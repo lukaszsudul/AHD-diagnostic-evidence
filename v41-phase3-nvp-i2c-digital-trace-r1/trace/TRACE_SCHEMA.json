@@ -1,0 +1,51 @@
+{
+  "schema_name": "AHD_NVP_I2C_DIGITAL_TRACE",
+  "schema_version": "0x00010000",
+  "sample_clock_hz": 62500000,
+  "sample_width_bits": 64,
+  "sample_depth": 4096,
+  "pre_trigger_samples": 3072,
+  "post_trigger_samples_including_trigger": 1024,
+  "earliest_sda_observation": "SDA_SYNC_STAGE1",
+  "earliest_scl_observation": "SCL_SYNC_STAGE1",
+  "fields": [
+    {"name": "sda_sync_stage1", "lsb": 0, "width": 1},
+    {"name": "sda_sync_stage2", "lsb": 1, "width": 1},
+    {"name": "sda_filtered", "lsb": 2, "width": 1},
+    {"name": "scl_sync_stage1", "lsb": 3, "width": 1},
+    {"name": "scl_sync_stage2", "lsb": 4, "width": 1},
+    {"name": "scl_filtered", "lsb": 5, "width": 1},
+    {"name": "sda_drive_low_enable", "lsb": 6, "width": 1},
+    {"name": "scl_drive_low_enable", "lsb": 7, "width": 1},
+    {"name": "ack_decision_strobe", "lsb": 8, "width": 1},
+    {"name": "ack_value_used_by_fsm", "lsb": 9, "width": 1, "encoding": "1=ACK_LOW,0=NACK_HIGH"},
+    {"name": "first_nack_event", "lsb": 10, "width": 1},
+    {"name": "first_nack_latched", "lsb": 11, "width": 1},
+    {"name": "nvp_reset_output", "lsb": 12, "width": 1},
+    {"name": "vdd1_enable_output", "lsb": 13, "width": 1},
+    {"name": "vdd3_enable_output", "lsb": 14, "width": 1},
+    {"name": "init_active", "lsb": 15, "width": 1},
+    {"name": "i2c_bit_index", "lsb": 16, "width": 4},
+    {"name": "i2c_byte_phase", "lsb": 20, "width": 8},
+    {"name": "i2c_fsm_state", "lsb": 28, "width": 8},
+    {"name": "i2c_operation_index", "lsb": 36, "width": 8},
+    {"name": "current_tx_byte", "lsb": 44, "width": 8},
+    {"name": "init_done", "lsb": 52, "width": 1},
+    {"name": "init_error", "lsb": 53, "width": 1},
+    {"name": "first_error_code", "lsb": 54, "width": 8},
+    {"name": "first_error_valid", "lsb": 62, "width": 1},
+    {"name": "reserved_zero", "lsb": 63, "width": 1}
+  ],
+  "byte_phase_encoding": {
+    "0": "NONE_OR_NON_BYTE_STATE",
+    "1": "WRITE_ADDRESS_BYTE",
+    "2": "REGISTER_BYTE",
+    "3": "DATA_BYTE",
+    "4": "READ_ADDRESS_BYTE"
+  },
+  "trigger_reason_encoding": {
+    "1": "FIRST_NACK",
+    "2": "INIT_DONE_NO_NACK",
+    "3": "TRACE_INTERNAL_ERROR_OR_TIMEOUT"
+  }
+}

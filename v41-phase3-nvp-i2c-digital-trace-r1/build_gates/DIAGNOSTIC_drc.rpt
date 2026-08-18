@@ -1,0 +1,81 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Tue Aug 18 22:21:13 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_drc -file C:/FPGA/TEMP_V41_NVP_TRACE_DIAGNOSTIC_R1/BUILD_EVIDENCE_CYCLE_2/DIAGNOSTIC_drc.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : Fully Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: ahd_capture_top_xdma
+          Floorplan: design_1
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max checks: <unlimited>
+             Checks found: 6
++-----------+----------+----------------------------+--------+
+| Rule      | Severity | Description                | Checks |
++-----------+----------+----------------------------+--------+
+| PDCN-1569 | Warning  | LUT equation term check    | 1      |
+| REQP-1839 | Warning  | RAMB36 async control check | 4      |
+| RTSTAT-10 | Warning  | No routable loads          | 1      |
++-----------+----------+----------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+PDCN-1569#1 Warning
+LUT equation term check  
+Used physical LUT pin 'A4' of cell XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A3)*A1)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
+Related violations: <none>
+
+REQP-1839#1 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ENARDEN (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_i_1_n_0) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#2 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/RSTRAMARSTRAM (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/lopt) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#3 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ENARDEN (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_i_1_n_0) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#4 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/RSTRAMARSTRAM (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/lopt) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+RTSTAT-10#1 Warning
+No routable loads  
+23 net(s) have no routable loads. The problem bus(es) and/or net(s) are XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0],
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0],
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_i,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/store_ltssm
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/user_valid.
+Related violations: <none>
+
+
