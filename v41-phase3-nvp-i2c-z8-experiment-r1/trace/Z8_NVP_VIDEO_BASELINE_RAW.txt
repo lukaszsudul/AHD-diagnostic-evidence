@@ -1,0 +1,192 @@
+READER_PATH=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/evidence/xdma_axil_read
+READER_SHA256=808aa85670ccebd288de6ea7ee05bef303272a6e555273e763d75dc45b68351e
+READER_IDENTITY=PASS
+UTC_START=2026-08-19T16:21:07,294738211+02:00
+HOSTNAME=VCDE-DUT-1
+BOOT_ID=9bc88f45-bc65-4d82-b944-e74a52e9426e
+ENDPOINT_COUNT=1
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+0000:01:00.0 Memory controller: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug)
+	Subsystem: Xilinx Corporation Device 0007
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 83
+	IOMMU group: 13
+	Region 0: Memory at f6e00000 (32-bit, non-prefetchable) [size=128K]
+	Region 1: Memory at f6e20000 (32-bit, non-prefetchable) [size=64K]
+	Capabilities: [40] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold-)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [48] MSI: Enable+ Count=1/1 Maskable- 64bit+
+		Address: 00000000fee00000  Data: 0000
+	Capabilities: [60] Express (v2) Endpoint, IntMsgNum 0
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 unlimited
+			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset- SlotPowerLimit 75W TEE-IO-
+		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 2.5GT/s, Width x1, ASPM L0s, Exit Latency L0s unlimited
+			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt- FltModeDis-
+		LnkSta:	Speed 2.5GT/s, Width x1
+			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range B, TimeoutDis- NROPrPrP- LTR-
+			 10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS- TPHComp- ExtTPHComp-
+			 AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+			 AtomicOpsCtl: ReqEn-
+			 IDOReq- IDOCompl- LTR- EmergencyPowerReductionReq-
+crw------- 1 root root 511, 36 Aug 19 16:16 /dev/xdma0_c2h_0
+crw------- 1 root root 511,  1 Aug 19 16:16 /dev/xdma0_control
+crw------- 1 root root 511, 32 Aug 19 16:16 /dev/xdma0_h2c_0
+crw------- 1 root root 511,  0 Aug 19 16:16 /dev/xdma0_user
+KERNEL_WINDOW_PRE_BEGIN
+Aug 19 16:10:50.736988 VCDE-DUT-1 kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+Aug 19 16:10:50.738506 VCDE-DUT-1 kernel: pci 0000:00:01.1: [1022:14ed] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.739131 VCDE-DUT-1 kernel: pci 0000:00:02.1: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.739876 VCDE-DUT-1 kernel: pci 0000:00:02.2: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.740776 VCDE-DUT-1 kernel: pci 0000:00:08.1: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.741630 VCDE-DUT-1 kernel: pci 0000:00:08.2: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.742364 VCDE-DUT-1 kernel: pci 0000:00:08.3: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.744282 VCDE-DUT-1 kernel: pci 0000:01:00.0: [10ee:7011] type 00 class 0x058000 PCIe Endpoint
+Aug 19 16:10:50.744945 VCDE-DUT-1 kernel: pci 0000:02:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+Aug 19 16:10:50.745846 VCDE-DUT-1 kernel: pci 0000:03:00.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.746382 VCDE-DUT-1 kernel: pci 0000:03:08.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.746917 VCDE-DUT-1 kernel: pci 0000:03:09.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.747457 VCDE-DUT-1 kernel: pci 0000:03:0a.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.748256 VCDE-DUT-1 kernel: pci 0000:03:0b.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.748838 VCDE-DUT-1 kernel: pci 0000:03:0c.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.749503 VCDE-DUT-1 kernel: pci 0000:03:0d.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.750717 VCDE-DUT-1 kernel: pci 0000:07:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+Aug 19 16:10:50.751824 VCDE-DUT-1 kernel: pci 0000:09:00.0: [1022:43f7] type 00 class 0x0c0330 PCIe Legacy Endpoint
+Aug 19 16:10:50.752512 VCDE-DUT-1 kernel: pci 0000:0a:00.0: [1022:43f6] type 00 class 0x010601 PCIe Legacy Endpoint
+Aug 19 16:10:50.753334 VCDE-DUT-1 kernel: pci 0000:0b:00.0: [12ab:0710] type 00 class 0x048000 PCIe Endpoint
+Aug 19 16:10:50.753968 VCDE-DUT-1 kernel: pci 0000:0c:00.0: [1002:15bf] type 00 class 0x030000 PCIe Legacy Endpoint
+Aug 19 16:10:50.754865 VCDE-DUT-1 kernel: pci 0000:0c:00.1: [1002:1640] type 00 class 0x040300 PCIe Legacy Endpoint
+Aug 19 16:10:50.755380 VCDE-DUT-1 kernel: pci 0000:0c:00.2: [1022:15c7] type 00 class 0x108000 PCIe Endpoint
+Aug 19 16:10:50.755901 VCDE-DUT-1 kernel: pci 0000:0c:00.3: [1022:15b9] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.756420 VCDE-DUT-1 kernel: pci 0000:0c:00.4: [1022:15ba] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.756973 VCDE-DUT-1 kernel: pci 0000:0c:00.6: [1022:15e3] type 00 class 0x040300 PCIe Endpoint
+Aug 19 16:10:50.757605 VCDE-DUT-1 kernel: pci 0000:0d:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Aug 19 16:10:50.757989 VCDE-DUT-1 kernel: pci 0000:0d:00.1: [1022:1502] type 00 class 0x118000 PCIe Endpoint
+Aug 19 16:10:50.758878 VCDE-DUT-1 kernel: pci 0000:0e:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Aug 19 16:10:50.759140 VCDE-DUT-1 kernel: pci 0000:0e:00.3: [1022:15c0] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.759656 VCDE-DUT-1 kernel: pci 0000:0e:00.4: [1022:15c1] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.779038 VCDE-DUT-1 kernel: pcieport 0000:00:01.1: PME: Signaling with IRQ 27
+Aug 19 16:10:50.779157 VCDE-DUT-1 kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 28
+Aug 19 16:10:50.779276 VCDE-DUT-1 kernel: pcieport 0000:00:02.2: PME: Signaling with IRQ 29
+Aug 19 16:10:50.779393 VCDE-DUT-1 kernel: pcieport 0000:00:08.1: PME: Signaling with IRQ 30
+Aug 19 16:10:50.779513 VCDE-DUT-1 kernel: pcieport 0000:00:08.2: PME: Signaling with IRQ 31
+Aug 19 16:10:50.779632 VCDE-DUT-1 kernel: pcieport 0000:00:08.3: PME: Signaling with IRQ 32
+Aug 19 16:16:27.311593 VCDE-DUT-1 kernel: xdma: loading out-of-tree module taints kernel.
+Aug 19 16:16:27.311686 VCDE-DUT-1 kernel: xdma: module verification failed: signature and/or required key missing - tainting kernel
+Aug 19 16:16:27.312584 VCDE-DUT-1 kernel: xdma:xdma_mod_init: Xilinx XDMA Reference Driver xdma v2025.2.0
+Aug 19 16:16:27.312620 VCDE-DUT-1 kernel: xdma:xdma_mod_init: desc_blen_max: 0xfffffff/268435455, timeout: h2c 10 c2h 10 sec.
+Aug 19 16:16:27.312643 VCDE-DUT-1 kernel: xdma:xdma_device_open: xdma device 0000:01:00.0, 0x000000003eda3a1d.
+Aug 19 16:16:27.312675 VCDE-DUT-1 kernel: xdma 0000:01:00.0: enabling device (0000 -> 0002)
+Aug 19 16:16:27.313026 VCDE-DUT-1 kernel: xdma:map_single_bar: BAR0 at 0xf6e00000 mapped at 0x00000000a8d0dc55, length=131072(/131072)
+Aug 19 16:16:27.313039 VCDE-DUT-1 kernel: xdma:map_single_bar: BAR1 at 0xf6e20000 mapped at 0x0000000025112490, length=65536(/65536)
+Aug 19 16:16:27.313055 VCDE-DUT-1 kernel: xdma:map_bars: config bar 1, pos 1.
+Aug 19 16:16:27.313072 VCDE-DUT-1 kernel: xdma:identify_bars: 2 BARs: config 1, user 0, bypass -1.
+Aug 19 16:16:27.313084 VCDE-DUT-1 kernel: xdma:pci_keep_intx_enabled: 0000:01:00.0: clear INTX_DISABLE, 0x406 -> 0x6.
+Aug 19 16:16:27.313095 VCDE-DUT-1 kernel: xdma:probe_one: 0000:01:00.0 xdma0, pdev 0x000000003eda3a1d, xdev 0x0000000089d66ec1, 0x00000000c417463b, usr 16, ch 1,1.
+Aug 19 16:16:27.313581 VCDE-DUT-1 kernel: xdma:cdev_xvc_init: xcdev 0x000000002308e6d6, bar 0, offset 0x40000.
+KERNEL_WINDOW_PRE_END
+T0_TIMESTAMP_NS=1787149267336421860
+T0_FRAME_DELTA_SOURCE=0x00000000
+T0_VCLK_DELTA_SOURCE=0x8C93D666
+T0_SAV_DELTA_SOURCE=0x00000000
+T0_NVP_STATUS=0x000000FB
+T0_NVP_NACK_COUNT=0x00000014
+T0_NVP_TIMEOUT_COUNT=0x00000000
+T0_NVP_CURRENT_OP=0x00D608F9
+T0_NVP_FIRST_ERROR=0x80010200
+T0_NVP_DETAIL_W0=0x00D6F908
+T0_NVP_DETAIL_W1=0xFF0001FA
+T0_NVP_DETAIL_W2=0x01010000
+T0_NVP_DETAIL_W3=0x00FF0102
+T0_NVP_DETAIL_W4=0x00000014
+T0_NVP_DETAIL_W5=0x00000000
+T1_TIMESTAMP_NS=1787149268378797302
+T1_FRAME_DELTA_SOURCE=0x00000000
+T1_VCLK_DELTA_SOURCE=0x95D00BAD
+T1_SAV_DELTA_SOURCE=0x00000000
+T1_NVP_STATUS=0x000000FB
+T1_NVP_NACK_COUNT=0x00000014
+T1_NVP_TIMEOUT_COUNT=0x00000000
+T1_NVP_CURRENT_OP=0x00D608F9
+T1_NVP_FIRST_ERROR=0x80010200
+T1_NVP_DETAIL_W0=0x00D6F908
+T1_NVP_DETAIL_W1=0xFF0001FA
+T1_NVP_DETAIL_W2=0x01010000
+T1_NVP_DETAIL_W3=0x00FF0102
+T1_NVP_DETAIL_W4=0x00000014
+T1_NVP_DETAIL_W5=0x00000000
+KERNEL_WINDOW_POST_BEGIN
+Aug 19 16:10:50.736988 VCDE-DUT-1 kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+Aug 19 16:10:50.738506 VCDE-DUT-1 kernel: pci 0000:00:01.1: [1022:14ed] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.739131 VCDE-DUT-1 kernel: pci 0000:00:02.1: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.739876 VCDE-DUT-1 kernel: pci 0000:00:02.2: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.740776 VCDE-DUT-1 kernel: pci 0000:00:08.1: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.741630 VCDE-DUT-1 kernel: pci 0000:00:08.2: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.742364 VCDE-DUT-1 kernel: pci 0000:00:08.3: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Aug 19 16:10:50.744282 VCDE-DUT-1 kernel: pci 0000:01:00.0: [10ee:7011] type 00 class 0x058000 PCIe Endpoint
+Aug 19 16:10:50.744945 VCDE-DUT-1 kernel: pci 0000:02:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+Aug 19 16:10:50.745846 VCDE-DUT-1 kernel: pci 0000:03:00.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.746382 VCDE-DUT-1 kernel: pci 0000:03:08.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.746917 VCDE-DUT-1 kernel: pci 0000:03:09.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.747457 VCDE-DUT-1 kernel: pci 0000:03:0a.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.748256 VCDE-DUT-1 kernel: pci 0000:03:0b.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.748838 VCDE-DUT-1 kernel: pci 0000:03:0c.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.749503 VCDE-DUT-1 kernel: pci 0000:03:0d.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Aug 19 16:10:50.750717 VCDE-DUT-1 kernel: pci 0000:07:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+Aug 19 16:10:50.751824 VCDE-DUT-1 kernel: pci 0000:09:00.0: [1022:43f7] type 00 class 0x0c0330 PCIe Legacy Endpoint
+Aug 19 16:10:50.752512 VCDE-DUT-1 kernel: pci 0000:0a:00.0: [1022:43f6] type 00 class 0x010601 PCIe Legacy Endpoint
+Aug 19 16:10:50.753334 VCDE-DUT-1 kernel: pci 0000:0b:00.0: [12ab:0710] type 00 class 0x048000 PCIe Endpoint
+Aug 19 16:10:50.753968 VCDE-DUT-1 kernel: pci 0000:0c:00.0: [1002:15bf] type 00 class 0x030000 PCIe Legacy Endpoint
+Aug 19 16:10:50.754865 VCDE-DUT-1 kernel: pci 0000:0c:00.1: [1002:1640] type 00 class 0x040300 PCIe Legacy Endpoint
+Aug 19 16:10:50.755380 VCDE-DUT-1 kernel: pci 0000:0c:00.2: [1022:15c7] type 00 class 0x108000 PCIe Endpoint
+Aug 19 16:10:50.755901 VCDE-DUT-1 kernel: pci 0000:0c:00.3: [1022:15b9] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.756420 VCDE-DUT-1 kernel: pci 0000:0c:00.4: [1022:15ba] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.756973 VCDE-DUT-1 kernel: pci 0000:0c:00.6: [1022:15e3] type 00 class 0x040300 PCIe Endpoint
+Aug 19 16:10:50.757605 VCDE-DUT-1 kernel: pci 0000:0d:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Aug 19 16:10:50.757989 VCDE-DUT-1 kernel: pci 0000:0d:00.1: [1022:1502] type 00 class 0x118000 PCIe Endpoint
+Aug 19 16:10:50.758878 VCDE-DUT-1 kernel: pci 0000:0e:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Aug 19 16:10:50.759140 VCDE-DUT-1 kernel: pci 0000:0e:00.3: [1022:15c0] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.759656 VCDE-DUT-1 kernel: pci 0000:0e:00.4: [1022:15c1] type 00 class 0x0c0330 PCIe Endpoint
+Aug 19 16:10:50.779038 VCDE-DUT-1 kernel: pcieport 0000:00:01.1: PME: Signaling with IRQ 27
+Aug 19 16:10:50.779157 VCDE-DUT-1 kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 28
+Aug 19 16:10:50.779276 VCDE-DUT-1 kernel: pcieport 0000:00:02.2: PME: Signaling with IRQ 29
+Aug 19 16:10:50.779393 VCDE-DUT-1 kernel: pcieport 0000:00:08.1: PME: Signaling with IRQ 30
+Aug 19 16:10:50.779513 VCDE-DUT-1 kernel: pcieport 0000:00:08.2: PME: Signaling with IRQ 31
+Aug 19 16:10:50.779632 VCDE-DUT-1 kernel: pcieport 0000:00:08.3: PME: Signaling with IRQ 32
+Aug 19 16:16:27.311593 VCDE-DUT-1 kernel: xdma: loading out-of-tree module taints kernel.
+Aug 19 16:16:27.311686 VCDE-DUT-1 kernel: xdma: module verification failed: signature and/or required key missing - tainting kernel
+Aug 19 16:16:27.312584 VCDE-DUT-1 kernel: xdma:xdma_mod_init: Xilinx XDMA Reference Driver xdma v2025.2.0
+Aug 19 16:16:27.312620 VCDE-DUT-1 kernel: xdma:xdma_mod_init: desc_blen_max: 0xfffffff/268435455, timeout: h2c 10 c2h 10 sec.
+Aug 19 16:16:27.312643 VCDE-DUT-1 kernel: xdma:xdma_device_open: xdma device 0000:01:00.0, 0x000000003eda3a1d.
+Aug 19 16:16:27.312675 VCDE-DUT-1 kernel: xdma 0000:01:00.0: enabling device (0000 -> 0002)
+Aug 19 16:16:27.313026 VCDE-DUT-1 kernel: xdma:map_single_bar: BAR0 at 0xf6e00000 mapped at 0x00000000a8d0dc55, length=131072(/131072)
+Aug 19 16:16:27.313039 VCDE-DUT-1 kernel: xdma:map_single_bar: BAR1 at 0xf6e20000 mapped at 0x0000000025112490, length=65536(/65536)
+Aug 19 16:16:27.313055 VCDE-DUT-1 kernel: xdma:map_bars: config bar 1, pos 1.
+Aug 19 16:16:27.313072 VCDE-DUT-1 kernel: xdma:identify_bars: 2 BARs: config 1, user 0, bypass -1.
+Aug 19 16:16:27.313084 VCDE-DUT-1 kernel: xdma:pci_keep_intx_enabled: 0000:01:00.0: clear INTX_DISABLE, 0x406 -> 0x6.
+Aug 19 16:16:27.313095 VCDE-DUT-1 kernel: xdma:probe_one: 0000:01:00.0 xdma0, pdev 0x000000003eda3a1d, xdev 0x0000000089d66ec1, 0x00000000c417463b, usr 16, ch 1,1.
+Aug 19 16:16:27.313581 VCDE-DUT-1 kernel: xdma:cdev_xvc_init: xcdev 0x000000002308e6d6, bar 0, offset 0x40000.
+KERNEL_WINDOW_POST_END
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+crw------- 1 root root 511, 36 Aug 19 16:16 /dev/xdma0_c2h_0
+crw------- 1 root root 511,  1 Aug 19 16:16 /dev/xdma0_control
+crw------- 1 root root 511, 32 Aug 19 16:16 /dev/xdma0_h2c_0
+crw------- 1 root root 511,  0 Aug 19 16:16 /dev/xdma0_user
+UTC_END=2026-08-19T16:21:08,441077867+02:00
+READ_ONLY_BASELINE_SCRIPT=COMPLETE
+AXIL_READS=28
+AXIL_WRITES=0
+C2H_TRANSFERS=0
+H2C_TRANSFERS=0

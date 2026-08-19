@@ -1,0 +1,107 @@
+# Stage C Z8 source and waveform safety gate
+
+Scope: one ephemeral midpoint ACK-sampling hypothesis experiment layered on the
+exact validated R2 observer. This source is outside Git and is not a release
+candidate.
+
+## Identity
+
+BASE_FUNCTIONAL_COMMIT=fd32fcb65be3f1a59c569874195d1faeaf7d27e9
+
+OBSERVER_R2_PATCH_SHA256=78C2D4099A20F1A8C81D15CBE7E7AB15E7F041FBA9C03A07AE83593CCD2F0E51
+
+Z8_FUNCTIONAL_PATCH_SHA256=A41797FB9B114ECF7A89F225E9E3EFA566E910ED7FAAED362970D7153DEE1872
+
+COMBINED_EXPERIMENT_PATCH_SHA256=9D90016FAD1A1B05C9CA53292F035445350A1143FD0214FC04D58AB9975B4440
+
+COMBINED_EXPERIMENT_SOURCE_MANIFEST_SHA256=0FD1670D7BEF067221DA184BBE90CCF92307D3C1F498AE6121E9A5D478A796EE
+
+SOURCE_MANIFEST_FILES=193
+
+SOURCE_MANIFEST_MISMATCHES_AFTER_FREEZE=0
+
+## Exact functional delta
+
+The only intended functional property change is the ACK decision source and
+sampling phase for the four existing ACK paths: write address, register byte,
+data byte, and read address. The unchanged ACK-high state releases SCL, an
+internal counter samples the already-filtered SDA/SCL values at the midpoint,
+and the next pre-existing tick consumes the latched sample through the existing
+ACK/NACK accounting path. An invalid sample is never presented as ACK and does
+not create a retry.
+
+DIVIDER_R2=`CLK_HZ / (I2C_HZ * 2)`
+
+DIVIDER_Z8=`CLK_HZ / (I2C_HZ * 2)`
+
+DIVIDER_CHANGED=NO
+
+FUNCTIONAL_HALF_PHASE_CYCLES=626
+
+ACK_SAMPLE_OFFSET_CYCLES=313
+
+ACK_SAMPLE_OFFSET_US=5.008
+
+FUNCTIONAL_HALF_PHASE_US=10.016
+
+NOMINAL_SCL_PERIOD_US=20.032
+
+I2C_STATE_TRANSITION_ASSIGNMENTS_R2=62
+
+I2C_STATE_TRANSITION_ASSIGNMENTS_Z8=62
+
+I2C_STATE_TRANSITION_DIFFERENCES=0
+
+SCL_DRIVE_ASSIGNMENTS_R2=34
+
+SCL_DRIVE_ASSIGNMENTS_Z8=34
+
+SCL_DRIVE_ASSIGNMENT_DIFFERENCES=0
+
+SDA_DRIVE_ASSIGNMENTS_R2=25
+
+SDA_DRIVE_ASSIGNMENTS_Z8=25
+
+SDA_DRIVE_ASSIGNMENT_DIFFERENCES=0
+
+Z8_SCL_PERIOD_CHANGED=NO
+
+EXTRA_SCL_PULSES=0
+
+EXTRA_FUNCTIONAL_STATES=0
+
+RETRIES_ADDED=0
+
+RESET_TIMING_CHANGED=0
+
+NVP_TABLE_CHANGED=0
+
+BANK_BEHAVIOR_CHANGED=0
+
+ABORT_POLICY_CHANGED=0
+
+## Frozen functional assets
+
+The R2 and Z8 copies have identical SHA-256 values for the NVP table package,
+the formal 53-register control block, physical frontend, video capture,
+record producer/mailbox, XDMA XCI, pin constraints, and video timing
+constraints. The diagnostic bus-width propagation and observer/schema/tooling
+changes have no functional sink.
+
+NVP_TABLE_PACKAGE_MATCH=YES
+
+FORMAL_53_REGISTER_BLOCK_MATCH=YES
+
+XDMA_XCI_MATCH=YES
+
+VIDEO_FRONTEND_MATCH=YES
+
+V40B_AXIS_PATH_MATCH=YES
+
+PIN_AND_VIDEO_TIMING_XDC_MATCH=YES
+
+OBSERVER_TO_FUNCTIONAL_FANOUT=0_BY_SOURCE_CONSTRUCTION
+
+FORMAL_REPOSITORY_MUTATION=0
+
+PREBUILD_SOURCE_GATE=PASS

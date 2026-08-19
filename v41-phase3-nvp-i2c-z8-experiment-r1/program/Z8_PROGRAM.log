@@ -1,0 +1,72 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Aug 19 16:07:48 2026
+# Process ID         : 14416
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -notrace -log C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\Z8_PROGRAM.log -journal C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\Z8_PROGRAM.jou -source C:\FPGA\TEMP_V41_NVP_Z8_R1\SOURCE_Z8\scripts\v41\program_sram_once.tcl -tclargs C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\03_BUILD\CYCLE_01\artifacts\ahd_capture_v41_NVP_Z8_EXPERIMENT_ONLY_R1.bit fd32fcb65be3f1a59c569874195d1faeaf7d27e9
+# Log file           : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807/V41_V40_1_0_RESUME/EVIDENCE/V41_NVP_ACK_PHASE_INVESTIGATION/03_STAGE_C_Z8/05_HARDWARE/Z8_PROGRAM.log
+# Journal file       : C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\Z8_PROGRAM.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6938 MB
+# Total Virtual      : 23966 MB
+# Available Virtual  : 4730 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\TEMP_V41_NVP_Z8_R1\SOURCE_Z8\scripts\v41\program_sram_once.tcl} -notrace
+PHASE=V41_CONTROLLED_SRAM_PROGRAM_ONCE
+UTC=2026-08-19T14:08:08Z
+BIT_PATH=C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807/V41_V40_1_0_RESUME/EVIDENCE/V41_NVP_ACK_PHASE_INVESTIGATION/03_STAGE_C_Z8/03_BUILD/CYCLE_01/artifacts/ahd_capture_v41_NVP_Z8_EXPERIMENT_ONLY_R1.bit
+EXPECTED_GIT_COMMIT=fd32fcb65be3f1a59c569874195d1faeaf7d27e9
+FPGA_SRAM_PROGRAM_LIMIT=1
+FLASH_OPERATIONS_THIS_SCRIPT=0
+CFGMEM_OPERATIONS_THIS_SCRIPT=0
+PROGRAM_B_OPERATIONS_THIS_SCRIPT=0
+open_hw_manager: Time (s): cpu = 00:00:28 ; elapsed = 00:00:31 . Memory (MB): peak = 539.742 ; gain = 222.492
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:01 ; elapsed = 00:00:31 . Memory (MB): peak = 544.691 ; gain = 4.949
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+PREPROGRAM_DEVICE_COUNT=1
+PREPROGRAM_DEVICE_PART=xc7a35t
+PREPROGRAM_DEVICE_IDCODE=0362D093
+INFO: [Labtools 27-3164] End of startup status: HIGH
+PROGRAM_HW_DEVICES_COMPLETED=YES
+END_OF_STARTUP_STATUS=HIGH
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+POSTPROGRAM_FPGA_PART=xc7a35t
+POSTPROGRAM_FPGA_IDCODE=0362D093
+POSTPROGRAM_FPGA_DONE=1
+PROGRAM_RESULT=PASS_EOS_HIGH_DONE_1
+FPGA_SRAM_PROGRAMS_THIS_SCRIPT=1
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 19 16:09:16 2026...

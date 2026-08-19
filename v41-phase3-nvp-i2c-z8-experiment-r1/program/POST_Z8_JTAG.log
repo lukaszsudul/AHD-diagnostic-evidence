@@ -1,0 +1,134 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Aug 19 16:34:57 2026
+# Process ID         : 1628
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -log C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\POST_Z8\POST_Z8_JTAG.log -journal C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\POST_Z8\POST_Z8_JTAG.jou -source C:\FPGA\TEMP_V41_NVP_Z8_R1\SOURCE_Z8\scripts\v41\read_jtag_identity_done.tcl
+# Log file           : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807/V41_V40_1_0_RESUME/EVIDENCE/V41_NVP_ACK_PHASE_INVESTIGATION/03_STAGE_C_Z8/05_HARDWARE/POST_Z8/POST_Z8_JTAG.log
+# Journal file       : C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\V41_NVP_ACK_PHASE_INVESTIGATION\03_STAGE_C_Z8\05_HARDWARE\POST_Z8\POST_Z8_JTAG.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6938 MB
+# Total Virtual      : 23966 MB
+# Available Virtual  : 4701 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\TEMP_V41_NVP_Z8_R1\SOURCE_Z8\scripts\v41\read_jtag_identity_done.tcl}
+# if {$argc != 0} {
+#   puts stderr "usage: read_jtag_identity_done.tcl"
+#   exit 2
+# }
+# set intended_target {localhost:3121/xilinx_tcf/Digilent/210241768436}
+# set expected_part {xc7a35t}
+# set expected_idcode {0362D093}
+# proc emit {key value} { puts "$key=$value" }
+# proc normalized_idcode {dev} {
+#   if {[lsearch -exact [list_property $dev] IDCODE_HEX] >= 0} {
+#     return [string toupper [get_property IDCODE_HEX $dev]]
+#   }
+#   set raw [get_property IDCODE $dev]
+#   if {[string match -nocase 0x* $raw]} {
+#     return [string toupper [string range $raw 2 end]]
+#   }
+#   if {[string is integer -strict $raw]} { return [format %08X $raw] }
+#   return [string toupper $raw]
+# }
+# proc cleanup_hw {} {
+#   catch {close_hw_target}
+#   catch {disconnect_hw_server}
+#   catch {close_hw_manager}
+# }
+# set rc 0
+# if {[catch {
+#   open_hw_manager
+#   connect_hw_server
+#   set targets [get_hw_targets -quiet $intended_target]
+#   if {[llength $targets] != 1} {
+#     error "expected one exact HS2 target; found [llength $targets]"
+#   }
+#   set target [lindex $targets 0]
+#   current_hw_target $target
+#   open_hw_target
+# 
+#   set devices [get_hw_devices -quiet]
+#   emit DEVICE_COUNT [llength $devices]
+#   set matches {}
+#   foreach dev $devices {
+#     set part [get_property PART $dev]
+#     set idcode [normalized_idcode $dev]
+#     emit DEVICE_PART $part
+#     emit DEVICE_IDCODE $idcode
+#     if {[string equal -nocase $part $expected_part] &&
+#         [string equal -nocase $idcode $expected_idcode]} {
+#       lappend matches $dev
+#     }
+#   }
+#   if {[llength $matches] != 1} {
+#     error "exact A35T/IDCODE match count is [llength $matches]"
+#   }
+#   set dev [lindex $matches 0]
+#   current_hw_device $dev
+#   refresh_hw_device $dev
+# 
+#   set done [get_property REGISTER.IR.BIT5_DONE $dev]
+#   emit JTAG_TARGET $intended_target
+#   emit FPGA_PART [get_property PART $dev]
+#   emit FPGA_IDCODE [normalized_idcode $dev]
+#   emit FPGA_DONE $done
+#   if {$done ne "1"} { error "DONE is not 1: $done" }
+#   emit READ_ONLY_JTAG_GATE PASS
+#   emit FPGA_SRAM_PROGRAMS_THIS_SCRIPT 0
+# } err opts]} {
+#   emit ERROR $err
+#   emit ERROR_OPTIONS $opts
+#   emit READ_ONLY_JTAG_GATE FAIL
+#   set rc 1
+# }
+open_hw_manager: Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 542.852 ; gain = 221.734
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:34 . Memory (MB): peak = 546.852 ; gain = 4.000
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+DEVICE_COUNT=1
+DEVICE_PART=xc7a35t
+DEVICE_IDCODE=0362D093
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+JTAG_TARGET=localhost:3121/xilinx_tcf/Digilent/210241768436
+FPGA_PART=xc7a35t
+FPGA_IDCODE=0362D093
+FPGA_DONE=1
+READ_ONLY_JTAG_GATE=PASS
+FPGA_SRAM_PROGRAMS_THIS_SCRIPT=0
+# cleanup_hw
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+# exit $rc
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 19 16:36:27 2026...
