@@ -5,6 +5,18 @@ review. It documents one ephemeral, observer-only FPGA image used to capture
 the internal digital I2C state surrounding the first NVP NACK. It is not a
 release candidate and contains no authorized functional correction.
 
+## Independent review erratum
+
+**The original data remain valid. The extended interpretation of samples
+1829..2446 is superseded by the
+[independent-review erratum](reviews/INDEPENDENT_REVIEW_ERRATUM_ACK_WINDOW.md).**
+
+Those samples show the master driving address bit 0 of wire byte `0x60` LOW;
+they do not prove a slave ACK. The unchanged FSM made its ACK/NACK decision at
+sample 3072 while SCL was still observed LOW and actively driven LOW by the
+master. The erratum preserves the original files and provides the corrected
+sample-by-sample interpretation.
+
 ## Evidence identity
 
 ```text
@@ -52,4 +64,3 @@ The observer records digital states inside the FPGA. It does not measure
 analog voltage, threshold margin, edge rate, ringing, rail droop, or ground
 bounce. The evidence therefore supports a timing/phase diagnosis but does not
 exclude an electrical contribution.
-
