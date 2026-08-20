@@ -1,0 +1,398 @@
+UTC_START=2026-08-20T18:28:19.2088936Z
+UTC_END=2026-08-20T18:28:22.6112464Z
+EVIDENCE_KIND=XDMA_BOOT_FORENSIC
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+SYSTEM
+Linux VCDE-DUT-1 7.0.0-29-generic #29-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:52:35 UTC 2026 x86_64 GNU/Linux
+20ce3f85-63d7-4d02-a3ad-9c87de8ad794
+BOOT_IMAGE=/boot/vmlinuz-7.0.0-29-generic root=UUID=f7897627-c98a-4bf4-b24a-ae18f881e2da ro quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+SecureBoot disabled
+PCI
+01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+	Subsystem: Xilinx Corporation Device [10ee:0007]
+01:00.0 Memory controller: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug)
+	Subsystem: Xilinx Corporation Device 0007
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 255
+	IOMMU group: 13
+	Region 0: Memory at f6e00000 (32-bit, non-prefetchable) [disabled] [size=128K]
+	Region 1: Memory at f6e20000 (32-bit, non-prefetchable) [disabled] [size=64K]
+	Capabilities: [40] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold-)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [48] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [60] Express (v2) Endpoint, IntMsgNum 0
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 unlimited
+			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset- SlotPowerLimit 75W TEE-IO-
+		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 2.5GT/s, Width x1, ASPM L0s, Exit Latency L0s unlimited
+			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt- FltModeDis-
+		LnkSta:	Speed 2.5GT/s, Width x1
+			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range B, TimeoutDis- NROPrPrP- LTR-
+			 10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS- TPHComp- ExtTPHComp-
+			 AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+			 AtomicOpsCtl: ReqEn-
+			 IDOReq- IDOCompl- LTR- EmergencyPowerReductionReq-
+			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+		LnkCtl2: Target Link Speed: 2.5GT/s, EnterCompliance- SpeedDis-
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+		LnkSta2: Current De-emphasis Level: -3.5dB, EqualizationComplete- EqualizationPhase1-
+			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+			 Retimer- 2Retimers- CrosslinkRes: unsupported, FltMode-
+	Capabilities: [100 v1] Device Serial Number 00-00-00-00-00-00-00-00
+
+/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/driver
+pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00
+(null)
+MODULES
+Module                  Size  Used by
+snd_seq_dummy          12288  0
+snd_hrtimer            12288  1
+qrtr                   53248  2
+intel_rapl_msr         20480  0
+amd_atl                77824  1
+intel_rapl_common      57344  1 intel_rapl_msr
+binfmt_misc            24576  1
+mfd_aaeon              12288  0
+edac_mce_amd           28672  0
+eeepc_wmi              12288  0
+nls_iso8859_1          12288  1
+spd5118                16384  0
+asus_wmi              106496  2 eeepc_wmi,mfd_aaeon
+r8169                 151552  0
+kvm_amd               262144  0
+realtek                57344  1
+sparse_keymap          12288  1 asus_wmi
+wmi_bmof               12288  0
+kvm                  1527808  1 kvm_amd
+amdgpu              21569536  2
+snd_hda_codec_alc662    20480  1
+irqbypass              16384  1 kvm
+rapl                   20480  0
+snd_hda_codec_realtek_lib    65536  1 snd_hda_codec_alc662
+snd_hda_codec_generic   126976  2 snd_hda_codec_alc662,snd_hda_codec_realtek_lib
+snd_hda_codec_atihdmi    24576  1
+k10temp                16384  0
+snd_hda_codec_hdmi     65536  1 snd_hda_codec_atihdmi
+amdxdna               172032  0
+amdxcp                 12288  1 amdgpu
+drm_panel_backlight_quirks    12288  1 amdgpu
+amd_pmf               131072  1 amdxdna
+amdtee                 32768  0
+drm_buddy              28672  1 amdgpu
+amd_sfh                73728  1 amd_pmf
+snd_hda_intel          65536  2
+drm_ttm_helper         20480  1 amdgpu
+parport_pc             53248  1
+tee                    61440  2 amd_pmf,amdtee
+ttm                   135168  2 amdgpu,drm_ttm_helper
+snd_hda_codec         212992  6 snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec_alc662,snd_hda_codec_realtek_lib,snd_hda_codec_atihdmi
+gpu_sched              69632  2 amdxdna,amdgpu
+drm_exec               12288  1 amdgpu
+drm_suballoc_helper    24576  1 amdgpu
+hid                   282624  1 amd_sfh
+drm_display_helper    303104  1 amdgpu
+snd_hda_core          151552  7 snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec_alc662,snd_hda_codec,snd_hda_codec_realtek_lib,snd_hda_codec_atihdmi
+platform_profile       20480  2 amd_pmf,asus_wmi
+snd_intel_dspcfg       45056  1 snd_hda_intel
+cec                   106496  2 drm_display_helper,amdgpu
+i2c_piix4              36864  0
+gpio_amdpt             16384  0
+rc_core                81920  1 cec
+snd_intel_sdw_acpi     16384  1 snd_intel_dspcfg
+i2c_algo_bit           16384  1 amdgpu
+i2c_smbus              20480  1 i2c_piix4
+mac_hid                12288  0
+snd_usb_audio         622592  7
+snd_usbmidi_lib        57344  1 snd_usb_audio
+snd_hwdep              24576  2 snd_usb_audio,snd_hda_codec
+snd_ump                49152  1 snd_usb_audio
+snd_pcm               208896  5 snd_hda_codec_hdmi,snd_hda_intel,snd_usb_audio,snd_hda_codec,snd_hda_core
+snd_seq_midi           24576  0
+snd_seq_midi_event     16384  1 snd_seq_midi
+snd_rawmidi            57344  3 snd_seq_midi,snd_usbmidi_lib,snd_ump
+snd_seq               126976  9 snd_seq_midi,snd_seq_midi_event,snd_seq_dummy
+snd_seq_device         16384  4 snd_seq,snd_seq_midi,snd_ump,snd_rawmidi
+snd_timer              53248  3 snd_seq,snd_hrtimer,snd_pcm
+snd                   147456  34 snd_hda_codec_generic,snd_seq,snd_seq_device,snd_hda_codec_hdmi,snd_hwdep,snd_hda_intel,snd_usb_audio,snd_usbmidi_lib,snd_hda_codec,snd_timer,snd_hda_codec_realtek_lib,snd_ump,snd_pcm,snd_rawmidi
+soundcore              16384  1 snd
+mc                     90112  1 snd_usb_audio
+sch_fq_codel           28672  2
+efi_pstore             12288  0
+ghash_clmulni_intel    12288  0
+ahci                   53248  2
+ccp                   192512  2 kvm_amd,amdtee
+video                  77824  2 asus_wmi,amdgpu
+libahci                57344  1 ahci
+wmi                    36864  4 video,asus_wmi,wmi_bmof,mfd_aaeon
+lp                     32768  0
+ppdev                  24576  0
+parport                81920  3 parport_pc,lp,ppdev
+msr                    12288  0
+dmi_sysfs              28672  0
+autofs4                61440  2
+aesni_intel            98304  0
+snd_seq_dummy 12288 0 - Live 0xffffffffc07b7000
+snd_hrtimer 12288 1 - Live 0xffffffffc072e000
+qrtr 53248 2 - Live 0xffffffffc17fb000
+intel_rapl_msr 20480 0 - Live 0xffffffffc066b000
+amd_atl 77824 1 - Live 0xffffffffc17f3000
+intel_rapl_common 57344 1 intel_rapl_msr, Live 0xffffffffc17ee000
+binfmt_misc 24576 1 - Live 0xffffffffc17ec000
+mfd_aaeon 12288 0 - Live 0xffffffffc17eb000
+edac_mce_amd 28672 0 - Live 0xffffffffc07e8000
+eeepc_wmi 12288 0 - Live 0xffffffffc17e9000
+nls_iso8859_1 12288 1 - Live 0xffffffffc07e7000
+spd5118 16384 0 - Live 0xffffffffc071c000
+asus_wmi 106496 2 mfd_aaeon,eeepc_wmi, Live 0xffffffffc17df000
+r8169 151552 0 - Live 0xffffffffc07ea000
+kvm_amd 262144 0 - Live 0xffffffffc2600000
+realtek 57344 1 - Live 0xffffffffc07e3000
+sparse_keymap 12288 1 asus_wmi, Live 0xffffffffc07e2000
+wmi_bmof 12288 0 - Live 0xffffffffc070f000
+kvm 1527808 1 kvm_amd, Live 0xffffffffc1738000
+amdgpu 21569536 2 - Live 0xffffffffc0c00000
+snd_hda_codec_alc662 20480 1 - Live 0xffffffffc07b5000
+irqbypass 16384 1 kvm, Live 0xffffffffc0769000
+rapl 20480 0 - Live 0xffffffffc0720000
+snd_hda_codec_realtek_lib 65536 1 snd_hda_codec_alc662, Live 0xffffffffc07dd000
+snd_hda_codec_generic 126976 2 snd_hda_codec_alc662,snd_hda_codec_realtek_lib, Live 0xffffffffc07cc000
+snd_hda_codec_atihdmi 24576 1 - Live 0xffffffffc07b3000
+k10temp 16384 0 - Live 0xffffffffc071d000
+snd_hda_codec_hdmi 65536 1 snd_hda_codec_atihdmi, Live 0xffffffffc07ad000
+amdxdna 172032 0 - Live 0xffffffffc07b8000
+amdxcp 12288 1 amdgpu, Live 0xffffffffc06fd000
+drm_panel_backlight_quirks 12288 1 amdgpu, Live 0xffffffffc074d000
+amd_pmf 131072 1 amdxdna, Live 0xffffffffc07a1000
+amdtee 32768 0 - Live 0xffffffffc079e000
+drm_buddy 28672 1 amdgpu, Live 0xffffffffc079b000
+amd_sfh 73728 1 amd_pmf, Live 0xffffffffc0794000
+snd_hda_intel 65536 2 - Live 0xffffffffc0717000
+drm_ttm_helper 20480 1 amdgpu, Live 0xffffffffc0701000
+parport_pc 53248 1 - Live 0xffffffffc0712000
+tee 61440 2 amd_pmf,amdtee, Live 0xffffffffc078e000
+ttm 135168 2 amdgpu,drm_ttm_helper, Live 0xffffffffc0780000
+snd_hda_codec 212992 6 snd_hda_codec_alc662,snd_hda_codec_realtek_lib,snd_hda_codec_generic,snd_hda_codec_atihdmi,snd_hda_codec_hdmi,snd_hda_intel, Live 0xffffffffc076a000
+gpu_sched 69632 2 amdgpu,amdxdna, Live 0xffffffffc0763000
+drm_exec 12288 1 amdgpu, Live 0xffffffffc068c000
+drm_suballoc_helper 24576 1 amdgpu, Live 0xffffffffc0761000
+hid 282624 1 amd_sfh, Live 0xffffffffc074e000
+drm_display_helper 303104 1 amdgpu, Live 0xffffffffc072f000
+snd_hda_core 151552 7 snd_hda_codec_alc662,snd_hda_codec_realtek_lib,snd_hda_codec_generic,snd_hda_codec_atihdmi,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec, Live 0xffffffffc0721000
+platform_profile 20480 2 asus_wmi,amd_pmf, Live 0xffffffffc071e000
+snd_intel_dspcfg 45056 1 snd_hda_intel, Live 0xffffffffc0710000
+cec 106496 2 amdgpu,drm_display_helper, Live 0xffffffffc0702000
+i2c_piix4 36864 0 - Live 0xffffffffc06fe000
+gpio_amdpt 16384 0 - Live 0xffffffffc06fc000
+rc_core 81920 1 cec, Live 0xffffffffc06f4000
+snd_intel_sdw_acpi 16384 1 snd_intel_dspcfg, Live 0xffffffffc0673000
+i2c_algo_bit 16384 1 amdgpu, Live 0xffffffffc06f2000
+i2c_smbus 20480 1 i2c_piix4, Live 0xffffffffc065b000
+mac_hid 12288 0 - Live 0xffffffffc0621000
+snd_usb_audio 622592 7 - Live 0xffffffffc06b2000
+snd_usbmidi_lib 57344 1 snd_usb_audio, Live 0xffffffffc06ac000
+snd_hwdep 24576 2 snd_hda_codec,snd_usb_audio, Live 0xffffffffc06aa000
+snd_ump 49152 1 snd_usb_audio, Live 0xffffffffc06a5000
+snd_pcm 208896 5 snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,snd_hda_core,snd_usb_audio, Live 0xffffffffc068d000
+snd_seq_midi 24576 0 - Live 0xffffffffc068a000
+snd_seq_midi_event 16384 1 snd_seq_midi, Live 0xffffffffc0689000
+snd_rawmidi 57344 3 snd_usbmidi_lib,snd_ump,snd_seq_midi, Live 0xffffffffc0683000
+snd_seq 126976 9 snd_seq_dummy,snd_seq_midi,snd_seq_midi_event, Live 0xffffffffc0674000
+snd_seq_device 16384 4 snd_ump,snd_seq_midi,snd_rawmidi,snd_seq, Live 0xffffffffc0672000
+snd_timer 53248 3 snd_hrtimer,snd_pcm,snd_seq, Live 0xffffffffc066c000
+snd 147456 34 snd_hda_codec_realtek_lib,snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,snd_usb_audio,snd_usbmidi_lib,snd_hwdep,snd_ump,snd_pcm,snd_rawmidi,snd_seq,snd_seq_device,snd_timer, Live 0xffffffffc065c000
+soundcore 16384 1 snd, Live 0xffffffffc064e000
+mc 90112 1 snd_usb_audio, Live 0xffffffffc0653000
+sch_fq_codel 28672 2 - Live 0xffffffffc0650000
+efi_pstore 12288 0 - Live 0xffffffffc0618000
+ghash_clmulni_intel 12288 0 - Live 0xffffffffc064f000
+ahci 53248 2 - Live 0xffffffffc064c000
+ccp 192512 2 kvm_amd,amdtee, Live 0xffffffffc0634000
+video 77824 2 asus_wmi,amdgpu, Live 0xffffffffc0630000
+libahci 57344 1 ahci, Live 0xffffffffc062a000
+wmi 36864 4 mfd_aaeon,asus_wmi,wmi_bmof,video, Live 0xffffffffc0627000
+lp 32768 0 - Live 0xffffffffc0624000
+ppdev 24576 0 - Live 0xffffffffc0622000
+parport 81920 3 parport_pc,lp,ppdev, Live 0xffffffffc0619000
+msr 12288 0 - Live 0xffffffffc0615000
+dmi_sysfs 28672 0 - Live 0xffffffffc0616000
+autofs4 61440 2 - Live 0xffffffffc060f000
+aesni_intel 98304 0 - Live 0xffffffffc0600000
+MODINFO
+filename:       /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+license:        GPL
+author:         XRT Team <runtimeca39d@amd.com>
+description:    AMD XDMA driver
+srcversion:     8F61105E6B60B5A7A441D9A
+alias:          platform:xdma
+depends:        
+intree:         Y
+name:           xdma
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+sig_id:         PKCS#7
+signer:         Build time autogenerated kernel key
+sig_key:        25:84:45:71:EF:28:15:5F:FB:E8:A3:AE:5F:FD:86:B9:DC:66:18:CD
+sig_hashalgo:   sha512
+signature:      06:11:86:11:60:07:ED:6D:70:E2:D8:61:56:E1:87:77:5A:09:29:01:
+		88:55:DD:C0:46:01:27:36:6A:2A:A2:43:32:52:D2:A5:0D:58:F4:E6:
+		DC:1B:EF:B3:A9:40:D1:4B:E4:4F:AB:BD:08:81:41:8A:FF:C6:9F:1D:
+		12:8D:49:67:4B:97:2F:54:9D:28:1B:8A:BE:43:10:BE:7E:01:8A:A0:
+		5B:F9:46:7A:8A:E2:33:09:2A:F6:30:98:DA:72:A9:73:60:BB:43:74:
+		9B:D7:98:A7:72:5D:ED:FE:B2:A2:B8:0B:EE:86:11:BD:41:46:B2:8B:
+		11:73:6F:9E:48:18:38:0F:BA:39:CB:2F:B6:ED:D4:44:B4:59:71:72:
+		14:EC:E8:A5:0F:65:80:6E:1A:B7:4E:90:21:9F:06:93:36:AF:36:BD:
+		D4:E8:B6:B8:C9:00:DA:34:10:7E:F5:5E:97:A0:56:88:1D:7F:4A:46:
+		63:06:A2:D3:FF:BE:12:38:45:A5:4D:9D:3C:BB:EB:38:CE:08:98:AC:
+		34:5C:AF:92:DF:14:5F:6B:7F:2F:9C:35:D0:21:B2:90:C4:71:DB:DE:
+		4A:CB:3F:FC:9D:EB:E0:C0:01:01:7E:1D:9F:D8:AA:61:4D:37:2B:F5:
+		46:84:8F:D5:7E:86:92:11:ED:9B:C1:86:7A:85:98:82:E8:4F:FC:CE:
+		D3:DC:2B:7D:7A:B0:41:4E:75:E0:BB:FC:0B:AD:0D:CE:C4:2D:42:2F:
+		EE:1F:87:55:4B:1C:60:F9:D2:7A:AE:83:E0:31:3D:DD:84:DF:62:EB:
+		F5:C6:CE:5C:6A:74:97:28:A5:94:4F:A7:6B:78:7F:02:8A:0C:A4:99:
+		1D:D9:5A:D9:51:97:63:8A:79:4D:2A:18:F4:2F:0D:CB:07:E2:4A:D6:
+		E6:2A:CE:89:47:97:9D:F9:49:51:64:56:16:B4:5A:E1:0A:69:E6:A7:
+		58:6F:D6:FD:DE:A9:71:92:B1:2E:D2:67:C2:CF:97:3B:DB:CE:35:3D:
+		32:BC:28:4D:0D:7F:C1:BC:23:E9:6A:36:15:BF:BE:2E:51:9F:35:1A:
+		A3:69:8C:E9:CE:37:55:49:EB:CC:11:10:47:46:34:C3:97:2C:AD:01:
+		51:73:98:0D:71:3B:0C:DB:5B:73:74:8F:9C:7E:47:53:5E:5C:F3:ED:
+		BD:5C:DA:DA:27:9A:AF:B4:71:42:A7:F6:6C:47:27:6F:80:E2:0E:72:
+		46:59:46:0E:44:F6:DC:78:ED:90:89:C0:F6:32:7A:44:CC:B1:AC:12:
+		DF:FB:2C:A3:99:C5:2A:32:2E:65:69:08:9F:B7:71:48:5B:20:70:C2:
+		78:D2:0D:B6:AA:8E:9B:D9:A4:35:D7:8F
+/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+7.0.0-29-generic SMP preempt mod_unload modversions 
+Build time autogenerated kernel key
+8F61105E6B60B5A7A441D9A
+platform:xdma
+INVENTORY
+FILE=/home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko SIZE=3306800
+1aef06244df308fee544a2662b73855c81beb88bc929e7885d8d113e474b320a  /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+VERMAGIC=7.0.0-29-generic SMP preempt mod_unload modversions 
+NAME=xdma
+FILE=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/driver_src/XDMA/linux-kernel/xdma/xdma.ko SIZE=3306464
+734ab33f5bda4fa11b0237adc40bf3a2461f872eac4faf9b1bbae2586c08e0f9  /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/driver_src/XDMA/linux-kernel/xdma/xdma.ko
+VERMAGIC=7.0.0-14-generic SMP preempt mod_unload modversions 
+NAME=xdma
+FILE=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/evidence/xdma.ko SIZE=3306464
+734ab33f5bda4fa11b0237adc40bf3a2461f872eac4faf9b1bbae2586c08e0f9  /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/evidence/xdma.ko
+VERMAGIC=7.0.0-14-generic SMP preempt mod_unload modversions 
+NAME=xdma
+FILE=/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst SIZE=13827
+523ed1f77a4700773ef1df846a54592d7396774826acabbcb222e104cc5a9490  /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+VERMAGIC=7.0.0-29-generic SMP preempt mod_unload modversions 
+NAME=xdma
+NODES
+ls: cannot access '/dev/xdma*': No such file or directory
+UDEV
+P: /devices/pci0000:00/0000:00:01.1/0000:01:00.0
+M: 0000:01:00.0
+R: 0
+J: +pci:0000:01:00.0
+U: pci
+E: DEVPATH=/devices/pci0000:00/0000:00:01.1/0000:01:00.0
+E: PCI_CLASS=58000
+E: PCI_ID=10EE:7011
+E: PCI_SUBSYS_ID=10EE:0007
+E: PCI_SLOT_NAME=0000:01:00.0
+E: MODALIAS=pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00
+E: SUBSYSTEM=pci
+E: USEC_INITIALIZED=3907536
+E: ID_PCI_CLASS_FROM_DATABASE=Memory controller
+E: ID_PCI_SUBCLASS_FROM_DATABASE=Memory controller
+E: ID_VENDOR_FROM_DATABASE=Xilinx Corporation
+E: ID_MODEL_FROM_DATABASE=7-Series FPGA Hard PCIe block (AXI/debug)
+E: ID_PATH=pci-0000:01:00.0
+E: ID_PATH_TAG=pci-0000_01_00_0
+
+SERVICES
+CONFIG_REFS
+JOURNAL
+Aug 20 19:26:21 VCDE-DUT-1 kernel: secureboot: Secure boot disabled
+Aug 20 19:26:21 VCDE-DUT-1 kernel: secureboot: Secure boot disabled
+Aug 20 19:26:21 VCDE-DUT-1 kernel: ACPI: Early table checksum verification disabled
+Aug 20 19:26:21 VCDE-DUT-1 kernel: kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+Aug 20 19:26:21 VCDE-DUT-1 kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+Aug 20 19:26:21 VCDE-DUT-1 kernel: pci 0000:01:00.0: [10ee:7011] type 00 class 0x058000 PCIe Endpoint
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2017): 242ade75ac4a15e50d50c84b0d45ff3eae707a03'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (ESM 2018): 365188c1d374d6b07c3c8f240f8ef722433d6a8b'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2019): c0746fd6c5da3ae827864651ad66ae47fe24b3e8'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v1): a8d54bbb3825cfb94fa13c9f8a594a195c107b8d'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v2): 4cf046892d6fd3c9a5b03f98d845f90851dc6a8c'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v3): 100437bb6de6e469b581e61cd66bce3ef4ed53af'
+Aug 20 19:26:21 VCDE-DUT-1 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (Ubuntu Core 2019): c1d57b8f6b743f23ee41f4f7ee292f06eecadfb9'
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Starting dracut-pre-udev.service - dracut pre-udev hook...
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Finished dracut-pre-udev.service - dracut pre-udev hook.
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Starting systemd-udevd.service - Rule-based Manager for Device Events and Files...
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Started systemd-udevd.service - Rule-based Manager for Device Events and Files.
+Aug 20 19:26:21 VCDE-DUT-1 systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Listening on systemd-udevd-varlink.socket - udev Varlink Socket.
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: modprobe@configfs.service - Load Kernel Module configfs skipped, unmet condition check ConditionKernelModuleLoaded=!configfs
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: modprobe@drm.service - Load Kernel Module drm skipped, unmet condition check ConditionKernelModuleLoaded=!drm
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: modprobe@fuse.service - Load Kernel Module fuse skipped, unmet condition check ConditionKernelModuleLoaded=!fuse
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Starting systemd-udev-load-credentials.service - Load udev Rules from Credentials...
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+Aug 20 19:26:24 VCDE-DUT-1 systemd[1]: Finished systemd-udev-load-credentials.service - Load udev Rules from Credentials.
+DMESG
+[    0.000000] secureboot: Secure boot disabled
+[    0.002972] secureboot: Secure boot disabled
+[    0.002976] ACPI: Early table checksum verification disabled
+[    0.242027] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    0.289978] acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+[    0.293494] pci 0000:01:00.0: [10ee:7011] type 00 class 0x058000 PCIe Endpoint
+[    0.736709] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+[    0.736719] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2017): 242ade75ac4a15e50d50c84b0d45ff3eae707a03'
+[    0.736728] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (ESM 2018): 365188c1d374d6b07c3c8f240f8ef722433d6a8b'
+[    0.736740] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2019): c0746fd6c5da3ae827864651ad66ae47fe24b3e8'
+[    0.736750] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v1): a8d54bbb3825cfb94fa13c9f8a594a195c107b8d'
+[    0.736759] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v2): 4cf046892d6fd3c9a5b03f98d845f90851dc6a8c'
+[    0.736770] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v3): 100437bb6de6e469b581e61cd66bce3ef4ed53af'
+[    0.736780] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (Ubuntu Core 2019): c1d57b8f6b743f23ee41f4f7ee292f06eecadfb9'
+[    0.944942] systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[    0.944982] systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+[    0.973128] systemd[1]: Starting dracut-pre-udev.service - dracut pre-udev hook...
+[    0.983760] systemd[1]: Finished dracut-pre-udev.service - dracut pre-udev hook.
+[    0.984619] systemd[1]: Starting systemd-udevd.service - Rule-based Manager for Device Events and Files...
+[    1.010618] systemd[1]: Started systemd-udevd.service - Rule-based Manager for Device Events and Files.
+[    1.011165] systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+[    3.650645] systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[    3.650687] systemd[1]: Listening on systemd-udevd-varlink.socket - udev Varlink Socket.
+[    3.660487] systemd[1]: modprobe@configfs.service - Load Kernel Module configfs skipped, unmet condition check ConditionKernelModuleLoaded=!configfs
+[    3.660511] systemd[1]: modprobe@drm.service - Load Kernel Module drm skipped, unmet condition check ConditionKernelModuleLoaded=!drm
+[    3.661108] systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+[    3.661136] systemd[1]: modprobe@fuse.service - Load Kernel Module fuse skipped, unmet condition check ConditionKernelModuleLoaded=!fuse
+[    3.665146] systemd[1]: Starting systemd-udev-load-credentials.service - Load udev Rules from Credentials...
+[    3.665707] systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+[    3.675071] systemd[1]: Finished systemd-udev-load-credentials.service - Load udev Rules from Credentials.
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

@@ -1,0 +1,77 @@
+UTC_START=2026-08-20T18:33:24.4938717Z
+UTC_END=2026-08-20T18:33:25.6642715Z
+EVIDENCE_KIND=ACCEPTED_LOADER_CONTENT
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+7279e316a2d647826b8d5ec6bedf78a143b72d100b4008c7ac006c1b6653649f  /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+PATH=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh SIZE=1481 MODE=644
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 3 ]]; then
+  echo "usage: $0 XDMA_MODULE EXPECTED_SHA256 EVIDENCE_DIRECTORY" >&2
+  exit 2
+fi
+if [[ $(id -u) -ne 0 ]]; then
+  echo "driver load requires root" >&2
+  exit 2
+fi
+
+module=$1
+expected_sha=${2,,}
+evidence=$3
+mkdir -p "$evidence"
+
+actual_sha=$(sha256sum "$module" | awk '{print $1}')
+[[ $actual_sha == "$expected_sha" ]]
+
+mapfile -t endpoints < <(lspci -Dnn -d 10ee:7011)
+if [[ ${#endpoints[@]} -ne 1 ]]; then
+  printf 'XDMA_ENDPOINT_COUNT=%u\n' "${#endpoints[@]}" |
+    tee "$evidence/driver_load_gate.txt"
+  exit 1
+fi
+
+if lsmod | awk '{print $1}' | grep -qx xdma; then
+  echo 'PREEXISTING_XDMA_MODULE=YES' | tee "$evidence/driver_load_gate.txt"
+  exit 1
+fi
+
+dmesg_cursor=$(dmesg | wc -l)
+insmod "$module"
+udevadm settle --timeout=10
+
+lsmod | grep '^xdma ' | tee "$evidence/lsmod_xdma.txt"
+modinfo "$module" | tee "$evidence/modinfo_loaded_xdma.txt"
+find /dev -maxdepth 1 -type c -name 'xdma*' -printf '%f\n' | sort |
+  tee "$evidence/xdma_nodes.txt"
+dmesg | tail -n "+$((dmesg_cursor + 1))" |
+  tee "$evidence/xdma_driver_dmesg.txt"
+
+mapfile -t user_nodes < <(
+  find /dev -maxdepth 1 -type c -name 'xdma*_user' -print | sort
+)
+[[ ${#user_nodes[@]} -eq 1 ]]
+
+{
+  echo "XDMA_MODULE_SHA256=$actual_sha"
+  echo "XDMA_ENDPOINT_COUNT=1"
+  echo "XDMA_BDF=${endpoints[0]%% *}"
+  echo 'PREEXISTING_XDMA_MODULE=NO'
+  echo 'XDMA_DRIVER_LOAD=PASS'
+  echo "XDMA_USER_NODE=${user_nodes[0]}"
+} | tee "$evidence/driver_load_gate.txt"
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

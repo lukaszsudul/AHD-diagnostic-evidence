@@ -1,0 +1,183 @@
+UTC_START=2026-08-20T18:32:07.3846871Z
+UTC_END=2026-08-20T18:32:08.5768186Z
+EVIDENCE_KIND=PINNED_LOADER_AUDIT
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+PATH=/home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/tests/load_driver.sh SIZE=2546 MODE=775
+667fd30f526ebfd44d562d69afce583a8abd273344e88d1d258522169688395a  /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/tests/load_driver.sh
+#!/bin/bash
+# set -x
+
+display_help() {
+        echo "$0 [interrupt mode]"
+        echo "interrupt mode: optional"
+        echo "0: auto"
+        echo "1: MSI"
+        echo "2: Legacy"
+        echo "3: MSIx"
+        echo "4: do not use interrupt, poll mode only"
+        exit;
+}
+
+if [ "$1" == "help" ]; then
+        display_help
+fi;
+
+interrupt_selection=$1
+echo "interrupt_selection $interrupt_selection."
+device_id=903f
+
+# Make sure only root can run our script
+if [[ $EUID -ne 0 ]]; then
+	echo "This script must be run as root" 1>&2
+	exit 1
+fi
+
+# Remove the existing xdma kernel module
+lsmod | grep xdma
+if [ $? -eq 0 ]; then
+	rmmod xdma
+	if [ $? -ne 0 ]; then
+		echo "rmmod xdma failed: $?"
+		exit 1
+	fi
+fi
+
+# Use the following command to Load the driver in the default 
+# or interrupt drive mode. This will allow the driver to use 
+# interrupts to signal when DMA transfers are completed.
+echo -n "Loading driver..."
+case $interrupt_selection in
+	"0")
+		echo "insmod xdma.ko interrupt_mode=1 ..."
+		ret=`insmod ../xdma/xdma.ko interrupt_mode=0`
+		;;
+	"1")
+		echo "insmod xdma.ko interrupt_mode=2 ..."
+		ret=`insmod ../xdma/xdma.ko interrupt_mode=1`
+		;;
+	"2")
+		echo "insmod xdma.ko interrupt_mode=3 ..."
+		ret=`insmod ../xdma/xdma.ko interrupt_mode=2`
+		;;
+	"3")
+		echo "insmod xdma.ko interrupt_mode=4 ..."
+		ret=`insmod ../xdma/xdma.ko interrupt_mode=3`
+		;;
+	"4")
+		echo "insmod xdma.ko poll_mode=1 ..."
+		ret=`insmod ../xdma/xdma.ko poll_mode=1`
+		;;
+	*)
+		intp=`sudo lspci -d :${device_id} -v | grep -o -E "MSI-X"`
+		intp1=`sudo lspci -d :${device_id} -v | grep -o -E "MSI:"`
+	       	if [[ ( -n $intp ) && ( $intp == "MSI-X" ) ]]; then
+			echo "insmod xdma.ko interrupt_mode=0 ..."
+			ret=`insmod ../xdma/xdma.ko interrupt_mode=0`
+	       	elif [[ ( -n $intp1 ) && ( $intp1 == "MSI:" ) ]]; then
+			echo "insmod xdma.ko interrupt_mode=1 ..."
+			ret=`insmod ../xdma/xdma.ko interrupt_mode=1`
+		else
+			echo "insmod xdma.ko interrupt_mode=2 ..."
+			ret=`insmod ../xdma/xdma.ko interrupt_mode=2`
+		fi
+		;;
+esac
+
+if [ ! $ret == 0 ]; then
+	echo "Error: xdma driver did not load properly"
+	echo " FAILED"
+	exit 1
+fi
+
+# Check to see if the xdma devices were recognized
+echo ""
+cat /proc/devices | grep xdma > /dev/null
+returnVal=$?
+if [ $returnVal == 0 ]; then
+	# Installed devices were recognized.
+	echo "The Kernel module installed correctly and the xmda devices were recognized."
+else
+	# No devices were installed.
+	echo "Error: The Kernel module installed correctly, but no devices were recognized."
+	echo " FAILED"
+	exit 1
+fi
+
+echo "DONE"
+
+SOURCE_COMMIT=8721136e74a66500b02d16cb41922d966139cd46
+MODULE=1aef06244df308fee544a2662b73855c81beb88bc929e7885d8d113e474b320a  /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+xdma
+2025.2.0
+7.0.0-29-generic SMP preempt mod_unload modversions 
+pci:v00001D0Fd0000F001sv*sd*bc*sc*i*
+pci:v00001D0Fd0000F000sv*sd*bc*sc*i*
+pci:v000010EEd00002808sv*sd*bc*sc*i*
+pci:v000010EEd00004B28sv*sd*bc*sc*i*
+pci:v000010EEd00004A28sv*sd*bc*sc*i*
+pci:v000010EEd00004908sv*sd*bc*sc*i*
+pci:v000010EEd00004828sv*sd*bc*sc*i*
+pci:v000010EEd00004808sv*sd*bc*sc*i*
+pci:v000010EEd00006D30sv*sd*bc*sc*i*
+pci:v000010EEd00006A30sv*sd*bc*sc*i*
+pci:v000010EEd00006A28sv*sd*bc*sc*i*
+pci:v000010EEd00006930sv*sd*bc*sc*i*
+pci:v000010EEd00006928sv*sd*bc*sc*i*
+pci:v000010EEd00006830sv*sd*bc*sc*i*
+pci:v000010EEd00006828sv*sd*bc*sc*i*
+pci:v000010EEd00007038sv*sd*bc*sc*i*
+pci:v000010EEd00007034sv*sd*bc*sc*i*
+pci:v000010EEd00007032sv*sd*bc*sc*i*
+pci:v000010EEd00007031sv*sd*bc*sc*i*
+pci:v000010EEd00007028sv*sd*bc*sc*i*
+pci:v000010EEd00007024sv*sd*bc*sc*i*
+pci:v000010EEd00007022sv*sd*bc*sc*i*
+pci:v000010EEd00007021sv*sd*bc*sc*i*
+pci:v000010EEd00007018sv*sd*bc*sc*i*
+pci:v000010EEd00007014sv*sd*bc*sc*i*
+pci:v000010EEd00007012sv*sd*bc*sc*i*
+pci:v000010EEd00007011sv*sd*bc*sc*i*
+pci:v000010EEd00008038sv*sd*bc*sc*i*
+pci:v000010EEd00008034sv*sd*bc*sc*i*
+pci:v000010EEd00008032sv*sd*bc*sc*i*
+pci:v000010EEd00008031sv*sd*bc*sc*i*
+pci:v000010EEd00008028sv*sd*bc*sc*i*
+pci:v000010EEd00008024sv*sd*bc*sc*i*
+pci:v000010EEd00008022sv*sd*bc*sc*i*
+pci:v000010EEd00008021sv*sd*bc*sc*i*
+pci:v000010EEd00008018sv*sd*bc*sc*i*
+pci:v000010EEd00008014sv*sd*bc*sc*i*
+pci:v000010EEd00008012sv*sd*bc*sc*i*
+pci:v000010EEd00008011sv*sd*bc*sc*i*
+pci:v000010EEd00009011sv*sd*bc*sc*i*
+pci:v000010EEd00009021sv*sd*bc*sc*i*
+pci:v000010EEd00009031sv*sd*bc*sc*i*
+pci:v000010EEd00009012sv*sd*bc*sc*i*
+pci:v000010EEd00009022sv*sd*bc*sc*i*
+pci:v000010EEd00009032sv*sd*bc*sc*i*
+pci:v000010EEd00009014sv*sd*bc*sc*i*
+pci:v000010EEd00009024sv*sd*bc*sc*i*
+pci:v000010EEd00009034sv*sd*bc*sc*i*
+pci:v000010EEd00009018sv*sd*bc*sc*i*
+pci:v000010EEd00009028sv*sd*bc*sc*i*
+pci:v000010EEd00009038sv*sd*bc*sc*i*
+pci:v000010EEd0000903Fsv*sd*bc*sc*i*
+pci:v000010EEd00009041sv*sd*bc*sc*i*
+pci:v000010EEd00009042sv*sd*bc*sc*i*
+pci:v000010EEd00009044sv*sd*bc*sc*i*
+pci:v000010EEd00009048sv*sd*bc*sc*i*
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
