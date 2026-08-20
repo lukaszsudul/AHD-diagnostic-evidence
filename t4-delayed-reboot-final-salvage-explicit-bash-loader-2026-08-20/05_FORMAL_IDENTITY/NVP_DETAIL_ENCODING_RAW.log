@@ -1,0 +1,121 @@
+UTC_START=2026-08-20T19:39:30.0370954Z
+UTC_END=2026-08-20T19:39:31.1389970Z
+EVIDENCE_KIND=NVP_DETAIL_ENCODING
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_pcie.v:198:    .diag_detail(nvp_init_detail)
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:92:    .diag_detail(nvp_init_detail)
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:150:  logic [737:0] nvp_diag_axi = '0;
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:152:    nvp_diag_axi <= {nvp_init_detail, nvp_init_error, nvp_init_done};
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:268:    .nvp_init_busy(nvp_init_busy), .nvp_init_done(nvp_diag_axi[0]),
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:269:    .nvp_init_error(nvp_diag_axi[1]), .nvp_reset_released(nvp_rst),
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:272:    .nvp_detail(nvp_diag_axi[193:2]),
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:289:    .diag_nvp_autoinit_done(nvp_diag_axi[0]),
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:290:    .diag_nvp_autoinit_error(nvp_diag_axi[1]),
+/home/vcdeagent1/FPGA_AHD/rtl/top/ahd_capture_top_xdma.sv:291:    .diag_nvp_autoinit_detail(nvp_diag_axi[737:2]),
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:29:    diag_detail  : out std_logic_vector(735 downto 0)
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:145:    diag_detail <= d;
+AUTOINIT_PORTS
+29:    diag_detail  : out std_logic_vector(735 downto 0)
+53:  signal diag_original_ff       : std_logic_vector(7 downto 0);
+54:  signal diag_restored_ff       : std_logic_vector(7 downto 0);
+55:  signal diag_meta_bank         : std_logic_vector(7 downto 0);
+56:  signal diag_phys_bank         : std_logic_vector(7 downto 0);
+57:  signal diag_phys_bank_valid   : std_logic;
+65:  signal diag_phase             : std_logic_vector(7 downto 0);
+66:  signal diag_step              : std_logic_vector(7 downto 0);
+67:  signal diag_table_length      : std_logic_vector(15 downto 0);
+68:  signal diag_last_op           : std_logic_vector(2 downto 0);
+69:  signal diag_last_reg          : std_logic_vector(7 downto 0);
+70:  signal diag_last_wdata        : std_logic_vector(7 downto 0);
+71:  signal diag_last_rdata        : std_logic_vector(7 downto 0);
+72:  signal diag_last_ack          : std_logic;
+73:  signal diag_first_valid       : std_logic;
+74:  signal diag_first_code        : std_logic_vector(7 downto 0);
+75:  signal diag_first_step        : std_logic_vector(7 downto 0);
+76:  signal diag_first_meta_bank   : std_logic_vector(7 downto 0);
+77:  signal diag_first_phys_bank   : std_logic_vector(7 downto 0);
+78:  signal diag_first_reg         : std_logic_vector(7 downto 0);
+79:  signal diag_first_data        : std_logic_vector(7 downto 0);
+80:  signal diag_nack_count        : std_logic_vector(15 downto 0);
+81:  signal diag_nack_log_count    : std_logic_vector(3 downto 0);
+82:  signal diag_nack_log_overflow : std_logic;
+83:  signal diag_nack_log          : std_logic_vector(511 downto 0);
+84:  signal diag_timeout_count     : std_logic_vector(15 downto 0);
+85:  signal diag_i2c_state         : std_logic_vector(7 downto 0);
+101:  process(diag_phase, diag_step, diag_table_length, diag_last_op, diag_last_ack,
+102:          scl_i, sda_i, nvp_rst_i, diag_meta_bank, diag_phys_bank,
+103:          diag_phys_bank_valid, diag_original_ff, diag_restored_ff,
+104:          diag_first_phys_bank, diag_nack_log_count, diag_nack_log_overflow,
+105:          diag_nack_log, diag_last_reg,
+106:          diag_last_wdata, diag_last_rdata, diag_first_valid, diag_first_code,
+107:          diag_first_step, diag_first_meta_bank, diag_first_reg, diag_first_data,
+108:          diag_nack_count, diag_timeout_count, diag_i2c_state)
+112:    d(7 downto 0)     := diag_phase;
+113:    d(15 downto 8)    := diag_step;
+114:    d(31 downto 16)   := diag_table_length;
+115:    d(34 downto 32)   := diag_last_op;
+116:    d(35)             := diag_last_ack;
+122:    d(55 downto 48)   := diag_meta_bank;
+123:    d(63 downto 56)   := diag_last_reg;
+124:    d(71 downto 64)   := diag_last_wdata;
+125:    d(79 downto 72)   := diag_last_rdata;
+126:    d(80)             := diag_first_valid;
+127:    d(95 downto 88)   := diag_first_code;
+128:    d(103 downto 96)  := diag_first_step;
+129:    d(111 downto 104) := diag_first_meta_bank;
+130:    d(119 downto 112) := diag_first_reg;
+131:    d(127 downto 120) := diag_first_data;
+132:    d(143 downto 128) := diag_nack_count;
+133:    d(159 downto 144) := diag_timeout_count;
+134:    d(167 downto 160) := diag_i2c_state;
+135:    d(175 downto 168) := diag_original_ff;
+136:    d(183 downto 176) := diag_restored_ff;
+137:    d(191 downto 184) := diag_first_phys_bank;
+138:    d(195 downto 192) := diag_nack_log_count;
+139:    d(196)            := diag_nack_log_overflow;
+140:    d(197)            := diag_phys_bank_valid;
+141:    d(207 downto 200) := diag_meta_bank;
+142:    d(215 downto 208) := diag_phys_bank;
+144:    d(735 downto 224) := diag_nack_log;
+145:    diag_detail <= d;
+204:      original_ff      => diag_original_ff,
+205:      restored_ff      => diag_restored_ff,
+206:      meta_bank        => diag_meta_bank,
+207:      phys_bank        => diag_phys_bank,
+208:      phys_bank_valid  => diag_phys_bank_valid,
+216:      autoinit_fsm_dbg => diag_phase,
+217:      step_index_dbg   => diag_step,
+218:      table_length_dbg => diag_table_length,
+219:      last_op_dbg      => diag_last_op,
+220:      last_reg_dbg     => diag_last_reg,
+221:      last_wdata_dbg   => diag_last_wdata,
+222:      last_rdata_dbg   => diag_last_rdata,
+223:      last_ack_dbg     => diag_last_ack,
+224:      first_error_valid_dbg => diag_first_valid,
+225:      first_error_code_dbg  => diag_first_code,
+226:      first_error_step_dbg  => diag_first_step,
+227:      first_error_meta_bank_dbg => diag_first_meta_bank,
+228:      first_error_phys_bank_dbg => diag_first_phys_bank,
+229:      first_error_reg_dbg   => diag_first_reg,
+230:      first_error_data_dbg  => diag_first_data,
+231:      nack_count_dbg        => diag_nack_count,
+232:      nack_log_count_dbg    => diag_nack_log_count,
+233:      nack_log_overflow_dbg => diag_nack_log_overflow,
+234:      nack_log_dbg          => diag_nack_log,
+235:      timeout_count_dbg     => diag_timeout_count,
+236:      i2c_fsm_dbg           => diag_i2c_state
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

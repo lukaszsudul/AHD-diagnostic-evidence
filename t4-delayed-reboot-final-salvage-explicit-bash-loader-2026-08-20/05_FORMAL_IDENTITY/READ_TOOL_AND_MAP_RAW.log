@@ -1,0 +1,170 @@
+UTC_START=2026-08-20T19:38:13.4409900Z
+UTC_END=2026-08-20T19:38:14.5562551Z
+EVIDENCE_KIND=READ_TOOL_AND_REGISTER_MAP
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+808aa85670ccebd288de6ea7ee05bef303272a6e555273e763d75dc45b68351e  /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/xdma_axil_read
+868842808943594c2f41f086d40ef27cf781c7e6dac5504d6d0ebc52dda041d7  /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/xdma_axil_read.c
+#define _POSIX_C_SOURCE 200809L
+
+#include <errno.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+static int parse_u64(const char *text, uint64_t *value) {
+  char *end = NULL;
+  errno = 0;
+  unsigned long long parsed = strtoull(text, &end, 0);
+  if (errno != 0 || end == text || *end != '\0') return -1;
+  *value = (uint64_t)parsed;
+  return 0;
+}
+
+int main(int argc, char **argv) {
+  uint64_t offset, expected64;
+  uint32_t observed;
+  int fd;
+
+  if (argc != 4 || parse_u64(argv[2], &offset) != 0 ||
+      parse_u64(argv[3], &expected64) != 0 || (offset & 3u) != 0 ||
+      expected64 > UINT32_MAX) {
+    fprintf(stderr, "usage: %s /dev/xdmaN_user OFFSET EXPECTED_DWORD\n",
+            argv[0]);
+    return 2;
+  }
+
+  fd = open(argv[1], O_RDONLY | O_CLOEXEC);
+  if (fd < 0) {
+    fprintf(stderr, "open(%s): %s\n", argv[1], strerror(errno));
+    return 1;
+  }
+  if (pread(fd, &observed, sizeof observed, (off_t)offset) !=
+      (ssize_t)sizeof observed) {
+    fprintf(stderr, "pread(%s, 0x%" PRIx64 "): %s\n", argv[1], offset,
+            strerror(errno));
+    close(fd);
+    return 1;
+  }
+  close(fd);
+
+  printf("XDMA_USER_NODE=%s\n", argv[1]);
+  printf("AXI_LITE_OFFSET=0x%08" PRIX64 "\n", offset);
+  printf("AXI_LITE_OBSERVED=0x%08" PRIX32 "\n", observed);
+  printf("AXI_LITE_EXPECTED=0x%08" PRIX32 "\n", (uint32_t)expected64);
+  printf("AXI_LITE_READ_RESULT=%s\n",
+         observed == (uint32_t)expected64 ? "PASS" : "FAIL");
+  return observed == (uint32_t)expected64 ? 0 : 3;
+}
+REGISTER_MAP_SEARCH
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:62:    first_error_valid_dbg : out std_logic;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:63:    first_error_code_dbg  : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:64:    first_error_step_dbg  : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:65:    first_error_meta_bank_dbg : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:66:    first_error_phys_bank_dbg : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:67:    first_error_reg_dbg   : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:68:    first_error_data_dbg  : out std_logic_vector(7 downto 0);
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:169:  signal first_error_valid_r : std_logic := '0';
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:170:  signal first_error_code_r  : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:171:  signal first_error_step_r  : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:172:  signal first_error_meta_bank_r : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:173:  signal first_error_phys_bank_r : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:174:  signal first_error_reg_r   : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:175:  signal first_error_data_r  : std_logic_vector(7 downto 0) := (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:237:  first_error_valid_dbg <= first_error_valid_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:238:  first_error_code_dbg  <= first_error_code_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:239:  first_error_step_dbg  <= first_error_step_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:240:  first_error_meta_bank_dbg <= first_error_meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:241:  first_error_phys_bank_dbg <= first_error_phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:242:  first_error_reg_dbg   <= first_error_reg_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:243:  first_error_data_dbg  <= first_error_data_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:409:        first_error_valid_r <= '0';
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:410:        first_error_code_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:411:        first_error_step_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:412:        first_error_meta_bank_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:413:        first_error_phys_bank_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:414:        first_error_reg_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:415:        first_error_data_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:471:                first_error_valid_r <= '0';
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:472:                first_error_code_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:473:                first_error_step_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:474:                first_error_meta_bank_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:475:                first_error_phys_bank_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:476:                first_error_reg_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:477:                first_error_data_r <= (others => '0');
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:527:              if sda_filtered_r = '0' and first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:528:                first_error_valid_r <= '1';
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:529:                first_error_code_r <= x"06"; -- SDA_STUCK_LOW
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:530:                first_error_step_r <= std_logic_vector(to_unsigned(op_idx, 8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:531:                first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:532:                first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:533:                first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:534:                first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:732:                if first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:733:                  first_error_valid_r <= '1'; first_error_code_r <= x"01";
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:734:                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:735:                  first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:736:                  first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:737:                  first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:738:                  first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:770:                if first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:771:                  first_error_valid_r <= '1'; first_error_code_r <= x"02";
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:772:                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:773:                  first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:774:                  first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:775:                  first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:776:                  first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:812:                if first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:813:                  first_error_valid_r <= '1'; first_error_code_r <= x"03";
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:814:                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:815:                  first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:816:                  first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:817:                  first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:818:                  first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:870:                if first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:871:                  first_error_valid_r <= '1'; first_error_code_r <= x"04";
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:872:                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:873:                  first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:874:                  first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:875:                  first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:876:                  first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:921:                if first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:922:                  first_error_valid_r <= '1'; first_error_code_r <= x"07";
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:923:                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:924:                  first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:925:                  first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:926:                  first_error_reg_r <= reg_addr;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:927:                  first_error_data_r <= write_data;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:949:                       first_error_valid_r = '0' then
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:950:                      first_error_valid_r <= '1';
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:951:                      first_error_code_r <= x"08"; -- BANK_VERIFY_MISMATCH
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:952:                      first_error_step_r <= std_logic_vector(to_unsigned(op_idx, 8));
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:953:                      first_error_meta_bank_r <= meta_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:954:                      first_error_phys_bank_r <= phys_bank_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:955:                      first_error_reg_r <= C_V38EK_BANK_SELECT_REG;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_i2c_bringup.vhd:956:                      first_error_data_r <= bank_verify_expected_r;
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:224:      first_error_valid_dbg => diag_first_valid,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:225:      first_error_code_dbg  => diag_first_code,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:226:      first_error_step_dbg  => diag_first_step,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:227:      first_error_meta_bank_dbg => diag_first_meta_bank,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:228:      first_error_phys_bank_dbg => diag_first_phys_bank,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:229:      first_error_reg_dbg   => diag_first_reg,
+/home/vcdeagent1/FPGA_AHD/rtl/nvp/nvp6134c_autoinit.vhd:230:      first_error_data_dbg  => diag_first_data,
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

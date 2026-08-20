@@ -1,0 +1,225 @@
+UTC_START=2026-08-20T19:39:03.6441159Z
+UTC_END=2026-08-20T19:39:04.7745307Z
+EVIDENCE_KIND=CONTROL_STATUS_REGISTER_MAP
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+849dc315a243267941d196bc8039426f4c99893ddfbd9bd9f4e21ea5741c392f  /home/vcdeagent1/FPGA_AHD/rtl/v41/control_status_regs.sv
+`timescale 1ns/1ps
+
+// Phase-3 XDMA user AXI-Lite register plane. Requests in the first 256 bytes
+// are handled locally; the remainder of the 128 KiB aperture is forwarded to
+// the preserved v40 PIO/capture target for staged equivalence work.
+module v41_control_status_regs #(
+  parameter logic [31:0] BLOCK_ID = 32'hA40A0C07,
+  parameter logic [31:0] GIT_SHA_W0 = 32'h00000000,
+  parameter logic [31:0] GIT_SHA_W1 = 32'h00000000,
+  parameter logic [31:0] GIT_SHA_W2 = 32'h00000000,
+  parameter logic [31:0] GIT_SHA_W3 = 32'h00000000,
+  parameter logic [31:0] GIT_SHA_W4 = 32'h00000000,
+  parameter logic [31:0] BUILD_FLAGS = 32'h00000000
+) (
+  input  logic        clk,
+  input  logic        reset,
+
+  input  logic        host_req_valid,
+  output logic        host_req_ready,
+  input  logic        host_req_write,
+  input  logic [16:0] host_req_addr,
+  input  logic [31:0] host_req_wdata,
+  input  logic [3:0]  host_req_be,
+  output logic        host_rsp_valid,
+  input  logic        host_rsp_ready,
+  output logic [31:0] host_rsp_rdata,
+
+  output logic        app_req_valid,
+  input  logic        app_req_ready,
+  output logic        app_req_write,
+  output logic [16:0] app_req_addr,
+  output logic [31:0] app_req_wdata,
+  output logic [3:0]  app_req_be,
+  input  logic        app_rsp_valid,
+  output logic        app_rsp_ready,
+  input  logic [31:0] app_rsp_rdata,
+
+  input  logic        capture_request_busy,
+  input  logic        capture_busy,
+  input  logic        capture_armed,
+  input  logic        capture_done,
+  input  logic        capture_aborted,
+  input  logic [31:0] capture_generation,
+  input  logic [31:0] captured_line_count,
+  input  logic [31:0] first_source_line,
+  input  logic [31:0] frame_sequence,
+  input  logic [31:0] bad_marker_count,
+  input  logic [31:0] bad_length_count,
+  input  logic [31:0] capture_overflow_count,
+  input  logic [31:0] malformed_count,
+  input  logic [31:0] capture_dropped_count,
+  input  logic [31:0] arm_rejected_count,
+  input  logic [31:0] mailbox_rejected_count,
+
+  input  logic [31:0] vclk_edge_count,
+  input  logic [31:0] active_sav_count,
+  input  logic [31:0] record_commit_count,
+  input  logic        nvp_init_busy,
+  input  logic        nvp_init_done,
+  input  logic        nvp_init_error,
+  input  logic        nvp_reset_released,
+  input  logic        nvp_vdd1x_active,
+  input  logic        nvp_vdd3x_active,
+  input  logic        nvp_scl_sample,
+  input  logic        nvp_sda_sample,
+  input  logic [191:0] nvp_detail,
+
+  input  logic [31:0] dma_status,
+  input  logic [31:0] records_streamed,
+  input  logic [31:0] dropped_records,
+  input  logic [63:0] c2h_stall_cycles,
+  input  logic [31:0] last_streamed_capture_sequence,
+  input  logic [31:0] stream_protocol_errors,
+  input  logic [31:0] user_irq_count,
+  input  logic [31:0] h2c_attempt_count
+);
+  localparam logic [31:0] PROTOCOL = 32'h0000400B;
+  localparam logic [31:0] CAPABILITIES = 32'h00031002;
+  localparam logic [31:0] BUILD_ID_SCHEMA = 32'h00010000;
+  localparam logic [31:0] VIVADO_VERSION = 32'h07E90002;
+  localparam logic [31:0] VIVADO_SW_BUILD = 32'd6299465;
+  localparam logic [31:0] TRANSPORT_SIGNATURE = 32'h58444D41;
+
+  logic [31:0] scratch_rw;
+  logic        local_rsp_valid;
+  logic [31:0] local_rsp_rdata;
+  wire         local_select = (host_req_addr[16:8] == 9'b0);
+
+  function automatic [31:0] apply_be(
+    input [31:0] old_value, input [31:0] new_value, input [3:0] be);
+    integer byte_index;
+    begin
+      apply_be = old_value;
+      for (byte_index = 0; byte_index < 4; byte_index = byte_index + 1)
+        if (be[byte_index])
+          apply_be[byte_index*8 +: 8] = new_value[byte_index*8 +: 8];
+    end
+  endfunction
+
+  function automatic [31:0] local_read(input [7:0] offset);
+    begin
+      case (offset)
+        8'h00: local_read = BLOCK_ID;
+        8'h04: local_read = PROTOCOL;
+        8'h08: local_read = CAPABILITIES;
+        8'h0C: local_read = BUILD_ID_SCHEMA;
+        8'h10: local_read = GIT_SHA_W0;
+        8'h14: local_read = GIT_SHA_W1;
+        8'h18: local_read = GIT_SHA_W2;
+        8'h1C: local_read = GIT_SHA_W3;
+        8'h20: local_read = GIT_SHA_W4;
+        8'h24: local_read = VIVADO_VERSION;
+        8'h28: local_read = VIVADO_SW_BUILD;
+        8'h2C: local_read = BUILD_FLAGS;
+        8'h30: local_read = TRANSPORT_SIGNATURE;
+        8'h34: local_read = scratch_rw;
+
+        // Phase 3 exposes capture status and telemetry read-only. Capture
+        // commands/configuration remain reserved until the staged data-plane
+        // control integration; writes to 0x40..0x4C have no effect.
+        8'h40: local_read = 32'b0;
+        8'h44: local_read = 32'b0;
+        8'h48: local_read = 32'b0;
+        8'h4C: local_read = 32'b0;
+        8'h50: local_read = {27'b0, capture_request_busy, capture_aborted,
+                             capture_done, capture_armed, capture_busy};
+        8'h54: local_read = capture_generation;
+        8'h58: local_read = captured_line_count;
+        8'h5C: local_read = first_source_line;
+        8'h60: local_read = frame_sequence;
+        8'h64: local_read = bad_marker_count;
+        8'h68: local_read = bad_length_count;
+        8'h6C: local_read = capture_overflow_count;
+        8'h70: local_read = malformed_count;
+        8'h74: local_read = capture_dropped_count;
+        8'h78: local_read = arm_rejected_count;
+        8'h7C: local_read = mailbox_rejected_count;
+
+        8'h80: local_read = vclk_edge_count;
+        8'h84: local_read = active_sav_count;
+        8'h88: local_read = record_commit_count;
+        8'h8C: local_read = {24'b0, nvp_sda_sample, nvp_scl_sample,
+                             nvp_vdd3x_active, nvp_vdd1x_active,
+                             nvp_reset_released, nvp_init_busy,
+                             nvp_init_error, nvp_init_done};
+        8'h90: local_read = {16'b0, nvp_detail[143:128]};
+        8'h94: local_read = {16'b0, nvp_detail[159:144]};
+        8'h98: local_read = {nvp_detail[31:16], nvp_detail[7:0],
+                             nvp_detail[15:8]};
+        8'h9C: local_read = {nvp_detail[80], 7'b0, nvp_detail[95:88],
+                             nvp_detail[103:96], 8'b0};
+        8'hA0: local_read = nvp_detail[31:0];
+        8'hA4: local_read = nvp_detail[63:32];
+        8'hA8: local_read = nvp_detail[95:64];
+        8'hAC: local_read = nvp_detail[127:96];
+        8'hB0: local_read = nvp_detail[159:128];
+        8'hB4: local_read = nvp_detail[191:160];
+
+        8'hC0: local_read = dma_status;
+        8'hC4: local_read = records_streamed;
+        8'hC8: local_read = dropped_records;
+        8'hCC: local_read = c2h_stall_cycles[31:0];
+        8'hD0: local_read = c2h_stall_cycles[63:32];
+        8'hD4: local_read = last_streamed_capture_sequence;
+        8'hD8: local_read = stream_protocol_errors;
+        8'hDC: local_read = user_irq_count;
+        8'hE0: local_read = h2c_attempt_count;
+        default: local_read = 32'b0;
+      endcase
+    end
+  endfunction
+
+  assign app_req_valid = host_req_valid && !local_select;
+  assign app_req_write = host_req_write;
+  assign app_req_addr = host_req_addr;
+  assign app_req_wdata = host_req_wdata;
+  assign app_req_be = host_req_be;
+  assign host_req_ready = local_select ? !local_rsp_valid : app_req_ready;
+
+  assign host_rsp_valid = local_rsp_valid || app_rsp_valid;
+  assign host_rsp_rdata = local_rsp_valid ? local_rsp_rdata : app_rsp_rdata;
+  assign app_rsp_ready = host_rsp_ready && !local_rsp_valid;
+
+  always_ff @(posedge clk) begin
+    if (reset) begin
+      scratch_rw <= 32'b0;
+      local_rsp_valid <= 1'b0;
+      local_rsp_rdata <= 32'b0;
+    end else begin
+      if (local_rsp_valid && host_rsp_ready)
+        local_rsp_valid <= 1'b0;
+
+      if (host_req_valid && host_req_ready && local_select) begin
+        if (host_req_write) begin
+          if (host_req_addr[7:0] == 8'h34)
+            scratch_rw <= apply_be(scratch_rw, host_req_wdata, host_req_be);
+        end else begin
+          local_rsp_rdata <= host_req_addr[1:0] == 2'b00
+                           ? local_read(host_req_addr[7:0]) : 32'b0;
+          local_rsp_valid <= 1'b1;
+        end
+      end
+    end
+  end
+endmodule
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
