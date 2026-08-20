@@ -1,0 +1,166 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 20 14:50:31 2026
+# Process ID         : 2648
+# Current directory  : C:/FPGA/T1_RCA_PUTTY_CONTROL_20260820/05_RUN_01
+# Command line       : vivado.exe -mode batch -log RUN_01_PROGRAM.log -journal RUN_01_PROGRAM.jou -source C:\FPGA\V41_P2_SOURCE_R1\scripts\v40_1_0_program_sram_once.tcl -tclargs C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V40_1_0_NVP_PATCH\V40_1_0_FINAL_ACCEPTANCE_R2\BUILD\ARTIFACTS\ahd_capture_v40_1_0_RC_A.bit T1_CONTEXTUAL_RUN_01
+# Log file           : C:/FPGA/T1_RCA_PUTTY_CONTROL_20260820/05_RUN_01/RUN_01_PROGRAM.log
+# Journal file       : C:/FPGA/T1_RCA_PUTTY_CONTROL_20260820/05_RUN_01\RUN_01_PROGRAM.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4831 MB
+# Total Virtual      : 21860 MB
+# Available Virtual  : 8866 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_P2_SOURCE_R1\scripts\v40_1_0_program_sram_once.tcl}
+# set intended_target {localhost:3121/xilinx_tcf/Digilent/210241768436}
+# set expected_part {xc7a35t}
+# set expected_idcode {0362D093}
+# if {[llength $argv] != 2} {
+#     puts stderr {usage: v40_1_0_program_sram_once.tcl BIT_FILE RUN_LABEL}
+#     exit 64
+# }
+# set bit_file [file normalize [lindex $argv 0]]
+# set run_label [lindex $argv 1]
+# proc emit {key value} { puts "$key=$value" }
+# proc normalized_idcode {dev} {
+#     if {[lsearch -exact [list_property $dev] IDCODE_HEX] >= 0} {
+#         return [string toupper [get_property IDCODE_HEX $dev]]
+#     }
+#     set raw [get_property IDCODE $dev]
+#     if {[string match -nocase 0x* $raw]} {
+#         return [string toupper [string range $raw 2 end]]
+#     }
+#     if {[string is integer -strict $raw]} { return [format %08X $raw] }
+#     return [string toupper $raw]
+# }
+# proc cleanup_hw {} {
+#     catch {close_hw_target}
+#     catch {disconnect_hw_server}
+#     catch {close_hw_manager}
+# }
+# emit PHASE V40_1_0_CONTROLLED_SRAM_PROGRAM_ONCE
+PHASE=V40_1_0_CONTROLLED_SRAM_PROGRAM_ONCE
+# emit RUN_LABEL $run_label
+RUN_LABEL=T1_CONTEXTUAL_RUN_01
+# emit UTC [clock format [clock seconds] -gmt true -format {%Y-%m-%dT%H:%M:%SZ}]
+UTC=2026-08-20T12:51:19Z
+# emit BIT_FILE $bit_file
+BIT_FILE=C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807/V40_1_0_NVP_PATCH/V40_1_0_FINAL_ACCEPTANCE_R2/BUILD/ARTIFACTS/ahd_capture_v40_1_0_RC_A.bit
+# emit TARGET $intended_target
+TARGET=localhost:3121/xilinx_tcf/Digilent/210241768436
+# emit FLASH_OPERATIONS_THIS_SCRIPT 0
+FLASH_OPERATIONS_THIS_SCRIPT=0
+# emit CFGMEM_OPERATIONS_THIS_SCRIPT 0
+CFGMEM_OPERATIONS_THIS_SCRIPT=0
+# emit PROGRAM_B_MANIPULATIONS_THIS_SCRIPT 0
+PROGRAM_B_MANIPULATIONS_THIS_SCRIPT=0
+# set rc 0
+# if {[catch {
+#     if {![file isfile $bit_file]} { error "Bitstream not found: $bit_file" }
+#     open_hw_manager
+#     connect_hw_server
+#     set targets [get_hw_targets -quiet $intended_target]
+#     if {[llength $targets] != 1} {
+#         error "Expected one exact HS2 target; found [llength $targets]"
+#     }
+#     set target [lindex $targets 0]
+#     current_hw_target $target
+#     open_hw_target
+# 
+#     set devices [get_hw_devices -quiet]
+#     emit PREPROGRAM_DEVICE_COUNT [llength $devices]
+#     set matches {}
+#     foreach dev $devices {
+#         set part [get_property PART $dev]
+#         set idcode [normalized_idcode $dev]
+#         emit PREPROGRAM_DEVICE_PART $part
+#         emit PREPROGRAM_DEVICE_IDCODE $idcode
+#         if {[string equal -nocase $part $expected_part] &&
+#             [string equal -nocase $idcode $expected_idcode]} {
+#             lappend matches $dev
+#         }
+#     }
+#     if {[llength $matches] != 1} {
+#         error "Exact A35T/IDCODE match count is [llength $matches]"
+#     }
+#     set dev [lindex $matches 0]
+#     current_hw_device $dev
+# 
+#     # This is deliberately the PM1-proven historical order: no pre-program
+#     # refresh and no pre-program DONE property read.
+#     set_property PROGRAM.FILE $bit_file $dev
+#     emit PROGRAM_HW_DEVICES_INVOCATIONS 1
+#     program_hw_devices $dev
+#     refresh_hw_device $dev
+# 
+#     set post_part [get_property PART $dev]
+#     set post_idcode [normalized_idcode $dev]
+#     set post_done [get_property REGISTER.IR.BIT5_DONE $dev]
+#     emit POSTPROGRAM_FPGA_PART $post_part
+#     emit POSTPROGRAM_FPGA_IDCODE $post_idcode
+#     emit POSTPROGRAM_FPGA_DONE $post_done
+#     if {[lsearch -exact [list_property $dev] REGISTER.CONFIG_STATUS] >= 0} {
+#         emit POSTPROGRAM_CONFIG_STATUS [get_property REGISTER.CONFIG_STATUS $dev]
+#     } else {
+#         emit POSTPROGRAM_CONFIG_STATUS UNAVAILABLE
+#     }
+#     if {![string equal -nocase $post_part $expected_part]} {
+#         error "Post-program part mismatch: $post_part"
+#     }
+#     if {![string equal -nocase $post_idcode $expected_idcode]} {
+#         error "Post-program IDCODE mismatch: $post_idcode"
+#     }
+#     if {$post_done ne "1"} { error "Post-program DONE is not 1: $post_done" }
+#     emit PROGRAM_RESULT PASS
+#     emit FPGA_SRAM_PROGRAMS_THIS_SCRIPT 1
+# } err opts]} {
+#     emit ERROR $err
+#     emit ERROR_OPTIONS $opts
+#     emit PROGRAM_RESULT FAIL
+#     emit FPGA_SRAM_PROGRAMS_THIS_SCRIPT 1
+#     set rc 1
+# }
+open_hw_manager: Time (s): cpu = 00:00:53 ; elapsed = 00:01:07 . Memory (MB): peak = 541.906 ; gain = 225.230
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:30 . Memory (MB): peak = 546.867 ; gain = 4.961
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+PREPROGRAM_DEVICE_COUNT=1
+PREPROGRAM_DEVICE_PART=xc7a35t
+PREPROGRAM_DEVICE_IDCODE=0362D093
+PROGRAM_HW_DEVICES_INVOCATIONS=1
+INFO: [Labtools 27-3164] End of startup status: HIGH
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+POSTPROGRAM_FPGA_PART=xc7a35t
+POSTPROGRAM_FPGA_IDCODE=0362D093
+POSTPROGRAM_FPGA_DONE=1
+POSTPROGRAM_CONFIG_STATUS=01010000000100000111100111111100
+PROGRAM_RESULT=PASS
+FPGA_SRAM_PROGRAMS_THIS_SCRIPT=1
+# cleanup_hw
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+# exit $rc
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 20 14:53:08 2026...
