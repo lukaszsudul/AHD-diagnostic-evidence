@@ -1,0 +1,21 @@
+item,side,x_mm,y_mm,detail
+U4_center,Top,146.550,127.900,FPGA package center
+U4.T17,Top,151.750,121.900,NVP_SCL BGA pad
+U4.T18,Top,151.750,121.100,NVP_SDA BGA pad
+U6_center,Top,132.200,107.075,NVP6134C package center
+U6.64,Top,133.400,102.6375,NVP_SCL QFN pad
+U6.63,Top,133.800,102.6375,NVP_SDA QFN pad
+R20_center,Top,134.625,100.275,4k7 SCL pull-up
+R20.1,Top,134.625,100.760,NVP_SCL accessible 0402 pad
+R20.2,Top,134.625,99.790,Vcco accessible 0402 pad
+R21_center,Bottom,134.275,102.575,4k7 SDA pull-up
+R21.2,Bottom,133.790,102.575,NVP_SDA accessible 0402 pad
+R21.1,Bottom,134.760,102.575,Vcco accessible 0402 pad
+NVP_SDA_via,Through,133.800,103.525,0.48-mm via / 0.25-mm drill; only I2C via
+nearest_local_GND_via,Through,135.100,103.750,0.60-mm via / 0.30-mm drill; 1.44 mm from R21 center
+J2_center,Top/Through,157.075,135.100,1x6 JTAG header
+J2.1,Through,157.075,135.100,Vcco rail access
+J2.2,Through,157.075,133.830,GND reference access
+J2.6,Through,157.075,128.750,TMS end of header
+U1_center,Top,121.350,117.400,TPS22919DCK Vcco load switch
+TP1,SCHEMATIC_ONLY,NOT_PRESENT,NOT_PRESENT,3.3-V test point exists in schematic/netlist but no TP1 footprint occurs in PCB file
