@@ -1,0 +1,24 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 20 18:24:52 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/t4_retention/xsim_script.tcl
+# xsim {t4_retention} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS_PAUSE_RETENTION before_physical_reset_release
+PASS_PAUSE_RETENTION after_reset_before_start_model_point
+PASS_PAUSE_RETENTION address_byte_model_point
+PASS_PAUSE_RETENTION ack_preparation_model_point
+PASS_PAUSE_RETENTION register_byte_model_point
+PASS_PAUSE_RETENTION between_transactions_model_point
+PASS_INTEGRATION_RESET_INDEPENDENCE_MODEL
+HYPOTHETICAL_NOT_PROVEN_CLOCK_PAUSE_LIFECYCLE
+$finish called at time : 7432 ns : File "C:/FPGA/T4_RCA_V41_RESET_CLOCK_AUDIT_20260820/07_SIMULATION/tb_clock_reset_retention.sv" Line 61
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 20 18:24:56 2026...

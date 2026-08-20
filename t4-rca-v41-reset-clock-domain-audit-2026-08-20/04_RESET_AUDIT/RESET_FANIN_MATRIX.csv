@@ -1,0 +1,8 @@
+image,state_or_output,direct_reset_or_initializer,PCIe_reset_reaches_state,conclusion
+RC-A,nvp_por_count/por_reset,configuration initialization only,NO,independent in RTL
+RC-A,delay_count/started/I2C FSM,nvp_por_reset,NO,user_reset absent
+RC-A,nvp_rst pin,nvp_por_reset then autoinit sequencing,NO,user_reset absent
+v41,nvp_por_count/por_reset,configuration initialization only,NO,independent in RTL
+v41,delay_count/started/I2C FSM,nvp_por_reset,NO,axi_aresetn absent
+v41,nvp_rst pin,nvp_por_reset then autoinit sequencing,NO,axi_aresetn absent
+v41,AXI/control telemetry,not axi_aresetn,YES,control plane only

@@ -1,0 +1,3 @@
+# Program-to-reboot timeline analysis
+
+Exact DONE/EOS-to-reboot timestamps were not retained, so overlap cannot be classified for either image. RC-A pre-program log timestamps precede reboot commands by about 145.090 s, 100.157 s and 103.769 s, which proves only that the recorded program invocation began long before reboot; it does not establish DONE time. v41 evidence lacks comparable exact reboot-command timestamps. Therefore PROGRAM_TO_REBOOT_TIMING_DIFFERENCE=NOT_PROVEN_TIMESTAMPS_INCOMPLETE, and no timing-only conclusion is permitted. The data also cannot distinguish reboot timing from a clock/reset lifecycle difference.

@@ -1,0 +1,467 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 20 18:13:38 2026
+# Process ID         : 21848
+# Current directory  : C:/FPGA/T4_RCA_V41_RESET_CLOCK_AUDIT_20260820/05_IMPLEMENTED_CHECKPOINT_AUDIT
+# Command line       : vivado.exe -mode batch -notrace -log C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\V41_REFERENCE_VIVADO.log -journal C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\V41_REFERENCE_VIVADO.jou -source C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\audit_checkpoint.tcl -tclargs C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V41_V40_1_0_RESUME\EVIDENCE\PHASE_1\PHASE1B_R2\PHASE1B_routed.dcp C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\V41_REFERENCE
+# Log file           : C:/FPGA/T4_RCA_V41_RESET_CLOCK_AUDIT_20260820/05_IMPLEMENTED_CHECKPOINT_AUDIT/V41_REFERENCE_VIVADO.log
+# Journal file       : C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\V41_REFERENCE_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4831 MB
+# Total Virtual      : 21860 MB
+# Available Virtual  : 8130 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\T4_RCA_V41_RESET_CLOCK_AUDIT_20260820\05_IMPLEMENTED_CHECKPOINT_AUDIT\audit_checkpoint.tcl} -notrace
+Command: open_checkpoint {C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807/V41_V40_1_0_RESUME/EVIDENCE/PHASE_1/PHASE1B_R2/PHASE1B_routed.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.155 . Memory (MB): peak = 332.367 ; gain = 5.668
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 791.777 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1296 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 2 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.323 . Memory (MB): peak = 928.426 ; gain = 8.211
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.131 . Memory (MB): peak = 1549.496 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1549.496 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1549.496 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1549.496 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1549.496 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.886 . Memory (MB): peak = 1565.090 ; gain = 15.594
+Read Physdb Files: Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1565.090 ; gain = 15.594
+Restored from archive | CPU: 5.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1565.090 ; gain = 15.594
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1585.691 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 288 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 10 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 250 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 18 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:01:23 ; elapsed = 00:02:23 . Memory (MB): peak = 1591.430 ; gain = 1273.176
+report_clock_networks: Time (s): cpu = 00:00:38 ; elapsed = 00:00:24 . Memory (MB): peak = 1646.648 ; gain = 55.219
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-164] This design has multiple clocks. Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  string       true       
+DIFF_PAIR_TYPE                  enum         true       
+DIFF_TERM                       bool         false      0
+DIRECTION                       enum         false      OUT
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+DRIVE                           enum         false      12
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      
+INTERFACE                       string       false      
+IN_TERM                         enum         false      NONE
+IOB                             enum         false      
+IOBANK                          int          true       14
+IOSTANDARD                      enum         false      LVCMOS33
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       0
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IOB_X0Y21
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      nvp_rst
+OFFCHIP_TERM                    string       false      FP_VTT_50
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      R17
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+PULLTYPE                        string       false      
+SETUP_SLACK                     double       true       needs timing update***
+SLEW                            enum         false      SLOW
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+USE_INTERNAL_VREF               enum         false      
+VCCAUX_IO                       enum         false      
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  string       true       
+DIFF_PAIR_TYPE                  enum         true       
+DIFF_TERM                       bool         false      0
+DIRECTION                       enum         false      INOUT
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+DQS_BIAS                        enum         false      
+DRIVE                           enum         false      12
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      1
+INTERFACE                       interface    false      CLK.SYS_CLK_5542
+IN_TERM                         enum         false      NONE
+IOB                             enum         false      
+IOBANK                          int          true       14
+IOSTANDARD                      enum         false      LVCMOS33
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       0
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IOB_X0Y18
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      nvp_scl
+OFFCHIP_TERM                    string       false      FP_VTT_50
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      T17
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+PULLTYPE                        string       false      
+SETUP_SLACK                     double       true       needs timing update***
+SLEW                            enum         false      SLOW
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+USE_INTERNAL_VREF               enum         false      
+VCCAUX_IO                       enum         false      
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      CLK
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  string       true       
+DIFF_PAIR_TYPE                  enum         true       
+DIFF_TERM                       bool         false      0
+DIRECTION                       enum         false      INOUT
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+DQS_BIAS                        enum         false      
+DRIVE                           enum         false      12
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      1
+INTERFACE                       interface    false      CLK.SYS_CLK_5542
+IN_TERM                         enum         false      NONE
+IOB                             enum         false      
+IOBANK                          int          true       14
+IOSTANDARD                      enum         false      LVCMOS33
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       0
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IOB_X0Y19
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      nvp_sda
+OFFCHIP_TERM                    string       false      FP_VTT_50
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      T18
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+PULLTYPE                        string       false      
+SETUP_SLACK                     double       true       needs timing update***
+SLEW                            enum         false      SLOW
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+USE_INTERNAL_VREF               enum         false      
+VCCAUX_IO                       enum         false      
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      CLK
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  string       true       
+DIFF_PAIR_TYPE                  enum         true       
+DIFF_TERM                       bool         false      0
+DIRECTION                       enum         false      IN
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+DQS_BIAS                        enum         false      
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      1
+INTERFACE                       interface    false      RST.sys_rst_n_5542
+IN_TERM                         enum         false      NONE
+IOB                             enum         false      
+IOBANK                          int          true       15
+IOSTANDARD                      enum         false      LVCMOS33
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       0
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IOB_X0Y97
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      sys_rst_n
+OFFCHIP_TERM                    string       false      NONE
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      C8
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+PULLTYPE                        string       false      PULLUP
+SETUP_SLACK                     double       true       needs timing update***
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+USE_INTERNAL_VREF               enum         false      
+VCCAUX_IO                       enum         false      
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      RST
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  port         true       sys_clk_n
+DIFF_PAIR_TYPE                  enum         true       P
+DIFF_TERM                       bool         false      
+DIRECTION                       enum         false      IN
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      
+INTERFACE                       interface    false      CLK.SYS_CLK_5542
+IN_TERM                         enum         false      
+IOB                             enum         false      
+IOBANK                          int          true       
+IOSTANDARD                      enum         false      
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       1
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IPAD_X1Y14
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      sys_clk_p
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      D6
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+SETUP_SLACK                     double       true       needs timing update***
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      CLK
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+Property                        Type         Read-only  Value
+BOARD_PART_PIN                  string       false      
+BUFFER_TYPE                     enum         false      
+BUS_DIRECTION                   enum         true       
+BUS_NAME                        string       true       
+BUS_START                       int          true       
+BUS_STOP                        int          true       
+BUS_WIDTH                       int          true       
+CLASS                           string       true       port
+CLOCK_BUFFER_TYPE               enum         false      
+DCI_CAL_DISABLE                 bool         false      
+DC_BIAS                         enum         false      
+DELAY_VALUE_XPHY                int          false      
+DIFF_PAIR_PORT                  port         true       sys_clk_p
+DIFF_PAIR_TYPE                  enum         true       N
+DIFF_TERM                       bool         false      
+DIRECTION                       enum         false      IN
+DIRECT_ENABLE                   bool         false      
+DIRECT_RESET                    bool         false      
+ESSENTIAL_CLASSIFICATION_VALUE  int          false      
+EXTRACT_ENABLE                  bool         false      
+EXTRACT_RESET                   bool         false      
+GATED_CLOCK                     bool         false      
+HD.ASSIGNED_PPLOCS              string*      true       
+HD.CLK_SRC                      string       false      
+HD.PARTPIN_LOCS                 string*      false      
+HD.PARTPIN_RANGE                string*      false      
+HD.PARTPIN_TIEOFF               bool         false      
+HD.TANDEM                       int          false      
+HOLD_SLACK                      double       true       needs timing update***
+IBUF_LOW_PWR                    bool         false      
+INTERFACE                       interface    false      CLK.SYS_CLK_5542
+IN_TERM                         enum         false      
+IOB                             enum         false      
+IOBANK                          int          true       
+IOSTANDARD                      enum         false      
+IO_BUFFER_TYPE                  enum         false      
+IS_GT_TERM                      bool         true       1
+IS_LOC_FIXED                    bool         false      1
+IS_REUSED                       bool         true       0
+KEEP_PRSHELL_DISCONNECT         bool         true       
+LOAD                            double       false      
+LOC                             site         false      IPAD_X1Y15
+LOGIC_VALUE                     string       true       needs timing update***
+NAME                            string       false      sys_clk_n
+OUT_TERM                        enum         false      
+PACKAGE_PIN                     package_pin  false      D5
+PARTITION_ID                    int          true       0
+PCB_MAX_DELAY                   double       false      
+PCB_MIN_DELAY                   double       false      
+PIO_DIRECTION                   enum         false      
+SETUP_SLACK                     double       true       needs timing update***
+SOURCE_SYNC_IO_GROUP            string       false      
+SOURCE_SYNC_IO_TYPE             enum         false      
+UNAVAILABLE_DURING_CALIBRATION  bool         false      
+UNCONNECTED                     bool         true       0
+VOH                             string       false      
+X_IFC_LOGICAL_NAME              string       false      CLK
+X_INTERFACE_INFO                string       false      
+X_INTERFACE_MODE                string       false      
+X_INTERFACE_PARAMETER           string       false      
+keep                            string       false      
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 20 18:17:26 2026...
