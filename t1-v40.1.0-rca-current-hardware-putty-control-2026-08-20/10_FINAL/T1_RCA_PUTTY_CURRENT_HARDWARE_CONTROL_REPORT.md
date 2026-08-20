@@ -1,0 +1,174 @@
+# T1 RC-A PuTTY current-hardware control report
+
+## Outcome
+
+The verified official portable Plink 0.84 was not started. A pre-launch,
+in-memory comparison proved that the password value collides exactly with a
+required Plink process argument. The absolute secret-handling policy therefore
+required a stop before password authentication, sudo, formal-state checks,
+JTAG, FPGA programming, reboot, or scientific sampling.
+
+No T1 scientific inference is made.
+
+## Required final block
+
+    TASK=
+        PUTTY_PLINK_084_PREFLIGHT_AND_T1_RCA_3RUN_CONTROL
+
+    CREDENTIAL_FILE=
+        C:\FPGA\VCDE-DUT-1.txt
+
+    PLINK_SOURCE=
+        OFFICIAL_PORTABLE_0_84
+
+    PLINK_PATH=
+        C:\FPGA\T1_RCA_PUTTY_CONTROL_20260820\00_PUTTY\putty-0.84-w64\plink.exe
+    PLINK_VERSION=
+        Release 0.84
+    PLINK_SHA256=
+        E5621FFE4879F0EC39ED40F688DB9399C2D43054D41EF14472FA335C4693B915
+    PLINK_PWFILE_SUPPORTED=
+        YES
+
+    PASSWORD_AUTH_3_OF_3=
+        NOT_RUN
+    HOST_KEY_FINGERPRINT_MATCH=
+        NOT_TESTED_NO_PLINK_CONNECTION
+    SUDO_AUTH_TRUE=
+        NOT_RUN
+    SUDO_REBOOT_PERMISSION=
+        NOT_RUN
+
+    PREFLIGHT_REBOOT_EXECUTED=
+        NO
+
+    SSH_PREFLIGHT_CLASSIFICATION=
+        FAIL_SECRET_HANDLING_GATE
+
+    RC_A_BIT_SHA256=
+        A43B9280FACFF259F126B0E4FDD56E39C3D136321696EBFC98B79184A747B3B6
+
+    RC_A_SOURCE_COMMIT=
+        55ce0df41552bb74e0923f89eff43977b040f2e5
+
+    T1_VALID_RUNS=
+        0
+    T1_PASS_COUNT=
+        0
+    T1_FAIL_COUNT=
+        0
+    T1_INVALID_COUNT=
+        0
+
+    RUN_01_RESULT=
+        NOT_RUN
+    RUN_01_NACK_COUNT=
+        NOT_COLLECTED
+    RUN_01_FIRST_ERROR=
+        NOT_COLLECTED
+    RUN_01_VCLK_DELTA=
+        NOT_COLLECTED
+    RUN_01_SAV_DELTA=
+        NOT_COLLECTED
+    RUN_01_FRAME_DELTA=
+        NOT_COLLECTED
+
+    RUN_02_RESULT=
+        NOT_RUN
+    RUN_02_NACK_COUNT=
+        NOT_COLLECTED
+    RUN_02_FIRST_ERROR=
+        NOT_COLLECTED
+    RUN_02_VCLK_DELTA=
+        NOT_COLLECTED
+    RUN_02_SAV_DELTA=
+        NOT_COLLECTED
+    RUN_02_FRAME_DELTA=
+        NOT_COLLECTED
+
+    RUN_03_RESULT=
+        NOT_RUN
+    RUN_03_NACK_COUNT=
+        NOT_COLLECTED
+    RUN_03_FIRST_ERROR=
+        NOT_COLLECTED
+    RUN_03_VCLK_DELTA=
+        NOT_COLLECTED
+    RUN_03_SAV_DELTA=
+        NOT_COLLECTED
+    RUN_03_FRAME_DELTA=
+        NOT_COLLECTED
+
+    T1_CLASSIFICATION=
+        INCONCLUSIVE_INFRASTRUCTURE
+    FAILURE_ISOLATED_TO_V41=
+        NO_SCIENTIFIC_INFERENCE
+    CHANGED_HARDWARE_OR_ELECTRICAL_MARGIN=
+        NO_SCIENTIFIC_INFERENCE
+    NEXT_RECOMMENDED_ACTION=
+        OWNER_AUTHORIZED_NONCOLLIDING_AUTHENTICATION_CHANNEL
+
+    RC_A_PROGRAM_INVOCATIONS=
+        0
+    RC_A_WARM_REBOOTS=
+        0
+
+    FORMAL_RESTORE_PROGRAM_INVOCATIONS=
+        0
+    FORMAL_RESTORE_EOS=
+        NOT_RUN
+    FORMAL_RESTORE_DONE=
+        NOT_RUN
+    FORMAL_RESTORE_WARM_REBOOT=
+        0
+
+    FORMAL_PHASE2_ACTIVE_AT_END=
+        NOT_REVERIFIED_NO_HARDWARE_ACTION
+    FORMAL_IDENTITY_AT_END=
+        NOT_READ
+    DIAGNOSTIC_MAGIC_AT_END=
+        NOT_READ
+    FINAL_JTAG_DONE=
+        NOT_READ
+
+    TEMP_PASSWORD_FILES_REMAINING=
+        0
+
+    ORIGINAL_CREDENTIAL_FILE_MODIFIED=
+        NO
+
+    SECRET_LEAK_SCAN=
+        PASS
+
+    PASSWORD_IN_PROCESS_ARGUMENTS=
+        NO
+
+    FORMAL_REPOSITORY_MUTATION=
+        0
+
+    AXI_LITE_WRITES=
+        0
+
+    C2H_TRANSFERS=
+        0
+
+    H2C_TRANSFERS=
+        0
+
+    COLD_STARTS=
+        0
+
+    PHYSICAL_ACTIONS=
+        0
+
+    SOURCE_CHANGES=
+        0
+
+    BUILDS=
+        0
+
+    PHASE3_RESUMED=
+        NO
+
+    PHASE4_STARTED=
+        NO
