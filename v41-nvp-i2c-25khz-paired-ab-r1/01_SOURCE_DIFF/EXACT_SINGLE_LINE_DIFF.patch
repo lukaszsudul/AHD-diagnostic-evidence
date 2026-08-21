@@ -1,0 +1,12 @@
+diff --git a/rtl/top/ahd_capture_top_xdma.sv b/rtl/top/ahd_capture_top_xdma.sv
+--- a/rtl/top/ahd_capture_top_xdma.sv
++++ b/rtl/top/ahd_capture_top_xdma.sv
+@@ -80,7 +80,7 @@ module ahd_capture_top_xdma #(
+   );
+ 
+   v40a_nvp_autoinit #(
+-    .CLK_HZ(NVP_AUTOINIT_CLK_HZ), .I2C_HZ(50000),
++    .CLK_HZ(NVP_AUTOINIT_CLK_HZ), .I2C_HZ(25000),
+     .ENABLE_MAREK_INIT_TABLE(ENABLE_MAREK_INIT_TABLE)
+   ) NVP_AUTOINIT (
+     .clk(autonomous_clk), .rst(nvp_por_reset),

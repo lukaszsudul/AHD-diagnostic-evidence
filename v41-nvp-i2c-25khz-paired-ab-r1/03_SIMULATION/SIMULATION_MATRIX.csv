@@ -1,0 +1,25 @@
+PROFILE,TEST,EXPECTED_SEMANTICS,RESULT,EVIDENCE
+50000,all_ack,"done=1 error=0 nack=0 timeout=0; 275 transactions",PASS,50KHZ_REGRESSION/simulation.log
+25000,all_ack,"done=1 error=0 nack=0 timeout=0; 275 transactions",PASS,25KHZ_REGRESSION/simulation.log
+50000,address_byte_nack,"first error and three retained NACK phases",PASS,50KHZ_REGRESSION/simulation.log
+25000,address_byte_nack,"first error and three retained NACK phases",PASS,25KHZ_REGRESSION/simulation.log
+50000,middle_register_or_data_nack,"step 0x65 and frozen metadata",PASS,50KHZ_REGRESSION/simulation.log
+25000,middle_register_or_data_nack,"step 0x65 and frozen metadata",PASS,25KHZ_REGRESSION/simulation.log
+50000,final_operation_nack,"late step and unchanged error mapping",PASS,50KHZ_REGRESSION/simulation.log
+25000,final_operation_nack,"late step and unchanged error mapping",PASS,25KHZ_REGRESSION/simulation.log
+50000,sda_stuck_low,"code 0x06; no NACK misclassification",PASS,50KHZ_REGRESSION/simulation.log
+25000,sda_stuck_low,"code 0x06; no NACK misclassification",PASS,25KHZ_REGRESSION/simulation.log
+50000,scl_released_low,"code 0x07 and bounded base-clock watchdog",PASS,50KHZ_REGRESSION/simulation.log
+25000,scl_released_low,"code 0x07 and bounded base-clock watchdog",PASS,25KHZ_REGRESSION/simulation.log
+50000,bank_select_write_failure,"wrong-bank target blocked",PASS,50KHZ_REGRESSION/simulation.log
+25000,bank_select_write_failure,"wrong-bank target blocked",PASS,25KHZ_REGRESSION/simulation.log
+50000,bank_readback_mismatch,"code 0x08 and wrong-bank target blocked",PASS,50KHZ_REGRESSION/simulation.log
+25000,bank_readback_mismatch,"code 0x08 and wrong-bank target blocked",PASS,25KHZ_REGRESSION/simulation.log
+50000,two_cycle_raw_sda_glitch,"rejected by unchanged synchronizer/filter",PASS,50KHZ_REGRESSION/simulation.log
+25000,two_cycle_raw_sda_glitch,"rejected by unchanged synchronizer/filter",PASS,25KHZ_REGRESSION/simulation.log
+50000,reset_restart,"sticky state clears and clean rerun completes",PASS,50KHZ_REGRESSION/simulation.log
+25000,reset_restart,"sticky state clears and clean rerun completes",PASS,25KHZ_REGRESSION/simulation.log
+50000,exact_cycle_count,"31043 actions; 31042 intervals; lifecycle 113182679",PASS,CYCLE_COUNT_50KHZ/xsim.log
+25000,exact_cycle_count,"31043 actions; 31042 intervals; lifecycle 132584734",PASS,CYCLE_COUNT_25KHZ/xsim.log
+both,effective_operation_dump,"187 target writes; 26 NOP; 1 delay; 25 bank changes",PASS,OP_DUMP/simulation.log
+both,transaction_stream,"220 writes plus 55 reads; byte/order identical",PASS,TRANSACTION_STREAM_DIFF.md

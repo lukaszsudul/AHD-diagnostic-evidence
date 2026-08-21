@@ -1,0 +1,34 @@
+TASK=V41_NVP_I2C_25KHZ_PAIRED_AB_R1
+PACKAGE_ROLE=MEASUREMENT_AND_SCIENTIFIC_EVIDENCE
+
+INCLUDED=
+  exact task prompt and owner experiment statement
+  source identities and the exact one-line source diff
+  numerical model, simulation scripts, testbenches, logs, and CSVs
+  build launcher, verifier, log, journal, route/timing/DRC/CDC reports
+  accepted REQP-1839 baseline reference and new-build comparison
+  routed-DCP report-only audit outputs
+  hardware precheck, Arm-A fail-closed evidence, formal restoration evidence
+  comparison, operation/time ledgers, and final Markdown report
+  SHA256_MANIFEST.txt
+
+EXCLUDED=
+  worktree and Git metadata
+  transient Vivado project/build root
+  duplicate build-package staging directory
+  standalone DCP and bit files
+  V41_NVP_I2C_25KHZ_PAIRED_AB_R1_BUILD_PACKAGE.zip
+  credentials and temporary password files
+  credential-handling helper source (hash, audit, and sanitized logs retained)
+  this measurement ZIP, its external SHA-256 sidecar, and integrity report
+
+BUILD_PACKAGE_SEPARATE=YES
+BUILD_PACKAGE_FILENAME=V41_NVP_I2C_25KHZ_PAIRED_AB_R1_BUILD_PACKAGE.zip
+BUILD_PACKAGE_SIZE_BYTES=88970399
+BUILD_PACKAGE_SHA256=918E0972F94CEF0D21D87A4D92177B9DB69FF9558F6BA3217571FE68D41CCA3A
+BUILD_PACKAGE_PUBLICATION_METHOD=GIT_LFS_EXACT_PATH
+
+SELF_REFERENCE_POLICY=
+  The measurement package SHA-256 and evidence commit cannot be embedded in
+  the archive that determines them. They are recorded in external sidecar and
+  post-publication receipt files.

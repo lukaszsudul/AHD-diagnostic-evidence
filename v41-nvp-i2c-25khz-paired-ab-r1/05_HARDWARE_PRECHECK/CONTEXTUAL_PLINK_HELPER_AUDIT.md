@@ -1,0 +1,28 @@
+# Task-local contextual Plink helper audit
+
+This is an offline static audit. The credential file was not read, the helper
+was not executed, and no Plink/SSH/sudo session was launched.
+
+```text
+ACCEPTED_HELPER_PATH=C:\FPGA\T1_RCA_PUTTY_CONTROL_20260820\01_SECRET_CHANNEL\Invoke-ContextualPlink.ps1
+ACCEPTED_HELPER_SHA256=22DBA29C3D4ABBA55BFD1BD776C9B8AEAA5D677BA19AC91DADAC7A352CD861C2
+TASK_HELPER_PATH=C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\05_HARDWARE_PRECHECK\SECRET_CHANNEL\Invoke-ContextualPlink.ps1
+TASK_HELPER_SHA256=EEB9922C1A522220DFABCF1590DA2A8883328A4DFD2C99D669EAEEF8915F3DDA
+TASK_HELPER_SIZE_BYTES=10940
+LINE_LEVEL_DIFF_COUNT=1
+ONLY_CHANGED_FIELD=secretDirectory
+TASK_SECRET_DIRECTORY=C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\05_HARDWARE_PRECHECK\SECRET_CHANNEL
+PLINK_PW_OPTION_ALLOWED=NO
+PLINK_PWFILE_OPTION_REQUIRED=YES
+PASSWORD_STDIN_ROLE=SUDO_ONLY
+TEMP_PASSWORD_FILE_POLICY=RANDOMIZED_ONE_USE_ACL_PROTECTED_DELETE_IN_FINALLY
+HELPER_EXECUTED_DURING_STATIC_AUDIT=NO
+CREDENTIAL_READS_DURING_STATIC_AUDIT=0
+TEMP_PASSWORD_FILES_REMAINING=0
+```
+
+The one changed line replaces the accepted task's secret directory with this
+task's ASCII-only precheck secret directory. Authentication, host-key pinning,
+argument audit, ACL construction, `-pwfile` use, `-pw` rejection, timeout,
+sanitization, and `finally` deletion logic are otherwise byte-for-byte at the
+line level.

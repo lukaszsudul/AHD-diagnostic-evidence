@@ -1,0 +1,9 @@
+EventType,ConsumedBoundary,RequiredEvidence,RetryPolicy
+FORMAL_START_GATE_FAILURE,Any retained/live exact-formal proof field is missing or contradictory,gate report+HARD_STOP=YES+FPGA_PROGRAMS_REQUIRED_AT_HARD_STOP=0,NO_BOOTSTRAP_AND_NO_PROGRAM
+FPGA_PROGRAM,PROGRAM_INVOCATION_CONSUMED=1 emitted immediately before program_hw_devices,role+bit SHA+Tcl log+EOS+DONE+exit status,NO_RETRY
+WARM_REBOOT,Exact sudo reboot command submitted,submit UTC+old boot ID+disappear UTC+return UTC+new boot ID,NO_SECOND_COMMAND
+PRE_ARM_A_DRIVER_LOADER,Remote /usr/bin/bash accepted-loader process begins,loader/module hashes+fresh evidence dir+exit+binding+nodes,NO_RETRY
+POST_REBOOT_DRIVER_LOADER,Remote /usr/bin/bash accepted-loader process begins,arm+boot ID+loader evidence+binding+nodes,NO_RETRY
+MMIO_READ,Accepted xdma_axil_read process invoked,offset+observed value+reader rc+read timestamp bracket,READ_ONLY_BOUNDED
+READ_ONLY_JTAG,Fresh Hardware Manager session opens,target+part+IDCODE+DONE+zero-program marker,READ_ONLY_ONLY
+

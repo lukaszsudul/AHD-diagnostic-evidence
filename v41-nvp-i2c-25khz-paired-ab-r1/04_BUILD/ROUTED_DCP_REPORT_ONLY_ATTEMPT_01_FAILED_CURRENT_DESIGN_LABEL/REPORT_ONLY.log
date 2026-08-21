@@ -1,0 +1,77 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 21 23:28:11 2026
+# Process ID         : 24112
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -source C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\scripts\run_routed_dcp_report_only_after_pass.tcl -log C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\ROUTED_DCP_REPORT_ONLY\REPORT_ONLY.log -journal C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\ROUTED_DCP_REPORT_ONLY\REPORT_ONLY.jou -notrace -tclargs C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\FULL_BUILD_EVIDENCE\PHASE3_routed.dcp C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\ROUTED_DCP_REPORT_ONLY C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\FULL_BUILD_EVIDENCE\I25_POST_BUILD_GATE_RESULT.txt
+# Log file           : C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/04_BUILD/ROUTED_DCP_REPORT_ONLY/REPORT_ONLY.log
+# Journal file       : C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\04_BUILD\ROUTED_DCP_REPORT_ONLY\REPORT_ONLY.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4160 MB
+# Total Virtual      : 21189 MB
+# Available Virtual  : 8344 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\scripts\run_routed_dcp_report_only_after_pass.tcl} -notrace
+REPORT_ONLY_MODE=ROUTED_DCP_AFTER_PASS
+REPORT_ONLY_DCP=C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/04_BUILD/FULL_BUILD_EVIDENCE/PHASE3_routed.dcp
+REPORT_ONLY_OUTPUT_ROOT=C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/04_BUILD/ROUTED_DCP_REPORT_ONLY
+Command: open_checkpoint C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/04_BUILD/FULL_BUILD_EVIDENCE/PHASE3_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.137 . Memory (MB): peak = 331.375 ; gain = 3.363
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 790.246 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1322 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.303 . Memory (MB): peak = 927.113 ; gain = 9.016
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.079 . Memory (MB): peak = 1547.645 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.042 . Memory (MB): peak = 1547.645 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1547.645 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 1547.645 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1547.645 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.715 . Memory (MB): peak = 1564.227 ; gain = 16.582
+Read Physdb Files: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1564.227 ; gain = 16.582
+Restored from archive | CPU: 3.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1564.227 ; gain = 16.582
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.033 . Memory (MB): peak = 1585.703 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 288 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 10 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 250 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 18 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:01:07 ; elapsed = 00:01:37 . Memory (MB): peak = 1591.383 ; gain = 1275.055
+REPORT_ONLY_WRONG_DESIGN=checkpoint_PHASE3_routed
+    while executing
+"error "REPORT_ONLY_WRONG_DESIGN=$design""
+    invoked from within
+"if {$design ne $expected_design} {
+  error "REPORT_ONLY_WRONG_DESIGN=$design"
+}"
+    (file "C:\FPGA\V41_NVP_I2C_25KHZ_PAIRED_AB_R1\scripts\run_routed_dcp_report_only_after_pass.tcl" line 84)
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 21 23:30:19 2026...

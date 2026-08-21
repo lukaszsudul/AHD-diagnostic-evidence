@@ -1,0 +1,19 @@
+# Power-context reference
+
+```text
+EVIDENCE_REPOSITORY=lukaszsudul/AHD-diagnostic-evidence
+EVIDENCE_COMMIT=f711325fab4e993bfaf1881626d23c2dac20c8af
+POWER_ASSUMPTIONS_COMPARABLE=YES
+FORMAL_PHASE2_DYNAMIC_POWER_W=0.552
+RCA_DYNAMIC_POWER_W=0.323
+POWER_BREAKDOWN_DECISION_CASE=CASE_D_INCONCLUSIVE_REPORT_POWER_LIMITATION
+ON_CHIP_SWITCHING_RETURN_PATH_CONTEXT=SUPPORTED
+PER_BANK_VCCO_14_POWER=NOT_EXPOSED_BY_UNMODIFIED_DCP
+BOARD_VCCO_DROOP_PROVEN=NO
+GROUND_BOUNCE_PROVEN=NO
+ANALOG_I2C_MARGIN_PROVEN=NO
+```
+
+This context motivates the timing-margin diagnostic. It is not evidence that
+the 25-kHz image passed or failed; that question remained unmeasured because
+Arm A was infrastructure-invalid.

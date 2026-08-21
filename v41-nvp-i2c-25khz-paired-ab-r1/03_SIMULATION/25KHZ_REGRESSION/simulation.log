@@ -1,0 +1,42 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Fri Aug 21 22:23:14 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/i25_reg25/xsim_script.tcl
+# xsim {i25_reg25} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS all transactions ACK
+Time: 651905500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS NACK at first operation
+Time: 1302590500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS NACK at middle table step and frozen metadata
+Time: 1954514500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS NACK at final operation
+Time: 2606438500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS SDA stuck low
+Time: 3427034500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: SCL timeout observed code=7 count=36 error='1'
+Time: 3738674500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS SCL stuck low and bounded controller timeout
+Time: 3738674500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS bank-select write failure blocks wrong-bank target
+Time: 4314998500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS bank-select readback mismatch blocks wrong-bank target
+Time: 5215520500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS two-cycle raw SDA glitch rejected by Z9 filter
+Time: 5867444500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS reset during init, table boundary, and done/error latch
+Time: 6521405500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+Note: PASS_STAGE6_G0P8C5D_AUTOINIT_SIMULATION
+Time: 6521405500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/V41_NVP_I2C_25KHZ_PAIRED_AB_R1/scripts/tb_nvp_autoinit_25khz.vhd
+$stop called at time : 6521405500 ns
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 198.070 ; gain = 0.051
+exit
+INFO: xsimkernel Simulation Memory Usage: 12124 KB (Peak: 12124 KB), Simulation CPU Usage: 11718 ms
+INFO: [Common 17-206] Exiting xsim at Fri Aug 21 22:23:30 2026...
