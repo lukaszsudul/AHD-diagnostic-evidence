@@ -1,0 +1,41 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:51:01 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_drc -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/DRC_SUMMARY.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : Fully Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_ahd_capture_v40_release_routed
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max checks: <unlimited>
+             Checks found: 1
++-----------+----------+-------------------+--------+
+| Rule      | Severity | Description       | Checks |
++-----------+----------+-------------------+--------+
+| RTSTAT-10 | Warning  | No routable loads | 1      |
++-----------+----------+-------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+RTSTAT-10#1 Warning
+No routable loads  
+1 net(s) have no routable loads. The problem bus(es) and/or net(s) are pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/store_ltssm.
+Related violations: <none>
+
+

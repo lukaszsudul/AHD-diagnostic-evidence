@@ -1,0 +1,318 @@
+get_timing_paths
+
+Description: 
+Get timing paths
+
+Syntax: 
+get_timing_paths  [-from <args>] [-rise_from <args>] [-fall_from <args>]
+                  [-to <args>] [-rise_to <args>] [-fall_to <args>]
+                  [-through <args>] [-rise_through <args>]
+                  [-fall_through <args>] [-delay_type <arg>] [-setup] [-hold]
+                  [-max_paths <arg>] [-nworst <arg>] [-unique_pins]
+                  [-slack_lesser_than <arg>] [-slack_greater_than <arg>]
+                  [-group <args>] [-no_report_unconstrained] [-user_ignored]
+                  [-routable_nets] [-inter_slr <arg>] [-sort_by <arg>]
+                  [-filter <arg>] [-regexp] [-nocase] [-cell <args>] [-quiet]
+                  [-verbose]
+
+Usage: 
+  Name                        Description
+  ---------------------------------------
+  [-from]                     From pins, ports, cells or clocks
+  [-rise_from]                Rising from pins, ports, cells or clocks
+  [-fall_from]                Falling from pins, ports, cells  or clocks
+  [-to]                       To pins, ports, cells or clocks
+  [-rise_to]                  Rising to pins, ports, cells or clocks
+  [-fall_to]                  Falling to pins, ports, cells or clocks
+  [-through]                  Through pins, ports, cells or nets
+  [-rise_through]             Rising through pins, ports, cells or nets
+  [-fall_through]             Falling through pins, ports, cells or nets
+  [-delay_type]               Type of path delay: Values: max, min, min_max, 
+                              max_rise, max_fall, min_rise, min_fall
+                              Default: max
+  [-setup]                    Get max delay timing paths (equivalent to 
+                              -delay_type max)
+  [-hold]                     Get min delay timing paths (equivalent to 
+                              -delay_type min)
+  [-max_paths]                Maximum number of paths to return: Value >=1
+                              Default: 1
+  [-nworst]                   List N worst paths to endpoint: Value >=1
+                              Default: 1
+  [-unique_pins]              for each unique set of pins, show at most 1 
+                              path per path group
+  [-slack_lesser_than]        Include paths with slack less than this
+                              Default: 1e+30
+  [-slack_greater_than]       Include paths with slack greater than this
+                              Default: -1e+30
+  [-group]                    Limit paths in this group(s)
+  [-no_report_unconstrained]  Do not get unconstrained paths
+  [-user_ignored]             only report paths which have infinite slack 
+                              because of set_false_path or set_clock_groups 
+                              timing constraints
+  [-routable_nets]            store the number of routable nets traversed as 
+                              a property on timing paths.
+  [-inter_slr]                report timing paths crossing between SLRs: 
+                              Values: any_crossing, data_crossing, 
+                              clock_crossing, no_crossing
+  [-sort_by]                  Sorting order of paths: Values: group, slack
+                              Default: slack
+  [-filter]                   Filter list with expression
+  [-regexp]                   Patterns specified in filter are full regular 
+                              expressions
+  [-nocase]                   Perform case-insensitive matching for patterns 
+                              specified in filter (valid only when -regexp 
+                              specified)
+  [-cell]                     run get_timing_paths on the cell
+  [-quiet]                    Ignore command errors
+  [-verbose]                  Suspend message limits during command execution
+
+Categories: 
+Object, Timing
+
+Description:
+
+  Gets timing path objects that meet the specified criteria. It predefines
+  timing paths to pass to the report_timing command for instance and creates
+  custom reporting and analysis.
+
+  The get_timing_paths command is very similar to the report_timing command.
+  However, get_timing_paths returns timing path objects to query for
+  properties, or passes to other Tcl commands for processing, where
+  report_timing returns a file or a string.
+
+  Note: To improve memory and performance, the get_* commands return a
+  container list of a single type of objects (for example, cells, nets, pins,
+  or ports). You can add new objects to the list (using lappend for instance),
+  but you can only add the same type of object that is currently in the list.
+  Adding a different type of object, or string, to the list is not permitted
+  and results in a Tcl error.
+
+Arguments:
+
+  -from <args> - (Optional) Defines the starting points of the timing paths
+  to run the analysis. You can specify ports, pins, or cells can be specified
+  as timing path startpoints. For a clock object, it analyzes all startpoints
+  clocked by the named clock.
+
+  -rise_from <args> - (Optional) Similar to the -from option, but considers
+  only the rising edge of signals from the startpoints. For a clock
+  object, it analyzes only the paths launched by the rising edge of the clock
+  as startpoints.
+
+  -fall_from <args> - (Optional) Similar to the -from option, but considers
+  only the falling edge of signals from the startpoints. For a clock
+  object, it analyzes only the paths launched by the falling edge of the
+  clock are considered as startpoints.
+
+  -to <args> - (Optional) Specifies the endpoints or destination objects of
+  timing paths to run the analysis.You can specify ports, pins, and cell
+  objects as endpoints. For a clock object, it analyzes endpoints clocked by
+  the named clock.
+
+  -rise_to <args> - (Optional) Similar to the -to option, but considers only
+  the rising edge of signals to the endpoints. For a clock object, it
+  analyzes only the paths captured by the rising edge of the named clock as
+  endpoints.
+
+  -fall_to <args> - (Optional) Similar to the -to option, but considers only
+  the falling edge of signals to the endpoints. For a clock object, it 
+  analyzes only the paths captured by the falling edge of the named clock as 
+  endpoints.
+
+  -through <args> - (Optional) Considers paths through the specified pins,
+  cell instance, or nets only for timing analysis. You can specify individual
+  -through (or -rise_through and -fall_through ) points in sequence to define
+  a specific path through the design for analysis. The order of the specified
+  through points is important to define a specific path. You can also specify
+  through points with multiple objects, in which case the timing path passes
+  through any of the specified through objects.
+
+  -rise_through <args> - (Optional) Similar to the -through option, but it
+  performs timing analysis on paths with a rising transition at the specified
+  objects.
+
+  -fall_through <args> - (Optional) Similar to the -through option, but it
+  performs timing analysis on paths with a falling transition at the
+  specified objects.
+
+  -delay_type <arg> - (Optional) Specifies the type of delay to analyze when
+  running the timing report. The valid values are min, max, min_max,
+  max_rise, max_fall, min_rise, min_fall. The default setting for -delay_type
+  is max.
+
+  -setup - (Optional) Checks for setup violations. This is same as
+  specifying -delay_type max.
+
+  -hold - (Optional) Checks for hold violations. This is same as
+  specifying -delay_type min.
+
+  Note: You can specify -setup and -hold together, which is same as
+  specifying -delay_type min_max.
+
+  -max_paths <arg> - (Optional) The maximum number of paths to output when
+  sorted by slack; or the maximum number of paths per path group when sorted
+  by group, as specified by -sort_by. The value must be greater than or equal
+  to 1. The default value is 1 and returns the single worst timing path or
+  the worst path per group.
+
+  -nworst <arg> - (Optional) The number of timing paths to show to each
+  endpoint. The timing report shows the N worst paths based on the specified
+  value. The value must be greater than or equal to 1. The default setting is
+  1.
+
+  -unique_pins - (Optional) Shows only one timing path per each unique pin or
+  group of pins. This is a boolean option, enabled by the use.
+
+  -inter_slr <args> - (Optional) Reports the timing paths based on their
+  SLR-crossing characteristics. Ensure to specify one of the following
+  values: any_crossing, data_crossing, clock_crossing, or no_crossing.
+
+  -routable_nets - (Optional) Reports the number of routable nets traversed
+  as a property of the returned timing paths.
+
+  -slack_greater_than <arg> - (Optional) Reports timing on paths with a
+  calculated slack value greater than the specified value. Provides a range
+  of slack values of specific interest with -slack_lesser_than.
+
+  -slack_lesser_than <arg> - (Optional) Reports timing on paths with a
+  calculated slack value less than the specified value. Provides a range of
+  slack values of specific interest with -slack_greater_than.
+
+  -group <args> - (Optional) Reports timing for paths in the specified path
+  groups.
+
+  -no_report_unconstrained - (Optional) Does not report timing on
+  unconstrained paths.
+
+  -user_ignored - (Optional) Shows the timing paths that are ignored during
+  timing analysis because the user has specified set_false_path or
+  set_clock_groups timing constraints. This is a boolean option and enabled 
+  as per usage.
+
+  -sort_by [ slack | group ] - (Optional) Sorts timing paths by path groups
+  or by slack values. The default sort order is by slack values.
+
+  -filter <args> - (Optional) Filters the result list with the specified
+  expression. The -filter argument filters the list of objects returned by
+  get_timing_paths based on property values on the timing paths. You can find
+  the properties on an object with the report_property or list_property
+  commands. For timing path object, properties "DATAPATH_DELAY",
+  "ENDPOINT_PIN" and "ENDPOINT_CLOCK" filters result.
+
+  The filter search pattern should be quoted to avoid having to escape
+  special characters. String matching is case-sensitive and is always
+  anchored to the start and to the end of the search string. The wildcard "*"
+  character can be used at the beginning or at the end of a search string to
+  widen the search to include a substring of the property value.
+
+  Note: The filter returns an object if a specified property exists on the
+  object, and the specified pattern matches the property value on the object.
+  In the case of the "*" wildcard character, this will match a property with
+  a defined value of "".
+
+  The following example gets the first 100 most critical timing paths objects
+  and returns only those from the path group clk_tx_clk_core_1:
+
+    get_timing_paths -max_paths 100 -filter {GROUP == clk_tx_clk_core_1}
+
+  For string comparison, the specific operators that can be used in filter
+  expressions are "equal" (==), "not-equal" (!=), "match" (=~), and
+  "not-match" (!~). Numeric comparison operators <, >, <=, and >= can also be
+  used. Multiple filter expressions can be joined by AND and OR (&& and ||).
+  The following gets input pins that do NOT contain the "RESET" substring
+  within their name:
+
+    get_pins * -filter {DIRECTION == IN && NAME !~ "*RESET*"}
+
+  Boolean (bool) type properties can be directly evaluated in filter
+  expressions as true or not true:
+
+    -filter {IS_PRIMITIVE && !IS_LOC_FIXED}
+
+  -regexp - (Optional) Specifies that the search <patterns> are written as
+  regular expressions. Both search <patterns> and -filter expressions must be
+  written as regular expressions when this argument is used. AMD regular
+  expression Tcl commands are always anchored to the start of the search
+  string. You can add ".*" to the beginning or end of a search string to
+  widen the search to include a substring. See
+  http://perldoc.perl.org/perlre.html for help with regular expression
+  syntax.
+
+  Note: The Tcl built-in command regexp is not anchored, and works as a
+  standard Tcl command. For more information refer to
+  http://www.tcl.tk/man/tcl8.5/TclCmd/regexp.htm.
+
+  -nocase - (Optional) Performs case-insensitive matching when a pattern has
+  been specified. This argument applies to the use of -regexp only.
+
+  -cell <arg> - (Optional) Applies the get_timing_paths command to the
+  specified cell. You can specify the cells by name or as an object returned
+  by the get_cells command.
+
+  -quiet - (Optional) Executes the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  The following example gets the five worst timing paths from the specified
+  endpoint and reports all the properties of the fourth timing path in the
+  list:
+
+    report_property -all [lindex [get_timing_paths -to [get_ports led_pins[*]]\
+    -nworst 5] 3]
+
+  The following example defines a procedure called custom_report and report
+  the 100 worst paths from the clk_tx_clk_core_1 path group:
+
+    proc custom_report { listOfPaths } {
+       puts [format {%-40s %-40s %-20s %-20s %7s} "Startpoint" "Endpoint" \
+          "Launch Clock" "Capture Clock" "Slack"]
+       puts [string repeat "-" 140]
+       foreach path $listOfPaths {
+          set startpoint [get_property STARTPOINT_PIN $path]
+          set startclock [get_property STARTPOINT_CLOCK $path]
+          set endpoint [get_property ENDPOINT_PIN $path]
+          set endclock [get_property ENDPOINT_CLOCK $path]
+          set slack [get_property SLACK $path]
+          puts [format {%-40s %-40s %-20s %-20s %7s} $startpoint $endpoint \
+             $startclock $endclock $slack]
+       }
+    }
+    set paths [get_timing_paths -group clk_tx_clk_core_1 -max_paths 100]\
+    custom_report $paths
+
+  The following example uses get_timing_paths to perform a timing analysis on
+  the specified paths:
+
+    set paths [get_timing_paths -group clk_tx_clk_core_1 -max_paths 100]
+    report_timing -of_objects $paths
+
+  The following example is the equivalent of:
+
+    report_timing -group clk_tx_clk_core_1 -max_paths 100
+
+  The following example returns timing paths where the logic levels are
+  greater than the specified number of logic levels.
+
+    get_timing_paths -max_paths 1000 -filter {LOGIC_LEVELS > 1}
+
+  The following example returns the number of SLR crossings in the worst
+  setup path with the datapath crossing SLRs:
+
+    get_property SLR_CROSSINGS [get_timing_path -inter_slr data_crossing]
+
+See Also:
+
+   *  report_property
+   *  report_timing
+

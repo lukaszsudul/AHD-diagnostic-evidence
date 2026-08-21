@@ -1,0 +1,788 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:40:26 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -from [get_pins -quiet -of_objects [get_cells -quiet -hierarchical -regexp {^NVP_AUTOINIT/u_sequence/scl_filtered_r_reg$}] -filter {REF_PIN_NAME == Q}] -to [get_pins -quiet NVP_AUTOINIT/u_sequence/tick_reg/C] -delay_type min -max_paths 20 -nworst 1 -unique_pins -routable_nets -sort_by slack -path_type full_clock_expanded -input_pins -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/06_COMPARATOR_FORMAL_PHASE2/FORMAL_PHASE2_SCL_FILTERED_TO_TIMEOUT_OR_STATE_DECISION_MIN.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.408ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/D
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.544ns  (logic 0.254ns (46.663%)  route 0.290ns (53.337%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.016ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.808ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.610ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.236     2.581    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2/I2
+    SLICE_X12Y47         LUT5 (Prop_lut5_I2_O)        0.045     2.626 r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2/O
+                         net (fo=1, routed)           0.054     2.681    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2_n_0
+    SLICE_X12Y47                                                      r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1/I1
+    SLICE_X12Y47         LUT6 (Prop_lut6_I1_O)        0.045     2.726 r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1/O
+                         net (fo=1, routed)           0.000     2.726    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1_n_0
+    SLICE_X12Y47         FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.837     2.807    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y47         FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/C
+                         clock pessimism             -0.610     2.198    
+    SLICE_X12Y47         FDRE (Hold_fdre_C_D)         0.120     2.318    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg
+  -------------------------------------------------------------------
+                         required time                         -2.318    
+                         arrival time                           2.726    
+  -------------------------------------------------------------------
+                         slack                                  0.408    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.716ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.764ns  (logic 0.209ns (27.353%)  route 0.555ns (72.647%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.283     2.946    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X6Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X6Y47          FDRE (Hold_fdre_C_CE)       -0.016     2.230    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]
+  -------------------------------------------------------------------
+                         required time                         -2.230    
+                         arrival time                           2.946    
+  -------------------------------------------------------------------
+                         slack                                  0.716    
+
+Slack (MET) :             0.795ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.819ns  (logic 0.209ns (25.534%)  route 0.610ns (74.466%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.063ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.834ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.338     3.000    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.864     2.834    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/C
+                         clock pessimism             -0.590     2.245    
+    SLICE_X7Y46          FDRE (Hold_fdre_C_CE)       -0.039     2.206    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]
+  -------------------------------------------------------------------
+                         required time                         -2.206    
+                         arrival time                           3.000    
+  -------------------------------------------------------------------
+                         slack                                  0.795    
+
+Slack (MET) :             0.795ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.819ns  (logic 0.209ns (25.534%)  route 0.610ns (74.466%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.063ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.834ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.338     3.000    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.864     2.834    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/C
+                         clock pessimism             -0.590     2.245    
+    SLICE_X7Y46          FDRE (Hold_fdre_C_CE)       -0.039     2.206    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]
+  -------------------------------------------------------------------
+                         required time                         -2.206    
+                         arrival time                           3.000    
+  -------------------------------------------------------------------
+                         slack                                  0.795    
+
+Slack (MET) :             0.795ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.819ns  (logic 0.209ns (25.534%)  route 0.610ns (74.466%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.063ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.834ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.338     3.000    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.864     2.834    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/C
+                         clock pessimism             -0.590     2.245    
+    SLICE_X7Y46          FDRE (Hold_fdre_C_CE)       -0.039     2.206    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]
+  -------------------------------------------------------------------
+                         required time                         -2.206    
+                         arrival time                           3.000    
+  -------------------------------------------------------------------
+                         slack                                  0.795    
+
+Slack (MET) :             0.795ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.819ns  (logic 0.209ns (25.534%)  route 0.610ns (74.466%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.063ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.834ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.338     3.000    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.864     2.834    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X7Y46          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/C
+                         clock pessimism             -0.590     2.245    
+    SLICE_X7Y46          FDRE (Hold_fdre_C_CE)       -0.039     2.206    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]
+  -------------------------------------------------------------------
+                         required time                         -2.206    
+                         arrival time                           3.000    
+  -------------------------------------------------------------------
+                         slack                                  0.795    
+
+Slack (MET) :             0.798ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.823ns  (logic 0.209ns (25.402%)  route 0.614ns (74.598%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.064ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.835ns
+    Source Clock Delay      (SCD):    2.182ns
+    Clock Pessimism Removal (CPR):    0.590ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.026     0.499 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.567     2.182    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X12Y48         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X12Y48         FDSE (Prop_fdse_C_Q)         0.164     2.346 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.272     2.617    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X12Y47                                                      f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X12Y47         LUT6 (Prop_lut6_I2_O)        0.045     2.662 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.342     3.004    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X7Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20                                                    r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.029     0.538 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15140, routed)       0.865     2.836    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X7Y47          FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/C
+                         clock pessimism             -0.590     2.246    
+    SLICE_X7Y47          FDRE (Hold_fdre_C_CE)       -0.039     2.207    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]
+  -------------------------------------------------------------------
+                         required time                         -2.207    
+                         arrival time                           3.004    
+  -------------------------------------------------------------------
+                         slack                                  0.798    
+
+
+
+

@@ -1,0 +1,50 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 15:52:17 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_exceptions -coverage -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/03_R1_DESIGN_INVENTORY/EXCEPTIONS_COVERAGE.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Exceptions Report
+
+Position  Type                     Setup      Hold     From       Through  To         Endpoints  From (%)  Through (%)  To (%)
+--------  -----------------------  ---------  -------  ---------  -------  ---------  ---------  --------  -----------  ------
+2         False Path               false      false    1 ports                        7          100.00                  
+4         False Path               false      false                        1 pins     0                                 0.00
+5         False Path               false      false                        1 pins     0                                 0.00
+8         False Path               false      false               1 pins              1                    100.00        
+9         False Path               false      false               1 pins              1                    100.00        
+10        False Path               false      false               1 pins              2                    100.00        
+11        False Path               false      false               1 pins              1                    100.00        
+12        False Path               false      false               1 pins              2                    100.00        
+13        False Path               false      false               1 pins              1                    100.00        
+14        False Path               false      false               1 pins              0                    100.00        
+15        False Path               false      false               1 pins              1                    100.00        
+16        False Path               false      false               1 pins              0                    100.00        
+17        False Path               false      false               1 pins              0                    100.00        
+18        False Path               false      false               1 pins              2                    100.00        
+19        False Path               false      false               1 pins              2                    100.00        
+20        False Path               false      false               1 pins              0                    100.00        
+21        False Path               false      false               1 pins              0                    100.00        
+25        False Path               f_false    f_false  8 ports             1 clocks   8          100.00                 100.00
+26        False Path               false      false    1 ports                        7          100.00                  
+27        Max Delay Datapath Only  max_dpo=6  -        74 cells            74 cells   74         100.00                 33.33
+29        Max Delay Datapath Only  max_dpo=6  -        291 cells           291 cells  291        100.00                 33.33
+31        False Path               false      false                        8 pins     8                                 100.00
+32        Max Delay Datapath Only  max_dpo=6  -        96 cells            96 pins    96         100.00                 100.00
+34        False Path               false      false                        6 pins     6                                 100.00
+35        False Path               false      false               1 pins              4                    100.00        
+36        False Path               false      false               1 pins              4                    100.00        
+37        False Path               false      false               1 pins              4                    100.00        
+38        False Path               false      false               1 pins              2                    100.00        
+39        False Path               false      false                        1 cells    0                                 0.00
+40        False Path               false      false                        1 cells    1                                 33.33
+41        False Path               false      false                        1 cells    1                                 33.33
+42        False Path               false      false                        1 cells    1                                 33.33
+
+Warning: the percentages reported indicate the number of pins covered by the exception relative to the number of pins specified implicitly or explicitly.

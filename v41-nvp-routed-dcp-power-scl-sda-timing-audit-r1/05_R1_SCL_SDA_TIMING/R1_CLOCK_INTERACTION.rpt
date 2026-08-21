@@ -1,0 +1,30 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:23:11 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_clock_interaction -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/05_R1_SCL_SDA_TIMING/R1_CLOCK_INTERACTION.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Interaction Report
+
+Clock Interaction Table
+-----------------------
+
+                                                        WNS                            TNS Failing  TNS Total    WNS Path         Clock-Pair           Inter-Clock              
+From Clock                  To Clock                    Clock Edges  WNS(ns)  TNS(ns)    Endpoints    Endpoints  Requirement(ns)  Classification       Constraints              
+--------------------------  --------------------------  -----------  -------  -------  -----------  -----------  ---------------  -------------------  -----------------------  
+clk_125mhz                  clk_125mhz                  rise - rise     4.24     0.00            0          938             8.00  Clean                Timed                    
+clk_125mhz                  userclk1                                                             0            2                   Ignored              False Path               
+idelay_refclk_unbuf         idelay_refclk_unbuf         rise - rise     3.83     0.00            0           10             5.05  Clean                Timed                    
+nvp_vclk1                   nvp_vclk1                   rise - rise     0.62     0.00            0         4957             6.73  Clean                Partial False Path       
+nvp_vclk1                   userclk1                    rise - rise     4.23     0.00            0          391       Unexpanded  Ignored              Max Delay Datapath Only  
+pcie_refclk_100             pcie_refclk_100             rise - rise     8.69     0.00            0            7            10.00  Clean                Timed                    
+userclk1                    nvp_vclk1                   rise - rise     4.84     0.00            0           92       Unexpanded  Ignored              Max Delay Datapath Only  
+userclk1                    userclk1                    rise - rise     6.47     0.00            0        40704            16.00  Clean                Partial False Path       
+
+

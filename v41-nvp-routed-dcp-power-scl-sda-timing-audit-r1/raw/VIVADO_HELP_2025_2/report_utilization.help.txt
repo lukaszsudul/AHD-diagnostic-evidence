@@ -1,0 +1,265 @@
+report_utilization
+
+Description: 
+Compute utilization of device and display report
+
+Syntax: 
+report_utilization  [-file <arg>] [-append] [-pblocks <args>]
+                    [-evaluate_pblock] [-exclude_child_pblocks]
+                    [-exclude_non_assigned] [-cells <args>] [-return_string]
+                    [-slr] [-packthru] [-name <arg>] [-no_primitives]
+                    [-omit_locs] [-hierarchical] [-spreadsheet_file <arg>]
+                    [-spreadsheet_table <arg>] [-spreadsheet_depth <arg>]
+                    [-hierarchical_depth <arg>] [-hierarchical_percentages]
+                    [-hierarchical_min_primitive_count <arg>] [-quiet]
+                    [-verbose]
+
+Returns: 
+Report
+
+Usage: 
+  Name                                 Description
+  ------------------------------------------------
+  [-file]                              Filename to output results to. (send 
+                                       output to console if -file is not 
+                                       used)
+  [-append]                            Append the results to file, don't 
+                                       overwrite the results file
+  [-pblocks]                           Report utilization of given pblock
+  [-evaluate_pblock]                   Report utilization with demand as 
+                                       specified cells and supply as 
+                                       specified pblock area
+  [-exclude_child_pblocks]             Report utilization with out child 
+                                       pblocks
+  [-exclude_non_assigned]              Pblock utilization with out 
+                                       Non-assigned Cells
+  [-cells]                             Report utilization of given list of 
+                                       cells
+  [-return_string]                     Return report as string
+  [-slr]                               SLR wise utilization of resources
+  [-packthru]                          Reports LUTs used exclusively as 
+                                       pack-thru
+  [-name]                              Output the results to GUI panel with 
+                                       this name
+  [-no_primitives]                     Removes "Primitives Section" from 
+                                       report_utilization o/p.
+  [-omit_locs]                         Removes "Loced" column from 
+                                       report_utilization o/p.
+  [-hierarchical]                      Generates text-based hierarchical 
+                                       report.
+  [-spreadsheet_file]                  Specify file for exporting utilization
+                                       tables as spreadsheets. This feature 
+                                       is available only in GUI mode.
+  [-spreadsheet_table]                 Choose a particular utilization table 
+                                       to export as spreadsheet file. 
+                                       Default: Hierarchy
+  [-spreadsheet_depth]                 Specifies the depth level for 
+                                       spreadsheet.
+                                       Default: 8
+  [-hierarchical_depth]                Specifies the depth level for textual 
+                                       hierarchical report
+                                       Default: 0
+  [-hierarchical_percentages]          Report percentages in textual 
+                                       hierarchical report
+  [-hierarchical_min_primitive_count]  Specifies the minimum count of 
+                                       primitives in a hierarchy to be 
+                                       displayed in hierarichal report.
+                                       Default: 50
+  [-quiet]                             Ignore command errors
+  [-verbose]                           Suspend message limits during command 
+                                       execution
+
+Categories: 
+Report
+
+Description:
+
+  Report resource usage on the target part by the current synthesized or
+  implemented design. If you do not specify the -file, -return_string, or
+  -name arguments, the report generates in the standard output.
+
+  Tip: Although, the command reports resource usage early in the design
+  process, the report is more accurate as the design progresses from
+  synthesis through implementation.
+
+  This command returns the requested information, or returns an error if it
+  fails. When this command runs in hierarchical mode, either with
+  -hierarchical or -name, it reports resource utilization for each hierarchy
+  in the design that meets the -hierarchical_min_primitive_count threshold.
+
+Arguments:
+
+  -append - (Optional) Append the output of the command to the specified file
+  rather than overwriting it.
+
+  Note: The -append option can only be used with the -file option.
+
+  -cells <arg> - (Optional) Report the resources utilized by one or more
+  hierarchical cells in the current design.
+
+  -evaluate_pblock <arg> - (Optional) Performs a what-if analysis on the
+  specified -pblocks and the specified -cells. This option reports the
+  utilization of the Pblocks populated by the specified cells. Percentages of
+  utilization represent the ratio of the assigned cells to the available
+  resources. This option requires both -pblocks and -cells.
+
+  -exclude_child_pblocks - (Optional) Report utilization of the specified
+  -pblocks excluding any nested Pblocks. This reduces the utilization of the
+  region as it does not account for assigned cells to a Pblock through a
+  nested Pblock.
+
+  -exclude_non_assigned - (Optional) Exclude non-assigned cells from the
+  Utilization report when the -pblocks option is specified. This decreases
+  the utilization of the Pblock region as it does not account for utilized
+  cells and not assigned to the specified Pblocks.
+
+  -file <arg> - (Optional) Write the report into the specified file. If you
+  do not specify the -append option, it overwrites the existing file.
+
+  Note: If you do not specify a path, the tool writes into the current 
+  working directory.
+
+  -hierarchical - (Optional) Reports the utilization of the device
+  categorized as per the design hierarchy. This impacts report generated to a
+  file. The report is hierarchical regardless when run inside the Vivado IDE.
+
+  -hierarchical_depth <arg> - (Optional) Specifies the depth of the hierarchy
+  to report when reporting utilization according to the hierarchy. If the
+  default depth is 0, it means that -hierarchical option reports full design
+  hierarchy.
+
+  -hierarchical_min_primitive_count <arg> - (Optional) Specifies the minimum 
+  number of cells required in order to report a hierarchy when the report is 
+  generated in hierarchical mode. Specifying -name or -hierarchical options 
+  triggers hierarchical mode. Using value zero reports all hierarchies. A 
+  higher level cell count is sum total of the lower level leaf cell counts 
+  and the number of leaf cells in the current hierarchy. Default value is 50.
+
+  -hierarchical_percentages - (Optional) Specifies that utilization data in
+  the hierarchical report is reported as percentages.
+
+  -slr - (Optional) Reports the utilization for each separate SLR in devices
+  having SLRs.
+
+  -name <arg> - (Optional) Specifies the name of the results to output to the
+  GUI.
+
+  -no_primitives - (Optional) Remove the Primitives section from the report.
+  The Primitives section reports the number and type of logic primitives used
+  on the device.
+
+  -omit_locs - (Optional) Omit the Fixed column from the report. The Fixed
+  column reports the quantity of fixed logic elements, or manually places
+  onto the device.
+
+  -pblocks <arg> - (Optional) Report the resources utilized by a Pblock.
+
+  Note: -pblocks can not be used with the -name option.
+
+  -packthru - (Optional) Reports LUTs used for route through purposes. This
+  appears in the utilization report as "LUTs used exclusively as
+  route-thrus".
+
+  -return_string - (Optional) Directs the output to a Tcl string rather than
+  to the standard output. A variable definition captures the Tcl string,
+  parses, or processes as required.
+
+  Note: This argument cannot be used with the -file option.
+
+  -spreadsheet_file <arg> - (Optional) Export utilization tables to the
+  specified XLSX format spreadsheet. The ability to export a spreadsheet file
+  is only available when the -name option is also specified and the report is
+  generated in the GUI.
+
+  Tip: Ensure to specify the .xlsx suffix for the specified file, as it is
+  not automatically assigned. If you do not specify a path, the tool writes
+  into the current working directory.
+
+  -spreadsheet_table <arg> - (Optional) Specify a utilization table to export
+  to the spreadsheet file. The default is to export the Hierarchy table for
+  the whole design. This option requires the use of -spreadsheet_file.
+
+  It also exports other tables and specific resources. This process requires
+  you to build the argument -spreadsheet_file switch by specifying the table
+  name and then a hyphen followed the resource.
+
+   *  Table Name - Resource Name: Adds multiple resources
+
+   *  Table Name - Resource Name - Resource Name: Identify the names of the
+      tables and the resources in the report
+
+      Warning: Ensure that the text matches precisely and is case sensitive.
+
+      Note: The existing command works differently for different stages in
+      the design flow or when porting projects to new families. Verify the
+      command when targeting a new family or design stage.
+
+  Some example table names are:
+
+   *  Hierarchy
+
+   *  Slice Logic Distribution
+
+   *  Slice Logic Distribution - LUT as Memory
+
+   *  Netlist Logic
+
+   *  Netlist Logic - Registers
+
+  -spreadsheet_depth <arg> - (Optional) Specifies the hierarchical depth,
+  starting from the top-level of the design, to export to the spreadsheet
+  file. The default value is 8. This options requires the use of
+  -spreadsheet_file.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  The following example reports a hierarchical report and writes it to
+  util_hier.rpt file:
+
+    report_utilization -hierarchical -file util_hier.rpt
+
+  The following example generates a hierarchical report showing all
+  hierarchies regardless of whether they meet the minimum primitive count
+  threshold and writes it to util_hier2.rpt file:
+
+    report_utilization -hierarchical -hierarchical_min_primitive_count 0 -file \
+    util_hier2.rpt
+
+  The following example reports the resources used by a Pblock and write the
+  results to the specified file:
+
+    report_utilization -pblocks [get_pblocks <pblockName>] -file \
+    ./pblocks_util.txt
+
+  This example reports the whole design utilization for named report in the
+  GUI, but exports the "Clocking - BUFGCTRL" table to the specified
+  spreadsheet file:
+
+    report_utilization -name utilization_1 -spreadsheet_file util_table.xlsx \
+    -spreadsheet_table "Clocking - BUFGCTRL"
+
+  The following example reports the resources utilized by each Pblock in the
+  design, appending the report for each Pblock to a single specified file:
+
+    foreach x [get_pblocks] {
+      puts "Reporting Pblock: $x ----------------------------------"
+      report_utilization -append -file C:/Data/pblocks_util.txt -pblocks $x
+    }
+
+See Also:
+
+   *  delete_utilization_results
+

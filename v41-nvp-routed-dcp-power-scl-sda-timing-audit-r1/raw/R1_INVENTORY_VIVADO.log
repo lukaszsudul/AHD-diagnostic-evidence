@@ -1,0 +1,287 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 21 15:48:54 2026
+# Process ID         : 8336
+# Current directory  : C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1
+# Command line       : vivado.exe -mode batch -nojournal -log C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\raw\R1_INVENTORY_VIVADO.log -source C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\scripts\inventory_checkpoint.tcl -tclargs C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\01_INPUT_IDENTITY\R1_PACKAGE_EXTRACTED\PHASE3_routed.dcp C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\03_R1_DESIGN_INVENTORY R1
+# Log file           : C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/raw/R1_INVENTORY_VIVADO.log
+# Journal file       : 
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4160 MB
+# Total Virtual      : 21189 MB
+# Available Virtual  : 8725 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\scripts\inventory_checkpoint.tcl}
+# if {$argc != 3} {
+#     error "USAGE: inventory_checkpoint.tcl <dcp_path> <output_dir> <role>"
+# }
+# set dcp_path [lindex $argv 0]
+# set out_dir  [lindex $argv 1]
+# set role     [lindex $argv 2]
+# file mkdir $out_dir
+# proc write_text {path text} {
+#     set fh [open $path w]
+#     puts -nonewline $fh $text
+#     close $fh
+# }
+# proc prop_or_na {obj prop} {
+#     if {[catch {set value [get_property $prop $obj]}]} {
+#         return "NOT_AVAILABLE"
+#     }
+#     return $value
+# }
+# proc csv_field {value} {
+#     set escaped [string map [list "\"" "\"\""] $value]
+#     return "\"$escaped\""
+# }
+# proc must_report {label script out_path} {
+#     puts "AUDIT_REPORT_START=$label"
+#     if {[catch {uplevel #0 $script} err opts]} {
+#         puts "AUDIT_REPORT_ERROR=$label:$err"
+#         return -options $opts $err
+#     }
+#     if {![file exists $out_path] || [file size $out_path] == 0} {
+#         error "MANDATORY_REPORT_EMPTY=$label:$out_path"
+#     }
+#     puts "AUDIT_REPORT_PASS=$label:[file size $out_path]"
+# }
+# puts "AUDIT_ROLE=$role"
+AUDIT_ROLE=R1
+# puts "AUDIT_STAGE=OPEN_CHECKPOINT"
+AUDIT_STAGE=OPEN_CHECKPOINT
+# puts "AUDIT_DCP=$dcp_path"
+AUDIT_DCP=C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\01_INPUT_IDENTITY\R1_PACKAGE_EXTRACTED\PHASE3_routed.dcp
+# open_checkpoint $dcp_path
+Command: open_checkpoint {C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\01_INPUT_IDENTITY\R1_PACKAGE_EXTRACTED\PHASE3_routed.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.137 . Memory (MB): peak = 331.137 ; gain = 4.254
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 791.637 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1449 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 3 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.301 . Memory (MB): peak = 928.449 ; gain = 8.691
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.080 . Memory (MB): peak = 1548.754 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 1548.754 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1548.754 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 1549.180 ; gain = 0.426
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1549.180 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.661 . Memory (MB): peak = 1566.246 ; gain = 17.066
+Read Physdb Files: Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 1566.246 ; gain = 17.492
+Restored from archive | CPU: 4.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 1566.246 ; gain = 17.492
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 1589.531 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 288 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 10 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 250 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 18 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:01:12 ; elapsed = 00:01:47 . Memory (MB): peak = 1595.285 ; gain = 1279.207
+# set design [current_design]
+# set part [prop_or_na $design PART]
+# set design_mode [prop_or_na $design DESIGN_MODE]
+# set top [prop_or_na $design TOP]
+# set summary "ROLE=$role\nCURRENT_DESIGN=$design\nPART=$part\nTOP_PROPERTY=$top\nDESIGN_MODE=$design_mode\n"
+# foreach prop {NAME TYPE STATUS IS_IMPLEMENTED IS_PLACED IS_ROUTED NEEDS_REFRESH} {
+#     append summary "$prop=[prop_or_na $design $prop]\n"
+# }
+# write_text [file join $out_dir CURRENT_DESIGN_PROPERTIES.txt] $summary
+# set report_path [file join $out_dir CURRENT_DESIGN_REPORT_PROPERTY.txt]
+# must_report CURRENT_DESIGN_REPORT_PROPERTY [list report_property -all -file $report_path [current_design]] $report_path
+AUDIT_REPORT_START=CURRENT_DESIGN_REPORT_PROPERTY
+AUDIT_REPORT_PASS=CURRENT_DESIGN_REPORT_PROPERTY:6664
+# set pfh [open [file join $out_dir PORT_INVENTORY.csv] w]
+# puts $pfh "name,direction,package_pin,bank,iostandard,drive,slew,pulltype,diff_term,in_term,loc"
+# foreach port [lsort [get_ports -quiet *]] {
+#     set vals [list \
+#         $port \
+#         [prop_or_na $port DIRECTION] \
+#         [prop_or_na $port PACKAGE_PIN] \
+#         [prop_or_na $port BANK] \
+#         [prop_or_na $port IOSTANDARD] \
+#         [prop_or_na $port DRIVE] \
+#         [prop_or_na $port SLEW] \
+#         [prop_or_na $port PULLTYPE] \
+#         [prop_or_na $port DIFF_TERM] \
+#         [prop_or_na $port IN_TERM] \
+#         [prop_or_na $port LOC]]
+#     set quoted {}
+#     foreach v $vals { lappend quoted [csv_field $v] }
+#     puts $pfh [join $quoted ,]
+# }
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxn[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxp[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txn[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txp[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_n'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_p'.
+# close $pfh
+# set cfh [open [file join $out_dir CLOCK_INVENTORY.csv] w]
+# puts $cfh "name,period,waveform,is_generated,master_clock,source_pins"
+# foreach clk [lsort [get_clocks -quiet *]] {
+#     set vals [list \
+#         $clk \
+#         [prop_or_na $clk PERIOD] \
+#         [prop_or_na $clk WAVEFORM] \
+#         [prop_or_na $clk IS_GENERATED] \
+#         [prop_or_na $clk MASTER_CLOCK] \
+#         [prop_or_na $clk SOURCE_PINS]]
+#     set quoted {}
+#     foreach v $vals { lappend quoted [csv_field $v] }
+#     puts $cfh [join $quoted ,]
+# }
+WARNING: [Common 17-673] Cannot get value of property 'MASTER_CLOCK' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'MASTER_CLOCK' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'MASTER_CLOCK' because this property is not valid in conjunction with other property setting on this object.
+# close $cfh
+# set ref_counts [dict create]
+# set all_cells [get_cells -hierarchical -quiet *]
+# foreach cell $all_cells {
+#     set ref [prop_or_na $cell REF_NAME]
+#     if {$ref eq ""} { set ref "EMPTY_REF_NAME" }
+#     dict incr ref_counts $ref
+# }
+# set hfh [open [file join $out_dir HIERARCHY_SUMMARY.txt] w]
+# puts $hfh "TOTAL_CELLS=[llength $all_cells]"
+# foreach ref [lsort [dict keys $ref_counts]] {
+#     puts $hfh "$ref=[dict get $ref_counts $ref]"
+# }
+# close $hfh
+# set path [file join $out_dir ROUTE_STATUS.rpt]
+# must_report ROUTE_STATUS [list report_route_status -file $path] $path
+AUDIT_REPORT_START=ROUTE_STATUS
+AUDIT_REPORT_PASS=ROUTE_STATUS:651
+# set path [file join $out_dir TIMING_SUMMARY.rpt]
+# must_report TIMING_SUMMARY [list report_timing_summary -delay_type min_max -report_unconstrained -check_timing_verbose -max_paths 20 -file $path] $path
+AUDIT_REPORT_START=TIMING_SUMMARY
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:00:54 ; elapsed = 00:00:33 . Memory (MB): peak = 1709.602 ; gain = 53.707
+AUDIT_REPORT_PASS=TIMING_SUMMARY:2187164
+# set path [file join $out_dir CHECK_TIMING_VERBOSE.rpt]
+# must_report CHECK_TIMING_VERBOSE [list check_timing -verbose -file $path] $path
+AUDIT_REPORT_START=CHECK_TIMING_VERBOSE
+AUDIT_REPORT_PASS=CHECK_TIMING_VERBOSE:3701
+# set path [file join $out_dir DRC_SUMMARY.rpt]
+# must_report DRC_SUMMARY [list report_drc -file $path] $path
+AUDIT_REPORT_START=DRC_SUMMARY
+Command: report_drc -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/03_R1_DESIGN_INVENTORY/DRC_SUMMARY.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/03_R1_DESIGN_INVENTORY/DRC_SUMMARY.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:18 ; elapsed = 00:00:14 . Memory (MB): peak = 1775.840 ; gain = 66.238
+AUDIT_REPORT_PASS=DRC_SUMMARY:9574
+# set path [file join $out_dir UTILIZATION.rpt]
+# must_report UTILIZATION [list report_utilization -file $path] $path
+AUDIT_REPORT_START=UTILIZATION
+AUDIT_REPORT_PASS=UTILIZATION:12796
+# set path [file join $out_dir UTILIZATION_HIERARCHICAL.rpt]
+# must_report UTILIZATION_HIERARCHICAL [list report_utilization -hierarchical -hierarchical_depth 20 -file $path] $path
+AUDIT_REPORT_START=UTILIZATION_HIERARCHICAL
+AUDIT_REPORT_PASS=UTILIZATION_HIERARCHICAL:25232
+# set path [file join $out_dir CLOCK_UTILIZATION.rpt]
+# must_report CLOCK_UTILIZATION [list report_clock_utilization -file $path] $path
+AUDIT_REPORT_START=CLOCK_UTILIZATION
+AUDIT_REPORT_PASS=CLOCK_UTILIZATION:61280
+# set path [file join $out_dir CLOCKS.rpt]
+# must_report CLOCKS [list report_clocks -file $path] $path
+AUDIT_REPORT_START=CLOCKS
+AUDIT_REPORT_PASS=CLOCKS:5329
+# set path [file join $out_dir CLOCK_INTERACTION.rpt]
+# must_report CLOCK_INTERACTION [list report_clock_interaction -file $path] $path
+AUDIT_REPORT_START=CLOCK_INTERACTION
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-164] This design has multiple clocks. Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+AUDIT_REPORT_PASS=CLOCK_INTERACTION:2942
+# set path [file join $out_dir REPORT_IO.rpt]
+# must_report REPORT_IO [list report_io -file $path] $path
+AUDIT_REPORT_START=REPORT_IO
+report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.203 . Memory (MB): peak = 1775.840 ; gain = 0.000
+AUDIT_REPORT_PASS=REPORT_IO:100867
+# set path [file join $out_dir EXCEPTIONS_COVERAGE.rpt]
+# must_report EXCEPTIONS_COVERAGE [list report_exceptions -coverage -file $path] $path
+AUDIT_REPORT_START=EXCEPTIONS_COVERAGE
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+report_exceptions: Time (s): cpu = 00:00:14 ; elapsed = 00:00:08 . Memory (MB): peak = 1775.840 ; gain = 0.000
+AUDIT_REPORT_PASS=EXCEPTIONS_COVERAGE:5334
+# set path [file join $out_dir CDC_DETAILS.rpt]
+# must_report CDC_DETAILS [list report_cdc -details -file $path] $path
+AUDIT_REPORT_START=CDC_DETAILS
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-314] The report_cdc command only analyzes and reports clock domain crossing paths where clocks have been defined on both source and destination sides. Ports with no input delay constraint are skipped. Please run check_timing to verify there are no missing clock definitions in your design, nor any unconstrained input port.
+report_cdc: Time (s): cpu = 00:00:10 ; elapsed = 00:00:06 . Memory (MB): peak = 1775.840 ; gain = 0.000
+AUDIT_REPORT_PASS=CDC_DETAILS:89811
+# set path [file join $out_dir DESIGN_ANALYSIS_CONGESTION.rpt]
+# must_report DESIGN_ANALYSIS_CONGESTION [list report_design_analysis -congestion -file $path] $path
+AUDIT_REPORT_START=DESIGN_ANALYSIS_CONGESTION
+AUDIT_REPORT_PASS=DESIGN_ANALYSIS_CONGESTION:2285
+# puts "AUDIT_RESULT=INVENTORY_COMPLETE"
+AUDIT_RESULT=INVENTORY_COMPLETE
+# close_design
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 21 15:52:26 2026...

@@ -1,0 +1,101 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:53:21 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -from [all_fanin -flat -startpoints_only -to [get_pins -quiet -of_objects [get_cells -quiet -of_objects [get_pins -quiet -leaf -of_objects [get_nets -quiet -segments -of_objects [get_pins -quiet -of_objects [get_cells -quiet -of_objects [get_pins -quiet -leaf -of_objects [get_nets -quiet -segments -of_objects [get_ports -quiet nvp_scl]] -filter {REF_NAME == OBUFT && REF_PIN_NAME == O}]] -filter {REF_PIN_NAME == T}]] -filter {DIRECTION == OUT}]] -filter {REF_PIN_NAME == D}]] -to [get_pins -quiet -of_objects [get_cells -quiet -of_objects [get_pins -quiet -leaf -of_objects [get_nets -quiet -segments -of_objects [get_pins -quiet -of_objects [get_cells -quiet -of_objects [get_pins -quiet -leaf -of_objects [get_nets -quiet -segments -of_objects [get_ports -quiet nvp_scl]] -filter {REF_NAME == OBUFT && REF_PIN_NAME == O}]] -filter {REF_PIN_NAME == T}]] -filter {DIRECTION == OUT}]] -filter {REF_PIN_NAME == D}] -delay_type max -max_paths 20 -nworst 1 -unique_pins -routable_nets -sort_by slack -path_type full_clock_expanded -input_pins -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_SCL_CONTROL_TO_OEN_REGISTER_D_MAX.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             10.712ns  (required time - arrival time)
+  Source:                 NVP_AUTOINIT/u_sequence/FSM_onehot_state_reg[8]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_oen_r_reg/D
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            16.000ns  (userclk1 rise@16.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        5.195ns  (logic 1.407ns (27.081%)  route 3.788ns (72.919%))
+  Logic Levels:           6  (LUT4=2 LUT5=1 LUT6=3)
+  Clock Path Skew:        -0.044ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    5.419ns = ( 21.419 - 16.000 ) 
+    Source Clock Delay      (SCD):    5.780ns
+    Clock Pessimism Removal (CPR):    0.317ns
+  Clock Uncertainty:      0.079ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.081     1.290 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        1.517     5.780    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X14Y136        FDRE                                         r  NVP_AUTOINIT/u_sequence/FSM_onehot_state_reg[8]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X14Y136        FDRE (Prop_fdre_C_Q)         0.433     6.213 r  NVP_AUTOINIT/u_sequence/FSM_onehot_state_reg[8]/Q
+                         net (fo=9, routed)           1.092     7.305    NVP_AUTOINIT/u_sequence/FSM_onehot_state_reg_n_0_[8]
+    SLICE_X13Y138                                                     r  NVP_AUTOINIT/u_sequence/FSM_onehot_state[26]_i_4/I2
+    SLICE_X13Y138        LUT4 (Prop_lut4_I2_O)        0.115     7.420 f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[26]_i_4/O
+                         net (fo=6, routed)           0.669     8.089    NVP_AUTOINIT/u_sequence/FSM_onehot_state[26]_i_4_n_0
+    SLICE_X14Y138                                                     f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[20]_i_4/I0
+    SLICE_X14Y138        LUT5 (Prop_lut5_I0_O)        0.267     8.356 f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[20]_i_4/O
+                         net (fo=2, routed)           0.250     8.606    NVP_AUTOINIT/u_sequence/FSM_onehot_state[20]_i_4_n_0
+    SLICE_X14Y139                                                     f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[34]_i_10/I0
+    SLICE_X14Y139        LUT6 (Prop_lut6_I0_O)        0.105     8.711 f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[34]_i_10/O
+                         net (fo=3, routed)           0.736     9.446    NVP_AUTOINIT/u_sequence/FSM_onehot_state[34]_i_10_n_0
+    SLICE_X15Y139                                                     f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[0]_i_2/I0
+    SLICE_X15Y139        LUT4 (Prop_lut4_I0_O)        0.115     9.561 f  NVP_AUTOINIT/u_sequence/FSM_onehot_state[0]_i_2/O
+                         net (fo=2, routed)           0.472    10.033    NVP_AUTOINIT/u_sequence/FSM_onehot_state[0]_i_2_n_0
+    SLICE_X15Y138                                                     f  NVP_AUTOINIT/u_sequence/scl_oen_r_i_4/I5
+    SLICE_X15Y138        LUT6 (Prop_lut6_I5_O)        0.267    10.300 r  NVP_AUTOINIT/u_sequence/scl_oen_r_i_4/O
+                         net (fo=1, routed)           0.571    10.871    NVP_AUTOINIT/scl_oen_r11_out
+    SLICE_X16Y136                                                     r  NVP_AUTOINIT/scl_oen_r_i_1/I4
+    SLICE_X16Y136        LUT6 (Prop_lut6_I4_O)        0.105    10.976 r  NVP_AUTOINIT/scl_oen_r_i_1/O
+                         net (fo=1, routed)           0.000    10.976    NVP_AUTOINIT/u_sequence/scl_oen_r_reg_1
+    SLICE_X16Y136        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                     16.000    16.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000    16.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.150    17.150    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.077    17.227 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.286    18.513    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.073    18.586 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.357    19.944    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.077    20.021 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        1.399    21.419    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y136        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+                         clock pessimism              0.317    21.736    
+                         clock uncertainty           -0.079    21.657    
+    SLICE_X16Y136        FDSE (Setup_fdse_C_D)        0.030    21.687    NVP_AUTOINIT/u_sequence/scl_oen_r_reg
+  -------------------------------------------------------------------
+                         required time                         21.687    
+                         arrival time                         -10.976    
+  -------------------------------------------------------------------
+                         slack                                 10.712    
+
+
+
+

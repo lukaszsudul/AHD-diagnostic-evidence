@@ -1,0 +1,58 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:51:02 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -hierarchical_depth 20 -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/UTILIZATION_HIERARCHICAL.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : Routed
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------------------------------------------------------------------+------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+|                                     Instance                                     |               Module               | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs | RAMB36 | RAMB18 | DSP Blocks |
++----------------------------------------------------------------------------------+------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+| ahd_capture_top_pcie                                                             |                              (top) |       2861 |       2850 |       0 |   11 | 4345 |     10 |      0 |          0 |
+|   (ahd_capture_top_pcie)                                                         |                              (top) |         25 |         25 |       0 |    0 |  145 |      0 |      0 |          0 |
+|   NVP_AUTOINIT                                                                   |                  v40a_nvp_autoinit |       1015 |       1015 |       0 |    0 |  748 |      0 |      0 |          0 |
+|     u_sequence                                                                   |          nvp_i2c_bringup_seq_v38ek |        981 |        981 |       0 |    0 |  717 |      0 |      0 |          0 |
+|   app                                                                            |                        pcie_app_7x |       1440 |       1440 |       0 |    0 | 2746 |      2 |      0 |          0 |
+|     PIO                                                                          |                                PIO |       1440 |       1440 |       0 |    0 | 2746 |      2 |      0 |          0 |
+|       PIO_EP_inst                                                                |                             PIO_EP |       1439 |       1439 |       0 |    0 | 2744 |      2 |      0 |          0 |
+|         COMPLETER                                                                |              g0p8c1_pio_tlp_bridge |        376 |        376 |       0 |    0 |  217 |      0 |      0 |          0 |
+|         G0P8C2_CAPTURE                                                           |           g0p8c2_capture_subsystem |       1063 |       1063 |       0 |    0 | 2527 |      2 |      0 |          0 |
+|           (G0P8C2_CAPTURE)                                                       |           g0p8c2_capture_subsystem |         54 |         54 |       0 |    0 |  322 |      0 |      0 |          0 |
+|           (BAR_TARGET)                                                           |                  g0p8c2_bar_target |        169 |        169 |       0 |    0 |  257 |      0 |      0 |          0 |
+|           MAILBOX                                                                |             g0p8c2_capture_mailbox |        160 |        160 |       0 |    0 |  777 |      0 |      0 |          0 |
+|           PRODUCER                                                               |         g0p8c2_bt656_slot_producer |        680 |        680 |       0 |    0 | 1159 |      0 |      0 |          0 |
+|   pcie7_g0p8c0_support_i                                                         |               pcie7_g0p8c0_support |        382 |        371 |       0 |   11 |  693 |      8 |      0 |          0 |
+|     pcie7_g0p8c0_i                                                               |                       pcie7_g0p8c0 |        379 |        368 |       0 |   11 |  690 |      8 |      0 |          0 |
+|       inst                                                                       |             pcie7_g0p8c0_pcie2_top |        379 |        368 |       0 |   11 |  690 |      8 |      0 |          0 |
+|         inst                                                                     |              pcie7_g0p8c0_core_top |        379 |        368 |       0 |   11 |  690 |      8 |      0 |          0 |
+|           pcie_top_i                                                             |              pcie7_g0p8c0_pcie_top |        114 |        114 |       0 |    0 |  260 |      8 |      0 |          0 |
+|             axi_basic_top                                                        |         pcie7_g0p8c0_axi_basic_top |        103 |        103 |       0 |    0 |  244 |      0 |      0 |          0 |
+|               rx_inst                                                            |          pcie7_g0p8c0_axi_basic_rx |         78 |         78 |       0 |    0 |  146 |      0 |      0 |          0 |
+|                 rx_pipeline_inst                                                 | pcie7_g0p8c0_axi_basic_rx_pipeline |         51 |         51 |       0 |    0 |  133 |      0 |      0 |          0 |
+|               tx_inst                                                            |          pcie7_g0p8c0_axi_basic_tx |         25 |         25 |       0 |    0 |   98 |      0 |      0 |          0 |
+|                 tx_pipeline_inst                                                 | pcie7_g0p8c0_axi_basic_tx_pipeline |          3 |          3 |       0 |    0 |   70 |      0 |      0 |          0 |
+|           gt_top_i                                                               |                pcie7_g0p8c0_gt_top |        258 |        251 |       0 |    7 |  415 |      0 |      0 |          0 |
+|             pipe_wrapper_i                                                       |          pcie7_g0p8c0_pipe_wrapper |        240 |        233 |       0 |    7 |  377 |      0 |      0 |          0 |
+|               pipe_lane[0].pipe_user_i                                           |             pcie7_g0p8c0_pipe_user |         32 |         32 |       0 |    0 |   51 |      0 |      0 |          0 |
+|               pipe_lane[0].gtp_pipe_drp.gtp_pipe_drp_i                           |          pcie7_g0p8c0_gtp_pipe_drp |         24 |         24 |       0 |    0 |   63 |      0 |      0 |          0 |
+|               pipe_lane[0].pipe_eq.pipe_eq_i                                     |               pcie7_g0p8c0_pipe_eq |         73 |         73 |       0 |    0 |   66 |      0 |      0 |          0 |
+|               pipe_lane[0].pipe_quad.gt_common_enabled.gt_common_int.gt_common_i |             pcie7_g0p8c0_gt_common |         48 |         41 |       0 |    7 |   80 |      0 |      0 |          0 |
+|                 qpll_drp_i                                                       |              pcie7_g0p8c0_qpll_drp |         41 |         41 |       0 |    0 |   78 |      0 |      0 |          0 |
++----------------------------------------------------------------------------------+------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

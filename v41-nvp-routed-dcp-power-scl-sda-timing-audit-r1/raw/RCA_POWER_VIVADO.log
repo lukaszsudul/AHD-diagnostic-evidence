@@ -1,0 +1,130 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 21 16:56:37 2026
+# Process ID         : 14092
+# Current directory  : C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1
+# Command line       : vivado.exe -mode batch -nojournal -log C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\raw\RCA_POWER_VIVADO.log -source C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\scripts\audit_power.tcl -tclargs C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V40_1_0_NVP_PATCH\V40_1_0_FINAL_ACCEPTANCE_R2\BUILD\REPORTS\ahd_capture_v40_release_routed.dcp C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\07_COMPARATOR_RCA RCA
+# Log file           : C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/raw/RCA_POWER_VIVADO.log
+# Journal file       : 
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4160 MB
+# Total Virtual      : 21189 MB
+# Available Virtual  : 8788 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1\scripts\audit_power.tcl}
+# if {$argc != 3} {
+#     error "USAGE: audit_power.tcl <dcp_path> <output_dir> <role>"
+# }
+# set dcp_path [lindex $argv 0]
+# set out_dir  [lindex $argv 1]
+# set role     [lindex $argv 2]
+# file mkdir $out_dir
+# proc must_exist_nonempty {label path} {
+#     if {![file exists $path] || [file size $path] == 0} {
+#         error "POWER_REPORT_MISSING_OR_EMPTY=$label:$path"
+#     }
+#     puts "POWER_REPORT_PASS=$label:[file size $path]"
+# }
+# open_checkpoint $dcp_path
+Command: open_checkpoint {C:\Users\£ukasz Sudu³\Documents\ChatGPT\AHD_20260807\V40_1_0_NVP_PATCH\V40_1_0_FINAL_ACCEPTANCE_R2\BUILD\REPORTS\ahd_capture_v40_release_routed.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.145 . Memory (MB): peak = 326.988 ; gain = 0.430
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.360 . Memory (MB): peak = 753.434 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 358 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.076 . Memory (MB): peak = 857.035 ; gain = 1.352
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.636 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.172 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.914 . Memory (MB): peak = 1468.438 ; gain = 0.000
+Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1468.438 ; gain = 2.594
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1468.438 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:00:57 ; elapsed = 00:01:23 . Memory (MB): peak = 1468.438 ; gain = 1152.102
+# set base [file join $out_dir "${role}_REPORT_POWER.rpt"]
+# report_power -file $base
+Command: report_power -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_REPORT_POWER.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+0 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:18 ; elapsed = 00:00:10 . Memory (MB): peak = 1532.414 ; gain = 63.977
+# must_exist_nonempty BASE $base
+POWER_REPORT_PASS=BASE:11109
+# set verbose [file join $out_dir "${role}_REPORT_POWER_VERBOSE.rpt"]
+# report_power -hier all -hierarchical_depth 0 -l 0 -verbose -file $verbose
+Command: report_power -hier all -hierarchical_depth 0 -l 0 -verbose -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_REPORT_POWER_VERBOSE.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+0 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:08 ; elapsed = 00:00:07 . Memory (MB): peak = 1533.121 ; gain = 0.707
+# must_exist_nonempty VERBOSE_DETAIL $verbose
+POWER_REPORT_PASS=VERBOSE_DETAIL:38450
+# set advisory [file join $out_dir "${role}_REPORT_POWER_ADVISORY.rpt"]
+# report_power -advisory -file $advisory
+Command: report_power -advisory -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_REPORT_POWER_ADVISORY.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+0 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+# must_exist_nonempty ADVISORY $advisory
+POWER_REPORT_PASS=ADVISORY:61117
+# set xml [file join $out_dir "${role}_REPORT_POWER.xml"]
+# report_power -format xml -file $xml
+Command: report_power -format xml -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_REPORT_POWER.xml
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+0 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+# must_exist_nonempty XML $xml
+POWER_REPORT_PASS=XML:34910
+# puts "AUDIT_RESULT=POWER_REPORTS_COMPLETE"
+AUDIT_RESULT=POWER_REPORTS_COMPLETE
+# close_design
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 21 16:58:46 2026...

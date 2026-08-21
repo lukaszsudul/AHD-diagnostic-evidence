@@ -1,0 +1,788 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:53:35 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -from [get_pins -quiet -of_objects [get_cells -quiet -hierarchical -regexp {^NVP_AUTOINIT/u_sequence/scl_filtered_r_reg$}] -filter {REF_PIN_NAME == Q}] -to [get_pins -quiet NVP_AUTOINIT/u_sequence/tick_reg/C] -delay_type min -max_paths 20 -nworst 1 -unique_pins -routable_nets -sort_by slack -path_type full_clock_expanded -input_pins -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_SCL_FILTERED_TO_TIMEOUT_OR_STATE_DECISION_MIN.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.613ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/D
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.717ns  (logic 0.272ns (37.941%)  route 0.445ns (62.059%))
+  Logic Levels:           2  (LUT5=1 LUT6=1)
+  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.879ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.613ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.163     2.544    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2/I2
+    SLICE_X16Y119        LUT5 (Prop_lut5_I2_O)        0.099     2.643 r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2/O
+                         net (fo=1, routed)           0.282     2.925    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_2_n_0
+    SLICE_X16Y120                                                     r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1/I1
+    SLICE_X16Y120        LUT6 (Prop_lut6_I1_O)        0.045     2.970 r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1/O
+                         net (fo=1, routed)           0.000     2.970    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_i_1_n_0
+    SLICE_X16Y120        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.908     2.879    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y120        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg/C
+                         clock pessimism             -0.613     2.266    
+    SLICE_X16Y120        FDRE (Hold_fdre_C_D)         0.091     2.357    NVP_AUTOINIT/u_sequence/scl_timeout_seen_r_reg
+  -------------------------------------------------------------------
+                         required time                         -2.357    
+                         arrival time                           2.970    
+  -------------------------------------------------------------------
+                         slack                                  0.613    
+
+Slack (MET) :             0.624ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.643ns  (logic 0.227ns (35.330%)  route 0.416ns (64.670%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.035ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.882ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.170     2.896    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.911     2.882    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]/C
+                         clock pessimism             -0.594     2.288    
+    SLICE_X12Y118        FDRE (Hold_fdre_C_CE)       -0.016     2.272    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[10]
+  -------------------------------------------------------------------
+                         required time                         -2.272    
+                         arrival time                           2.896    
+  -------------------------------------------------------------------
+                         slack                                  0.624    
+
+Slack (MET) :             0.624ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.643ns  (logic 0.227ns (35.330%)  route 0.416ns (64.670%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.035ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.882ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.170     2.896    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.911     2.882    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]/C
+                         clock pessimism             -0.594     2.288    
+    SLICE_X12Y118        FDRE (Hold_fdre_C_CE)       -0.016     2.272    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[6]
+  -------------------------------------------------------------------
+                         required time                         -2.272    
+                         arrival time                           2.896    
+  -------------------------------------------------------------------
+                         slack                                  0.624    
+
+Slack (MET) :             0.624ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.643ns  (logic 0.227ns (35.330%)  route 0.416ns (64.670%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.035ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.882ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.170     2.896    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.911     2.882    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]/C
+                         clock pessimism             -0.594     2.288    
+    SLICE_X12Y118        FDRE (Hold_fdre_C_CE)       -0.016     2.272    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[8]
+  -------------------------------------------------------------------
+                         required time                         -2.272    
+                         arrival time                           2.896    
+  -------------------------------------------------------------------
+                         slack                                  0.624    
+
+Slack (MET) :             0.624ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.643ns  (logic 0.227ns (35.330%)  route 0.416ns (64.670%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.035ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.882ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.170     2.896    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.911     2.882    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X12Y118        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]/C
+                         clock pessimism             -0.594     2.288    
+    SLICE_X12Y118        FDRE (Hold_fdre_C_CE)       -0.016     2.272    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[9]
+  -------------------------------------------------------------------
+                         required time                         -2.272    
+                         arrival time                           2.896    
+  -------------------------------------------------------------------
+                         slack                                  0.624    
+
+Slack (MET) :             0.683ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X12Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X12Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X12Y117        FDRE (Hold_fdre_C_CE)       -0.016     2.273    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[7]
+  -------------------------------------------------------------------
+                         required time                         -2.273    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.683    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[0]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[2]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[3]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[4]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+Slack (MET) :             0.706ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/CE
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.703ns  (logic 0.227ns (32.280%)  route 0.476ns (67.720%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.036ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.883ns
+    Source Clock Delay      (SCD):    2.253ns
+    Clock Pessimism Removal (CPR):    0.594ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.638     2.253    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X16Y119        FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X16Y119        FDSE (Prop_fdse_C_Q)         0.128     2.381 f  NVP_AUTOINIT/u_sequence/scl_filtered_r_reg/Q
+                         net (fo=3, routed)           0.245     2.627    NVP_AUTOINIT/u_sequence/scl_filtered_r
+    SLICE_X16Y119                                                     f  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/I2
+    SLICE_X16Y119        LUT6 (Prop_lut6_I2_O)        0.099     2.726 r  NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2/O
+                         net (fo=11, routed)          0.231     2.956    NVP_AUTOINIT/u_sequence/scl_low_released_count[10]_i_2_n_0
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.912     2.883    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X13Y117        FDRE                                         r  NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]/C
+                         clock pessimism             -0.594     2.289    
+    SLICE_X13Y117        FDRE (Hold_fdre_C_CE)       -0.039     2.250    NVP_AUTOINIT/u_sequence/scl_low_released_count_reg[5]
+  -------------------------------------------------------------------
+                         required time                         -2.250    
+                         arrival time                           2.956    
+  -------------------------------------------------------------------
+                         slack                                  0.706    
+
+
+
+

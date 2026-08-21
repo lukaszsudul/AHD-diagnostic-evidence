@@ -1,0 +1,606 @@
+report_design_analysis
+
+Description: 
+Report Design Analysis
+
+Syntax: 
+report_design_analysis  [-file <arg>] [-csv <arg>] [-append] [-return_string]
+                        [-complexity] [-cells <args>] [-bounding_boxes <args>]
+                        [-hierarchical_depth <arg>] [-rent_greater_than <arg>]
+                        [-instances_greater_than <arg>]
+                        [-instances_lesser_than <arg>]
+                        [-av_fanout_greater_than <arg>] [-congestion]
+                        [-min_congestion_level <arg>] [-timing] [-setup]
+                        [-hold] [-show_all] [-full_logical_pin]
+                        [-routed_vs_estimated] [-logic_level_distribution]
+                        [-logic_level_dist_paths <arg>] [-min_level <arg>]
+                        [-max_level <arg>] [-return_timing_paths]
+                        [-of_timing_paths <args>] [-max_paths <arg>] [-extend]
+                        [-routes] [-end_point_clocks <args>]
+                        [-logic_levels <arg>] [-qor_summary] [-json <arg>]
+                        [-name <arg>] [-no_pr_attribute] [-quiet] [-verbose]
+
+Usage: 
+  Name                         Description
+  ----------------------------------------
+  [-file]                      Filename to output results to. (send output to
+                               console if -file is not used)
+  [-csv]                       Write detailed tables to the CSV filename 
+                               specified
+  [-append]                    Append the results to file, don't overwrite 
+                               the results file
+  [-return_string]             Return report as string
+  [-complexity]                Finds the interconnection complexity (Rent) of
+                               the design
+  [-cells]                     Report analysis information for given list of 
+                               cells
+  [-bounding_boxes]            Report interconnection complexity (Rent) for 
+                               given list of bounding boxes
+                               Default: empty
+  [-hierarchical_depth]        Hierarchical depth option for -complexity
+                               Default: 1
+  [-rent_greater_than]         Threshold for Rent for a module to report 
+                               complexity
+                               Default: 0.6
+  [-instances_greater_than]    Threshold for minimum number of instances for 
+                               a module to report complexity
+                               Default: 15000
+  [-instances_lesser_than]     Threshold for maximum number of instances for 
+                               a module to report complexity
+                               Default: 1000000
+  [-av_fanout_greater_than]    Threshold for minimum average fanout for a 
+                               module to report complexity
+                               Default: 3.0
+  [-congestion]                Reports congestion of the design
+  [-min_congestion_level]      Minimum congestion level for reporting router 
+                               congestion, integer value between 3 and 8
+                               Default: 5
+  [-timing]                    Reports characteristics of critical path
+  [-setup]                     Reports characteristics of critical SETUP path
+  [-hold]                      Reports characteristics of critical HOLD path
+  [-show_all]                  Adds more characteristics to the timing 
+                               characteristics report
+  [-full_logical_pin]          Display hierarchical pin names in the report
+  [-routed_vs_estimated]       Reports relevant characteristics of critical 
+                               path in estimated mode
+  [-logic_level_distribution]  Reports logic level distribution
+  [-logic_level_dist_paths]    Number of critical paths for analyzing logic 
+                               level distribution used along with 
+                               -logic_level_distribution
+                               Default: 1000
+  [-min_level]                 Group all paths with logic levels 
+                               <min_level-1> and below into a single bin, 
+                               value passed must be at least 1
+                               Default: Not Used
+  [-max_level]                 Group all paths with logic levels 
+                               <max_level+1> and above into a single bin, 
+                               where <max_level> must be the greater of zero 
+                               or <min_level + 1> if -min_level is used
+                               Default: Not Used
+  [-return_timing_paths]       Returns timing path objects
+  [-of_timing_paths]           Reports characteristics for these paths
+  [-max_paths]                 Number of paths to consider for -timing option
+                               Default: 1
+  [-extend]                    Reports characteristics of worst path before 
+                               the start point of critical path and worst 
+                               path after the end of the critical path
+  [-routes]                    Reports distribution with respect to Routes 
+                               instead of logic levels
+  [-end_point_clocks]          Returns timing path objects filtered by 
+                               endpoint clock names as passed to this option
+  [-logic_levels]              Returns timing path objects bucketed under the
+                               bin name as passed to this option
+  [-qor_summary]               Design Flow summary
+  [-json]                      Write the report in JSON format to the 
+                               filename specified
+  [-name]                      Output the results to GUI panel with this name
+  [-no_pr_attribute]           Report without PR attributes
+  [-quiet]                     Ignore command errors
+  [-verbose]                   Suspend message limits during command 
+                               execution
+
+Categories: 
+Report, Timing
+
+Description:
+
+  Provides timing data on critical path characteristics and complexity of the
+  design to help identify and analyze problem areas that are subject to
+  timing closure issues and routing congestion. For more information on this
+  command refer to the Vivado Design Suite User Guide: Design Analysis and
+  Closure Techniques (UG906).
+
+  The report_design_analysis command currently has three modes of operation:
+
+   *  Timing: reports timing and physical characteristics of timing paths.
+
+   *  Complexity: analyzes the design for routing complexity and LUT
+      distribution.
+
+   *  Congestion: analyzes the design for routing congestion.
+
+  In timing mode, the command calls the static timing engine to analyze
+  critical path data and report the characteristics of each path. The path
+  characteristics include important elements such as clock skew, placement
+  obstacles such as crossing clock regions, and physical constraints such as
+  Pblocks and LOCs. The list of paths can be extended to include a number of
+  top critical paths or specific paths can be analyzed by providing timing
+  path objects to the command. The reports can also be extended to show the
+  paths preceding and following the critical path.
+
+  The following are definitions of the characteristics of the paths reported
+  in timing mode:
+
+   *  PATH_TYPE: Either SETUP or HOLD.
+
+   *  REQUIREMENT: Delay requirement from static timing analysis.
+
+   *  PATH DELAY: Data path delay from static timing analysis.
+
+   *  LOGIC DELAY: The portion of the PATH DELAY attributed to logic on the
+      path.
+
+   *  NET DELAY: The portion of the PATH DELAY attributed to wires on the
+      path. Note that the net delay is based on the estimated or actual
+      routing delay as specified by the set_delay_model command.
+
+   *  CLOCK SKEW: Difference in delay between the source and destination
+      clocks.
+
+   *  SLACK: Path timing slack from static timing analysis.
+
+   *  CLOCK PAIR CLASSIFICATION: Timed, Timed (unsafe), and Max Delay
+      Datapath only. Helps identify the constraining methodology used on the
+      timing path.
+
+   *  TIMING EXCEPTION: The timing exceptions, for example, set_false_path or
+      set_multicycle_path are assigned to the path.
+
+   *  LOGIC LEVELS: Number of logic levels between the source and
+      destination, reported when the -logic_level_distribution is specified.
+
+   *  LOGICAL PATH: Shorthand notation showing the ordered list of cells in
+      the path including thestart point and end point.
+
+      Note: For Partial Reconfiguration (PR) designs, the logical path is
+      appended to identify the cell as belonging to a reconfigurable
+      partition (:RP#), or to the static region of the design (:S). A
+      translation table at the bottom of the report maps :RP# to a specific
+      reconfigurable partition.
+
+   *  START POINT CLOCK: The clock domain of the start point of the path.
+
+   *  END POINT CLOCK: The clock domain of the end point of the path.
+
+   *  START POINT PIN PRIMITIVE: The library cell and pin of the start point
+      of the path.
+
+   *  END POINT PIN PRIMITIVE: The library cell and pin of the end point of
+      the path.
+
+   *  START POINT PIN: The instance and pin name of the start point.
+
+   *  END POINT PIN: The instance and pin name of the end point.
+
+   *  COMB DSP: Number of combinational DSP blocks in the path.
+
+   *  DOA REG: Number of DOA registers on the path.
+
+   *  DOB REG: Number of DOB registers on the path.
+
+   *  MREG: Number of MREG registers on the path.
+
+   *  PREG: Number of PREG registers on the path.
+
+   *  Block RAM CROSSINGS: Number of block RAM columns traversed by the path.
+
+   *  DSP CROSSINGS: Number of DSP block columns traversed by the path.
+
+   *  IO CROSSINGS: Number of IO columns traversed by the path.
+
+   *  CONFIG CROSSINGS: Number of CONFIG tile traversed by the path.
+
+   *  SLR CROSSINGS: Number of SLRs traversed by the path.
+
+   *  BOUNDING BOX SIZE: The rectangular area covered by the critical path,
+      measured in RPM GRID unitswhich are based on the device RPM_X
+      (horizontal) and RPM_Y (vertical) sitecoordinates. Because different
+      sites (for example, slices, DSP, block RAM) have differentsizes, each
+      site has unique RPM_X and RPM_Y properties to pin-point the location
+      within the device.
+
+   *  CLOCK REGION DISTANCE: An ordered pair showing the number of clock
+      regions traversed in the horizontal and vertical directions from path
+      startpoint to endpoint. Minimizing clock region crossings can improve
+      critical path delay and clock skew.
+
+       -  Example 1: A critical path begins in clock region X1Y1 and ends in
+          clock region X3Y3, resulting in a CLOCK_REGION_DISTANCE of (2, 2).
+
+       -  Example 2: a critical path begins in clock region X2Y1 and ends in
+          X0Y0, resulting in a CLOCK_REGION_DISTANCE of (-2, -1).
+
+   *  PBLOCKS: Number of Pblocks traversed by the path.
+
+   *  HIGH FANOUT: The greatest fanout of a net in the path.
+
+   *  CUMULATIVE FANOUT: The total fanout on the path.
+
+   *  DONT TOUCH: Number of cells in the path with DONT_TOUCH value of TRUE.
+      A value of TRUE for DONT_TOUCH on a cell prevents it from being
+      optimized, disabling potentially beneficial optimizations such as
+      phys_opt_design replication.
+
+   *  MARK DEBUG: Number of cells in the path with a MARK_DEBUG value of
+      TRUE. By default a net with MARK_DEBUG has DONT_TOUCH set to TRUE which
+      disables optimization on that net. The DONT_TOUCH can be set to FALSE
+      to enable optimization and potentially improve timing.
+
+   *  FIXED LOC: Number of placed cells in the path with an IS_LOC_FIXED
+      value of TRUE. FIXED cells cannot be moved by either place_design or
+      phys_opt_design.
+
+   *  FIXED ROUTE: Number of routed nets in the path with IS_ROUTE_FIXED
+      value of TRUE. FIXED routes cannot be ripped up and rerouted by
+      route_design.
+
+   *  HOLD FIX DETOUR: The amount of routing detour provided to fix hold
+      timing to post-route criticalpaths.
+
+   *  COMBINED LUT PAIRS: Number of LUT cells in the path that have been
+      combined with other LUT cells into the same LUT BEL to use both the O6
+      and O5 outputs. LUT cells that have been combined with LUTNM, HLUTNM,
+      or SOFT_HLUTNM can be uncombined and re-placed by setting their HLUTNM
+      properties to an empty string. This allows exploring LUTcombining and
+      un-combining effects on timing and congestion reduction.
+
+   *  The following fields are reported for Partial Reconfiguration (PR)
+      designs. Refer to the Vivado Design Suite User Guide: Dynamic Function
+      eXchange (UG909) for more information.
+
+       -  PR PATH TYPE: Specifies the path as being completely in the static
+          region,completely in a reconfigurable partition (RP), or as
+          crossing the boundary between regions. The delay elements for the
+          timing path are also broken down between the regions.
+
+       -  STATIC CROSSINGS: Reports the number of times a reconfigurable
+          partition (RP) path crosses into the static region.
+
+       -  RP CROSSINGS: Reports the number of times a static region path
+          crosses into are configurable partition (RP) region.
+
+       -  BOUNDARY FANOUT: Reports the fanout of a boundary path at the PPLOC
+          to the downstream loads.
+
+  In complexity mode, the command performs complexity analysis of the current
+  design and reports the Rent Exponent which is a measure of complexity, the
+  Average Fanout, and a Primitive Histogram. The analysis can be performed on
+  the top-level design or recursively on hierarchical levels of the design,
+  with the ability to control the level of recursion.
+
+  The following are definitions of the characteristics reported in complexity
+  mode:
+
+   *  Rent: The Rent exponent, as defined by Rent's rule, is a measure of
+      interconnect complexity in a netlist. Higher Rent indicates higher
+      complexity and greater difficulty to avoid routing congestion. Most
+      designs have a Rent in the 0.5 to 0.6 range. A Rent value of 0.65 is
+      considered high and 0.85 is considered very high.
+
+   *  Average Fanout: This is the average fanout of a logic cell in the
+      design, excluding global buffers. Higher average fanout may result in
+      more difficulty for placement and routing. While absolute values may
+      not predict difficultly, relative values between designs or between
+      hierarchical levels may be more indicative.
+
+   *  Primitive Histogram: This displays the totals of certain primitive
+      types used in the design. A high Rent may be caused by a predominance
+      of LUT6 cells. If there are many more LUT6 than other size LUTs, the
+      Rent may be reduced by adopting a more area-focused synthesis strategy.
+
+  Tip: The complexity characteristics cannot predict routing congestion
+  always but it pinpoint problem areas when congestion issues occur.
+
+  In congestion mode, the command analyzes the design and provides metrics to
+  help you alleviate routing congestion. Using the results from the
+  report_design_analysis command, you can change placement to avoid specific
+  routing hot spots.
+
+  The command returns the file created, or returns the analysis results to
+  the Tcl console, or returns an error if it fails.
+
+Arguments:
+
+  -file <arg> - (Optional) Write the analysis results into the specified
+  file. The specified file will be overwritten if one already exists unless
+  -append is also specified.
+
+  -csv <arg> - (Optional) Write a CSV file that shows the timing paths and
+  analysis features. The specified file will be overwritten if one already
+  exists.
+
+  Note: If the path is not specified as part of the file name for either
+  -file or -csv, the file will be written into the current working directory
+  that can be identified using the [pwd] Tcl command.
+
+  -append - (Optional) Append the output of the command to the specified file
+  rather than overwriting it.
+
+  Note: The -append option can only be used with the -file option.
+
+  -return_string - (Optional) Directs the output to a Tcl string rather than
+  to the standard output. The Tcl string can be captured by a variable
+  definition and parsed or otherwise processed.
+
+  Note: This argument cannot be used with the -file option.
+
+  -complexity - (Optional) Perform complexity analysis of the design and
+  report the Rent Exponent, Average Fanout, and Primitive Histogram.
+
+  Tip: The -complexity option can result in a high compile time for large
+  designs. Use with -cells,
+  -hierarchical_depth,-instances_greater_than,-instances_lesser_than and
+  -av_fanout_greater_than to lower compile time.
+
+  -cells <arg> - (Optional) Specify the cells to use when reporting design
+  analysis. Cells should be hierarchical modules of the design. Use this
+  option to specify a cell other than the top cell for analysis. Cells can be
+  specified by name, or as objects returned by the get_cells command. Cannot
+  be used with -hierarchical_depth.
+
+  -bounding_boxes <args> - (Optional) Specify regions of the device to
+  analyze for complexity. This limits the area and reduces the time required
+  for analysis. The argument is specified as a pair of device tiles
+  representing the "lower-left:upper-right" corners of the bounding box.
+  Multiple windows can be specified as follows:
+
+    -bounding_boxes { "CLE_M_X21Y239:CLEL_R_X28Y254" \
+       "CLEL_R_X18Y171:CLE_M_X26Y186" }
+
+  Important: A space is required between the `{` and the start of the
+  bounding box as shown above.
+
+  -hierarchical_depth <arg> - (Optional) Specify that the complexity analysis
+  should be performed on the hierarchy of the design, rather than just the
+  top-level of the design, or the specified cell. In this case, the hierarchy
+  of the design or cell is examined to the specified depth. The default
+  setting is 1. Requires the -complexity option.
+
+  -rent_greater_than <arg> - (Optional) Specify the minimum value of Rent to
+  be reported. Only valid when used with -complexity. Default value is 0.6.
+
+  -instances_greater_than <arg> - (Optional) Specify the minimum threshold
+  for the number of instances in a hierarchy in order to perform a Rent
+  calculation. Small modules are typically good to ignore as they do rarely
+  translate to congestion. Higher values lower compile time. Only valid when
+  used with -complexity. Default value is 15000.
+
+  -instances_lesser_than <arg> - (Optional) Specify the maximum threshold for
+  the number of instances in a hierarchy in order to perform a Rent
+  calculation. Use with -instances_greater_than to create a range of values.
+  Lower values lower compile time. Only valid when used with -complexity.
+  Default value is 100000.
+
+  -av_fanout_greater_than <arg> - (Optional) Specify the minimum threshold of
+  average fanout within a hierarchical module in order to perform a Rent
+  calculation. Higher values lower compile time. Only valid when used with
+  -complexity. Default is 3.0.
+
+  -congestion - (Optional) Reports the vertical and horizontal routing
+  congestion of the placed design on a per tile basis. This option can only
+  be run after implementation, or after place_design. Congestion analysis is
+  performed on the whole design, even if -cells is specified for complexity
+  analysis.
+
+  -min_congestion_level <arg> - (Optional) Specifies the minimum congestion
+  level to show congestion in the design. The minimum supported value is 3 as
+  the report does not have any information on congestion windows under level
+  3. The default value is 5 if the option is not specified.
+
+  -timing - (Optional) Runs design analysis in timing mode, to report setup
+  and hold characteristics of critical paths. This is the default analysis
+  run by the report_design_analysis command when no other options are
+  specified.
+
+  Tip: The -timing option can be specified with -setup, -hold,
+  -of_timing_paths, -max_paths, and -extend, but can not be used with -cells
+  or -hierarchical_depth.
+
+  -setup - (Optional) Limit the reporting scope to only setup path
+  characteristics. Requires the -timing option.
+
+  -hold - (Optional) Limit the reporting scope to only hold path
+  characteristics. Requires the -timing option.
+
+  Important: When -hold is used with the -extend option this generates two
+  side-by-side reports: the setup report showing the worst setup paths on the
+  left, and the corresponding hold report for those paths on the right. This
+  shows hold characteristics side-by-side with the setup characteristics of
+  the same start and endpoints to make it easier to see if hold and setup
+  fixing are affecting one another.
+
+  -show_all - (Optional) Adds more characteristics to the timing
+  characteristics report.
+
+  -full_logical_pin - (Optional) Output the full hierarchical pin name in the
+  design analysis report.
+
+  -routed_vs_estimated - (Optional) Reports the estimated vs. actual routed
+  delays side-by-side for the same path.
+
+  Important: This requires the set_delay_model -interconnect to be set to
+  actual to provide both the estimated and actual delays.
+
+  -logic_level_distribution - (Optional) Reports logic-level distribution of
+  the -timing report to help identify the longer paths in the design. The
+  logic levels distribution is runtime intensive so it is not reported by
+  default.
+
+  Tip: Remember that -logic_level_distribution is performed on critical
+  timing paths identified by the -timing option. If the purpose of analysis
+  is to identify all of the paths with the greatest number of logic levels in
+  the design, you can use -of_timing_paths with the get_timing_paths command
+  to define the timing paths of interest. In addition, you can use the
+  LOGIC_LEVELS property on timing paths to obtain this information.
+
+  -logic_level_dist_paths <arg> - (Optional) This option can be specified
+  with -logic_level_distribution to specify the number of critical paths for
+  analyzing logic level distribution. Specified as a value greater than or
+  equal to 1. The default is 1000 paths.
+
+  -min_level <arg> - (Optional) Group all timing paths with logic levels, or
+  routes, less than the value specified into a single bin. When specified,
+  the <arg> value passed must be at least 1.
+
+  -max_level <arg> - (Optional) Group all timing paths with logic levels, or
+  routes, greater than the value specified into a single bin. When specified,
+  the <arg> value must be greater than the value of -min_level, or can be
+  zero.
+
+  -return_timing_paths - (Optional) This must be used with the
+  -end_point_clock and -logic_levels options. Directs the
+  report_design_analysis command to return timing_path objects as well as the
+  analysis report. The timing_path objects can be passed to other analysis
+  commands that take timing paths such as report_timing, or even passed to
+  the -of_timing_paths option of a second report_design_analysis command.
+
+  Tip: If -return_timing_paths is specified, -timing is disabled so that no
+  timing results are returned. If no timing paths match the specified
+  options, the command returns the message No timing paths returned.
+
+  -of_timing_paths <args> - (Optional) Specify a list of timing path objects
+  for analysis. Requires the -timing option. The command will report
+  characteristics of the specified paths instead of the most critical paths.
+  You can use the get_timing_paths command to provide the timing path objects
+  for -of_timing_paths.
+
+  -max_paths <arg> - Specify the number of paths to report for critical path
+  analysis. The default number of critical paths analyzed is 1. Note, the
+  number of paths returned is affected by other options such as
+  -end_point_clock, which can reduce the number of paths returned due to the
+  specified clock.
+
+  -extend - (Optional) Perform an extended setup analysis of the critical
+  paths. The hold analysis is not performed. Requires the -timing option.
+  Three paths are reported for an extended analysis:
+
+   *  The path ending at critical path start point.
+
+   *  The critical path.
+
+   *  The path starting at critical path endpoint.
+
+  -routes - (Optional) Reports the path distribution with respect to the
+  number of routes per end point clock instead of logic levels. When it is
+  used with the -of_timing_objects option, the get_timing_paths command must
+  be run with the -routable_nets option.
+
+  -end_point_clocks <arg> - (Optional) Takes a list of clocks that can be
+  specified by name or by using get_clocks. Limits the timing paths under
+  consideration to only the ones in the specified clock group.
+
+  -logic_levels <arg> - (Optional) Filters timing paths by the specified
+  number of logic levels. You can specify one logic level and it can be used
+  with -end_point_clocks to further limit timing paths based on the clock
+  domain.
+
+  -qor_summary - (Optional) Include a summary of the QoR for the design.
+
+  -json <arg> - (Optional) Writes the QoR summary in JSON format where <arg>
+  is the name of the JSON file. The generated JSON file overwrites an
+  existing JSON files with the same name.
+
+  Note: The -json option can only be used with the-qor_summary, -complexity,
+  and-logic_level_distribution switches. In addition, switches that shape the
+  data for each report section are also valid.
+
+  -name <arg> - (Optional) The name of the Design Analysis Report view to
+  display in the tool GUI mode. If the name has already been used in an open
+  Report view, that view will be closed and a new report opened.
+
+  -no_pr_attribute - (Optional) Report the design analysis without partial
+  reconfiguration (PR) attributes. For Partial Reconfiguration (PR) designs,
+  the logical path is defined as belonging to a reconfigurable partition
+  (:RP#), or to the static region of the design (:S), as well as whether the
+  path is completely in the PR region or S region or crosses between the
+  regions.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  Perform a complexity analysis of the two specified cells.
+
+    report_design_analysis -complexity -cells {cpuEngine fftEngine}
+
+  Perform complexity analysis of the specified bounding boxes.
+
+    report_design_analysis -complexity \
+    -bounding_boxes { "CLE_M_X21Y239:CLEL_R_X28Y254" "CLEL_R_X18Y171:CLE_M_X26Y186" }
+
+  Get an extended analysis of the worst critical path from the Block RAMs in
+  the design.
+
+    report_design_analysis -timing -of_timing_paths \
+    [get_timing_paths -from [all_rams]]
+
+  Perform complexity analysis for the specified cell, to a depth of two
+  hierarchical levels, and performs timing and congestion analysis on the
+  design.
+
+    report_design_analysis -complexity -hierarchical_depth 2 -timing -setup \
+    -hold -max_paths 10 -logic_level_distribution -logic_level_dist_paths 20 -congestion
+
+  Use the report_design_analysis command to return the timing paths with the
+  specified end point clock and logic levels, and pass those paths to the
+  report_timing command for analysis.
+
+    report_timing -of_objects [report_design_analysis -end_point_clock cpuClk \
+    -logic_levels 10 -timing -return_timing_paths]
+
+  The following example generates a logic level report with levels 0-1
+  grouped in a bin, 10 and greater grouped in another bin, and a bin for each
+  individual number in between.
+
+    report_design_analysis -logic_level_distribution -min_level 2 -max_level 9
+
+  The following example generates a QoR summary report in both JSON format.
+
+    report_design_analysis -qor_summary -json rda_qor.json
+
+  The following example generates a logic level distribution report in JSON
+  format. It is limited to the 1000 worst timing paths.
+
+    report_design_analysis -logic_level_distribution -json rda_qor.json \
+     -logic_level_distribution_paths 1000
+
+  The following example generates a complexity report that is limited to
+  hierarchies containing instances greater than 20000 and less than 50000
+  with an average fanout of 3.5.
+
+    report_design_analysis -complexity -instances_greater_than 20000 \
+    -instaces_lesser_than 50000 -av_fanout_greater_than 3.5
+
+See Also:
+
+   *  config_design_analysis
+   *  get_cells
+   *  get_timing_paths
+   *  place_design
+   *  report_timing
+   *  report_timing_summary
+   *  set_delay_model
+   *  set_false_path
+   *  set_multicycle_path
+

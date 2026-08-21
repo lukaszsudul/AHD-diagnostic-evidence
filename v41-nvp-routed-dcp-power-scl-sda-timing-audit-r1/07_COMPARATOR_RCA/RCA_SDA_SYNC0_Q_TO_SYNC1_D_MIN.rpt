@@ -1,0 +1,78 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 16:53:53 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -from [get_pins -quiet -of_objects [get_cells -quiet -hierarchical -regexp {^NVP_AUTOINIT/u_sequence/sda_sync_r_reg\[0\]$}] -filter {REF_PIN_NAME == Q}] -to [get_pins -quiet -of_objects [get_cells -quiet -hierarchical -regexp {^NVP_AUTOINIT/u_sequence/sda_sync_r_reg\[1\]$}] -filter {REF_PIN_NAME == D}] -delay_type min -max_paths 20 -nworst 1 -unique_pins -routable_nets -sort_by slack -path_type full_clock_expanded -input_pins -file C:/FPGA/V41_NVP_ROUTED_DCP_POWER_TIMING_AUDIT_R1/07_COMPARATOR_RCA/RCA_SDA_SYNC0_Q_TO_SYNC1_D_MIN.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.184ns  (arrival time - required time)
+  Source:                 NVP_AUTOINIT/u_sequence/sda_sync_r_reg[0]/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            NVP_AUTOINIT/u_sequence/sda_sync_r_reg[1]/D
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Path Group:             userclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (userclk1 rise@0.000ns - userclk1 rise@0.000ns)
+  Data Path Delay:        0.259ns  (logic 0.141ns (54.387%)  route 0.118ns (45.613%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.888ns
+    Source Clock Delay      (SCD):    2.258ns
+    Clock Pessimism Removal (CPR):    0.630ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.473     0.473    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.026     0.499 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.551     1.050    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.050     1.100 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.489     1.589    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     1.615 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.643     2.258    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X22Y139        FDSE                                         r  NVP_AUTOINIT/u_sequence/sda_sync_r_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X22Y139        FDSE (Prop_fdse_C_Q)         0.141     2.399 r  NVP_AUTOINIT/u_sequence/sda_sync_r_reg[0]/Q
+                         net (fo=1, routed)           0.118     2.517    NVP_AUTOINIT/u_sequence/sda_sync_r[0]
+    SLICE_X22Y139        FDSE                                         r  NVP_AUTOINIT/u_sequence/sda_sync_r_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           0.509     0.509    pcie7_g0p8c0_support_i/pipe_clock_i/pipe_txoutclk_out
+    BUFGCTRL_X0Y18                                                    r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/I
+    BUFGCTRL_X0Y18       BUFG (Prop_bufg_I_O)         0.029     0.538 r  pcie7_g0p8c0_support_i/pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           0.818     1.355    pcie7_g0p8c0_support_i/pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0                                                   r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKIN1
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.053     1.408 r  pcie7_g0p8c0_support_i/pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           0.534     1.942    pcie7_g0p8c0_support_i/pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0                                                     r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/I
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     1.971 r  pcie7_g0p8c0_support_i/pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=2216, routed)        0.917     2.888    NVP_AUTOINIT/u_sequence/user_clk_out
+    SLICE_X22Y139        FDSE                                         r  NVP_AUTOINIT/u_sequence/sda_sync_r_reg[1]/C
+                         clock pessimism             -0.630     2.258    
+    SLICE_X22Y139        FDSE (Hold_fdse_C_D)         0.075     2.333    NVP_AUTOINIT/u_sequence/sda_sync_r_reg[1]
+  -------------------------------------------------------------------
+                         required time                         -2.333    
+                         arrival time                           2.517    
+  -------------------------------------------------------------------
+                         slack                                  0.184    
+
+
+
+

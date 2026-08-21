@@ -1,0 +1,184 @@
+get_nodes
+
+Description: 
+Get a list of nodes in the device.
+
+Syntax: 
+get_nodes  [-of_objects <args>] [-regexp] [-nocase] [-filter <arg>] [-uphill]
+           [-downhill] [-flyover] [-from <args>] [-to <args>]
+           [-slls_between <args>] [-quiet] [-verbose] [<patterns>]
+
+Returns: 
+nodes
+
+Usage: 
+  Name             Description
+  ----------------------------
+  [-of_objects]    Get 'node' objects of these types: 'net tile node bel_pin 
+                   site_pin wire pip speed_model pin'.
+  [-regexp]        Patterns are full regular expressions
+  [-nocase]        Perform case-insensitive matching. (valid only when 
+                   -regexp specified)
+  [-filter]        Filter list with expression
+  [-uphill]        Get the nodes uphill (driver) from the site_pin, pip, node
+                   or tile(s) provided in the -of_objects.
+  [-downhill]      Get the nodes downhill (loads) from the site_pin, pip, 
+                   node or tile(s) provided in the -of_objects.
+  [-flyover]       Get the nodes that fly over the given tile(s).
+  [-from]          -from <pip/site pin> Return the nodes beginning at this 
+                   pip or site pin.  May be used in combination with uphill. 
+                   Default is downhill.  -all is implied.
+  [-to]            -to <pip/site pin> Return the nodes ending at this wire or
+                   site pin.  May be used in combination with uphill.  
+                   Default is downhill.  -all is implied.
+  [-slls_between]  -slls_between takes SLR1 and SLR2 and returns intermediate
+                   SLL nodes. May be used with -filter.
+  [-quiet]         Ignore command errors
+  [-verbose]       Suspend message limits during command execution
+  [<patterns>]     Match the 'node' objects against patterns.
+                   Default: *
+
+Categories: 
+Device, Object, XDC
+
+Description:
+
+  Returns a list of nodes on the device that match a specified search pattern
+  in an open design.
+
+  The default command gets a list of all nodes on the device.
+
+  Note: To improve memory and performance, the get_* commands return a
+  container list of a single type of objects (e.g. cells, nets, pins, or
+  ports). You can add new objects to the list (using lappend for instance),
+  but you can only add the same type of object that is currently in the list.
+  Adding a different type of object, or string, to the list is not permitted
+  and will result in a Tcl error.
+
+Arguments:
+
+  -of_objects <args> - (Optional) Return the nodes of the specified nets,
+  tiles, nodes, bel_pins, site_pins, wires, speed_model or pip objects.
+
+  Note: The -of_objects option requires objects to be specified using the
+  get_* commands, such as get_cells or get_pins, rather than specifying
+  objects by name. In addition, -of_objects cannot be used with a search
+  <pattern>.
+
+  -regexp - (Optional) Specifies that the search <patterns> are written as
+  regular expressions. Both search <patterns> and -filter expressions must be
+  written as regular expressions when this argument is used. AMD regular
+  expression Tcl commands are always anchored to the start of the search
+  string. You can add ".*" to the beginning or end of a search string to
+  widen the search to include a substring. See
+  http://perldoc.perl.org/perlre.html for help with regular expression
+  syntax.
+
+  Note: The Tcl built-in command regexp is not anchored, and works as a
+  standard Tcl command. For more information refer to
+  http://www.tcl.tk/man/tcl8.5/TclCmd/regexp.htm.
+
+  -nocase - (Optional) Perform case-insensitive matching when a pattern has
+  been specified. This argument applies to the use of -regexp only.
+
+  -filter <args> - Filter the results list with the specified expression. The
+  -filter argument filters the list of objects returned by get_nodes based on
+  property values on the nodes. You can find the properties on an object with
+  the report_property or list_property commands. Any property/value pair can
+  be used as a filter. In the case of the node object, "IS_INPUT_PIN",
+  "IS_BEL_PIN" and "NUM_WIRES" are some of the properties that can be used to
+  filter results.
+
+  The filter search pattern should be quoted to avoid having to escape
+  special characters that may be found in net, pin, or cell names, or other
+  properties. String matching is case-sensitive and is always anchored to the
+  start and to the end of the search string. The wildcard "*" character can
+  be used at the beginning or at the end of a search string to widen the
+  search to include a substring of the property value.
+
+  Note: The filter returns an object if a specified property exists on the
+  object, and the specified pattern matches the property value on the object.
+  In the case of the "*" wildcard character, this will match a property with
+  a defined value of "".
+
+  For string comparison, the specific operators that can be used in filter
+  expressions are "equal" (==), "not-equal" (!=), "match" (=~), and
+  "not-match" (!~). Numeric comparison operators <, >, <=, and >= can also be
+  used. Multiple filter expressions can be joined by AND and OR (&& and ||).
+  The following gets input pins that do NOT contain the "RESET" substring
+  within their name:
+
+    get_pins * -filter {DIRECTION == IN && NAME !~ "*RESET*"} 
+    
+
+  Boolean (bool) type properties can be directly evaluated in filter
+  expressions as true or not true:
+
+    -filter {IS_PRIMITIVE && !IS_LOC_FIXED} 
+    
+
+  -uphill - (Optional) Return the nodes uphill of objects specified by the
+  -of_objects option. Uphill nodes precede the specified object in the logic
+  network.
+
+  -downhill - (Optional) Return the nodes downhill of objects specified by
+  the -of_objects option. Downhill nodes follow the specified object in the
+  logic network.
+
+  -flyover - (Optional) Return the nodes that pass through (or flyover) the
+  specified tiles.
+
+  -from <args> - (Optional) Defines the starting points of the nodes to get
+  from site_pin or pip objects. This option can be combined with -uphill. The
+  default is to return nodes downhill of a start point. By default, all nodes
+  will be returned.
+
+  -to <args> - (Optional) Defines the ending points of the nodes to get from
+  site_pin or pip objects. This option can be combined with -uphill. The
+  default is to return nodes downhill of a start point to the specified end
+  point. By default, all nodes will be returned.
+
+  -slls_between <args> - (Optional) Return SLL nodes between provided SLRs.
+  SLL nodes are ones that have IS_SLL property set to true.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <patterns> - (Optional) Return nodes matching the specified search
+  patterns. The default pattern is the wildcard `*` which gets a list of all
+  nodes on the device. More than one search pattern can be specified to find
+  nodes based on different search criteria.
+
+  Note: You must enclose multiple search patterns in braces, {}, or quotes,
+  "", to present the list as a single element.
+
+Examples:
+
+  The following example returns the nodes associated with the specified tile:
+
+    get_nodes -of_objects [get_tiles CLBLM_R_X11Y158] 
+    
+
+  The following example returns the nodes downhill from the specified node:
+
+    get_nodes -downhill -of_objects [get_nodes LIOB33_SING_X0Y199/IOB_PADOUT0] 
+    
+
+See Also:
+
+   *  get_site_pins
+   *  get_tiles
+   *  get_wires
+   *  list_property
+   *  report_property
+

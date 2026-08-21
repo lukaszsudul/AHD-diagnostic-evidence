@@ -1,0 +1,436 @@
+if {$argc != 3} {
+    error "USAGE: audit_scl_sda_timing.tcl <dcp_path> <output_dir> <role>"
+}
+
+set dcp_path [lindex $argv 0]
+set out_dir  [lindex $argv 1]
+set role     [lindex $argv 2]
+file mkdir $out_dir
+
+proc prop_or_na {obj prop} {
+    if {[catch {set value [get_property $prop $obj]}]} { return "NOT_AVAILABLE" }
+    return $value
+}
+
+proc csv_field {value} {
+    set escaped [string map [list "\"" "\"\""] $value]
+    return "\"$escaped\""
+}
+
+proc pins_on_nets {nets} {
+    return [get_pins -quiet -leaf -of_objects $nets]
+}
+
+proc nets_of_pin {pin} {
+    return [get_nets -quiet -segments -of_objects $pin]
+}
+
+proc cells_of_pins {pins} {
+    return [get_cells -quiet -of_objects $pins]
+}
+
+proc pin_by_ref {cell refpin} {
+    return [get_pins -quiet -of_objects $cell -filter "REF_PIN_NAME == $refpin"]
+}
+
+proc require_count {label collection expected} {
+    set actual [llength $collection]
+    if {$actual != $expected} { error "${label}_COUNT_MISMATCH:EXPECTED=$expected:ACTUAL=$actual:OBJECTS=$collection" }
+}
+
+proc emit_object_csv {fh role line semantic obj composite} {
+    set vals [list $role $line $semantic $obj [prop_or_na $obj CLASS] [prop_or_na $obj REF_NAME] \
+        [prop_or_na $obj ORIG_REF_NAME] [prop_or_na $obj REF_PIN_NAME] [prop_or_na $obj DIRECTION] \
+        [prop_or_na $obj IS_SEQUENTIAL] [prop_or_na $obj LOC] [prop_or_na $obj BEL] [prop_or_na $obj SITE] \
+        [prop_or_na $obj CLOCK_REGION] [prop_or_na $obj ASYNC_REG] [prop_or_na $obj SHREG_EXTRACT] \
+        [prop_or_na $obj DONT_TOUCH] [prop_or_na $obj KEEP] [prop_or_na $obj IOB] $composite]
+    set quoted {}
+    foreach value $vals { lappend quoted [csv_field $value] }
+    puts $fh [join $quoted ,]
+}
+
+proc emit_pin_list {fh label pins} {
+    puts $fh "${label}_COUNT=[llength $pins]"
+    set idx 0
+    foreach pin $pins {
+        set pin_obj [get_pins -quiet $pin]
+        set cells [get_cells -quiet -of_objects $pin_obj]
+        puts $fh "${label}_${idx}=PIN=$pin REF_PIN=[prop_or_na $pin REF_PIN_NAME] DIRECTION=[prop_or_na $pin DIRECTION] CELLS=$cells"
+        incr idx
+    }
+}
+
+proc emit_net_detail {fh role line semantic nets} {
+    foreach net $nets {
+        set net_obj [get_nets -quiet $net]
+        set nodes [get_nodes -quiet -of_objects $net_obj]
+        set wires [get_wires -quiet -of_objects $net_obj]
+        puts $fh "ROLE=$role LINE=$line SEMANTIC=$semantic NET=$net ROUTE_STATUS=[prop_or_na $net_obj ROUTE_STATUS] FANOUT=[prop_or_na $net_obj FANOUT] NODE_COUNT=[llength $nodes] WIRE_COUNT=[llength $wires]"
+        puts $fh "ROUTE=[prop_or_na $net_obj ROUTE]"
+        puts $fh "NODES_BEGIN"
+        foreach node [lsort $nodes] { puts $fh $node }
+        puts $fh "NODES_END"
+        puts $fh "WIRES_BEGIN"
+        foreach wire [lsort $wires] { puts $fh $wire }
+        puts $fh "WIRES_END"
+    }
+}
+
+proc emit_net_delays {fh role line semantic nets to_pin mode} {
+    if {[llength $nets] == 0 || [llength $to_pin] == 0} {
+        puts $fh [join [list [csv_field $role] [csv_field $line] [csv_field $semantic] [csv_field $mode] [csv_field "PATH_NOT_FOUND"] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""]] ,]
+        return
+    }
+    if {$mode eq "INTERCONNECT_ONLY"} {
+        set delays [get_net_delays -quiet -interconnect_only -of_objects $nets -to $to_pin]
+    } else {
+        set delays [get_net_delays -quiet -of_objects $nets -to $to_pin]
+    }
+    if {[llength $delays] == 0} {
+        puts $fh [join [list [csv_field $role] [csv_field $line] [csv_field $semantic] [csv_field $mode] [csv_field "PATH_NOT_FOUND"] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""] [csv_field ""]] ,]
+        return
+    }
+    foreach delay $delays {
+        set vals [list $role $line $semantic $mode $delay [prop_or_na $delay NET] [prop_or_na $delay TO_PIN] \
+            [prop_or_na $delay FAST_MAX] [prop_or_na $delay FAST_MIN] [prop_or_na $delay SLOW_MAX] [prop_or_na $delay SLOW_MIN] [prop_or_na $delay ROUTED]]
+        set quoted {}
+        foreach value $vals { lappend quoted [csv_field $value] }
+        puts $fh [join $quoted ,]
+    }
+}
+
+proc emit_timing {csv_fh props_path exceptions_dir role label from_objs to_objs max_paths} {
+    foreach delay_type {max min} {
+        set delay_uc [string toupper $delay_type]
+        set report_path [file join $exceptions_dir "${role}_${label}_${delay_uc}.rpt"]
+        set exception_path [file join $exceptions_dir "${role}_${label}_${delay_uc}_EXCEPTIONS.rpt"]
+        set status "PATH_NOT_FOUND"
+        set paths {}
+        set query_error ""
+        if {[llength $from_objs] > 0 && [llength $to_objs] > 0} {
+            if {[catch {
+                set paths [get_timing_paths -quiet -from $from_objs -to $to_objs -delay_type $delay_type \
+                    -max_paths $max_paths -nworst 1 -unique_pins -routable_nets -sort_by slack]
+            } err]} {
+                set query_error $err
+            }
+        }
+        if {$query_error ne ""} {
+            set fh [open $report_path w]
+            puts $fh "PATH_QUERY_ERROR=$query_error"
+            close $fh
+            set status "PATH_QUERY_ERROR"
+        } elseif {[llength $paths] == 0} {
+            set fh [open $report_path w]
+            puts $fh "PATH_NOT_FOUND"
+            puts $fh "FROM=$from_objs"
+            puts $fh "TO=$to_objs"
+            close $fh
+        } else {
+            report_timing -from $from_objs -to $to_objs -delay_type $delay_type -max_paths $max_paths -nworst 1 \
+                -unique_pins -routable_nets -sort_by slack -path_type full_clock_expanded -input_pins -file $report_path
+            set status "TIMING_PATH_REPORTED"
+        }
+        if {[llength $from_objs] > 0 && [llength $to_objs] > 0} {
+            if {[catch {report_exceptions -from $from_objs -to $to_objs -file $exception_path} exerr]} {
+                set efh [open $exception_path w]
+                puts $efh "FOCUSED_EXCEPTION_REPORT_ERROR=$exerr"
+                close $efh
+            }
+        } else {
+            set efh [open $exception_path w]
+            puts $efh "FOCUSED_EXCEPTION_REPORT_NOT_APPLICABLE_EMPTY_ENDPOINT_SET"
+            close $efh
+        }
+
+        if {[llength $paths] == 0} {
+            set vals [list $role $label $delay_type $status 0 "" "" "" "" "" "" "" "" "" "" "" ""]
+            set quoted {}
+            foreach value $vals { lappend quoted [csv_field $value] }
+            puts $csv_fh [join $quoted ,]
+        } else {
+            set index 0
+            foreach path $paths {
+                if {$index == 0} {
+                    report_property -all -append -file $props_path $path
+                }
+                set vals [list $role $label $delay_type $status [llength $paths] $index \
+                    [prop_or_na $path STARTPOINT_PIN] [prop_or_na $path ENDPOINT_PIN] [prop_or_na $path PATH_GROUP] \
+                    [prop_or_na $path DATAPATH_DELAY] [prop_or_na $path LOGIC_DELAY] [prop_or_na $path ROUTE_DELAY] \
+                    [prop_or_na $path LOGIC_LEVELS] [prop_or_na $path SLACK] [prop_or_na $path REQUIREMENT] \
+                    [prop_or_na $path IS_UNCONSTRAINED] [prop_or_na $path ROUTABLE_NETS]]
+                set quoted {}
+                foreach value $vals { lappend quoted [csv_field $value] }
+                puts $csv_fh [join $quoted ,]
+                incr index
+            }
+        }
+    }
+}
+
+puts "AUDIT_STAGE=OPEN_CHECKPOINT"
+open_checkpoint $dcp_path
+
+set map_path [file join $out_dir "${role}_SCL_SDA_OBJECT_MAP.csv"]
+set map_fh [open $map_path w]
+puts $map_fh "role,line,semantic_role,object,class,ref_name,orig_ref_name,ref_pin_name,direction,is_sequential,loc,bel,site,clock_region,async_reg,shreg_extract,dont_touch,keep,iob,parent_composite"
+
+set raw_path [file join $out_dir "${role}_SCL_SDA_RAW_CONNECTIVITY.txt"]
+set raw_fh [open $raw_path w]
+puts $raw_fh "ROLE=$role"
+puts $raw_fh "DCP=$dcp_path"
+puts $raw_fh "CURRENT_DESIGN=[current_design]"
+puts $raw_fh "TOP=[prop_or_na [current_design] TOP]"
+puts $raw_fh "PART=[prop_or_na [current_design] PART]"
+
+set cells_path [file join $out_dir "${role}_SCL_SDA_CELL_PROPERTIES.csv"]
+set cells_fh [open $cells_path w]
+puts $cells_fh "role,line,semantic_role,cell,ref_name,orig_ref_name,loc,bel,site,clock_region,async_reg,shreg_extract,dont_touch,keep,iob"
+
+set placement_path [file join $out_dir "${role}_SCL_SDA_PLACEMENT.csv"]
+set place_fh [open $placement_path w]
+puts $place_fh "role,line,semantic_role,cell,loc,bel,site,clock_region,iob"
+
+set route_path [file join $out_dir "${role}_SCL_SDA_ROUTE_NODES.txt"]
+set route_fh [open $route_path w]
+
+set net_delay_path [file join $out_dir "${role}_SCL_SDA_NET_DELAYS_PS.csv"]
+set nd_fh [open $net_delay_path w]
+puts $nd_fh "role,line,semantic,mode,delay_object,net,to_pin,fast_max_ps,fast_min_ps,slow_max_ps,slow_min_ps,routed"
+
+set timing_csv_path [file join $out_dir "${role}_SCL_SDA_TIMING_PATHS.csv"]
+set timing_fh [open $timing_csv_path w]
+puts $timing_fh "role,path_class,delay_type,status,path_count,path_index,startpoint,end_point,path_group,datapath_delay_ns,logic_delay_ns,route_delay_ns,logic_levels,slack_ns,requirement_ns,is_unconstrained,routable_nets"
+set timing_props_path [file join $out_dir "${role}_SCL_SDA_TIMING_PATH_PROPERTIES.txt"]
+set tph [open $timing_props_path w]
+puts $tph "ROLE=$role"
+close $tph
+
+array set line_data {}
+
+foreach {line port_name} {SCL nvp_scl SDA nvp_sda} {
+    set lc [string tolower $line]
+    set port [get_ports -quiet $port_name]
+    require_count "${line}_PORT" $port 1
+    set port_nets [nets_of_pin $port]
+    set leaf_port_pins [pins_on_nets $port_nets]
+
+    set ibuf_port_pins [get_pins -quiet -leaf -of_objects $port_nets -filter {REF_NAME == IBUF && REF_PIN_NAME == I}]
+    set obuft_port_pins [get_pins -quiet -leaf -of_objects $port_nets -filter {REF_NAME == OBUFT && REF_PIN_NAME == O}]
+    require_count "${line}_CONNECTED_IBUF_LEAF" $ibuf_port_pins 1
+    require_count "${line}_CONNECTED_OBUFT_LEAF" $obuft_port_pins 1
+    set ibuf_cell [cells_of_pins $ibuf_port_pins]
+    set obuft_cell [cells_of_pins $obuft_port_pins]
+    require_count "${line}_IBUF_CELL" $ibuf_cell 1
+    require_count "${line}_OBUFT_CELL" $obuft_cell 1
+    set ibuf_root [file dirname $ibuf_cell]
+    set obuft_root [file dirname $obuft_cell]
+    if {$ibuf_root ne $obuft_root} { error "${line}_COMPOSITE_IOBUF_ROOT_MISMATCH:IBUF=$ibuf_cell:OBUFT=$obuft_cell" }
+    set composite $ibuf_root
+
+    set i_pin [pin_by_ref $obuft_cell I]
+    set t_pin [pin_by_ref $obuft_cell T]
+    set o_pin [pin_by_ref $ibuf_cell O]
+    require_count "${line}_COMPOSITE_I_PIN" $i_pin 1
+    require_count "${line}_COMPOSITE_T_PIN" $t_pin 1
+    require_count "${line}_COMPOSITE_O_PIN" $o_pin 1
+
+    set i_nets [nets_of_pin $i_pin]
+    set i_net_pins [pins_on_nets $i_nets]
+    set i_drivers [get_pins -quiet -leaf -of_objects $i_nets -filter {DIRECTION == OUT}]
+    set i_driver_cells [cells_of_pins $i_drivers]
+    require_count "${line}_IOBUF_I_DRIVER_CELL" $i_driver_cells 1
+    if {[prop_or_na $i_driver_cells REF_NAME] ne "GND"} { error "${line}_IOBUF_I_NOT_CONSTANT_ZERO:DRIVER=$i_driver_cells:REF=[prop_or_na $i_driver_cells REF_NAME]" }
+
+    set t_nets [nets_of_pin $t_pin]
+    set t_net_pins [pins_on_nets $t_nets]
+    set t_drivers [get_pins -quiet -leaf -of_objects $t_nets -filter {DIRECTION == OUT}]
+    require_count "${line}_IOBUF_T_DIRECT_DRIVER_PIN" $t_drivers 1
+    set oen_cell [cells_of_pins $t_drivers]
+    require_count "${line}_IOBUF_T_DIRECT_DRIVER_CELL" $oen_cell 1
+    if {[prop_or_na $oen_cell IS_SEQUENTIAL] ne "1"} { error "${line}_OEN_DRIVER_NOT_SEQUENTIAL:$oen_cell" }
+    set oen_q $t_drivers
+    set oen_d [pin_by_ref $oen_cell D]
+    require_count "${line}_OEN_D" $oen_d 1
+    set oen_ce [pin_by_ref $oen_cell CE]
+
+    set raw_nets [nets_of_pin $o_pin]
+    set raw_net_pins [pins_on_nets $raw_nets]
+    set raw_loads [get_pins -quiet -leaf -of_objects $raw_nets -filter {DIRECTION == IN}]
+
+    set sync0_regex [format {^NVP_AUTOINIT/u_sequence/%s_sync_r_reg\[0\]$} $lc]
+    set sync0_cell [get_cells -quiet -hierarchical -regexp $sync0_regex]
+    require_count "${line}_SYNC0_CELL" $sync0_cell 1
+    if {[prop_or_na $sync0_cell IS_SEQUENTIAL] ne "1" || [prop_or_na $sync0_cell ASYNC_REG] ne "1"} {
+        error "${line}_SYNC0_ATTRIBUTES_INVALID:CELL=$sync0_cell"
+    }
+    set sync0_d [pin_by_ref $sync0_cell D]
+    require_count "${line}_RAW_TO_SEQUENCE_SYNC0_D" $sync0_d 1
+    if {[lsearch -exact $raw_loads $sync0_d] < 0} { error "${line}_RAW_TO_SYNC0_DIRECT_CONNECTIVITY_NOT_PROVEN" }
+    set raw_other_names {}
+    foreach pin $raw_loads { if {$pin ne $sync0_d} { lappend raw_other_names $pin } }
+    set raw_other_loads [get_pins -quiet $raw_other_names]
+    set sync0_q [pin_by_ref $sync0_cell Q]
+    require_count "${line}_SYNC0_Q" $sync0_q 1
+
+    set sync0_nets [nets_of_pin $sync0_q]
+    set sync0_net_pins [pins_on_nets $sync0_nets]
+    set sync1_regex [format {^NVP_AUTOINIT/u_sequence/%s_sync_r_reg\[1\]$} $lc]
+    set sync1_cell [get_cells -quiet -hierarchical -regexp $sync1_regex]
+    require_count "${line}_SYNC1_CELL" $sync1_cell 1
+    if {[prop_or_na $sync1_cell IS_SEQUENTIAL] ne "1" || [prop_or_na $sync1_cell ASYNC_REG] ne "1"} {
+        error "${line}_SYNC1_ATTRIBUTES_INVALID:CELL=$sync1_cell"
+    }
+    set sync1_d [pin_by_ref $sync1_cell D]
+    require_count "${line}_SYNC0_TO_SYNC1_D" $sync1_d 1
+    if {[lsearch -exact $sync0_net_pins $sync1_d] < 0} { error "${line}_SYNC0_TO_SYNC1_DIRECT_CONNECTIVITY_NOT_PROVEN" }
+    set sync1_q [pin_by_ref $sync1_cell Q]
+    require_count "${line}_SYNC1_Q" $sync1_q 1
+
+    set filtered_regex [format {^NVP_AUTOINIT/u_sequence/%s_filtered_r_reg$} $lc]
+    set filtered_cell [get_cells -quiet -hierarchical -regexp $filtered_regex]
+    require_count "${line}_FILTERED_REGISTER" $filtered_cell 1
+    set filtered_d [pin_by_ref $filtered_cell D]
+    set filtered_q [pin_by_ref $filtered_cell Q]
+    require_count "${line}_FILTERED_D" $filtered_d 1
+    require_count "${line}_FILTERED_Q" $filtered_q 1
+    set sync1_endpoints [all_fanout -flat -endpoints_only -from $sync1_q]
+    if {[lsearch -exact $sync1_endpoints $filtered_d] < 0} { error "${line}_SYNC1_TO_FILTERED_CONNECTIVITY_NOT_PROVEN" }
+
+    set decision_endpoint_names {}
+    set all_filtered_endpoints [all_fanout -flat -endpoints_only -from $filtered_q]
+    foreach pin $all_filtered_endpoints {
+        foreach cell [get_cells -quiet -of_objects $pin] {
+            if {[prop_or_na $cell IS_SEQUENTIAL] ne "1"} { continue }
+            set name_lc [string tolower $cell]
+            if {[string first "nvp_autoinit" $name_lc] < 0} { continue }
+            if {$line eq "SDA"} {
+                foreach token {last_ack cur_error nack_count first_error any_error nack_log data_rx fsm_onehot_state} {
+                    if {[string first $token $name_lc] >= 0} { lappend decision_endpoint_names $pin; break }
+                }
+            } else {
+                foreach token {scl_low_released scl_timeout fsm_onehot_state} {
+                    if {[string first $token $name_lc] >= 0} { lappend decision_endpoint_names $pin; break }
+                }
+            }
+        }
+    }
+    set decision_endpoints [get_pins -quiet [lsort -unique $decision_endpoint_names]]
+    if {[llength $decision_endpoints] == 0} { error "${line}_FILTERED_PROTOCOL_DECISION_ENDPOINTS_NOT_FOUND" }
+
+    puts $raw_fh "${line}_IOBUF_COUNT=1"
+    puts $raw_fh "${line}_COMPOSITE_IOBUF=$composite"
+    puts $raw_fh "${line}_IBUF_LEAF=$ibuf_cell"
+    puts $raw_fh "${line}_OBUFT_LEAF=$obuft_cell"
+    puts $raw_fh "${line}_IOBUF_I_PIN=$i_pin"
+    puts $raw_fh "${line}_IOBUF_T_PIN=$t_pin"
+    puts $raw_fh "${line}_IOBUF_O_PIN=$o_pin"
+    puts $raw_fh "${line}_IOBUF_I_DRIVER_CELL=$i_driver_cells"
+    puts $raw_fh "${line}_IOBUF_I_CONSTANT_ZERO=YES"
+    puts $raw_fh "${line}_OUTPUT_T_NET=$t_nets"
+    puts $raw_fh "${line}_OUTPUT_T_DIRECT_DRIVER_PIN=$oen_q"
+    puts $raw_fh "${line}_OUTPUT_T_DIRECT_DRIVER_CELL=$oen_cell"
+    puts $raw_fh "${line}_INPUT_O_NET=$raw_nets"
+    puts $raw_fh "${line}_SYNC0_D=$sync0_d"
+    puts $raw_fh "${line}_SYNC0_CELL=$sync0_cell"
+    puts $raw_fh "${line}_SYNC1_D=$sync1_d"
+    puts $raw_fh "${line}_SYNC1_CELL=$sync1_cell"
+    puts $raw_fh "${line}_FILTERED_CELL=$filtered_cell"
+    emit_pin_list $raw_fh "${line}_RAW_OTHER_DIRECT_LOAD" $raw_other_loads
+    emit_pin_list $raw_fh "${line}_FILTERED_DECISION_ENDPOINT" $decision_endpoints
+
+    foreach {semantic objs} [list PORT $port COMPOSITE_IBUF_ROOT $composite IBUF_LEAF $ibuf_cell OBUFT_LEAF $obuft_cell \
+        IOBUF_I_PIN $i_pin IOBUF_T_PIN $t_pin IOBUF_O_PIN $o_pin I_CONSTANT_DRIVER $i_driver_cells OEN_REGISTER $oen_cell \
+        OEN_Q $oen_q OEN_D $oen_d SYNC0_REGISTER $sync0_cell SYNC0_D $sync0_d SYNC0_Q $sync0_q \
+        SYNC1_REGISTER $sync1_cell SYNC1_D $sync1_d SYNC1_Q $sync1_q FILTERED_REGISTER $filtered_cell \
+        FILTERED_D $filtered_d FILTERED_Q $filtered_q] {
+        foreach obj $objs { emit_object_csv $map_fh $role $line $semantic $obj $composite }
+    }
+
+    foreach {semantic cell_collection} [list IBUF_LEAF $ibuf_cell OBUFT_LEAF $obuft_cell OEN_REGISTER $oen_cell \
+        SYNC0_REGISTER $sync0_cell SYNC1_REGISTER $sync1_cell FILTERED_REGISTER $filtered_cell] {
+        foreach cell $cell_collection {
+            set vals [list $role $line $semantic $cell [prop_or_na $cell REF_NAME] [prop_or_na $cell ORIG_REF_NAME] \
+                [prop_or_na $cell LOC] [prop_or_na $cell BEL] [prop_or_na $cell SITE] [prop_or_na $cell CLOCK_REGION] \
+                [prop_or_na $cell ASYNC_REG] [prop_or_na $cell SHREG_EXTRACT] [prop_or_na $cell DONT_TOUCH] \
+                [prop_or_na $cell KEEP] [prop_or_na $cell IOB]]
+            set quoted {}
+            foreach value $vals { lappend quoted [csv_field $value] }
+            puts $cells_fh [join $quoted ,]
+            set pvals [list $role $line $semantic $cell [prop_or_na $cell LOC] [prop_or_na $cell BEL] \
+                [prop_or_na $cell SITE] [prop_or_na $cell CLOCK_REGION] [prop_or_na $cell IOB]]
+            set pquoted {}
+            foreach value $pvals { lappend pquoted [csv_field $value] }
+            puts $place_fh [join $pquoted ,]
+        }
+    }
+
+    set port_prop_path [file join $out_dir "${role}_${line}_PORT_PROPERTIES.txt"]
+    report_property -all -file $port_prop_path $port
+    report_property -all -append -file $port_prop_path $ibuf_cell
+    report_property -all -append -file $port_prop_path $obuft_cell
+
+    emit_net_detail $route_fh $role $line OEN_Q_TO_IOBUF_T_NET $t_nets
+    emit_net_detail $route_fh $role $line IBUF_O_TO_SYNC0_NET $raw_nets
+    emit_net_detail $route_fh $role $line SYNC0_Q_TO_SYNC1_NET $sync0_nets
+    emit_net_detail $route_fh $role $line FILTERED_Q_NET [nets_of_pin $filtered_q]
+
+    emit_net_delays $nd_fh $role $line OEN_Q_TO_IOBUF_T $t_nets $t_pin FULL
+    emit_net_delays $nd_fh $role $line OEN_Q_TO_IOBUF_T $t_nets $t_pin INTERCONNECT_ONLY
+    emit_net_delays $nd_fh $role $line IBUF_O_TO_SYNC0 $raw_nets $sync0_d FULL
+    emit_net_delays $nd_fh $role $line IBUF_O_TO_SYNC0 $raw_nets $sync0_d INTERCONNECT_ONLY
+    emit_net_delays $nd_fh $role $line SYNC0_Q_TO_SYNC1 $sync0_nets $sync1_d FULL
+    emit_net_delays $nd_fh $role $line SYNC0_Q_TO_SYNC1 $sync0_nets $sync1_d INTERCONNECT_ONLY
+
+    set oen_d_starts [all_fanin -flat -startpoints_only -to $oen_d]
+    emit_pin_list $raw_fh "${line}_OEN_D_FANIN_STARTPOINT" $oen_d_starts
+    set oen_ce_starts {}
+    if {[llength $oen_ce] > 0} {
+        set oen_ce_starts [all_fanin -flat -startpoints_only -to $oen_ce]
+        emit_pin_list $raw_fh "${line}_OEN_CE_FANIN_STARTPOINT" $oen_ce_starts
+    }
+
+    emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_OEN_REGISTER_Q_TO_IOBUF_T" $oen_q $t_pin 20
+    emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_CONTROL_TO_OEN_REGISTER_D" $oen_d_starts $oen_d 20
+    if {[llength $oen_ce] > 0} {
+        emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_CONTROL_TO_OEN_REGISTER_CE" $oen_ce_starts $oen_ce 20
+    }
+    emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_IOBUF_O_TO_FIRST_SYNC_D" $o_pin $sync0_d 20
+    emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_SYNC0_Q_TO_SYNC1_D" $sync0_q $sync1_d 20
+    emit_timing $timing_fh $timing_props_path $out_dir $role "${line}_SYNC1_TO_FILTER_LOGIC" $sync1_q $filtered_d 20
+    if {$line eq "SDA"} {
+        emit_timing $timing_fh $timing_props_path $out_dir $role "SDA_FILTERED_TO_ACK_DECISION" $filtered_q $decision_endpoints 20
+    } else {
+        emit_timing $timing_fh $timing_props_path $out_dir $role "SCL_FILTERED_TO_TIMEOUT_OR_STATE_DECISION" $filtered_q $decision_endpoints 20
+    }
+
+    set line_data(${line},port) $port
+    set line_data(${line},composite) $composite
+    set line_data(${line},oen) $oen_cell
+    set line_data(${line},sync0) $sync0_cell
+    set line_data(${line},sync1) $sync1_cell
+    set line_data(${line},filtered) $filtered_cell
+}
+
+close $map_fh
+close $raw_fh
+close $cells_fh
+close $place_fh
+close $route_fh
+close $nd_fh
+close $timing_fh
+
+set io_path [file join $out_dir "${role}_REPORT_IO.rpt"]
+report_io -file $io_path
+set ex_path [file join $out_dir "${role}_FOCUSED_AND_GLOBAL_EXCEPTIONS.rpt"]
+report_exceptions -coverage -file $ex_path
+set cdc_path [file join $out_dir "${role}_CDC_CONTEXT.rpt"]
+report_cdc -details -file $cdc_path
+set clk_path [file join $out_dir "${role}_CLOCK_INTERACTION.rpt"]
+report_clock_interaction -file $clk_path
+set unconstrained_path [file join $out_dir "${role}_UNCONSTRAINED_PATHS.rpt"]
+report_timing_summary -delay_type min_max -report_unconstrained -no_detailed_paths -file $unconstrained_path
+
+puts "AUDIT_RESULT=SCL_SDA_CONNECTIVITY_AND_TIMING_COMPLETE"
+close_design
+exit 0
