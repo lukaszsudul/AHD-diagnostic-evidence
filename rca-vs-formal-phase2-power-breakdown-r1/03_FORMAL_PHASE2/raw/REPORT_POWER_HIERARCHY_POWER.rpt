@@ -1,0 +1,248 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version     : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date             : Fri Aug 21 19:55:54 2026
+| Host             : NBLSUDUL running 64-bit major release  (build 9200)
+| Command          : report_power -hier power -hierarchical_depth 0 -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/03_FORMAL_PHASE2/raw/REPORT_POWER_HIERARCHY_POWER.rpt
+| Design           : ahd_capture_top_xdma
+| Device           : xc7a35tcsg325-2
+| Design State     : routed
+| Grade            : commercial
+| Process          : typical
+| Characterization : Production
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Power Report
+
+Table of Contents
+-----------------
+1. Summary
+1.1 On-Chip Components
+1.2 Power Supply Summary
+1.3 Confidence Level
+2. Settings
+2.1 Environment
+2.2 Clock Constraints
+3. Detailed Reports
+3.1 By Hierarchy
+
+1. Summary
+----------
+
++--------------------------+--------------+
+| Total On-Chip Power (W)  | 0.631        |
+| Design Power Budget (W)  | Unspecified* |
+| Power Budget Margin (W)  | NA           |
+| Dynamic (W)              | 0.552        |
+| Device Static (W)        | 0.078        |
+| Effective TJA (C/W)      | 4.8          |
+| Max Ambient (C)          | 82.0         |
+| Junction Temperature (C) | 28.0         |
+| Confidence Level         | Low          |
+| Setting File             | ---          |
+| Simulation Activity File | ---          |
+| Design Nets Matched      | NA           |
++--------------------------+--------------+
+* Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
+
+
+1.1 On-Chip Components
+----------------------
+
++--------------------------+-----------+----------+-----------+-----------------+
+| On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
++--------------------------+-----------+----------+-----------+-----------------+
+| Clocks                   |     0.044 |       11 |       --- |             --- |
+| Slice Logic              |     0.022 |    32616 |       --- |             --- |
+|   LUT as Logic           |     0.018 |    11354 |     20800 |           54.59 |
+|   Register               |     0.001 |    15187 |     41600 |           36.51 |
+|   LUT as Distributed RAM |     0.001 |     1042 |      9600 |           10.85 |
+|   CARRY4                 |     0.001 |      697 |      8150 |            8.55 |
+|   F7/F8 Muxes            |    <0.001 |      271 |     32600 |            0.83 |
+|   LUT as Shift Register  |    <0.001 |       12 |      9600 |            0.13 |
+|   Others                 |     0.000 |      265 |       --- |             --- |
+| Signals                  |     0.029 |    24901 |       --- |             --- |
+| Block RAM                |     0.028 |     21.5 |        50 |           43.00 |
+| MMCM                     |     0.224 |        2 |         5 |           40.00 |
+| I/O                      |     0.031 |       15 |       150 |           10.00 |
+| GTP                      |     0.149 |        1 |       --- |             --- |
+| Hard IPs                 |     0.025 |        1 |       --- |             --- |
+|   PCIE                   |     0.025 |        1 |         1 |          100.00 |
+| Static Power             |     0.078 |          |           |                 |
+| Total                    |     0.631 |          |           |                 |
++--------------------------+-----------+----------+-----------+-----------------+
+
+
+1.2 Power Supply Summary
+------------------------
+
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+| Vccint    |       1.000 |     0.172 |       0.161 |      0.011 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.153 |       0.140 |      0.013 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
+| MGTAVcc   |       1.000 |     0.068 |       0.067 |      0.001 |       NA    | Unspecified | NA         |
+| MGTAVtt   |       1.200 |     0.062 |       0.059 |      0.003 |       NA    | Unspecified | NA         |
+| Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
++-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
+
+
+1.3 Confidence Level
+--------------------
+
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| User Input Data             | Confidence | Details                                                | Action                                                                                                     |
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Design implementation state | High       | Design is routed                                       |                                                                                                            |
+| Clock nodes activity        | High       | User specified more than 95% of clocks                 |                                                                                                            |
+| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view   |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
+| Device models               | High       | Device models are Production                           |                                                                                                            |
+|                             |            |                                                        |                                                                                                            |
+| Overall confidence level    | Low        |                                                        |                                                                                                            |
++-----------------------------+------------+--------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+
+2. Settings
+-----------
+
+2.1 Environment
+---------------
+
++-----------------------+--------------------------+
+| Ambient Temp (C)      | 25.0                     |
+| ThetaJA (C/W)         | 4.8                      |
+| Airflow (LFM)         | 250                      |
+| Heat Sink             | medium (Medium Profile)  |
+| ThetaSA (C/W)         | 4.6                      |
+| Board Selection       | medium (10"x10")         |
+| # of Board Layers     | 12to15 (12 to 15 Layers) |
+| Board Temperature (C) | 25.0                     |
++-----------------------+--------------------------+
+
+
+2.2 Clock Constraints
+---------------------
+
++----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| Clock                      | Domain                                                                                                                                              | Constraint (ns) |
++----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| clk_125mhz                 | XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/clk_125mhz                  |             8.0 |
+| clk_250mhz                 | XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/clk_250mhz                  |             4.0 |
+| idelay_mmcm_feedback_unbuf | NVP_PHYSICAL_FRONTEND/idelay_mmcm_feedback_unbuf                                                                                                    |             6.7 |
+| idelay_refclk_unbuf        | NVP_PHYSICAL_FRONTEND/idelay_refclk_unbuf                                                                                                           |             5.1 |
+| mmcm_fb                    | XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_fb                     |            10.0 |
+| nvp_vclk1                  | vclk1                                                                                                                                               |             6.7 |
+| pcie_refclk_100            | sys_clk_p                                                                                                                                           |            10.0 |
+| txoutclk_x0y0              | XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i_6 |            10.0 |
+| userclk1                   | XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1                    |            16.0 |
++----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+
+
+3. Detailed Reports
+-------------------
+
+3.1 By Hierarchy
+----------------
+
++--------------------------------------------------------------------------------------+-----------+
+| Name                                                                                 | Power (W) |
++--------------------------------------------------------------------------------------+-----------+
+| ahd_capture_top_xdma                                                                 |     0.552 |
+|   AXI_LITE_HOST_BRIDGE                                                               |     0.002 |
+|   CAPTURE_SUBSYSTEM                                                                  |     0.019 |
+|     BAR_TARGET                                                                       |     0.006 |
+|     MAILBOX                                                                          |     0.004 |
+|     PRODUCER                                                                         |     0.007 |
+|   NVP_AUTOINIT                                                                       |     0.002 |
+|     u_sequence                                                                       |     0.002 |
+|   NVP_PHYSICAL_FRONTEND                                                              |     0.149 |
+|   XDMA                                                                               |     0.377 |
+|     inst                                                                             |     0.377 |
+|       ram_top                                                                        |     0.007 |
+|         C2H_PCIE_DSC_CPLD_RAM                                                        |     0.003 |
+|         MASTER_READ_BRAM                                                             |     0.002 |
+|           xpm_memory_sdpram_inst_loop[0].xpm_memory_sdpram_inst                      |     0.002 |
+|             xpm_memory_base_inst                                                     |     0.002 |
+|         mas_bridge_ram_write_512.MASTER_WRITE_FIFO                                   |     0.002 |
+|           xpm_memory_sdpram_inst_loop[0].xpm_memory_sdpram_inst                      |     0.002 |
+|             xpm_memory_base_inst                                                     |     0.002 |
+|       udma_wrapper                                                                   |     0.064 |
+|         dma_top                                                                      |     0.064 |
+|           axi4mm_bridge_top_inst                                                     |     0.004 |
+|             axi4mm_axi_mm_master_top_inst                                            |     0.004 |
+|               axi4mm_axi_mm_master_rd                                                |     0.001 |
+|               axi4mm_axi_mm_master_wr_inst                                           |     0.001 |
+|               axi4mm_axi_str_masterbr_rdtlp_inst                                     |     0.001 |
+|           base                                                                       |     0.006 |
+|             CFG_INST                                                                 |     0.001 |
+|             IRQ_INST                                                                 |     0.003 |
+|               msix_internal_xdma.pf0_msix_table                                      |     0.003 |
+|           dma_enable.vul_dma                                                         |     0.037 |
+|             RD                                                                       |     0.012 |
+|               gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST                                |     0.012 |
+|                 RRQ_FIFO                                                             |     0.001 |
+|             WR                                                                       |     0.015 |
+|               gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST                                |     0.015 |
+|                 DSC_FIFO                                                             |     0.001 |
+|                 WRQ_FIFO                                                             |     0.002 |
+|             dsc_eng.DSC                                                              |     0.009 |
+|               RRQ_FIFO                                                               |     0.001 |
+|           dma_enable.wb_eng.dma_pcie_wb_eng                                          |     0.001 |
+|           dma_pcie_req                                                               |     0.014 |
+|             dma_pcie_rc                                                              |     0.007 |
+|               u_mem_rc                                                               |     0.002 |
+|             dma_pcie_rq                                                              |     0.005 |
+|               RQ_FIFO                                                                |     0.001 |
+|       xdma_v41_m1_pcie2_to_pcie3_wrapper_i                                           |     0.306 |
+|         pcie2_ip_i                                                                   |     0.301 |
+|           inst                                                                       |     0.301 |
+|             inst                                                                     |     0.301 |
+|               gt_top_i                                                               |     0.262 |
+|                 pipe_wrapper_i                                                       |     0.262 |
+|                   pipe_clock_int.pipe_clock_i                                        |     0.108 |
+|                   pipe_lane[0].gt_wrapper_i                                          |     0.149 |
+|                   pipe_lane[0].gtp_pipe_drp.gtp_pipe_drp_i                           |     0.001 |
+|                   pipe_lane[0].pipe_quad.gt_common_enabled.gt_common_int.gt_common_i |     0.002 |
+|                     qpll_drp_i                                                       |     0.001 |
+|               pcie_top_i                                                             |     0.038 |
+|                 axi_basic_top                                                        |     0.001 |
+|                 pcie_7x_i                                                            |     0.037 |
+|                   pcie_bram_top                                                      |     0.011 |
+|                     pcie_brams_rx                                                    |     0.005 |
+|                       brams[0].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[1].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[2].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[3].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                     pcie_brams_tx                                                    |     0.005 |
+|                       brams[0].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[1].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[2].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|                       brams[3].ram                                                   |     0.001 |
+|                         use_tdp.ramb36                                               |     0.001 |
+|         xdma_v41_m1_axi_stream_intf_i                                                |     0.005 |
+|           xdma_v41_m1_rx_demux_i                                                     |     0.003 |
+|             dma_cpl_fifo_inst                                                        |     0.001 |
+|               U0                                                                     |     0.001 |
+|                 inst_fifo_gen                                                        |     0.001 |
+|                   gaxis_fifo.gaxisf.axisf                                            |     0.001 |
+|                     grf.rf                                                           |     0.001 |
+|                       gntv_or_sync_fifo.mem                                          |     0.001 |
++--------------------------------------------------------------------------------------+-----------+
+
+

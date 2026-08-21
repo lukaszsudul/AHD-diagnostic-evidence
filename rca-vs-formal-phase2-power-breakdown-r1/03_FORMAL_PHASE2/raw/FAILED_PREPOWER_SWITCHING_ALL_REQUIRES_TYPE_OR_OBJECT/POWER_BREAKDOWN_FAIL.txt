@@ -1,0 +1,20 @@
+ERROR=MANDATORY_REPORT_FAILED=PRE_SWITCHING_ACTIVITY_ALL:ERROR: [Common 17-39] 'report_switching_activity' failed due to earlier errors.
+
+OPTIONS=-code 1 -level 0 -errorstack {INNER {invokeStk1 error {MANDATORY_REPORT_FAILED=PRE_SWITCHING_ACTIVITY_ALL:ERROR: [Common 17-39] 'report_switching_activity' failed due to earlier errors.
+}} CALL {run_mandatory_report PRE_SWITCHING_ACTIVITY_ALL {report_switching_activity -all -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/03_FORMAL_PHASE2/raw/PRE_SWITCHING_ACTIVITY_ALL.rpt} C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/03_FORMAL_PHASE2/raw/PRE_SWITCHING_ACTIVITY_ALL.rpt} CALL {run_mandatory_report PRE_SWITCHING_ACTIVITY_ALL {report_switching_activity -all -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/03_FORMAL_PHASE2/raw/PRE_SWITCHING_ACTIVITY_ALL.rpt} C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/03_FORMAL_PHASE2/raw/PRE_SWITCHING_ACTIVITY_ALL.rpt} CALL {capture_inventory PRE} CALL main} -errorcode NONE -errorinfo {MANDATORY_REPORT_FAILED=PRE_SWITCHING_ACTIVITY_ALL:ERROR: [Common 17-39] 'report_switching_activity' failed due to earlier errors.
+
+    while executing
+"error "MANDATORY_REPORT_FAILED=$label:$message""
+    invoked from within
+"if {[catch {uplevel #0 $command} message options]} {
+        error "MANDATORY_REPORT_FAILED=$label:$message"
+    }"
+    (procedure "run_mandatory_report" line 3)
+    invoked from within
+"run_mandatory_report "${phase}_SWITCHING_ACTIVITY_ALL" [list report_switching_activity -all -file $path] $path"
+    (procedure "capture_inventory" line 10)
+    invoked from within
+"capture_inventory PRE"
+    (procedure "main" line 43)
+    invoked from within
+"main"} -errorline 1

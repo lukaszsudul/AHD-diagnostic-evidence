@@ -1,0 +1,32 @@
+REPORT_SCRIPT_SHA256=5B11D9AAE10A34819CF0463E0E39828DB7BE34F8EFB4DDFD844F75CBFB45BB67
+FORMAL_COMMAND_COUNT=25
+RCA_COMMAND_COUNT=25
+COMMAND_LABEL_SEQUENCE_EQUAL=YES
+NORMALIZED_COMMAND_SEQUENCE_EQUAL=YES
+
+--- NORMALIZED SEQUENCE ---
+OPEN_CHECKPOINT=open_checkpoint <DCP>
+ROUTE_STATUS=report_route_status -file <OUTPUT_ROOT>/ROUTE_STATUS.rpt
+REPORT_IO=report_io -file <OUTPUT_ROOT>/REPORT_IO.rpt
+REPORT_IO_XML=report_io -format xml -file <OUTPUT_ROOT>/REPORT_IO.xml
+UTILIZATION_HIERARCHICAL=report_utilization -hierarchical -hierarchical_depth 0 -file <OUTPUT_ROOT>/UTILIZATION_HIERARCHICAL.rpt
+PRE_OPERATING_CONDITIONS_ALL=report_operating_conditions -all -file <OUTPUT_ROOT>/PRE_OPERATING_CONDITIONS_ALL.rpt
+PRE_OPERATING_CONDITIONS_CORE_VOLTAGE=report_operating_conditions -voltage VCCINT VCCAUX -file <OUTPUT_ROOT>/PRE_OPERATING_CONDITIONS_CORE_VOLTAGE.rpt
+PRE_SWITCHING_ACTIVITY_TOP_PORTS=report_switching_activity -toggle_rate -average -file <OUTPUT_ROOT>/PRE_SWITCHING_ACTIVITY_TOP_PORTS.rpt nvp_en_vdd1x nvp_en_vdd3x nvp_mpp[0] nvp_mpp[1] nvp_mpp[2] nvp_mpp[3] nvp_rst nvp_scl nvp_sda pci_exp_rxn[0] pci_exp_rxp[0] pci_exp_txn[0] pci_exp_txp[0] sys_clk_n sys_clk_p sys_rst_n vclk1 vdo1_data[0] vdo1_data[1] vdo1_data[2] vdo1_data[3] vdo1_data[4] vdo1_data[5] vdo1_data[6] vdo1_data[7]
+PRE_SWITCHING_ACTIVITY_DEFAULTS=report_switching_activity -default_static_probability -default_toggle_rate -file <OUTPUT_ROOT>/PRE_SWITCHING_ACTIVITY_DEFAULTS.rpt
+PRE_CLOCKS=report_clocks -file <OUTPUT_ROOT>/PRE_CLOCKS.rpt
+PRE_CLOCK_NETWORKS=report_clock_networks -file <OUTPUT_ROOT>/PRE_CLOCK_NETWORKS.rpt
+PRE_CLOCK_NETWORK_ENDPOINTS=report_clock_networks -endpoints_only -expand_buckets -file <OUTPUT_ROOT>/PRE_CLOCK_NETWORK_ENDPOINTS.rpt
+POWER_STANDARD=report_power -file <OUTPUT_ROOT>/REPORT_POWER_STANDARD.rpt
+POWER_HIERARCHY_ALL_VERBOSE=report_power -hier all -hierarchical_depth 0 -l 0 -verbose -file <OUTPUT_ROOT>/REPORT_POWER_HIERARCHY_ALL_VERBOSE.rpt
+POWER_HIERARCHY_POWER=report_power -hier power -hierarchical_depth 0 -file <OUTPUT_ROOT>/REPORT_POWER_HIERARCHY_POWER.rpt
+POWER_ADVISORY=report_power -advisory -file <OUTPUT_ROOT>/REPORT_POWER_ADVISORY.rpt
+POWER_XML=report_power -hier all -hierarchical_depth 0 -l 0 -format xml -file <OUTPUT_ROOT>/REPORT_POWER.xml
+POWER_RPX=report_power -hier all -hierarchical_depth 0 -l 0 -rpx <OUTPUT_ROOT>/REPORT_POWER.rpx -file <OUTPUT_ROOT>/REPORT_POWER_WITH_RPX.rpt
+POST_OPERATING_CONDITIONS_ALL=report_operating_conditions -all -file <OUTPUT_ROOT>/POST_OPERATING_CONDITIONS_ALL.rpt
+POST_OPERATING_CONDITIONS_CORE_VOLTAGE=report_operating_conditions -voltage VCCINT VCCAUX -file <OUTPUT_ROOT>/POST_OPERATING_CONDITIONS_CORE_VOLTAGE.rpt
+POST_SWITCHING_ACTIVITY_TOP_PORTS=report_switching_activity -toggle_rate -average -file <OUTPUT_ROOT>/POST_SWITCHING_ACTIVITY_TOP_PORTS.rpt nvp_en_vdd1x nvp_en_vdd3x nvp_mpp[0] nvp_mpp[1] nvp_mpp[2] nvp_mpp[3] nvp_rst nvp_scl nvp_sda pci_exp_rxn[0] pci_exp_rxp[0] pci_exp_txn[0] pci_exp_txp[0] sys_clk_n sys_clk_p sys_rst_n vclk1 vdo1_data[0] vdo1_data[1] vdo1_data[2] vdo1_data[3] vdo1_data[4] vdo1_data[5] vdo1_data[6] vdo1_data[7]
+POST_SWITCHING_ACTIVITY_DEFAULTS=report_switching_activity -default_static_probability -default_toggle_rate -file <OUTPUT_ROOT>/POST_SWITCHING_ACTIVITY_DEFAULTS.rpt
+POST_CLOCKS=report_clocks -file <OUTPUT_ROOT>/POST_CLOCKS.rpt
+POST_CLOCK_NETWORKS=report_clock_networks -file <OUTPUT_ROOT>/POST_CLOCK_NETWORKS.rpt
+POST_CLOCK_NETWORK_ENDPOINTS=report_clock_networks -endpoints_only -expand_buckets -file <OUTPUT_ROOT>/POST_CLOCK_NETWORK_ENDPOINTS.rpt

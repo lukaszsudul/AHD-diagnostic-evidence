@@ -1,0 +1,722 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 21 19:57:37 2026
+# Process ID         : 6608
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -nojournal -log C:\FPGA\V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1\04_RCA\raw\VIVADO_REPORT_SUITE.log -source C:\FPGA\V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1\scripts\run_power_breakdown.tcl -tclargs RCA C:\FPGA\V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1\01_INPUT_IDENTITY\RCA_routed.dcp C:\FPGA\V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1\04_RCA\raw ahd_capture_top_pcie
+# Log file           : C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/VIVADO_REPORT_SUITE.log
+# Journal file       : 
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4160 MB
+# Total Virtual      : 21189 MB
+# Available Virtual  : 8715 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1\scripts\run_power_breakdown.tcl}
+# puts "SCRIPT_ENTERED"
+SCRIPT_ENTERED
+# flush stdout
+# if {$argc != 4} {
+#     puts stderr "USAGE: run_power_breakdown.tcl <role> <dcp_path> <output_root> <expected_top>"
+#     exit 64
+# }
+# set role         [lindex $argv 0]
+# set dcp_path     [file normalize [lindex $argv 1]]
+# set output_root  [file normalize [lindex $argv 2]]
+# set expected_top [lindex $argv 3]
+# file mkdir $output_root
+# set ::command_log [open [file join $output_root REPORT_COMMAND_SEQUENCE.txt] w]
+# set ::design_open 0
+# proc csv_field {value} {
+#     return "\"[string map [list \" \"\"] $value]\""
+# }
+# proc prop_or_na {object property} {
+#     if {[catch {set value [get_property $property $object]}]} {
+#         return "NOT_AVAILABLE"
+#     }
+#     if {$value eq ""} { return "UNSET" }
+#     return $value
+# }
+# proc log_command {label command} {
+#     puts $::command_log "$label=[join $command { }]"
+#     flush $::command_log
+# }
+# proc require_nonempty {label path} {
+#     if {![file exists $path] || [file size $path] <= 0} {
+#         error "MANDATORY_OUTPUT_MISSING_OR_EMPTY=$label:$path"
+#     }
+#     puts "REPORT_PASS=$label:[file size $path]"
+# }
+# proc run_mandatory_report {label command path} {
+#     log_command $label $command
+#     if {[catch {uplevel #0 $command} message options]} {
+#         error "MANDATORY_REPORT_FAILED=$label:$message"
+#     }
+#     require_nonempty $label $path
+# }
+# proc write_text {path text} {
+#     set handle [open $path w]
+#     puts -nonewline $handle $text
+#     close $handle
+# }
+# proc capture_inventory {phase} {
+#     set root $::output_root
+#     set path [file join $root "${phase}_OPERATING_CONDITIONS_ALL.rpt"]
+#     run_mandatory_report "${phase}_OPERATING_CONDITIONS_ALL" [list report_operating_conditions -all -file $path] $path
+# 
+#     set path [file join $root "${phase}_OPERATING_CONDITIONS_CORE_VOLTAGE.rpt"]
+#     run_mandatory_report "${phase}_OPERATING_CONDITIONS_CORE_VOLTAGE" [list report_operating_conditions -voltage {VCCINT VCCAUX} -file $path] $path
+# 
+#     set path [file join $root "${phase}_SWITCHING_ACTIVITY_TOP_PORTS.rpt"]
+#     run_mandatory_report "${phase}_SWITCHING_ACTIVITY_TOP_PORTS" [list report_switching_activity -toggle_rate -average -file $path [get_ports -quiet *]] $path
+# 
+#     set path [file join $root "${phase}_SWITCHING_ACTIVITY_DEFAULTS.rpt"]
+#     run_mandatory_report "${phase}_SWITCHING_ACTIVITY_DEFAULTS" [list report_switching_activity -default_static_probability -default_toggle_rate -file $path] $path
+# 
+#     set path [file join $root "${phase}_CLOCKS.rpt"]
+#     run_mandatory_report "${phase}_CLOCKS" [list report_clocks -file $path] $path
+# 
+#     set path [file join $root "${phase}_CLOCK_NETWORKS.rpt"]
+#     run_mandatory_report "${phase}_CLOCK_NETWORKS" [list report_clock_networks -file $path] $path
+# 
+#     set path [file join $root "${phase}_CLOCK_NETWORK_ENDPOINTS.rpt"]
+#     run_mandatory_report "${phase}_CLOCK_NETWORK_ENDPOINTS" [list report_clock_networks -endpoints_only -expand_buckets -file $path] $path
+# }
+# proc capture_object_power_properties {} {
+#     set root $::output_root
+#     set properties_csv [open [file join $root OBJECT_POWER_PROPERTIES.csv] w]
+#     puts $properties_csv "object_class,object_name,property,value"
+# 
+#     set all_properties [open [file join $root OBJECT_PROPERTIES_ALL.txt] w]
+#     set seen [dict create]
+# 
+#     set banks [get_iobanks -quiet]
+#     foreach bank $banks {
+#         set key "IOBANK|$bank"
+#         dict set seen $key 1
+#         puts $all_properties "===== IOBANK $bank ====="
+#         foreach property [lsort [list_property $bank]] {
+#             set value [prop_or_na $bank $property]
+#             puts $all_properties "$property=$value"
+#             if {[regexp -nocase {(power|current|voltage|toggle|switch|activity|static|dynamic)} $property]} {
+#                 puts $properties_csv "[csv_field IOBANK],[csv_field $bank],[csv_field $property],[csv_field $value]"
+#             }
+#         }
+#     }
+# 
+#     foreach rail [get_power_rails -quiet] {
+#         puts $all_properties "===== POWER_RAIL $rail ====="
+#         foreach property [lsort [list_property $rail]] {
+#             set value [prop_or_na $rail $property]
+#             puts $all_properties "$property=$value"
+#             if {[regexp -nocase {(power|current|voltage|toggle|switch|activity|static|dynamic)} $property]} {
+#                 puts $properties_csv "[csv_field POWER_RAIL],[csv_field $rail],[csv_field $property],[csv_field $value]"
+#             }
+#         }
+#     }
+# 
+#     foreach port [lsort [get_ports -quiet *]] {
+#         puts $all_properties "===== PORT $port ====="
+#         foreach property [lsort [list_property $port]] {
+#             set value [prop_or_na $port $property]
+#             puts $all_properties "$property=$value"
+#             if {[regexp -nocase {(power|current|voltage|toggle|switch|activity|static|dynamic)} $property]} {
+#                 puts $properties_csv "[csv_field PORT],[csv_field $port],[csv_field $property],[csv_field $value]"
+#             }
+#         }
+# 
+#         set port_nets [get_nets -quiet -of_objects $port]
+#         foreach net $port_nets {
+#             set key "NET|$net"
+#             if {![dict exists $seen $key]} {
+#                 dict set seen $key 1
+#                 puts $all_properties "===== NET $net ====="
+#                 foreach property [lsort [list_property $net]] {
+#                     set value [prop_or_na $net $property]
+#                     puts $all_properties "$property=$value"
+#                     if {[regexp -nocase {(power|current|voltage|toggle|switch|activity|static|dynamic)} $property]} {
+#                         puts $properties_csv "[csv_field NET],[csv_field $net],[csv_field $property],[csv_field $value]"
+#                     }
+#                 }
+#             }
+#         }
+# 
+#         foreach cell [get_cells -quiet -of_objects $port_nets] {
+#             set ref_name [prop_or_na $cell REF_NAME]
+#             if {![regexp -nocase {(IOBUF|IBUF|OBUF|OBUFT)} $ref_name]} { continue }
+#             set key "CELL|$cell"
+#             if {[dict exists $seen $key]} { continue }
+#             dict set seen $key 1
+#             puts $all_properties "===== IO_CELL $cell REF_NAME=$ref_name ====="
+#             foreach property [lsort [list_property $cell]] {
+#                 set value [prop_or_na $cell $property]
+#                 puts $all_properties "$property=$value"
+#                 if {[regexp -nocase {(power|current|voltage|toggle|switch|activity|static|dynamic)} $property]} {
+#                     puts $properties_csv "[csv_field IO_CELL],[csv_field $cell],[csv_field $property],[csv_field $value]"
+#                 }
+#             }
+#         }
+#     }
+#     close $all_properties
+#     close $properties_csv
+# }
+# proc capture_port_bank_inventory {} {
+#     set root $::output_root
+#     set handle [open [file join $root PORT_IOBANK_INVENTORY.csv] w]
+#     puts $handle "port,package_pin,iobank,direction,iostandard,drive,slew,pulltype,in_term,diff_term,clock_association"
+#     foreach port [lsort [get_ports -quiet *]] {
+#         set banks [get_iobanks -quiet -of_objects $port]
+#         if {[llength $banks] == 0} { set banks "NOT_AVAILABLE" }
+#         if {[catch {set clocks [get_clocks -quiet -of_objects $port]}]} { set clocks "NOT_AVAILABLE" }
+#         if {[llength $clocks] == 0} { set clocks "NONE_PROVEN" }
+#         set values [list $port [prop_or_na $port PACKAGE_PIN] $banks [prop_or_na $port DIRECTION] [prop_or_na $port IOSTANDARD] [prop_or_na $port DRIVE] [prop_or_na $port SLEW] [prop_or_na $port PULLTYPE] [prop_or_na $port IN_TERM] [prop_or_na $port DIFF_TERM] $clocks]
+#         set quoted {}
+#         foreach value $values { lappend quoted [csv_field $value] }
+#         puts $handle [join $quoted ,]
+#     }
+#     close $handle
+# }
+# proc main {} {
+#     puts "POWER_BREAKDOWN_ROLE=$::role"
+#     puts "POWER_BREAKDOWN_DCP=$::dcp_path"
+#     log_command OPEN_CHECKPOINT [list open_checkpoint $::dcp_path]
+#     open_checkpoint $::dcp_path
+#     set ::design_open 1
+# 
+#     set design [current_design]
+#     set top_property [prop_or_na $design TOP]
+#     set part [prop_or_na $design PART]
+#     set is_routed [prop_or_na $design IS_ROUTED]
+#     set design_mode [prop_or_na $design DESIGN_MODE]
+#     if {$top_property ne $::expected_top} { error "WRONG_TOP=$top_property:EXPECTED=$::expected_top" }
+#     if {$part ne "xc7a35tcsg325-2"} { error "WRONG_PART=$part" }
+# 
+#     set path [file join $::output_root ROUTE_STATUS.rpt]
+#     run_mandatory_report ROUTE_STATUS [list report_route_status -file $path] $path
+#     set route_handle [open $path r]
+#     set route_text [read $route_handle]
+#     close $route_handle
+#     if {![regexp {# of routable nets\.+\s*:\s*([0-9]+)\s*:} $route_text unused routable_nets]} {
+#         error "ROUTE_STATUS_PARSE_FAILED=ROUTABLE_NETS"
+#     }
+#     if {![regexp {# of fully routed nets\.+\s*:\s*([0-9]+)\s*:} $route_text unused fully_routed_nets]} {
+#         error "ROUTE_STATUS_PARSE_FAILED=FULLY_ROUTED_NETS"
+#     }
+#     if {![regexp {# of nets with routing errors\.+\s*:\s*([0-9]+)\s*:} $route_text unused routing_error_nets]} {
+#         error "ROUTE_STATUS_PARSE_FAILED=ROUTING_ERRORS"
+#     }
+#     if {$routing_error_nets != 0 || $fully_routed_nets != $routable_nets} {
+#         error "CHECKPOINT_NOT_ROUTED=ROUTABLE_$routable_nets:FULLY_$fully_routed_nets:ERRORS_$routing_error_nets"
+#     }
+#     set gate "ROLE=$::role\nCURRENT_DESIGN=$design\nTOP_PROPERTY=$top_property\nEXPECTED_TOP=$::expected_top\nPART=$part\nIS_ROUTED_PROPERTY=$is_routed\nDESIGN_MODE=$design_mode\nROUTABLE_NETS=$routable_nets\nFULLY_ROUTED_NETS=$fully_routed_nets\nROUTING_ERROR_NETS=$routing_error_nets\nIS_ROUTED=YES\n"
+#     write_text [file join $::output_root DESIGN_IDENTITY_GATE.txt] $gate
+#     set path [file join $::output_root REPORT_IO.rpt]
+#     run_mandatory_report REPORT_IO [list report_io -file $path] $path
+#     set path [file join $::output_root REPORT_IO.xml]
+#     run_mandatory_report REPORT_IO_XML [list report_io -format xml -file $path] $path
+#     set path [file join $::output_root UTILIZATION_HIERARCHICAL.rpt]
+#     run_mandatory_report UTILIZATION_HIERARCHICAL [list report_utilization -hierarchical -hierarchical_depth 0 -file $path] $path
+#     capture_port_bank_inventory
+# 
+#     capture_inventory PRE
+# 
+#     set path [file join $::output_root REPORT_POWER_STANDARD.rpt]
+#     run_mandatory_report POWER_STANDARD [list report_power -file $path] $path
+# 
+#     set path [file join $::output_root REPORT_POWER_HIERARCHY_ALL_VERBOSE.rpt]
+#     run_mandatory_report POWER_HIERARCHY_ALL_VERBOSE [list report_power -hier all -hierarchical_depth 0 -l 0 -verbose -file $path] $path
+# 
+#     set path [file join $::output_root REPORT_POWER_HIERARCHY_POWER.rpt]
+#     run_mandatory_report POWER_HIERARCHY_POWER [list report_power -hier power -hierarchical_depth 0 -file $path] $path
+# 
+#     set path [file join $::output_root REPORT_POWER_ADVISORY.rpt]
+#     run_mandatory_report POWER_ADVISORY [list report_power -advisory -file $path] $path
+# 
+#     set path [file join $::output_root REPORT_POWER.xml]
+#     run_mandatory_report POWER_XML [list report_power -hier all -hierarchical_depth 0 -l 0 -format xml -file $path] $path
+# 
+#     set text_path [file join $::output_root REPORT_POWER_WITH_RPX.rpt]
+#     set rpx_path [file join $::output_root REPORT_POWER.rpx]
+#     log_command POWER_RPX [list report_power -hier all -hierarchical_depth 0 -l 0 -rpx $rpx_path -file $text_path]
+#     if {[catch {report_power -hier all -hierarchical_depth 0 -l 0 -rpx $rpx_path -file $text_path} message options]} {
+#         error "MANDATORY_REPORT_FAILED=POWER_RPX:$message"
+#     }
+#     require_nonempty POWER_RPX_TEXT $text_path
+#     require_nonempty POWER_RPX $rpx_path
+# 
+#     capture_object_power_properties
+#     capture_inventory POST
+# 
+#     write_text [file join $::output_root OPTIONAL_REPORTS.txt] "REPORT_SSN_RUN=NO\nREASON=SUPPLEMENTARY_ONLY_NOT_REQUIRED_FOR_POWER_BREAKDOWN\n"
+#     puts "POWER_BREAKDOWN_RESULT=PASS"
+# }
+# if {[catch {main} message options]} {
+#     puts stderr "POWER_BREAKDOWN_RESULT=FAIL"
+#     puts stderr "POWER_BREAKDOWN_ERROR=$message"
+#     write_text [file join $output_root POWER_BREAKDOWN_FAIL.txt] "ERROR=$message\nOPTIONS=$options\n"
+#     if {$::design_open} { catch {close_design} }
+#     close $::command_log
+#     exit 1
+# }
+POWER_BREAKDOWN_ROLE=RCA
+POWER_BREAKDOWN_DCP=C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/01_INPUT_IDENTITY/RCA_routed.dcp
+Command: open_checkpoint C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/01_INPUT_IDENTITY/RCA_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.118 . Memory (MB): peak = 333.613 ; gain = 6.793
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.341 . Memory (MB): peak = 755.246 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 358 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.066 . Memory (MB): peak = 858.930 ; gain = 1.348
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.026 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.568 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.187 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.874 . Memory (MB): peak = 1469.441 ; gain = 0.000
+Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1469.441 ; gain = 1.574
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1469.441 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:00:58 ; elapsed = 00:01:28 . Memory (MB): peak = 1469.441 ; gain = 1153.230
+REPORT_PASS=ROUTE_STATUS:651
+report_io: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.205 . Memory (MB): peak = 1502.578 ; gain = 0.000
+REPORT_PASS=REPORT_IO:100857
+report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.277 . Memory (MB): peak = 1502.578 ; gain = 0.000
+REPORT_PASS=REPORT_IO_XML:489309
+REPORT_PASS=UTILIZATION_HIERARCHICAL:8121
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxn[0]'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxp[0]'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txn[0]'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txp[0]'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_n'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Common 17-673] Cannot get value of property 'DRIVE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'SLEW' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'PULLTYPE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_p'.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+REPORT_PASS=PRE_OPERATING_CONDITIONS_ALL:1620
+REPORT_PASS=PRE_OPERATING_CONDITIONS_CORE_VOLTAGE:36
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+REPORT_PASS=PRE_SWITCHING_ACTIVITY_TOP_PORTS:32
+REPORT_PASS=PRE_SWITCHING_ACTIVITY_DEFAULTS:64
+REPORT_PASS=PRE_CLOCKS:3385
+report_clock_networks: Time (s): cpu = 00:00:10 ; elapsed = 00:00:05 . Memory (MB): peak = 1531.668 ; gain = 29.090
+REPORT_PASS=PRE_CLOCK_NETWORKS:1645
+REPORT_PASS=PRE_CLOCK_NETWORK_ENDPOINTS:462640
+Command: report_power -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER_STANDARD.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 47 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+REPORT_PASS=POWER_STANDARD:11109
+Command: report_power -hier all -hierarchical_depth 0 -l 0 -verbose -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER_HIERARCHY_ALL_VERBOSE.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 48 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:09 ; elapsed = 00:00:07 . Memory (MB): peak = 1532.605 ; gain = 0.938
+REPORT_PASS=POWER_HIERARCHY_ALL_VERBOSE:38465
+Command: report_power -hier power -hierarchical_depth 0 -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER_HIERARCHY_POWER.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 49 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+REPORT_PASS=POWER_HIERARCHY_POWER:15288
+Command: report_power -advisory -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER_ADVISORY.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 50 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+REPORT_PASS=POWER_ADVISORY:61090
+Command: report_power -hier all -hierarchical_depth 0 -l 0 -format xml -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER.xml
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 51 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:09 ; elapsed = 00:00:07 . Memory (MB): peak = 1542.348 ; gain = 0.492
+REPORT_PASS=POWER_XML:139608
+Command: report_power -hier all -hierarchical_depth 0 -l 0 -rpx C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER.rpx -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/REPORT_POWER_WITH_RPX.rpt
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+WARNING: [Power 33-332] Found switching activity that implies high-fanout reset nets being asserted for excessive periods of time which may result in inaccurate power analysis.
+Resolution: To review and fix problems, please run Power Constraints Advisor in the GUI from Tools > Power Constraints Advisor or run report_power with the -advisory option to generate a text report.
+12 Infos, 52 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+report_power: Time (s): cpu = 00:00:08 ; elapsed = 00:00:07 . Memory (MB): peak = 1543.336 ; gain = 0.988
+REPORT_PASS=POWER_RPX_TEXT:38651
+REPORT_PASS=POWER_RPX:3390749
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3180] IBUF_LOW_PWR is not a valid property for port nvp_en_vdd1x because it is an output port
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-599] Property 'SLEWTYPE' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Common 17-599] Property 'SLEW_ADV' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd1x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'nvp_en_vdd1x_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'nvp_en_vdd1x_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3180] IBUF_LOW_PWR is not a valid property for port nvp_en_vdd3x because it is an output port
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-599] Property 'SLEWTYPE' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Common 17-599] Property 'SLEW_ADV' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_en_vdd3x_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'nvp_en_vdd3x_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'nvp_en_vdd3x_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3180] IBUF_LOW_PWR is not a valid property for port nvp_rst because it is an output port
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-599] Property 'SLEWTYPE' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Common 17-599] Property 'SLEW_ADV' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Vivado 12-8382] 'nvp_rst' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_rst' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_rst' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_rst_OBUF_inst' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'nvp_rst_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'nvp_rst_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-599] Property 'SLEWTYPE' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Common 17-599] Property 'SLEW_ADV' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Vivado 12-8382] 'nvp_scl' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_scl' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_scl' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_scl_iobuf' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'nvp_scl_iobuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'nvp_scl_iobuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-599] Property 'SLEWTYPE' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Common 17-599] Property 'SLEW_ADV' is deprecated for object type 'port'. Use 'SLEW'.
+WARNING: [Vivado 12-8382] 'nvp_sda' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_sda' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_sda' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'nvp_sda_iobuf' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'nvp_sda_iobuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'nvp_sda_iobuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3179] IBUF_LOW_PWR is not a valid property for port pci_exp_rxn[0] because it does not have an I/O standard
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxn[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.ROW' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RUNTIME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.TILE.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.TILE.NAME' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxn[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.TILE.ROW' is only valid on AIE cell(s).
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'pci_exp_rxn[0]_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'pci_exp_rxn[0]_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3179] IBUF_LOW_PWR is not a valid property for port pci_exp_rxp[0] because it does not have an I/O standard
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_rxp[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]' is not an AIE net.  Property 'AIE.BUFFER_COUNT' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]' is not an AIE net.  Property 'AIE.FIFO_DEPTH' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]' is not an AIE net.  Property 'AIE.MARGIN' is only valid on AIE net(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_MEMORIES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.NOT_COLOCATED_NODES' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.BANK' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.COLUMN' is only valid on AIE cell(s).
+WARNING: [Vivado 12-8382] 'pci_exp_rxp[0]_IBUF_inst' is not an AIE cell.  Property 'AIE.RESERVED_MEMORY.OFFSET' is only valid on AIE cell(s).
+INFO: [Common 17-14] Message 'Vivado 12-8382' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'pci_exp_rxp[0]_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'pci_exp_rxp[0]_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3180] IBUF_LOW_PWR is not a valid property for port pci_exp_txn[0] because it is an output port
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txn[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'pci_exp_txn[0]_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'pci_exp_txn[0]_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3180] IBUF_LOW_PWR is not a valid property for port pci_exp_txp[0] because it is an output port
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'pci_exp_txp[0]'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'pci_exp_txp[0]_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'pci_exp_txp[0]_OBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3179] IBUF_LOW_PWR is not a valid property for port sys_clk_n because it does not have an I/O standard
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_n'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'sys_clk_n_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'sys_clk_n_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DIFF_TERM' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3179] IBUF_LOW_PWR is not a valid property for port sys_clk_p because it does not have an I/O standard
+WARNING: [Vivado 12-3295] 'IN_TERM' cannot be set on GT port 'sys_clk_p'.
+WARNING: [Vivado 12-1815] Setting property 'IOSTANDARD' is not allowed for GT terminals.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'sys_clk_p_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'sys_clk_p_IBUF_inst' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-69] Command failed: HD.ISOLATED can only be set on hierarchical instances. 'sys_reset_n_ibuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.RECONFIGURABLE can only be set on hierarchical instances. 'sys_reset_n_ibuf' is not a hierarchical instance
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+WARNING: [Common 17-673] Cannot get value of property 'DCI_CAL_DISABLE' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-673] Cannot get value of property 'DELAY_VALUE_XPHY' because this property is not valid in conjunction with other property setting on this object.
+WARNING: [Common 17-69] Command failed: HD.TANDEM can only be applied for target parts that support Tandem flow.
+WARNING: [Vivado 12-3298] Part xc7a35tcsg325-2 does not support the 'OUT_TERM' property.
+REPORT_PASS=POST_OPERATING_CONDITIONS_ALL:1620
+REPORT_PASS=POST_OPERATING_CONDITIONS_CORE_VOLTAGE:36
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+WARNING: [Power 33-294] Please check port connectivity. For differential IOs, refer to P side instead of N side for setting/reporting switching activities.
+REPORT_PASS=POST_SWITCHING_ACTIVITY_TOP_PORTS:35
+REPORT_PASS=POST_SWITCHING_ACTIVITY_DEFAULTS:64
+REPORT_PASS=POST_CLOCKS:3386
+REPORT_PASS=POST_CLOCK_NETWORKS:1646
+REPORT_PASS=POST_CLOCK_NETWORK_ENDPOINTS:462643
+POWER_BREAKDOWN_RESULT=PASS
+# if {$::design_open} { close_design }
+# close $::command_log
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 21 20:00:13 2026...

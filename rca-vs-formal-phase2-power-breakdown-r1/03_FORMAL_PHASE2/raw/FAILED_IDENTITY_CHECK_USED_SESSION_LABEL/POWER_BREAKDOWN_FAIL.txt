@@ -1,0 +1,9 @@
+ERROR=WRONG_TOP=checkpoint_FORMAL_PHASE2_routed:EXPECTED=ahd_capture_top_xdma
+OPTIONS=-code 1 -level 0 -errorstack {INNER {invokeStk1 error WRONG_TOP=checkpoint_FORMAL_PHASE2_routed:EXPECTED=ahd_capture_top_xdma} CALL main CALL main} -errorcode NONE -errorinfo {WRONG_TOP=checkpoint_FORMAL_PHASE2_routed:EXPECTED=ahd_capture_top_xdma
+    while executing
+"error "WRONG_TOP=$design:EXPECTED=$::expected_top" "
+    invoked from within
+"if {$design ne $::expected_top} { error "WRONG_TOP=$design:EXPECTED=$::expected_top" }"
+    (procedure "main" line 14)
+    invoked from within
+"main"} -errorline 1

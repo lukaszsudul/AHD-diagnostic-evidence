@@ -1,0 +1,34 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 21 20:00:12 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_clock_networks -file C:/FPGA/V41_RCA_PHASE2_POWER_BREAKDOWN_NO_BUILD_R1/04_RCA/raw/POST_CLOCK_NETWORKS.rpt
+| Design       : ahd_capture_top_pcie
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Networks Report
+
+
+Constrained Clocks
+-------------------
+
+Clock sys_clk (100MHz)(endpoints: 9 clock, 1 nonclock)
+Port sys_clk_p
+
+Clock txoutclk_x0y0 (100MHz)(endpoints: 2652 clock, 1 nonclock)
+GTPE2_CHANNEL/TXOUTCLK (pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i)
+
+Clock nvp_vclk1 (148.5MHz)(endpoints: 1735 clock, 0 nonclock)
+Port vclk1
+
+
+Unconstrained Pulse Width Clocks
+-------------------
+
+Clock PLL0OUTCLK (endpoints: 0 clock, 1 nonclock)
+GTPE2_COMMON/PLL0OUTCLK (pcie7_g0p8c0_support_i/pcie7_g0p8c0_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].pipe_quad.gt_common_enabled.gt_common_int.gt_common_i/qpll_wrapper_i/gtp_common.gtpe2_common_i)
+

@@ -1,0 +1,164 @@
+report_operating_conditions
+
+Description: 
+Get operating conditions values for power estimation
+
+Syntax: 
+report_operating_conditions  [-voltage <args>] [-voltage_range <args>] [-grade]
+                             [-process] [-junction_temp] [-ambient_temp]
+                             [-thetaja] [-thetasa] [-airflow] [-heatsink]
+                             [-thetajb] [-board] [-board_temp] [-board_layers]
+                             [-design_power_budget] [-all] [-file <arg>]
+                             [-return_string] [-append]
+                             [-supply_current_budget <args>] [-quiet]
+                             [-verbose]
+
+Usage: 
+  Name                      Description
+  -------------------------------------
+  [-voltage]                Gets voltage value.  Supported voltage supplies 
+                            vary by family.
+  [-voltage_range]          Gets voltage range.  Supported voltage supplies 
+                            vary by family.
+  [-grade]                  Temperature grade.  Supported values vary by 
+                            family.
+  [-process]                Gets process
+  [-junction_temp]          Junction Temperature (C): auto|degC
+  [-ambient_temp]           Ambient Temperature (C): default|degC
+  [-thetaja]                ThetaJA (C/W): auto|degC/W
+  [-thetasa]                Gets ThetaSA
+  [-airflow]                Airflow (LFM): 0 to 750
+  [-heatsink]               Gets dimensions of heatsink
+  [-thetajb]                Gets ThetaJB
+  [-board]                  Board type: jedec, small, medium, large, custom
+  [-board_temp]             Board Temperature degC
+  [-board_layers]           Board layers: 4to7, 8to11, 12to15, 16+
+  [-design_power_budget]    Design Power Budget (W)
+  [-all]                    Gets all operating conditions listed in this help
+                            message
+  [-file]                   Filename to output results to. (send output to 
+                            console if -file is not used)
+  [-return_string]          Return operating conditions as string
+  [-append]                 Append operating conditions to end of file
+  [-supply_current_budget]  Reports a list of supply current budget 'name 
+                            value' pairs.  Supported voltage supplies vary by
+                            family.
+  [-quiet]                  Ignore command errors
+  [-verbose]                Suspend message limits during command execution
+
+Categories: 
+Report
+
+Description:
+
+  Displays the real-world operating conditions that are used when performing
+  analysis of the design. The reported values of operating conditions can be
+  defined by the set_operating_conditions command.
+
+  The environmental operating conditions of the device are used for power
+  analysis when running the report_power command, but are not used during
+  timing analysis.
+
+  Note: By default the report is written to the Tcl console or STD output.
+  However, the results can also be written to a file or returned as a string
+  if desired.
+
+Arguments:
+
+  -voltage - (Optional) Report the list of voltage pairs. Supported voltage
+  supplies vary by family.
+
+  -voltage_range - (Optional) Report the list of voltage ranges. Supported
+  voltage supplies vary by family.
+
+  -grade - (Optional) Report the temperature grade of the target device
+
+  -process - (Optional) Report the manufacturing process characteristics to
+  be assumed.
+
+  -junction_temp - (Optional) Report the device junction temperature used for
+  modeling
+
+  -ambient_temp - (Optional) Reports the environment ambient temperature
+
+  -thetaja - (Optional) Report the Theta-JA thermal resistance used for
+  modeling
+
+  -thetasa - (Optional) Report the Theta-SA thermal resistance used for
+  modeling
+
+  -airflow - (Optional) Report the Linear Feet Per Minute (LFM) airflow to be
+  used for modeling.
+
+  -heatsink - (Optional) Report the heatsink type to be used for modeling.
+
+  -thetajb - (Optional) Report the Theta-JB thermal resistance used for
+  modeling
+
+  -board - (Optional) Report the board size to be used for modeling.
+
+  -board_temp - (Optional) Report the board temperature in degrees Centigrade
+  to be used for modeling.
+
+  -board_layers - (Optional) Report the number of board layers to be used for
+  modeling
+
+  -design_power_budget - (Optional) Report the design power budget in Watts.
+  This value is used by the report_power command to report the difference
+  between the calculated on-chip power and the design power budget.
+
+  -all - (Optional) Report the current values of all operating conditions.
+  Use this to avoid having to report each condition separately.
+
+  -file <arg> - (Optional) Write the report into the specified file. This
+  will overwrite an existing file of the same name, unless the -append option
+  is also used.
+
+  Note: If the path is not specified as part of the file name, the file will
+  be written into the current working directory, or the directory from which
+  the tool was launched.
+
+  -append - (Optional) Append the output of the command to the specified file
+  rather than overwriting it.
+
+  Note: The -append option can only be used with the -file option.
+
+  -return_string - (Optional) Directs the output to a Tcl string rather than
+  to the standard output. The Tcl string can be captured by a variable
+  definition and parsed or otherwise processed.
+
+  Note: This argument cannot be used with the -file option.
+
+  -supply_current_budget - (Optional) Report the list of supply name and
+  current budget pairs. Supported voltage supplies vary by family.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  Specify an industrial temperature grade device with an ambient temperature
+  of 75 degrees C and then write those settings to a file on disk.
+
+    set_operating_conditions -grade industrial -junction_temp 75  
+    report_operating_conditions -grade -junction_temp -return_string -file \  
+    ~/conditions.txt 
+    
+
+  Get voltage ranges of VCCINT and VCCAUX for the target device.
+
+    report_operating_conditions -voltage_range {VCCINT VCCAUX}
+
+See Also:
+
+   *  set_operating_conditions

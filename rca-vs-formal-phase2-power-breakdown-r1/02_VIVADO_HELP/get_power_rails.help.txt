@@ -1,0 +1,26 @@
+get_power_rails
+
+Description: 
+Get a list of Power Rails in the current design
+
+Syntax: 
+get_power_rails  [-regexp] [-nocase] [-filter <arg>] [-quiet] [-verbose]
+                 [<patterns>]
+
+Returns: 
+list of power rail objects
+
+Usage: 
+  Name          Description
+  -------------------------
+  [-regexp]     Patterns are full regular expressions
+  [-nocase]     Perform case-insensitive matching (valid only when -regexp 
+                specified)
+  [-filter]     Filter list with expression
+  [-quiet]      Ignore command errors
+  [-verbose]    Suspend message limits during command execution
+  [<patterns>]  Match Power rail names against patterns
+                Default: *
+
+Categories: 
+XDC, Floorplan
