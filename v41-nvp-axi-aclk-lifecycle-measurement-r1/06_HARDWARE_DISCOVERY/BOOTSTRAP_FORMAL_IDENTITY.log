@@ -1,0 +1,40 @@
+UTC_START=2026-08-21T11:09:41.0084536Z
+UTC_END=2026-08-21T11:09:44.8915563Z
+EVIDENCE_KIND=BOOTSTRAP_FORMAL_IDENTITY
+RESULT=FAIL
+EXIT_CODE=1
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+64427968-3d60-4dfe-acee-451a2ae75c6a
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+0000:01:00.0 Memory controller: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug)
+	Subsystem: Xilinx Corporation Device 0007
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 83
+	IOMMU group: 13
+	Region 0: Memory at f6e00000 (32-bit, non-prefetchable) [size=128K]
+	Region 1: Memory at f6e20000 (32-bit, non-prefetchable) [size=64K]
+	Capabilities: <access denied>
+	Kernel driver in use: xdma
+
+/sys/bus/pci/drivers/xdma
+crw------- 1 root root 511, 1 Aug 21 13:08 /dev/xdma0_control
+crw------- 1 root root 511, 0 Aug 21 13:08 /dev/xdma0_user
+STDOUT_END
+STDERR_BEGIN
+
+sudo: interactive authentication is required
+sudo: interactive authentication is required
+sudo: interactive authentication is required
+sudo: interactive authentication is required
+STDERR_END

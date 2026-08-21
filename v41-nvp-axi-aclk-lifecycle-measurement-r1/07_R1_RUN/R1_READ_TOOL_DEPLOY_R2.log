@@ -1,0 +1,29 @@
+UTC_START=2026-08-21T11:18:48.6975852Z
+UTC_END=2026-08-21T11:18:50.1548615Z
+EVIDENCE_KIND=R1_READ_TOOL_DEPLOY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+b28e4fb388492d19f7adc59c198813d583eb94bd54a29e297b85ad6f1a18ddda  /home/vcdeagent1/r1_axi_clock_measure_tool/v41_axi_clock_measure_r1_read.c
+7cea7948e6af4607beb8074f65b5442258e0e635e1e14fb2396081d261c10993  /home/vcdeagent1/r1_axi_clock_measure_tool/v41_axi_clock_measure_r1_read
+STDOUT_END
+STDERR_BEGIN
+/home/vcdeagent1/r1_axi_clock_measure_tool/v41_axi_clock_measure_r1_read.c: In function ‘main’:
+/home/vcdeagent1/r1_axi_clock_measure_tool/v41_axi_clock_measure_r1_read.c:27:10: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘long long unsigned int’ [-Wformat=]
+   27 |   printf("REMOTE_MONOTONIC_NS=%" PRIu64 "\n",(uint64_t)ts.tv_sec*1000000000ull+ts.tv_nsec);
+      |          ^~~~~~~~~~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                               |
+      |                                                                               long long unsigned int
+In file included from /home/vcdeagent1/r1_axi_clock_measure_tool/v41_axi_clock_measure_r1_read.c:4:
+/usr/include/inttypes.h:110:41: note: format string is defined here
+  110 | # define PRIu64         __PRI64_PREFIX "u"
+STDERR_END
