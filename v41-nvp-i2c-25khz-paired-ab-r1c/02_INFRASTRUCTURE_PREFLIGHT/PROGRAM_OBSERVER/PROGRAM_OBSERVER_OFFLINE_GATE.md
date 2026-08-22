@@ -1,0 +1,56 @@
+# R1c accepted R1b programming-observer offline gate
+
+## Provenance and identity
+
+- Accepted evidence repository: `AHD-diagnostic-evidence`
+- Accepted evidence commit: `b773cf667fc6f3277e518535a3e070f3f8a59303`
+- Accepted source path: `v41-nvp-i2c-25khz-paired-ab-r1b`
+- Later hardened observer substituted: `NO`
+
+| Artifact | SHA-256 |
+|---|---|
+| `scripts/Run-ProgramOnceStartupHighDone.ps1` | `2F6CF02E14E5461F9710C3F1E803F0DC325628C04D64E3C925502E88BFA315AF` |
+| `scripts/ProgramObserverCommon.ps1` | `6F3CCFD6DF0DE449196970DE2BC3F570F68E562DF29F18EB8E8800B04F1EAB66` |
+| `scripts/program_once_startup_high_done.tcl` | `7E1EE248BF3D818561DDA5990411EAD3757205F39DCEBA8888079061F4A1F653` |
+| `scripts/Test-ProgramObserverFixtures.ps1` | `BC685B189BC480B414E3D316B082CD6FFF70EA03EFF3CC3065384B4E1E505771` |
+| `scripts/Test-ProgramObserverLog.ps1` | `8ADA846ACE686FCBE7147CC69548EA4E30CE9EDF0A44D2C7CC5A36535602938B` |
+| `scripts/Test-ProgramObserverStatic.ps1` | `95298F7428E71CC5A077DBE2A5644B608DDE9B9EF4BDBAFA62F3329518F2BF39` |
+| `scripts/Complete-ProgramObserverPostprocess.ps1` | `240B765D67C38A83314ADA5EE01712C5F6889E82E101429C3E5CD22B8534E48D` |
+| `scripts/read_only_property_preflight.tcl` | `F0F60701D3B24EA97B51D0616D1CA26B9353100B4B7BD7440A35596EE6E9AC4E` |
+
+## Fail-closed results
+
+- Static audit: `PASS`
+- Tcl `program_hw_devices` command count: `1`
+- BIT4/EOS property-query count: `0`
+- BIT5/DONE property-query count: `2`
+- Accepted fixture matrix: `PASS_11_OF_11`
+- Prior R1 replay: expected historical failure reproduced as `FAIL_POST_PROGRAM_OBSERVER_BIT4`
+- Prior R1b replay: `PASS_STARTUP_HIGH_DONE_1`
+- Postprocess evidence-append fixture: `PASS`
+- Rendered `System.Object[]` lines: `0`
+- Same-process synthetic QPC wait fixture: `PASS`
+- Prior R1b QPC replay: `PASS`; elapsed `223.944751400 s`
+
+## Output identities
+
+| Output | SHA-256 |
+|---|---|
+| `PROGRAM_OBSERVER_STATIC_AUDIT.txt` | `0B97F277F0F43D644E96AFCD207200D45B8C646D87B8A84360C55D01E7D71322` |
+| `PROGRAM_OBSERVER_FIXTURE_RESULTS.csv` | `F528F66F724AE4B4C464372F8E92BC1D58451322CCF5CEEF2459BB2FAF1B3B6D` |
+| `PRIOR_R1_PROGRAM_REPLAY.txt` | `2A81D79F0EAB05F77BA115AB4352465E08B0784BCE6A59246E845D14F45EE817` |
+| `PRIOR_R1B_PROGRAM_REPLAY.txt` | `86C9DF27F4F6CC10DF561D3B8E5A7E75811BD573D2BF196D85B6D35B2A553FB9` |
+| `PROGRAM_OBSERVER_SUPPLEMENTAL_GATES.txt` | `95316666C5D2FD8AC73906CE29B0E414FDA54E8A1283E381133B5E044D060273` |
+
+## Scope accounting
+
+```text
+VIVADO_LAUNCHES=0
+NETWORK_ACTIONS=0
+SSH_ACTIONS=0
+JTAG_ACTIONS=0
+HARDWARE_ACTIONS=0
+FPGA_SOURCE_CHANGES=0
+```
+
+Result: `R1C_PROGRAM_OBSERVER_OFFLINE_GATE=PASS`

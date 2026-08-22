@@ -1,0 +1,27 @@
+# Pre-Arm-A loader launcher attempt 01
+
+```text
+ATTEMPT_CLASSIFICATION=LOCAL_WINDOWS_POWERSHELL_PARSE_FAILURE_BEFORE_SCRIPT_ENTRY
+INVALID_WRAPPER_SHA256=4CBCA55DE206F4C668A6F1D9591ACD4349DCB20B0C43A1BF6F702F46EA0FD7EE
+FAILURE=WINDOWS_POWERSHELL_5_1_MISDECODED_UTF8_NON_ASCII_HELPER_PATH_LITERAL
+LOCAL_ONE_SHOT_RECEIPT_CREATED=NO
+CONTEXTUAL_PLINK_HELPER_ENTERED=NO
+SSH_SESSION_STARTED=NO
+REMOTE_LOADER_PAYLOAD_ENTERED=NO
+DRIVER_LOADER_INVOCATION_CONSUMED_MARKER=NOT_EMITTED
+OPTIONAL_PRE_ARM_A_DRIVER_LOADER_INVOCATIONS_AFTER_ATTEMPT=0
+PROGRAM_INVOCATIONS=0
+REBOOTS=0
+HARDWARE_STATE_CHANGE=NO
+```
+
+The failed wrapper was preserved byte-for-byte as
+`PRE_ARM_A_DRIVER_LOADER_WRAPPER_ATTEMPT_01_INVALID.ps1`. The only correction
+constructs the accepted helper path from the system Documents directory using
+ASCII-only source text. The corrected wrapper has SHA-256
+`3D532F32FE62144D86743CAB8B31A907614B41723D363F6057E825CCF254357C`, contains
+zero non-ASCII bytes, and parses with zero errors under Windows PowerShell 5.1.
+
+This attempt did not consume an authorized loader invocation because execution
+stopped in the PowerShell parser before the wrapper body, credential helper,
+SSH transport, or remote payload could begin.

@@ -1,0 +1,170 @@
+UTC_START=2026-08-22T11:57:30.2452195Z
+UTC_END=2026-08-22T11:57:31.5886311Z
+EVIDENCE_KIND=R1C_EXACT_DRIVER_LOADER_ARM_A
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+LOADER_ROLE=ARM_A
+REMOTE_USER=vcdeagent1
+REMOTE_EFFECTIVE_USER=root
+EXPLICIT_MODULE_PATH=/home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+MODULE_SHA256=1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+MODULE_VERSION=2025.2.0
+MODULE_VERMAGIC=7.0.0-29-generic SMP preempt mod_unload modversions 
+MODULE_SRCVERSION=E2C680AF6D8BF5E3A2F6ACB
+EXPLICIT_LOADER_PATH=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+LOADER_SHA256=7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+LOADER_MODE=644
+REMOTE_EVIDENCE_DIRECTORY=/home/vcdeagent1/FPGA_AHD_HOST/v41_nvp_i2c_25khz_r1c/arm_a_driver
+PRELOAD_GATE=PASS
+LOADER_COMMAND=/usr/bin/bash /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko 1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A /home/vcdeagent1/FPGA_AHD_HOST/v41_nvp_i2c_25khz_r1c/arm_a_driver
+DRIVER_LOADER_INVOCATION_CONSUMED=1
+DRIVER_LOADER_START_UTC=2026-08-22T11:57:32.197175258Z
+xdma                  114688  0
+filename:       /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+license:        Dual BSD/GPL
+version:        2025.2.0
+description:    Xilinx XDMA Reference Driver
+author:         Xilinx, Inc.
+srcversion:     E2C680AF6D8BF5E3A2F6ACB
+alias:          pci:v00001D0Fd0000F001sv*sd*bc*sc*i*
+alias:          pci:v00001D0Fd0000F000sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00002808sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00004B28sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00004A28sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00004908sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00004828sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00004808sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006D30sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006A30sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006A28sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006930sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006928sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006830sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00006828sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007038sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007034sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007032sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007031sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007028sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007024sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007022sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007021sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007018sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007014sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007012sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00007011sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008038sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008034sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008032sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008031sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008028sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008024sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008022sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008021sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008018sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008014sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008012sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00008011sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009011sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009021sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009031sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009012sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009022sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009032sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009014sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009024sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009034sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009018sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009028sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009038sv*sd*bc*sc*i*
+alias:          pci:v000010EEd0000903Fsv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009041sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009042sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009044sv*sd*bc*sc*i*
+alias:          pci:v000010EEd00009048sv*sd*bc*sc*i*
+depends:        
+name:           xdma
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+parm:           h2c_timeout:H2C sgdma timeout in seconds, default is 10 sec. (uint)
+parm:           c2h_timeout:C2H sgdma timeout in seconds, default is 10 sec. (uint)
+parm:           poll_mode:Set 1 for hw polling, default is 0 (interrupts) (uint)
+parm:           interrupt_mode:0 - Auto , 1 - MSI, 2 - Legacy, 3 - MSI-x (uint)
+parm:           enable_st_c2h_credit:Set 1 to enable ST C2H engine credit feature, default is 0 ( credit control disabled) (uint)
+parm:           desc_blen_max:per descriptor max. buffer length, default is (1 << 28) - 1 (uint)
+xdma0_c2h_0
+xdma0_control
+xdma0_events_0
+xdma0_events_1
+xdma0_events_10
+xdma0_events_11
+xdma0_events_12
+xdma0_events_13
+xdma0_events_14
+xdma0_events_15
+xdma0_events_2
+xdma0_events_3
+xdma0_events_4
+xdma0_events_5
+xdma0_events_6
+xdma0_events_7
+xdma0_events_8
+xdma0_events_9
+xdma0_h2c_0
+xdma0_user
+xdma0_xvc
+[  818.665649] xdma: loading out-of-tree module taints kernel.
+[  818.665657] xdma: module verification failed: signature and/or required key missing - tainting kernel
+[  818.666474] xdma:xdma_mod_init: Xilinx XDMA Reference Driver xdma v2025.2.0
+[  818.666476] xdma:xdma_mod_init: desc_blen_max: 0xfffffff/268435455, timeout: h2c 10 c2h 10 sec.
+[  818.666537] xdma:xdma_device_open: xdma device 0000:01:00.0, 0x000000009c521a51.
+[  818.666553] xdma 0000:01:00.0: enabling device (0000 -> 0002)
+[  818.666699] xdma:map_single_bar: BAR0 at 0xf6e00000 mapped at 0x000000000ad51607, length=131072(/131072)
+[  818.666709] xdma:map_single_bar: BAR1 at 0xf6e20000 mapped at 0x00000000d617d7c1, length=65536(/65536)
+[  818.666716] xdma:map_bars: config bar 1, pos 1.
+[  818.666717] xdma:identify_bars: 2 BARs: config 1, user 0, bypass -1.
+[  818.666874] xdma:pci_keep_intx_enabled: 0000:01:00.0: clear INTX_DISABLE, 0x406 -> 0x6.
+[  818.666902] xdma:probe_one: 0000:01:00.0 xdma0, pdev 0x000000009c521a51, xdev 0x0000000003ebdd2d, 0x00000000f6535865, usr 16, ch 1,1.
+[  818.667566] xdma:cdev_xvc_init: xcdev 0x00000000308e1a3c, bar 0, offset 0x40000.
+XDMA_MODULE_SHA256=1aef06244df308fee544a2662b73855c81beb88bc929e7885d8d113e474b320a
+XDMA_ENDPOINT_COUNT=1
+XDMA_BDF=0000:01:00.0
+PREEXISTING_XDMA_MODULE=NO
+XDMA_DRIVER_LOAD=PASS
+XDMA_USER_NODE=/dev/xdma0_user
+DRIVER_LOADER_EXIT_CODE=0
+DRIVER_LOADER_END_UTC=2026-08-22T11:57:32.270458476Z
+XDMA_NODE_COUNT=21
+XDMA_NODE_LIST=xdma0_c2h_0,xdma0_control,xdma0_events_0,xdma0_events_1,xdma0_events_10,xdma0_events_11,xdma0_events_12,xdma0_events_13,xdma0_events_14,xdma0_events_15,xdma0_events_2,xdma0_events_3,xdma0_events_4,xdma0_events_5,xdma0_events_6,xdma0_events_7,xdma0_events_8,xdma0_events_9,xdma0_h2c_0,xdma0_user,xdma0_xvc
+XDMA_OPEN_PROCESS_COUNT=0
+BAR_PARSER_SHA256=5F7A6BDBF498720E1B40C54AB71A7E86BBD43AF1758AB207CF7EEBA65B15A922
+BAR0_START=0x00000000f6e00000
+BAR0_END=0x00000000f6e1ffff
+BAR0_FLAGS=0x0000000000040200
+BAR0_BYTES=131072
+BAR1_START=0x00000000f6e20000
+BAR1_END=0x00000000f6e2ffff
+BAR1_FLAGS=0x0000000000040200
+BAR1_BYTES=65536
+EXPECTED_UNSIGNED_MODULE_TAINT_COUNT=1
+POSTLOAD_CRITICAL_MATCH_COUNT=0
+POSTLOAD_CRITICAL_MATCHES_BEGIN
+
+POSTLOAD_CRITICAL_MATCHES_END
+WRONG_SAME_NAME_XDMA_LOADED_OR_BOUND=NO
+TASK_DMA_COMMANDS=0
+LOADER_RESULT=PASS
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

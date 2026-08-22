@@ -1,0 +1,194 @@
+UTC_START=2026-08-22T11:10:44.3345438Z
+UTC_END=2026-08-22T11:10:45.8167581Z
+EVIDENCE_KIND=R1C_HOST_PREFLIGHT_READ_ONLY
+RESULT=FAIL
+EXIT_CODE=1
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+REMOTE_USER=vcdeagent1
+REMOTE_EFFECTIVE_USER=root
+HOSTNAME=VCDE-DUT-1
+CURRENT_BOOT_ID=f86e72b5-a516-43da-b320-841b715bb926
+CURRENT_KERNEL=7.0.0-29-generic
+UPTIME_START=2026-08-22 11:59:57
+PROC_CMDLINE=BOOT_IMAGE=/boot/vmlinuz-7.0.0-29-generic root=UUID=f7897627-c98a-4bf4-b24a-ae18f881e2da ro quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+PROC_CMDLINE_BOOT_IMAGE=/boot/vmlinuz-7.0.0-29-generic
+EXPECTED_MODULE_DIRECTORY=/lib/modules/7.0.0-29-generic
+EXPECTED_MODULE_DIRECTORY_PRESENT=YES
+PINNED_MODULE_PATH=/home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+PINNED_MODULE_SHA256=1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+PINNED_MODULE_VERSION=2025.2.0
+PINNED_MODULE_VERMAGIC=7.0.0-29-generic SMP preempt mod_unload modversions 
+PINNED_MODULE_SRCVERSION=E2C680AF6D8BF5E3A2F6ACB
+ACCEPTED_LOADER_PATH=/home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+ACCEPTED_LOADER_SHA256=7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+ACCEPTED_LOADER_MODE=644
+CURRENT_KERNEL_EQUALS_PINNED_VERMAGIC=YES
+ACTIVE_BOOTLOADER=GRUB
+GRUB_DEFAULT_FILE_RELEVANT_BEGIN
+GRUB_DEFAULT="gnulinux-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da>gnulinux-7.0.0-29-generic-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da"
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_TIMEOUT=0
+GRUB_DEFAULT_FILE_RELEVANT_END
+GRUB_ENV_BEGIN
+
+GRUB_ENV_END
+GRUB_DEFAULT_NORMALIZED=gnulinux-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da>gnulinux-7.0.0-29-generic-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da
+GRUB_SAVED_ENTRY=NONE
+GRUB_NEXT_ENTRY=NONE
+GRUB_KERNEL29_MENU_ENTRIES_BEGIN
+181:submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da' {
+219:	menuentry 'Ubuntu, with Linux 7.0.0-29-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-7.0.0-29-generic-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da' {
+238:	menuentry 'Ubuntu, with Linux 7.0.0-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-7.0.0-29-generic-recovery-f7897627-c98a-4bf4-b24a-ae18f881e2da' {
+GRUB_KERNEL29_MENU_ENTRIES_END
+PERSISTENT_DEFAULT_KERNEL29=YES
+NEXT_ENTRY_SELECTS_OTHER_KERNEL=NO
+GRUB_SELECTED_ENTRY_BLOCK_BEGIN
+	menuentry 'Ubuntu, with Linux 7.0.0-29-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-7.0.0-29-generic-advanced-f7897627-c98a-4bf4-b24a-ae18f881e2da' {
+		recordfail
+		load_video
+		set gfxpayload=$linux_gfx_mode
+		insmod gzio
+		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  f7897627-c98a-4bf4-b24a-ae18f881e2da
+		else
+		  search --no-floppy --fs-uuid --set=root f7897627-c98a-4bf4-b24a-ae18f881e2da
+		fi
+		echo	'Loading Linux 7.0.0-29-generic ...'
+		linux	/boot/vmlinuz-7.0.0-29-generic root=UUID=f7897627-c98a-4bf4-b24a-ae18f881e2da ro  quiet splash crashkernel=2G-4G:320M,4G-32G:512M,32G-64G:1024M,64G-128G:2048M,128G-:4096M
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-7.0.0-29-generic
+	}
+	menuentry 'Ubuntu, with Linux 7.0.0-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-7.0.0-29-generic-recovery-f7897627-c98a-4bf4-b24a-ae18f881e2da' {
+		recordfail
+		load_video
+		insmod gzio
+		if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  f7897627-c98a-4bf4-b24a-ae18f881e2da
+		else
+		  search --no-floppy --fs-uuid --set=root f7897627-c98a-4bf4-b24a-ae18f881e2da
+		fi
+		echo	'Loading Linux 7.0.0-29-generic ...'
+		linux	/boot/vmlinuz-7.0.0-29-generic root=UUID=f7897627-c98a-4bf4-b24a-ae18f881e2da ro recovery nomodeset dis_ucode_ldr 
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-7.0.0-29-generic
+	}
+}
+
+### END /etc/grub.d/10_linux ###
+GRUB_SELECTED_ENTRY_BLOCK_END
+NEXT_REBOOT_KERNEL_PROVEN=7.0.0-29-generic
+FRESH_DRIVER_EVIDENCE_DIRECTORY=/home/vcdeagent1/FPGA_AHD_HOST/v41_nvp_i2c_25khz_r1c/pre_arm_a_driver STATE=ABSENT_FRESH
+FRESH_DRIVER_EVIDENCE_DIRECTORY=/home/vcdeagent1/FPGA_AHD_HOST/v41_nvp_i2c_25khz_r1c/arm_a_driver STATE=ABSENT_FRESH
+FRESH_DRIVER_EVIDENCE_DIRECTORY=/home/vcdeagent1/FPGA_AHD_HOST/v41_nvp_i2c_25khz_r1c/arm_b_driver STATE=ABSENT_FRESH
+ENDPOINT_COUNT=1
+ENDPOINT_LIST=0000:01:00.0
+ENDPOINT_BDF=0000:01:00.0
+ENDPOINT_VENDOR_DEVICE=10ee:7011
+ENDPOINT_SUBSYSTEM=10ee:0007
+ENDPOINT_CLASS=058000
+CURRENT_LINK_SPEED_RAW=2.5 GT/s PCIe
+CURRENT_LINK_WIDTH_RAW=1
+ENDPOINT_LINK=GEN1_X1
+PCI_RESOURCE_RAW_BEGIN
+0x00000000f6e00000 0x00000000f6e1ffff 0x0000000000040200
+0x00000000f6e20000 0x00000000f6e2ffff 0x0000000000040200
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+PCI_RESOURCE_RAW_END
+BAR_PARSER_REMOTE_SHA256=5F7A6BDBF498720E1B40C54AB71A7E86BBD43AF1758AB207CF7EEBA65B15A922
+BAR_PARSER_OUTPUT_BEGIN
+BAR0_START=0x00000000f6e00000
+BAR0_END=0x00000000f6e1ffff
+BAR0_FLAGS=0x0000000000040200
+BAR0_BYTES=131072
+BAR1_START=0x00000000f6e20000
+BAR1_END=0x00000000f6e2ffff
+BAR1_FLAGS=0x0000000000040200
+BAR1_BYTES=65536
+BAR_PARSER_OUTPUT_END
+BAR0_BYTES=131072
+BAR1_BYTES=65536
+RESOURCE0_STAT_BYTES=131072
+RESOURCE1_STAT_BYTES=65536
+LSPCI_RAW_BEGIN
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+	Subsystem: Xilinx Corporation Device [10ee:0007]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 255
+	IOMMU group: 13
+	Region 0: Memory at f6e00000 (32-bit, non-prefetchable) [disabled] [size=128K]
+	Region 1: Memory at f6e20000 (32-bit, non-prefetchable) [disabled] [size=64K]
+	Capabilities: [40] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold-)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [48] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [60] Express (v2) Endpoint, IntMsgNum 0
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 unlimited
+			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset- SlotPowerLimit 75W TEE-IO-
+		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 2.5GT/s, Width x1, ASPM L0s, Exit Latency L0s unlimited
+			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt- FltModeDis-
+		LnkSta:	Speed 2.5GT/s, Width x1
+			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range B, TimeoutDis- NROPrPrP- LTR-
+			 10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS- TPHComp- ExtTPHComp-
+			 AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+			 AtomicOpsCtl: ReqEn-
+			 IDOReq- IDOCompl- LTR- EmergencyPowerReductionReq-
+			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+		LnkCtl2: Target Link Speed: 2.5GT/s, EnterCompliance- SpeedDis-
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+		LnkSta2: Current De-emphasis Level: -3.5dB, EqualizationComplete- EqualizationPhase1-
+			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+			 Retimer- 2Retimers- CrosslinkRes: unsupported, FltMode-
+	Capabilities: [100 v1] Device Serial Number 00-00-00-00-00-00-00-00
+
+LSPCI_RAW_END
+ENDPOINT_BOUND_DRIVER=ABSENT
+XDMA_MODULE_PRESENT=NO
+XDMA_NODE_COUNT=0
+XDMA_NODE_LIST=NONE
+XDMA_EXPECTED_NODE_LIST=xdma0_c2h_0,xdma0_control,xdma0_events_0,xdma0_events_1,xdma0_events_10,xdma0_events_11,xdma0_events_12,xdma0_events_13,xdma0_events_14,xdma0_events_15,xdma0_events_2,xdma0_events_3,xdma0_events_4,xdma0_events_5,xdma0_events_6,xdma0_events_7,xdma0_events_8,xdma0_events_9,xdma0_h2c_0,xdma0_user,xdma0_xvc
+WRONG_SAME_NAME_XDMA_LOADED_OR_BOUND=NO
+PRE_ARM_A_DRIVER_LOAD_REQUIRED=YES
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
