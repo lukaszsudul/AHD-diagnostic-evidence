@@ -1,0 +1,24 @@
+id,test,transactions,result,evidence
+1,trigger before init,0,PASS,case_06_trigger_before_init.log
+2,dormant init-path mux equivalence,0,PASS,case_07_dormant_equivalence.log
+3,filtered bus-idle handoff,10000,PASS,case_08_bus_idle_handoff.log
+4,all ACK 50-kHz mode,10000,PASS,case_00_all_ack_50.log
+5,all NACK 50-kHz mode,10000,PASS,case_01_all_nack_50.log
+6,deterministic ACK pattern 50-kHz mode,10000,PASS,case_02_pattern_50.log
+7,all ACK 25-kHz mode after 50-kHz campaign,20000 total,PASS,case_03_all_ack_25.log
+8,deterministic pattern 25-kHz mode after 50-kHz campaign,20000 total,PASS,case_04_pattern_25.log
+9,two-campaign 50 then 25 lifecycle,20000 total,PASS,case_05_two_campaigns_third_reject.log
+10,third trigger rejected,20000 total no extra,PASS,case_05_two_campaigns_third_reject.log
+11,SDA stuck low before START,0,PASS,case_09_sda_stuck_low.log
+12,SCL released low timeout,0 completed,PASS,case_10_scl_released_low.log
+13,AXI/user reset perturbation isolation,10000,PASS,case_11_reset_perturbation.log
+14,AXI-Lite diagnostic register behavior,2 control pulses,PASS,register unit raw xsim log
+15,decoded stream exact address-only transaction,10000 per campaign,PASS,DECODED_PROBE_STREAM.csv
+16,existing NVP diagnostic telemetry structurally separate,NA,PASS,FUNCTIONAL_FREEZE_GATE.md
+17,existing v41 control-status register regression,3044 reads,PASS,existing_control_status_regs.log
+18,existing AXI-Lite bridge regression,NA,PASS,existing AXI bridge raw log
+19,existing NVP D2b table gate,214 slots,PASS,existing_nvp_table_gate.log
+20,existing NVP D2b sequence,NA,PASS,existing_nvp_d2b_sequence.log
+21,existing NVP power/reset timing,NA,PASS,existing_nvp_power_timing.log
+22,existing comprehensive NVP autoinit regression,all fault modes,PASS,existing_nvp_autoinit.log
+

@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sat Aug 22 19:57:53 2026
+# Process ID         : 8344
+# Current directory  : C:/FPGA/V41_NVP_ADDRESS_ACK_PROBE_R1D/04_SIMULATION/work
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/r1d_control_status_regression/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_ADDRESS_ACK_PROBE_R1D/04_SIMULATION/work/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_ADDRESS_ACK_PROBE_R1D/04_SIMULATION/work\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4160 MB
+# Total Virtual      : 21189 MB
+# Available Virtual  : 6762 MB
+#-----------------------------------------------------------
+source xsim.dir/r1d_control_status_regression/xsim_script.tcl
+# xsim {r1d_control_status_regression} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PHASE3_CONTROLLED_REGISTER_READS=3044
+PHASE3_CONTROL_STATUS_REGS_UNIT_TEST=PASS
+$finish called at time : 73184 ns : File "C:/FPGA/WORKTREES/V41_NVP_ADDRESS_ACK_PROBE_R1D/tb/v41/tb_control_status_regs.sv" Line 239
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Aug 22 19:57:57 2026...

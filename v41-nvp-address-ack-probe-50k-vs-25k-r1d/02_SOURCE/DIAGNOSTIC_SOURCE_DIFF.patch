@@ -1,0 +1,1704 @@
+diff --git a/host/v41/nvp_address_probe_control.py b/host/v41/nvp_address_probe_control.py
+new file mode 100644
+index 0000000..318f5e1
+--- /dev/null
++++ b/host/v41/nvp_address_probe_control.py
+@@ -0,0 +1,53 @@
++#!/usr/bin/env python3
++"""Issue exactly one R1d PROBE_CONTROL pwrite; never retries."""
++
++from __future__ import annotations
++
++import argparse
++import datetime as dt
++import os
++import struct
++
++PROBE_CONTROL_OFFSET = 0x2208
++COMMANDS = {"START_50KHZ": 0x00000001, "START_25KHZ": 0x00000003}
++
++
++def write_once(fd: int, value: int, os_module=os) -> int:
++    payload = struct.pack("<I", value)
++    written = os_module.pwrite(fd, payload, PROBE_CONTROL_OFFSET)
++    if written != 4:
++        raise RuntimeError(f"single pwrite returned {written}, expected 4")
++    return written
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("command", choices=COMMANDS)
++    parser.add_argument("--node", required=True,
++                        help="exact already-proven XDMA user node")
++    parser.add_argument("--dry-run", action="store_true")
++    args = parser.parse_args()
++    value = COMMANDS[args.command]
++    now = dt.datetime.now(dt.timezone.utc).isoformat()
++    print(f"RECEIPT_BEFORE_UTC={now}")
++    print(f"NODE={args.node}")
++    print(f"OFFSET=0x{PROBE_CONTROL_OFFSET:08X}")
++    print(f"VALUE=0x{value:08X}")
++    print("PWRITE_TRANSACTIONS_PLANNED=1")
++    if args.dry_run:
++        print("DRY_RUN=YES")
++        print("PWRITE_TRANSACTIONS_ISSUED=0")
++        return 0
++    fd = os.open(args.node, os.O_WRONLY | getattr(os, "O_SYNC", 0))
++    try:
++        write_once(fd, value)
++    finally:
++        os.close(fd)
++    print(f"RECEIPT_AFTER_UTC={dt.datetime.now(dt.timezone.utc).isoformat()}")
++    print("PWRITE_TRANSACTIONS_ISSUED=1")
++    print("RETRY_COUNT=0")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/host/v41/nvp_address_probe_read.py b/host/v41/nvp_address_probe_read.py
+new file mode 100644
+index 0000000..634cddf
+--- /dev/null
++++ b/host/v41/nvp_address_probe_read.py
+@@ -0,0 +1,59 @@
++#!/usr/bin/env python3
++"""Read-only R1d probe register snapshot tool."""
++
++from __future__ import annotations
++
++import argparse
++import json
++import os
++import struct
++
++REGISTERS = {
++    "PROBE_MAGIC": 0x2200,
++    "PROBE_VERSION": 0x2204,
++    "PROBE_STATUS": 0x220C,
++    "PROBE_COUNT": 0x2210,
++    "PROBE_NACK_COUNT": 0x2214,
++    "PROBE_TIMEOUT_COUNT": 0x2218,
++    "PROBE_TARGET_COUNT": 0x221C,
++    "PROBE_DIVIDER": 0x2220,
++    "PROBE_TICK_CYCLES": 0x2224,
++    "PROBE_CAMPAIGN_INDEX": 0x2228,
++}
++
++
++def read_word(fd: int, offset: int, os_module=os) -> int:
++    payload = os_module.pread(fd, 4, offset)
++    if len(payload) != 4:
++        raise RuntimeError(f"pread at 0x{offset:X} returned {len(payload)} bytes")
++    return struct.unpack("<I", payload)[0]
++
++
++def snapshot(fd: int, os_module=os) -> dict[str, int]:
++    return {name: read_word(fd, offset, os_module) for name, offset in REGISTERS.items()}
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--node", required=True,
++                        help="exact already-proven XDMA user node")
++    parser.add_argument("--twice", action="store_true",
++                        help="require two complete static snapshots to match")
++    args = parser.parse_args()
++    fd = os.open(args.node, os.O_RDONLY)
++    try:
++        first = snapshot(fd)
++        if args.twice:
++            second = snapshot(fd)
++            if first != second:
++                raise RuntimeError("two complete probe snapshots differ")
++    finally:
++        os.close(fd)
++    print(json.dumps(first, sort_keys=True))
++    print("READ_ONLY=YES")
++    print(f"STATIC_SNAPSHOTS_MATCH={'YES' if args.twice else 'NOT_REQUESTED'}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/rtl/top/ahd_capture_top_xdma.sv b/rtl/top/ahd_capture_top_xdma.sv
+index c75db4b..fd6732e 100644
+--- a/rtl/top/ahd_capture_top_xdma.sv
++++ b/rtl/top/ahd_capture_top_xdma.sv
+@@ -58,6 +58,11 @@ module ahd_capture_top_xdma #(
+   logic nvp_sda_i;
+   logic nvp_scl_oen;
+   logic nvp_sda_oen;
++  logic nvp_init_scl_oen;
++  logic nvp_init_sda_oen;
++  logic probe_scl_oen;
++  logic probe_sda_oen;
++  logic probe_owns_bus;
+   logic nvp_init_busy;
+   logic nvp_init_done;
+   logic nvp_init_error;
+@@ -85,13 +90,47 @@ module ahd_capture_top_xdma #(
+   ) NVP_AUTOINIT (
+     .clk(autonomous_clk), .rst(nvp_por_reset),
+     .scl_i(nvp_scl_i), .sda_i(nvp_sda_i),
+-    .scl_oen(nvp_scl_oen), .sda_oen(nvp_sda_oen),
++    .scl_oen(nvp_init_scl_oen), .sda_oen(nvp_init_sda_oen),
+     .nvp_rst(nvp_rst), .nvp_en_vdd1x(nvp_en_vdd1x),
+     .nvp_en_vdd3x(nvp_en_vdd3x), .init_busy(nvp_init_busy),
+     .init_done(nvp_init_done), .init_error(nvp_init_error),
+     .diag_detail(nvp_init_detail)
+   );
+ 
++  assign nvp_scl_oen = probe_owns_bus ? probe_scl_oen : nvp_init_scl_oen;
++  assign nvp_sda_oen = probe_owns_bus ? probe_sda_oen : nvp_init_sda_oen;
++
++  wire        probe_control_write;
++  wire [31:0] probe_control_wdata;
++  wire [3:0]  probe_control_be;
++  wire [31:0] probe_status;
++  wire [31:0] probe_count;
++  wire [31:0] probe_nack_count;
++  wire [31:0] probe_timeout_count;
++  wire [31:0] probe_divider;
++  wire [31:0] probe_tick_cycles;
++  wire [31:0] probe_campaign_index;
++
++  nvp_i2c_address_probe #(
++    .CLK_HZ(NVP_AUTOINIT_CLK_HZ), .TARGET_COUNT(10000),
++    .DIVIDER_50KHZ(625), .DIVIDER_25KHZ(1250)
++  ) NVP_ADDRESS_PROBE (
++    .clk(autonomous_clk),
++    .control_write(probe_control_write),
++    .control_wdata(probe_control_wdata), .control_be(probe_control_be),
++    .init_done(nvp_init_done), .init_busy(nvp_init_busy),
++    .init_error(nvp_init_error),
++    .init_scl_oen(nvp_init_scl_oen), .init_sda_oen(nvp_init_sda_oen),
++    .raw_scl_i(nvp_scl_i), .raw_sda_i(nvp_sda_i),
++    .probe_owns_bus(probe_owns_bus),
++    .probe_scl_oen(probe_scl_oen), .probe_sda_oen(probe_sda_oen),
++    .probe_status(probe_status), .probe_count(probe_count),
++    .probe_nack_count(probe_nack_count),
++    .probe_timeout_count(probe_timeout_count),
++    .probe_divider(probe_divider), .probe_tick_cycles(probe_tick_cycles),
++    .probe_campaign_index(probe_campaign_index)
++  );
++
+   // Keep one source flop per asynchronous-reset synchronizer.  If these three
+   // logically identical registers are merged, one launch flop fans out into
+   // multiple independent reset synchronizers and report_cdc correctly raises
+@@ -181,6 +220,16 @@ module ahd_capture_top_xdma #(
+   wire host_rsp_ready;
+   wire [31:0] host_rsp_rdata;
+ 
++  wire probe_req_valid;
++  wire probe_req_ready;
++  wire probe_req_write;
++  wire [16:0] probe_req_addr;
++  wire [31:0] probe_req_wdata;
++  wire [3:0] probe_req_be;
++  wire probe_rsp_valid;
++  wire probe_rsp_ready;
++  wire [31:0] probe_rsp_rdata;
++
+   wire app_req_valid;
+   wire app_req_ready;
+   wire app_req_write;
+@@ -241,11 +290,11 @@ module ahd_capture_top_xdma #(
+     .host_req_wdata(host_req_wdata), .host_req_be(host_req_be),
+     .host_rsp_valid(host_rsp_valid), .host_rsp_ready(host_rsp_ready),
+     .host_rsp_rdata(host_rsp_rdata),
+-    .app_req_valid(app_req_valid), .app_req_ready(app_req_ready),
+-    .app_req_write(app_req_write), .app_req_addr(app_req_addr),
+-    .app_req_wdata(app_req_wdata), .app_req_be(app_req_be),
+-    .app_rsp_valid(app_rsp_valid), .app_rsp_ready(app_rsp_ready),
+-    .app_rsp_rdata(app_rsp_rdata),
++    .app_req_valid(probe_req_valid), .app_req_ready(probe_req_ready),
++    .app_req_write(probe_req_write), .app_req_addr(probe_req_addr),
++    .app_req_wdata(probe_req_wdata), .app_req_be(probe_req_be),
++    .app_rsp_valid(probe_rsp_valid), .app_rsp_ready(probe_rsp_ready),
++    .app_rsp_rdata(probe_rsp_rdata),
+     .capture_request_busy(telemetry_capture_request_busy),
+     .capture_busy(telemetry_capture_busy),
+     .capture_armed(telemetry_capture_armed),
+@@ -277,6 +326,27 @@ module ahd_capture_top_xdma #(
+     .h2c_attempt_count(32'b0)
+   );
+ 
++  nvp_address_probe_regs NVP_ADDRESS_PROBE_REGS (
++    .clk(axi_aclk), .reset(~axi_aresetn),
++    .host_req_valid(probe_req_valid), .host_req_ready(probe_req_ready),
++    .host_req_write(probe_req_write), .host_req_addr(probe_req_addr),
++    .host_req_wdata(probe_req_wdata), .host_req_be(probe_req_be),
++    .host_rsp_valid(probe_rsp_valid), .host_rsp_ready(probe_rsp_ready),
++    .host_rsp_rdata(probe_rsp_rdata),
++    .app_req_valid(app_req_valid), .app_req_ready(app_req_ready),
++    .app_req_write(app_req_write), .app_req_addr(app_req_addr),
++    .app_req_wdata(app_req_wdata), .app_req_be(app_req_be),
++    .app_rsp_valid(app_rsp_valid), .app_rsp_ready(app_rsp_ready),
++    .app_rsp_rdata(app_rsp_rdata),
++    .control_write(probe_control_write),
++    .control_wdata(probe_control_wdata), .control_be(probe_control_be),
++    .probe_status(probe_status), .probe_count(probe_count),
++    .probe_nack_count(probe_nack_count),
++    .probe_timeout_count(probe_timeout_count),
++    .probe_divider(probe_divider), .probe_tick_cycles(probe_tick_cycles),
++    .probe_campaign_index(probe_campaign_index)
++  );
++
+   wire bar_target_reset;
+   g0p8c2_capture_subsystem #(
+     .SLOT_COUNT(SLOT_COUNT), .BLOCK_OR_FW_ID(BLOCK_OR_FW_ID)
+diff --git a/rtl/v41/nvp_address_probe_regs.sv b/rtl/v41/nvp_address_probe_regs.sv
+new file mode 100644
+index 0000000..1819fe0
+--- /dev/null
++++ b/rtl/v41/nvp_address_probe_regs.sv
+@@ -0,0 +1,103 @@
++`timescale 1ns/1ps
++
++// Diagnostic-only interposer for the formally zero/reserved 0x2200..0x2228
++// window.  All requests outside this exact range are forwarded unchanged.
++module nvp_address_probe_regs (
++  input  logic        clk,
++  input  logic        reset,
++  input  logic        host_req_valid,
++  output logic        host_req_ready,
++  input  logic        host_req_write,
++  input  logic [16:0] host_req_addr,
++  input  logic [31:0] host_req_wdata,
++  input  logic [3:0]  host_req_be,
++  output logic        host_rsp_valid,
++  input  logic        host_rsp_ready,
++  output logic [31:0] host_rsp_rdata,
++  output logic        app_req_valid,
++  input  logic        app_req_ready,
++  output logic        app_req_write,
++  output logic [16:0] app_req_addr,
++  output logic [31:0] app_req_wdata,
++  output logic [3:0]  app_req_be,
++  input  logic        app_rsp_valid,
++  output logic        app_rsp_ready,
++  input  logic [31:0] app_rsp_rdata,
++  output logic        control_write,
++  output logic [31:0] control_wdata,
++  output logic [3:0]  control_be,
++  input  logic [31:0] probe_status,
++  input  logic [31:0] probe_count,
++  input  logic [31:0] probe_nack_count,
++  input  logic [31:0] probe_timeout_count,
++  input  logic [31:0] probe_divider,
++  input  logic [31:0] probe_tick_cycles,
++  input  logic [31:0] probe_campaign_index
++);
++  localparam logic [16:0] PROBE_BASE = 17'h02200;
++  localparam logic [31:0] PROBE_MAGIC = 32'h31425250;
++  localparam logic [31:0] PROBE_VERSION = 32'd1;
++  localparam logic [31:0] PROBE_TARGET_COUNT = 32'd10000;
++
++  logic local_rsp_valid = 1'b0;
++  logic [31:0] local_rsp_rdata = 32'b0;
++  wire probe_select = host_req_addr >= PROBE_BASE &&
++                      host_req_addr <= PROBE_BASE + 17'h00028;
++  wire [5:0] probe_offset = host_req_addr[5:0];
++
++  function automatic [31:0] probe_read(input [5:0] offset);
++    begin
++      case (offset)
++        6'h00: probe_read = PROBE_MAGIC;
++        6'h04: probe_read = PROBE_VERSION;
++        6'h08: probe_read = 32'b0;
++        6'h0C: probe_read = probe_status;
++        6'h10: probe_read = probe_count;
++        6'h14: probe_read = probe_nack_count;
++        6'h18: probe_read = probe_timeout_count;
++        6'h1C: probe_read = PROBE_TARGET_COUNT;
++        6'h20: probe_read = probe_divider;
++        6'h24: probe_read = probe_tick_cycles;
++        6'h28: probe_read = probe_campaign_index;
++        default: probe_read = 32'b0;
++      endcase
++    end
++  endfunction
++
++  assign app_req_valid = host_req_valid && !probe_select;
++  assign app_req_write = host_req_write;
++  assign app_req_addr = host_req_addr;
++  assign app_req_wdata = host_req_wdata;
++  assign app_req_be = host_req_be;
++  assign host_req_ready = probe_select ? !local_rsp_valid : app_req_ready;
++  assign host_rsp_valid = probe_select ? local_rsp_valid : app_rsp_valid;
++  assign host_rsp_rdata = probe_select ? local_rsp_rdata : app_rsp_rdata;
++  assign app_rsp_ready = !probe_select && host_rsp_ready;
++
++  always_ff @(posedge clk) begin
++    control_write <= 1'b0;
++    if (reset) begin
++      local_rsp_valid <= 1'b0;
++      local_rsp_rdata <= 32'b0;
++      control_wdata <= 32'b0;
++      control_be <= 4'b0;
++    end else begin
++      if (local_rsp_valid && host_rsp_ready)
++        local_rsp_valid <= 1'b0;
++      if (host_req_valid && host_req_ready && probe_select) begin
++        local_rsp_valid <= 1'b1;
++        local_rsp_rdata <= 32'b0;
++        if (host_req_write) begin
++          // Writes outside CONTROL are RAZ/WI and have no downstream effect.
++          if (host_req_addr[1:0] == 2'b00 && probe_offset == 6'h08) begin
++            control_write <= 1'b1;
++            control_wdata <= host_req_wdata;
++            control_be <= host_req_be;
++          end
++        end else if (host_req_addr[1:0] == 2'b00) begin
++          local_rsp_rdata <= probe_read(probe_offset);
++        end
++      end
++    end
++  end
++endmodule
+diff --git a/rtl/v41/nvp_i2c_address_probe.sv b/rtl/v41/nvp_i2c_address_probe.sv
+new file mode 100644
+index 0000000..cf52457
+--- /dev/null
++++ b/rtl/v41/nvp_i2c_address_probe.sv
+@@ -0,0 +1,336 @@
++`timescale 1ns/1ps
++
++// R1d post-init address-only probe.  This controller never loads or sends a
++// register, data, or read-address byte: every transaction is exactly
++// START, 8'h60, address ACK/NACK, STOP.
++module nvp_i2c_address_probe #(
++  parameter integer CLK_HZ = 62500000,
++  parameter integer TARGET_COUNT = 10000,
++  parameter integer DIVIDER_50KHZ = 625,
++  parameter integer DIVIDER_25KHZ = 1250,
++  parameter integer SCL_TIMEOUT_CYCLES = CLK_HZ / 50000,
++  parameter integer BUS_IDLE_TIMEOUT_CYCLES = CLK_HZ / 1000
++) (
++  input  logic        clk,
++  input  logic        control_write,
++  input  logic [31:0] control_wdata,
++  input  logic [3:0]  control_be,
++  input  logic        init_done,
++  input  logic        init_busy,
++  input  logic        init_error,
++  input  logic        init_scl_oen,
++  input  logic        init_sda_oen,
++  input  logic        raw_scl_i,
++  input  logic        raw_sda_i,
++  output logic        probe_owns_bus = 1'b0,
++  output logic        probe_scl_oen,
++  output logic        probe_sda_oen,
++  output logic [31:0] probe_status,
++  output logic [31:0] probe_count = 32'b0,
++  output logic [31:0] probe_nack_count = 32'b0,
++  output logic [31:0] probe_timeout_count = 32'b0,
++  output logic [31:0] probe_divider = DIVIDER_50KHZ,
++  output logic [31:0] probe_tick_cycles = DIVIDER_50KHZ + 1,
++  output logic [31:0] probe_campaign_index = 32'b0
++);
++  localparam logic [7:0] ADDRESS_BYTE = 8'h60;
++
++  typedef enum logic [3:0] {
++    ST_IDLE,
++    ST_WAIT_HANDOFF,
++    ST_PREAMBLE,
++    ST_BUS_FREE,
++    ST_START_A,
++    ST_START_B,
++    ST_SEND_ADDR_LOW,
++    ST_SEND_ADDR_HIGH,
++    ST_ACK_LOW,
++    ST_ACK_HIGH,
++    ST_STOP_A,
++    ST_STOP_B
++  } state_t;
++
++  state_t state = ST_IDLE;
++  logic busy = 1'b0;
++  logic done = 1'b0;
++  logic error = 1'b0;
++  logic mode_25khz = 1'b0;
++  logic init_done_seen = 1'b0;
++  logic init_error_snapshot = 1'b0;
++  logic bus_idle_gate_passed = 1'b0;
++  logic scl_timeout = 1'b0;
++  logic sampled_nack = 1'b0;
++  logic [2:0] bit_index = 3'd7;
++  logic [1:0] preamble_ticks = 2'b0;
++  logic [31:0] divider_count = 32'b0;
++  logic [31:0] bus_idle_wait_count = 32'b0;
++  logic [31:0] scl_low_released_count = 32'b0;
++  logic [2:0] scl_release_grace = 3'b0;
++  logic previous_scl_oen = 1'b1;
++
++  // Match the accepted NVP master's two-flop synchronizers and three-matching-
++  // sample filter exactly.  Raw pins fan out only to stage zero.
++  (* ASYNC_REG = "TRUE", SHREG_EXTRACT = "NO" *)
++  logic [1:0] scl_sync = 2'b11;
++  (* ASYNC_REG = "TRUE", SHREG_EXTRACT = "NO" *)
++  logic [1:0] sda_sync = 2'b11;
++  logic scl_filter_candidate = 1'b1;
++  logic sda_filter_candidate = 1'b1;
++  logic [1:0] scl_filter_count = 2'b0;
++  logic [1:0] sda_filter_count = 2'b0;
++  logic scl_filtered = 1'b1;
++  logic sda_filtered = 1'b1;
++
++  wire released_scl_phase =
++    state == ST_PREAMBLE || state == ST_BUS_FREE ||
++    state == ST_START_A || state == ST_START_B ||
++    state == ST_SEND_ADDR_HIGH || state == ST_ACK_HIGH ||
++    state == ST_STOP_B;
++  wire bus_idle_waiting = state == ST_WAIT_HANDOFF || state == ST_BUS_FREE;
++  wire bus_is_idle = scl_filtered && sda_filtered;
++  wire bus_idle_failure_now = busy && bus_idle_waiting && !bus_is_idle &&
++                               bus_idle_wait_count >= BUS_IDLE_TIMEOUT_CYCLES;
++  wire scl_timeout_now = busy && probe_owns_bus && released_scl_phase &&
++                         probe_scl_oen && previous_scl_oen &&
++                         scl_release_grace == 0 && !scl_filtered &&
++                         scl_low_released_count >= SCL_TIMEOUT_CYCLES;
++  wire control_is_50 = control_wdata == 32'h00000001;
++  wire control_is_25 = control_wdata == 32'h00000003;
++  wire control_is_full_word = control_be == 4'b1111;
++
++  always_comb begin
++    probe_scl_oen = 1'b1;
++    probe_sda_oen = 1'b1;
++    case (state)
++      ST_START_B: begin
++        probe_scl_oen = 1'b1;
++        probe_sda_oen = 1'b0;
++      end
++      ST_SEND_ADDR_LOW: begin
++        probe_scl_oen = 1'b0;
++        probe_sda_oen = ADDRESS_BYTE[bit_index];
++      end
++      ST_SEND_ADDR_HIGH: begin
++        probe_scl_oen = 1'b1;
++        probe_sda_oen = ADDRESS_BYTE[bit_index];
++      end
++      ST_ACK_LOW: begin
++        probe_scl_oen = 1'b0;
++        probe_sda_oen = 1'b1;
++      end
++      ST_ACK_HIGH: begin
++        probe_scl_oen = 1'b1;
++        probe_sda_oen = 1'b1;
++      end
++      ST_STOP_A: begin
++        probe_scl_oen = 1'b0;
++        probe_sda_oen = 1'b0;
++      end
++      ST_STOP_B: begin
++        probe_scl_oen = 1'b1;
++        probe_sda_oen = 1'b0;
++      end
++      default: begin
++        probe_scl_oen = 1'b1;
++        probe_sda_oen = 1'b1;
++      end
++    endcase
++  end
++
++  // Status map: IDLE, BUSY, DONE, ERROR, MODE_25KHZ, INIT_DONE_SEEN,
++  // INIT_ERROR_SNAPSHOT, BUS_IDLE_GATE_PASSED, SCL_TIMEOUT, then the two-bit
++  // completed-campaign count in [10:9].
++  always_comb begin
++    probe_status = 32'b0;
++    probe_status[0] = !busy;
++    probe_status[1] = busy;
++    probe_status[2] = done;
++    probe_status[3] = error;
++    probe_status[4] = mode_25khz;
++    probe_status[5] = init_done_seen;
++    probe_status[6] = init_error_snapshot;
++    probe_status[7] = bus_idle_gate_passed;
++    probe_status[8] = scl_timeout;
++    probe_status[10:9] = probe_campaign_index[1:0];
++  end
++
++  always_ff @(posedge clk) begin
++    scl_sync[0] <= raw_scl_i;
++    scl_sync[1] <= scl_sync[0];
++    sda_sync[0] <= raw_sda_i;
++    sda_sync[1] <= sda_sync[0];
++
++    if (scl_sync[1] != scl_filter_candidate) begin
++      scl_filter_candidate <= scl_sync[1];
++      scl_filter_count <= 2'd1;
++    end else if (scl_filter_count < 2) begin
++      scl_filter_count <= scl_filter_count + 1'b1;
++    end else begin
++      scl_filtered <= scl_filter_candidate;
++    end
++
++    if (sda_sync[1] != sda_filter_candidate) begin
++      sda_filter_candidate <= sda_sync[1];
++      sda_filter_count <= 2'd1;
++    end else if (sda_filter_count < 2) begin
++      sda_filter_count <= sda_filter_count + 1'b1;
++    end else begin
++      sda_filtered <= sda_filter_candidate;
++    end
++
++    previous_scl_oen <= probe_scl_oen;
++
++    // Every control-register write is consumed exactly once by the register
++    // bridge.  The engine accepts only the declared 50-then-25 sequence.
++    if (control_write) begin
++      if (!control_is_full_word || busy || error ||
++          (probe_campaign_index == 0 && !control_is_50) ||
++          (probe_campaign_index == 1 && (!done || !control_is_25)) ||
++          (probe_campaign_index >= 2) ||
++          !init_done || init_busy) begin
++        error <= 1'b1;
++      end else begin
++        busy <= 1'b1;
++        done <= 1'b0;
++        mode_25khz <= control_is_25;
++        bus_idle_gate_passed <= 1'b0;
++        scl_timeout <= 1'b0;
++        sampled_nack <= 1'b0;
++        probe_count <= 32'b0;
++        probe_nack_count <= 32'b0;
++        probe_timeout_count <= 32'b0;
++        probe_divider <= control_is_25 ? DIVIDER_25KHZ : DIVIDER_50KHZ;
++        probe_tick_cycles <= control_is_25 ? DIVIDER_25KHZ + 1
++                                            : DIVIDER_50KHZ + 1;
++        divider_count <= 32'b0;
++        bus_idle_wait_count <= 32'b0;
++        scl_low_released_count <= 32'b0;
++        scl_release_grace <= 3'b0;
++        preamble_ticks <= 2'b0;
++        state <= ST_WAIT_HANDOFF;
++        if (probe_campaign_index == 0) begin
++          init_done_seen <= init_done;
++          init_error_snapshot <= init_error;
++        end
++      end
++    end
++
++    if (busy) begin
++      if (bus_idle_failure_now) begin
++        busy <= 1'b0;
++        done <= 1'b1;
++        error <= 1'b1;
++        state <= ST_IDLE;
++      end else if (scl_timeout_now) begin
++        if (probe_timeout_count != 32'hFFFFFFFF)
++          probe_timeout_count <= probe_timeout_count + 1'b1;
++        busy <= 1'b0;
++        done <= 1'b1;
++        error <= 1'b1;
++        scl_timeout <= 1'b1;
++        state <= ST_IDLE;
++      end else begin
++        if (bus_idle_waiting && !bus_is_idle)
++          bus_idle_wait_count <= bus_idle_wait_count + 1'b1;
++        else if (!bus_idle_waiting)
++          bus_idle_wait_count <= 32'b0;
++
++        if (!probe_owns_bus || !released_scl_phase || !probe_scl_oen) begin
++          scl_low_released_count <= 32'b0;
++          scl_release_grace <= 3'b0;
++        end else if (!previous_scl_oen) begin
++          scl_release_grace <= 3'd5;
++        end else if (scl_release_grace != 0) begin
++          scl_release_grace <= scl_release_grace - 1'b1;
++        end else if (!scl_filtered) begin
++          scl_low_released_count <= scl_low_released_count + 1'b1;
++        end
++
++        if (state == ST_WAIT_HANDOFF) begin
++        divider_count <= 32'b0;
++        if (init_done && !init_busy && init_scl_oen && init_sda_oen &&
++            bus_is_idle) begin
++          probe_owns_bus <= 1'b1;
++          bus_idle_gate_passed <= 1'b1;
++          bus_idle_wait_count <= 32'b0;
++          preamble_ticks <= 2'b0;
++          state <= ST_PREAMBLE;
++        end
++        end else if (divider_count >= probe_divider) begin
++        divider_count <= 32'b0;
++        case (state)
++          ST_PREAMBLE: begin
++            if (preamble_ticks == 1) begin
++              state <= ST_BUS_FREE;
++              bus_idle_wait_count <= 32'b0;
++            end else begin
++              preamble_ticks <= preamble_ticks + 1'b1;
++            end
++          end
++          ST_BUS_FREE: begin
++            if (bus_is_idle) begin
++              state <= ST_START_A;
++              bus_idle_wait_count <= 32'b0;
++            end
++          end
++          ST_START_A: state <= ST_START_B;
++          ST_START_B: begin
++            bit_index <= 3'd7;
++            sampled_nack <= 1'b0;
++            scl_low_released_count <= 32'b0;
++            state <= ST_SEND_ADDR_LOW;
++          end
++          ST_SEND_ADDR_LOW: state <= ST_SEND_ADDR_HIGH;
++          ST_SEND_ADDR_HIGH: if (scl_filtered) begin
++            if (bit_index == 0)
++              state <= ST_ACK_LOW;
++            else begin
++              bit_index <= bit_index - 1'b1;
++              state <= ST_SEND_ADDR_LOW;
++            end
++          end
++          ST_ACK_LOW: state <= ST_ACK_HIGH;
++          ST_ACK_HIGH: if (scl_filtered) begin
++            sampled_nack <= sda_filtered;
++            state <= ST_STOP_A;
++          end
++          ST_STOP_A: state <= ST_STOP_B;
++          ST_STOP_B: if (scl_filtered) begin
++            if (probe_count == 32'hFFFFFFFF) begin
++              busy <= 1'b0;
++              done <= 1'b1;
++              error <= 1'b1;
++              state <= ST_IDLE;
++            end else begin
++              probe_count <= probe_count + 1'b1;
++              if (sampled_nack) begin
++                if (probe_nack_count == 32'hFFFFFFFF) begin
++                  busy <= 1'b0;
++                  done <= 1'b1;
++                  error <= 1'b1;
++                  state <= ST_IDLE;
++                end else begin
++                  probe_nack_count <= probe_nack_count + 1'b1;
++                end
++              end
++              if (probe_count + 1'b1 == TARGET_COUNT) begin
++                busy <= 1'b0;
++                done <= 1'b1;
++                if (probe_campaign_index != 32'hFFFFFFFF)
++                  probe_campaign_index <= probe_campaign_index + 1'b1;
++                state <= ST_IDLE;
++              end else begin
++                bus_idle_wait_count <= 32'b0;
++                state <= ST_BUS_FREE;
++              end
++            end
++          end
++          default: state <= ST_IDLE;
++        endcase
++        end else begin
++          divider_count <= divider_count + 1'b1;
++        end
++      end
++    end
++  end
++endmodule
+diff --git a/scripts/analyze_probe_rates.py b/scripts/analyze_probe_rates.py
+new file mode 100644
+index 0000000..dc79cfa
+--- /dev/null
++++ b/scripts/analyze_probe_rates.py
+@@ -0,0 +1,194 @@
++#!/usr/bin/env python3
++"""Self-contained aggregate-binomial analysis for the R1d probe pair."""
++
++from __future__ import annotations
++
++import argparse
++import math
++from dataclasses import dataclass
++
++Z95 = 1.959963984540054
++Z90 = 1.6448536269514722
++ABS_MARGIN = 0.0025
++RR_LOW_MARGIN = 0.80
++RR_HIGH_MARGIN = 1.25
++
++
++def wilson(x: int, n: int, z: float) -> tuple[float, float]:
++    if n <= 0:
++        raise ValueError("n must be positive")
++    p = x / n
++    z2 = z * z
++    den = 1 + z2 / n
++    center = (p + z2 / (2 * n)) / den
++    half = z * math.sqrt(p * (1 - p) / n + z2 / (4 * n * n)) / den
++    return max(0.0, center - half), min(1.0, center + half)
++
++
++def newcombe_difference(x25: int, n25: int, x50: int, n50: int,
++                        z: float) -> tuple[float, float]:
++    l25, u25 = wilson(x25, n25, z)
++    l50, u50 = wilson(x50, n50, z)
++    return l25 - u50, u25 - l50
++
++
++def katz_rr(x25: float, n25: float, x50: float, n50: float,
++            z: float) -> tuple[float, float, float]:
++    p25 = x25 / n25
++    p50 = x50 / n50
++    rr = p25 / p50
++    variance = 1 / x25 - 1 / n25 + 1 / x50 - 1 / n50
++    half = z * math.sqrt(max(0.0, variance))
++    return rr, math.exp(math.log(rr) - half), math.exp(math.log(rr) + half)
++
++
++def log_choose(n: int, k: int) -> float:
++    if k < 0 or k > n:
++        return float("-inf")
++    return math.lgamma(n + 1) - math.lgamma(k + 1) - math.lgamma(n - k + 1)
++
++
++def fisher(x25: int, n25: int, x50: int, n50: int) -> tuple[float, float]:
++    total_x = x25 + x50
++    total_n = n25 + n50
++    lo = max(0, total_x - n50)
++    hi = min(n25, total_x)
++    base = log_choose(total_n, total_x)
++
++    def probability(k: int) -> float:
++        return math.exp(log_choose(n25, k) + log_choose(n50, total_x - k) - base)
++
++    observed = probability(x25)
++    probs = [(k, probability(k)) for k in range(lo, hi + 1)]
++    two_sided = sum(p for _, p in probs if p <= observed * (1 + 1e-12))
++    one_sided_less = sum(p for k, p in probs if k <= x25)
++    return min(1.0, two_sided), min(1.0, one_sided_less)
++
++
++@dataclass
++class Analysis:
++    values: dict[str, object]
++
++
++def analyze(n50: int, x50: int, n25: int, x25: int) -> Analysis:
++    if n50 <= 0 or n25 <= 0 or not (0 <= x50 <= n50) or not (0 <= x25 <= n25):
++        raise ValueError("require positive N and 0 <= X <= N")
++    p50, p25 = x50 / n50, x25 / n25
++    w50 = wilson(x50, n50, Z95)
++    w25 = wilson(x25, n25, Z95)
++    diff95 = newcombe_difference(x25, n25, x50, n50, Z95)
++    diff90 = newcombe_difference(x25, n25, x50, n50, Z90)
++    fisher_two, fisher_less = fisher(x25, n25, x50, n50)
++
++    rr_method = "KATZ_LOG"
++    rr_secondary = False
++    if x50 > 0 and x25 > 0:
++        rr, rr95_lo, rr95_hi = katz_rr(x25, n25, x50, n50, Z95)
++        _, rr90_lo, rr90_hi = katz_rr(x25, n25, x50, n50, Z90)
++    else:
++        rr = (float("nan") if x50 == 0 and x25 == 0
++              else float("inf") if x50 == 0 else 0.0)
++        rr_cc, rr95_lo, rr95_hi = katz_rr(x25 + 0.5, n25 + 1,
++                                           x50 + 0.5, n50 + 1, Z95)
++        _, rr90_lo, rr90_hi = katz_rr(x25 + 0.5, n25 + 1,
++                                      x50 + 0.5, n50 + 1, Z90)
++        rr_method = "HALDANE_ANSCOMBE_CONTINUITY_CORRECTED_SECONDARY"
++        rr_secondary = True
++
++    abs_equiv = diff90[0] > -ABS_MARGIN and diff90[1] < ABS_MARGIN
++    rel_equiv = x50 > 0 and x25 > 0 and rr90_lo > RR_LOW_MARGIN and rr90_hi < RR_HIGH_MARGIN
++    equivalence = abs_equiv and rel_equiv
++
++    if x50 == 0 and x25 == 0:
++        classification = "BOTH_RATES_BELOW_DETECTION_LIMIT"
++    elif x50 > 0 and rr <= 0.50 and rr95_hi < 1.0:
++        classification = "STRONGLY_SUPPORTED_SINGLE_PAIRED_SAMPLE"
++    elif x50 > 0 and rr > 0.50 and rr95_hi < 1.0:
++        classification = "SUPPORTED_SINGLE_PAIRED_SAMPLE_LESS_THAN_TWOFOLD"
++    elif x50 > 0 and x25 > 0 and rr95_lo > 1.0:
++        classification = "CONTRADICTORY_25KHZ_WORSE"
++    elif equivalence:
++        classification = "NO_MATERIAL_EFFECT_WITHIN_PREDECLARED_EQUIVALENCE_MARGIN"
++    else:
++        classification = "INCONCLUSIVE_SINGLE_PAIRED_SAMPLE"
++
++    values: dict[str, object] = {
++        "N50": n50, "X50": x50, "N25": n25, "X25": x25,
++        "P50": p50, "P25": p25,
++        "P50_PERCENT": 100 * p50, "P25_PERCENT": 100 * p25,
++        "P50_PER_1000": 1000 * p50, "P25_PER_1000": 1000 * p25,
++        "P50_WILSON_95_LOW": w50[0], "P50_WILSON_95_HIGH": w50[1],
++        "P25_WILSON_95_LOW": w25[0], "P25_WILSON_95_HIGH": w25[1],
++        "P25_MINUS_P50": p25 - p50,
++        "DIFF_NEWCOMBE_95_LOW": diff95[0], "DIFF_NEWCOMBE_95_HIGH": diff95[1],
++        "DIFF_NEWCOMBE_90_LOW": diff90[0], "DIFF_NEWCOMBE_90_HIGH": diff90[1],
++        "RATE_RATIO_P25_OVER_P50": rr,
++        "RATE_RATIO_95_LOW": rr95_lo, "RATE_RATIO_95_HIGH": rr95_hi,
++        "RATE_RATIO_90_LOW": rr90_lo, "RATE_RATIO_90_HIGH": rr90_hi,
++        "RATE_RATIO_INTERVAL_METHOD": rr_method,
++        "RATE_RATIO_INTERVAL_SECONDARY": rr_secondary,
++        "FISHER_EXACT_TWO_SIDED_P": fisher_two,
++        "ONE_SIDED_P25_LESS_THAN_P50_P": fisher_less,
++        "ZERO_50_EXACT_ONE_SIDED_95_UPPER": 1 - 0.05 ** (1 / n50) if x50 == 0 else "NA",
++        "ZERO_25_EXACT_ONE_SIDED_95_UPPER": 1 - 0.05 ** (1 / n25) if x25 == 0 else "NA",
++        "EQUIVALENCE_ABSOLUTE_90": abs_equiv,
++        "EQUIVALENCE_RELATIVE_90": rel_equiv,
++        "EQUIVALENCE_RESULT": equivalence,
++        "ABSOLUTE_RATE_DIFFERENCE_MARGIN": ABS_MARGIN,
++        "RELATIVE_RATE_RATIO_MARGIN": "0.80_TO_1.25",
++        "SERIAL_CORRELATION_MEASURED": "NO",
++        "BINOMIAL_CONFIDENCE_INTERVALS": "NOMINAL_CONDITIONAL_ON_INDEPENDENCE",
++        "ADDRESS_ACK_FREQUENCY_EFFECT": classification,
++    }
++    return Analysis(values)
++
++
++def format_value(value: object) -> str:
++    if isinstance(value, float):
++        if math.isnan(value):
++            return "UNDEFINED"
++        if math.isinf(value):
++            return "INFINITY"
++        return f"{value:.12g}"
++    if isinstance(value, bool):
++        return "YES" if value else "NO"
++    return str(value)
++
++
++def self_test() -> None:
++    fixtures = [
++        (10000, 0, 10000, 0),
++        (10000, 100, 10000, 50),
++        (10000, 100, 10000, 100),
++        (10000, 10, 10000, 20),
++        (10000, 10000, 10000, 10000),
++    ]
++    for fixture in fixtures:
++        result = analyze(*fixture)
++        assert result.values["P50"] == fixture[1] / fixture[0]
++        assert result.values["P25"] == fixture[3] / fixture[2]
++        assert 0 <= result.values["FISHER_EXACT_TWO_SIDED_P"] <= 1
++        print("FIXTURE_PASS", fixture, result.values["ADDRESS_ACK_FREQUENCY_EFFECT"])
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("N50", type=int, nargs="?")
++    parser.add_argument("X50", type=int, nargs="?")
++    parser.add_argument("N25", type=int, nargs="?")
++    parser.add_argument("X25", type=int, nargs="?")
++    parser.add_argument("--self-test", action="store_true")
++    args = parser.parse_args()
++    if args.self_test:
++        self_test()
++        return 0
++    if None in (args.N50, args.X50, args.N25, args.X25):
++        parser.error("N50 X50 N25 X25 are required unless --self-test is used")
++    result = analyze(args.N50, args.X50, args.N25, args.X25)
++    for key, value in result.values.items():
++        print(f"{key}={format_value(value)}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/scripts/probe_timing_model.py b/scripts/probe_timing_model.py
+new file mode 100644
+index 0000000..4355708
+--- /dev/null
++++ b/scripts/probe_timing_model.py
+@@ -0,0 +1,63 @@
++#!/usr/bin/env python3
++"""Exact R1d 23-state-tick campaign timing model."""
++
++from __future__ import annotations
++
++import argparse
++import csv
++from decimal import Decimal, getcontext
++from pathlib import Path
++
++CLK_HZ = 62_500_000
++TARGET = 10_000
++TICKS_PER_PROBE = 23
++PREAMBLE_TICKS = 2
++MODES = (("50KHZ", 625), ("25KHZ", 1250))
++
++
++def rows():
++    getcontext().prec = 30
++    for name, divider in MODES:
++        tick_cycles = divider + 1
++        tick_us = Decimal(tick_cycles) * Decimal(1_000_000) / Decimal(CLK_HZ)
++        scl_hz = Decimal(CLK_HZ) / (Decimal(2) * Decimal(tick_cycles))
++        total_ticks = PREAMBLE_TICKS + TARGET * TICKS_PER_PROBE
++        seconds = Decimal(total_ticks * tick_cycles) / Decimal(CLK_HZ)
++        yield {
++            "mode": name,
++            "divider": divider,
++            "tick_cycles": tick_cycles,
++            "tick_us": tick_us,
++            "actual_scl_hz": scl_hz,
++            "ticks_per_probe": TICKS_PER_PROBE,
++            "preamble_ticks": PREAMBLE_TICKS,
++            "target_count": TARGET,
++            "expected_seconds": seconds,
++        }
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--output-dir", type=Path)
++    args = parser.parse_args()
++    model = list(rows())
++    if args.output_dir:
++        args.output_dir.mkdir(parents=True, exist_ok=True)
++        csv_path = args.output_dir / "PROBE_TIMING_50K_25K.csv"
++        with csv_path.open("w", newline="", encoding="ascii") as handle:
++            writer = csv.DictWriter(handle, fieldnames=model[0].keys())
++            writer.writeheader()
++            writer.writerows(model)
++        md = ["# R1d probe runtime model", "", "The final FSM uses 23 selected state ticks per completed address probe:", "", "- BUS_FREE: 1", "- START: 2", "- eight address bits: 16", "- ACK: 2", "- STOP: 2", "", "Each campaign has a two-tick stable-bus preamble.", ""]
++        for row in model:
++            md.append(f"- {row['mode']}: {row['expected_seconds']} s, actual SCL {row['actual_scl_hz']} Hz")
++        (args.output_dir / "PROBE_RUNTIME_MODEL.md").write_text("\n".join(md) + "\n", encoding="ascii")
++        (args.output_dir / "raw_calculation.log").write_text(
++            "\n".join(str(row) for row in model) + "\n", encoding="ascii")
++    for row in model:
++        print(" ".join(f"{key}={value}" for key, value in row.items()))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/scripts/v41/phase3_build.tcl b/scripts/v41/phase3_build.tcl
+index b908146..86eb3f3 100644
+--- a/scripts/v41/phase3_build.tcl
++++ b/scripts/v41/phase3_build.tcl
+@@ -1,5 +1,5 @@
+ if {$argc != 5 && $argc != 6} {
+-  puts stderr "usage: phase3_build.tcl REPOSITORY_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT BIT_FILENAME ?PROVENANCE_ONLY?"
++  puts stderr "usage: phase3_build.tcl REPOSITORY_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT BIT_FILENAME ?PROVENANCE_ONLY|R1D_ADDRESS_ACK_PROBE?"
+   exit 2
+ }
+ 
+@@ -11,8 +11,8 @@ set bit_filename [lindex $argv 4]
+ set execution_mode FULL_BUILD
+ if {$argc == 6} {
+   set execution_mode [lindex $argv 5]
+-  if {$execution_mode ne "PROVENANCE_ONLY"} {
+-    error "optional execution mode must be PROVENANCE_ONLY"
++  if {$execution_mode ni {PROVENANCE_ONLY R1D_ADDRESS_ACK_PROBE}} {
++    error "optional execution mode must be PROVENANCE_ONLY or R1D_ADDRESS_ACK_PROBE"
+   }
+ }
+ source [file join $repo_root scripts v41 xdma_config_common.tcl]
+@@ -99,13 +99,21 @@ if {$execution_mode eq "PROVENANCE_ONLY"} {
+   puts "PHASE3_PROVENANCE_PREFLIGHT=PASS"
+   exit 0
+ }
++set r1d_address_probe [expr {$execution_mode eq "R1D_ADDRESS_ACK_PROBE"}]
++if {$r1d_address_probe &&
++    $bit_filename ne "ahd_capture_v41_address_ack_probe_r1d.bit"} {
++  error "R1d mode requires exact diagnostic bit filename"
++}
+ 
+ file mkdir $build_root
+ file mkdir $evidence_root
+ cd $build_root
+ 
+-set project_name v41_phase3_axi_lite_control
+-set project_dir [file join $build_root project]
++set project_name [expr {$r1d_address_probe ?
++                        "v41_nvp_address_ack_probe_r1d" :
++                        "v41_phase3_axi_lite_control"}]
++set project_dir [file join $build_root [expr {$r1d_address_probe ?
++                                              "vivado_project" : "project"}]]
+ create_project -force $project_name $project_dir -part $v41_xdma::part
+ set_property target_language Verilog [current_project]
+ set_property simulator_language Mixed [current_project]
+@@ -121,6 +129,11 @@ set sv_files [list \
+   [file join $repo_root rtl video video_capture.sv] \
+   [file join $repo_root rtl video physical_frontend.sv] \
+   [file join $repo_root rtl top ahd_capture_top_xdma.sv]]
++if {$r1d_address_probe} {
++  set sv_files [linsert $sv_files end-1 \
++    [file join $repo_root rtl v41 nvp_i2c_address_probe.sv] \
++    [file join $repo_root rtl v41 nvp_address_probe_regs.sv]]
++}
+ set vhdl_files [list \
+   [file join $repo_root rtl nvp nvp6134c_diagnostics_pkg.vhd] \
+   [file join $repo_root rtl nvp nvp6134c_i2c_bringup.vhd] \
+@@ -216,6 +229,9 @@ report_clock_utilization -file [file join $evidence_root PHASE3_clock_utilizatio
+ report_design_analysis -congestion \
+   -file [file join $evidence_root PHASE3_congestion.rpt]
+ report_methodology -file [file join $evidence_root PHASE3_methodology.rpt]
++report_power -file [file join $evidence_root PHASE3_power.rpt]
++report_io -file [file join $evidence_root PHASE3_io.rpt]
++report_clocks -file [file join $evidence_root PHASE3_clocks.rpt]
+ report_property -file [file join $evidence_root PHASE3_design_properties.txt] \
+   [current_design]
+ 
+@@ -254,6 +270,8 @@ foreach violation [get_drc_violations -quiet] {
+ 
+ set bus_skew_violations [regexp -all {Slack \(VIOLATED\)} [read_text $bus_skew_report]]
+ set cdc_critical_types [regexp -all -line {^CDC-[0-9]+[ \t]+Critical[ \t]+} [read_text $cdc_report]]
++set cdc_unknown_types [regexp -all -line {^CDC-[0-9]+[ \t]+Unknown[ \t]+} [read_text $cdc_report]]
++set reqp_1839_count [regexp -all {REQP-1839} [read_text [file join $evidence_root PHASE3_methodology.rpt]]]
+ set route_errors 1
+ regexp {# of nets with routing errors[^:]*:[ \t]*([0-9]+)} \
+   [read_text $route_report] -> route_errors
+@@ -275,6 +293,7 @@ set mmcm_used [llength [get_cells -hier -filter {REF_NAME =~ MMCM*}]]
+ set gate PASS
+ if {$route_errors != 0 || $drc_errors != 0 || $drc_critical_warnings != 0 ||
+     $bus_skew_violations != 0 || $cdc_critical_types != 0 ||
++    $cdc_unknown_types != 0 || $reqp_1839_count > 4 ||
+     $wns < 0.0 || $whs <= 0.0 || $vdo_wns < 0.0 || $vdo_whs <= 0.0 ||
+     $lut_free_pct < 10.0 || $ff_free_pct < 10.0 || $bram_free_pct < 10.0} {
+   set gate FAIL
+@@ -303,6 +322,9 @@ write_lines [file join $evidence_root PHASE3_BUILD_RESULT.txt] [list \
+   "DRC_WARNINGS=$drc_warnings" \
+   "BUS_SKEW_VIOLATIONS=$bus_skew_violations" \
+   "CDC_CRITICAL_TYPES=$cdc_critical_types" \
++  "CDC_UNKNOWN_TYPES=$cdc_unknown_types" \
++  "REQP_1839_COUNT=$reqp_1839_count" \
++  "REQP_1839_ACCEPTED_BASELINE=4" \
+   "LUT_USED=$lut_used" "LUT_AVAILABLE=$lut_available" \
+   "LUT_FREE_PERCENT=[format %.2f $lut_free_pct]" \
+   "FF_USED=$ff_used" "FF_AVAILABLE=$ff_available" \
+diff --git a/scripts/verify_r1d_static.py b/scripts/verify_r1d_static.py
+new file mode 100644
+index 0000000..ff921db
+--- /dev/null
++++ b/scripts/verify_r1d_static.py
+@@ -0,0 +1,67 @@
++#!/usr/bin/env python3
++"""Static source-freeze and architecture gates for R1d."""
++
++from __future__ import annotations
++
++import argparse
++import re
++import subprocess
++from pathlib import Path
++
++PROTECTED = {
++    "rtl/nvp/nvp6134c_autoinit.vhd": "5dc0230cd569f03d68452055db6b10c5fcade751",
++    "rtl/nvp/nvp6134c_i2c_bringup.vhd": "cfe33464d8e75c514462786593b278d90b4059a4",
++    "rtl/nvp/nvp6134c_diagnostics_pkg.vhd": "7ddd60fc86da49cda1adcd7af7b772b337c95df6",
++    "xdc/boards/current/nvp_control.xdc": "2e4a6f56d5dfa227a968492fe4476d25721f09f9",
++}
++
++
++def require(condition: bool, message: str) -> None:
++    if not condition:
++        raise SystemExit(f"STATIC_GATE_FAIL: {message}")
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("repo", type=Path)
++    args = parser.parse_args()
++    repo = args.repo.resolve()
++    for relative, expected in PROTECTED.items():
++        actual = subprocess.check_output(
++            ["git", "-c", f"safe.directory={repo.as_posix()}", "-C", str(repo),
++             "hash-object", relative], text=True).strip()
++        require(actual == expected, f"protected blob {relative}: {actual}")
++
++    top = (repo / "rtl/top/ahd_capture_top_xdma.sv").read_text(encoding="utf-8")
++    engine = (repo / "rtl/v41/nvp_i2c_address_probe.sv").read_text(encoding="utf-8")
++    regs = (repo / "rtl/v41/nvp_address_probe_regs.sv").read_text(encoding="utf-8")
++    require(".I2C_HZ(50000)" in top, "formal autoinit I2C_HZ changed")
++    require("probe_owns_bus ? probe_scl_oen : nvp_init_scl_oen" in top,
++            "SCL ownership mux mismatch")
++    require("probe_owns_bus ? probe_sda_oen : nvp_init_sda_oen" in top,
++            "SDA ownership mux mismatch")
++    require("localparam logic [7:0] ADDRESS_BYTE = 8'h60" in engine,
++            "probe address byte mismatch")
++    require("8'h61" not in engine, "read address present in probe engine")
++    uncommented = re.sub(r"//.*", "", engine, flags=re.MULTILINE).lower()
++    require("reg_addr" not in uncommented and "write_data" not in uncommented,
++            "register/data byte datapath unexpectedly present")
++    require("17'h02200" in regs and "17'h00028" in regs,
++            "probe register range mismatch")
++    require("TARGET_COUNT(10000)" in top, "probe target mismatch")
++    require("DIVIDER_50KHZ(625)" in top and "DIVIDER_25KHZ(1250)" in top,
++            "probe divider mismatch")
++    require("scl_sync[0] <= raw_scl_i" in engine, "raw SCL fanout gate failed")
++    require("sda_sync[0] <= raw_sda_i" in engine, "raw SDA fanout gate failed")
++    print("PROTECTED_NVP_BLOBS_UNCHANGED=YES")
++    print("FORMAL_AUTOINIT_I2C_HZ=50000")
++    print("PROBE_ADDRESS_BYTE=0x60")
++    print("PROBE_REGISTER_BYTES_SENT=0")
++    print("PROBE_DATA_BYTES_SENT=0")
++    print("PROBE_READ_ADDRESS_BYTES_SENT=0")
++    print("PROBE_STATIC_ARCHITECTURE_GATE=PASS")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tb/v41/tb_nvp_address_probe_cases.sv b/tb/v41/tb_nvp_address_probe_cases.sv
+new file mode 100644
+index 0000000..d161485
+--- /dev/null
++++ b/tb/v41/tb_nvp_address_probe_cases.sv
+@@ -0,0 +1,14 @@
++`timescale 1ns/1ps
++
++module tb_probe_case_0;  tb_nvp_i2c_address_probe #(.CASE_ID(0))  tb(); endmodule
++module tb_probe_case_1;  tb_nvp_i2c_address_probe #(.CASE_ID(1))  tb(); endmodule
++module tb_probe_case_2;  tb_nvp_i2c_address_probe #(.CASE_ID(2))  tb(); endmodule
++module tb_probe_case_3;  tb_nvp_i2c_address_probe #(.CASE_ID(3))  tb(); endmodule
++module tb_probe_case_4;  tb_nvp_i2c_address_probe #(.CASE_ID(4))  tb(); endmodule
++module tb_probe_case_5;  tb_nvp_i2c_address_probe #(.CASE_ID(5))  tb(); endmodule
++module tb_probe_case_6;  tb_nvp_i2c_address_probe #(.CASE_ID(6))  tb(); endmodule
++module tb_probe_case_7;  tb_nvp_i2c_address_probe #(.CASE_ID(7))  tb(); endmodule
++module tb_probe_case_8;  tb_nvp_i2c_address_probe #(.CASE_ID(8))  tb(); endmodule
++module tb_probe_case_9;  tb_nvp_i2c_address_probe #(.CASE_ID(9))  tb(); endmodule
++module tb_probe_case_10; tb_nvp_i2c_address_probe #(.CASE_ID(10)) tb(); endmodule
++module tb_probe_case_11; tb_nvp_i2c_address_probe #(.CASE_ID(11)) tb(); endmodule
+diff --git a/tb/v41/tb_nvp_address_probe_regs.sv b/tb/v41/tb_nvp_address_probe_regs.sv
+new file mode 100644
+index 0000000..4ad9f0a
+--- /dev/null
++++ b/tb/v41/tb_nvp_address_probe_regs.sv
+@@ -0,0 +1,112 @@
++`timescale 1ns/1ps
++
++module tb_nvp_address_probe_regs;
++  logic clk = 1'b0;
++  always #2 clk = ~clk;
++  logic reset = 1'b1;
++  logic host_req_valid = 1'b0;
++  wire host_req_ready;
++  logic host_req_write = 1'b0;
++  logic [16:0] host_req_addr = 17'b0;
++  logic [31:0] host_req_wdata = 32'b0;
++  logic [3:0] host_req_be = 4'b0;
++  wire host_rsp_valid;
++  logic host_rsp_ready = 1'b0;
++  wire [31:0] host_rsp_rdata;
++  wire app_req_valid;
++  logic app_req_ready = 1'b0;
++  wire app_req_write;
++  wire [16:0] app_req_addr;
++  wire [31:0] app_req_wdata;
++  wire [3:0] app_req_be;
++  logic app_rsp_valid = 1'b0;
++  wire app_rsp_ready;
++  logic [31:0] app_rsp_rdata = 32'b0;
++  wire control_write;
++  wire [31:0] control_wdata;
++  wire [3:0] control_be;
++  integer control_pulses = 0;
++
++  nvp_address_probe_regs dut (
++    .clk, .reset, .host_req_valid, .host_req_ready, .host_req_write,
++    .host_req_addr, .host_req_wdata, .host_req_be,
++    .host_rsp_valid, .host_rsp_ready, .host_rsp_rdata,
++    .app_req_valid, .app_req_ready, .app_req_write, .app_req_addr,
++    .app_req_wdata, .app_req_be, .app_rsp_valid, .app_rsp_ready,
++    .app_rsp_rdata, .control_write, .control_wdata, .control_be,
++    .probe_status(32'h000004A5), .probe_count(32'd10000),
++    .probe_nack_count(32'd17), .probe_timeout_count(32'd0),
++    .probe_divider(32'd625), .probe_tick_cycles(32'd626),
++    .probe_campaign_index(32'd1)
++  );
++
++  always @(posedge clk) if (control_write) control_pulses = control_pulses + 1;
++
++  task automatic fail(input string message);
++    begin $display("TEST_FAIL: %s", message); $fatal(1); end
++  endtask
++
++  task automatic transact(input logic wr, input logic [16:0] addr,
++                           input logic [31:0] data, input logic [3:0] be,
++                           input logic [31:0] expected);
++    begin
++      @(negedge clk);
++      host_req_write = wr; host_req_addr = addr; host_req_wdata = data;
++      host_req_be = be; host_req_valid = 1'b1;
++      do @(posedge clk); while (!host_req_ready);
++      @(negedge clk); host_req_valid = 1'b0;
++      while (!host_rsp_valid) @(negedge clk);
++      if (host_rsp_rdata !== expected) fail("local response mismatch");
++      host_rsp_ready = 1'b1;
++      @(posedge clk); @(negedge clk); host_rsp_ready = 1'b0;
++    end
++  endtask
++
++  initial begin
++    repeat (4) @(posedge clk);
++    @(negedge clk); reset = 1'b0;
++    transact(0, 17'h02200, 0, 0, 32'h31425250);
++    transact(0, 17'h02204, 0, 0, 32'd1);
++    transact(0, 17'h02208, 0, 0, 32'd0);
++    transact(0, 17'h0220C, 0, 0, 32'h000004A5);
++    transact(0, 17'h02210, 0, 0, 32'd10000);
++    transact(0, 17'h02214, 0, 0, 32'd17);
++    transact(0, 17'h02218, 0, 0, 32'd0);
++    transact(0, 17'h0221C, 0, 0, 32'd10000);
++    transact(0, 17'h02220, 0, 0, 32'd625);
++    transact(0, 17'h02224, 0, 0, 32'd626);
++    transact(0, 17'h02228, 0, 0, 32'd1);
++    transact(0, 17'h02202, 0, 0, 32'd0);
++
++    transact(1, 17'h02200, 32'hFFFFFFFF, 4'hF, 32'd0);
++    transact(1, 17'h02210, 32'hFFFFFFFF, 4'hF, 32'd0);
++    if (control_pulses != 0) fail("non-control write had an effect");
++    transact(1, 17'h02208, 32'h00000001, 4'hF, 32'd0);
++    transact(1, 17'h02208, 32'h00000003, 4'hF, 32'd0);
++    if (control_pulses != 2) fail("control write pulse count mismatch");
++    if (control_wdata != 32'h00000003 || control_be != 4'hF)
++      fail("control write payload mismatch");
++
++    // Outside the diagnostic window, preserve the original downstream path.
++    @(negedge clk);
++    host_req_valid = 1'b1; host_req_write = 1'b0; host_req_addr = 17'h10000;
++    repeat (2) begin
++      @(posedge clk);
++      if (!app_req_valid || app_req_addr != 17'h10000)
++        fail("forwarded request changed under backpressure");
++    end
++    @(negedge clk); app_req_ready = 1'b1;
++    @(posedge clk); @(negedge clk);
++    host_req_valid = 1'b0; app_req_ready = 1'b0;
++    app_rsp_rdata = 32'hA5A55A5A; app_rsp_valid = 1'b1;
++    @(posedge clk); @(negedge clk); app_rsp_valid = 1'b0;
++    if (!host_rsp_valid || host_rsp_rdata != 32'hA5A55A5A)
++      fail("forwarded response mismatch");
++    host_rsp_ready = 1'b1;
++    @(posedge clk); @(negedge clk); host_rsp_ready = 1'b0;
++
++    $display("PROBE_REGISTER_CONTROL_PULSES=%0d", control_pulses);
++    $display("NVP_ADDRESS_PROBE_REGS_TEST=PASS");
++    $finish;
++  end
++endmodule
+diff --git a/tb/v41/tb_nvp_i2c_address_probe.sv b/tb/v41/tb_nvp_i2c_address_probe.sv
+new file mode 100644
+index 0000000..6dff5be
+--- /dev/null
++++ b/tb/v41/tb_nvp_i2c_address_probe.sv
+@@ -0,0 +1,272 @@
++`timescale 1ns/1ps
++
++module tb_nvp_i2c_address_probe #(
++  parameter integer CASE_ID = 0
++);
++  localparam integer TARGET = 10000;
++  logic clk = 1'b0;
++  always #1 clk = ~clk;
++
++  logic control_write = 1'b0;
++  logic [31:0] control_wdata = 32'b0;
++  logic [3:0] control_be = 4'b0;
++  logic init_done = 1'b0;
++  logic init_busy = 1'b0;
++  logic init_error = 1'b1;
++  logic init_scl_oen = 1'b1;
++  logic init_sda_oen = 1'b1;
++  logic axi_user_reset = 1'b0;
++  logic force_scl_low = 1'b0;
++  logic force_sda_low = 1'b0;
++  logic slave_drive_low = 1'b0;
++  wire probe_owns_bus;
++  wire probe_scl_oen;
++  wire probe_sda_oen;
++  wire [31:0] probe_status;
++  wire [31:0] probe_count;
++  wire [31:0] probe_nack_count;
++  wire [31:0] probe_timeout_count;
++  wire [31:0] probe_divider;
++  wire [31:0] probe_tick_cycles;
++  wire [31:0] probe_campaign_index;
++  wire scl_bus = force_scl_low ? 1'b0 : probe_scl_oen;
++  wire sda_bus = (force_sda_low || slave_drive_low) ? 1'b0 : probe_sda_oen;
++
++  integer nack_mode = 0;
++  integer transaction_count = 0;
++  integer stop_count = 0;
++  integer repeated_start_count = 0;
++  integer read_address_count = 0;
++  integer extra_byte_count = 0;
++  integer bit_count = 0;
++  logic [7:0] decoded_byte = 8'b0;
++  logic in_transaction = 1'b0;
++  logic ack_clock_seen = 1'b0;
++
++  nvp_i2c_address_probe #(
++    .CLK_HZ(1000000), .TARGET_COUNT(TARGET),
++    .DIVIDER_50KHZ(2), .DIVIDER_25KHZ(4),
++    .SCL_TIMEOUT_CYCLES(40), .BUS_IDLE_TIMEOUT_CYCLES(80)
++  ) dut (
++    .clk, .control_write, .control_wdata, .control_be,
++    .init_done, .init_busy, .init_error,
++    .init_scl_oen, .init_sda_oen,
++    .raw_scl_i(scl_bus), .raw_sda_i(sda_bus),
++    .probe_owns_bus, .probe_scl_oen, .probe_sda_oen,
++    .probe_status, .probe_count, .probe_nack_count,
++    .probe_timeout_count, .probe_divider, .probe_tick_cycles,
++    .probe_campaign_index
++  );
++
++  task automatic fail(input string message);
++    begin
++      $display("TEST_FAIL: %s", message);
++      $fatal(1);
++    end
++  endtask
++
++  task automatic trigger(input logic [31:0] value);
++    begin
++      @(negedge clk);
++      control_wdata = value;
++      control_be = 4'hF;
++      control_write = 1'b1;
++      @(posedge clk);
++      @(negedge clk);
++      control_write = 1'b0;
++      control_wdata = 32'b0;
++      control_be = 4'b0;
++    end
++  endtask
++
++  task automatic wait_done;
++    integer guard;
++    begin
++      guard = 0;
++      while (!probe_status[2] && guard < 2000000) begin
++        @(posedge clk);
++        guard = guard + 1;
++      end
++      if (!probe_status[2]) fail("campaign did not complete");
++    end
++  endtask
++
++  task automatic expect_valid(input integer expected_nacks, input integer index);
++    begin
++      if (probe_status[3]) fail("unexpected probe ERROR");
++      if (!probe_status[2] || probe_status[1]) fail("DONE/BUSY mismatch");
++      if (probe_count != TARGET) fail("PROBE_COUNT mismatch");
++      if (probe_nack_count != expected_nacks) fail("PROBE_NACK_COUNT mismatch");
++      if (probe_timeout_count != 0) fail("PROBE_TIMEOUT_COUNT mismatch");
++      if (probe_campaign_index != index) fail("campaign index mismatch");
++    end
++  endtask
++
++  // Transaction decoder and deterministic address slave.
++  always @(negedge sda_bus) begin
++    if (probe_owns_bus && scl_bus) begin
++      if (in_transaction)
++        repeated_start_count = repeated_start_count + 1;
++      else begin
++        in_transaction = 1'b1;
++        bit_count = 0;
++        decoded_byte = 8'b0;
++        ack_clock_seen = 1'b0;
++      end
++    end
++  end
++
++  always @(posedge scl_bus) begin
++    if (in_transaction) begin
++      if (bit_count < 8) begin
++        decoded_byte = {decoded_byte[6:0], sda_bus};
++        bit_count = bit_count + 1;
++      end else if (!ack_clock_seen) begin
++        ack_clock_seen = 1'b1;
++      end
++    end
++  end
++
++  always @(negedge scl_bus) begin
++    if (in_transaction && bit_count == 8 && !ack_clock_seen) begin
++      case (nack_mode)
++        0: slave_drive_low = 1'b1;
++        1: slave_drive_low = 1'b0;
++        default: slave_drive_low = ((transaction_count % 7) != 0);
++      endcase
++    end else if (in_transaction && ack_clock_seen) begin
++      slave_drive_low = 1'b0;
++    end
++  end
++
++  always @(posedge sda_bus) begin
++    if (scl_bus && in_transaction) begin
++      if (bit_count != 8 || !ack_clock_seen)
++        fail("STOP before exactly one address byte and ACK clock");
++      if (decoded_byte != 8'h60)
++        fail("decoded byte was not 0x60");
++      if (decoded_byte[0])
++        read_address_count = read_address_count + 1;
++      transaction_count = transaction_count + 1;
++      stop_count = stop_count + 1;
++      in_transaction = 1'b0;
++      slave_drive_low = 1'b0;
++    end
++  end
++
++  integer expected_pattern_nacks;
++  integer first_transaction_count;
++  initial begin
++    repeat (10) @(posedge clk);
++
++    if (CASE_ID == 6) begin
++      init_done = 1'b0;
++      trigger(32'h1);
++      repeat (20) @(posedge clk);
++      if (probe_owns_bus || probe_status[1]) fail("pre-init trigger owned bus");
++      if (!probe_status[3]) fail("pre-init trigger was not rejected");
++    end else if (CASE_ID == 7) begin
++      init_scl_oen = 1'b0;
++      init_sda_oen = 1'b1;
++      repeat (20) @(posedge clk);
++      if (probe_owns_bus) fail("dormant probe owned bus");
++      if ((probe_owns_bus ? probe_scl_oen : init_scl_oen) !== init_scl_oen ||
++          (probe_owns_bus ? probe_sda_oen : init_sda_oen) !== init_sda_oen)
++        fail("dormant ownership mux differs from init path");
++    end else if (CASE_ID == 8) begin
++      init_done = 1'b1;
++      force_sda_low = 1'b1;
++      // Let the exact two-flop/three-sample observer settle low before the
++      // control write; the handoff contract is intentionally filtered.
++      repeat (10) @(posedge clk);
++      trigger(32'h1);
++      repeat (30) @(posedge clk);
++      if (probe_owns_bus) fail("ownership asserted while SDA was low");
++      force_sda_low = 1'b0;
++      wait (probe_owns_bus);
++      if (!probe_status[7]) fail("bus-idle gate was not recorded");
++      wait_done();
++      expect_valid(0, 1);
++    end else if (CASE_ID == 9) begin
++      init_done = 1'b1;
++      force_sda_low = 1'b1;
++      repeat (10) @(posedge clk);
++      trigger(32'h1);
++      wait_done();
++      if (!probe_status[3] || probe_owns_bus || probe_count != 0)
++        fail("SDA-low gate failure mismatch");
++    end else if (CASE_ID == 10) begin
++      init_done = 1'b1;
++      trigger(32'h1);
++      wait (probe_owns_bus);
++      force_scl_low = 1'b1;
++      wait_done();
++      if (!probe_status[3] || !probe_status[8] || probe_timeout_count != 1)
++        fail("SCL timeout mismatch");
++    end else if (CASE_ID == 11) begin
++      integer count_before_reset;
++      init_done = 1'b1;
++      trigger(32'h1);
++      wait (probe_count >= 100);
++      count_before_reset = probe_count;
++      // The production top deliberately does not connect axi_aresetn/user
++      // reset to this configuration-initialized engine.
++      axi_user_reset = 1'b1;
++      repeat (100) @(posedge clk);
++      axi_user_reset = 1'b0;
++      if (!probe_status[1] || probe_count < count_before_reset)
++        fail("AXI/user reset perturbation changed or stopped active campaign");
++      wait (probe_count > count_before_reset);
++      wait_done();
++      expect_valid(0, 1);
++    end else begin
++      init_done = 1'b1;
++      if (CASE_ID == 1) nack_mode = 1;
++      if (CASE_ID == 2) nack_mode = 2;
++      trigger(32'h1);
++      wait_done();
++      expected_pattern_nacks = (TARGET + 6) / 7;
++      if (CASE_ID == 1)
++        expect_valid(TARGET, 1);
++      else if (CASE_ID == 2)
++        expect_valid(expected_pattern_nacks, 1);
++      else
++        expect_valid(0, 1);
++
++      if (CASE_ID == 3 || CASE_ID == 4 || CASE_ID == 5) begin
++        first_transaction_count = transaction_count;
++        nack_mode = (CASE_ID == 4) ? 2 : 0;
++        repeat (20) @(posedge clk);
++        trigger(32'h3);
++        repeat (2) @(posedge clk);
++        if (probe_count != 0 || probe_nack_count != 0)
++          fail("counters did not clear on second accepted trigger");
++        wait_done();
++        if (CASE_ID == 4)
++          expect_valid(expected_pattern_nacks, 2);
++        else
++          expect_valid(0, 2);
++        if (first_transaction_count != TARGET || transaction_count != 2*TARGET)
++          fail("two-campaign decoded transaction count mismatch");
++
++        if (CASE_ID == 5) begin
++          trigger(32'h3);
++          repeat (4) @(posedge clk);
++          if (!probe_status[3] || probe_campaign_index != 2 ||
++              probe_count != TARGET)
++            fail("third trigger rejection mismatch");
++        end
++      end
++    end
++
++    if (repeated_start_count != 0) fail("repeated START observed");
++    if (read_address_count != 0) fail("read address observed");
++    if (extra_byte_count != 0) fail("extra byte observed");
++    if (transaction_count != stop_count) fail("STOP count mismatch");
++    $display("CASE_ID=%0d", CASE_ID);
++    $display("TRANSACTIONS=%0d ADDRESS_BYTE=0x60 REGISTER_BYTES=0 DATA_BYTES=0 READ_ADDRESS_BYTES=0 REPEATED_STARTS=%0d STOPS=%0d",
++             transaction_count, repeated_start_count, stop_count);
++    $display("NVP_ADDRESS_PROBE_TEST=PASS");
++    $finish;
++  end
++endmodule
+diff --git a/tb/v41/tb_nvp_probe_waveform.sv b/tb/v41/tb_nvp_probe_waveform.sv
+new file mode 100644
+index 0000000..e2e5830
+--- /dev/null
++++ b/tb/v41/tb_nvp_probe_waveform.sv
+@@ -0,0 +1,85 @@
++`timescale 1ns/1ps
++
++module tb_nvp_probe_waveform #(
++  parameter integer MODE_25 = 0
++);
++  logic clk = 1'b0;
++  always #8 clk = ~clk; // 62.5 MHz
++  logic control_write = 1'b0;
++  logic [31:0] control_wdata = 32'b0;
++  logic [3:0] control_be = 4'b0;
++  logic slave_drive_low = 1'b0;
++  wire owns, scl_oen, sda_oen;
++  wire [31:0] status, count, nack_count, timeout_count;
++  wire [31:0] divider, tick_cycles, campaign_index;
++  wire scl_bus = scl_oen;
++  wire sda_bus = slave_drive_low ? 1'b0 : sda_oen;
++  integer bit_count = 0;
++  logic in_transaction = 1'b0;
++  logic ack_seen = 1'b0;
++  integer fd;
++
++  nvp_i2c_address_probe #(.TARGET_COUNT(2)) dut (
++    .clk, .control_write, .control_wdata, .control_be,
++    .init_done(1'b1), .init_busy(1'b0), .init_error(1'b1),
++    .init_scl_oen(1'b1), .init_sda_oen(1'b1),
++    .raw_scl_i(scl_bus), .raw_sda_i(sda_bus),
++    .probe_owns_bus(owns), .probe_scl_oen(scl_oen),
++    .probe_sda_oen(sda_oen), .probe_status(status), .probe_count(count),
++    .probe_nack_count(nack_count), .probe_timeout_count(timeout_count),
++    .probe_divider(divider), .probe_tick_cycles(tick_cycles),
++    .probe_campaign_index(campaign_index)
++  );
++
++  always @(negedge sda_bus) if (owns && scl_bus && !in_transaction) begin
++    in_transaction = 1'b1; bit_count = 0; ack_seen = 1'b0;
++  end
++  always @(posedge scl_bus) if (in_transaction) begin
++    if (bit_count < 8) bit_count = bit_count + 1;
++    else if (!ack_seen) ack_seen = 1'b1;
++  end
++  always @(negedge scl_bus) begin
++    if (in_transaction && bit_count == 8 && !ack_seen)
++      slave_drive_low = 1'b1;
++    else if (ack_seen)
++      slave_drive_low = 1'b0;
++  end
++  always @(posedge sda_bus) if (in_transaction && scl_bus) begin
++    in_transaction = 1'b0; slave_drive_low = 1'b0;
++  end
++
++  always @(scl_bus or sda_bus or owns)
++    if (fd) $fwrite(fd, "%0t,%0d,%0d,%0d,%0d,%0d\n",
++                    $time, owns, scl_bus, sda_bus, count, nack_count);
++
++  initial begin
++    fd = $fopen(MODE_25 ? "../PROBE_WAVEFORM_25K.csv" :
++                          "../PROBE_WAVEFORM_50K.csv", "w");
++    $fwrite(fd, "time_ps,probe_owns_bus,scl,sda,probe_count,nack_count\n");
++    repeat (10) @(posedge clk);
++    @(negedge clk);
++    control_wdata = MODE_25 ? 32'h3 : 32'h1;
++    // A standalone 25-kHz waveform still must satisfy the lifecycle contract;
++    // seed the campaign index/done state as if campaign 1 had completed.
++    if (MODE_25) begin
++      dut.probe_campaign_index = 1;
++      dut.done = 1'b1;
++    end
++    control_be = 4'hF; control_write = 1'b1;
++    @(posedge clk); @(negedge clk); control_write = 1'b0;
++    wait (status[2]);
++    if (status[3] || count != 2 || nack_count != 0 || timeout_count != 0)
++      $fatal(1, "waveform probe failed");
++    $fclose(fd);
++    $display("PROBE_WAVEFORM_MODE_%0d=PASS", MODE_25);
++    $finish;
++  end
++endmodule
++
++module tb_nvp_probe_waveform_50;
++  tb_nvp_probe_waveform #(.MODE_25(0)) tb();
++endmodule
++
++module tb_nvp_probe_waveform_25;
++  tb_nvp_probe_waveform #(.MODE_25(1)) tb();
++endmodule
+diff --git a/tests/v41/test_probe_host_tools.py b/tests/v41/test_probe_host_tools.py
+new file mode 100644
+index 0000000..0fbf01d
+--- /dev/null
++++ b/tests/v41/test_probe_host_tools.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++from __future__ import annotations
++
++import importlib.util
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[2]
++
++
++def load(name: str, path: Path):
++    spec = importlib.util.spec_from_file_location(name, path)
++    module = importlib.util.module_from_spec(spec)
++    assert spec.loader is not None
++    spec.loader.exec_module(module)
++    return module
++
++
++control = load("probe_control", ROOT / "host/v41/nvp_address_probe_control.py")
++reader = load("probe_reader", ROOT / "host/v41/nvp_address_probe_read.py")
++
++
++class FakeOS:
++    def __init__(self):
++        self.writes = []
++        self.reads = []
++
++    def pwrite(self, fd, payload, offset):
++        self.writes.append((fd, payload, offset))
++        return len(payload)
++
++    def pread(self, fd, size, offset):
++        self.reads.append((fd, size, offset))
++        return int(offset).to_bytes(4, "little")
++
++
++def main() -> int:
++    fake = FakeOS()
++    control.write_once(7, control.COMMANDS["START_50KHZ"], fake)
++    assert len(fake.writes) == 1
++    assert fake.writes[0][2] == 0x2208
++    assert fake.writes[0][1] == b"\x01\x00\x00\x00"
++    snap = reader.snapshot(8, fake)
++    assert len(fake.reads) == len(reader.REGISTERS)
++    assert snap["PROBE_MAGIC"] == 0x2200
++    assert 0x2208 not in reader.REGISTERS.values()
++    print("ONE_SHOT_WRITER_FIXTURE=PASS")
++    print("READ_ONLY_READER_FIXTURE=PASS")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())

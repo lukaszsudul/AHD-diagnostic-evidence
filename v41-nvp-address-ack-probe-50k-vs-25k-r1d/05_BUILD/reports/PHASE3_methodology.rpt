@@ -1,0 +1,77 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sat Aug 22 21:07:16 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_methodology -file C:/FPGA/V41_NVP_ADDRESS_ACK_PROBE_R1D/05_BUILD/reports/PHASE3_methodology.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : Fully Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: ahd_capture_top_xdma
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max checks: <unlimited>
+             Checks found: 5
++-----------+----------+--------------------------------------------+--------+
+| Rule      | Severity | Description                                | Checks |
++-----------+----------+--------------------------------------------+--------+
+| LUTAR-1   | Warning  | LUT drives async reset alert               | 2      |
+| TIMING-34 | Warning  | Bus skew constraint with unrealistic value | 3      |
++-----------+----------+--------------------------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_int_reg/PRE
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+LUTAR-1#2 Warning
+LUT drives async reset alert  
+LUT cell XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/rstblk/gpregsm1.curr_fwft_state[1]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[1]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[2]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_reg[0]/PRE,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_reg[1]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_reg[2]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_reg[3]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[0]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[1]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[2]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_d1_reg[3]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[0]/PRE,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[1]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[2]/CLR,
+XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0/inst_fifo_gen/gaxis_fifo.gaxisf.axisf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gcc0.gc0.count_reg[3]/CLR
+ (the first 15 of 26 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-34#1 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 28 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_abort_reg/D
+Related violations: <none>
+
+TIMING-34#2 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 30 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/MAILBOX/status_bus_pcie_reg[100]/D
+Related violations: <none>
+
+TIMING-34#3 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 33 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/active_sav_gray_sync1_pcie_reg[0]/D
+Related violations: <none>
+
+
