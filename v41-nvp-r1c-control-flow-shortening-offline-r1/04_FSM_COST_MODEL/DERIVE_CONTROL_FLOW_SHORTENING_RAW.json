@@ -1,0 +1,114 @@
+{
+  "decomposition_witnesses": [
+    {
+      "actual_read_transactions": 25,
+      "actual_write_transactions": 211,
+      "delta_reads_vs_ack": 0,
+      "delta_writes_vs_ack": -1,
+      "name": "ONE_SKIPPED_TARGET",
+      "raw_nack_events": 19,
+      "shortening_ticks": 61,
+      "skipped_target_count": 1,
+      "skipped_target_slots": [
+        1
+      ]
+    },
+    {
+      "actual_read_transactions": 25,
+      "actual_write_transactions": 211,
+      "delta_reads_vs_ack": 0,
+      "delta_writes_vs_ack": -1,
+      "name": "THREE_SKIPPED_TARGETS",
+      "raw_nack_events": 19,
+      "shortening_ticks": 61,
+      "skipped_target_count": 3,
+      "skipped_target_slots": [
+        2,
+        3,
+        5
+      ]
+    }
+  ],
+  "edge_convention_review": {
+    "authoritative_finish_preincrement_expected": 113182679,
+    "expected_and_monitor_capture_use_same_preincrement_convention": true,
+    "preserved_wrapper_init_done_high_edge": 113182680,
+    "reported_residual_cycles": -1,
+    "residual_attribution": "NOT_UNIQUELY_ATTRIBUTED_CONSISTENT_WITH_ONE_BASE_CLOCK_BOUNDARY",
+    "wrapper_high_edge_used_for_counter_deficit": false
+  },
+  "operation_model": {
+    "delay_slots": 1,
+    "expected_count_25khz": 132584734,
+    "expected_count_50khz": 113182679,
+    "explicit_ff_targets": [
+      {
+        "bank": "00",
+        "data": "00",
+        "slot": 148
+      },
+      {
+        "bank": "01",
+        "data": "01",
+        "slot": 171
+      },
+      {
+        "bank": "09",
+        "data": "09",
+        "slot": 192
+      },
+      {
+        "bank": "00",
+        "data": "00",
+        "slot": 211
+      },
+      {
+        "bank": "00",
+        "data": "00",
+        "slot": 213
+      }
+    ],
+    "init_read_transactions": 25,
+    "init_write_transactions": 212,
+    "nop_slots": 26,
+    "slots": 214,
+    "target_slots": 187,
+    "tick_actions": 31043,
+    "tick_intervals": 31042,
+    "total_read_transactions": 55,
+    "total_write_transactions": 220,
+    "verified_bank_changes": 25
+  },
+  "r1": {
+    "actual_cnt_at_init_done": 113144494,
+    "control_flow_shortening_cycles": 38185,
+    "expected_cnt_at_init_done": 113182679,
+    "first_error_code": "0x02",
+    "first_error_meta_raw": "0x80020100",
+    "first_error_path": "SLOT_0_TARGET_WRITE_REGISTER_BYTE_NACK_PATH_NEUTRAL",
+    "first_error_step": "0x01",
+    "first_error_valid": 1,
+    "method_validation": "PASS_61_TICKS_WITH_MINUS_1_CYCLE_EDGE_RESIDUAL",
+    "omitted_transaction_interpretation": "R1_61_TICKS_HAS_MULTIPLE_VALID_DECOMPOSITIONS",
+    "residual_cycles": -1,
+    "shortening_ticks_exact": "60.9984025559105",
+    "shortening_ticks_nearest": 61,
+    "signed_count_error_cycles": -38185,
+    "tick_cycles": 626,
+    "unique_effective_nack_events": null,
+    "unique_skipped_i2c_transactions": null,
+    "unique_skipped_table_entries": null
+  },
+  "source_checks": {
+    "compact_first_error_mapping_verified": true,
+    "counter_preincrement_capture_verified": true,
+    "fsm_branch_fragments_verified": 14,
+    "protected_source_equal_across_formal_r1c_r1": true,
+    "source_sha256": {
+      "rtl/nvp/nvp6134c_autoinit.vhd": "74EFDC0147ADEA9A13265C061ECD3BA0B8042A2357B0A0E10673112F9986C17F",
+      "rtl/nvp/nvp6134c_diagnostics_pkg.vhd": "36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156",
+      "rtl/nvp/nvp6134c_i2c_bringup.vhd": "027D0D2258E5FF80A2675198EA9CD7085E2FD360B0EBCE9C423D631656DF9080"
+    }
+  },
+  "status": "PASS"
+}
