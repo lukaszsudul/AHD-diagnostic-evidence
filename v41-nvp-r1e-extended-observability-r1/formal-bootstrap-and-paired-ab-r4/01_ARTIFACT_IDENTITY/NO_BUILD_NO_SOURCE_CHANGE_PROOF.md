@@ -1,0 +1,16 @@
+# No-build and no-source-change proof
+
+```text
+FULL_BUILDS_THIS_TASK=0
+SYNTHESIS_RUNS_THIS_TASK=0
+IMPLEMENTATION_RUNS_THIS_TASK=0
+BITSTREAMS_GENERATED_THIS_TASK=0
+FPGA_SOURCE_CHANGES_THIS_TASK=0
+R1E_SOURCE_WORKTREE_HEAD=f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+R1E_SOURCE_WORKTREE_TREE=db8b5581a237e19905fd01c6d453793047bc3ba7
+R1E_SOURCE_WORKTREE_STATUS=CLEAN
+R1E_ROUTED_DCP_REUSED=YES_EXACT
+FORMAL_REPOSITORY_MUTATIONS=0
+```
+
+R4 creates only task-local harness and evidence files. It does not invoke synthesis, implementation, checkpoint writing, or bitstream generation.
