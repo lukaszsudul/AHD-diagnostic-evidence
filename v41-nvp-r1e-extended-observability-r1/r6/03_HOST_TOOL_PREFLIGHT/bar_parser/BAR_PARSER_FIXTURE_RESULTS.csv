@@ -1,0 +1,10 @@
+FIXTURE,EXPECTED_RESULT,PROCESS_EXIT_CODE,ACTUAL_CLASSIFICATION,BAR0_BYTES,BAR1_BYTES,DETAIL
+normal_r1b_like.resource,PASS,0,PASS,131072,65536,expected behavior observed
+uppercase_hex.resource,PASS,0,PASS,131072,65536,expected behavior observed
+leading_zeros.resource,PASS,0,PASS,256,16,expected behavior observed
+all_zero_unused.resource,PASS,0,PASS,0,0,expected behavior observed
+end_before_start.resource,FAIL_CLOSED,2,PASS,,,expected behavior observed
+missing_token.resource,FAIL_CLOSED,2,PASS,,,expected behavior observed
+nonhex_token.resource,FAIL_CLOSED,2,PASS,,,expected behavior observed
+extra_whitespace.resource,PASS,0,PASS,131072,65536,expected behavior observed
+r1b_bad_token_replay.resource,PASS,0,PASS,131072,65536,expected behavior observed
