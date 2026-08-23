@@ -1,0 +1,1640 @@
+# CODEX MASTER PROMPT
+## v41 NVP R1e — post-route continuation and full paired A/B completion
+## Reuse exact routed checkpoint; correct only the report-property harness;
+## generate the sole R1e bitstream; execute Arm A and full Arm B; publish one final report
+## FULL OWNER PRE-AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+
+```text
+PROJECT:
+    AHD Capture Card
+
+TASK:
+    V41_NVP_R1E_POST_ROUTE_CONTINUATION_AND_PAIRED_AB_R1
+
+TASK_CHARACTER:
+    CONTINUATION_OF_THE_EXISTING_R1E_EXPERIMENT
+
+PRIMARY_PURPOSE:
+    Complete the already-routed R1e experiment without rebuilding or changing
+    FPGA source.
+
+    The prior R1e run reached a valid routed checkpoint and passed all
+    scientific/source/implementation gates reported below. It stopped before
+    `write_bitstream` because a report-only Tcl command passed two objects to
+    `report_property`, which requires exactly one object.
+
+CONTINUATION_STRATEGY:
+    open the exact prior routed DCP;
+    verify its identity and routed state;
+    correct only the task-local report-property invocation;
+    complete the exact remaining post-route report/bitstream tail;
+    generate one R1e bit;
+    run one full Arm-A/Arm-B hardware campaign;
+    leave exact formal Phase 2 active.
+
+FULL_REBUILD_THIS_TASK:
+    NO
+
+FPGA_SOURCE_CHANGE_THIS_TASK:
+    NO
+
+NEW_SOURCE_COMMIT_THIS_TASK:
+    NO
+
+POST_ROUTE_CONTINUATION_SESSIONS_MAX:
+    1
+
+WRITE_BITSTREAM_ATTEMPTS_MAX:
+    1
+
+FPGA_PROGRAM_INVOCATIONS_MAX:
+    2
+
+WARM_REBOOTS_MAX:
+    2
+
+PROGRAM_RETRIES:
+    0
+
+FINAL_REPORT_COUNT:
+    1
+
+FINAL_ACTIVE_IMAGE:
+    exact formal Phase 2
+```
+
+=====================================================================
+-1. STANDING OWNER AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+=====================================================================
+
+```text
+OWNER_STANDING_AUTHORIZATION=
+    GRANTED
+
+OWNER_INTERACTIVE_APPROVAL_REQUIRED=
+    NO
+
+CODEX_MUST_REQUEST_ADDITIONAL_CONFIRMATION=
+    NO
+
+EXPECTED_OWNER_INTERACTIONS=
+    0
+```
+
+The owner grants advance approval for every action explicitly authorized by
+this prompt.
+
+Do not pause to ask the owner to approve:
+
+```text
+task-local file creation;
+read-only source/evidence inspection;
+opening the exact routed DCP;
+the corrected post-route Vivado continuation;
+one `write_bitstream`;
+all report-only Vivado commands;
+one diagnostic FPGA program;
+one exact formal FPGA program;
+two authorized warm reboots;
+two exact pinned-driver loads;
+all authorized read-only BAR/telemetry accesses;
+evidence sealing;
+one normal evidence commit/push and remote verification.
+```
+
+A passing gate means continue automatically.
+
+A failing or blocked gate means:
+
+```text
+preserve evidence;
+write the single final report;
+publish when safely possible;
+hard-stop without asking whether to continue.
+```
+
+This pre-authorization does not permit any action outside the explicit scope or
+above the numerical limits.
+
+=====================================================================
+0. AUTHORITATIVE PRIOR R1e BUILD RESULT
+=====================================================================
+
+Prior exact R1e source:
+
+```text
+SOURCE_COMMIT=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+SOURCE_TREE=
+    db8b5581a237e19905fd01c6d453793047bc3ba7
+
+TRACKED_SOURCE_FILES_CHANGED=
+    18
+```
+
+Prior validated scientific/source results:
+
+```text
+PROTECTED_NVP_BLOBS_UNCHANGED=
+    YES
+
+PRE_INIT_DONE_EQUIVALENCE=
+    PASS
+
+PRE_INIT_DONE_EQUIVALENCE_CYCLES=
+    1814611
+
+ORDERED_NACK_LEGACY_WINDOW_AUDIT=
+    PASS
+
+PROBE_TARGET_COUNT=
+    10000
+
+PROBE_SIMULATION=
+    PASS
+```
+
+Prior implementation results:
+
+```text
+SYNTHESIS=
+    PASS
+
+PLACE=
+    PASS
+
+ROUTE=
+    PASS
+
+ROUTE_ERRORS=
+    0
+
+WNS_NS=
+    +0.617
+
+WHS_NS=
+    +0.021
+
+DRC_ERRORS=
+    0
+
+DRC_CRITICAL_WARNINGS=
+    0
+
+REQP_1839_COUNT=
+    4
+
+REQP_1839_ACCEPTED_BASELINE_COUNT=
+    4
+```
+
+Prior terminal command failure:
+
+```text
+FAILURE_PHASE=
+    AFTER_FULL_ROUTE_BEFORE_WRITE_BITSTREAM
+
+FAILURE_COMMAND_CLASS=
+    REPORT_ONLY
+
+ERROR=
+    [Common 17-56] 'report_property' expects exactly one object got '2'
+
+BITSTREAM_PRODUCED=
+    NO
+```
+
+Prior operation accounting:
+
+```text
+HARDWARE_ACTIONS=
+    0
+
+JTAG_SESSIONS=
+    0
+
+FPGA_PROGRAMS=
+    0
+
+SSH_TO_DUT=
+    0
+
+WARM_REBOOTS=
+    0
+
+DRIVER_LOADS=
+    0
+
+MMIO=
+    0
+
+DMA=
+    0
+```
+
+The previous heavy-operation locks were released and no stale Vivado/build lock
+remained.
+
+The prior routed implementation is the scientific object to complete.
+
+Do not replace it with a new placement/routing result.
+
+=====================================================================
+1. REPORTING POLICY AND SINGLE FINAL REPORT
+=====================================================================
+
+Create exactly one final scientific report for the complete R1e experiment:
+
+```text
+V41_NVP_R1E_EXTENDED_OBSERVABILITY_FINAL_REPORT.md
+```
+
+The final report must integrate:
+
+```text
+the exact source identity;
+the original build/source/simulation gates;
+the routed-checkpoint continuation;
+the corrected report-property handling;
+the generated bit identity;
+Arm A;
+full Arm B;
+the combined ordered-log/lifecycle/probe analysis;
+final formal Phase-2 state;
+operation accounting.
+```
+
+Do not publish a second standalone “final” report for the earlier pre-bitstream
+boundary.
+
+Preserve the earlier hard-stop report and raw log only as input evidence under:
+
+```text
+00_CONTINUATION_INPUT/
+```
+
+The single final report may describe the relevant build-tool boundary as:
+
+```text
+the first execution reached a fully routed DCP and stopped before bitstream
+generation on a report-only cardinality defect; the separately authorized
+continuation reused that exact DCP and corrected only the report harness.
+```
+
+------------------------------------------------------------
+1.1 Pre-task JTAG-disconnection reporting rule
+------------------------------------------------------------
+
+The temporary accidental JTAG disconnection occurred outside the executed
+scientific/hardware campaign and did not affect:
+
+```text
+source;
+simulation;
+synthesis;
+placement;
+routing;
+the routed DCP;
+bitstream contents;
+or any measured sample.
+```
+
+It must not be discussed in the final scientific report, executive summary,
+classification, or publication receipt.
+
+Do not fabricate, rewrite, or delete raw evidence.
+
+The task must record only the fresh live JTAG gate actually observed before
+hardware:
+
+```text
+JTAG_PRECHECK=
+    PASS / FAIL
+```
+
+If the fresh live gate fails, report that current gate failure normally.
+
+Do not mention the earlier human incident as a causal explanation.
+
+=====================================================================
+2. EXACT SOURCE, BUILD, AND HARDWARE IDENTITIES
+=====================================================================
+
+Formal repository:
+
+```text
+GITHUB_REPOSITORY=
+    lukaszsudul/FPGA_AHD
+```
+
+R1e source branch:
+
+```text
+BRANCH=
+    diag/v41-nvp-i2c-25khz-r1e-observability
+```
+
+Exact source:
+
+```text
+SOURCE_COMMIT=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+SOURCE_TREE=
+    db8b5581a237e19905fd01c6d453793047bc3ba7
+```
+
+R1e functional profile:
+
+```text
+AUTOINIT_I2C_HZ=
+    25000
+
+CLK_HZ=
+    62500000
+
+TICK_CYCLES=
+    1251
+
+EXPECTED_CNT_AT_INIT_DONE=
+    132584734
+
+PROBE_ADDRESS_BYTE=
+    0x60
+
+PROBE_TARGET_COUNT=
+    10000
+```
+
+Protected exact R1 observer blobs:
+
+```text
+rtl/v41/axi_clock_lifecycle_monitor.sv
+    c8c8145b12494cbdd54de7760f0558e6ab5fef11
+
+rtl/v41/axi_clock_measurement_regs.sv
+    64f4a3df745bcde00f9facac3030637a32a19485
+```
+
+Protected NVP blobs remain those recorded by the original R1e input manifest.
+
+Exact formal Phase-2 control:
+
+```text
+FORMAL_CHECKPOINT_COMMIT=
+    c89e88bcdf389614c884fb129e8b2d42a585bccb
+
+FORMAL_CHECKPOINT_TREE=
+    417820c69c134161fcafae0947dc5976919814d1
+
+FORMAL_BIT_SHA256=
+    7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2
+
+FORMAL_RUNTIME_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FORMAL_DIAGNOSTIC_MAGIC=
+    0x00000000
+```
+
+FPGA/JTAG:
+
+```text
+HS2_SERIAL=
+    210241768436
+
+PART=
+    xc7a35t
+
+IDCODE=
+    0362D093
+```
+
+Ubuntu:
+
+```text
+DUT=
+    vcdeagent1@10.132.1.111
+
+REQUIRED_KERNEL=
+    7.0.0-29-generic
+```
+
+Pinned XDMA module:
+
+```text
+PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+
+SHA256=
+    1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+
+VERMAGIC_PREFIX=
+    7.0.0-29-generic
+```
+
+Accepted loader:
+
+```text
+PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+
+SHA256=
+    7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+
+INVOCATION=
+    sudo /usr/bin/bash <loader> <exact-module> <module-sha> <fresh-dir>
+```
+
+Use the corrected Python BAR parser and the accepted vendor-startup-HIGH plus
+same-session-DONE programming observer from R1c/R1d.
+
+=====================================================================
+3. AUTHORIZATION AND LIMITS
+=====================================================================
+
+Authorized offline:
+
+```text
+read and hash prior R1e task evidence;
+create one continuation task root;
+open the exact prior routed DCP;
+run read-only/report-only DCP checks;
+create one task-local corrected continuation Tcl script;
+run the exact remaining post-route script tail;
+set only bitstream properties already specified by the original build script;
+run one `write_bitstream`;
+hash and package the generated bit;
+run task-local host-tool fixtures;
+publish one consolidated evidence package.
+```
+
+Authorized hardware:
+
+```text
+Arm A:
+    one R1e bit program;
+    one frozen modeled wait;
+    one warm reboot;
+    at most one exact pinned-driver load;
+    full R1e read-only telemetry;
+    one final read-only DONE.
+
+Arm B:
+    one exact formal Phase-2 program;
+    one normal wait;
+    one warm reboot;
+    at most one exact pinned-driver load;
+    full formal read-only control telemetry;
+    one final read-only DONE.
+```
+
+Maximum:
+
+```text
+FULL_BUILDS_THIS_TASK=
+    0
+
+SYNTHESIS_RUNS_THIS_TASK=
+    0
+
+PLACE_RUNS_THIS_TASK=
+    0
+
+ROUTE_RUNS_THIS_TASK=
+    0
+
+POST_ROUTE_CONTINUATION_SESSIONS=
+    1
+
+WRITE_BITSTREAM_ATTEMPTS=
+    1
+
+FPGA_PROGRAM_INVOCATIONS=
+    2
+
+WARM_REBOOTS=
+    2
+
+POST_REBOOT_DRIVER_LOADS=
+    2
+
+PROGRAM_RETRIES=
+    0
+```
+
+Not authorized:
+
+```text
+source edit;
+new FPGA source commit;
+new synthesis;
+new opt_design;
+new place_design;
+new phys_opt_design;
+new route_design;
+incremental implementation;
+DCP modification followed by write_checkpoint;
+replacement routed DCP;
+second bitstream attempt;
+second R1e hardware sample;
+formal bootstrap program;
+cold start;
+power cycle;
+physical action;
+PCIe remove/rescan/reset;
+AXI-Lite write;
+NVP register/data write outside the already-built probe;
+DMA;
+Phase 3;
+XDMA development;
+tag;
+Release.
+```
+
+=====================================================================
+4. TASK ROOT
+=====================================================================
+
+Create:
+
+```text
+C:\FPGA\V41_NVP_R1E_POST_ROUTE_CONTINUATION_R1\
+```
+
+Required structure:
+
+```text
+00_CONTINUATION_INPUT\
+01_IDENTITY\
+02_FAILED_COMMAND_AUDIT\
+03_DCP_CONTINUATION\
+04_BITSTREAM\
+05_HOST_TOOL_PREFLIGHT\
+06_HARDWARE_PRECHECK\
+07_ARM_A_R1E\
+08_ARM_B_FORMAL\
+09_ANALYSIS\
+10_FINAL\
+scripts\
+fixtures\
+```
+
+Create:
+
+```text
+OPERATION_LEDGER.md
+TOOL_COMMAND_LEDGER.md
+TIME_LEDGER.md
+```
+
+Initial accounting:
+
+```text
+FULL_BUILDS_THIS_TASK=0
+SYNTHESIS_RUNS_THIS_TASK=0
+PLACE_RUNS_THIS_TASK=0
+ROUTE_RUNS_THIS_TASK=0
+WRITE_BITSTREAM_ATTEMPTS=0
+FPGA_PROGRAMS=0
+WARM_REBOOTS=0
+DRIVER_LOADS=0
+PROGRAM_RETRIES=0
+SOURCE_CHANGES=0
+FORMAL_REPOSITORY_MUTATIONS=0
+```
+
+Save this prompt verbatim and hash it before any continuation command.
+
+=====================================================================
+5. P0 — PRIOR TASK AND ROUTED-DCP IDENTITY
+=====================================================================
+
+Locate the exact prior R1e task root and only that root.
+
+Do not use a similarly named DCP from another task.
+
+Preserve:
+
+```text
+prior final/hard-stop report;
+prior source manifest;
+prior operation ledger;
+prior build script;
+Vivado log/journal;
+simulation/equivalence reports;
+address-map audit;
+probe simulation;
+synth DCP;
+routed DCP;
+all generated pre-failure reports.
+```
+
+Compute and freeze:
+
+```text
+PRIOR_BUILD_SCRIPT_SHA256=
+PRIOR_VIVADO_LOG_SHA256=
+PRIOR_SYNTH_DCP_SHA256=
+PRIOR_ROUTED_DCP_SHA256=
+```
+
+Require:
+
+```text
+source commit=f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd;
+source tree=db8b5581a237e19905fd01c6d453793047bc3ba7;
+routed DCP exists;
+routed DCP opens in Vivado 2025.2;
+top is exact expected R1e top;
+part is xc7a35tcsg325-2;
+design is fully routed;
+route errors=0.
+```
+
+Re-run report-only checks from the opened DCP:
+
+```text
+report_route_status;
+report_timing_summary;
+report_drc;
+report_cdc;
+report_methodology;
+report_clocks;
+report_clock_interaction;
+report_utilization;
+report_power.
+```
+
+Require the observed results to remain compatible with the prior frozen values:
+
+```text
+WNS>=+0.617 ns or explain report rounding only;
+WHS>=+0.021 ns or explain report rounding only;
+DRC errors=0;
+DRC critical warnings=0;
+route errors=0;
+REQP-1839=4;
+protected source/provenance identity unchanged.
+```
+
+Any material contradiction:
+
+```text
+BLOCKED_PRIOR_ROUTED_DCP_IDENTITY_OR_STATE
+```
+
+No rebuild.
+
+=====================================================================
+6. P1 — EXACT FAILED-COMMAND AUDIT
+=====================================================================
+
+Locate the exact `[Common 17-56]` failure in:
+
+```text
+the prior Vivado log;
+the exact prior build Tcl script.
+```
+
+Record:
+
+```text
+FAILED_TCL_LINE=
+FAILED_OBJECT_QUERY=
+FAILED_OBJECT_COUNT=2
+FAILED_REPORT_PURPOSE=
+```
+
+Evaluate the exact object query in the opened routed DCP.
+
+Do not use:
+
+```tcl
+lindex $objects 0
+```
+
+as a silent fix.
+
+Classify the intended report semantics.
+
+------------------------------------------------------------
+6.1 Multi-object report semantics
+------------------------------------------------------------
+
+If the report was intended to document every matched object:
+
+```text
+REPORT_PROPERTY_CARDINALITY_FIX=
+    DETERMINISTIC_FOREACH_ALL_MATCHED_OBJECTS
+```
+
+Requirements:
+
+```text
+sort objects deterministically by full hierarchical name;
+require the exact expected count=2;
+emit one object header per object;
+call report_property with exactly one object per invocation;
+preserve all properties for both objects;
+produce a combined index plus per-object files.
+```
+
+------------------------------------------------------------
+6.2 Single-object gate semantics
+------------------------------------------------------------
+
+If the original gate logically required exactly one object:
+
+```text
+REPORT_PROPERTY_CARDINALITY_FIX=
+    NOT_PERMITTED_DUPLICATE_OBJECT_CONTRADICTION
+
+CLASSIFICATION=
+    BLOCKED_REPORT_GATE_EXPECTED_ONE_OBJECT_FOUND_TWO
+```
+
+Hard stop.
+
+Do not arbitrarily choose an object.
+
+------------------------------------------------------------
+6.3 Static continuation-script audit
+------------------------------------------------------------
+
+Before Vivado continuation, require:
+
+```text
+every `report_property` invocation receives exactly one object;
+no source-edit command;
+no synthesis/place/route command;
+no write_checkpoint;
+no implementation-changing property;
+exactly one possible write_bitstream command;
+no retry loop.
+```
+
+Create:
+
+```text
+02_FAILED_COMMAND_AUDIT\
+    FAILED_COMMAND_ROOT_CAUSE.md
+
+02_FAILED_COMMAND_AUDIT\
+    OBJECT_CARDINALITY.csv
+
+02_FAILED_COMMAND_AUDIT\
+    CONTINUATION_SCRIPT_STATIC_AUDIT.md
+```
+
+=====================================================================
+7. P2 — ORIGINAL BUILD-TAIL RECONCILIATION
+=====================================================================
+
+Audit the original build script from the failed line to its end.
+
+Create an ordered command inventory:
+
+```text
+original line;
+command;
+purpose;
+already completed before failure;
+required in continuation;
+forbidden in continuation.
+```
+
+Allowed continuation commands are limited to:
+
+```text
+corrected report-only commands;
+remaining report-only commands;
+bitstream-property assignments explicitly present in the original script;
+one write_bitstream;
+hash/manifest/evidence commands.
+```
+
+Forbidden:
+
+```text
+any design optimization;
+any placement/routing;
+any new constraint;
+any property not present in the original intended post-route tail, except
+task-local output paths and report formatting.
+```
+
+Require:
+
+```text
+ORIGINAL_BUILD_TAIL_RECONCILED=
+    PASS
+
+CONTINUATION_FUNCTIONAL_SEMANTICS_CHANGE=
+    NO
+```
+
+=====================================================================
+8. P3 — ONE POST-ROUTE CONTINUATION SESSION
+=====================================================================
+
+Create task-local:
+
+```text
+scripts\continue_exact_r1e_from_routed_dcp.tcl
+```
+
+The script must:
+
+```text
+open the exact frozen routed DCP;
+verify top/part/routed state;
+verify exact expected object counts;
+run the corrected per-object report_property sequence;
+run all reconciled remaining reports;
+apply only original intended BITSTREAM.* properties;
+write exactly one bitstream;
+exit nonzero on any gate failure.
+```
+
+Bit filename:
+
+```text
+ahd_capture_v41_i2c_25khz_r1e_observability.bit
+```
+
+Output:
+
+```text
+04_BITSTREAM\
+    ahd_capture_v41_i2c_25khz_r1e_observability.bit
+```
+
+Run exactly once through the supported Vivado launcher.
+
+Require:
+
+```text
+POST_ROUTE_CONTINUATION_SESSIONS=1
+WRITE_BITSTREAM_ATTEMPTS=1
+PROCESS_EXIT_CODE=0
+BITSTREAM_EXISTS=YES
+BITSTREAM_SIZE_NONZERO=YES
+```
+
+Compute:
+
+```text
+R1E_BIT_SHA256=
+```
+
+Preserve the exact stdout/stderr/log/journal.
+
+No rerun if `write_bitstream` or a report fails.
+
+=====================================================================
+9. P4 — POST-BITSTREAM OFFLINE GATES
+=====================================================================
+
+Require:
+
+```text
+R1E_BIT_SOURCE_COMMIT=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+R1E_BIT_SOURCE_TREE=
+    db8b5581a237e19905fd01c6d453793047bc3ba7
+
+R1E_BUILD_FLAGS_EXPECTED=
+    0x00000002
+
+FULL_BUILDS_TOTAL_EXPERIMENT=
+    1
+
+FULL_BUILDS_THIS_TASK=
+    0
+
+ROUTED_DCP_REUSED=
+    YES_EXACT
+
+SOURCE_CHANGES_THIS_TASK=
+    0
+```
+
+Reconcile all required R1e capabilities against the routed DCP and source
+manifest:
+
+```text
+lifecycle monitor present;
+expected constants present;
+probe target count=10000;
+probe address byte=0x60;
+probe I2C Hz=25000;
+existing legacy NACK window present;
+R1e page present;
+pre-init equivalence evidence PASS;
+probe simulation PASS.
+```
+
+Create a sealed build-completion package containing:
+
+```text
+source identity;
+prior synth/routed DCP identity;
+continuation script;
+corrected property reports;
+all post-route reports;
+bit;
+bit SHA;
+Vivado logs;
+continuation ledger.
+```
+
+Do not call this a second build.
+
+=====================================================================
+10. P5 — HOST-TOOL AND WAIT PREFLIGHT
+=====================================================================
+
+Reuse the exact R1e host decoders from the prior task when their hashes match.
+
+Require fixture coverage for:
+
+```text
+lifecycle page decoding;
+coherent 48-bit counter read;
+R1e capability/probe page;
+legacy header 0x10098;
+16 log words 0x1009C..0x100D8;
+record decode;
+overflow;
+NACK_COUNT<=8 consistency;
+NACK_COUNT>8 overflow consistency;
+Wilson interval;
+zero-NACK upper bound;
+probe-count invariants.
+```
+
+Freeze the Arm-A wait.
+
+Use the exact prior simulation/model result:
+
+```text
+MODELED_PROBE_COMPLETE_SECONDS_FROM_CONFIGURATION=
+```
+
+Require that value from the prior R1e simulation evidence.
+
+Then:
+
+```text
+ARM_A_REQUIRED_WAIT_SECONDS =
+    max(
+        10.000000,
+        MODELED_PROBE_COMPLETE_SECONDS_FROM_CONFIGURATION + 2.000000
+    )
+```
+
+Record the exact frozen value before hardware.
+
+If the prior modeled value is absent, derive it from the exact source and
+previously passed simulation artifacts without changing source, then require
+model/log agreement.
+
+No hardware if the wait cannot be proven.
+
+=====================================================================
+11. P6 — FRESH HARDWARE PRECHECK
+=====================================================================
+
+The owner reports that the physical JTAG connection is restored and tested.
+
+Treat that as context only.
+
+Fresh task evidence is authoritative.
+
+Require read-only:
+
+```text
+one HS2 210241768436 target;
+one xc7a35t;
+IDCODE 0362D093;
+fresh DONE=1;
+current kernel 7.0.0-29-generic;
+next warm reboot proven to remain kernel 29;
+one endpoint 10ee:7011 / 10ee:0007;
+Gen1 x1;
+BAR0 128 KiB;
+BAR1 64 KiB;
+corrected Python BAR-parser PASS;
+formal identity A40A0C07 / 0000400B / 00031002;
+diagnostic magic=0;
+exact pinned driver, or one permitted pre-Arm-A exact load;
+no wrong same-name xdma;
+no open XDMA node;
+zero DMA;
+kernel/AER health PASS;
+no stale Vivado/hw_server owner.
+```
+
+No bootstrap is authorized.
+
+If exact formal Phase 2 cannot be proven:
+
+```text
+BLOCKED_REQUIRED_FORMAL_START_STATE
+```
+
+with zero programs.
+
+=====================================================================
+12. ARM A — R1e EXTENDED-OBSERVABILITY IMAGE
+=====================================================================
+
+Immediately before program:
+
+```text
+rehash exact R1e bit;
+verify bit path;
+verify source/DCP/bit manifest;
+verify target;
+verify operation ledger.
+```
+
+Program once using the accepted observer.
+
+Require:
+
+```text
+vendor startup HIGH;
+same-session DONE=1;
+one invocation;
+exit code 0;
+no retry.
+```
+
+Wait exactly at least the frozen:
+
+```text
+ARM_A_REQUIRED_WAIT_SECONDS
+```
+
+using the common monotonic QPC method.
+
+Perform one warm reboot.
+
+Require:
+
+```text
+new boot ID;
+kernel 7.0.0-29-generic;
+corrected BAR geometry;
+exact explicit-path XDMA load;
+expected node set;
+host/kernel/AER health.
+```
+
+Verify runtime:
+
+```text
+GIT_SHA=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+BUILD_FLAGS=
+    0x00000002
+
+common identity=
+    A40A0C07 / 0000400B / 00031002
+
+R1 lifecycle magic/version=
+    PASS
+
+R1e magic/version/capabilities=
+    PASS
+
+ACTIVE_I2C_HZ=
+    25000
+
+PROBE_TARGET_COUNT=
+    10000
+```
+
+Collect two full read-only snapshots approximately one second apart.
+
+Each snapshot includes:
+
+```text
+normal NVP/video fields;
+
+0x2000..0x2094 lifecycle/R1e page;
+
+0x10098..0x100D8 legacy NACK header/log window.
+```
+
+Static coherence required for:
+
+```text
+CNT_AT_INIT_DONE;
+expected constants;
+probe counters/status;
+ordered-log header/records;
+INIT_DONE/ERROR;
+NACK/TIMEOUT;
+FIRST_ERROR;
+original/restored FF.
+```
+
+Valid instrumentation sample:
+
+```text
+PROBE_DONE=1
+PROBE_ABORTED=0
+PROBE_COUNT=10000
+PROBE_ACK_COUNT+PROBE_NACK_COUNT=10000
+PROBE_TIMEOUT_COUNT=0
+lifecycle counter coherent
+ordered-log consistency PASS
+final DONE=1
+```
+
+Classify NVP PASS/FAIL separately.
+
+No second Arm-A run.
+
+=====================================================================
+13. ARM B — FULL EXACT FORMAL CONTROL
+=====================================================================
+
+Program exact formal Phase 2 once.
+
+Require the same programming gates and no retry.
+
+Wait at least 5 seconds.
+
+Perform one warm reboot.
+
+Require:
+
+```text
+kernel 29;
+corrected BARs;
+exact pinned driver;
+formal identity;
+diagnostic magic=0;
+host/kernel health.
+```
+
+Collect the same normal NVP/video T0/T1 fields.
+
+Additionally read:
+
+```text
+0x10098..0x100D8:
+    formal legacy NACK header/log window
+
+0x2000..0x20FF:
+    expected deterministic zero/reserved page
+```
+
+Require:
+
+```text
+full Arm-B T0/T1 functional control;
+ordered-log consistency;
+R1e page zero;
+final DONE=1.
+```
+
+At task end:
+
+```text
+FINAL_ACTIVE_IMAGE=FORMAL_PHASE2
+FINAL_PINNED_DRIVER_LOADED=YES
+FINAL_DONE=1
+```
+
+Arm B is not restoration-only.
+
+=====================================================================
+14. SCIENTIFIC ANALYSIS
+=====================================================================
+
+Produce:
+
+```text
+Arm-A lifecycle shortening/extension;
+Arm-A ordered first-eight NACK records and overflow;
+Arm-A 10,000-probe NACK rate and confidence interval;
+Arm-A NVP functional result;
+
+Arm-B aggregate NACK;
+Arm-B ordered first-eight records and overflow;
+Arm-B NVP functional result;
+
+paired comparison;
+control-flow/log reconciliation;
+probe-versus-autoinit interpretation.
+```
+
+Required limitations:
+
+```text
+ordered log capacity=8;
+overflow means first eight only;
+probe measures post-autoinit write-address ACK only;
+probe is active but non-register-writing;
+new logic may alter implementation;
+analog voltage/rise time is not directly measured.
+```
+
+Always state:
+
+```text
+ROOT_CAUSE_SOLELY_PROVEN=NO
+BOARD_VCCO_DROOP_PROVEN=NO
+GROUND_BOUNCE_PROVEN=NO
+ANALOG_MARGIN_DIRECTLY_MEASURED=NO
+```
+
+=====================================================================
+15. EVIDENCE AND PUBLICATION
+=====================================================================
+
+Evidence repository:
+
+```text
+lukaszsudul/AHD-diagnostic-evidence
+```
+
+Preferred path:
+
+```text
+v41-nvp-r1e-extended-observability-r1/
+```
+
+If that path already contains the earlier incomplete-stage evidence:
+
+```text
+preserve all existing files and Git history;
+add the continuation and final evidence in a normal new commit;
+place the one authoritative final report at the path root;
+do not force-push or rewrite history.
+```
+
+Required evidence:
+
+```text
+verbatim continuation prompt;
+prior R1e source/build identities;
+prior routed DCP hash;
+failed-command audit;
+object cardinality;
+continuation script;
+corrected per-object property reports;
+post-route reports;
+bit and hash;
+host-tool fixtures;
+hardware precheck;
+raw Arm-A and Arm-B evidence;
+decoded logs;
+lifecycle/probe statistics;
+single final report;
+operation ledger;
+secret scan;
+SHA-256 manifest.
+```
+
+Create one sealed ZIP and sidecar.
+
+No PDF or DOCX.
+
+Normal commit/push only.
+
+No tag or Release.
+
+=====================================================================
+16. REQUIRED SINGLE FINAL REPORT BLOCK
+=====================================================================
+
+The one final report must end with:
+
+```text
+TASK=
+    V41_NVP_R1E_POST_ROUTE_CONTINUATION_AND_PAIRED_AB_R1
+
+FINAL_REPORT_COUNT=
+    1
+
+SOURCE_COMMIT=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+SOURCE_TREE=
+    db8b5581a237e19905fd01c6d453793047bc3ba7
+
+TRACKED_SOURCE_FILES_CHANGED=
+    18
+
+PROTECTED_NVP_BLOBS_UNCHANGED=
+    YES
+
+PRE_INIT_DONE_EQUIVALENCE=
+    PASS
+
+PRE_INIT_DONE_EQUIVALENCE_CYCLES=
+    1814611
+
+ORDERED_NACK_LEGACY_WINDOW_AUDIT=
+    PASS
+
+PROBE_TARGET_COUNT=
+    10000
+
+PROBE_SIMULATION=
+    PASS
+
+PRIOR_SYNTHESIS=
+    PASS
+
+PRIOR_PLACE=
+    PASS
+
+PRIOR_ROUTE=
+    PASS
+
+PRIOR_ROUTE_ERRORS=
+    0
+
+PRIOR_WNS_NS=
+    +0.617
+
+PRIOR_WHS_NS=
+    +0.021
+
+PRIOR_DRC_ERRORS=
+    0
+
+PRIOR_DRC_CRITICAL_WARNINGS=
+    0
+
+PRIOR_REQP_1839_COUNT=
+    4
+
+PRIOR_ROUTED_DCP_SHA256=
+
+REPORT_PROPERTY_ROOT_CAUSE=
+    MULTI_OBJECT_LIST_PASSED_TO_SINGLE_OBJECT_COMMAND
+
+REPORT_PROPERTY_MATCH_COUNT=
+    2
+
+REPORT_PROPERTY_FIX=
+    DETERMINISTIC_PER_OBJECT_REPORTING
+
+SOURCE_CHANGES_THIS_TASK=
+    0
+
+FULL_BUILDS_THIS_TASK=
+    0
+
+SYNTHESIS_RUNS_THIS_TASK=
+    0
+
+PLACE_RUNS_THIS_TASK=
+    0
+
+ROUTE_RUNS_THIS_TASK=
+    0
+
+POST_ROUTE_CONTINUATION_SESSIONS=
+    1
+
+WRITE_BITSTREAM_ATTEMPTS=
+    1
+
+R1E_BIT_SHA256=
+R1E_BIT_SOURCE_COMMIT=
+R1E_BIT_SOURCE_TREE=
+
+ARM_A_REQUIRED_WAIT_SECONDS=
+ARM_A_PROGRAM=
+ARM_A_KERNEL=
+ARM_A_DRIVER=
+ARM_A_RUNTIME_PROVENANCE=
+ARM_A_CNT_AT_INIT_DONE=
+ARM_A_SIGNED_COUNT_ERROR_CYCLES=
+ARM_A_SHORTENING_CYCLES=
+ARM_A_SHORTENING_TICKS=
+ARM_A_NACK_COUNT=
+ARM_A_NACK_LOG_COUNT=
+ARM_A_NACK_LOG_OVERFLOW=
+ARM_A_ORDERED_NACK_RECORDS=
+ARM_A_PROBE_COUNT=
+ARM_A_PROBE_ACK_COUNT=
+ARM_A_PROBE_NACK_COUNT=
+ARM_A_PROBE_TIMEOUT_COUNT=
+ARM_A_PROBE_NACK_RATE=
+ARM_A_PROBE_WILSON95=
+ARM_A_NVP_RESULT=
+ARM_A_FINAL_DONE=
+
+ARM_B_PROGRAM=
+ARM_B_KERNEL=
+ARM_B_DRIVER=
+ARM_B_FORMAL_IDENTITY=
+ARM_B_DIAGNOSTIC_MAGIC=
+ARM_B_R1E_PAGE_ZERO=
+ARM_B_NACK_COUNT=
+ARM_B_NACK_LOG_COUNT=
+ARM_B_NACK_LOG_OVERFLOW=
+ARM_B_ORDERED_NACK_RECORDS=
+ARM_B_NVP_RESULT=
+ARM_B_FINAL_DONE=
+
+PAIRED_AB_RESULT=
+CONTROL_FLOW_SHORTENING_EXPLAINED_BY_LOG=
+STOCHASTIC_ADDRESS_OR_BUS_MARGIN=
+AUTOINIT_OPERATION_OR_PHASE_CONTEXT=
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_PINNED_DRIVER_LOADED=
+FINAL_DONE=
+
+FPGA_PROGRAM_INVOCATIONS=
+    2
+
+WARM_REBOOTS=
+    2
+
+PROGRAM_RETRIES=
+    0
+
+COLD_STARTS=
+    0
+
+PHYSICAL_ACTIONS_DURING_TASK=
+    0
+
+AXI_LITE_WRITES=
+    0
+
+C2H_TRANSFERS=
+    0
+
+H2C_TRANSFERS=
+    0
+
+PHASE3_RESUMED=
+    NO
+
+XDMA_DEVELOPMENT_CONTINUED=
+    NO
+
+FORMAL_REPOSITORY_MUTATIONS=
+    0
+
+OWNER_INTERACTIVE_APPROVAL_REQUESTS=
+    0
+
+EVIDENCE_PACKAGE_SHA256=
+EVIDENCE_REPOSITORY_COMMIT=
+PUBLIC_REMOTE_VERIFICATION=
+NEXT_ACTION=
+    OWNER_AND_AUDITOR_REVIEW_OF_COMPLETED_R1E_RESULTS
+```
+
+=====================================================================
+17. HARD STOPS
+=====================================================================
+
+Hard-stop before bitstream if:
+
+```text
+source/tree mismatch;
+exact routed DCP unavailable;
+DCP top/part/routed state mismatch;
+route/timing/DRC contradiction;
+failed-command query does not return the exact expected two objects;
+the report semantically requires one object;
+continuation script includes implementation commands;
+original build tail cannot be reconciled.
+```
+
+Hard-stop after the single bitstream attempt if:
+
+```text
+write_bitstream fails;
+bit is absent/empty;
+source/DCP/bit provenance cannot be proven.
+```
+
+Hard-stop before hardware if:
+
+```text
+fresh JTAG gate fails;
+formal start state is not proven;
+kernel/driver/BAR/endpoint gate fails;
+host-tool fixtures fail;
+modeled Arm-A wait is not frozen.
+```
+
+Hard-stop during hardware if:
+
+```text
+programming fails;
+host does not return;
+kernel changes;
+driver cannot load once;
+runtime provenance mismatch;
+probe invariants fail;
+ordered-log consistency fails;
+lifecycle read is incoherent;
+final DONE fails.
+```
+
+No:
+
+```text
+DCP replacement;
+full rebuild;
+source patch;
+second bitstream attempt;
+program retry;
+third program;
+second Arm-A sample;
+physical action;
+Phase-3 work.
+```
+
+=====================================================================
+18. BEGIN
+=====================================================================
+
+```text
+save and hash this prompt
+    ->
+ingest prior R1e task evidence
+    ->
+freeze exact source/build/DCP identities
+    ->
+open exact routed DCP read-only
+    ->
+reconfirm route/timing/DRC/CDC gates
+    ->
+audit the exact failed report_property command
+    ->
+prove the two-object semantics
+    ->
+create one deterministic per-object continuation script
+    ->
+reconcile the original remaining build tail
+    ->
+run one post-route continuation session
+    ->
+write exactly one R1e bit
+    ->
+hash and seal the build-completion package
+    ->
+run host-tool/wait preflights
+    ->
+fresh JTAG/formal/kernel/driver/BAR precheck
+    ->
+Arm A R1e:
+        program once
+        frozen modeled wait
+        reboot
+        driver
+        lifecycle + probe + ordered log + normal telemetry
+        final DONE
+    ->
+Arm B formal:
+        program once
+        wait
+        reboot
+        driver
+        full control telemetry + ordered log
+        prove R1e page zero
+        final DONE
+    ->
+combined analysis
+    ->
+leave exact formal Phase 2 active
+    ->
+create one final report
+    ->
+seal and publish evidence
+    ->
+HARD STOP.
+```
+
+No interactive owner questions.
+No full rebuild.
+No FPGA source changes.
+No discussion of the pre-task accidental JTAG disconnection in the final
+scientific report.
+No Phase 3.
+No XDMA work.
