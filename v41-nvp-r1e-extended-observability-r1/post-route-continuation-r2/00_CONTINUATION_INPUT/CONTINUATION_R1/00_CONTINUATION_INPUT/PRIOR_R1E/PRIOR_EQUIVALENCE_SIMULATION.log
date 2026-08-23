@@ -1,0 +1,35 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sun Aug 23 01:12:01 2026
+# Process ID         : 18720
+# Current directory  : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION
+# Command line       : xsim.exe -log C:\FPGA\V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1\06_SIMULATION\equivalence\simulation.log -mode tcl -source {xsim.dir/r1e_pre_done_equivalence/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION/equivalence/simulation.log
+# Journal file       : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4202 MB
+# Total Virtual      : 21230 MB
+# Available Virtual  : 6735 MB
+#-----------------------------------------------------------
+source xsim.dir/r1e_pre_done_equivalence/xsim_script.tcl
+# xsim {r1e_pre_done_equivalence} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PRE_INIT_DONE_CYCLE_EQUIVALENCE=PASS CYCLES=1814611
+AUTOINIT_TRANSACTION_STREAM_BYTE_IDENTICAL=YES
+PROBE_ACTIVE_BEFORE_INIT_DONE=0 PROBE_BUS_DRIVE_BEFORE_INIT_DONE=0
+$finish called at time : 1814611501 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/tb/v41/tb_r1e_pre_done_equivalence.sv" Line 75
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:00:10 . Memory (MB): peak = 198.453 ; gain = 0.004
+exit
+INFO: xsimkernel Simulation Memory Usage: 12460 KB (Peak: 12460 KB), Simulation CPU Usage: 10421 ms
+INFO: [Common 17-206] Exiting xsim at Sun Aug 23 01:12:16 2026...

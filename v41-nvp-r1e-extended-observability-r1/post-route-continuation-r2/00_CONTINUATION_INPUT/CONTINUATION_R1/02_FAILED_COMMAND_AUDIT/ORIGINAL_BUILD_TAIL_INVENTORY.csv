@@ -1,0 +1,15 @@
+original_line,command,purpose,completed_before_failure,required_in_continuation,forbidden_in_continuation
+235-236,get_cells NVP IOBUF query,select both physical IOBUFs,YES,YES,NO
+237-238,report_property collection,document all IOBUF properties,FAILED,CORRECTED_PER_OBJECT,ORIGINAL_FORM_FORBIDDEN
+239-244,get_pins/all_fanin/all_fanout,document NVP I/O connectivity,NO,YES,NO
+245-250,get_cells/write_lines,document probe and lifecycle cells,NO,YES,NO
+252-257,report_timing VDO paths,confirm VDO setup/hold,NO,YES,NO
+259-305,get_timing_paths/get_drc_violations/report_utilization,compute frozen implementation gates,NO,YES,NO
+307-314,gate calculation,decide bitstream eligibility,NO,YES,NO
+316-322,write_bitstream,generate sole R1e bit,NO,YES_EXACTLY_ONCE,RETRY_FORBIDDEN
+324-357,write result/puts,preserve results,NO,YES,NO
+358-359,close/exit,terminate session,NO,YES,NO
+
+ORIGINAL_BUILD_TAIL_RECONCILED=PASS
+CONTINUATION_FUNCTIONAL_SEMANTICS_CHANGE=NO
+

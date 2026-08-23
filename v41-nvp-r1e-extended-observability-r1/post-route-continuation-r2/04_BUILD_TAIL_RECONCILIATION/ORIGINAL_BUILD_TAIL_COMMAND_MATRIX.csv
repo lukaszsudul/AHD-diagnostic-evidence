@@ -1,0 +1,14 @@
+original_line,command,purpose,originally_completed,read_only_dry_run,write_continuation,forbidden
+209,report_route_status,routed-state evidence,YES,YES,MINIMAL_GATE,NO
+210,report_timing_summary,timing gate,YES,YES,NO,NO
+211,report_drc,DRC gate,YES,YES,NO,NO
+212-226,remaining report commands,complete post-route evidence,YES,YES,NO,NO
+227-228,report_property current_design,design properties,YES,YES_ONE_OBJECT,NO,NO
+230-234,NVP timing reports,NVP I/O timing evidence,YES,YES,NO,NO
+235-238,NVP IOBUF report_property,all two IOBUF properties,FAILED,YES_PER_OBJECT,NO,ORIGINAL_MULTI_OBJECT_FORM
+239-305,fanin/fanout/cells/VDO/gate calculations,remaining audit and gates,NO,YES,NO,NO
+307-314,implementation gate,bit eligibility,NO,YES,NO,NO
+316-322,write_bitstream,sole bit generation,NO,NO,YES_EXACTLY_ONCE,RETRY
+324-357,result record,build-tail accounting,NO,SESSION_SPECIFIC,YES,NO
+358-359,close and exit,clean session termination,NO,YES,YES,NO
+
