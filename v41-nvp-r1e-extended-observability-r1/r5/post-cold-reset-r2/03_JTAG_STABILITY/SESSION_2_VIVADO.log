@@ -1,0 +1,64 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sun Aug 23 22:42:36 2026
+# Process ID         : 8836
+# Current directory  : C:/FPGA/V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5/03_JTAG_STABILITY
+# Command line       : vivado.exe -mode batch -notrace -log C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_2_VIVADO.log -journal C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_2_VIVADO.jou -source C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\scripts\r5_jtag_stability_session.tcl -tclargs 2 C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_2_MATRIX.csv C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_2_LIST_PROPERTY.txt
+# Log file           : C:/FPGA/V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5/03_JTAG_STABILITY/SESSION_2_VIVADO.log
+# Journal file       : C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_2_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21367 MB
+# Available Virtual  : 7909 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\scripts\r5_jtag_stability_session.tcl} -notrace
+R5_JTAG_SESSION_START_UTC=2026-08-23T20:43:02Z
+R5_JTAG_SESSION_INDEX=2
+EXPECTED_SAMPLE_COUNT=5
+INTER_SAMPLE_DELAY_MS=500
+open_hw_manager: Time (s): cpu = 00:00:26 ; elapsed = 00:00:31 . Memory (MB): peak = 542.086 ; gain = 223.785
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:28 . Memory (MB): peak = 547.016 ; gain = 4.930
+INITIAL_TARGET_COUNT=1
+INTENDED_TARGET_MATCH_COUNT=0
+R5_JTAG_SESSION_ERROR=expected exactly one matching HS2 target; found 0
+R5_JTAG_SESSION_ERROR_OPTIONS=-code 1 -level 0 -errorstack {INNER {returnImm {expected exactly one matching HS2 target; found 0} {}}} -errorcode NONE -errorinfo {expected exactly one matching HS2 target; found 0
+    while executing
+"error "expected exactly one matching HS2 target; found [llength $matching_targets]""} -errorline 30
+SESSION_GATE=FAIL
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+INFO: [Labtoolstcl 44-468] Target hw_target localhost:3121/xilinx_tcf/Xilinx/80802026a98b01 is already closed
+FPGA_PROGRAM_OPERATIONS_THIS_SESSION=0
+INFO: [Common 17-206] Exiting Vivado at Sun Aug 23 22:44:04 2026...
