@@ -1,0 +1,50 @@
+# R7 final post-report secret and required-field audit
+
+```text
+AUDIT_UTC=2026-08-23T23:48:46.0915585Z
+AUDIT_MODE=READ_ONLY_CURRENT_TREE_POST_REPORT
+CURRENT_TREE_FILES=208
+TEXT_OR_STRUCTURED_FILES_SCANNED=205
+EXACT_BINARY_INPUTS_IDENTITY_ONLY=3
+TEXT_OR_STRUCTURED_BYTES_SCANNED=1182225
+HIGH_CONFIDENCE_SECRET_FINDINGS=0
+CONTEXTUAL_LOG_FILES_SCANNED_FOR_STANDALONE_PLINK_PW=38
+STANDALONE_PLINK_PW_FINDINGS=0
+CREDENTIAL_FILE_COPIES=0
+REPARSE_POINTS=0
+IMMUTABLE_R6_ZIP_TEXT_ENTRIES_SCANNED=113
+IMMUTABLE_R6_ZIP_HIGH_CONFIDENCE_SECRET_FINDINGS=0
+CURRENT_TREE_SECRET_SCAN=PASS
+```
+
+The high-confidence scan covered private-key headers and common GitHub,
+OpenAI, AWS, Slack, and Google API-key formats. Live contextual logs were
+independently checked for the forbidden standalone Plink `-pw` option; the
+accepted `-pwfile` mechanism is not a finding. The owner credential file was
+not read by this audit and no copy exists in the task root.
+
+The three identity-only binary inputs are the two exact FPGA bitstreams and
+the immutable R6 evidence ZIP. The R6 ZIP was separately opened in memory and
+its text entries scanned without extraction or mutation.
+
+```text
+AUTHORITATIVE_REPORT_SHA256=D28C782BBCE84A9EB5658052FEB70E112DBF43F6DD993284822A078708E1E1D2
+OPERATION_LEDGER_SHA256=FA8A2DBECD6DF203AA3AE81FC1D945EEB6720D0FE108783889379259B8B61B79
+TIME_LEDGER_SHA256=796813DFDF76F97A5820E52020371D21C0C959CAC5DF6E0A5BB5972F1AC48283
+TOOL_COMMAND_LEDGER_SHA256=B15D19F6162A1F26B1236F0C4094A40C9135C111F330FE09C24A4E85AA5A2307
+REQUIRED_FINAL_BLOCK_PROMPT_KEYS=166
+REQUIRED_FINAL_BLOCK_REPORT_KEYS=166
+MISSING_KEYS=0
+EXTRA_KEYS=0
+DUPLICATE_KEYS=0
+BLANK_KEYS=0
+FIXED_PROMPT_VALUES_MATCH=52_OF_52
+REQUIRED_FIELD_AUDIT=PASS
+ACCOUNTING_RECONCILIATION=PASS
+FINAL_FORMAL_STATE_EVIDENCE=PASS
+```
+
+The final package manifest is intentionally generated after this audit so it
+can cover this audit itself. A noncircular external receipt records the final
+ZIP hash, package-content verification, publication commit, and public-remote
+verification.

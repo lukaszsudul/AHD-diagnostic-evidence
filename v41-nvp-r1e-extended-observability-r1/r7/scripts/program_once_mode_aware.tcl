@@ -1,0 +1,302 @@
+# R7 task-local, fail-closed, mode-aware single-program observer.
+# Usage through Vivado -tclargs:
+#   PROGRAM_ROLE OBSERVER_MODE PROVEN_CONFIGURED_IMAGE_RECEIPT
+#   EXPECTED_FULL_TARGET_PATH BIT_PATH EXPECTED_FILENAME EXPECTED_SIZE
+#   EXPECTED_SHA256
+
+namespace eval r7_mode_observer {
+  variable bootstrap_mode {BOOTSTRAP_FROM_STABLE_UNKNOWN_SRAM}
+  variable transition_mode {TRANSITION_FROM_PROVEN_CONFIGURED_IMAGE}
+
+  proc receipt_allowed {role receipt} {
+    if {$role eq {ARM_A_R1E}} {
+      return [expr {$receipt eq {FORMAL_READY_RECEIPT}}]
+    }
+    if {$role eq {ARM_B_FORMAL}} {
+      return [expr {$receipt in {VALID_ARM_A_RECEIPT ARM_A_TERMINAL_SAFE_DONE1_RECEIPT}}]
+    }
+    return 0
+  }
+
+  proc classify_preprogram {mode role receipt target_match done_samples} {
+    variable bootstrap_mode
+    variable transition_mode
+
+    if {$mode ni [list $bootstrap_mode $transition_mode]} {
+      return [dict create status FAIL_MODE_NOT_ACCEPTED value {} readable NO stable NO]
+    }
+    if {!$target_match} {
+      return [dict create status FAIL_SELECTED_TARGET_MISMATCH value {} readable NO stable NO]
+    }
+    if {[llength $done_samples] != 5} {
+      return [dict create status FAIL_UNREADABLE_OR_UNSTABLE_DONE value {} readable NO stable NO]
+    }
+    foreach sample $done_samples {
+      if {$sample ni {0 1}} {
+        return [dict create status FAIL_UNREADABLE_OR_UNSTABLE_DONE value {} readable NO stable NO]
+      }
+    }
+    set unique_samples [lsort -unique $done_samples]
+    if {[llength $unique_samples] != 1} {
+      return [dict create status FAIL_UNREADABLE_OR_UNSTABLE_DONE value {} readable YES_5_OF_5 stable NO]
+    }
+    set value [lindex $unique_samples 0]
+
+    if {$mode eq $bootstrap_mode} {
+      if {$role ne {FORMAL_BOOTSTRAP} || $receipt ne {NO_RECEIPT_REQUIRED}} {
+        return [dict create status FAIL_MODE_ROLE_OR_RECEIPT value $value readable YES_5_OF_5 stable YES]
+      }
+      return [dict create status PASS value $value readable YES_5_OF_5 stable YES]
+    }
+
+    if {$role ni {ARM_A_R1E ARM_B_FORMAL}} {
+      return [dict create status FAIL_MODE_ROLE_OR_RECEIPT value $value readable YES_5_OF_5 stable YES]
+    }
+    if {$value ne {1}} {
+      return [dict create status FAIL_PROVEN_CONFIGURED_IMAGE_LOST value $value readable YES_5_OF_5 stable YES]
+    }
+    if {![receipt_allowed $role $receipt]} {
+      return [dict create status FAIL_MISSING_OR_INVALID_CONFIGURED_IMAGE_RECEIPT value $value readable YES_5_OF_5 stable YES]
+    }
+    return [dict create status PASS value $value readable YES_5_OF_5 stable YES]
+  }
+}
+
+if {[info exists ::r7_mode_aware_library_only] && $::r7_mode_aware_library_only} {
+  return
+}
+
+if {$argc != 8} {
+  puts stderr {usage: program_once_mode_aware.tcl PROGRAM_ROLE OBSERVER_MODE PROVEN_CONFIGURED_IMAGE_RECEIPT EXPECTED_FULL_TARGET_PATH BIT_PATH EXPECTED_FILENAME EXPECTED_SIZE EXPECTED_SHA256}
+  exit 2
+}
+
+lassign $argv role observer_mode configured_receipt expected_full_target_path bit_arg expected_filename expected_size expected_sha256
+set allowed_roles {FORMAL_BOOTSTRAP ARM_A_R1E ARM_B_FORMAL}
+if {[lsearch -exact $allowed_roles $role] < 0} {
+  puts stderr "unsupported program role: $role"
+  exit 2
+}
+if {$observer_mode ni {BOOTSTRAP_FROM_STABLE_UNKNOWN_SRAM TRANSITION_FROM_PROVEN_CONFIGURED_IMAGE}} {
+  puts stderr "unsupported observer mode: $observer_mode"
+  exit 2
+}
+if {![string is integer -strict $expected_size] || $expected_size <= 0} {
+  puts stderr {EXPECTED_SIZE must be a positive integer}
+  exit 2
+}
+if {![regexp -nocase {^[0-9a-f]{64}$} $expected_sha256]} {
+  puts stderr {EXPECTED_SHA256 must contain exactly 64 hexadecimal digits}
+  exit 2
+}
+
+set selector_path {C:/FPGA/V41_NVP_R1E_SELECTED_NEW_JTAG_PAIRED_AB_R6/scripts/select_r6_jtag_target.tcl}
+if {![file exists $selector_path] || ![file isfile $selector_path]} {
+  puts stderr "frozen R6 target selector is unavailable: $selector_path"
+  exit 2
+}
+source $selector_path
+
+if {[r6_target::canonical_id_from_path $expected_full_target_path] ne {Xilinx/80802026a98b01}} {
+  puts stderr "expected full target path lacks the exact canonical R7 suffix: $expected_full_target_path"
+  exit 2
+}
+
+set expected_part {xc7a35t}
+set expected_idcode {0362D093}
+set bitfile [file normalize $bit_arg]
+set bit5_property {REGISTER.IR.BIT5_DONE}
+set bit4_property {REGISTER.IR.BIT4_EOS}
+set preprogram_sample_count 5
+set preprogram_delay_ms 250
+
+proc emit {key value} {
+  puts "$key=$value"
+  flush stdout
+}
+
+proc utc {} {
+  return [clock format [clock seconds] -format {%Y-%m-%dT%H:%M:%SZ} -gmt 1]
+}
+
+proc normalized_idcode {dev} {
+  if {[lsearch -exact [list_property $dev] IDCODE_HEX] >= 0} {
+    return [string toupper [get_property IDCODE_HEX $dev]]
+  }
+  set raw [get_property IDCODE $dev]
+  if {[string match -nocase 0x* $raw]} {
+    return [string toupper [string range $raw 2 end]]
+  }
+  if {[string is integer -strict $raw]} {
+    return [format %08X $raw]
+  }
+  return [string toupper $raw]
+}
+
+proc cleanup_hw {} {
+  catch {close_hw_target}
+  catch {disconnect_hw_server}
+  catch {close_hw_manager}
+}
+
+set invoked 0
+set rc 0
+
+if {[catch {
+  if {![file exists $bitfile] || ![file isfile $bitfile]} {
+    error "bit file does not exist as a regular file: $bitfile"
+  }
+  if {[file tail $bitfile] ne $expected_filename} {
+    error "bit filename mismatch: [file tail $bitfile]"
+  }
+  if {[file size $bitfile] != $expected_size} {
+    error "bit size mismatch: [file size $bitfile]"
+  }
+
+  emit PROGRAM_ROLE $role
+  emit OBSERVER_MODE $observer_mode
+  emit PROVEN_CONFIGURED_IMAGE_RECEIPT $configured_receipt
+  emit BIT_PATH $bitfile
+  emit BIT_FILENAME [file tail $bitfile]
+  emit BIT_SIZE [file size $bitfile]
+  emit BIT_SHA256_EXPECTED [string toupper $expected_sha256]
+  emit BIT_SHA256_VERIFICATION WINDOWS_SUPERVISOR_REQUIRED
+  emit PREPROGRAM_SAMPLE_COUNT_EXPECTED $preprogram_sample_count
+  emit PREPROGRAM_INTER_SAMPLE_DELAY_MS $preprogram_delay_ms
+  emit JTAG_FREQUENCY_CHANGED NO
+
+  open_hw_manager
+  connect_hw_server
+
+  set selected_target [r6_target::select_live_target]
+  set selected_path [string trim $selected_target]
+  emit R7_FULL_JTAG_TARGET_PATH $selected_path
+  if {$selected_path ne $expected_full_target_path} {
+    emit PROGRAM_PRECONDITION FAIL_SELECTED_TARGET_MISMATCH
+    error "R7 full selected target path mismatch: $selected_path"
+  }
+  current_hw_target $selected_target
+  open_hw_target
+
+  set devices [get_hw_devices -quiet]
+  emit JTAG_DEVICE_COUNT [llength $devices]
+  if {[llength $devices] != 1} {
+    emit PROGRAM_PRECONDITION FAIL_SELECTED_TARGET_MISMATCH
+    error "expected exactly one JTAG device; found [llength $devices]"
+  }
+
+  set dev [lindex $devices 0]
+  set initial_device_path [string trim $dev]
+  current_hw_device $dev
+  r6_target::record_object_properties R7_SELECTED_DEVICE $dev
+
+  set hw_props [list_property $dev]
+  set bit5_available [expr {[lsearch -exact $hw_props $bit5_property] >= 0 ? {YES} : {NO}}]
+  set bit4_available [expr {[lsearch -exact $hw_props $bit4_property] >= 0 ? {YES} : {NO}}]
+  emit DONE_PROPERTY_AVAILABLE $bit5_available
+  emit BIT4_EOS_PROPERTY_AVAILABLE $bit4_available
+  emit BIT4_EOS_PROPERTY_QUERY_ATTEMPTED NO
+  if {$bit5_available ne {YES}} {
+    emit PROGRAM_PRECONDITION FAIL_UNREADABLE_OR_UNSTABLE_DONE
+    error {required BIT5 DONE property is unavailable}
+  }
+
+  set done_samples {}
+  set identity_stable YES
+  for {set sample_index 1} {$sample_index <= $preprogram_sample_count} {incr sample_index} {
+    if {[catch {refresh_hw_device $dev} refresh_error]} {
+      emit PREPROGRAM_REFRESH_${sample_index} FAIL
+      emit PROGRAM_PRECONDITION FAIL_UNREADABLE_OR_UNSTABLE_DONE
+      error "pre-program refresh $sample_index failed: $refresh_error"
+    }
+
+    set sample_targets [get_hw_targets -quiet]
+    set target_classification [r6_target::classify_target_paths $sample_targets]
+    if {[dict get $target_classification status] ne {PASS} ||
+        [dict get $target_classification selected_path] ne $expected_full_target_path} {
+      emit PROGRAM_PRECONDITION FAIL_SELECTED_TARGET_MISMATCH
+      error "pre-program sample $sample_index target selection changed"
+    }
+
+    set sample_devices [get_hw_devices -quiet]
+    if {[llength $sample_devices] != 1 || [string trim [lindex $sample_devices 0]] ne $initial_device_path} {
+      emit PROGRAM_PRECONDITION FAIL_SELECTED_TARGET_MISMATCH
+      error "pre-program sample $sample_index device selection changed"
+    }
+    set sample_dev [lindex $sample_devices 0]
+    set sample_part [get_property PART $sample_dev]
+    set sample_idcode [normalized_idcode $sample_dev]
+    emit PREPROGRAM_SAMPLE_${sample_index}_PART $sample_part
+    emit PREPROGRAM_SAMPLE_${sample_index}_IDCODE $sample_idcode
+    if {![string equal -nocase $sample_part $expected_part] ||
+        ![string equal -nocase $sample_idcode $expected_idcode]} {
+      set identity_stable NO
+      emit PROGRAM_PRECONDITION FAIL_SELECTED_TARGET_MISMATCH
+      error "pre-program sample $sample_index device identity mismatch: part=$sample_part idcode=$sample_idcode"
+    }
+
+    set sample_properties [list_property $sample_dev]
+    if {[lsearch -exact $sample_properties $bit5_property] < 0 ||
+        [catch {get_property $bit5_property $sample_dev} sample_done]} {
+      set sample_done UNREADABLE
+    } else {
+      set sample_done [string trim $sample_done]
+    }
+    lappend done_samples $sample_done
+    emit PREPROGRAM_DONE_SAMPLE_${sample_index} $sample_done
+    emit PREPROGRAM_REFRESH_${sample_index} PASS
+    if {$sample_index < $preprogram_sample_count} {
+      after $preprogram_delay_ms
+    }
+  }
+
+  set precondition [r7_mode_observer::classify_preprogram $observer_mode $role $configured_receipt 1 $done_samples]
+  emit PREPROGRAM_DONE_SAMPLE_COUNT [llength $done_samples]
+  emit PREPROGRAM_DONE_SAMPLES [join $done_samples ,]
+  emit PREPROGRAM_DONE_READABLE [dict get $precondition readable]
+  emit PREPROGRAM_DONE_STABLE [dict get $precondition stable]
+  emit TARGET_PART_IDCODE_STABLE $identity_stable
+  if {[dict get $precondition value] ne {}} {
+    emit PREPROGRAM_DONE_VALUE [dict get $precondition value]
+  }
+  if {$observer_mode eq {BOOTSTRAP_FROM_STABLE_UNKNOWN_SRAM}} {
+    emit PREPROGRAM_DONE_0_ACCEPTED YES_BOOTSTRAP_MODE_ONLY
+    emit PREPROGRAM_DONE_1_ACCEPTED YES_BOOTSTRAP_MODE
+  } else {
+    emit PREPROGRAM_DONE_0_ACCEPTED NO_TRANSITION_MODE
+    emit PREPROGRAM_DONE_1_ACCEPTED YES_TRANSITION_MODE_WITH_VALID_RECEIPT
+  }
+  emit PROGRAM_PRECONDITION [dict get $precondition status]
+  if {[dict get $precondition status] ne {PASS}} {
+    error "mode-aware pre-program gate failed: [dict get $precondition status]"
+  }
+
+  set_property PROGRAM.FILE $bitfile $dev
+  emit PROGRAM_START_UTC [utc]
+  set invoked 1
+  emit PROGRAM_INVOCATION_CONSUMED 1
+
+  program_hw_devices $dev
+
+  emit I25_PROGRAM_RETURN_MARKER [utc]
+  refresh_hw_device $dev
+  set done [get_property $bit5_property $dev]
+  emit PROGRAM_DONE $done
+  if {$done ne "1"} {
+    error "post-program DONE gate failed: DONE=$done"
+  }
+  emit FRESH_DONE_OBSERVATION $done
+  emit I25_FRESH_DONE_MARKER [utc]
+  emit PROGRAM_END_UTC [utc]
+  emit PROGRAM_INVOCATIONS 1
+  emit PROGRAM_TCL_RESULT PASS_DONE_1
+} err opts]} {
+  emit PROGRAM_INVOCATIONS $invoked
+  emit PROGRAM_ERROR $err
+  emit PROGRAM_ERROR_OPTIONS $opts
+  emit PROGRAM_TCL_RESULT FAIL_NO_RETRY
+  set rc 1
+}
+
+cleanup_hw
+exit $rc

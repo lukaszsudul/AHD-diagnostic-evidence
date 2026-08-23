@@ -1,0 +1,230 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 00:38:14 2026
+# Process ID         : 19684
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -source C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\frozen_tools\test_select_r6_jtag_target.tcl -log C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\TARGET_SELECTOR_FIXTURE_VIVADO.log -journal C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\TARGET_SELECTOR_FIXTURE_VIVADO.jou -tclargs C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\TARGET_SELECTOR_FIXTURE_RESULTS.csv
+# Log file           : C:/FPGA/V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7/03_HOST_TOOL_PREFLIGHT/TARGET_SELECTOR_FIXTURE_VIVADO.log
+# Journal file       : C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\TARGET_SELECTOR_FIXTURE_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7830 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1E_MODE_AWARE_DONE0_PAIRED_AB_R7\03_HOST_TOOL_PREFLIGHT\frozen_tools\test_select_r6_jtag_target.tcl}
+# if {$argc != 1} {
+#   puts stderr {usage: test_select_r6_jtag_target.tcl OUTPUT_CSV}
+#   exit 2
+# }
+# source [file join [file dirname [info script]] select_r6_jtag_target.tcl]
+## namespace eval r6_target {
+##   variable canonical_id {Xilinx/80802026a98b01}
+##   variable canonical_suffix {/Xilinx/80802026a98b01}
+##   variable legacy_id {Digilent/210241768436}
+## 
+##   proc emit {key value} {
+##     puts "$key=$value"
+##     flush stdout
+##   }
+## 
+##   proc normalized_path {target_path} {
+##     return [string map {\\ /} [string trim $target_path]]
+##   }
+## 
+##   proc canonical_id_from_path {target_path} {
+##     variable canonical_id
+##     variable canonical_suffix
+##     set normalized [normalized_path $target_path]
+##     if {$normalized eq $canonical_id} {
+##       return $canonical_id
+##     }
+##     set suffix_length [string length $canonical_suffix]
+##     if {[string length $normalized] > $suffix_length &&
+##         [string range $normalized end-[expr {$suffix_length - 1}] end] eq $canonical_suffix} {
+##       return $canonical_id
+##     }
+##     return {}
+##   }
+## 
+##   proc classify_nonmatch {target_path} {
+##     variable canonical_id
+##     variable legacy_id
+##     set normalized [normalized_path $target_path]
+##     if {$normalized eq $legacy_id || [string match "*/$legacy_id" $normalized]} {
+##       return FAIL_OLD_TARGET_NOT_SELECTED
+##     }
+## 
+##     set expected_leaf [lindex [split $canonical_id /] end]
+##     set actual_components [split $normalized /]
+##     set actual_vendor [lindex $actual_components end-1]
+##     set actual_leaf [lindex $actual_components end]
+##     if {$actual_vendor eq {Xilinx} &&
+##         ([string first $actual_leaf $expected_leaf] == 0 ||
+##          [string first $expected_leaf $actual_leaf] == 0)} {
+##       return FAIL_NEAR_MATCH
+##     }
+##     return FAIL_CANONICAL_ID_MISMATCH
+##   }
+## 
+##   proc classify_target_paths {target_paths} {
+##     set total_count [llength $target_paths]
+##     if {$total_count == 0} {
+##       return [dict create status FAIL_NO_TARGET selected_path {} canonical_id {} total_count 0 exact_match_count 0]
+##     }
+## 
+##     set exact_matches {}
+##     foreach target_path $target_paths {
+##       if {[canonical_id_from_path $target_path] ne {}} {
+##         lappend exact_matches $target_path
+##       }
+##     }
+##     set exact_match_count [llength $exact_matches]
+## 
+##     if {$total_count != 1} {
+##       set status [expr {$exact_match_count > 1 ? {FAIL_DUPLICATE} : {FAIL_TARGET_COUNT_NOT_ONE}}]
+##       return [dict create status $status selected_path {} canonical_id {} total_count $total_count exact_match_count $exact_match_count]
+##     }
+## 
+##     set only_target [lindex $target_paths 0]
+##     set canonical [canonical_id_from_path $only_target]
+##     if {$canonical eq {}} {
+##       return [dict create status [classify_nonmatch $only_target] selected_path {} canonical_id {} total_count 1 exact_match_count 0]
+##     }
+## 
+##     return [dict create status PASS selected_path $only_target canonical_id $canonical total_count 1 exact_match_count 1]
+##   }
+## 
+##   proc safe_property_value {value} {
+##     return [string map [list "\r" {\r} "\n" {\n}] $value]
+##   }
+## 
+##   proc record_object_properties {label object} {
+##     set properties [lsort -dictionary [list_property $object]]
+##     emit ${label}_PROPERTY_COUNT [llength $properties]
+##     set property_index 0
+##     foreach property_name $properties {
+##       if {[catch {get_property $property_name $object} property_value]} {
+##         set property_value {UNREADABLE}
+##       }
+##       emit ${label}_PROPERTY_${property_index}_NAME $property_name
+##       emit ${label}_PROPERTY_${property_index}_VALUE [safe_property_value $property_value]
+##       incr property_index
+##     }
+##     return $properties
+##   }
+## 
+##   proc write_object_properties {object output_path} {
+##     set normalized_output [file normalize $output_path]
+##     if {[file exists $normalized_output]} {
+##       error "property evidence already exists: $normalized_output"
+##     }
+##     set handle [open $normalized_output {WRONLY CREAT EXCL}]
+##     set properties [lsort -dictionary [list_property $object]]
+##     puts $handle "property_name\tproperty_value"
+##     foreach property_name $properties {
+##       if {[catch {get_property $property_name $object} property_value]} {
+##         set property_value {UNREADABLE}
+##       }
+##       puts $handle "$property_name\t[safe_property_value $property_value]"
+##     }
+##     close $handle
+##     return [llength $properties]
+##   }
+## 
+##   proc select_live_target {} {
+##     set targets [get_hw_targets -quiet]
+##     set target_paths {}
+##     set target_index 0
+##     foreach target $targets {
+##       set target_path [string trim $target]
+##       lappend target_paths $target_path
+##       emit R6_ENUMERATED_TARGET_${target_index}_PATH $target_path
+##       record_object_properties R6_ENUMERATED_TARGET_${target_index} $target
+##       incr target_index
+##     }
+## 
+##     set classification [classify_target_paths $target_paths]
+##     emit R6_TOTAL_TARGET_COUNT [dict get $classification total_count]
+##     emit R6_EXACT_CANONICAL_MATCH_COUNT [dict get $classification exact_match_count]
+##     emit R6_TARGET_SELECTOR_STATUS [dict get $classification status]
+##     if {[dict get $classification status] ne {PASS}} {
+##       error "R6 target selector failed: [dict get $classification status]"
+##     }
+## 
+##     set selected_path [dict get $classification selected_path]
+##     set selected_objects [get_hw_targets -quiet $selected_path]
+##     if {[llength $selected_objects] != 1} {
+##       error "R6 selected target object count changed: [llength $selected_objects]"
+##     }
+##     emit R6_SELECTED_JTAG_CANONICAL_ID [dict get $classification canonical_id]
+##     emit R6_FULL_JTAG_TARGET_PATH $selected_path
+##     emit R6_TARGET_MATCH_MODE EXACT_CANONICAL_ID_OR_EXACT_PATH_SUFFIX
+##     emit R6_FALLBACK_TO_FIRST_TARGET NO
+##     emit R6_LEGACY_HS2_REQUIRED NO
+##     return [lindex $selected_objects 0]
+##   }
+## }
+# set output_path [file normalize [lindex $argv 0]]
+# if {[file exists $output_path]} {
+#   puts stderr "fixture output must be fresh: $output_path"
+#   exit 2
+# }
+# set cases [list \
+#   [list A [list {localhost:3121/xilinx_tcf/Xilinx/80802026a98b01}] PASS] \
+#   [list B [list {Xilinx/80802026a98b01}] PASS] \
+#   [list C [list {Digilent/210241768436}] FAIL_OLD_TARGET_NOT_SELECTED] \
+#   [list D [list {Xilinx/80802026a98b0}] FAIL_NEAR_MATCH] \
+#   [list E [list {Xilinx/80802026a98b010}] FAIL_NEAR_MATCH] \
+#   [list F [list {localhost:3121/xilinx_tcf/Xilinx/80802026a98b01} {localhost:3121/xilinx_tcf/Other/1234}] FAIL_TARGET_COUNT_NOT_ONE] \
+#   [list G [list {localhost:3121/xilinx_tcf/Xilinx/80802026a98b01} {otherhost:3121/xilinx_tcf/Xilinx/80802026a98b01}] FAIL_DUPLICATE] \
+#   [list H [list] FAIL_NO_TARGET]]
+# set handle [open $output_path {WRONLY CREAT EXCL}]
+# puts $handle {fixture,target_count,expected,actual,result}
+# set failure_count 0
+# foreach fixture $cases {
+#   lassign $fixture name paths expected
+#   set classification [r6_target::classify_target_paths $paths]
+#   set actual [dict get $classification status]
+#   set result [expr {$actual eq $expected ? {PASS} : {FAIL}}]
+#   if {$result ne {PASS}} { incr failure_count }
+#   puts $handle "$name,[llength $paths],$expected,$actual,$result"
+#   puts "FIXTURE_$name=$result EXPECTED=$expected ACTUAL=$actual"
+# }
+FIXTURE_A=PASS EXPECTED=PASS ACTUAL=PASS
+FIXTURE_B=PASS EXPECTED=PASS ACTUAL=PASS
+FIXTURE_C=PASS EXPECTED=FAIL_OLD_TARGET_NOT_SELECTED ACTUAL=FAIL_OLD_TARGET_NOT_SELECTED
+FIXTURE_D=PASS EXPECTED=FAIL_NEAR_MATCH ACTUAL=FAIL_NEAR_MATCH
+FIXTURE_E=PASS EXPECTED=FAIL_NEAR_MATCH ACTUAL=FAIL_NEAR_MATCH
+FIXTURE_F=PASS EXPECTED=FAIL_TARGET_COUNT_NOT_ONE ACTUAL=FAIL_TARGET_COUNT_NOT_ONE
+FIXTURE_G=PASS EXPECTED=FAIL_DUPLICATE ACTUAL=FAIL_DUPLICATE
+FIXTURE_H=PASS EXPECTED=FAIL_NO_TARGET ACTUAL=FAIL_NO_TARGET
+# close $handle
+# puts "TARGET_SELECTOR_FIXTURE_COUNT=[llength $cases]"
+TARGET_SELECTOR_FIXTURE_COUNT=8
+# puts "TARGET_SELECTOR_FIXTURE_FAILURES=$failure_count"
+TARGET_SELECTOR_FIXTURE_FAILURES=0
+# puts {TARGET_MATCH_MODE=EXACT_CANONICAL_ID_OR_EXACT_PATH_SUFFIX}
+TARGET_MATCH_MODE=EXACT_CANONICAL_ID_OR_EXACT_PATH_SUFFIX
+# puts {FALLBACK_TO_FIRST_TARGET=NO}
+FALLBACK_TO_FIRST_TARGET=NO
+# puts {LEGACY_HS2_REQUIRED=NO}
+LEGACY_HS2_REQUIRED=NO
+# if {$failure_count != 0} {
+#   puts {TARGET_SELECTOR_FIXTURES=FAIL}
+#   exit 1
+# }
+# puts {TARGET_SELECTOR_FIXTURES=PASS_ALL}
+TARGET_SELECTOR_FIXTURES=PASS_ALL
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 24 00:38:58 2026...
