@@ -1,0 +1,1745 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sun Aug 23 14:05:11 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type min -from [get_ports {vdo1_data[*]}] -max_paths 32 -nworst 4 -file C:/FPGA/V41_NVP_R1E_SEMANTIC_DRC_CONTINUATION_R3/04_WRITE_CONTINUATION/PHASE3_vdo_hold_paths.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.601ns  (arrival time - required time)
+  Source:                 vdo1_data[7]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.042ns  (logic 2.042ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.355ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.355ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    C18                                               0.000     2.104 r  vdo1_data[7] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[7]
+    C18                  IBUF (Prop_ibuf_I_O)         1.387     3.491 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.491    NVP_PHYSICAL_FRONTEND/vdo1_pad_7
+    IDELAY_X0Y63         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.146 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.146    NVP_PHYSICAL_FRONTEND/vdo1_delayed_7
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.274     3.355    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/C
+                         clock pessimism              0.000     3.355    
+                         clock uncertainty            0.035     3.390    
+    ILOGIC_X0Y63         IDDR (Hold_iddr_C_D)         0.155     3.545    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.545    
+                         arrival time                           4.146    
+  -------------------------------------------------------------------
+                         slack                                  0.601    
+
+Slack (MET) :             0.601ns  (arrival time - required time)
+  Source:                 vdo1_data[7]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.042ns  (logic 2.042ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.355ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.355ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    C18                                               0.000     2.104 f  vdo1_data[7] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[7]
+    C18                  IBUF (Prop_ibuf_I_O)         1.387     3.491 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.491    NVP_PHYSICAL_FRONTEND/vdo1_pad_7
+    IDELAY_X0Y63         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.146 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.146    NVP_PHYSICAL_FRONTEND/vdo1_delayed_7
+    ILOGIC_X0Y63         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.274     3.355    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/C
+                         clock pessimism              0.000     3.355    
+                         clock uncertainty            0.035     3.390    
+    ILOGIC_X0Y63         IDDR (Hold_iddr_C_D)         0.155     3.545    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.545    
+                         arrival time                           4.146    
+  -------------------------------------------------------------------
+                         slack                                  0.601    
+
+Slack (MET) :             0.607ns  (arrival time - required time)
+  Source:                 vdo1_data[1]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.040ns  (logic 2.040ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B14                                               0.000     2.104 r  vdo1_data[1] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[1]
+    B14                  IBUF (Prop_ibuf_I_O)         1.385     3.489 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.489    NVP_PHYSICAL_FRONTEND/vdo1_pad_1
+    IDELAY_X0Y80         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.144 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.144    NVP_PHYSICAL_FRONTEND/vdo1_delayed_1
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y80         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.144    
+  -------------------------------------------------------------------
+                         slack                                  0.607    
+
+Slack (MET) :             0.607ns  (arrival time - required time)
+  Source:                 vdo1_data[1]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.040ns  (logic 2.040ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B14                                               0.000     2.104 f  vdo1_data[1] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[1]
+    B14                  IBUF (Prop_ibuf_I_O)         1.385     3.489 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.489    NVP_PHYSICAL_FRONTEND/vdo1_pad_1
+    IDELAY_X0Y80         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.144 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.144    NVP_PHYSICAL_FRONTEND/vdo1_delayed_1
+    ILOGIC_X0Y80         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y80         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.144    
+  -------------------------------------------------------------------
+                         slack                                  0.607    
+
+Slack (MET) :             0.608ns  (arrival time - required time)
+  Source:                 vdo1_data[3]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.043ns  (logic 2.043ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.349ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.349ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B15                                               0.000     2.104 r  vdo1_data[3] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[3]
+    B15                  IBUF (Prop_ibuf_I_O)         1.388     3.492 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.492    NVP_PHYSICAL_FRONTEND/vdo1_pad_3
+    IDELAY_X0Y81         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.147 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.147    NVP_PHYSICAL_FRONTEND/vdo1_delayed_3
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.268     3.349    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/C
+                         clock pessimism              0.000     3.349    
+                         clock uncertainty            0.035     3.384    
+    ILOGIC_X0Y81         IDDR (Hold_iddr_C_D)         0.155     3.539    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.539    
+                         arrival time                           4.147    
+  -------------------------------------------------------------------
+                         slack                                  0.608    
+
+Slack (MET) :             0.608ns  (arrival time - required time)
+  Source:                 vdo1_data[3]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.043ns  (logic 2.043ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.349ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.349ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B15                                               0.000     2.104 f  vdo1_data[3] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[3]
+    B15                  IBUF (Prop_ibuf_I_O)         1.388     3.492 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.492    NVP_PHYSICAL_FRONTEND/vdo1_pad_3
+    IDELAY_X0Y81         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.147 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.147    NVP_PHYSICAL_FRONTEND/vdo1_delayed_3
+    ILOGIC_X0Y81         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.268     3.349    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/C
+                         clock pessimism              0.000     3.349    
+                         clock uncertainty            0.035     3.384    
+    ILOGIC_X0Y81         IDDR (Hold_iddr_C_D)         0.155     3.539    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.539    
+                         arrival time                           4.147    
+  -------------------------------------------------------------------
+                         slack                                  0.608    
+
+Slack (MET) :             0.615ns  (arrival time - required time)
+  Source:                 vdo1_data[4]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.048ns  (logic 2.048ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B16                                               0.000     2.104 r  vdo1_data[4] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[4]
+    B16                  IBUF (Prop_ibuf_I_O)         1.393     3.497 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.497    NVP_PHYSICAL_FRONTEND/vdo1_pad_4
+    IDELAY_X0Y70         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.152 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.152    NVP_PHYSICAL_FRONTEND/vdo1_delayed_4
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y70         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.152    
+  -------------------------------------------------------------------
+                         slack                                  0.615    
+
+Slack (MET) :             0.615ns  (arrival time - required time)
+  Source:                 vdo1_data[4]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.048ns  (logic 2.048ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B16                                               0.000     2.104 f  vdo1_data[4] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[4]
+    B16                  IBUF (Prop_ibuf_I_O)         1.393     3.497 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.497    NVP_PHYSICAL_FRONTEND/vdo1_pad_4
+    IDELAY_X0Y70         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.152 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.152    NVP_PHYSICAL_FRONTEND/vdo1_delayed_4
+    ILOGIC_X0Y70         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y70         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.152    
+  -------------------------------------------------------------------
+                         slack                                  0.615    
+
+Slack (MET) :             0.615ns  (arrival time - required time)
+  Source:                 vdo1_data[6]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.050ns  (logic 2.050ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.349ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.349ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B17                                               0.000     2.104 r  vdo1_data[6] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[6]
+    B17                  IBUF (Prop_ibuf_I_O)         1.395     3.499 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.499    NVP_PHYSICAL_FRONTEND/vdo1_pad_6
+    IDELAY_X0Y67         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.154 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.154    NVP_PHYSICAL_FRONTEND/vdo1_delayed_6
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.268     3.349    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/C
+                         clock pessimism              0.000     3.349    
+                         clock uncertainty            0.035     3.384    
+    ILOGIC_X0Y67         IDDR (Hold_iddr_C_D)         0.155     3.539    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.539    
+                         arrival time                           4.154    
+  -------------------------------------------------------------------
+                         slack                                  0.615    
+
+Slack (MET) :             0.615ns  (arrival time - required time)
+  Source:                 vdo1_data[6]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.050ns  (logic 2.050ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.349ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.349ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B17                                               0.000     2.104 f  vdo1_data[6] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[6]
+    B17                  IBUF (Prop_ibuf_I_O)         1.395     3.499 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.499    NVP_PHYSICAL_FRONTEND/vdo1_pad_6
+    IDELAY_X0Y67         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.154 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.154    NVP_PHYSICAL_FRONTEND/vdo1_delayed_6
+    ILOGIC_X0Y67         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.268     3.349    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/C
+                         clock pessimism              0.000     3.349    
+                         clock uncertainty            0.035     3.384    
+    ILOGIC_X0Y67         IDDR (Hold_iddr_C_D)         0.155     3.539    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.539    
+                         arrival time                           4.154    
+  -------------------------------------------------------------------
+                         slack                                  0.615    
+
+Slack (MET) :             0.616ns  (arrival time - required time)
+  Source:                 vdo1_data[5]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.049ns  (logic 2.049ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A17                                               0.000     2.104 r  vdo1_data[5] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[5]
+    A17                  IBUF (Prop_ibuf_I_O)         1.394     3.498 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.498    NVP_PHYSICAL_FRONTEND/vdo1_pad_5
+    IDELAY_X0Y69         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.153 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.153    NVP_PHYSICAL_FRONTEND/vdo1_delayed_5
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y69         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.153    
+  -------------------------------------------------------------------
+                         slack                                  0.616    
+
+Slack (MET) :             0.616ns  (arrival time - required time)
+  Source:                 vdo1_data[5]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.049ns  (logic 2.049ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A17                                               0.000     2.104 f  vdo1_data[5] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[5]
+    A17                  IBUF (Prop_ibuf_I_O)         1.394     3.498 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.498    NVP_PHYSICAL_FRONTEND/vdo1_pad_5
+    IDELAY_X0Y69         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.153 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.153    NVP_PHYSICAL_FRONTEND/vdo1_delayed_5
+    ILOGIC_X0Y69         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y69         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.153    
+  -------------------------------------------------------------------
+                         slack                                  0.616    
+
+Slack (MET) :             0.622ns  (arrival time - required time)
+  Source:                 vdo1_data[2]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.055ns  (logic 2.055ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A15                                               0.000     2.104 r  vdo1_data[2] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[2]
+    A15                  IBUF (Prop_ibuf_I_O)         1.400     3.504 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.504    NVP_PHYSICAL_FRONTEND/vdo1_pad_2
+    IDELAY_X0Y79         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.159 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.159    NVP_PHYSICAL_FRONTEND/vdo1_delayed_2
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y79         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.159    
+  -------------------------------------------------------------------
+                         slack                                  0.622    
+
+Slack (MET) :             0.622ns  (arrival time - required time)
+  Source:                 vdo1_data[2]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.055ns  (logic 2.055ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.347ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.347ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A15                                               0.000     2.104 f  vdo1_data[2] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[2]
+    A15                  IBUF (Prop_ibuf_I_O)         1.400     3.504 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.504    NVP_PHYSICAL_FRONTEND/vdo1_pad_2
+    IDELAY_X0Y79         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.159 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.159    NVP_PHYSICAL_FRONTEND/vdo1_delayed_2
+    ILOGIC_X0Y79         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.266     3.347    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/C
+                         clock pessimism              0.000     3.347    
+                         clock uncertainty            0.035     3.382    
+    ILOGIC_X0Y79         IDDR (Hold_iddr_C_D)         0.155     3.537    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.537    
+                         arrival time                           4.159    
+  -------------------------------------------------------------------
+                         slack                                  0.622    
+
+Slack (MET) :             0.640ns  (arrival time - required time)
+  Source:                 vdo1_data[0]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.076ns  (logic 2.076ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.350ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.350ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A14                                               0.000     2.104 r  vdo1_data[0] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[0]
+    A14                  IBUF (Prop_ibuf_I_O)         1.421     3.525 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.525    NVP_PHYSICAL_FRONTEND/vdo1_pad_0
+    IDELAY_X0Y83         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.180 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.180    NVP_PHYSICAL_FRONTEND/vdo1_delayed_0
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.269     3.350    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/C
+                         clock pessimism              0.000     3.350    
+                         clock uncertainty            0.035     3.385    
+    ILOGIC_X0Y83         IDDR (Hold_iddr_C_D)         0.155     3.540    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.540    
+                         arrival time                           4.180    
+  -------------------------------------------------------------------
+                         slack                                  0.640    
+
+Slack (MET) :             0.640ns  (arrival time - required time)
+  Source:                 vdo1_data[0]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        2.076ns  (logic 2.076ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        3.350ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    3.350ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A14                                               0.000     2.104 f  vdo1_data[0] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[0]
+    A14                  IBUF (Prop_ibuf_I_O)         1.421     3.525 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     3.525    NVP_PHYSICAL_FRONTEND/vdo1_pad_0
+    IDELAY_X0Y83         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.655     4.180 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     4.180    NVP_PHYSICAL_FRONTEND/vdo1_delayed_0
+    ILOGIC_X0Y83         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         1.461     1.461 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.364     1.825    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       1.256     3.081 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.269     3.350    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/C
+                         clock pessimism              0.000     3.350    
+                         clock uncertainty            0.035     3.385    
+    ILOGIC_X0Y83         IDDR (Hold_iddr_C_D)         0.155     3.540    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -3.540    
+                         arrival time                           4.180    
+  -------------------------------------------------------------------
+                         slack                                  0.640    
+
+Slack (MET) :             1.144ns  (arrival time - required time)
+  Source:                 vdo1_data[7]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.533ns  (logic 0.533ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.389ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.389ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    C18                                               0.000     2.104 r  vdo1_data[7] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[7]
+    C18                  IBUF (Prop_ibuf_I_O)         0.290     2.394 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.394    NVP_PHYSICAL_FRONTEND/vdo1_pad_7
+    IDELAY_X0Y63         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.637 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.637    NVP_PHYSICAL_FRONTEND/vdo1_delayed_7
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.108     1.389    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/C
+                         clock pessimism              0.000     1.389    
+                         clock uncertainty            0.035     1.425    
+    ILOGIC_X0Y63         IDDR (Hold_iddr_C_D)         0.068     1.493    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.493    
+                         arrival time                           2.637    
+  -------------------------------------------------------------------
+                         slack                                  1.144    
+
+Slack (MET) :             1.144ns  (arrival time - required time)
+  Source:                 vdo1_data[7]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.533ns  (logic 0.533ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.389ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.389ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    C18                                               0.000     2.104 f  vdo1_data[7] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[7]
+    C18                  IBUF (Prop_ibuf_I_O)         0.290     2.394 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.394    NVP_PHYSICAL_FRONTEND/vdo1_pad_7
+    IDELAY_X0Y63         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.637 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.637    NVP_PHYSICAL_FRONTEND/vdo1_delayed_7
+    ILOGIC_X0Y63         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.108     1.389    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y63         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr/C
+                         clock pessimism              0.000     1.389    
+                         clock uncertainty            0.035     1.425    
+    ILOGIC_X0Y63         IDDR (Hold_iddr_C_D)         0.068     1.493    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[7].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.493    
+                         arrival time                           2.637    
+  -------------------------------------------------------------------
+                         slack                                  1.144    
+
+Slack (MET) :             1.147ns  (arrival time - required time)
+  Source:                 vdo1_data[1]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.531ns  (logic 0.531ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B14                                               0.000     2.104 r  vdo1_data[1] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[1]
+    B14                  IBUF (Prop_ibuf_I_O)         0.288     2.392 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.392    NVP_PHYSICAL_FRONTEND/vdo1_pad_1
+    IDELAY_X0Y80         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.635 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.635    NVP_PHYSICAL_FRONTEND/vdo1_delayed_1
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y80         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.635    
+  -------------------------------------------------------------------
+                         slack                                  1.147    
+
+Slack (MET) :             1.147ns  (arrival time - required time)
+  Source:                 vdo1_data[1]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.531ns  (logic 0.531ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B14                                               0.000     2.104 f  vdo1_data[1] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[1]
+    B14                  IBUF (Prop_ibuf_I_O)         0.288     2.392 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.392    NVP_PHYSICAL_FRONTEND/vdo1_pad_1
+    IDELAY_X0Y80         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.635 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.635    NVP_PHYSICAL_FRONTEND/vdo1_delayed_1
+    ILOGIC_X0Y80         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y80         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y80         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[1].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.635    
+  -------------------------------------------------------------------
+                         slack                                  1.147    
+
+Slack (MET) :             1.148ns  (arrival time - required time)
+  Source:                 vdo1_data[3]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.534ns  (logic 0.534ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B15                                               0.000     2.104 r  vdo1_data[3] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[3]
+    B15                  IBUF (Prop_ibuf_I_O)         0.291     2.395 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.395    NVP_PHYSICAL_FRONTEND/vdo1_pad_3
+    IDELAY_X0Y81         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.638 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.638    NVP_PHYSICAL_FRONTEND/vdo1_delayed_3
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y81         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.638    
+  -------------------------------------------------------------------
+                         slack                                  1.148    
+
+Slack (MET) :             1.148ns  (arrival time - required time)
+  Source:                 vdo1_data[3]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.534ns  (logic 0.534ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B15                                               0.000     2.104 f  vdo1_data[3] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[3]
+    B15                  IBUF (Prop_ibuf_I_O)         0.291     2.395 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.395    NVP_PHYSICAL_FRONTEND/vdo1_pad_3
+    IDELAY_X0Y81         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.638 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.638    NVP_PHYSICAL_FRONTEND/vdo1_delayed_3
+    ILOGIC_X0Y81         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y81         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y81         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[3].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.638    
+  -------------------------------------------------------------------
+                         slack                                  1.148    
+
+Slack (MET) :             1.155ns  (arrival time - required time)
+  Source:                 vdo1_data[4]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.539ns  (logic 0.539ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B16                                               0.000     2.104 r  vdo1_data[4] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[4]
+    B16                  IBUF (Prop_ibuf_I_O)         0.296     2.400 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.400    NVP_PHYSICAL_FRONTEND/vdo1_pad_4
+    IDELAY_X0Y70         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.643 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.643    NVP_PHYSICAL_FRONTEND/vdo1_delayed_4
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y70         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.643    
+  -------------------------------------------------------------------
+                         slack                                  1.155    
+
+Slack (MET) :             1.155ns  (arrival time - required time)
+  Source:                 vdo1_data[4]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.539ns  (logic 0.539ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B16                                               0.000     2.104 f  vdo1_data[4] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[4]
+    B16                  IBUF (Prop_ibuf_I_O)         0.296     2.400 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.400    NVP_PHYSICAL_FRONTEND/vdo1_pad_4
+    IDELAY_X0Y70         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.643 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.643    NVP_PHYSICAL_FRONTEND/vdo1_delayed_4
+    ILOGIC_X0Y70         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y70         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y70         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[4].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.643    
+  -------------------------------------------------------------------
+                         slack                                  1.155    
+
+Slack (MET) :             1.155ns  (arrival time - required time)
+  Source:                 vdo1_data[6]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.541ns  (logic 0.541ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B17                                               0.000     2.104 r  vdo1_data[6] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[6]
+    B17                  IBUF (Prop_ibuf_I_O)         0.298     2.402 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.402    NVP_PHYSICAL_FRONTEND/vdo1_pad_6
+    IDELAY_X0Y67         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.645 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.645    NVP_PHYSICAL_FRONTEND/vdo1_delayed_6
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y67         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.645    
+  -------------------------------------------------------------------
+                         slack                                  1.155    
+
+Slack (MET) :             1.155ns  (arrival time - required time)
+  Source:                 vdo1_data[6]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.541ns  (logic 0.541ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    B17                                               0.000     2.104 f  vdo1_data[6] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[6]
+    B17                  IBUF (Prop_ibuf_I_O)         0.298     2.402 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.402    NVP_PHYSICAL_FRONTEND/vdo1_pad_6
+    IDELAY_X0Y67         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.645 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.645    NVP_PHYSICAL_FRONTEND/vdo1_delayed_6
+    ILOGIC_X0Y67         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y67         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y67         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[6].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.645    
+  -------------------------------------------------------------------
+                         slack                                  1.155    
+
+Slack (MET) :             1.156ns  (arrival time - required time)
+  Source:                 vdo1_data[5]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.539ns  (logic 0.539ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A17                                               0.000     2.104 r  vdo1_data[5] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[5]
+    A17                  IBUF (Prop_ibuf_I_O)         0.296     2.400 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.400    NVP_PHYSICAL_FRONTEND/vdo1_pad_5
+    IDELAY_X0Y69         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.643 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.643    NVP_PHYSICAL_FRONTEND/vdo1_delayed_5
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y69         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.643    
+  -------------------------------------------------------------------
+                         slack                                  1.156    
+
+Slack (MET) :             1.156ns  (arrival time - required time)
+  Source:                 vdo1_data[5]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.539ns  (logic 0.539ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A17                                               0.000     2.104 f  vdo1_data[5] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[5]
+    A17                  IBUF (Prop_ibuf_I_O)         0.296     2.400 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.400    NVP_PHYSICAL_FRONTEND/vdo1_pad_5
+    IDELAY_X0Y69         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.643 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.643    NVP_PHYSICAL_FRONTEND/vdo1_delayed_5
+    ILOGIC_X0Y69         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y69         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y69         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[5].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.643    
+  -------------------------------------------------------------------
+                         slack                                  1.156    
+
+Slack (MET) :             1.162ns  (arrival time - required time)
+  Source:                 vdo1_data[2]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.546ns  (logic 0.546ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A15                                               0.000     2.104 r  vdo1_data[2] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[2]
+    A15                  IBUF (Prop_ibuf_I_O)         0.303     2.407 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.407    NVP_PHYSICAL_FRONTEND/vdo1_pad_2
+    IDELAY_X0Y79         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.650 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.650    NVP_PHYSICAL_FRONTEND/vdo1_delayed_2
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y79         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.650    
+  -------------------------------------------------------------------
+                         slack                                  1.162    
+
+Slack (MET) :             1.162ns  (arrival time - required time)
+  Source:                 vdo1_data[2]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.546ns  (logic 0.546ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.384ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.384ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A15                                               0.000     2.104 f  vdo1_data[2] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[2]
+    A15                  IBUF (Prop_ibuf_I_O)         0.303     2.407 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.407    NVP_PHYSICAL_FRONTEND/vdo1_pad_2
+    IDELAY_X0Y79         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.650 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.650    NVP_PHYSICAL_FRONTEND/vdo1_delayed_2
+    ILOGIC_X0Y79         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.103     1.384    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y79         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr/C
+                         clock pessimism              0.000     1.384    
+                         clock uncertainty            0.035     1.420    
+    ILOGIC_X0Y79         IDDR (Hold_iddr_C_D)         0.068     1.488    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[2].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.488    
+                         arrival time                           2.650    
+  -------------------------------------------------------------------
+                         slack                                  1.162    
+
+Slack (MET) :             1.181ns  (arrival time - required time)
+  Source:                 vdo1_data[0]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.566ns  (logic 0.566ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A14                                               0.000     2.104 r  vdo1_data[0] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[0]
+    A14                  IBUF (Prop_ibuf_I_O)         0.323     2.427 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.427    NVP_PHYSICAL_FRONTEND/vdo1_pad_0
+    IDELAY_X0Y83         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.670 r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.670    NVP_PHYSICAL_FRONTEND/vdo1_delayed_0
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y83         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.670    
+  -------------------------------------------------------------------
+                         slack                                  1.181    
+
+Slack (MET) :             1.181ns  (arrival time - required time)
+  Source:                 vdo1_data[0]
+                            (input port clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Destination:            NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+                            (rising edge-triggered cell IDDR clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (nvp_vclk1 rise@0.000ns - nvp_vclk1 rise@0.000ns)
+  Data Path Delay:        0.566ns  (logic 0.566ns (100.000%)  route 0.000ns (0.000%))
+  Logic Levels:           2  (IBUF=1 IDELAYE2=1)
+  Input Delay:            2.104ns
+  Clock Path Skew:        1.386ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.386ns
+    Source Clock Delay      (SCD):    0.000ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+                         input delay                  2.104     2.104    
+    A14                                               0.000     2.104 f  vdo1_data[0] (IN)
+                         net (fo=0)                   0.000     2.104    NVP_PHYSICAL_FRONTEND/vdo1_data[0]
+    A14                  IBUF (Prop_ibuf_I_O)         0.323     2.427 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_ibuf/O
+                         net (fo=1, routed)           0.000     2.427    NVP_PHYSICAL_FRONTEND/vdo1_pad_0
+    IDELAY_X0Y83         IDELAYE2 (Prop_idelaye2_IDATAIN_DATAOUT)
+                                                      0.243     2.670 f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_idelay/DATAOUT
+                         net (fo=1, routed)           0.000     2.670    NVP_PHYSICAL_FRONTEND/vdo1_delayed_0
+    ILOGIC_X0Y83         IDDR                                         f  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock nvp_vclk1 rise edge)
+                                                      0.000     0.000 r  
+    E13                                               0.000     0.000 r  vclk1 (IN)
+                         net (fo=0)                   0.000     0.000    NVP_PHYSICAL_FRONTEND/vclk1
+    E13                  IBUF (Prop_ibuf_I_O)         0.485     0.485 r  NVP_PHYSICAL_FRONTEND/u_vclk1_ibuf/O
+                         net (fo=3, routed)           0.280     0.765    NVP_PHYSICAL_FRONTEND/vclk1_ibuf
+    BUFIO_X0Y6           BUFIO (Prop_bufio_I_O)       0.516     1.281 r  NVP_PHYSICAL_FRONTEND/u_vclk1_bufio/O
+                         net (fo=8, routed)           0.105     1.386    NVP_PHYSICAL_FRONTEND/vclk1_io
+    ILOGIC_X0Y83         IDDR                                         r  NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr/C
+                         clock pessimism              0.000     1.386    
+                         clock uncertainty            0.035     1.422    
+    ILOGIC_X0Y83         IDDR (Hold_iddr_C_D)         0.068     1.490    NVP_PHYSICAL_FRONTEND/GEN_VDO1_INGRESS[0].u_vdo_iddr
+  -------------------------------------------------------------------
+                         required time                         -1.490    
+                         arrival time                           2.670    
+  -------------------------------------------------------------------
+                         slack                                  1.181    
+
+
+
+

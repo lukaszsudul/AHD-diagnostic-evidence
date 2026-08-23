@@ -1,0 +1,57 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sun Aug 23 13:59:41 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_drc -name R3_REQP_1839_SEMANTIC -checks REQP-1839 -file C:/FPGA/V41_NVP_R1E_SEMANTIC_DRC_CONTINUATION_R3/03_READ_ONLY_PREFLIGHT/SEMANTIC_REQP_1839/REQP_1839_semantic_report.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : ignored
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_PHASE3_routed
+      Design limits: <entire design considered>
+
+            Checks: REQP-1839
+             Max checks: <unlimited>
+             Checks found: 4
++-----------+----------+----------------------------+--------+
+| Rule      | Severity | Description                | Checks |
++-----------+----------+----------------------------+--------+
+| REQP-1839 | Warning  | RAMB36 async control check | 4      |
++-----------+----------+----------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+REQP-1839#1 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ENARDEN (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_i_1_n_0) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#2 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/RSTRAMARSTRAM (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/lopt) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#3 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/ENARDEN (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_i_1_n_0) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+REQP-1839#4 Warning
+RAMB36 async control check  
+The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/RSTRAMARSTRAM (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[1].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/lopt) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+Related violations: <none>
+
+

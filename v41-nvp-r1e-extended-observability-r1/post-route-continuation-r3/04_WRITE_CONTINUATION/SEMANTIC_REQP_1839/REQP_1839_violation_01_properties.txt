@@ -1,0 +1,12 @@
+Property      Type    Read-only  Value
+CHECK         string  true       REQP-1839
+CLASS         string  true       drc_violation
+DESCRIPTION   string  true       The RAMB36E1 CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg has an input control pin CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg/RSTRAMARSTRAM (net: CAPTURE_SUBSYSTEM/BAR_TARGET/GEN_V40B_SLOT[0].GEN_AVAILABLE.SLOT_RAM/xpm_memory_base_inst/lopt) which is driven by a register (XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/user_reset_out_reg) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+FULLNAME      string  true       RAMB36 async control check
+ID            int     true       2
+IS_READ_ONLY  bool    true       0
+IS_WAIVED     bool    true       0
+NAME          string  true       REQP-1839#2
+OBJECT_TYPES  string  true       cell net pin
+SEVERITY      string  true       Warning
+WAIVER        string  true       

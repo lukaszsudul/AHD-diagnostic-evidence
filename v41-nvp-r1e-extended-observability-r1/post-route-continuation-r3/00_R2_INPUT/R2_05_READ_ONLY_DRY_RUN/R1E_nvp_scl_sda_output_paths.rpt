@@ -1,0 +1,1289 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sun Aug 23 12:24:15 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -to [get_ports {nvp_scl nvp_sda}] -max_paths 32 -nworst 16 -file C:/FPGA/V41_NVP_R1E_POST_ROUTE_CONTINUATION_R2/05_READ_ONLY_DRY_RUN/R1E_nvp_scl_sda_output_paths.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.518ns  (logic 3.892ns (45.691%)  route 4.626ns (54.309%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.348     7.417    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I5_O)        0.105     7.522 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.978    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     8.083 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.905    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.208 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.208    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.518ns  (logic 3.892ns (45.691%)  route 4.626ns (54.309%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.348     7.417    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I5_O)        0.105     7.522 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.978    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     8.083 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.905    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.208 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.208    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.518ns  (logic 3.892ns (45.691%)  route 4.626ns (54.309%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.348     7.417    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I5_O)        0.105     7.522 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.978    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     8.083 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.905    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.208 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.208    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.518ns  (logic 3.892ns (45.691%)  route 4.626ns (54.309%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.348     7.417    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I5_O)        0.105     7.522 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.978    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     8.083 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.905    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.208 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.208    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.344ns  (logic 3.946ns (47.290%)  route 4.398ns (52.710%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.424     5.687    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y28         FDRE                                         r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y28         FDRE (Prop_fdre_C_Q)         0.433     6.120 r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/Q
+                         net (fo=6, routed)           1.120     7.240    POST_INIT_ADDRESS_PROBE/bit_index_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I2_O)        0.105     7.345 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.801    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.906 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.728    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.031 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.031    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.344ns  (logic 3.946ns (47.290%)  route 4.398ns (52.710%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.424     5.687    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y28         FDRE                                         r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y28         FDRE (Prop_fdre_C_Q)         0.433     6.120 f  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/Q
+                         net (fo=6, routed)           1.120     7.240    POST_INIT_ADDRESS_PROBE/bit_index_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I2_O)        0.105     7.345 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.801    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.906 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.728    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.031 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.031    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.344ns  (logic 3.946ns (47.290%)  route 4.398ns (52.710%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.424     5.687    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y28         FDRE                                         r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y28         FDRE (Prop_fdre_C_Q)         0.433     6.120 r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/Q
+                         net (fo=6, routed)           1.120     7.240    POST_INIT_ADDRESS_PROBE/bit_index_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I2_O)        0.105     7.345 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.801    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.906 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.728    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.031 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.031    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.344ns  (logic 3.946ns (47.290%)  route 4.398ns (52.710%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.424     5.687    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y28         FDRE                                         r  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y28         FDRE (Prop_fdre_C_Q)         0.433     6.120 f  POST_INIT_ADDRESS_PROBE/bit_index_reg[1]/Q
+                         net (fo=6, routed)           1.120     7.240    POST_INIT_ADDRESS_PROBE/bit_index_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I2_O)        0.105     7.345 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.801    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.906 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.728    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    14.031 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    14.031    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.277ns  (logic 3.946ns (47.672%)  route 4.331ns (52.328%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 r  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          1.053     7.172    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I4_O)        0.105     7.277 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.733    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.838 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.660    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.963 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.963    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.277ns  (logic 3.946ns (47.672%)  route 4.331ns (52.328%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          1.053     7.172    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I4_O)        0.105     7.277 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.733    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.838 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.660    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.963 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.963    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.277ns  (logic 3.946ns (47.672%)  route 4.331ns (52.328%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 r  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          1.053     7.172    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I4_O)        0.105     7.277 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.733    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.838 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.660    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.963 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.963    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.277ns  (logic 3.946ns (47.672%)  route 4.331ns (52.328%))
+  Logic Levels:           3  (LUT4=1 LUT6=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          1.053     7.172    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X57Y27         LUT6 (Prop_lut6_I4_O)        0.105     7.277 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2/O
+                         net (fo=2, routed)           0.456     7.733    POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_2_n_0
+    SLICE_X56Y26         LUT4 (Prop_lut4_I3_O)        0.105     7.838 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.660    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.963 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.963    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.246ns  (logic 3.842ns (46.593%)  route 4.404ns (53.407%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.356     5.619    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X42Y20         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X42Y20         FDSE (Prop_fdse_C_Q)         0.433     6.052 f  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/Q
+                         net (fo=9, routed)           1.447     7.499    POST_INIT_ADDRESS_PROBE/nvp_init_scl_release
+    SLICE_X58Y26         LUT5 (Prop_lut5_I0_O)        0.105     7.604 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.561    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.865 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.865    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.246ns  (logic 3.842ns (46.593%)  route 4.404ns (53.407%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.356     5.619    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X42Y20         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X42Y20         FDSE (Prop_fdse_C_Q)         0.433     6.052 f  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/Q
+                         net (fo=9, routed)           1.447     7.499    POST_INIT_ADDRESS_PROBE/nvp_init_scl_release
+    SLICE_X58Y26         LUT5 (Prop_lut5_I0_O)        0.105     7.604 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.561    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.865 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.865    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.104ns  (logic 3.787ns (46.728%)  route 4.317ns (53.272%))
+  Logic Levels:           2  (LUT4=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.495     7.564    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X56Y26         LUT4 (Prop_lut4_I2_O)        0.105     7.669 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.491    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.794 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.794    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.104ns  (logic 3.787ns (46.728%)  route 4.317ns (53.272%))
+  Logic Levels:           2  (LUT4=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.495     7.564    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X56Y26         LUT4 (Prop_lut4_I2_O)        0.105     7.669 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.491    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.794 r  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.794    nvp_sda
+    T18                                                               r  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.104ns  (logic 3.787ns (46.728%)  route 4.317ns (53.272%))
+  Logic Levels:           2  (LUT4=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.495     7.564    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X56Y26         LUT4 (Prop_lut4_I2_O)        0.105     7.669 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.491    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.794 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.794    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_sda
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.104ns  (logic 3.787ns (46.728%)  route 4.317ns (53.272%))
+  Logic Levels:           2  (LUT4=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.495     7.564    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X56Y26         LUT4 (Prop_lut4_I2_O)        0.105     7.669 f  POST_INIT_ADDRESS_PROBE/NVP_SDA_IOBUF_i_1/O
+                         net (fo=1, routed)           2.822    10.491    NVP_SDA_IOBUF/T
+    T18                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.303    13.794 f  NVP_SDA_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.794    nvp_sda
+    T18                                                               f  nvp_sda (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.025ns  (logic 3.788ns (47.200%)  route 4.237ns (52.800%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.281     7.350    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I1_O)        0.105     7.455 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.411    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.715 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.715    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.025ns  (logic 3.788ns (47.200%)  route 4.237ns (52.800%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[0]/Q
+                         net (fo=38, routed)          1.281     7.350    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[0]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I1_O)        0.105     7.455 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.411    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.715 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.715    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.014ns  (logic 3.788ns (47.268%)  route 4.226ns (52.732%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.269     7.338    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I4_O)        0.105     7.443 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.400    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.704 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.704    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.014ns  (logic 3.788ns (47.268%)  route 4.226ns (52.732%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.269     7.338    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I4_O)        0.105     7.443 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.400    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.704 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.704    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.014ns  (logic 3.788ns (47.268%)  route 4.226ns (52.732%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 r  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.269     7.338    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I4_O)        0.105     7.443 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.400    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.704 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.704    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.014ns  (logic 3.788ns (47.268%)  route 4.226ns (52.732%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.427     5.690    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X61Y30         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y30         FDRE (Prop_fdre_C_Q)         0.379     6.069 f  POST_INIT_ADDRESS_PROBE/state_reg[3]/Q
+                         net (fo=34, routed)          1.269     7.338    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[3]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I4_O)        0.105     7.443 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.400    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.704 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.704    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.458ns  (logic 3.842ns (51.513%)  route 3.616ns (48.487%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 r  POST_INIT_ADDRESS_PROBE/state_reg[2]/Q
+                         net (fo=38, routed)          0.660     6.779    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[2]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I2_O)        0.105     6.884 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.840    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.144 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.144    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.458ns  (logic 3.842ns (51.513%)  route 3.616ns (48.487%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[2]/Q
+                         net (fo=38, routed)          0.660     6.779    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[2]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I2_O)        0.105     6.884 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.840    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.144 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.144    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.458ns  (logic 3.842ns (51.513%)  route 3.616ns (48.487%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 r  POST_INIT_ADDRESS_PROBE/state_reg[2]/Q
+                         net (fo=38, routed)          0.660     6.779    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[2]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I2_O)        0.105     6.884 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.840    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.144 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.144    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.458ns  (logic 3.842ns (51.513%)  route 3.616ns (48.487%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[2]/Q
+                         net (fo=38, routed)          0.660     6.779    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[2]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I2_O)        0.105     6.884 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.840    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.144 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.144    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.350ns  (logic 3.842ns (52.275%)  route 3.508ns (47.725%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          0.551     6.670    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I3_O)        0.105     6.775 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.732    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.036 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.036    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.350ns  (logic 3.842ns (52.275%)  route 3.508ns (47.725%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.423     5.686    POST_INIT_ADDRESS_PROBE/axi_aclk
+    SLICE_X60Y27         FDRE                                         r  POST_INIT_ADDRESS_PROBE/state_reg[1]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X60Y27         FDRE (Prop_fdre_C_Q)         0.433     6.119 f  POST_INIT_ADDRESS_PROBE/state_reg[1]/Q
+                         net (fo=41, routed)          0.551     6.670    POST_INIT_ADDRESS_PROBE/state_reg_n_0_[1]
+    SLICE_X58Y26         LUT5 (Prop_lut5_I3_O)        0.105     6.775 f  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957     9.732    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatE_obuft_T_O)
+                                                      3.304    13.036 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    13.036    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.122ns  (logic 2.718ns (38.164%)  route 4.404ns (61.836%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.356     5.619    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X42Y20         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X42Y20         FDSE (Prop_fdse_C_Q)         0.433     6.052 r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/Q
+                         net (fo=9, routed)           1.447     7.499    POST_INIT_ADDRESS_PROBE/nvp_init_scl_release
+    SLICE_X58Y26         LUT5 (Prop_lut5_I0_O)        0.105     7.604 r  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.561    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatD_obuft_T_O)
+                                                      2.180    12.741 r  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    12.741    nvp_scl
+    T17                                                               r  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+                            (rising edge-triggered cell FDSE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            nvp_scl
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        7.122ns  (logic 2.718ns (38.164%)  route 4.404ns (61.836%))
+  Logic Levels:           2  (LUT5=1 OBUFT=1)
+  Clock Uncertainty:      0.173ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Discrete Jitter          (DJ):    0.141ns
+    Phase Error              (PE):    0.099ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock userclk1 rise edge)
+                                                      0.000     0.000 r  
+    GTPE2_CHANNEL_X0Y3   GTPE2_CHANNEL                0.000     0.000 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_lane[0].gt_wrapper_i/gtp_channel.gtpe2_channel_i/TXOUTCLK
+                         net (fo=1, routed)           1.209     1.209    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i_0
+    BUFGCTRL_X0Y20       BUFG (Prop_bufg_I_O)         0.081     1.290 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/txoutclk_i.txoutclk_i/O
+                         net (fo=1, routed)           1.391     2.681    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/refclk
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT2)
+                                                      0.077     2.757 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/mmcm_i/CLKOUT2
+                         net (fo=1, routed)           1.425     4.182    XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.081     4.263 r  XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/userclk1_i1.usrclk1_i1/O
+                         net (fo=15975, routed)       1.356     5.619    NVP_AUTOINIT/u_sequence/axi_aclk
+    SLICE_X42Y20         FDSE                                         r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X42Y20         FDSE (Prop_fdse_C_Q)         0.433     6.052 r  NVP_AUTOINIT/u_sequence/scl_oen_r_reg/Q
+                         net (fo=9, routed)           1.447     7.499    POST_INIT_ADDRESS_PROBE/nvp_init_scl_release
+    SLICE_X58Y26         LUT5 (Prop_lut5_I0_O)        0.105     7.604 r  POST_INIT_ADDRESS_PROBE/NVP_SCL_IOBUF_i_1/O
+                         net (fo=1, routed)           2.957    10.561    NVP_SCL_IOBUF/T
+    T17                  OBUFT (TriStatD_obuft_T_O)
+                                                      2.180    12.741 f  NVP_SCL_IOBUF/OBUFT/O
+                         net (fo=1, unset)            0.000    12.741    nvp_scl
+    T17                                                               f  nvp_scl (INOUT)
+  -------------------------------------------------------------------    -------------------
+
+
+
+

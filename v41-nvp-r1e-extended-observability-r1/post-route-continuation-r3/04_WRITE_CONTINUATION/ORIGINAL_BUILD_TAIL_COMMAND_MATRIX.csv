@@ -1,0 +1,14 @@
+ORIGINAL_LINE,COMMAND,PURPOSE,ALREADY_COMPLETED,REQUIRED_IN_R3_WRITE_SESSION,FORBIDDEN_IN_R3
+200,write_checkpoint,freeze routed implementation,YES,NO,YES
+209,report_route_status,routed-state evidence,YES,YES,NO
+210,report_timing_summary,timing gate,YES,YES,NO
+211,report_drc,DRC evidence and object creation,YES,YES,NO
+212-226,remaining report commands,complete post-route evidence,YES,YES,NO
+227-228,report_property current_design,design properties,YES,YES_ONE_OBJECT,NO
+230-234,NVP timing reports,NVP I/O timing evidence,YES,YES,NO
+235-238,report_property two NVP IOBUF cells,original cardinality boundary,NO,YES_DETERMINISTIC_PER_OBJECT,YES_ORIGINAL_MULTI_OBJECT_FORM
+239-305,fanin fanout structural timing and utilization queries,remaining audit and gates,PARTIAL,YES,NO
+307-314,implementation gate,bit eligibility,NO,YES_WITH_SEMANTIC_REQP_1839_COUNT,NO
+316-322,write_bitstream,sole bit generation,NO,YES_EXACTLY_ONCE,YES_RETRY
+324-357,result record,build-tail accounting,NO,YES_SESSION_SPECIFIC,NO
+358-359,close and exit,clean session termination,NO,YES,NO
