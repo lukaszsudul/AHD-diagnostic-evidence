@@ -1,0 +1,69 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sun Aug 23 21:26:57 2026
+# Process ID         : 24804
+# Current directory  : C:/FPGA/V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5/03_JTAG_STABILITY
+# Command line       : vivado.exe -mode batch -notrace -log C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_1_VIVADO.log -journal C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_1_VIVADO.jou -source C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\scripts\r5_jtag_stability_session.tcl -tclargs 1 C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_1_MATRIX.csv C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_1_LIST_PROPERTY.txt
+# Log file           : C:/FPGA/V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5/03_JTAG_STABILITY/SESSION_1_VIVADO.log
+# Journal file       : C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\03_JTAG_STABILITY\SESSION_1_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21367 MB
+# Available Virtual  : 6126 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\scripts\r5_jtag_stability_session.tcl} -notrace
+R5_JTAG_SESSION_START_UTC=2026-08-23T19:27:45Z
+R5_JTAG_SESSION_INDEX=1
+EXPECTED_SAMPLE_COUNT=5
+INTER_SAMPLE_DELAY_MS=500
+open_hw_manager: Time (s): cpu = 00:00:42 ; elapsed = 00:00:47 . Memory (MB): peak = 542.324 ; gain = 224.480
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:41 . Memory (MB): peak = 547.266 ; gain = 4.941
+INITIAL_TARGET_COUNT=1
+INTENDED_TARGET_MATCH_COUNT=1
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+ERROR: [Labtools 27-2269] No devices detected on target localhost:3121/xilinx_tcf/Digilent/210241768436.
+Check cable connectivity and that the target board is powered up then
+use the disconnect_hw_server and connect_hw_server to re-register this hardware target.
+R5_JTAG_SESSION_ERROR=ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.
+
+R5_JTAG_SESSION_ERROR_OPTIONS=-code 1 -level 0 -errorstack {INNER {invokeStk1 open_hw_target}} -errorcode NONE -errorinfo {ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.
+
+    while executing
+"open_hw_target"} -errorline 35
+SESSION_GATE=FAIL
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+FPGA_PROGRAM_OPERATIONS_THIS_SESSION=0
+INFO: [Common 17-206] Exiting Vivado at Sun Aug 23 21:29:19 2026...

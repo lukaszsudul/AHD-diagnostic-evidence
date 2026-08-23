@@ -1,0 +1,70 @@
+SESSION_INDEX=2
+PROCESS_START_UTC=2026-08-23T19:29:20.6156200Z
+PROCESS_END_UTC=2026-08-23T19:31:21.2108635Z
+PROCESS_START_MONOTONIC_TICKS=2461433153612
+PROCESS_END_MONOTONIC_TICKS=2462639105773
+PROCESS_STARTED=YES
+PROCESS_TIMED_OUT=NO
+PROCESS_EXIT_CODE=1
+LAUNCH_ERROR=NONE
+----- STDOUT BEGIN -----
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Sun Aug 23 21:29:27 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\�ukasz Sudu�\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1E_JTAG_RECOVERED_PAIRED_AB_R5\scripts\r5_jtag_stability_session.tcl} -notrace
+R5_JTAG_SESSION_START_UTC=2026-08-23T19:29:54Z
+R5_JTAG_SESSION_INDEX=2
+EXPECTED_SAMPLE_COUNT=5
+INTER_SAMPLE_DELAY_MS=500
+open_hw_manager: Time (s): cpu = 00:00:41 ; elapsed = 00:00:42 . Memory (MB): peak = 542.574 ; gain = 225.758
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:40 . Memory (MB): peak = 547.422 ; gain = 4.848
+INITIAL_TARGET_COUNT=1
+INTENDED_TARGET_MATCH_COUNT=1
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+R5_JTAG_SESSION_ERROR=ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.
+
+R5_JTAG_SESSION_ERROR_OPTIONS=-code 1 -level 0 -errorstack {INNER {invokeStk1 open_hw_target}} -errorcode NONE -errorinfo {ERROR: [Common 17-39] 'open_hw_target' failed due to earlier errors.
+
+    while executing
+"open_hw_target"} -errorline 35
+SESSION_GATE=FAIL
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Digilent/210241768436
+FPGA_PROGRAM_OPERATIONS_THIS_SESSION=0
+INFO: [Common 17-206] Exiting Vivado at Sun Aug 23 21:31:20 2026...
+
+----- STDOUT END -----
+----- STDERR BEGIN -----
+ERROR: [Labtools 27-2269] No devices detected on target localhost:3121/xilinx_tcf/Digilent/210241768436.
+Check cable connectivity and that the target board is powered up then
+use the disconnect_hw_server and connect_hw_server to re-register this hardware target.
+
+----- STDERR END -----

@@ -1,0 +1,27 @@
+# R5 JTAG Transport-Stability Result
+
+READ_ONLY_JTAG_STABILITY_SESSIONS=2
+JTAG_REFRESH_SAMPLES_PER_SESSION=5_REQUIRED
+JTAG_STABILITY_SAMPLES=0
+FPGA_PROGRAM_OPERATIONS=0
+
+SESSION_1_TARGET_COUNT=1
+SESSION_1_INTENDED_TARGET_MATCH_COUNT=1
+SESSION_1_OPEN_TARGET=FAIL_LABTOOLS_27_2269_NO_DEVICES_DETECTED
+SESSION_1_PROCESS_EXIT_CODE=1
+
+SESSION_2_TARGET_COUNT=1
+SESSION_2_INTENDED_TARGET_MATCH_COUNT=1
+SESSION_2_OPEN_TARGET=FAIL_LABTOOLS_27_2269_NO_DEVICES_DETECTED
+SESSION_2_PROCESS_EXIT_CODE=1
+
+JTAG_PRECHECK_DONE_VALUE=UNREADABLE_NO_DEVICE_OPENED
+JTAG_TRANSPORT_STABILITY_GATE=FAIL
+CLASSIFICATION=BLOCKED_JTAG_TRANSPORT_NOT_STABLE
+
+Both independent read-only sessions enumerated the exact intended target, but
+neither could open a device. Vivado reported `[Labtools 27-2269] No devices
+detected on target localhost:3121/xilinx_tcf/Digilent/210241768436`. Therefore
+no refresh sample, part/IDCODE observation, or DONE value was accepted. R5
+requires a 10/10 stability result and consequently stops before SSH or any FPGA
+program. No physical recovery is authorized within R5.
