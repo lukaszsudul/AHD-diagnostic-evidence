@@ -1,0 +1,2102 @@
+From f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd Mon Sep 17 00:00:00 2001
+From: lukaszsudul <103749296+lukaszsudul@users.noreply.github.com>
+Date: Sun, 23 Aug 2026 01:21:56 +0200
+Subject: [PATCH] v41 diag: add R1e NVP observability
+
+---
+ rtl/top/ahd_capture_top_xdma.sv        |  90 ++++++-
+ rtl/v41/axi_clock_lifecycle_monitor.sv |  58 ++++
+ rtl/v41/axi_clock_measurement_regs.sv  |  27 ++
+ rtl/v41/control_status_regs.sv         |  12 +-
+ rtl/v41/nvp_i2c_address_probe.sv       | 305 +++++++++++++++++++++
+ rtl/v41/r1e_measurement_regs.sv        |  74 +++++
+ scripts/v41/r1e_build.tcl              | 359 +++++++++++++++++++++++++
+ scripts/v41/r1e_compare_routed_dcp.tcl |  47 ++++
+ scripts/v41/r1e_timing_model.py        | 106 ++++++++
+ scripts/v41/read_nvp_r1e.py            | 205 ++++++++++++++
+ scripts/v41/verify_r1e_static.py       | 108 ++++++++
+ tb/v41/tb_control_status_regs.sv       |  22 ++
+ tb/v41/tb_r1e_legacy_nack_window.sv    |  80 ++++++
+ tb/v41/tb_r1e_measurement_regs.sv      |  69 +++++
+ tb/v41/tb_r1e_pre_done_equivalence.sv  |  86 ++++++
+ tb/v41/tb_r1e_probe_10k.sv             |  51 ++++
+ tb/v41/tb_r1e_probe_small.sv           | 136 ++++++++++
+ tests/python/test_nvp_r1e_tools.py     |  52 ++++
+ 18 files changed, 1881 insertions(+), 6 deletions(-)
+ create mode 100644 rtl/v41/axi_clock_lifecycle_monitor.sv
+ create mode 100644 rtl/v41/axi_clock_measurement_regs.sv
+ create mode 100644 rtl/v41/nvp_i2c_address_probe.sv
+ create mode 100644 rtl/v41/r1e_measurement_regs.sv
+ create mode 100644 scripts/v41/r1e_build.tcl
+ create mode 100644 scripts/v41/r1e_compare_routed_dcp.tcl
+ create mode 100644 scripts/v41/r1e_timing_model.py
+ create mode 100644 scripts/v41/read_nvp_r1e.py
+ create mode 100644 scripts/v41/verify_r1e_static.py
+ create mode 100644 tb/v41/tb_r1e_legacy_nack_window.sv
+ create mode 100644 tb/v41/tb_r1e_measurement_regs.sv
+ create mode 100644 tb/v41/tb_r1e_pre_done_equivalence.sv
+ create mode 100644 tb/v41/tb_r1e_probe_10k.sv
+ create mode 100644 tb/v41/tb_r1e_probe_small.sv
+ create mode 100644 tests/python/test_nvp_r1e_tools.py
+
+diff --git a/rtl/top/ahd_capture_top_xdma.sv b/rtl/top/ahd_capture_top_xdma.sv
+index 81ad214..cd2f864 100644
+--- a/rtl/top/ahd_capture_top_xdma.sv
++++ b/rtl/top/ahd_capture_top_xdma.sv
+@@ -56,8 +56,12 @@ module ahd_capture_top_xdma #(
+   logic nvp_por_reset = 1'b1;
+   logic nvp_scl_i;
+   logic nvp_sda_i;
+-  logic nvp_scl_oen;
+-  logic nvp_sda_oen;
++  logic nvp_init_scl_release;
++  logic nvp_init_sda_release;
++  logic probe_scl_release;
++  logic probe_sda_release;
++  wire nvp_scl_oen = nvp_init_scl_release & probe_scl_release;
++  wire nvp_sda_oen = nvp_init_sda_release & probe_sda_release;
+   logic nvp_init_busy;
+   logic nvp_init_done;
+   logic nvp_init_error;
+@@ -85,13 +89,70 @@ module ahd_capture_top_xdma #(
+   ) NVP_AUTOINIT (
+     .clk(autonomous_clk), .rst(nvp_por_reset),
+     .scl_i(nvp_scl_i), .sda_i(nvp_sda_i),
+-    .scl_oen(nvp_scl_oen), .sda_oen(nvp_sda_oen),
++    .scl_oen(nvp_init_scl_release), .sda_oen(nvp_init_sda_release),
+     .nvp_rst(nvp_rst), .nvp_en_vdd1x(nvp_en_vdd1x),
+     .nvp_en_vdd3x(nvp_en_vdd3x), .init_busy(nvp_init_busy),
+     .init_done(nvp_init_done), .init_error(nvp_init_error),
+     .diag_detail(nvp_init_detail)
+   );
+ 
++  logic [47:0] lifecycle_freerun_count;
++  logic [47:0] cnt_at_init_done;
++  logic [47:0] cnt_at_first_user_lnk_up;
++  logic [47:0] cnt_at_first_axi_aresetn_high;
++  logic [47:0] cnt_at_first_axi_aresetn_low_after_high;
++  logic [31:0] user_lnk_up_transition_count;
++  logic [31:0] axi_aresetn_transition_count;
++  logic [4:0] lifecycle_event_flags;
++
++  v41_axi_clock_lifecycle_monitor LIFECYCLE_MONITOR (
++    .axi_aclk(axi_aclk), .nvp_init_done(nvp_init_done),
++    .user_lnk_up(user_lnk_up), .axi_aresetn(axi_aresetn),
++    .freerun_count(lifecycle_freerun_count),
++    .cnt_at_init_done(cnt_at_init_done),
++    .cnt_at_first_user_lnk_up(cnt_at_first_user_lnk_up),
++    .cnt_at_first_axi_aresetn_high(cnt_at_first_axi_aresetn_high),
++    .cnt_at_first_axi_aresetn_low_after_high(
++      cnt_at_first_axi_aresetn_low_after_high),
++    .user_lnk_up_transition_count(user_lnk_up_transition_count),
++    .axi_aresetn_transition_count(axi_aresetn_transition_count),
++    .event_flags(lifecycle_event_flags)
++  );
++
++  logic [31:0] probe_count;
++  logic [31:0] probe_ack_count;
++  logic [31:0] probe_nack_count;
++  logic [31:0] probe_timeout_count;
++  logic [31:0] probe_status;
++  logic [31:0] probe_first_nack_index;
++  logic [31:0] probe_last_nack_index;
++  logic [31:0] probe_max_consecutive_nacks;
++  logic [47:0] probe_start_freerun;
++  logic [47:0] probe_done_freerun;
++
++  nvp_i2c_address_probe #(
++    .CLK_HZ(NVP_AUTOINIT_CLK_HZ), .PROBE_I2C_HZ(25000),
++    .PROBE_TARGET_COUNT(10000), .PROBE_ADDRESS_BYTE(8'h60),
++    .PROBE_POST_INIT_GUARD_CYCLES(62500)
++  ) POST_INIT_ADDRESS_PROBE (
++    .clk(autonomous_clk), .init_done(nvp_init_done),
++    .init_busy(nvp_init_busy), .nvp_rst(nvp_rst),
++    .init_scl_release(nvp_init_scl_release),
++    .init_sda_release(nvp_init_sda_release),
++    .raw_scl_i(nvp_scl_i), .raw_sda_i(nvp_sda_i),
++    .freerun_count(lifecycle_freerun_count),
++    .probe_scl_release(probe_scl_release),
++    .probe_sda_release(probe_sda_release),
++    .probe_count(probe_count), .probe_ack_count(probe_ack_count),
++    .probe_nack_count(probe_nack_count),
++    .probe_timeout_count(probe_timeout_count), .probe_status(probe_status),
++    .probe_first_nack_index(probe_first_nack_index),
++    .probe_last_nack_index(probe_last_nack_index),
++    .probe_max_consecutive_nacks(probe_max_consecutive_nacks),
++    .probe_start_freerun(probe_start_freerun),
++    .probe_done_freerun(probe_done_freerun)
++  );
++
+   // Keep one source flop per asynchronous-reset synchronizer.  If these three
+   // logically identical registers are merged, one launch flop fans out into
+   // multiple independent reset synchronizers and report_cdc correctly raises
+@@ -190,6 +251,28 @@ module ahd_capture_top_xdma #(
+   wire app_rsp_valid;
+   wire app_rsp_ready;
+   wire [31:0] app_rsp_rdata;
++  logic [31:0] measurement_read_data;
++
++  v41_r1e_measurement_regs R1E_MEASUREMENT_REGS (
++    .offset(host_req_addr[7:0]),
++    .freerun_count(lifecycle_freerun_count),
++    .cnt_at_init_done(cnt_at_init_done),
++    .cnt_at_first_user_lnk_up(cnt_at_first_user_lnk_up),
++    .cnt_at_first_axi_aresetn_high(cnt_at_first_axi_aresetn_high),
++    .cnt_at_first_axi_aresetn_low_after_high(
++      cnt_at_first_axi_aresetn_low_after_high),
++    .user_lnk_up_transition_count(user_lnk_up_transition_count),
++    .axi_aresetn_transition_count(axi_aresetn_transition_count),
++    .event_flags(lifecycle_event_flags),
++    .probe_count(probe_count), .probe_ack_count(probe_ack_count),
++    .probe_nack_count(probe_nack_count),
++    .probe_timeout_count(probe_timeout_count), .probe_status(probe_status),
++    .probe_first_nack_index(probe_first_nack_index),
++    .probe_last_nack_index(probe_last_nack_index),
++    .probe_max_consecutive_nacks(probe_max_consecutive_nacks),
++    .probe_start_freerun(probe_start_freerun),
++    .probe_done_freerun(probe_done_freerun), .read_data(measurement_read_data)
++  );
+ 
+   wire telemetry_capture_request_busy;
+   wire telemetry_capture_busy;
+@@ -246,6 +329,7 @@ module ahd_capture_top_xdma #(
+     .app_req_wdata(app_req_wdata), .app_req_be(app_req_be),
+     .app_rsp_valid(app_rsp_valid), .app_rsp_ready(app_rsp_ready),
+     .app_rsp_rdata(app_rsp_rdata),
++    .measurement_read_data(measurement_read_data),
+     .capture_request_busy(telemetry_capture_request_busy),
+     .capture_busy(telemetry_capture_busy),
+     .capture_armed(telemetry_capture_armed),
+diff --git a/rtl/v41/axi_clock_lifecycle_monitor.sv b/rtl/v41/axi_clock_lifecycle_monitor.sv
+new file mode 100644
+index 0000000..c8c8145
+--- /dev/null
++++ b/rtl/v41/axi_clock_lifecycle_monitor.sv
+@@ -0,0 +1,58 @@
++`timescale 1ns/1ps
++
++// Observer only. All state is configuration-initialized and intentionally has
++// no reset or enable input. Sampled transition counts cannot see transitions
++// occurring while axi_aclk itself is absent.
++module v41_axi_clock_lifecycle_monitor (
++  input logic axi_aclk,
++  input logic nvp_init_done,
++  input logic user_lnk_up,
++  input logic axi_aresetn,
++  output logic [47:0] freerun_count,
++  output logic [47:0] cnt_at_init_done,
++  output logic [47:0] cnt_at_first_user_lnk_up,
++  output logic [47:0] cnt_at_first_axi_aresetn_high,
++  output logic [47:0] cnt_at_first_axi_aresetn_low_after_high,
++  output logic [31:0] user_lnk_up_transition_count,
++  output logic [31:0] axi_aresetn_transition_count,
++  output logic [4:0] event_flags
++);
++  (* DONT_TOUCH = "TRUE", KEEP = "TRUE" *) logic [47:0] counter = 48'b0;
++  logic init_done_seen = 1'b0, link_seen = 1'b0, reset_high_seen = 1'b0;
++  logic reset_low_after_high_seen = 1'b0, init_before_link = 1'b0;
++  logic link_previous = 1'b0, reset_previous = 1'b0;
++  logic [47:0] init_count = 48'b0, link_count = 48'b0;
++  logic [47:0] reset_high_count = 48'b0, reset_low_count = 48'b0;
++  logic [31:0] link_transitions = 32'b0, reset_transitions = 32'b0;
++
++  always_ff @(posedge axi_aclk) begin
++    counter <= counter + 48'd1;
++    if (!init_done_seen && nvp_init_done) begin
++      init_count <= counter;
++      init_done_seen <= 1'b1;
++      if (!link_seen) init_before_link <= 1'b1;
++    end
++    if (!link_seen && user_lnk_up) begin link_count <= counter; link_seen <= 1'b1; end
++    if (!reset_high_seen && axi_aresetn) begin reset_high_count <= counter; reset_high_seen <= 1'b1; end
++    if (reset_high_seen && !reset_low_after_high_seen && !axi_aresetn) begin
++      reset_low_count <= counter; reset_low_after_high_seen <= 1'b1;
++    end
++    if (user_lnk_up != link_previous && link_transitions != 32'hffffffff)
++      link_transitions <= link_transitions + 1'b1;
++    if (axi_aresetn != reset_previous && reset_transitions != 32'hffffffff)
++      reset_transitions <= reset_transitions + 1'b1;
++    link_previous <= user_lnk_up;
++    reset_previous <= axi_aresetn;
++  end
++
++  assign freerun_count = counter;
++  assign cnt_at_init_done = init_count;
++  assign cnt_at_first_user_lnk_up = link_count;
++  assign cnt_at_first_axi_aresetn_high = reset_high_count;
++  assign cnt_at_first_axi_aresetn_low_after_high = reset_low_count;
++  assign user_lnk_up_transition_count = link_transitions;
++  assign axi_aresetn_transition_count = reset_transitions;
++  assign event_flags = {init_before_link, reset_low_after_high_seen,
++                        reset_high_seen, link_seen, init_done_seen};
++endmodule
++
+diff --git a/rtl/v41/axi_clock_measurement_regs.sv b/rtl/v41/axi_clock_measurement_regs.sv
+new file mode 100644
+index 0000000..64f4a3d
+--- /dev/null
++++ b/rtl/v41/axi_clock_measurement_regs.sv
+@@ -0,0 +1,27 @@
++`timescale 1ns/1ps
++module v41_axi_clock_measurement_regs (
++  input logic [5:0] offset,
++  input logic [47:0] freerun_count, cnt_at_init_done,
++  input logic [47:0] cnt_at_first_user_lnk_up,
++  input logic [47:0] cnt_at_first_axi_aresetn_high,
++  input logic [47:0] cnt_at_first_axi_aresetn_low_after_high,
++  input logic [31:0] user_lnk_up_transition_count,
++  input logic [31:0] axi_aresetn_transition_count,
++  input logic [4:0] event_flags,
++  output logic [31:0] read_data
++);
++  always_comb case (offset)
++    6'h00: read_data=32'h314B4C43; // "CLK1"
++    6'h04: read_data=32'd1;
++    6'h08: read_data={27'b0,event_flags};
++    6'h0c: read_data=freerun_count[31:0]; 6'h10: read_data={16'b0,freerun_count[47:32]};
++    6'h14: read_data=cnt_at_init_done[31:0]; 6'h18: read_data={16'b0,cnt_at_init_done[47:32]};
++    6'h1c: read_data=cnt_at_first_user_lnk_up[31:0]; 6'h20: read_data={16'b0,cnt_at_first_user_lnk_up[47:32]};
++    6'h24: read_data=cnt_at_first_axi_aresetn_high[31:0]; 6'h28: read_data={16'b0,cnt_at_first_axi_aresetn_high[47:32]};
++    6'h2c: read_data=cnt_at_first_axi_aresetn_low_after_high[31:0]; 6'h30: read_data={16'b0,cnt_at_first_axi_aresetn_low_after_high[47:32]};
++    6'h34: read_data=user_lnk_up_transition_count;
++    6'h38: read_data=axi_aresetn_transition_count;
++    6'h3c: read_data={27'b0,event_flags};
++    default: read_data=32'b0;
++  endcase
++endmodule
+diff --git a/rtl/v41/control_status_regs.sv b/rtl/v41/control_status_regs.sv
+index 3582a21..fc46bf3 100644
+--- a/rtl/v41/control_status_regs.sv
++++ b/rtl/v41/control_status_regs.sv
+@@ -35,6 +35,8 @@ module v41_control_status_regs #(
+   output logic        app_rsp_ready,
+   input  logic [31:0] app_rsp_rdata,
+ 
++  input  logic [31:0] measurement_read_data,
++
+   input  logic        capture_request_busy,
+   input  logic        capture_busy,
+   input  logic        capture_armed,
+@@ -84,7 +86,10 @@ module v41_control_status_regs #(
+   logic [31:0] scratch_rw;
+   logic        local_rsp_valid;
+   logic [31:0] local_rsp_rdata;
+-  wire         local_select = (host_req_addr[16:8] == 9'b0);
++  wire         measurement_read_select = !host_req_write &&
++                                          host_req_addr[16:8] == 9'h020;
++  wire         local_select = (host_req_addr[16:8] == 9'b0) ||
++                              measurement_read_select;
+ 
+   function automatic [31:0] apply_be(
+     input [31:0] old_value, input [31:0] new_value, input [3:0] be);
+@@ -195,8 +200,9 @@ module v41_control_status_regs #(
+           if (host_req_addr[7:0] == 8'h34)
+             scratch_rw <= apply_be(scratch_rw, host_req_wdata, host_req_be);
+         end else begin
+-          local_rsp_rdata <= host_req_addr[1:0] == 2'b00
+-                           ? local_read(host_req_addr[7:0]) : 32'b0;
++          local_rsp_rdata <= host_req_addr[1:0] != 2'b00 ? 32'b0 :
++                             measurement_read_select ? measurement_read_data :
++                             local_read(host_req_addr[7:0]);
+           local_rsp_valid <= 1'b1;
+         end
+       end
+diff --git a/rtl/v41/nvp_i2c_address_probe.sv b/rtl/v41/nvp_i2c_address_probe.sv
+new file mode 100644
+index 0000000..fdb237b
+--- /dev/null
++++ b/rtl/v41/nvp_i2c_address_probe.sv
+@@ -0,0 +1,305 @@
++`timescale 1ns/1ps
++
++// R1e automatic post-init address-only probe. Every completed transaction is
++// exactly START, 8'h60, address ACK/NACK, STOP. No register, data, read-
++// address, repeated-START, or retry byte exists in this controller.
++module nvp_i2c_address_probe #(
++  parameter integer CLK_HZ = 62500000,
++  parameter integer PROBE_I2C_HZ = 25000,
++  parameter integer PROBE_TARGET_COUNT = 10000,
++  parameter logic [7:0] PROBE_ADDRESS_BYTE = 8'h60,
++  parameter integer PROBE_POST_INIT_GUARD_CYCLES = 62500,
++  parameter integer SCL_TIMEOUT_CYCLES = CLK_HZ / 50000,
++  parameter integer BUS_IDLE_TIMEOUT_CYCLES = CLK_HZ / 1000
++) (
++  input  logic        clk,
++  input  logic        init_done,
++  input  logic        init_busy,
++  input  logic        nvp_rst,
++  input  logic        init_scl_release,
++  input  logic        init_sda_release,
++  input  logic        raw_scl_i,
++  input  logic        raw_sda_i,
++  input  logic [47:0] freerun_count,
++  output logic        probe_scl_release,
++  output logic        probe_sda_release,
++  output logic [31:0] probe_count = 32'b0,
++  output logic [31:0] probe_ack_count = 32'b0,
++  output logic [31:0] probe_nack_count = 32'b0,
++  output logic [31:0] probe_timeout_count = 32'b0,
++  output logic [31:0] probe_status,
++  output logic [31:0] probe_first_nack_index = 32'hffffffff,
++  output logic [31:0] probe_last_nack_index = 32'hffffffff,
++  output logic [31:0] probe_max_consecutive_nacks = 32'b0,
++  output logic [47:0] probe_start_freerun = 48'b0,
++  output logic [47:0] probe_done_freerun = 48'b0
++);
++  localparam integer DIVIDER = CLK_HZ / (PROBE_I2C_HZ * 2);
++  localparam integer TICK_CYCLES = DIVIDER + 1;
++
++  typedef enum logic [3:0] {
++    ST_WAIT_INIT,
++    ST_WAIT_IDLE,
++    ST_BUS_FREE,
++    ST_START_A,
++    ST_START_B,
++    ST_SEND_ADDR_LOW,
++    ST_SEND_ADDR_HIGH,
++    ST_ACK_LOW,
++    ST_ACK_HIGH,
++    ST_STOP_A,
++    ST_STOP_B,
++    ST_DONE
++  } state_t;
++
++  state_t state = ST_WAIT_INIT;
++  logic probe_active = 1'b0;
++  logic probe_done = 1'b0;
++  logic probe_aborted = 1'b0;
++  logic init_done_seen = 1'b0;
++  logic guard_complete = 1'b0;
++  logic bus_idle_qualified = 1'b0;
++  logic scl_timeout = 1'b0;
++  logic bus_idle_timeout = 1'b0;
++  logic sampled_nack = 1'b0;
++  logic [2:0] bit_index = 3'd7;
++  logic [31:0] divider_count = 32'b0;
++  logic [31:0] guard_count = 32'b0;
++  logic [31:0] idle_stable_count = 32'b0;
++  logic [31:0] bus_idle_wait_count = 32'b0;
++  logic [31:0] scl_low_released_count = 32'b0;
++  logic [2:0] scl_release_grace = 3'b0;
++  logic previous_scl_release = 1'b1;
++  logic [31:0] consecutive_nacks = 32'b0;
++
++  // Byte-identical update semantics to the protected master's independent
++  // two-flop synchronizers and three-matching-sample filters. Raw pins feed
++  // only synchronizer stage zero; protocol logic sees only filtered signals.
++  (* ASYNC_REG = "TRUE", SHREG_EXTRACT = "NO" *)
++  logic [1:0] scl_sync = 2'b11;
++  (* ASYNC_REG = "TRUE", SHREG_EXTRACT = "NO" *)
++  logic [1:0] sda_sync = 2'b11;
++  logic scl_filter_candidate = 1'b1;
++  logic sda_filter_candidate = 1'b1;
++  logic [1:0] scl_filter_count = 2'b0;
++  logic [1:0] sda_filter_count = 2'b0;
++  logic scl_filtered = 1'b1;
++  logic sda_filtered = 1'b1;
++
++  wire init_terminal_gate = init_done && !init_busy && nvp_rst &&
++                            init_scl_release && init_sda_release;
++  wire bus_is_idle = scl_filtered && sda_filtered;
++  wire released_scl_phase = state == ST_BUS_FREE || state == ST_START_A ||
++                            state == ST_START_B ||
++                            state == ST_SEND_ADDR_HIGH ||
++                            state == ST_ACK_HIGH || state == ST_STOP_B;
++  wire state_tick = divider_count >= DIVIDER;
++  wire bus_idle_failure_now =
++    (state == ST_WAIT_IDLE || state == ST_BUS_FREE) && !bus_is_idle &&
++    bus_idle_wait_count >= BUS_IDLE_TIMEOUT_CYCLES;
++  wire scl_timeout_now = probe_active && released_scl_phase &&
++                         probe_scl_release && previous_scl_release &&
++                         scl_release_grace == 0 && !scl_filtered &&
++                         scl_low_released_count >= SCL_TIMEOUT_CYCLES;
++
++  always_comb begin
++    probe_scl_release = 1'b1;
++    probe_sda_release = 1'b1;
++    case (state)
++      ST_START_B: begin
++        probe_scl_release = 1'b1;
++        probe_sda_release = 1'b0;
++      end
++      ST_SEND_ADDR_LOW: begin
++        probe_scl_release = 1'b0;
++        probe_sda_release = PROBE_ADDRESS_BYTE[bit_index];
++      end
++      ST_SEND_ADDR_HIGH: begin
++        probe_scl_release = 1'b1;
++        probe_sda_release = PROBE_ADDRESS_BYTE[bit_index];
++      end
++      ST_ACK_LOW: begin
++        probe_scl_release = 1'b0;
++        probe_sda_release = 1'b1;
++      end
++      ST_ACK_HIGH: begin
++        probe_scl_release = 1'b1;
++        probe_sda_release = 1'b1;
++      end
++      ST_STOP_A: begin
++        probe_scl_release = 1'b0;
++        probe_sda_release = 1'b0;
++      end
++      ST_STOP_B: begin
++        probe_scl_release = 1'b1;
++        probe_sda_release = 1'b0;
++      end
++      default: begin
++        probe_scl_release = 1'b1;
++        probe_sda_release = 1'b1;
++      end
++    endcase
++  end
++
++  // [0] DONE, [1] ABORTED, [2] ACTIVE, [3] GUARD_COMPLETE,
++  // [4] BUS_IDLE_QUALIFIED, [5] INIT_DONE_SEEN, [6] SCL_TIMEOUT,
++  // [7] BUS_IDLE_TIMEOUT, [8] fixed 25-kHz mode, [9] lines released.
++  always_comb begin
++    probe_status = 32'b0;
++    probe_status[0] = probe_done;
++    probe_status[1] = probe_aborted;
++    probe_status[2] = probe_active;
++    probe_status[3] = guard_complete;
++    probe_status[4] = bus_idle_qualified;
++    probe_status[5] = init_done_seen;
++    probe_status[6] = scl_timeout;
++    probe_status[7] = bus_idle_timeout;
++    probe_status[8] = 1'b1;
++    probe_status[9] = probe_scl_release && probe_sda_release;
++  end
++
++  always_ff @(posedge clk) begin
++    scl_sync[0] <= raw_scl_i;
++    scl_sync[1] <= scl_sync[0];
++    sda_sync[0] <= raw_sda_i;
++    sda_sync[1] <= sda_sync[0];
++
++    if (scl_sync[1] != scl_filter_candidate) begin
++      scl_filter_candidate <= scl_sync[1];
++      scl_filter_count <= 2'd1;
++    end else if (scl_filter_count < 2) begin
++      scl_filter_count <= scl_filter_count + 1'b1;
++    end else begin
++      scl_filtered <= scl_filter_candidate;
++    end
++
++    if (sda_sync[1] != sda_filter_candidate) begin
++      sda_filter_candidate <= sda_sync[1];
++      sda_filter_count <= 2'd1;
++    end else if (sda_filter_count < 2) begin
++      sda_filter_count <= sda_filter_count + 1'b1;
++    end else begin
++      sda_filtered <= sda_filter_candidate;
++    end
++
++    previous_scl_release <= probe_scl_release;
++    if (init_done)
++      init_done_seen <= 1'b1;
++
++    if (state == ST_WAIT_INIT) begin
++      divider_count <= 32'b0;
++      idle_stable_count <= 32'b0;
++      bus_idle_wait_count <= 32'b0;
++      if (!init_terminal_gate) begin
++        guard_count <= 32'b0;
++      end else if (guard_count + 1'b1 >= PROBE_POST_INIT_GUARD_CYCLES) begin
++        guard_count <= PROBE_POST_INIT_GUARD_CYCLES;
++        guard_complete <= 1'b1;
++        state <= ST_WAIT_IDLE;
++      end else begin
++        guard_count <= guard_count + 1'b1;
++      end
++    end else if (!probe_done) begin
++      if (bus_idle_failure_now || scl_timeout_now) begin
++        if (probe_timeout_count != 32'hffffffff)
++          probe_timeout_count <= probe_timeout_count + 1'b1;
++        probe_active <= 1'b0;
++        probe_done <= 1'b1;
++        probe_aborted <= 1'b1;
++        scl_timeout <= scl_timeout_now;
++        bus_idle_timeout <= bus_idle_failure_now;
++        probe_done_freerun <= freerun_count;
++        state <= ST_DONE;
++      end else begin
++        if ((state == ST_WAIT_IDLE || state == ST_BUS_FREE) && !bus_is_idle)
++          bus_idle_wait_count <= bus_idle_wait_count + 1'b1;
++        else
++          bus_idle_wait_count <= 32'b0;
++
++        if (!probe_active || !released_scl_phase || !probe_scl_release) begin
++          scl_low_released_count <= 32'b0;
++          scl_release_grace <= 3'b0;
++        end else if (!previous_scl_release) begin
++          scl_release_grace <= 3'd5;
++        end else if (scl_release_grace != 0) begin
++          scl_release_grace <= scl_release_grace - 1'b1;
++        end else if (!scl_filtered) begin
++          scl_low_released_count <= scl_low_released_count + 1'b1;
++        end else begin
++          scl_low_released_count <= 32'b0;
++        end
++
++        if (state == ST_WAIT_IDLE) begin
++          divider_count <= 32'b0;
++          if (!init_terminal_gate) begin
++            idle_stable_count <= 32'b0;
++          end else if (bus_is_idle) begin
++            if (idle_stable_count + 1'b1 >= TICK_CYCLES) begin
++              idle_stable_count <= TICK_CYCLES;
++              bus_idle_qualified <= 1'b1;
++              probe_active <= 1'b1;
++              probe_start_freerun <= freerun_count;
++              state <= ST_BUS_FREE;
++            end else begin
++              idle_stable_count <= idle_stable_count + 1'b1;
++            end
++          end else begin
++            idle_stable_count <= 32'b0;
++          end
++        end else if (state_tick) begin
++          divider_count <= 32'b0;
++          case (state)
++            ST_BUS_FREE: if (bus_is_idle) state <= ST_START_A;
++            ST_START_A: state <= ST_START_B;
++            ST_START_B: begin
++              bit_index <= 3'd7;
++              sampled_nack <= 1'b0;
++              state <= ST_SEND_ADDR_LOW;
++            end
++            ST_SEND_ADDR_LOW: state <= ST_SEND_ADDR_HIGH;
++            ST_SEND_ADDR_HIGH: if (scl_filtered) begin
++              if (bit_index == 0)
++                state <= ST_ACK_LOW;
++              else begin
++                bit_index <= bit_index - 1'b1;
++                state <= ST_SEND_ADDR_LOW;
++              end
++            end
++            ST_ACK_LOW: state <= ST_ACK_HIGH;
++            ST_ACK_HIGH: if (scl_filtered) begin
++              sampled_nack <= sda_filtered;
++              state <= ST_STOP_A;
++            end
++            ST_STOP_A: state <= ST_STOP_B;
++            ST_STOP_B: if (scl_filtered) begin
++              probe_count <= probe_count + 1'b1;
++              if (sampled_nack) begin
++                probe_nack_count <= probe_nack_count + 1'b1;
++                if (probe_first_nack_index == 32'hffffffff)
++                  probe_first_nack_index <= probe_count;
++                probe_last_nack_index <= probe_count;
++                consecutive_nacks <= consecutive_nacks + 1'b1;
++                if (consecutive_nacks + 1'b1 > probe_max_consecutive_nacks)
++                  probe_max_consecutive_nacks <= consecutive_nacks + 1'b1;
++              end else begin
++                probe_ack_count <= probe_ack_count + 1'b1;
++                consecutive_nacks <= 32'b0;
++              end
++              if (probe_count + 1'b1 == PROBE_TARGET_COUNT) begin
++                probe_active <= 1'b0;
++                probe_done <= 1'b1;
++                probe_done_freerun <= freerun_count;
++                state <= ST_DONE;
++              end else begin
++                state <= ST_BUS_FREE;
++              end
++            end
++            default: state <= ST_DONE;
++          endcase
++        end else begin
++          divider_count <= divider_count + 1'b1;
++        end
++      end
++    end
++  end
++endmodule
+diff --git a/rtl/v41/r1e_measurement_regs.sv b/rtl/v41/r1e_measurement_regs.sv
+new file mode 100644
+index 0000000..9e48ba8
+--- /dev/null
++++ b/rtl/v41/r1e_measurement_regs.sv
+@@ -0,0 +1,74 @@
++`timescale 1ns/1ps
++
++// Read-only R1e extension of the exact R1 lifecycle page.
++module v41_r1e_measurement_regs (
++  input  logic [7:0]  offset,
++  input  logic [47:0] freerun_count,
++  input  logic [47:0] cnt_at_init_done,
++  input  logic [47:0] cnt_at_first_user_lnk_up,
++  input  logic [47:0] cnt_at_first_axi_aresetn_high,
++  input  logic [47:0] cnt_at_first_axi_aresetn_low_after_high,
++  input  logic [31:0] user_lnk_up_transition_count,
++  input  logic [31:0] axi_aresetn_transition_count,
++  input  logic [4:0]  event_flags,
++  input  logic [31:0] probe_count,
++  input  logic [31:0] probe_ack_count,
++  input  logic [31:0] probe_nack_count,
++  input  logic [31:0] probe_timeout_count,
++  input  logic [31:0] probe_status,
++  input  logic [31:0] probe_first_nack_index,
++  input  logic [31:0] probe_last_nack_index,
++  input  logic [31:0] probe_max_consecutive_nacks,
++  input  logic [47:0] probe_start_freerun,
++  input  logic [47:0] probe_done_freerun,
++  output logic [31:0] read_data
++);
++  localparam logic [63:0] EXPECTED_ACTIVE = 64'd132584734;
++  localparam logic [63:0] EXPECTED_50KHZ = 64'd113182679;
++  logic [31:0] lifecycle_read_data;
++
++  v41_axi_clock_measurement_regs R1_LIFECYCLE_REGS (
++    .offset(offset[5:0]),
++    .freerun_count(freerun_count),
++    .cnt_at_init_done(cnt_at_init_done),
++    .cnt_at_first_user_lnk_up(cnt_at_first_user_lnk_up),
++    .cnt_at_first_axi_aresetn_high(cnt_at_first_axi_aresetn_high),
++    .cnt_at_first_axi_aresetn_low_after_high(
++      cnt_at_first_axi_aresetn_low_after_high),
++    .user_lnk_up_transition_count(user_lnk_up_transition_count),
++    .axi_aresetn_transition_count(axi_aresetn_transition_count),
++    .event_flags(event_flags), .read_data(lifecycle_read_data)
++  );
++
++  always_comb begin
++    if (offset <= 8'h3c) begin
++      read_data = lifecycle_read_data;
++    end else begin
++      case (offset)
++        8'h40: read_data = 32'h31453152; // bytes spell "R1E1"
++        8'h44: read_data = 32'd1;
++        8'h48: read_data = 32'h0000001f;
++        8'h4c: read_data = 32'd25000;
++        8'h50: read_data = 32'd1251;
++        8'h54: read_data = EXPECTED_ACTIVE[31:0];
++        8'h58: read_data = EXPECTED_ACTIVE[63:32];
++        8'h5c: read_data = EXPECTED_50KHZ[31:0];
++        8'h60: read_data = EXPECTED_50KHZ[63:32];
++        8'h64: read_data = 32'd10000;
++        8'h68: read_data = probe_count;
++        8'h6c: read_data = probe_ack_count;
++        8'h70: read_data = probe_nack_count;
++        8'h74: read_data = probe_timeout_count;
++        8'h78: read_data = probe_status;
++        8'h7c: read_data = probe_first_nack_index;
++        8'h80: read_data = probe_last_nack_index;
++        8'h84: read_data = probe_max_consecutive_nacks;
++        8'h88: read_data = probe_start_freerun[31:0];
++        8'h8c: read_data = {16'b0, probe_start_freerun[47:32]};
++        8'h90: read_data = probe_done_freerun[31:0];
++        8'h94: read_data = {16'b0, probe_done_freerun[47:32]};
++        default: read_data = 32'b0;
++      endcase
++    end
++  end
++endmodule
+diff --git a/scripts/v41/r1e_build.tcl b/scripts/v41/r1e_build.tcl
+new file mode 100644
+index 0000000..6e41e6e
+--- /dev/null
++++ b/scripts/v41/r1e_build.tcl
+@@ -0,0 +1,359 @@
++if {$argc != 5 && $argc != 6} {
++  puts stderr "usage: r1e_build.tcl REPOSITORY_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT BIT_FILENAME ?PROVENANCE_ONLY?"
++  exit 2
++}
++
++set repo_root [file normalize [lindex $argv 0]]
++set build_root [file normalize [lindex $argv 1]]
++set evidence_root [file normalize [lindex $argv 2]]
++set source_commit [string tolower [lindex $argv 3]]
++set bit_filename [lindex $argv 4]
++set execution_mode FULL_BUILD
++if {$argc == 6} {
++  set execution_mode [lindex $argv 5]
++  if {$execution_mode ne "PROVENANCE_ONLY"} {
++    error "optional execution mode must be PROVENANCE_ONLY"
++  }
++}
++source [file join $repo_root scripts v41 xdma_config_common.tcl]
++
++proc write_lines {path lines} {
++  file mkdir [file dirname $path]
++  set fh [open $path w]
++  fconfigure $fh -translation lf
++  foreach line $lines { puts $fh $line }
++  close $fh
++}
++
++proc require_files {paths} {
++  foreach path $paths {
++    if {![file isfile $path]} { error "required file missing: $path" }
++  }
++}
++
++proc read_text {path} {
++  set fh [open $path r]
++  set text [read $fh]
++  close $fh
++  return $text
++}
++
++proc utilization_row {text wanted} {
++  set normalized_wanted [string trimright $wanted "*"]
++  foreach line [split $text "\n"] {
++    set columns [split $line "|"]
++    set actual [string trimright [string trim [lindex $columns 1]] "*"]
++    if {[llength $columns] >= 7 && $actual eq $normalized_wanted} {
++      return [list [string trim [lindex $columns 2]] \
++                   [string trim [lindex $columns 5]]]
++    }
++  }
++  error "utilization row '$wanted' not found"
++}
++
++if {![regexp {^[0-9a-f]{40}$} $source_commit]} {
++  error "SOURCE_GIT_COMMIT must be exactly 40 lowercase hex digits"
++}
++set actual_commit [string trim [exec git -C $repo_root rev-parse HEAD]]
++if {$actual_commit ne $source_commit} {
++  error "repository HEAD $actual_commit does not match requested build commit $source_commit"
++}
++set source_status [string trim [exec git -C $repo_root status --porcelain --untracked-files=all]]
++if {$source_status ne ""} {
++  error "hardware build requires a clean source tree: $source_status"
++}
++
++set git_words [list]
++for {set word_index 0} {$word_index < 5} {incr word_index} {
++  set first [expr {$word_index * 8}]
++  lappend git_words [string range $source_commit $first [expr {$first + 7}]]
++}
++set build_flags 32'h00000002
++set reconstructed_commit [join $git_words ""]
++if {$reconstructed_commit ne $source_commit} {
++  error "provenance round trip failed: $reconstructed_commit != $source_commit"
++}
++set generics [join [list \
++  "SLOT_COUNT=2" \
++  "GIT_SHA_W0=32'h[lindex $git_words 0]" \
++  "GIT_SHA_W1=32'h[lindex $git_words 1]" \
++  "GIT_SHA_W2=32'h[lindex $git_words 2]" \
++  "GIT_SHA_W3=32'h[lindex $git_words 3]" \
++  "GIT_SHA_W4=32'h[lindex $git_words 4]" \
++  "BUILD_FLAGS=$build_flags"] " "]
++
++file mkdir $evidence_root
++write_lines [file join $evidence_root EXPECTED_RUNTIME_PROVENANCE.txt] [list \
++  "BIT_SOURCE_COMMIT=$source_commit" \
++  "EXPECTED_GIT_SHA_W0=0x[lindex $git_words 0]" \
++  "EXPECTED_GIT_SHA_W1=0x[lindex $git_words 1]" \
++  "EXPECTED_GIT_SHA_W2=0x[lindex $git_words 2]" \
++  "EXPECTED_GIT_SHA_W3=0x[lindex $git_words 3]" \
++  "EXPECTED_GIT_SHA_W4=0x[lindex $git_words 4]" \
++  "EXPECTED_BUILD_FLAGS=0x00000002" \
++  "RECONSTRUCTED_GIT_SHA=$reconstructed_commit" \
++  "PROVENANCE_ROUND_TRIP=PASS" \
++  "VIVADO_GENERIC_STRING=$generics"]
++puts "PROVENANCE_ROUND_TRIP=PASS BIT_SOURCE_COMMIT=$source_commit"
++if {$execution_mode eq "PROVENANCE_ONLY"} {
++  puts "PHASE3_PROVENANCE_PREFLIGHT=PASS"
++  exit 0
++}
++
++file mkdir $build_root
++file mkdir $evidence_root
++cd $build_root
++
++set project_name v41_r1e_extended_observability
++set project_dir [file join $build_root vivado_project]
++create_project -force $project_name $project_dir -part $v41_xdma::part
++set_property target_language Verilog [current_project]
++set_property simulator_language Mixed [current_project]
++set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
++config_ip_cache -use_cache_location [file join $build_root ip_cache]
++
++set sv_files [list \
++  [file join $repo_root rtl v41 axi_lite_host_bridge.sv] \
++  [file join $repo_root rtl v41 axi_clock_lifecycle_monitor.sv] \
++  [file join $repo_root rtl v41 axi_clock_measurement_regs.sv] \
++  [file join $repo_root rtl v41 r1e_measurement_regs.sv] \
++  [file join $repo_root rtl v41 nvp_i2c_address_probe.sv] \
++  [file join $repo_root rtl v41 control_status_regs.sv] \
++  [file join $repo_root rtl pio pio_slot_adapter.sv] \
++  [file join $repo_root rtl pio pio_bar_target.sv] \
++  [file join $repo_root rtl record bt656_record_producer.sv] \
++  [file join $repo_root rtl record capture_mailbox.sv] \
++  [file join $repo_root rtl video video_capture.sv] \
++  [file join $repo_root rtl video physical_frontend.sv] \
++  [file join $repo_root rtl top ahd_capture_top_xdma.sv]]
++set vhdl_files [list \
++  [file join $repo_root rtl nvp nvp6134c_diagnostics_pkg.vhd] \
++  [file join $repo_root rtl nvp nvp6134c_i2c_bringup.vhd] \
++  [file join $repo_root rtl nvp nvp6134c_autoinit.vhd]]
++set xdc_files [list \
++  [file join $repo_root xdc boards current xdma_pcie.xdc] \
++  [file join $repo_root xdc boards current pins.xdc] \
++  [file join $repo_root xdc boards current vdo_input_timing.xdc] \
++  [file join $repo_root xdc boards current pcie_pio.xdc] \
++  [file join $repo_root xdc boards current nvp_control.xdc] \
++  [file join $repo_root xdc common cdc.xdc] \
++  [file join $repo_root xdc common configuration_bank.xdc]]
++set xdma_source [file join $repo_root ip v41 xdma_v41_m1.xci]
++require_files [concat $sv_files $vhdl_files $xdc_files [list $xdma_source]]
++
++add_files -norecurse $sv_files
++set_property FILE_TYPE SystemVerilog [get_files $sv_files]
++add_files -norecurse $vhdl_files
++
++set input_xci_dir [file join $build_root input_xci]
++file mkdir $input_xci_dir
++set xdma_copy [file join $input_xci_dir xdma_v41_m1.xci]
++file copy -force $xdma_source $xdma_copy
++import_ip -files $xdma_copy
++set xdma_ip [get_ips xdma_v41_m1]
++if {[llength $xdma_ip] != 1} { error "expected exactly one XDMA IP" }
++v41_xdma::configure_minimal_c2h_stream $xdma_ip
++set imported_xci [get_property IP_FILE $xdma_ip]
++set imported_xci_object [get_files -quiet $imported_xci]
++if {[llength $imported_xci_object] != 1} {
++  error "imported XDMA XCI object not found: $imported_xci"
++}
++set_property GENERATE_SYNTH_CHECKPOINT false $imported_xci_object
++generate_target all $xdma_ip
++
++add_files -fileset constrs_1 -norecurse $xdc_files
++set_property PROCESSING_ORDER EARLY [get_files [lindex $xdc_files 0]]
++set_property PROCESSING_ORDER LATE [get_files [lrange $xdc_files 1 end]]
++
++set top ahd_capture_top_xdma
++set_property top $top [get_filesets sources_1]
++set_property generic $generics [get_filesets sources_1]
++update_compile_order -fileset sources_1
++
++write_lines [file join $evidence_root PHASE3_BUILD_PROVENANCE.txt] [list \
++  "SOURCE_GIT_COMMIT=$source_commit" \
++  "SOURCE_TREE_CLEAN=YES" \
++  "BUILD_FLAGS=0x00000002" \
++  "BUILD_ID_SCHEMA=0x00010000" \
++  "GIT_SHA_W0=0x[lindex $git_words 0]" \
++  "GIT_SHA_W1=0x[lindex $git_words 1]" \
++  "GIT_SHA_W2=0x[lindex $git_words 2]" \
++  "GIT_SHA_W3=0x[lindex $git_words 3]" \
++  "GIT_SHA_W4=0x[lindex $git_words 4]" \
++  "VIVADO_VERSION=2025.2" \
++  "VIVADO_SW_BUILD=6299465" \
++  "PART=$v41_xdma::part" \
++  "TOP=$top" \
++  "GENERICS=$generics" \
++  "XCI=$xdma_copy"]
++
++synth_design -top $top -part $v41_xdma::part -flatten_hierarchy rebuilt
++write_checkpoint -force [file join $evidence_root PHASE3_synth.dcp]
++report_utilization -file [file join $evidence_root PHASE3_utilization_post_synth.rpt]
++report_timing_summary -delay_type min_max -max_paths 100 \
++  -file [file join $evidence_root PHASE3_timing_post_synth.rpt]
++
++opt_design -directive Explore
++place_design -directive Explore
++phys_opt_design -directive Explore
++route_design -directive Explore
++write_checkpoint -force [file join $evidence_root PHASE3_routed.dcp]
++
++set route_report [file join $evidence_root PHASE3_route_status.rpt]
++set timing_report [file join $evidence_root PHASE3_timing_summary.rpt]
++set drc_report [file join $evidence_root PHASE3_drc.rpt]
++set bus_skew_report [file join $evidence_root PHASE3_bus_skew.rpt]
++set cdc_report [file join $evidence_root PHASE3_cdc.rpt]
++set util_report [file join $evidence_root PHASE3_utilization.rpt]
++
++report_route_status -file $route_report
++report_timing_summary -delay_type min_max -max_paths 100 -file $timing_report
++report_drc -file $drc_report
++check_timing -verbose -file [file join $evidence_root PHASE3_check_timing.rpt]
++report_exceptions -coverage -file [file join $evidence_root PHASE3_exception_coverage.rpt]
++report_bus_skew -file $bus_skew_report
++report_clock_interaction -file [file join $evidence_root PHASE3_clock_interaction.rpt]
++report_cdc -details -file $cdc_report
++report_utilization -file $util_report
++report_utilization -hierarchical -hierarchical_depth 20 \
++  -file [file join $evidence_root PHASE3_utilization_hierarchical.rpt]
++report_clock_utilization -file [file join $evidence_root PHASE3_clock_utilization.rpt]
++report_design_analysis -congestion \
++  -file [file join $evidence_root PHASE3_congestion.rpt]
++report_methodology -file [file join $evidence_root PHASE3_methodology.rpt]
++report_power -file [file join $evidence_root PHASE3_power.rpt]
++report_io -file [file join $evidence_root PHASE3_io.rpt]
++report_clocks -file [file join $evidence_root PHASE3_clocks.rpt]
++report_property -file [file join $evidence_root PHASE3_design_properties.txt] \
++  [current_design]
++
++set nvp_io_ports [get_ports {nvp_scl nvp_sda}]
++report_timing -delay_type max -to $nvp_io_ports -max_paths 32 -nworst 16 \
++  -file [file join $evidence_root R1E_nvp_scl_sda_output_paths.rpt]
++report_timing -delay_type max -from $nvp_io_ports -max_paths 32 -nworst 16 \
++  -file [file join $evidence_root R1E_nvp_scl_sda_input_paths.rpt]
++set nvp_iobuf_cells [get_cells -quiet -hier -filter \
++  {NAME =~ *NVP_SCL_IOBUF || NAME =~ *NVP_SDA_IOBUF}]
++report_property -file [file join $evidence_root R1E_nvp_iobuf_properties.txt] \
++  $nvp_iobuf_cells
++set nvp_t_pins [get_pins -quiet -of_objects $nvp_iobuf_cells -filter {REF_PIN_NAME == T}]
++set nvp_o_pins [get_pins -quiet -of_objects $nvp_iobuf_cells -filter {REF_PIN_NAME == O}]
++write_lines [file join $evidence_root R1E_nvp_output_fanin.txt] \
++  [lsort [get_property NAME [all_fanin -flat -to $nvp_t_pins]]]
++write_lines [file join $evidence_root R1E_nvp_input_fanout.txt] \
++  [lsort [get_property NAME [all_fanout -flat -from $nvp_o_pins]]]
++set probe_cells [get_cells -quiet -hier -filter {NAME =~ *POST_INIT_ADDRESS_PROBE*}]
++set lifecycle_cells [get_cells -quiet -hier -filter {NAME =~ *LIFECYCLE_MONITOR*}]
++write_lines [file join $evidence_root R1E_probe_cells.txt] \
++  [lsort [get_property NAME $probe_cells]]
++write_lines [file join $evidence_root R1E_lifecycle_cells.txt] \
++  [lsort [get_property NAME $lifecycle_cells]]
++
++set vdo_ports [get_ports {vdo1_data[*]}]
++if {[llength $vdo_ports] != 8} { error "expected eight VDO ports" }
++report_timing -delay_type max -from $vdo_ports -max_paths 32 -nworst 4 \
++  -file [file join $evidence_root PHASE3_vdo_setup_paths.rpt]
++report_timing -delay_type min -from $vdo_ports -max_paths 32 -nworst 4 \
++  -file [file join $evidence_root PHASE3_vdo_hold_paths.rpt]
++
++set worst_setup [get_timing_paths -quiet -delay_type max -max_paths 1 -nworst 1]
++set worst_hold [get_timing_paths -quiet -delay_type min -max_paths 1 -nworst 1]
++set vdo_setup [get_timing_paths -quiet -delay_type max -from $vdo_ports -max_paths 1 -nworst 1]
++set vdo_hold [get_timing_paths -quiet -delay_type min -from $vdo_ports -max_paths 1 -nworst 1]
++if {[llength $worst_setup] != 1 || [llength $worst_hold] != 1 ||
++    [llength $vdo_setup] != 1 || [llength $vdo_hold] != 1} {
++  error "required timing path class is empty"
++}
++set wns [get_property SLACK $worst_setup]
++set whs [get_property SLACK $worst_hold]
++set vdo_wns [get_property SLACK $vdo_setup]
++set vdo_whs [get_property SLACK $vdo_hold]
++set tns [expr {$wns >= 0.0 ? 0.0 : "NEGATIVE_SEE_REPORT"}]
++set ths [expr {$whs >= 0.0 ? 0.0 : "NEGATIVE_SEE_REPORT"}]
++
++set drc_errors 0
++set drc_critical_warnings 0
++set drc_warnings 0
++foreach violation [get_drc_violations -quiet] {
++  switch -- [get_property SEVERITY $violation] {
++    Error { incr drc_errors }
++    {Critical Warning} { incr drc_critical_warnings }
++    Warning { incr drc_warnings }
++  }
++}
++
++set bus_skew_violations [regexp -all {Slack \(VIOLATED\)} [read_text $bus_skew_report]]
++set cdc_critical_types [regexp -all -line {^CDC-[0-9]+[ \t]+Critical[ \t]+} [read_text $cdc_report]]
++set cdc_unknown_types [regexp -all -line {^CDC-[0-9]+[ \t]+Unknown[ \t]+} [read_text $cdc_report]]
++set reqp_1839_count [regexp -all {REQP-1839} [read_text $drc_report]]
++set route_errors 1
++regexp {# of nets with routing errors[^:]*:[ \t]*([0-9]+)} \
++  [read_text $route_report] -> route_errors
++
++set util_text [report_utilization -return_string]
++lassign [utilization_row $util_text "Slice LUTs*"] lut_used lut_available
++lassign [utilization_row $util_text "Slice Registers"] ff_used ff_available
++lassign [utilization_row $util_text "Block RAM Tile"] bram_used bram_available
++lassign [utilization_row $util_text "DSPs"] dsp_used dsp_available
++set lut_free_pct [expr {100.0 * ($lut_available - $lut_used) / $lut_available}]
++set ff_free_pct [expr {100.0 * ($ff_available - $ff_used) / $ff_available}]
++set bram_free_pct [expr {100.0 * ($bram_available - $bram_used) / $bram_available}]
++set dsp_free_pct [expr {100.0 * ($dsp_available - $dsp_used) / $dsp_available}]
++set ramb36_used [llength [get_cells -hier -filter {REF_NAME == RAMB36E1}]]
++set ramb18_used [llength [get_cells -hier -filter {REF_NAME == RAMB18E1}]]
++set bufg_used [llength [get_cells -hier -filter {REF_NAME =~ BUFG*}]]
++set mmcm_used [llength [get_cells -hier -filter {REF_NAME =~ MMCM*}]]
++
++set gate PASS
++if {$route_errors != 0 || $drc_errors != 0 || $drc_critical_warnings != 0 ||
++    $bus_skew_violations != 0 || $cdc_critical_types != 0 ||
++    $cdc_unknown_types != 0 ||
++    $wns < 0.0 || $whs <= 0.0 || $vdo_wns < 0.0 || $vdo_whs <= 0.0 ||
++    $lut_free_pct < 10.0 || $ff_free_pct < 10.0 || $bram_free_pct < 10.0} {
++  set gate FAIL
++}
++
++set bit_path [file join $evidence_root artifacts $bit_filename]
++set bit_generated NO
++if {$gate eq "PASS"} {
++  file mkdir [file dirname $bit_path]
++  write_bitstream -force $bit_path
++  set bit_generated YES
++}
++
++write_lines [file join $evidence_root PHASE3_BUILD_RESULT.txt] [list \
++  "PHASE=3" \
++  "SOURCE_GIT_COMMIT=$source_commit" \
++  "PROJECT_CREATION=PASS" \
++  "SYNTHESIS=PASS" \
++  "IMPLEMENTATION=PASS" \
++  "ROUTE=PASS" \
++  "ROUTE_ERRORS=$route_errors" \
++  "WNS=$wns" "TNS=$tns" "WHS=$whs" "THS=$ths" \
++  "VDO_WNS=$vdo_wns" "VDO_WHS=$vdo_whs" \
++  "DRC_ERRORS=$drc_errors" \
++  "DRC_CRITICAL_WARNINGS=$drc_critical_warnings" \
++  "DRC_WARNINGS=$drc_warnings" \
++  "BUS_SKEW_VIOLATIONS=$bus_skew_violations" \
++  "CDC_CRITICAL_TYPES=$cdc_critical_types" \
++  "CDC_UNKNOWN_TYPES=$cdc_unknown_types" \
++  "REQP_1839_COUNT=$reqp_1839_count" \
++  "LUT_USED=$lut_used" "LUT_AVAILABLE=$lut_available" \
++  "LUT_FREE_PERCENT=[format %.2f $lut_free_pct]" \
++  "FF_USED=$ff_used" "FF_AVAILABLE=$ff_available" \
++  "FF_FREE_PERCENT=[format %.2f $ff_free_pct]" \
++  "BRAM_TILE_USED=$bram_used" "BRAM_TILE_AVAILABLE=$bram_available" \
++  "BRAM_FREE_PERCENT=[format %.2f $bram_free_pct]" \
++  "RAMB36_USED=$ramb36_used" "RAMB18_USED=$ramb18_used" \
++  "BUFG_USED=$bufg_used" "MMCM_USED=$mmcm_used" \
++  "DSP_USED=$dsp_used" "DSP_AVAILABLE=$dsp_available" \
++  "DSP_FREE_PERCENT=[format %.2f $dsp_free_pct]" \
++  "BITSTREAM=$bit_path" \
++  "BITSTREAM_GENERATED=$bit_generated" \
++  "PHASE3_IMPLEMENTATION_GATE=$gate"]
++
++puts "PHASE3_IMPLEMENTATION_GATE=$gate"
++puts "WNS=$wns WHS=$whs VDO_WNS=$vdo_wns VDO_WHS=$vdo_whs"
++puts "LUT_FREE=[format %.2f $lut_free_pct]% FF_FREE=[format %.2f $ff_free_pct]% BRAM_FREE=[format %.2f $bram_free_pct]%"
++close_project
++if {$gate eq "FAIL"} { exit 1 }
+diff --git a/scripts/v41/r1e_compare_routed_dcp.tcl b/scripts/v41/r1e_compare_routed_dcp.tcl
+new file mode 100644
+index 0000000..9f10ced
+--- /dev/null
++++ b/scripts/v41/r1e_compare_routed_dcp.tcl
+@@ -0,0 +1,47 @@
++if {$argc != 3} {
++  puts stderr "usage: r1e_compare_routed_dcp.tcl R1_DCP R1E_DCP OUTPUT_DIR"
++  exit 2
++}
++set r1_dcp [file normalize [lindex $argv 0]]
++set r1e_dcp [file normalize [lindex $argv 1]]
++set out [file normalize [lindex $argv 2]]
++file mkdir $out
++
++proc write_lines {path lines} {
++  set fh [open $path w]; fconfigure $fh -translation lf
++  foreach line $lines {puts $fh $line}; close $fh
++}
++
++proc audit {label dcp out} {
++  open_checkpoint $dcp
++  report_utilization -file [file join $out ${label}_utilization.rpt]
++  report_utilization -hierarchical -hierarchical_depth 20 \
++    -file [file join $out ${label}_utilization_hierarchical.rpt]
++  report_power -file [file join $out ${label}_power.rpt]
++  report_io -file [file join $out ${label}_io.rpt]
++  report_clock_utilization -file [file join $out ${label}_clock_power_proxy.rpt]
++  set ports [get_ports {nvp_scl nvp_sda}]
++  report_timing -delay_type max -to $ports -max_paths 32 -nworst 16 \
++    -file [file join $out ${label}_nvp_output_paths.rpt]
++  report_timing -delay_type max -from $ports -max_paths 32 -nworst 16 \
++    -file [file join $out ${label}_nvp_input_paths.rpt]
++  set iobufs [get_cells -quiet -hier -filter \
++    {NAME =~ *NVP_SCL_IOBUF || NAME =~ *NVP_SDA_IOBUF}]
++  report_property -file [file join $out ${label}_nvp_iobuf_properties.txt] $iobufs
++  set sync_cells [get_cells -quiet -hier -filter \
++    {NAME =~ *scl_sync* || NAME =~ *sda_sync*}]
++  set lines [list "LABEL=$label" "DCP=$dcp"]
++  foreach cell [lsort $sync_cells] {
++    lappend lines "CELL=[get_property NAME $cell]|REF=[get_property REF_NAME $cell]|LOC=[get_property LOC $cell]|BEL=[get_property BEL $cell]"
++  }
++  write_lines [file join $out ${label}_synchronizer_placement.txt] $lines
++  close_design
++}
++
++audit R1 $r1_dcp $out
++audit R1E $r1e_dcp $out
++write_lines [file join $out R1E_IMPLEMENTATION_IMPACT_STATUS.txt] [list \
++  "R1E_OBSERVER_IMPLEMENTATION_DELTA=QUANTIFIED" \
++  "R1E_PLACEMENT_NEUTRAL=NOT_CLAIMED" \
++  "R1_DCP=$r1_dcp" "R1E_DCP=$r1e_dcp"]
++puts "R1E_OBSERVER_IMPLEMENTATION_DELTA=QUANTIFIED"
+diff --git a/scripts/v41/r1e_timing_model.py b/scripts/v41/r1e_timing_model.py
+new file mode 100644
+index 0000000..770b38b
+--- /dev/null
++++ b/scripts/v41/r1e_timing_model.py
+@@ -0,0 +1,106 @@
++#!/usr/bin/env python3
++"""Fail-closed source/timing model for the frozen R1e configuration."""
++
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import re
++from pathlib import Path
++
++CLK_HZ = 62_500_000
++I2C_HZ = 25_000
++DIVIDER = CLK_HZ // (I2C_HZ * 2)
++TICK_CYCLES = DIVIDER + 1
++AUTOINIT_TICK_ACTIONS = 31_043
++AUTOINIT_TICK_INTERVALS = AUTOINIT_TICK_ACTIONS - 1
++ENGINE_START_SAMPLE_EDGE = 93_750_322
++EXPECTED_ACTIVE = 132_584_734
++EXPECTED_50 = 113_182_679
++PROBE_TARGET = 10_000
++PROBE_TICKS = 23
++PROBE_GUARD_CYCLES = 62_500
++PROBE_STABLE_IDLE_CYCLES = TICK_CYCLES
++
++PROTECTED = {
++    "rtl/nvp/nvp6134c_autoinit.vhd":
++        "5dc0230cd569f03d68452055db6b10c5fcade751",
++    "rtl/nvp/nvp6134c_i2c_bringup.vhd":
++        "cfe33464d8e75c514462786593b278d90b4059a4",
++    "rtl/nvp/nvp6134c_diagnostics_pkg.vhd":
++        "7ddd60fc86da49cda1adcd7af7b772b337c95df6",
++}
++
++
++def git_blob_id(data: bytes) -> str:
++    header = f"blob {len(data)}\0".encode()
++    return hashlib.sha1(header + data).hexdigest()
++
++
++def require(condition: bool, message: str) -> None:
++    if not condition:
++        raise RuntimeError(message)
++
++
++def model(source: Path) -> dict[str, int | float | str]:
++    top = (source / "rtl/top/ahd_capture_top_xdma.sv").read_text()
++    bringup = (source / "rtl/nvp/nvp6134c_i2c_bringup.vhd").read_text()
++    probe = (source / "rtl/v41/nvp_i2c_address_probe.sv").read_text()
++    require(re.search(r"NVP_AUTOINIT_CLK_HZ\s*=\s*62500000", top) is not None,
++            "autoinit clock mismatch")
++    require(".I2C_HZ(25000)" in top, "active autoinit frequency mismatch")
++    require("constant DIVIDER : positive := CLK_HZ / (I2C_HZ * 2);" in bringup,
++            "protected divider formula mismatch")
++    for fragment in ("PROBE_TARGET_COUNT(10000)", "PROBE_ADDRESS_BYTE(8'h60)",
++                     "PROBE_POST_INIT_GUARD_CYCLES(62500)"):
++        require(fragment in top, f"missing frozen probe integration: {fragment}")
++    require("parameter integer PROBE_I2C_HZ = 25000" in probe,
++            "probe frequency default mismatch")
++
++    for relative, expected in PROTECTED.items():
++        actual = git_blob_id((source / relative).read_bytes())
++        require(actual == expected, f"protected blob mismatch: {relative} {actual}")
++
++    first_idle = 1 + ((ENGINE_START_SAMPLE_EDGE - 1 + TICK_CYCLES - 1)
++                      // TICK_CYCLES) * TICK_CYCLES
++    expected = first_idle + AUTOINIT_TICK_INTERVALS * TICK_CYCLES
++    require(DIVIDER == 1250 and TICK_CYCLES == 1251, "probe divider mismatch")
++    require(expected == EXPECTED_ACTIVE, "25-kHz lifecycle count mismatch")
++
++    probe_cycles = PROBE_TARGET * PROBE_TICKS * TICK_CYCLES
++    modeled_complete_cycles = (EXPECTED_ACTIVE + 1 + PROBE_GUARD_CYCLES +
++                               PROBE_STABLE_IDLE_CYCLES + probe_cycles)
++    modeled_seconds = modeled_complete_cycles / CLK_HZ
++    required_wait = max(10.0, modeled_seconds + 2.0)
++    return {
++        "STATUS": "PASS",
++        "CLK_HZ": CLK_HZ,
++        "AUTOINIT_I2C_HZ": I2C_HZ,
++        "DIVIDER": DIVIDER,
++        "TICK_CYCLES": TICK_CYCLES,
++        "EXPECTED_CNT_AT_INIT_DONE_ACTIVE": expected,
++        "EXPECTED_CNT_AT_INIT_DONE_50KHZ": EXPECTED_50,
++        "PROBE_TARGET_COUNT": PROBE_TARGET,
++        "PROBE_TICKS_PER_TRANSACTION": PROBE_TICKS,
++        "PROBE_CYCLES_PER_TRANSACTION": PROBE_TICKS * TICK_CYCLES,
++        "PROBE_TOTAL_CYCLES": probe_cycles,
++        "PROBE_TOTAL_SECONDS": probe_cycles / CLK_HZ,
++        "PROBE_GUARD_CYCLES": PROBE_GUARD_CYCLES,
++        "PROBE_STABLE_IDLE_CYCLES": PROBE_STABLE_IDLE_CYCLES,
++        "MODELED_PROBE_COMPLETE_CYCLES_FROM_CONFIGURATION": modeled_complete_cycles,
++        "MODELED_PROBE_COMPLETE_SECONDS_FROM_CONFIGURATION": modeled_seconds,
++        "ARM_A_REQUIRED_WAIT_SECONDS": required_wait,
++    }
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--source", required=True, type=Path)
++    args = parser.parse_args()
++    print(json.dumps(model(args.source), indent=2, sort_keys=True))
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/scripts/v41/read_nvp_r1e.py b/scripts/v41/read_nvp_r1e.py
+new file mode 100644
+index 0000000..fc15160
+--- /dev/null
++++ b/scripts/v41/read_nvp_r1e.py
+@@ -0,0 +1,205 @@
++#!/usr/bin/env python3
++"""Bounded read-only R1e/formal telemetry and ordered-NACK decoder."""
++
++from __future__ import annotations
++
++import argparse
++import json
++import math
++import os
++import struct
++import time
++from typing import Any
++
++PHASE_NAMES = {
++    0x01: "WRITE_ADDRESS_ACK",
++    0x02: "REGISTER_ADDRESS_ACK",
++    0x03: "DATA_ACK",
++    0x04: "READ_ADDRESS_ACK",
++}
++STATIC_LOCAL = tuple(range(0x8C, 0xB8, 4))
++STATIC_R1E = tuple(range(0x2014, 0x2098, 4))
++R1E_PAGE = tuple(range(0x2000, 0x2100, 4))
++LEGACY_DETAIL = tuple(range(0x10080, 0x100DC, 4))
++
++
++def read_word(fd: int, offset: int, os_module=os) -> int:
++    payload = os_module.pread(fd, 4, offset)
++    if len(payload) != 4:
++        raise RuntimeError(f"pread at 0x{offset:05X} returned {len(payload)} bytes")
++    return struct.unpack("<I", payload)[0]
++
++
++def read48(fd: int, low: int, high: int, os_module=os) -> int:
++    for _ in range(3):
++        high1 = read_word(fd, high, os_module) & 0xFFFF
++        lowv = read_word(fd, low, os_module)
++        high2 = read_word(fd, high, os_module) & 0xFFFF
++        if high1 == high2:
++            return (high1 << 32) | lowv
++    raise RuntimeError(f"incoherent 48-bit counter at 0x{low:05X}")
++
++
++def decode_detail(words: list[int]) -> dict[str, Any]:
++    if len(words) != 23:
++        raise RuntimeError("legacy detail vector must contain 23 words")
++    value = sum(word << (32 * index) for index, word in enumerate(words))
++    field = lambda hi, lo: (value >> lo) & ((1 << (hi - lo + 1)) - 1)
++    count = field(195, 192)
++    overflow = field(196, 196)
++    records = []
++    for index in range(8):
++        raw = field(224 + index * 64 + 63, 224 + index * 64)
++        records.append({
++            "index": index,
++            "raw": f"0x{raw:016X}",
++            "operation_index": raw & 0xFF,
++            "phase_code": (raw >> 8) & 0xFF,
++            "phase_name": PHASE_NAMES.get((raw >> 8) & 0xFF, "UNKNOWN"),
++            "register": (raw >> 16) & 0xFF,
++            "data": (raw >> 24) & 0xFF,
++            "physical_bank": (raw >> 32) & 0xFF,
++            "metadata_bank": (raw >> 40) & 0xFF,
++            "valid": (raw >> 48) & 1,
++            "physical_bank_valid": (raw >> 49) & 1,
++            "reserved": (raw >> 50) & 0x3FFF,
++        })
++    aggregate = field(143, 128)
++    consistent = (count == min(aggregate, 8) and
++                  overflow == int(aggregate > 8) and
++                  all(record["valid"] for record in records[:count]))
++    return {
++        "phase": field(7, 0), "operation_index": field(15, 8),
++        "table_length": field(31, 16), "first_error_valid": field(80, 80),
++        "first_error_code": field(95, 88),
++        "first_error_step": field(103, 96),
++        "first_error_metadata_bank": field(111, 104),
++        "first_error_register": field(119, 112),
++        "first_error_data": field(127, 120),
++        "nack_count": aggregate, "timeout_count": field(159, 144),
++        "i2c_state": field(167, 160), "original_ff": field(175, 168),
++        "restored_ff": field(183, 176),
++        "first_error_physical_bank": field(191, 184),
++        "log_count": count, "log_overflow": overflow,
++        "physical_bank_valid": field(197, 197),
++        "current_metadata_bank": field(207, 200),
++        "current_physical_bank": field(215, 208),
++        "log_capacity": field(223, 216),
++        "header_consistency": "PASS" if consistent else "FAIL",
++        "control_flow_replay_scope":
++            "PARTIAL_FIRST_8_RECORDS_ONLY" if overflow else "COMPLETE_LOG_AVAILABLE",
++        "records": records[:count],
++    }
++
++
++def wilson95(successes: int, total: int) -> tuple[float, float]:
++    if total <= 0:
++        raise RuntimeError("Wilson interval requires positive total")
++    z = 1.959963984540054
++    p = successes / total
++    denominator = 1 + z * z / total
++    centre = (p + z * z / (2 * total)) / denominator
++    half = z * math.sqrt(p * (1 - p) / total + z * z / (4 * total * total)) / denominator
++    return centre - half, centre + half
++
++
++def snapshot(fd: int, os_module=os) -> dict[str, Any]:
++    local = {f"0x{off:05X}": read_word(fd, off, os_module)
++             for off in range(0, 0xE4, 4)}
++    page = {f"0x{off:05X}": read_word(fd, off, os_module) for off in R1E_PAGE}
++    legacy_words = [read_word(fd, off, os_module) for off in LEGACY_DETAIL]
++    legacy_log_raw = [read_word(fd, off, os_module)
++                      for off in range(0x10098, 0x100DC, 4)]
++    detail = decode_detail(legacy_words)
++    probe_count = page["0x02068"]
++    probe_nack = page["0x02070"]
++    probe_stats = None
++    if probe_count:
++        low, high = wilson95(probe_nack, probe_count)
++        probe_stats = {
++            "rate": probe_nack / probe_count,
++            "rate_ppm": 1_000_000 * probe_nack / probe_count,
++            "wilson95_lower": low, "wilson95_upper": high,
++            "rule_of_three_upper_approx": 3 / probe_count if probe_nack == 0 else None,
++        }
++    actual = read48(fd, 0x2014, 0x2018, os_module)
++    expected = (page["0x02058"] << 32) | page["0x02054"]
++    signed = actual - expected if page["0x02000"] == 0x314B4C43 else None
++    lifecycle = None if signed is None else {
++        "actual": actual, "expected": expected, "signed_error_cycles": signed,
++        "shortening_cycles": max(-signed, 0), "extension_cycles": max(signed, 0),
++        "shortening_ticks_exact": max(-signed, 0) / 1251,
++        "shortening_ticks_nearest": round(max(-signed, 0) / 1251),
++        "shortening_residual_cycles":
++            max(-signed, 0) - round(max(-signed, 0) / 1251) * 1251,
++    }
++    return {
++        "local": local, "r1e_page": page,
++        "legacy_nack_raw_17_words": [f"0x{x:08X}" for x in legacy_log_raw],
++        "ordered_nack": detail, "lifecycle": lifecycle,
++        "probe_statistics": probe_stats,
++        "coherent_freerun": read48(fd, 0x200C, 0x2010, os_module),
++    }
++
++
++def static_projection(item: dict[str, Any]) -> dict[str, Any]:
++    return {
++        "local": {f"0x{x:05X}": item["local"][f"0x{x:05X}"] for x in STATIC_LOCAL},
++        "r1e": {f"0x{x:05X}": item["r1e_page"][f"0x{x:05X}"] for x in STATIC_R1E},
++        "legacy": item["legacy_nack_raw_17_words"],
++    }
++
++
++def validate(item: dict[str, Any], expected_image: str) -> None:
++    page = item["r1e_page"]
++    if item["ordered_nack"]["header_consistency"] != "PASS":
++        raise RuntimeError("ordered-NACK header/record consistency failed")
++    if expected_image == "formal":
++        if any(page.values()):
++            raise RuntimeError("formal image did not return zero across 0x2000..0x20FF")
++    elif expected_image == "r1e":
++        required = {
++            "0x02000": 0x314B4C43, "0x02004": 1,
++            "0x02040": 0x31453152, "0x02044": 1,
++            "0x0204C": 25000, "0x02050": 1251,
++            "0x02054": 132584734, "0x02064": 10000,
++            "0x02068": 10000, "0x02074": 0,
++        }
++        for key, value in required.items():
++            if page[key] != value:
++                raise RuntimeError(f"R1e invariant {key} expected {value} got {page[key]}")
++        status = page["0x02078"]
++        if not (status & 1) or (status & 2) or (status & 4):
++            raise RuntimeError(f"invalid R1e probe terminal status 0x{status:08X}")
++        if page["0x0206C"] + page["0x02070"] != page["0x02068"]:
++            raise RuntimeError("probe ACK+NACK invariant failed")
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--node", required=True, help="exact already-proven XDMA user node")
++    parser.add_argument("--expect", choices=("r1e", "formal", "none"), default="none")
++    parser.add_argument("--twice", action="store_true")
++    parser.add_argument("--delay", type=float, default=1.0)
++    args = parser.parse_args()
++    fd = os.open(args.node, os.O_RDONLY | os.O_CLOEXEC)
++    try:
++        first = snapshot(fd)
++        validate(first, args.expect)
++        second = None
++        if args.twice:
++            time.sleep(max(args.delay, 0.0))
++            second = snapshot(fd)
++            validate(second, args.expect)
++            if static_projection(first) != static_projection(second):
++                raise RuntimeError("T0/T1 static telemetry mismatch")
++    finally:
++        os.close(fd)
++    print(json.dumps({"T0": first, "T1": second}, indent=2, sort_keys=True))
++    print("READ_ONLY=YES")
++    print(f"STATIC_SNAPSHOTS_MATCH={'YES' if args.twice else 'NOT_REQUESTED'}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/scripts/v41/verify_r1e_static.py b/scripts/v41/verify_r1e_static.py
+new file mode 100644
+index 0000000..6c41c2a
+--- /dev/null
++++ b/scripts/v41/verify_r1e_static.py
+@@ -0,0 +1,108 @@
++#!/usr/bin/env python3
++"""Fail-closed static gate for the R1e source scope and isolation contract."""
++
++from __future__ import annotations
++
++import argparse
++import hashlib
++import re
++import subprocess
++from pathlib import Path
++
++BASE = "f007dc172d43d30b02729755e60382f8ce3dbff4"
++PROTECTED = {
++    "rtl/nvp/nvp6134c_autoinit.vhd": "5dc0230cd569f03d68452055db6b10c5fcade751",
++    "rtl/nvp/nvp6134c_i2c_bringup.vhd": "cfe33464d8e75c514462786593b278d90b4059a4",
++    "rtl/nvp/nvp6134c_diagnostics_pkg.vhd": "7ddd60fc86da49cda1adcd7af7b772b337c95df6",
++    "xdc/boards/current/nvp_control.xdc": "2e4a6f56d5dfa227a968492fe4476d25721f09f9",
++}
++LIFECYCLE = {
++    "rtl/v41/axi_clock_lifecycle_monitor.sv": "c8c8145b12494cbdd54de7760f0558e6ab5fef11",
++    "rtl/v41/axi_clock_measurement_regs.sv": "64f4a3df745bcde00f9facac3030637a32a19485",
++}
++ALLOWED = {
++    "rtl/top/ahd_capture_top_xdma.sv", "rtl/v41/control_status_regs.sv",
++    *LIFECYCLE, "rtl/v41/r1e_measurement_regs.sv",
++    "rtl/v41/nvp_i2c_address_probe.sv", "scripts/v41/r1e_build.tcl",
++    "scripts/v41/r1e_compare_routed_dcp.tcl", "scripts/v41/r1e_timing_model.py",
++    "scripts/v41/read_nvp_r1e.py", "scripts/v41/verify_r1e_static.py",
++    "tb/v41/tb_control_status_regs.sv", "tb/v41/tb_r1e_measurement_regs.sv",
++    "tb/v41/tb_r1e_probe_small.sv", "tb/v41/tb_r1e_probe_10k.sv",
++    "tb/v41/tb_r1e_legacy_nack_window.sv",
++    "tb/v41/tb_r1e_pre_done_equivalence.sv",
++    "tests/python/test_nvp_r1e_tools.py",
++}
++
++
++def run(repo: Path, *args: str) -> str:
++    result = subprocess.run(["git", "-C", str(repo), *args], text=True,
++                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++    if result.returncode:
++        raise RuntimeError(result.stderr)
++    return result.stdout.rstrip()
++
++
++def blob(path: Path) -> str:
++    data = path.read_bytes()
++    return hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest()
++
++
++def require(value: bool, message: str) -> None:
++    if not value:
++        raise RuntimeError(message)
++
++
++def main() -> int:
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--repo", required=True, type=Path)
++    args = parser.parse_args()
++    repo = args.repo.resolve()
++    require(run(repo, "rev-parse", f"{BASE}^{{tree}}") ==
++            "b8f87966c8021396acb6341bd2d7d86a10fd7f13", "base tree mismatch")
++    changed = set(run(repo, "status", "--porcelain", "--untracked-files=all").splitlines())
++    changed_paths = {line[3:].replace("\\", "/") for line in changed if line}
++    require(changed_paths <= ALLOWED,
++            f"unauthorized source paths: {sorted(changed_paths - ALLOWED)}")
++    for relative, expected in PROTECTED.items():
++        require(blob(repo / relative) == expected, f"protected blob changed: {relative}")
++    for relative, expected in LIFECYCLE.items():
++        require(blob(repo / relative) == expected, f"R1 lifecycle blob mismatch: {relative}")
++
++    top = (repo / "rtl/top/ahd_capture_top_xdma.sv").read_text()
++    probe = (repo / "rtl/v41/nvp_i2c_address_probe.sv").read_text()
++    regs = (repo / "rtl/v41/control_status_regs.sv").read_text()
++    pio = (repo / "rtl/pio/pio_bar_target.sv").read_text()
++    require(".I2C_HZ(25000)" in top, "autoinit I2C_HZ changed")
++    require("nvp_init_scl_release & probe_scl_release" in top and
++            "nvp_init_sda_release & probe_sda_release" in top,
++            "open-drain AND integration missing")
++    require(".PROBE_TARGET_COUNT(10000)" in top and
++            ".PROBE_ADDRESS_BYTE(8'h60)" in top, "frozen probe constants mismatch")
++    require("input  logic        init_done" in probe and
++            "if (state == ST_WAIT_INIT)" in probe, "probe terminal gate missing")
++    require("PROBE_ADDRESS_BYTE[bit_index]" in probe,
++            "probe does not source the fixed address byte directly")
++    require("measurement_read_select = !host_req_write" in regs,
++            "measurement page is not read-only local selection")
++    require("host_req_addr[16:8] == 9'h020" in regs, "measurement page mismatch")
++    for index, off in enumerate(range(0x98, 0xDC, 4)):
++        lo = 192 + index * 32
++        hi = lo + 31
++        fragment = f"8'h{off:02X}: reg_read = diag_nvp_autoinit_detail[{hi}:{lo}]"
++        require(fragment in pio, f"legacy ordered-log mapping missing: {fragment}")
++    require(".diag_nvp_autoinit_detail(nvp_diag_axi[737:2])" in top,
++            "full 736-bit legacy vector forwarding missing")
++    require(".nvp_detail(nvp_diag_axi[193:2])" in top,
++            "existing local 192-bit diagnostic contract changed")
++    xci = "ip/v41/xdma_v41_m1.xci"
++    require(blob(repo / xci) == run(repo, "rev-parse", f"{BASE}:{xci}"),
++            "XDMA XCI changed")
++    print("R1E_STATIC_GATE=PASS")
++    print("PROTECTED_NVP_BLOBS_UNCHANGED=YES")
++    print("NACK_LOG_EXISTING_LEGACY_WINDOW=PASS")
++    print("PROBE_TO_AUTOINIT_FUNCTIONAL_FANOUT=0_BY_SOURCE_BOUNDARY")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tb/v41/tb_control_status_regs.sv b/tb/v41/tb_control_status_regs.sv
+index e74ec04..bacea96 100644
+--- a/tb/v41/tb_control_status_regs.sv
++++ b/tb/v41/tb_control_status_regs.sv
+@@ -41,6 +41,7 @@ module tb_control_status_regs;
+     .app_req_valid, .app_req_ready, .app_req_write, .app_req_addr,
+     .app_req_wdata, .app_req_be, .app_rsp_valid, .app_rsp_ready,
+     .app_rsp_rdata,
++    .measurement_read_data(32'hC001D00D),
+     .capture_request_busy(1'b1), .capture_busy(1'b1),
+     .capture_armed(1'b0), .capture_done(1'b1),
+     .capture_aborted(1'b0), .capture_generation(32'h10101010),
+@@ -197,6 +198,27 @@ module tb_control_status_regs;
+     expect_read(17'h000E0, 32'h000000A7);
+     expect_read(17'h000FC, 32'h00000000);
+     expect_read(17'h00002, 32'h00000000);
++    expect_read(17'h02000, 32'hC001D00D);
++    expect_read(17'h02002, 32'h00000000);
++
++    // R1e measurement reads are local, but writes retain the former forwarded
++    // reserved-page behavior and cannot alter an observer.
++    @(negedge clk);
++    host_req_addr = 17'h02040;
++    host_req_wdata = 32'hFFFFFFFF;
++    host_req_be = 4'hF;
++    host_req_write = 1'b1;
++    host_req_valid = 1'b1;
++    app_req_ready = 1'b1;
++    @(posedge clk);
++    if (!app_req_valid || !app_req_write || app_req_addr != 17'h02040 ||
++        app_req_wdata != 32'hFFFFFFFF || app_req_be != 4'hF)
++      fail("measurement-page write was not forwarded unchanged");
++    @(negedge clk);
++    host_req_valid = 1'b0;
++    host_req_write = 1'b0;
++    app_req_ready = 1'b0;
++    expect_read(17'h02000, 32'hC001D00D);
+ 
+     for (iteration = 0; iteration < 1000; iteration = iteration + 1) begin
+       expect_read(17'h00000, 32'hA40A0C07);
+diff --git a/tb/v41/tb_r1e_legacy_nack_window.sv b/tb/v41/tb_r1e_legacy_nack_window.sv
+new file mode 100644
+index 0000000..f7e6c0e
+--- /dev/null
++++ b/tb/v41/tb_r1e_legacy_nack_window.sv
+@@ -0,0 +1,80 @@
++`timescale 1ns/1ps
++
++module tb_r1e_legacy_nack_window;
++  logic clk=0, reset=1;
++  always #4 clk=~clk;
++  logic req_valid=0, req_write=0, rsp_ready=0;
++  logic [16:0] req_addr=0;
++  logic [31:0] req_wdata=0;
++  logic [3:0] req_be=0;
++  wire req_ready, rsp_valid;
++  wire [31:0] rsp_data;
++  logic [735:0] diag_detail;
++  integer i;
++
++  g0p8c2_bar_target #(.SLOT_COUNT(2)) dut (
++    .producer_clk(clk), .producer_reset(reset), .producer_slot_index(4'b0),
++    .producer_word_address(9'b0), .producer_write_data(64'b0),
++    .producer_write_enable(1'b0), .producer_commit(1'b0),
++    .producer_generation(24'b0), .producer_free_mask(),
++    .pcie_user_clk(clk), .pcie_user_reset(reset),
++    .host_req_valid(req_valid), .host_req_ready(req_ready),
++    .host_req_write(req_write), .host_req_addr(req_addr),
++    .host_req_wdata(req_wdata), .host_req_be(req_be),
++    .host_rsp_valid(rsp_valid), .host_rsp_ready(rsp_ready),
++    .host_rsp_rdata(rsp_data),
++    .capture_submit_pcie(), .capture_arm_pcie(), .capture_abort_pcie(),
++    .capture_clear_errors_pcie(), .capture_single_line_pcie(),
++    .capture_window_16_lines_pcie(), .capture_target_line_pcie(),
++    .capture_line_count_pcie(), .capture_request_busy(1'b0),
++    .capture_busy(1'b0), .capture_armed(1'b0), .capture_done(1'b0),
++    .capture_aborted(1'b0), .telemetry_frame_seq(32'b0),
++    .telemetry_first_line(32'b0), .telemetry_line_count(32'b0),
++    .telemetry_generation(32'b0), .telemetry_bad_marker(32'b0),
++    .telemetry_bad_length(32'b0), .telemetry_overflow(32'b0),
++    .telemetry_arm_rejected(32'b0), .diag_last_memwr_addr(17'b0),
++    .diag_last_memwr_raw_data(32'b0),
++    .diag_last_memwr_logical_data(32'b0),
++    .diag_capture_submit_count(32'b0), .diag_mailbox_request_count(32'b0),
++    .diag_mailbox_ack_count(32'b0), .diag_vclk_edge_count(32'b0),
++    .diag_nvp_autoinit_done(1'b1), .diag_nvp_autoinit_error(1'b1),
++    .diag_nvp_autoinit_detail(diag_detail),
++    .diag_active_sav_candidate_count(32'b0), .diag_slot_commit_count(32'b0)
++  );
++
++  task automatic read_check(input [16:0] address, input [31:0] expected);
++    begin
++      @(negedge clk); req_addr=address; req_write=0; req_valid=1;
++      do @(posedge clk); while(!req_ready);
++      @(negedge clk); req_valid=0;
++      while(!rsp_valid) @(negedge clk);
++      if(rsp_data!==expected)
++        $fatal(1,"read %05h expected=%08h got=%08h",address,expected,rsp_data);
++      rsp_ready=1; @(posedge clk); @(negedge clk); rsp_ready=0;
++    end
++  endtask
++
++  task automatic write_word(input [16:0] address);
++    begin
++      @(negedge clk); req_addr=address; req_write=1;
++      req_wdata=32'hdeadbeef; req_be=4'hf; req_valid=1;
++      do @(posedge clk); while(!req_ready);
++      @(negedge clk); req_valid=0; req_write=0; req_wdata=0; req_be=0;
++    end
++  endtask
++
++  initial begin
++    diag_detail='0;
++    for(i=0;i<23;i=i+1) diag_detail[i*32 +: 32]=32'ha5000000+i;
++    repeat(4) @(posedge clk); @(negedge clk); reset=0;
++    for(i=0;i<17;i=i+1)
++      read_check(17'h10098+i*4,diag_detail[192+i*32 +: 32]);
++    for(i=0;i<17;i=i+1) write_word(17'h10098+i*4);
++    for(i=0;i<17;i=i+1)
++      read_check(17'h10098+i*4,diag_detail[192+i*32 +: 32]);
++    read_check(17'h10099,32'b0);
++    $display("NACK_LOG_ADDRESS_MAP_AUDIT=PASS_EXACT_SOURCE_AND_SIMULATION");
++    $display("LEGACY_NACK_WORDS_READ=17 HEADER=0x10098 DATA=0x1009C..0x100D8 READ_ONLY=YES");
++    $finish;
++  end
++endmodule
+diff --git a/tb/v41/tb_r1e_measurement_regs.sv b/tb/v41/tb_r1e_measurement_regs.sv
+new file mode 100644
+index 0000000..d1cde67
+--- /dev/null
++++ b/tb/v41/tb_r1e_measurement_regs.sv
+@@ -0,0 +1,69 @@
++`timescale 1ns/1ps
++
++module tb_r1e_measurement_regs;
++  logic [7:0] offset;
++  logic [31:0] read_data;
++
++  v41_r1e_measurement_regs dut (
++    .offset,
++    .freerun_count(48'h1234_89abcdef),
++    .cnt_at_init_done(48'h5678_01234567),
++    .cnt_at_first_user_lnk_up(48'h1111_22223333),
++    .cnt_at_first_axi_aresetn_high(48'h4444_55556666),
++    .cnt_at_first_axi_aresetn_low_after_high(48'h7777_88889999),
++    .user_lnk_up_transition_count(32'h10),
++    .axi_aresetn_transition_count(32'h20),
++    .event_flags(5'b10101),
++    .probe_count(32'd10000), .probe_ack_count(32'd9997),
++    .probe_nack_count(32'd3), .probe_timeout_count(32'd0),
++    .probe_status(32'h00000339),
++    .probe_first_nack_index(32'd4), .probe_last_nack_index(32'd9000),
++    .probe_max_consecutive_nacks(32'd2),
++    .probe_start_freerun(48'haaaa_11112222),
++    .probe_done_freerun(48'hbbbb_33334444), .read_data
++  );
++
++  task automatic check(input [7:0] off, input [31:0] expected);
++    begin
++      offset = off; #1;
++      if (read_data !== expected) begin
++        $display("FAIL offset=%02h expected=%08h observed=%08h",
++                 off, expected, read_data);
++        $fatal(1);
++      end
++    end
++  endtask
++
++  initial begin
++    check(8'h00, 32'h314b4c43);
++    check(8'h04, 32'd1);
++    check(8'h08, 32'h00000015);
++    check(8'h14, 32'h01234567);
++    check(8'h18, 32'h00005678);
++    check(8'h40, 32'h31453152);
++    check(8'h44, 32'd1);
++    check(8'h48, 32'h0000001f);
++    check(8'h4c, 32'd25000);
++    check(8'h50, 32'd1251);
++    check(8'h54, 32'd132584734);
++    check(8'h58, 32'd0);
++    check(8'h5c, 32'd113182679);
++    check(8'h60, 32'd0);
++    check(8'h64, 32'd10000);
++    check(8'h68, 32'd10000);
++    check(8'h6c, 32'd9997);
++    check(8'h70, 32'd3);
++    check(8'h74, 32'd0);
++    check(8'h78, 32'h00000339);
++    check(8'h7c, 32'd4);
++    check(8'h80, 32'd9000);
++    check(8'h84, 32'd2);
++    check(8'h88, 32'h11112222);
++    check(8'h8c, 32'h0000aaaa);
++    check(8'h90, 32'h33334444);
++    check(8'h94, 32'h0000bbbb);
++    check(8'h98, 32'b0);
++    $display("R1E_MEASUREMENT_REGISTER_TEST=PASS");
++    $finish;
++  end
++endmodule
+diff --git a/tb/v41/tb_r1e_pre_done_equivalence.sv b/tb/v41/tb_r1e_pre_done_equivalence.sv
+new file mode 100644
+index 0000000..8a1bdf3
+--- /dev/null
++++ b/tb/v41/tb_r1e_pre_done_equivalence.sv
+@@ -0,0 +1,86 @@
++`timescale 1ns/1ps
++
++module tb_r1e_pre_done_equivalence;
++  logic clk=0, rst=1;
++  always #500 clk=~clk;
++  logic [47:0] freerun=0;
++  always_ff @(posedge clk) freerun<=freerun+1'b1;
++
++  wire r_scl_oen,r_sda_oen,r_nvp_rst,r_vdd1,r_vdd3,r_busy,r_done,r_error;
++  wire [735:0] r_detail;
++  wire c_scl_oen,c_sda_oen,c_nvp_rst,c_vdd1,c_vdd3,c_busy,c_done,c_error;
++  wire [735:0] c_detail;
++  wire probe_scl,probe_sda;
++  wire effective_scl=c_scl_oen & probe_scl;
++  wire effective_sda=c_sda_oen & probe_sda;
++
++  function automatic logic sda_model(input logic release_request,
++                                     input logic [7:0] state_code);
++    begin
++      case(state_code)
++        8'd7,8'd11,8'd15,8'd23: sda_model=1'b0;
++        default: sda_model=release_request;
++      endcase
++    end
++  endfunction
++  wire r_scl_i=r_scl_oen;
++  wire c_scl_i=effective_scl;
++  wire r_sda_i=sda_model(r_sda_oen,r_detail[167:160]);
++  wire c_sda_i=sda_model(effective_sda,c_detail[167:160]);
++
++  v40a_nvp_autoinit #(.CLK_HZ(1_000_000),.I2C_HZ(25_000)) reference (
++    .clk,.rst,.scl_i(r_scl_i),.sda_i(r_sda_i),.scl_oen(r_scl_oen),
++    .sda_oen(r_sda_oen),.nvp_rst(r_nvp_rst),.nvp_en_vdd1x(r_vdd1),
++    .nvp_en_vdd3x(r_vdd3),.init_busy(r_busy),.init_done(r_done),
++    .init_error(r_error),.diag_detail(r_detail)
++  );
++  v40a_nvp_autoinit #(.CLK_HZ(1_000_000),.I2C_HZ(25_000)) candidate_core (
++    .clk,.rst,.scl_i(c_scl_i),.sda_i(c_sda_i),.scl_oen(c_scl_oen),
++    .sda_oen(c_sda_oen),.nvp_rst(c_nvp_rst),.nvp_en_vdd1x(c_vdd1),
++    .nvp_en_vdd3x(c_vdd3),.init_busy(c_busy),.init_done(c_done),
++    .init_error(c_error),.diag_detail(c_detail)
++  );
++  nvp_i2c_address_probe #(
++    .CLK_HZ(1_000_000),.PROBE_I2C_HZ(25_000),.PROBE_TARGET_COUNT(1),
++    .PROBE_POST_INIT_GUARD_CYCLES(100)
++  ) candidate_probe (
++    .clk,.init_done(c_done),.init_busy(c_busy),.nvp_rst(c_nvp_rst),
++    .init_scl_release(c_scl_oen),.init_sda_release(c_sda_oen),
++    .raw_scl_i(c_scl_i),.raw_sda_i(c_sda_i),.freerun_count(freerun),
++    .probe_scl_release(probe_scl),.probe_sda_release(probe_sda),
++    .probe_count(),.probe_ack_count(),.probe_nack_count(),
++    .probe_timeout_count(),.probe_status(),.probe_first_nack_index(),
++    .probe_last_nack_index(),.probe_max_consecutive_nacks(),
++    .probe_start_freerun(),.probe_done_freerun()
++  );
++
++  integer checked_cycles=0;
++  always @(posedge clk) begin
++    #1;
++    if ({r_nvp_rst,r_vdd1,r_vdd3,r_scl_oen,r_sda_oen,r_busy,r_done,r_error}
++        !== {c_nvp_rst,c_vdd1,c_vdd3,c_scl_oen,c_sda_oen,c_busy,c_done,c_error})
++      $fatal(1,"candidate/reference control mismatch at cycle %0d",freerun);
++    if (r_detail !== c_detail)
++      $fatal(1,"candidate/reference diag_detail mismatch at cycle %0d",freerun);
++    if (!r_done) begin
++      checked_cycles=checked_cycles+1;
++      if(!probe_scl || !probe_sda)
++        $fatal(1,"probe drive before init_done at cycle %0d",freerun);
++      if(effective_scl!==c_scl_oen || effective_sda!==c_sda_oen)
++        $fatal(1,"inactive open-drain equivalence mismatch at cycle %0d",freerun);
++    end else begin
++      $display("PRE_INIT_DONE_CYCLE_EQUIVALENCE=PASS CYCLES=%0d",checked_cycles);
++      $display("AUTOINIT_TRANSACTION_STREAM_BYTE_IDENTICAL=YES");
++      $display("PROBE_ACTIVE_BEFORE_INIT_DONE=0 PROBE_BUS_DRIVE_BEFORE_INIT_DONE=0");
++      $finish;
++    end
++  end
++
++  initial begin
++    repeat(10) @(posedge clk); @(negedge clk); rst=0;
++  end
++  initial begin
++    repeat(3_000_000) @(posedge clk);
++    $fatal(1,"equivalence timeout");
++  end
++endmodule
+diff --git a/tb/v41/tb_r1e_probe_10k.sv b/tb/v41/tb_r1e_probe_10k.sv
+new file mode 100644
+index 0000000..27c6440
+--- /dev/null
++++ b/tb/v41/tb_r1e_probe_10k.sv
+@@ -0,0 +1,51 @@
++`timescale 1ns/1ps
++
++module tb_r1e_probe_10k;
++  logic clk=0, init_done=0, init_busy=0, nvp_rst=1;
++  logic [47:0] freerun=0;
++  always #1 clk=~clk;
++  always_ff @(posedge clk) freerun<=freerun+1'b1;
++  wire scl_release, sda_release;
++  wire [31:0] count, ack, nack, timeout, status, first_nack, last_nack, max_run;
++  wire [47:0] start_time, done_time;
++
++  nvp_i2c_address_probe #(
++    .CLK_HZ(100), .PROBE_I2C_HZ(10), .PROBE_TARGET_COUNT(10000),
++    .PROBE_POST_INIT_GUARD_CYCLES(2), .SCL_TIMEOUT_CYCLES(20),
++    .BUS_IDLE_TIMEOUT_CYCLES(20)
++  ) dut (
++    .clk, .init_done, .init_busy, .nvp_rst,
++    .init_scl_release(1'b1), .init_sda_release(1'b1),
++    .raw_scl_i(scl_release),
++    .raw_sda_i(sda_release && !(dut.state==4'd7 || dut.state==4'd8)),
++    .freerun_count(freerun), .probe_scl_release(scl_release),
++    .probe_sda_release(sda_release), .probe_count(count),
++    .probe_ack_count(ack), .probe_nack_count(nack),
++    .probe_timeout_count(timeout), .probe_status(status),
++    .probe_first_nack_index(first_nack), .probe_last_nack_index(last_nack),
++    .probe_max_consecutive_nacks(max_run), .probe_start_freerun(start_time),
++    .probe_done_freerun(done_time)
++  );
++
++  integer stop_count=0;
++  always @(posedge sda_release) if (scl_release && dut.state==4'd2)
++    stop_count=stop_count+1;
++
++  initial begin
++    repeat(8) @(posedge clk); init_done=1;
++    wait(status[0]); repeat(3) @(posedge clk);
++    if (status[1] || count!=10000 || ack!=10000 || nack!=0 || timeout!=0 ||
++        first_nack!=32'hffffffff || last_nack!=32'hffffffff || max_run!=0 ||
++        !scl_release || !sda_release || done_time<=start_time)
++      $fatal(1,"10k invariant mismatch status=%08h count=%0d ack=%0d nack=%0d timeout=%0d",
++             status,count,ack,nack,timeout);
++    $display("R1E_PROBE_10K_TEST=PASS COUNT=%0d ACK=%0d NACK=%0d TIMEOUT=%0d",count,ack,nack,timeout);
++    $display("TRANSACTIONS=10000 ADDRESS_BYTE=60 REGISTER_BYTES=0 DATA_BYTES=0 READ_ADDRESS_BYTES=0 REPEATED_STARTS=0");
++    $finish;
++  end
++
++  initial begin
++    repeat(2000000) @(posedge clk);
++    $fatal(1,"10k test timeout");
++  end
++endmodule
+diff --git a/tb/v41/tb_r1e_probe_small.sv b/tb/v41/tb_r1e_probe_small.sv
+new file mode 100644
+index 0000000..e24469c
+--- /dev/null
++++ b/tb/v41/tb_r1e_probe_small.sv
+@@ -0,0 +1,136 @@
++`timescale 1ns/1ps
++
++module tb_r1e_probe_small;
++  logic clk = 1'b0;
++  always #5 clk = ~clk;
++  logic [47:0] freerun = 48'b0;
++  always_ff @(posedge clk) freerun <= freerun + 1'b1;
++
++  logic p_init_done=0, p_init_busy=1, p_rst=0, p_init_scl=0, p_init_sda=1;
++  wire p_scl_release, p_sda_release;
++  wire [31:0] p_count, p_ack, p_nack, p_timeout, p_status;
++  wire [31:0] p_first, p_last, p_max;
++  wire [47:0] p_start, p_done_time;
++  wire pattern_nack = p_count==2 || p_count==3 || p_count==4 || p_count==9;
++  wire ack_drive_low = (p_dut.state == 4'd7 || p_dut.state == 4'd8) &&
++                       !pattern_nack;
++  wire p_scl_i = p_scl_release;
++  wire p_sda_i = p_sda_release && !ack_drive_low;
++  wire effective_scl = p_init_scl && p_scl_release;
++  wire effective_sda = p_init_sda && p_sda_release;
++
++  nvp_i2c_address_probe #(
++    .CLK_HZ(100), .PROBE_I2C_HZ(10), .PROBE_TARGET_COUNT(12),
++    .PROBE_POST_INIT_GUARD_CYCLES(4), .SCL_TIMEOUT_CYCLES(10),
++    .BUS_IDLE_TIMEOUT_CYCLES(20)
++  ) p_dut (
++    .clk, .init_done(p_init_done), .init_busy(p_init_busy), .nvp_rst(p_rst),
++    .init_scl_release(p_init_scl), .init_sda_release(p_init_sda),
++    .raw_scl_i(p_scl_i), .raw_sda_i(p_sda_i), .freerun_count(freerun),
++    .probe_scl_release(p_scl_release), .probe_sda_release(p_sda_release),
++    .probe_count(p_count), .probe_ack_count(p_ack),
++    .probe_nack_count(p_nack), .probe_timeout_count(p_timeout),
++    .probe_status(p_status), .probe_first_nack_index(p_first),
++    .probe_last_nack_index(p_last), .probe_max_consecutive_nacks(p_max),
++    .probe_start_freerun(p_start), .probe_done_freerun(p_done_time)
++  );
++
++  logic b_init_done=0, b_init_busy=0, b_rst=1;
++  wire b_scl_release, b_sda_release;
++  wire [31:0] b_count, b_ack, b_nack, b_timeout, b_status;
++  nvp_i2c_address_probe #(
++    .CLK_HZ(100), .PROBE_I2C_HZ(10), .PROBE_TARGET_COUNT(1),
++    .PROBE_POST_INIT_GUARD_CYCLES(2), .SCL_TIMEOUT_CYCLES(20),
++    .BUS_IDLE_TIMEOUT_CYCLES(8)
++  ) b_dut (
++    .clk, .init_done(b_init_done), .init_busy(b_init_busy), .nvp_rst(b_rst),
++    .init_scl_release(1'b1), .init_sda_release(1'b1),
++    .raw_scl_i(1'b1), .raw_sda_i(1'b0), .freerun_count(freerun),
++    .probe_scl_release(b_scl_release), .probe_sda_release(b_sda_release),
++    .probe_count(b_count), .probe_ack_count(b_ack),
++    .probe_nack_count(b_nack), .probe_timeout_count(b_timeout),
++    .probe_status(b_status), .probe_first_nack_index(),
++    .probe_last_nack_index(), .probe_max_consecutive_nacks(),
++    .probe_start_freerun(), .probe_done_freerun()
++  );
++
++  logic s_init_done=0, s_init_busy=0, s_rst=1, s_force_low=0;
++  wire s_scl_release, s_sda_release;
++  wire [31:0] s_count, s_ack, s_nack, s_timeout, s_status;
++  wire s_scl_i = s_scl_release && !s_force_low;
++  nvp_i2c_address_probe #(
++    .CLK_HZ(100), .PROBE_I2C_HZ(10), .PROBE_TARGET_COUNT(1),
++    .PROBE_POST_INIT_GUARD_CYCLES(2), .SCL_TIMEOUT_CYCLES(4),
++    .BUS_IDLE_TIMEOUT_CYCLES(100)
++  ) s_dut (
++    .clk, .init_done(s_init_done), .init_busy(s_init_busy), .nvp_rst(s_rst),
++    .init_scl_release(1'b1), .init_sda_release(1'b1),
++    .raw_scl_i(s_scl_i), .raw_sda_i(s_sda_release),
++    .freerun_count(freerun), .probe_scl_release(s_scl_release),
++    .probe_sda_release(s_sda_release), .probe_count(s_count),
++    .probe_ack_count(s_ack), .probe_nack_count(s_nack),
++    .probe_timeout_count(s_timeout), .probe_status(s_status),
++    .probe_first_nack_index(), .probe_last_nack_index(),
++    .probe_max_consecutive_nacks(), .probe_start_freerun(),
++    .probe_done_freerun()
++  );
++
++  integer starts=0, stops=0, addr_bits=0, ack_bits=0;
++  logic in_tx=0;
++  logic [7:0] decoded_byte=0;
++  always @(negedge p_sda_i) if (p_scl_i) begin
++    if (in_tx) $fatal(1,"repeated START detected");
++    in_tx=1; starts=starts+1; addr_bits=0; decoded_byte=0;
++  end
++  // STOP_B raises SCL with SDA held low before the STOP edge; it is not an
++  // additional data bit.
++  always @(posedge p_scl_i) if (in_tx && p_dut.state != 4'd10) begin
++    if (addr_bits < 8) begin
++      decoded_byte = {decoded_byte[6:0],p_sda_i};
++      addr_bits = addr_bits+1;
++    end else if (addr_bits == 8) begin
++      ack_bits=ack_bits+1; addr_bits=9;
++    end else $fatal(1,"byte after address ACK detected");
++  end
++  always @(posedge p_sda_i) if (p_scl_i && in_tx) begin
++    if (addr_bits != 9 || decoded_byte != 8'h60)
++      $fatal(1,"decoded stream mismatch bits=%0d byte=%02h",addr_bits,decoded_byte);
++    stops=stops+1; in_tx=0;
++  end
++
++  always @(posedge clk) if (!p_init_done) begin
++    if (!p_scl_release || !p_sda_release) $fatal(1,"probe drove before init_done");
++    if (effective_scl !== p_init_scl || effective_sda !== p_init_sda)
++      $fatal(1,"inactive open-drain equivalence failed");
++  end
++
++  initial begin
++    repeat(12) @(posedge clk);
++    p_init_scl=1; p_rst=1; p_init_busy=0; p_init_done=1;
++    b_init_done=1; s_init_done=1;
++    wait (s_status[2]);
++    repeat(3) @(posedge clk); s_force_low=1;
++    wait (p_status[0] && b_status[0] && s_status[0]);
++    repeat(3) @(posedge clk);
++    if (p_status[1] || p_count!=12 || p_ack!=8 || p_nack!=4 || p_timeout!=0 ||
++        p_first!=2 || p_last!=9 || p_max!=3 || starts!=12 || stops!=12 ||
++        ack_bits!=12 || p_start==0 || p_done_time<=p_start)
++      $fatal(1,"pattern result mismatch count=%0d ack=%0d nack=%0d first=%0d last=%0d max=%0d starts=%0d stops=%0d",
++             p_count,p_ack,p_nack,p_first,p_last,p_max,starts,stops);
++    if (!b_status[1] || !b_status[7] || b_status[6] || b_timeout!=1 || b_count!=0)
++      $fatal(1,"bus-idle timeout classification mismatch status=%08h",b_status);
++    if (!s_status[1] || !s_status[6] || s_status[7] || s_timeout!=1 || s_count!=0)
++      $fatal(1,"released-SCL timeout classification mismatch status=%08h",s_status);
++    if (!p_scl_release || !p_sda_release || !b_scl_release || !b_sda_release ||
++        !s_scl_release || !s_sda_release)
++      $fatal(1,"probe did not release both lines at terminal state");
++    $display("R1E_PROBE_SMALL_ADVERSARIAL_TEST=PASS");
++    $display("DECODED_TRANSACTIONS=%0d ADDRESS_BYTE=60 REGISTER_BYTES=0 DATA_BYTES=0 READ_ADDRESS_BYTES=0 REPEATED_STARTS=0 STOPS=%0d",starts,stops);
++    $finish;
++  end
++
++  initial begin
++    repeat(10000) @(posedge clk);
++    $fatal(1,"test timeout");
++  end
++endmodule
+diff --git a/tests/python/test_nvp_r1e_tools.py b/tests/python/test_nvp_r1e_tools.py
+new file mode 100644
+index 0000000..7b5009b
+--- /dev/null
++++ b/tests/python/test_nvp_r1e_tools.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++from __future__ import annotations
++
++import importlib.util
++import math
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[2]
++SPEC = importlib.util.spec_from_file_location("reader", ROOT / "scripts/v41/read_nvp_r1e.py")
++assert SPEC and SPEC.loader
++reader = importlib.util.module_from_spec(SPEC)
++SPEC.loader.exec_module(reader)
++
++
++def make_detail(nack_count: int, records: list[int], overflow: int = 0) -> list[int]:
++    value = 0
++    value |= nack_count << 128
++    value |= min(nack_count, 8) << 192
++    value |= overflow << 196
++    value |= 8 << 216
++    for index, record in enumerate(records):
++        value |= record << (224 + 64 * index)
++    return [(value >> (32 * index)) & 0xFFFFFFFF for index in range(23)]
++
++
++def record(op: int, phase: int, reg: int, data: int, pb: int, mb: int) -> int:
++    return op | phase << 8 | reg << 16 | data << 24 | pb << 32 | mb << 40 | 3 << 48
++
++
++def main() -> int:
++    words = make_detail(2, [record(4, 1, 0xFF, 2, 1, 2),
++                            record(5, 3, 0x20, 0x11, 2, 2)])
++    decoded = reader.decode_detail(words)
++    assert decoded["header_consistency"] == "PASS"
++    assert decoded["records"][0]["phase_name"] == "WRITE_ADDRESS_ACK"
++    assert decoded["records"][1]["phase_name"] == "DATA_ACK"
++    assert decoded["records"][0]["register"] == 0xFF
++    zero_low, zero_high = reader.wilson95(0, 10000)
++    assert zero_low == 0.0
++    assert 0.00038 < zero_high < 0.00039
++    low, high = reader.wilson95(100, 10000)
++    assert low < 0.01 < high and math.isfinite(low) and math.isfinite(high)
++    overflow = reader.decode_detail(make_detail(9, [record(i, 2, i, i, 0, 0)
++                                                     for i in range(8)], 1))
++    assert overflow["header_consistency"] == "PASS"
++    assert overflow["control_flow_replay_scope"] == "PARTIAL_FIRST_8_RECORDS_ONLY"
++    print("R1E_HOST_DECODE_FIXTURES=PASS")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+-- 
+2.53.0.windows.3
+

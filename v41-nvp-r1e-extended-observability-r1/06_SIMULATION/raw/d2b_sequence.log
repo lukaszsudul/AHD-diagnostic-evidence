@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sun Aug 23 01:20:38 2026
+# Process ID         : 11980
+# Current directory  : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION
+# Command line       : xsim.exe -log C:\FPGA\V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1\06_SIMULATION\d2b_sequence.log -mode tcl -source {xsim.dir/r1e_d2b_sequence/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION/d2b_sequence.log
+# Journal file       : C:/FPGA/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/06_SIMULATION\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4202 MB
+# Total Virtual      : 21230 MB
+# Available Virtual  : 6760 MB
+#-----------------------------------------------------------
+source xsim.dir/r1e_d2b_sequence/xsim_script.tcl
+# xsim {r1e_d2b_sequence} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS D2b full sequence is D1 + Z5-ALT with operations 1..148 disabled
+Time: 210762500 ns  Iteration: 0  Process: /tb_nvp_d2b_sequence/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1E_EXTENDED_OBSERVABILITY_R1/tests/nvp/tb_nvp_d2b_sequence.vhd
+$stop called at time : 210762500 ns
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Aug 23 01:20:42 2026...
