@@ -1,0 +1,1153 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 17:11:44 2026
+# Process ID         : 12348
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -log C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\02_LANGUAGE_CONTRACT\INSTALLED_TOOL_HELP\vivado_command_help.log -journal C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\02_LANGUAGE_CONTRACT\INSTALLED_TOOL_HELP\vivado_command_help.jou -source C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\02_LANGUAGE_CONTRACT\capture_installed_vivado_help.tcl
+# Log file           : C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/02_LANGUAGE_CONTRACT/INSTALLED_TOOL_HELP/vivado_command_help.log
+# Journal file       : C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\02_LANGUAGE_CONTRACT\INSTALLED_TOOL_HELP\vivado_command_help.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7243 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\02_LANGUAGE_CONTRACT\capture_installed_vivado_help.tcl}
+# set output_dir [file normalize [file dirname [info script]]]
+# proc capture_help {command_name} {
+#   puts "BEGIN_INSTALLED_HELP=$command_name"
+#   uplevel #0 [list $command_name -help]
+#   puts "END_INSTALLED_HELP=$command_name"
+# }
+# set version_path [file join $output_dir INSTALLED_TOOL_HELP vivado_version.txt]
+# file mkdir [file dirname $version_path]
+# set version_fh [open $version_path w]
+# fconfigure $version_fh -encoding utf-8 -translation lf
+# puts $version_fh [version]
+# close $version_fh
+# capture_help read_vhdl
+BEGIN_INSTALLED_HELP=read_vhdl
+read_vhdl
+
+Description: 
+Read one or more VHDL files
+
+Syntax: 
+read_vhdl  -library <arg> [-vhdl2008] [-vhdl2019] [-quiet] [-verbose] <files>
+
+Returns: 
+list of file objects that were added
+
+Usage: 
+  Name         Description
+  ------------------------
+  -library     VHDL library
+  [-vhdl2008]  VHDL file is version 2008.
+  [-vhdl2019]  VHDL file is version 2019.
+  [-quiet]     Ignore command errors
+  [-verbose]   Suspend message limits during command execution
+  <files>      VHDL file name(s)
+
+Categories: 
+FileIO
+
+Description:
+
+  Reads VHDL source files. This command is similar to the add_files command.
+  The VHDL files are added to the source fileset as the file is read. If the
+  -library argument is specified, the file is added with the Library property
+  defined.
+
+  You can use this command to read the contents of source files into the
+  in-memory design, when running the AMD Vivado Design Suite tool in Non
+  Project mode, in which there is no project file to maintain and manage the
+  various project source files. Refer to the Vivado Design Suite User Guide:
+  Design Flows Overview (UG892) for more information on Non Project mode.
+
+Arguments:
+
+  -library <arg> - (Optional) The library the VHDL file should reference. The
+  default VHDL library is xil_defaultlib.
+
+  -vhdl2008 - (Optional) Identifies the files to be read as VHDL file version
+  2008.
+
+  -vhdl2019 - (Optional) Identifies the files to be read as VHDL file version
+  2019.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <files> - (Required) Names of one or more VHDL files to be read.
+
+  Note: If the path is not specified as part of the file name, the tool will
+  search for the specified file in the current working directory and then in
+  the directory from which the tool was launched.
+
+Examples:
+
+  The following example reads the specified VHDL file and adds it to the
+  source fileset:
+
+    read_vhdl C:/Data/FPGA_Design/new_module.vhdl
+
+  This example reads multiple specified VHDL 2008 files:
+
+    read_vhdl -vhdl2008 {file1.vhd file2.vhd file3.vhd}
+
+  This example reads multiple specified VHDL 2019 files:
+
+    read_vhdl -vhdl2019 {file1.vhd file2.vhd file3.vhd}
+
+See Also:
+
+   *  add_files
+   *  read_verilog
+   *  remove_files
+END_INSTALLED_HELP=read_vhdl
+# capture_help synth_design
+BEGIN_INSTALLED_HELP=synth_design
+synth_design
+
+Description: 
+Synthesize a design using Vivado Synthesis and open that design
+
+Syntax: 
+synth_design  [-name <arg>] [-part <arg>] [-constrset <arg>] [-top <arg>]
+              [-include_dirs <args>] [-generic <args>] [-define <args>]
+              [-verilog_define <args>] [-vhdl_define <args>]
+              [-flatten_hierarchy <arg>] [-gated_clock_conversion <arg>]
+              [-directive <arg>] [-rtl] [-lint] [-file <arg>] [-bufg <arg>]
+              [-no_lc] [-lut_cascade] [-shreg_min_size <arg>] [-mode <arg>]
+              [-fsm_extraction <arg>] [-rtl_skip_mlo] [-rtl_skip_ip]
+              [-rtl_skip_constraints] [-srl_style <arg>]
+              [-keep_equivalent_registers] [-resource_sharing <arg>]
+              [-cascade_dsp <arg>] [-control_set_opt_threshold <arg>]
+              [-incremental_mode <arg>] [-max_bram <arg>] [-max_uram <arg>]
+              [-max_dsp <arg>] [-max_bram_cascade_height <arg>]
+              [-max_uram_cascade_height <arg>] [-global_retiming <arg>]
+              [-no_srlextract] [-assert] [-no_timing_driven] [-sfcu]
+              [-debug_log] [-quiet] [-verbose]
+
+Returns: 
+design object
+
+Usage: 
+  Name                          Description
+  -----------------------------------------
+  [-name]                       Design name
+  [-part]                       Target part
+  [-constrset]                  Constraint fileset to use
+  [-top]                        Specify the top module name
+  [-include_dirs]               Specify verilog search directories
+  [-generic]                    Specify generic parameters. Syntax: -generic 
+                                <name>=<value> -generic <name>=<value> ...
+  [-define]                     Specify verilog and vhdl defines. Syntax: 
+                                -define <macro_name>[=<macro_text>] -define 
+                                <macro_name>[=<macro_text>] ...
+  [-verilog_define]             Specify verilog defines. Syntax: 
+                                -verilog_define <macro_name>[=<macro_text>] 
+                                -verilog_define <macro_name>[=<macro_text>] 
+                                ...
+  [-vhdl_define]                Specify vhdl defines. Syntax: -vhdl_define 
+                                <macro_name>[=<macro_text>] -vhdl_define 
+                                <macro_name>[=<macro_text>] ...
+  [-flatten_hierarchy]          Flatten hierarchy during LUT mapping. Values:
+                                full, none, rebuilt
+                                Default: rebuilt
+  [-gated_clock_conversion]     Convert clock gating logic to flop enable. 
+                                Values: off, on, auto
+                                Default: off
+  [-directive]                  Synthesis directive. Values: default, 
+                                RuntimeOptimized, AreaOptimized_high, 
+                                AreaOptimized_medium, AlternateRoutability, 
+                                AreaMapLargeShiftRegToBRAM, 
+                                AreaMultThresholdDSP, FewerCarryChains, 
+                                PerformanceOptimized, LogicCompaction, 
+                                PowerOptimized_high, PowerOptimized_medium
+                                Default: default
+  [-rtl]                        Elaborate and open an rtl design
+  [-lint]                       Run RTL Linter on source files. Recommended 
+                                to run before RTL simulation and synthesis to
+                                identify potential issues at early design 
+                                cycle.
+  [-file]                       Linter Filename to output results to. (send 
+                                output to console if -file is not used)
+  [-bufg]                       Max number of global clock buffers used by 
+                                synthesis
+                                Default: 12
+  [-no_lc]                      Disable LUT combining. Do not allow combining
+                                LUT pairs into single dual output LUTs.
+  [-lut_cascade]                Enable LUT cascading in synthesis. Pack more 
+                                logic into same slice by utilizing LUT 
+                                cascade connection. This is expected to 
+                                improve delay at cost of area.
+  [-shreg_min_size]             Minimum length for chain of registers to be 
+                                mapped onto SRL
+                                Default: 3
+  [-mode]                       The design mode. Values: default, 
+                                out_of_context
+                                Default: default
+  [-fsm_extraction]             FSM Extraction Encoding. Values: off, 
+                                one_hot, sequential, johnson, gray, 
+                                user_encoding, auto
+                                Default: auto
+  [-rtl_skip_mlo]               Skip mandatory logic optimization for RTL 
+                                elaboration of the design; requires -rtl 
+                                option.
+  [-rtl_skip_ip]                Exclude subdesign checkpoints in the RTL 
+                                elaboration of the design; requires -rtl 
+                                option.
+  [-rtl_skip_constraints]       Do not load and validate constraints against 
+                                elaborated design; requires -rtl option.
+  [-srl_style]                  Static SRL Implementation Style. Values: 
+                                register, srl, srl_reg, reg_srl, reg_srl_reg
+  [-keep_equivalent_registers]  Prevents registers sourced by the same logic 
+                                from being merged. (Note that the merging can
+                                otherwise be prevented using the synthesis 
+                                KEEP attribute)
+  [-resource_sharing]           Sharing arithmetic operators. Value: auto, 
+                                on, off
+                                Default: auto
+  [-cascade_dsp]                Controls how adders summing DSP block outputs
+                                will be implemented. Value: auto, tree, force
+                                Default: auto
+  [-control_set_opt_threshold]  Threshold for synchronous control set 
+                                optimization to lower number of control sets.
+                                Valid values are 'auto' and non-negative 
+                                integers. The higher the number, the more 
+                                control set optimization will be performed 
+                                and fewer control sets will result. To 
+                                disable control set optimization completely, 
+                                set to 0.
+                                Default: auto
+  [-incremental_mode]           Mode of incremental synthesis 
+                                (aggressive/default/off/quick)
+                                Default: default
+  [-max_bram]                   Maximum number of block RAM allowed in 
+                                design. (Note -1 means that the tool will 
+                                choose the max number allowed for the part in
+                                question)
+                                Default: -1
+  [-max_uram]                   Maximum number of Ultra RAM blocks allowed in
+                                design. (Note -1 means that the tool will 
+                                choose the max number allowed for the part in
+                                question)
+                                Default: -1
+  [-max_dsp]                    Maximum number of block DSP allowed in 
+                                design. (Note -1 means that the tool will 
+                                choose the max number allowed for the part in
+                                question)
+                                Default: -1
+  [-max_bram_cascade_height]    Controls the maximum number of BRAM that can 
+                                be cascaded by the tool. (Note -1 means that 
+                                the tool will choose the max number allowed 
+                                for the part in question)
+                                Default: -1
+  [-max_uram_cascade_height]    Controls the maximum number of URAM that can 
+                                be cascaded by the tool. (Note -1 means that 
+                                the tool will choose the max number allowed 
+                                for the part in question)
+                                Default: -1
+  [-global_retiming]            Values: auto, on, off. Improves circuit 
+                                performance for intra-clock sequential paths 
+                                by automatically movingregisters (register 
+                                balancing) across combinatorial gates or 
+                                LUTs. It maintains the original behavior and 
+                                latency of the circuitand does not require 
+                                changes to the RTL sources.
+                                Default: auto
+  [-no_srlextract]              Prevents the extraction of shift registers so
+                                that they get implemented as simple registers
+  [-assert]                     Enable VHDL assert statements to be 
+                                evaluated. A severity level of failure will 
+                                stop the synthesis flow and produce an error.
+  [-no_timing_driven]           Do not run in timing driven mode
+  [-sfcu]                       Run in single-file compilation unit mode
+  [-debug_log]                  Print detailed log files for debugging
+  [-quiet]                      Ignore command errors
+  [-verbose]                    Suspend message limits during command 
+                                execution
+
+Categories: 
+Tools
+Description:
+
+  Directly launches the Vivado synthesis engine to compile and synthesize a
+  design in either Project Mode or Non-Project Mode in the Vivado Design
+  Suite. Refer to the Vivado Design Suite User Guide: Design Flows Overview
+  (UG892) for a complete description of Project Mode and Non-Project Mode.
+
+  Vivado synthesis can be launched directly with the synth_design command in
+  the Non-Project Mode of the Vivado Design Suite.
+
+  Tip: The synth_design can be multi-threaded to speed the process. Refer to
+  the set_param command for more information on setting the
+  general.maxThreads parameter.
+
+  In Project Mode, synthesis should be launched from an existing synthesis
+  run created with the create_run command. The run is launched using the
+  launch_runs command, and this in turn calls synth_design for Vivado
+  synthesis.
+
+  You can also use the synth_design command to elaborate RTL source files,
+  and open an elaborated design:
+
+    synth_design -rtl -name rtl_1
+
+  This command returns a transcript of the synthesis process, or returns an
+  error if it fails.
+
+Arguments:
+
+  -name <arg> - (Optional) This is the name assigned to the synthesized
+  design when it is opened by the Vivado tool after synthesis has completed.
+  This name is for reference purposes, and has nothing to do with the
+  top-level of the design or any logic contained within.
+
+  -part <arg> - (Optional) The target AMD device to use for the design. If
+  the part is not specified the default part assigned to the project will be
+  used.
+
+  -constrset <arg> - (Optional) The name of the XDC constraints to use when
+  synthesizing the design. Vivado synthesis requires the use of XDC, and does
+  not support UCF. The -constrset argument must refer to a constraint fileset
+  that exists. It cannot be used to create a new fileset. Use the
+  create_fileset command for that purpose.
+
+  -top <arg> - (Optional) The top module of the design hierarchy.
+
+  Important: If you use the find_top command to define the -top option, be
+  sure to specify only one top if find_top returns multiple prospects. See
+  the examples below.
+
+  -include_dirs <args> - (Optional) The directories to search for Verilog
+  `include files. You can specify multiple directories by creating a list to
+  contain them:
+
+    -include_dirs {C:/data/include1 C:/data/include2}
+
+  -generic <name>=<value> - (Optional) The value of a VHDL generic entity, or
+  of a Verilog parameter. The -generic option can be used to override the
+  assigned values of parameters in the RTL design sources. However it can
+  only override parameters at the top level of the design. The parameters of
+  lower-level modules can only be overridden at the time of instantiation and
+  not by the -generic option. The syntax for the -generic argument is
+  <name>=<value>, specifying the name of the generic or parameter, and the
+  value to be assigned. Repeat the -generic option multiple times in the
+  synth_design command for each generic or parameter value to be defined:
+
+    synth_design -generic width=32 -generic depth=512 ...
+
+  Important: When specifying binary values for boolean or std_logic VHDL
+  generic types, you must specify the value using the Verilog bit format,
+  rather than standard VHDL format:
+
+    0 = 1`b0
+    01010000 = 8`b01010000
+
+  -verilog_define <name>=<text> - (Optional) Set values for Verilog `define,
+  and `ifdef, statements. The syntax for the -verilog_define argument is
+  <name>=<text>, specifying the name of the define directive, and the value
+  to be assigned. The argument can be reused multiple times in a single
+  synth_design command.
+
+    synth_design -verilog_define <name>=<value> -verilog_define <name>=<value> ...
+
+  -flatten_hierarchy <arg> - (Optional) Flatten the hierarchy of the design
+  during LUT mapping. The valid values are:
+
+   *  rebuilt - This will attempt to rebuild the original hierarchy of the
+      RTL design after synthesis has completed. This is the default setting.
+
+   *  full - Flatten the hierarchy of the design.
+
+   *  none - Do not flatten the hierarchy of the design. This will preserve
+      the hierarchy of the design, but will also limit the design
+      optimization that can be performed by the synthesis tool.
+
+  -gated_clock_conversion <arg> - (Optional) Convert clock gating logic to
+  use the flop enable pins when available. This optimization can eliminate
+  logic and simplify the netlist. Refer to the GATED_CLOCK property in the
+  Vivado Design Suite User Guide: Synthesis (UG901) for more information.
+  Valid values for this option are:
+
+   *  off - Disables the conversion of clock gating logic during synthesis,
+      regardless of the use of the GATED_CLOCK property in the RTL design.
+
+   *  on - Converts clock gating logic based on the use of the GATED_CLOCK
+      property in the RTL design.
+
+   *  auto - lets Vivado synthesis perform gated clock conversion if either
+      the GATED_CLOCK property is present in the RTL, or if the Vivado tool
+      detects a gate with a valid clock constraint.
+
+  -directive <arg> - (Optional) Direct synthesis to achieve specific design
+  objectives. Only one directive can be specified for a single synth_design
+  command, and values are case-sensitive. Valid values are:
+
+   *  default - Run the default synthesis process.
+
+   *  runtimeoptimized - Perform fewer timing optimizations and eliminate
+      some RTL optimizations to reduce synthesis run time.
+
+   *  AreaOptimized_high - Perform general area optimizations including
+      AreaMapLargeShiftRegToBRAM, AreaThresholdUseDSP directives.
+
+   *  AreaOptimized_medium - Perform general area optimizations including
+      forcing ternary adder implementation, applying new thresholds for use
+      of carry chain in comparators, and implementing area optimized
+      multiplexers.
+
+   *  AlternateRoutability - Algorithms to improve routability with reduced
+      use of MUXFs and CARRYs.
+
+   *  AreaMapLargeShiftRegToBRAM - Detects large shift registers and
+      implements them using dedicated blocks of RAM.
+
+   *  AreaMultThresholdDSP - Lower threshold for dedicated DSP block
+      inference for packing multipliers.
+
+   *  FewerCarryChains - Higher operand size threshold to use LUTs instead of
+      the carry chain.
+
+   *  PerformanceOptimized - Perform general timing optimizations including
+      logic level reduction at the expense of area.
+
+   *  LogicCompaction - Configure LUTs and Carry chains for multipliers in a
+      way that makes it easier for the placer to pack these structures into
+      small areas.
+
+  -rtl - (Optional) Elaborate the HDL source files and open the RTL design.
+  In designs that use out-of-context (OOC) modules, such as IP from the
+  Xilinx IP catalog, the Vivado Design Suite will import synthesized design
+  checkpoints (DCP) for the OOC modules in the design, and import associated
+  constraint files (XDC) into the elaborated design. However, you can disable
+  the default behavior using the -rtl_skip_ip and -rtl_skip_constraints
+  options.
+
+  -lint - Run RTL Linter on source files against various rules. The following
+  are the supported rules.
+
+   *  ASSIGN-1(arithmetic overlfow)
+
+   *  ASSIGN-2(mixed operand signedness)
+
+   *  ASSIGN-3(shift overflow)
+
+   *  ASSIGN-4(unused scalar)
+
+   *  ASSIGN-5(bit in array not set)
+
+   *  ASSIGN-6(bit in array not used)
+
+   *  ASSIGN-7(mult-assign/multi-driver)
+
+   *  QOR-1(arithmetic operator not mergeable)
+
+   *  INFER-1(inferred latch)
+
+   *  INFER-2(incomplete case statement)
+
+   *  INFER-3(case equality)
+
+   *  CLOCK-1(module using both clock edges)
+
+   *  RESET-1(mixed asyncreset)
+
+   *  RESET-2(missing async reset logic)
+
+  Create_waiver -type LINT can be used to waive rules or individual linter
+  warnings. For example,
+
+    create_waiver -type LINT -id ASSIGN-3 -description {waive all warnings from ASSIGN-3 check}
+
+  -rtl_skip_ip - (Optional) This option requires the use of the -rtl option.
+  When elaborating the RTL design, this option causes the Vivado Design Suite
+  to skip loading the DCP files for OOC modules in the design, and instead
+  load a stub file to treat the OOC modules as black boxes. This can
+  significantly speed elaboration of the design.
+
+  Tip: An OOC synthesis run will be needed in either case to generate the DCP
+  file that is loaded during elaboration, or to generate the stub file needed
+  for the black box.
+
+  -rtl_skip_constraints - (Optional) This option requires the use of the -rtl
+  option. When elaborating the RTL design, this option causes the Vivado
+  Design Suite to skip loading any design constraints (XDC) into the
+  elaborated design. This can significantly speed elaboration of the design.
+
+  -bufg <arg> - (Optional) Specify the maximum number of global clock buffers
+  to be used on clock nets during synthesis. Specified as a value >= 1, which
+  should not exceed the BUFG count on the target device. The default value is
+  12.
+
+  Tip: Vivado synthesis infers up to the number of BUFGs specified, including
+  those instantiated in the RTL source. For example, with the default setting
+  of -bufg 12, if there are three BUFGs instantiated in the RTL, the tool
+  infers up to nine more for a total of 12.
+
+  -no_lc - (Optional) Disable the default LUT combining feature of Vivado
+  synthesis.
+
+  -shreg_min_size <arg> - (Optional) Specified as an integer, this is the
+  minimum length for a chain of registers to be mapped onto SRL. The default
+  is three.
+
+  -mode [ default | out_of_context ] - (Optional) Out of Context mode
+  specifies the synthesis of an IP module, or block module, for use in an
+  out-of-context design flow. This mode turns off I/O buffer insertion for
+  the module, and marks the module as OOC, to facilitate its use in the tool
+  flow. The block can also be implemented for analysis purposes. Refer to the
+  Vivado Design Suite User Guide: Designing with IP (UG896) or the Vivado
+  Design Suite User Guide: Hierarchical Design (UG905) for more information.
+
+  -fsm_extraction <arg> - (Optional) Finite state machine (FSM) encoding is
+  automatic (auto) in Vivado synthesis by default. This option enables state
+  machine identification and specifies the type of encoding that should be
+  applied. Valid values are: off, one_hot, sequential, johnson, gray, auto.
+  Automatic encoding (auto) allows the tool to choose the best encoding for
+  each state machine identified. In this case, the tool may use different
+  encoding styles for different FSMs in the same design.
+
+  Note: Use -fsm_extraction off to disable finite state machine extraction in
+  Vivado synthesis. This will override the FSM_ENCODING property when
+  specified.
+
+  -keep_equivalent_registers - (Optional) Works like the KEEP property to
+  prevent the merging of registers during optimization.
+
+  -resource_sharing <arg> - (Optional) Share arithmetic operators like adders
+  or subtractors between different signals, rather than creating new
+  operators. This can result in better area usage when it is turned on. Valid
+  values are: auto, on, off. The default is auto.
+
+  -cascade_dsp [ auto | tree | force ] - (Optional) Specifies how to
+  implement adders that add DSP block outputs. Valid values include auto,
+  tree, force. The default setting is auto.
+
+  -control_set_opt_threshold <arg> - (Optional) Threshold for synchronous
+  control set optimization to decrease the number of control sets. Specifies
+  how large the fanout of a control set should be before it starts using it
+  as a control set. For example, if -control_set_opt_threshold is set to 10,
+  a synchronous reset that only fans out to 5 registers would be moved to the
+  D input logic, rather than using the reset line of a register. However, if
+  -control_set_opt_threshold is set to 4, then the reset line is used. This
+  option can be specified as "auto", or as an integer from 0 to 16. The
+  default setting is "auto", and the actual threshold used under "auto" can
+  vary depending on the selected device architecture.
+
+  -incremental - (Optional) Specify a DCP file for the incremental
+  compilation flow. In the incremental synthesis flow, the netlist from the
+  incremental DCP is applied to the design objects in the current design to
+  reuse existing synthesis results when possible.
+
+  -max_bram <arg> - (Optional) Specify the maximum number of Block RAM to add
+  to the design during synthesis. Specify a value >= 1, which should not
+  exceed the available Block RAM count on the target device. If a value of -1
+  is used, the Vivado synthesis tool will not exceed the available Block RAM
+  limit of the device. The default value is -1.
+
+  Note: A value of 0 directs Vivado synthesis to not infer Block RAMs in the
+  design, but is not a recommended value.
+
+  -max_uram <arg> - (Optional) Specify the maximum number of Ultra RAM blocks
+  (URAM) to add to the design during synthesis. Specify a value >= 1, which
+  should not exceed the available URAM count on the target device. If a value
+  of -1 is used, the Vivado synthesis tool will not exceed the available URAM
+  block limit of the device. The default value is -1.
+
+  Note: A value of 0 directs Vivado synthesis to not infer URAM in the
+  design, but is not a recommended value.
+
+  -max_dsp <arg> - (Optional) Specify the maximum number of DSPs to add to
+  the design during synthesis. Specify a value >= 1, which should not exceed
+  the available DSP count on the target device. If a value of -1 is used, the
+  Vivado synthesis tool will not exceed the available limit of the device.
+  The default value is -1.
+
+  Note: A value of 0 directs Vivado synthesis to not infer DSPs in the
+  design, but is not a recommended value.
+
+  -max_bram_cascade_height <arg> - (Optional) Controls the maximum number of
+  Block RAM that can be cascaded by the tool. A value of -1 lets Vivado
+  synthesis choose up to the maximum number allowed for the target part. The
+  default value is -1.
+
+  -max_uram_cascade_height <arg> - (Optional) Controls the maximum number of
+  URAM that can be cascaded by the tool. A value of -1 lets Vivado synthesis
+  choose up to the maximum number allowed for the target part. The default
+  value is -1.
+
+  -retiming - (Optional) For non-Versal devices who do not have retiming
+  turned On by default. Seeks to improve circuit performance for intra-clock
+  sequential paths by automatically moving registers (register balancing)
+  across combinatorial gates or LUTs. It maintains the original behavior and
+  latency of the circuit and does not require changes to the RTL sources.
+
+  Note: If both -retiming and -no_retiming are set, retiming will not occur.
+
+  -no_retiming - (Optional). This is for Versal devices where retiming is On
+  by default. Turns off the retiming feature.
+
+  Note: If both -retiming and -no_retiming are set, retiming will not occur.
+
+  -no_srlextract - (Optional) Prevents the extraction of shift registers so
+  that they get implemented as simple registers.
+
+  -assert - (Optional) Enable VHDL assert statements to be evaluated. A
+  severity level of failure stops the synthesis flow and produce an error.
+
+  -no_timing_driven - (Optional) Disables the default timing driven synthesis
+  algorithm. This results in a reduced synthesis runtime, but ignores the
+  effect of timing on synthesis.
+
+  -debug_log - (Optional) Prints an extended log file that is useful for
+  debugging. Will have extra information about logic that was trimmed along
+  with sections on the sizes of the RTL partitions and RTL Components. In
+  addition, there will be more INFO/WARNING messages that are often ignored.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  The following example uses the set_property command to define the target
+  part for the active project, then elaborates the source files and opens an
+  RTL design:
+
+    set_property part xc7vx485tffg1158-1 [current_project]
+    synth_design -rtl -name rtl_1
+
+  Note: The default source set, constraint set, and part will be used in this
+  example.
+
+  The following example uses the find_top command to define the top of the
+  current design for synthesis:
+
+    synth_design -top [lindex [find_top] 0]
+
+  Note: Since find_top returns multiple possible candidates, choosing index 0
+  chooses the best top candidate for synthesis.
+
+  The following example runs synthesis on the current design, defining the
+  top module and the target part, and specifying no flattening of the
+  hierarchy. The results of the synthesis run are then opened in a netlist
+  design:
+
+    synth_design -top top -part xc7k70tfbg676-2 -flatten_hierarchy none
+    open_run synth_1 -name netlist_1
+
+See Also:
+
+   *  create_ip_run
+   *  create_run
+   *  current_design
+   *  current_project
+   *  find_top
+   *  open_run
+   *  opt_design
+   *  set_property
+END_INSTALLED_HELP=synth_design
+# capture_help get_files
+BEGIN_INSTALLED_HELP=get_files
+get_files
+
+Description: 
+Get a list of source files
+
+Syntax: 
+get_files  [-regexp] [-nocase] [-filter <arg>] [-compile_order <arg>]
+           [-used_in <arg>] [-references] [-all] [-of_objects <args>] [-quiet]
+           [-verbose] [<patterns>]
+
+Returns: 
+list of file objects
+
+Usage: 
+  Name              Description
+  -----------------------------
+  [-regexp]         Patterns are full regular expressions
+  [-nocase]         Perform case-insensitive matching (valid only when 
+                    -regexp specified)
+  [-filter]         Filter list with expression
+  [-compile_order]  Get files by type and in compilation order (must use with
+                    -used_in)
+  [-used_in]        Get files used in a specific step (must use with 
+                    -compile_order)
+  [-references]     Get files referenced in the provided objects (must use 
+                    with -of_objects)
+  [-all]            Include all internal files.
+  [-of_objects]     Get 'file' objects of these types: 'file fileset ip 
+                    reconfig_module'.
+  [-quiet]          Ignore command errors
+  [-verbose]        Suspend message limits during command execution
+  [<patterns>]      Match file names against patterns
+                    Default: *
+
+Categories: 
+Object, Project
+
+Description:
+
+  Gets a list of files in the current project that match a specified search
+  pattern. The default command gets a list of all files in the project.
+
+  The get_files command returns a machine readable list of files in the
+  project, in a design, or in a sub-design such as an IP core or block
+  design. You can filter the results returned by get_files using one of the
+  command arguments such as -of_objects, -compile_order, -used_in, and
+  -filter.
+
+  The -compile_order and -used_in options must be used together to return a
+  list of files from the sources or constraints filesets used in synthesis,
+  simulation, or implementation, sorted according to the order of evaluation
+  by the Vivado tools. The -compile_order and -used_in options use complex
+  file ordering rules that can change based on header files, include files,
+  or other language options. You can also filter files returned by get_files
+  according to the USED_IN property, using the -filter option instead of the
+  -used_in option.
+
+  You can use the report_compile_order command to generate a report of all
+  files in the sources or constraints filesets, used in synthesis,
+  simulation, AND implementation, sorted into different sections.
+
+  Note: To improve memory and performance, the get_* commands return a
+  container list of a single type of objects (e.g. cells, nets, pins, or
+  ports). You can add new objects to the list (using lappend for instance),
+  but you can only add the same type of object that is currently in the list.
+  Adding a different type of object, or string, to the list is not permitted
+  and will result in a Tcl error.
+
+Arguments:
+
+  -regexp - (Optional) Specifies that the search <patterns> are written as
+  regular expressions. Both search <patterns> and -filter expressions must be
+  written as regular expressions when this argument is used. AMD regular
+  expression Tcl commands are always anchored to the start of the search
+  string. You can add ".*" to the beginning or end of a search string to
+  widen the search to include a substring. See
+  http://perldoc.perl.org/perlre.html for help with regular expression
+  syntax.
+
+  Note: The Tcl built-in command regexp is not anchored, and works as a
+  standard Tcl command. For more information refer to
+  http://www.tcl.tk/man/tcl8.5/TclCmd/regexp.htm.
+
+  -nocase - (Optional) Perform case-insensitive matching when a pattern has
+  been specified. This argument applies to the use of -regexp only.
+
+  -filter <args> - (Optional) Filter the results list with the specified
+  expression. The -filter argument filters the list of objects returned by
+  get_files based on property values on the files. You can find the
+  properties on an object with the report_property or list_property commands.
+  Any property/value pair can be used as a filter. In the case of the "file"
+  object, "FILE_TYPE", and "IS_ENABLED" are some of the properties that can
+  be used to filter results.
+
+  The filter search pattern should be quoted to avoid having to escape
+  special characters that may be found in net, pin, or cell names, or other
+  properties. String matching is case-sensitive and is always anchored to the
+  start and to the end of the search string. The wildcard "*" character can
+  be used at the beginning or at the end of a search string to widen the
+  search to include a substring of the property value.
+
+  Note: The filter returns an object if a specified property exists on the
+  object, and the specified pattern matches the property value on the object.
+  In the case of the "*" wildcard character, this will match a property with
+  a defined value of "".
+
+  For string comparison, the specific operators that can be used in filter
+  expressions are "equal" (==), "not-equal" (!=), "match" (=~), and
+  "not-match" (!~). Numeric comparison operators <, >, <=, and >= can also be
+  used. Multiple filter expressions can be joined by AND and OR (&& and ||).
+  The following gets input pins that do NOT contain the "RESET" substring
+  within their name:
+
+    get_pins * -filter {DIRECTION == IN && NAME !~ "*RESET*"} 
+    
+
+  Boolean (bool) type properties can be directly evaluated in filter
+  expressions as true or not true:
+
+    -filter {IS_PRIMITIVE && !IS_LOC_FIXED} 
+    
+
+  -of_objects <args> - (Optional) Get the files that are associated with the
+  specified file, fileset, IP, or reconfig_module objects. The default is to
+  search all filesets. When -compile_order and -used_in are specified, the
+  -of_objects switch will only accept a single fileset, or a single
+  sub-design such as an IP core, Block Design, or DSP design. A sub-design is
+  also known as a composite file.
+
+  Note: The -of_objects option requires objects to be specified using the
+  get_* commands, such as get_cells or get_pins, rather than specifying
+  objects by name. In addition, -of_objects cannot be used with a search
+  <pattern>.
+
+  -compile_order [ sources | constraints ] - (Optional) Returns the source
+  design files, or the constraint files sorted according to the order of
+  compilation by the Vivado Design Suite.
+
+  Note: This option must be used with the -used_in option. When specified,
+  the -of_objects switch will only accept a single fileset or sub-design.
+
+  -used_in <arg> - (Optional) Accepts one of the enumerated values of the
+  USED_IN property for files, and returns files matching the specified value.
+  Valid values for this option include the following: synthesis, simulation,
+  or implementation. Refer to the Vivado Design Suite Properties Reference
+  Guide (UG912) for information on the USED_IN property and its supported
+  values.
+
+  Note: This option must be used with the -compile_order option. When
+  specified, the -of_objects switch will only accept a single fileset or
+  sub-design.
+
+  -all - (Optional) Returns all of the files in the design, including
+  internal files in support of IP and other objects.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <patterns> - (Optional) Match files against the specified patterns. The
+  default pattern is the wildcard `*` which gets all files in the project or
+  of_objects. More than one pattern can be specified to find multiple files
+  based on different search criteria.
+
+Examples:
+
+  The following example returns the VHDL files in the design that are used in
+  simulation:
+
+    get_files -filter {FILE_TYPE == VHDL && USED_IN =~ simulation*} 
+    
+
+  This example returns the design source files that are used in simulation:
+
+    get_files -compile_order sources -used_in simulation 
+    
+
+  This example gets a list of files associated with the specified IP core
+  composite file (ip.xci), from the sources_1 fileset that are used in
+  synthesis:
+
+    get_files -compile_order sources -used_in synthesis -of [get_files ip.xci]  
+    
+
+  The following example gets a list of the files found in the sources_1 and
+  constrs_1 filesets:
+
+    get_files -of [get_filesets {sources_1 constrs_1}] 
+    
+
+  Note: If there are no files matching the pattern you will get a warning.
+
+See Also:
+
+   *  report_compile_order
+   *  report_property
+END_INSTALLED_HELP=get_files
+# capture_help get_property
+BEGIN_INSTALLED_HELP=get_property
+get_property
+
+Description: 
+Get properties of object
+
+Syntax: 
+get_property  [-min] [-max] [-quiet] [-verbose] <name> <object>
+
+Returns: 
+property value
+
+Usage: 
+  Name        Description
+  -----------------------
+  [-min]      Return only the minimum value
+  [-max]      Return only the maximum value
+  [-quiet]    Ignore command errors
+  [-verbose]  Suspend message limits during command execution
+  <name>      Name of property whose value is to be retrieved
+  <object>    Object to query for properties
+
+Categories: 
+Object, PropertyAndParameter, XDC
+
+Description:
+
+  Gets the current value of the named property from the specified object or
+  objects. If multiple objects are specified, a list of values is returned.
+
+  If the property is not currently assigned to the object, or is assigned
+  without a value, then the get_property command returns nothing, or the null
+  string. If multiple objects are queried, the null string is added to the
+  list of values returned.
+
+  If multiple objects are passed to the get_property command, you can use the
+  -min or -max options to return the smallest or greatest value of the
+  property specified by name. This feature can be useful when setting timing
+  constraints.
+
+  Note: For numeric properties, the min/max determination is based on numeric
+  values. For all other properties, the determination is based on string
+  sorting.
+
+  This command returns a value, or list of values, or returns an error if it
+  fails.
+
+Arguments:
+
+  -min - (Optional) When multiple <objects> are specified, this option
+  examines the values of the property specified by <name>, and returns the
+  smallest value from the list of objects. Numeric properties are sorted by
+  value. All other properties are sorted as strings.
+
+  -max - (Optional) When multiple <objects> are specified, this option
+  examines the values of the property specified by <name>, and returns the
+  largest value from the list of objects. Numeric properties are sorted by
+  value. All other properties are sorted as strings.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+  <name> - (Required) The name of the property to be returned. The name is
+  not case sensitive.
+
+  <objects> - (Required) One or more objects to examine for the specified
+  property.
+
+Examples:
+
+  The following example gets the NAME property from the specified cell:
+
+    get_property NAME [lindex [get_cells] 3] 
+    
+
+  The following example returns the smallest PERIOD property from the
+  specified clock objects:
+
+    get_property -min PERIOD [get_clocks] 
+    
+
+  This example demonstrates the string based sorting of the SITE property for
+  the specified ports:
+
+    get_property SITE [get_ports]  
+    IOB_X1Y75 IOB_X1Y76 IOB_X1Y98 IOB_X1Y125 IOB_X0Y94 IOB_X1Y95 IOB_X1Y96  
+    IOB_X1Y93 IOB_X1Y94  
+     
+    get_property -min SITE [get_ports]  
+    IOB_X0Y94  
+     
+    get_property -max SITE [get_ports]  
+    IOB_X1Y98 
+    
+
+  Note: While IOB_X1Y125 is the largest site value on the port objects, the
+  property value IOB_X1Y98 is returned because of the sorting of the property
+  values as strings.
+
+See Also:
+
+   *  create_property
+   *  get_cells
+   *  get_ports
+   *  list_property
+   *  list_property_value
+   *  report_property
+   *  reset_property
+   *  set_property
+END_INSTALLED_HELP=get_property
+# capture_help report_compile_order
+BEGIN_INSTALLED_HELP=report_compile_order
+report_compile_order
+
+Description: 
+Report the compile order by analyzing files and constructing a hierarchy.
+
+Syntax: 
+report_compile_order  [-fileset <arg>] [-missing_instances] [-constraints]
+                      [-sources] [-used_in <arg>] [-file <arg>] [-append]
+                      [-of_objects <args>] [-quiet] [-verbose]
+
+Usage: 
+  Name                  Description
+  ---------------------------------
+  [-fileset]            FileSet to parse to determine compile order
+  [-missing_instances]  Report missing instances in the design hierarchy
+  [-constraints]        Report the constraint compile order
+  [-sources]            Report the source compile order
+  [-used_in]            Specify the used in filter.
+  [-file]               Filename to output results to.
+  [-append]             Append output to existing file
+  [-of_objects]         Get 'file' objects of these types: 'file fileset ip 
+                        reconfig_module'.
+  [-quiet]              Ignore command errors
+  [-verbose]            Suspend message limits during command execution
+
+Categories: 
+Project
+
+Description:
+
+  Report the compilation order of files in the various active filesets:
+  constraints, design sources, and simulation sources.
+
+  This command returns the order of file processing for synthesis,
+  implementation, and simulation. The report can be limited by specifying the
+  fileset of interest with -fileset, or using the -constraints option or
+  -sources option.
+
+  The -used_in option lets you report the processing order of files used in
+  Synthesis, Simulation, or one of the implementation steps, according to the
+  value of the USED_IN property.
+
+  By default the report is returned to the Tcl console, or standard output,
+  but it can also be written to a file.
+
+Arguments:
+
+  -of_objects <args> - (Optional) Report the files that are associated with
+  the specified filesets, sub-designs, or reconfiguration modules. The
+  default is to search all filesets. When -compile_order and -used_in are
+  specified, the -of_objects switch will only accept a single fileset, or a
+  single sub-design such as an IP core, Block Design, or DSP design. A
+  sub-design is also known as a composite file.
+
+  Note: The -of_objects option requires objects to be specified using the
+  get_* commands, such as get_cells or get_pins, rather than specifying
+  objects by name. In addition, -of_objects cannot be used with a search
+  <pattern>.
+
+  -fileset <arg> - (Optional) Limit the report to the specified fileset.
+
+  -missing_instances - (Optional) Return the list of cells that are missing
+  source files in the current or specified fileset.
+
+  -constraints - (Optional) Report the compilation order of the constraint
+  files in the current design, including constraints for any IP in the
+  design.
+
+  -sources - (Optional) Report the compilation order of files found in the
+  sources_1 fileset of design sources.
+
+  -used_in <arg> - (Optional) Accepts one of the enumerated values of the
+  USED_IN property for files, and returns files matching the specified value.
+  Valid values for this option include the following: synthesis, simulation,
+  or implementation. Refer to the Vivado Design Suite Properties Reference
+  Guide (UG912) for information on the USED_IN property and its supported
+  values.
+
+  -file <arg> - (Optional) Write the report into the specified file. The
+  specified file will be overwritten if one already exists, unless -append is
+  also specified.
+
+  Note: If the path is not specified as part of the file name, the file will
+  be written into the current working directory, or the directory from which
+  the tool was launched.
+
+  -append - (Optional) Append the output of the command to the specified file
+  rather than overwriting it.
+
+  Note: The -append option can only be used with the -file option.
+
+  -quiet - (Optional) Execute the command quietly, returning no messages from
+  the command. The command also returns TCL_OK regardless of any errors
+  encountered during execution.
+
+  Note: Any errors encountered on the command-line, while launching the
+  command, will be returned. Only errors occurring inside the command will be
+  trapped.
+
+  -verbose - (Optional) Temporarily override any message limits and return
+  all messages from this command.
+
+  Note: Message limits can be defined with the set_msg_config command.
+
+Examples:
+
+  The following example reports the compilation order of the active filesets
+  in the current design:
+
+    report_compile_order 
+    
+
+  The following returns a list of cells with missing source files in the
+  current design, and appends the report to the specified file:
+
+    report_compile_order -missing_instances -file C:/Data/report1.txt -append 
+    
+
+  The following command lists the compile order of the files in the active
+  constraint set:
+
+    report_compile_order -constraints 
+    
+
+See Also:
+
+   *  current_fileset
+   *  get_files
+   *  update_compile_order
+END_INSTALLED_HELP=report_compile_order
+# set summary_path [file join $output_dir INSTALLED_TOOL_HELP capture_summary.txt]
+# set summary_fh [open $summary_path w]
+# fconfigure $summary_fh -encoding utf-8 -translation lf
+# puts $summary_fh "HELP_CAPTURE=PASS"
+# puts $summary_fh "VIVADO_VERSION_SHORT=[version -short]"
+# puts $summary_fh "COMMANDS=read_vhdl,synth_design,get_files,get_property,report_compile_order"
+# puts $summary_fh "PROJECT_CREATED=NO"
+# puts $summary_fh "SYNTH_DESIGN_INVOKED=NO"
+# close $summary_fh
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 24 17:12:30 2026...

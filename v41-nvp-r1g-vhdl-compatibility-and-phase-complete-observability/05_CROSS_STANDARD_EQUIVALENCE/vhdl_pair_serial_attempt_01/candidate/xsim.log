@@ -1,0 +1,24 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Aug 24 17:37:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/candidate_serial_snapshot/xsim_script.tcl
+# xsim {candidate_serial_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_serial_attempt_01/candidate/run.tcl}
+Time resolution is 1 ps
+source C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_serial_attempt_01/candidate/run.tcl
+## open_vcd {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_serial_attempt_01/candidate/top_observables.vcd}
+## log_vcd [get_objects /tb_r1f_transaction_serial_counter/*]
+## run all
+Note: PASS TRANSACTION_INDEX_16_UNIQUE_AT_300
+Time: 6050 ns  Iteration: 0  Process: /tb_r1f_transaction_serial_counter/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/tests/v41/tb_r1f_transaction_serial_counter.vhd
+Note: PASS R1F_TRANSACTION_SERIAL_CLEAR
+Time: 6056 ns  Iteration: 0  Process: /tb_r1f_transaction_serial_counter/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/tests/v41/tb_r1f_transaction_serial_counter.vhd
+$stop called at time : 6056 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/tests/v41/tb_r1f_transaction_serial_counter.vhd" Line 59
+## close_vcd
+## quit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 17:37:31 2026...

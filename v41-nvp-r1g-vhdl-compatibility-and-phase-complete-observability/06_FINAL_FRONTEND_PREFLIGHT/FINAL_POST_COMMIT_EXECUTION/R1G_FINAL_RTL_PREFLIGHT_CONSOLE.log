@@ -1,0 +1,1526 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 18:37:58 2026
+# Process ID         : 10868
+# Current directory  : C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY
+# Command line       : vivado.exe -mode batch -log C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\06_FINAL_FRONTEND_PREFLIGHT\R1G_FINAL_RTL_PREFLIGHT_CONSOLE.log -journal C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\06_FINAL_FRONTEND_PREFLIGHT\R1G_FINAL_RTL_PREFLIGHT_CONSOLE.jou -source C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\scripts\r1g_final_rtl_elaboration_preflight.tcl -tclargs C:\FPGA\WORKTREES\V41_NVP_R1G_VHDL_COMPATIBILITY C:\FPGA\V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\06_FINAL_FRONTEND_PREFLIGHT\FINAL_POST_COMMIT_EXECUTION e112a5addb7ac62700a9a71af81bf368fad0bada 3a59ebec130103055d24a3a32ecda00dedde5534
+# Log file           : C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/06_FINAL_FRONTEND_PREFLIGHT/R1G_FINAL_RTL_PREFLIGHT_CONSOLE.log
+# Journal file       : C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\06_FINAL_FRONTEND_PREFLIGHT\R1G_FINAL_RTL_PREFLIGHT_CONSOLE.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7172 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\scripts\r1g_final_rtl_elaboration_preflight.tcl}
+# if {$argc != 5} {
+#   puts stderr "usage: r1g_final_rtl_elaboration_preflight.tcl REPOSITORY_ROOT WORK_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT SOURCE_GIT_TREE"
+#   exit 2
+# }
+# set repo_root [file normalize [lindex $argv 0]]
+# set work_root [file normalize [lindex $argv 1]]
+# set evidence_root [file normalize [lindex $argv 2]]
+# set source_commit [string tolower [lindex $argv 3]]
+# set source_tree [string tolower [lindex $argv 4]]
+# set expected_branch diag/v41-nvp-r1g-vhdl-compatibility
+# set exact_r1f_parent 225544084dbfcaadb8592fcecc947aa1cec4970e
+# set exact_r1f_tree cfde8769af95cf20586391c411fab3ddfa2c87b6
+# set expected_vivado_version 2025.2
+# set expected_vivado_sw_build 6299465
+# set expected_part xc7a35tcsg325-2
+# set expected_top ahd_capture_top_xdma
+# set expected_xdma_sha256 EA651CA26A2FE4AA5201A5E88BA41D9BD737A3BF19D58AA89394D1CB8C1B0A7C
+# set expected_common_tcl_sha256 3A76FC7893B2188871B340E326B53C7EE39B93C19EF416EAD2611CA9FDA9CDC7
+# proc write_lines {path lines} {
+#   file mkdir [file dirname $path]
+#   set fh [open $path w]
+#   fconfigure $fh -encoding utf-8 -translation lf
+#   foreach line $lines {
+#     puts $fh $line
+#   }
+#   close $fh
+# }
+# proc sha256_file {path} {
+#   if {![file isfile $path]} {
+#     error "cannot hash missing file: $path"
+#   }
+#   set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
+#   foreach line [split $output "\n"] {
+#     set compact [string toupper \
+#       [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
+#     if {[regexp {^[0-9A-F]{64}$} $compact]} {
+#       return $compact
+#     }
+#   }
+#   error "certutil did not return a SHA-256 digest for $path"
+# }
+# proc directory_entries {path} {
+#   set result [list]
+#   if {![file exists $path]} {
+#     return $result
+#   }
+#   if {![file isdirectory $path]} {
+#     error "expected directory, found non-directory: $path"
+#   }
+#   foreach pattern [list * .*] {
+#     foreach item [glob -nocomplain -directory $path $pattern] {
+#       set tail [file tail $item]
+#       if {$tail ne "." && $tail ne ".."} {
+#         lappend result [file normalize $item]
+#       }
+#     }
+#   }
+#   return [lsort -unique $result]
+# }
+# proc path_inside_or_equal {child parent} {
+#   set child_native [string tolower [file nativename [file normalize $child]]]
+#   set parent_native [string trimright \
+#     [string tolower [file nativename [file normalize $parent]]] "\\/"]
+#   if {$child_native eq $parent_native} {
+#     return 1
+#   }
+#   return [expr {
+#     [string first "$parent_native\\" $child_native] == 0 ||
+#     [string first "$parent_native/" $child_native] == 0
+#   }]
+# }
+# proc compile_order_index {compile_names required_path} {
+#   set required_native [string tolower \
+#     [file nativename [file normalize $required_path]]]
+#   set index 0
+#   foreach name $compile_names {
+#     set name_native [string tolower \
+#       [file nativename [file normalize $name]]]
+#     if {$name_native eq $required_native} {
+#       return $index
+#     }
+#     incr index
+#   }
+#   return -1
+# }
+# if {![regexp {^[0-9a-f]{40}$} $source_commit]} {
+#   error "SOURCE_GIT_COMMIT must be exactly 40 lowercase hex digits"
+# }
+# if {![regexp {^[0-9a-f]{40}$} $source_tree]} {
+#   error "SOURCE_GIT_TREE must be exactly 40 lowercase hex digits"
+# }
+# if {![file isdirectory $repo_root]} {
+#   error "repository root is not a directory: $repo_root"
+# }
+# if {[path_inside_or_equal $work_root $repo_root] ||
+#     [path_inside_or_equal $evidence_root $repo_root]} {
+#   error "work and evidence roots must be outside the clean source repository"
+# }
+# if {[path_inside_or_equal $evidence_root $work_root]} {
+#   error "evidence root must not be inside the disposable work root"
+# }
+# if {[llength [directory_entries $work_root]] != 0} {
+#   error "preflight work root must be new or empty: $work_root"
+# }
+# set actual_commit [string tolower [string trim \
+#   [exec git -C $repo_root rev-parse HEAD]]]
+# set actual_tree [string tolower [string trim \
+#   [exec git -C $repo_root rev-parse {HEAD^{tree}}]]]
+# set actual_parent [string tolower [string trim \
+#   [exec git -C $repo_root rev-parse HEAD^]]]
+# set parent_tree [string tolower [string trim \
+#   [exec git -C $repo_root rev-parse {HEAD^^{tree}}]]]
+# set actual_branch [string trim \
+#   [exec git -C $repo_root symbolic-ref --short HEAD]]
+# set source_status [string trim \
+#   [exec git -C $repo_root status --porcelain --untracked-files=all]]
+# set commits_above_r1f [string trim [exec git -C $repo_root rev-list --count \
+#   [format "%s..%s" $exact_r1f_parent $source_commit]]]
+# if {$actual_commit ne $source_commit || $actual_tree ne $source_tree} {
+#   error "repository commit/tree does not match requested R1g identity"
+# }
+# if {$actual_parent ne $exact_r1f_parent || $parent_tree ne $exact_r1f_tree} {
+#   error "R1g source is not a direct child of the exact R1f commit/tree"
+# }
+# if {$commits_above_r1f ne "1"} {
+#   error "R1g must contain exactly one commit above R1f; got $commits_above_r1f"
+# }
+# if {$actual_branch ne $expected_branch} {
+#   error "branch mismatch: expected $expected_branch, got $actual_branch"
+# }
+# if {$source_status ne ""} {
+#   error "final preflight requires a fully clean source repository: $source_status"
+# }
+# set vivado_short [string trim [version -short]]
+# set vivado_detail [version]
+# set vivado_sw_build UNKNOWN
+# regexp {SW Build[ \t]+([0-9]+)} $vivado_detail -> vivado_sw_build
+# if {$vivado_short ne $expected_vivado_version ||
+#     $vivado_sw_build ne $expected_vivado_sw_build} {
+#   error "Vivado identity mismatch: $vivado_short / $vivado_sw_build"
+# }
+# set sv_rel_files [list \
+#   rtl/v41/axi_lite_host_bridge.sv \
+#   rtl/v41/axi_clock_lifecycle_monitor.sv \
+#   rtl/v41/axi_clock_measurement_regs.sv \
+#   rtl/v41/r1e_measurement_regs.sv \
+#   rtl/v41/nvp_i2c_tri_phase_probe.sv \
+#   rtl/v41/r1f_failed_txn_logger.sv \
+#   rtl/v41/r1f_measurement_regs.sv \
+#   rtl/v41/control_status_regs.sv \
+#   rtl/pio/pio_slot_adapter.sv \
+#   rtl/pio/pio_bar_target.sv \
+#   rtl/record/bt656_record_producer.sv \
+#   rtl/record/capture_mailbox.sv \
+#   rtl/video/video_capture.sv \
+#   rtl/video/physical_frontend.sv \
+#   rtl/top/ahd_capture_top_xdma.sv]
+# set vhdl_rel_files [list \
+#   rtl/nvp/nvp6134c_diagnostics_pkg.vhd \
+#   rtl/nvp/r1f_transaction_serial_counter.vhd \
+#   rtl/nvp/nvp6134c_i2c_bringup.vhd \
+#   rtl/nvp/nvp6134c_autoinit.vhd]
+# set xdc_rel_files [list \
+#   xdc/boards/current/xdma_pcie.xdc \
+#   xdc/boards/current/pins.xdc \
+#   xdc/boards/current/vdo_input_timing.xdc \
+#   xdc/boards/current/pcie_pio.xdc \
+#   xdc/boards/current/nvp_control.xdc \
+#   xdc/common/cdc.xdc \
+#   xdc/common/configuration_bank.xdc]
+# set sv_files [list]
+# foreach rel $sv_rel_files {
+#   lappend sv_files [file normalize [file join $repo_root $rel]]
+# }
+# set vhdl_files [list]
+# foreach rel $vhdl_rel_files {
+#   lappend vhdl_files [file normalize [file join $repo_root $rel]]
+# }
+# set xdc_files [list]
+# foreach rel $xdc_rel_files {
+#   lappend xdc_files [file normalize [file join $repo_root $rel]]
+# }
+# set xdma_source [file normalize \
+#   [file join $repo_root ip v41 xdma_v41_m1.xci]]
+# set common_tcl [file normalize \
+#   [file join $repo_root scripts v41 xdma_config_common.tcl]]
+# foreach required [concat $sv_files $vhdl_files $xdc_files \
+#     [list $xdma_source $common_tcl]] {
+#   if {![file isfile $required]} {
+#     error "required preflight input missing: $required"
+#   }
+# }
+# if {[sha256_file $xdma_source] ne $expected_xdma_sha256 ||
+#     [sha256_file $common_tcl] ne $expected_common_tcl_sha256} {
+#   error "frozen XDMA XCI or configuration helper identity mismatch"
+# }
+# set git_words [list]
+# for {set word_index 0} {$word_index < 5} {incr word_index} {
+#   set first [expr {$word_index * 8}]
+#   lappend git_words [string range $source_commit $first [expr {$first + 7}]]
+# }
+# set build_flags 32'h00000002
+# set generics [join [list \
+#   "SLOT_COUNT=2" \
+#   "GIT_SHA_W0=32'h[lindex $git_words 0]" \
+#   "GIT_SHA_W1=32'h[lindex $git_words 1]" \
+#   "GIT_SHA_W2=32'h[lindex $git_words 2]" \
+#   "GIT_SHA_W3=32'h[lindex $git_words 3]" \
+#   "GIT_SHA_W4=32'h[lindex $git_words 4]" \
+#   "BUILD_FLAGS=$build_flags" \
+#   "ENABLE_MAREK_INIT_TABLE=1"] " "]
+# file mkdir $evidence_root
+# set sentinel [file join $evidence_root \
+#   R1G_FINAL_RTL_ELABORATION_PREFLIGHT_CONSUMED.marker]
+# if {[file exists $sentinel]} {
+#   error "the sole final RTL elaboration preflight was already consumed: $sentinel"
+# }
+# set sentinel_fh [open $sentinel {WRONLY CREAT EXCL}]
+# fconfigure $sentinel_fh -encoding utf-8 -translation lf
+# puts $sentinel_fh "FINAL_RTL_ELABORATION_PREFLIGHTS=1"
+# puts $sentinel_fh "SOURCE_GIT_COMMIT=$source_commit"
+# puts $sentinel_fh "SOURCE_GIT_TREE=$source_tree"
+# puts $sentinel_fh "SOURCE_PARENT_COMMIT=$actual_parent"
+# puts $sentinel_fh "CONSUMED_BEFORE_CREATE_PROJECT=YES"
+# puts $sentinel_fh \
+#   "CONSUMED_UTC=[clock format [clock seconds] -gmt true -format {%Y-%m-%dT%H:%M:%SZ}]"
+# close $sentinel_fh
+create_project: Time (s): cpu = 00:00:26 ; elapsed = 00:00:32 . Memory (MB): peak = 538.180 ; gain = 221.082
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+import_ip: Time (s): cpu = 00:00:19 ; elapsed = 00:00:23 . Memory (MB): peak = 618.254 ; gain = 80.074
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'xdma_v41_m1'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'xdma_v41_m1'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'xdma_v41_m1'...
+INFO: [IP_Flow 19-1686] Generating 'Implementation' target for IP 'xdma_v41_m1'...
+INFO: [IP_Flow 19-1686] Generating 'Change Log' target for IP 'xdma_v41_m1'...
+generate_target: Time (s): cpu = 00:00:06 ; elapsed = 00:00:15 . Memory (MB): peak = 677.883 ; gain = 5.988
+Command: synth_design -rtl -name r1g_rtl_preflight -top ahd_capture_top_xdma -part xc7a35tcsg325-2
+Starting synth_design
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 22788
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:24 ; elapsed = 00:00:31 . Memory (MB): peak = 1403.293 ; gain = 539.359
+---------------------------------------------------------------------------------
+INFO: [Synth 8-11241] undeclared symbol 'RdDeQ', assumed default net type 'wire' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:179]
+INFO: [Synth 8-11241] undeclared symbol 'cfg_config_space_enable', assumed default net type 'wire' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:4347]
+INFO: [Synth 8-11241] undeclared symbol 'cfg_hot_reset_in', assumed default net type 'wire' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:4348]
+INFO: [Synth 8-11241] undeclared symbol 'usr_irq_fail', assumed default net type 'wire' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:4838]
+INFO: [Synth 8-6157] synthesizing module 'ahd_capture_top_xdma' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/top/ahd_capture_top_xdma.sv:7]
+	Parameter SLOT_COUNT bound to: 2 - type: integer 
+	Parameter GIT_SHA_W0 bound to: 32'b11100001000100101010010110101101 
+	Parameter GIT_SHA_W1 bound to: 32'b11011011011110101100011000100111 
+	Parameter GIT_SHA_W2 bound to: 32'b00000000101010011010011100011010 
+	Parameter GIT_SHA_W3 bound to: 32'b11111000000110111111001101101000 
+	Parameter GIT_SHA_W4 bound to: 32'b11111010110100001011101011011010 
+	Parameter BUILD_FLAGS bound to: 32'b00000000000000000000000000000010 
+	Parameter ENABLE_MAREK_INIT_TABLE bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'IBUF' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6155] done synthesizing module 'IBUF' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6157] synthesizing module 'IBUFDS_GTE2' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83044]
+INFO: [Synth 8-6155] done synthesizing module 'IBUFDS_GTE2' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83044]
+INFO: [Synth 8-6157] synthesizing module 'IOBUF' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:87566]
+INFO: [Synth 8-6155] done synthesizing module 'IOBUF' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:87566]
+INFO: [Synth 8-638] synthesizing module 'v40a_nvp_autoinit' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/nvp6134c_autoinit.vhd:42]
+	Parameter CLK_HZ bound to: 62500000 - type: integer 
+	Parameter I2C_HZ bound to: 25000 - type: integer 
+	Parameter ENABLE_MAREK_INIT_TABLE bound to: 1 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'nvp_i2c_bringup_seq_v38ek' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/nvp6134c_i2c_bringup.vhd:93]
+	Parameter CLK_HZ bound to: 62500000 - type: integer 
+	Parameter I2C_HZ bound to: 25000 - type: integer 
+	Parameter ENABLE_MAREK_INIT_TABLE bound to: 1 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'r1f_transaction_serial_counter' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/r1f_transaction_serial_counter.vhd:19]
+INFO: [Synth 8-256] done synthesizing module 'r1f_transaction_serial_counter' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/r1f_transaction_serial_counter.vhd:19]
+INFO: [Synth 8-256] done synthesizing module 'nvp_i2c_bringup_seq_v38ek' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/nvp6134c_i2c_bringup.vhd:93]
+INFO: [Synth 8-256] done synthesizing module 'v40a_nvp_autoinit' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/nvp/nvp6134c_autoinit.vhd:42]
+INFO: [Synth 8-6157] synthesizing module 'v41_axi_clock_lifecycle_monitor' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_clock_lifecycle_monitor.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'v41_axi_clock_lifecycle_monitor' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_clock_lifecycle_monitor.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'nvp_i2c_tri_phase_probe' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/nvp_i2c_tri_phase_probe.sv:16]
+	Parameter CLK_HZ bound to: 62500000 - type: integer 
+	Parameter PROBE_I2C_HZ bound to: 25000 - type: integer 
+	Parameter TARGET_OPPORTUNITIES_PER_PHASE bound to: 10000 - type: integer 
+	Parameter BLOCK_COUNT_PER_PHASE bound to: 10 - type: integer 
+	Parameter NACK_INDEX_CAPACITY_PER_PHASE bound to: 512 - type: integer 
+	Parameter MAX_TRANSACTION_ATTEMPTS_PER_PHASE bound to: 12000 - type: integer 
+	Parameter POST_INIT_GUARD_CYCLES bound to: 62500 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'nvp_i2c_tri_phase_probe' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/nvp_i2c_tri_phase_probe.sv:16]
+INFO: [Synth 8-6157] synthesizing module 'v41_r1f_failed_txn_logger' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1f_failed_txn_logger.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'v41_r1f_failed_txn_logger' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1f_failed_txn_logger.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c3r1_physical_frontend' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/video/physical_frontend.sv:11]
+INFO: [Synth 8-6157] synthesizing module 'IBUF__parameterized0' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+	Parameter IBUF_LOW_PWR bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IBUF__parameterized0' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6157] synthesizing module 'IDELAYE2' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85109]
+	Parameter CINVCTRL_SEL bound to: FALSE - type: string 
+	Parameter DELAY_SRC bound to: IDATAIN - type: string 
+	Parameter HIGH_PERFORMANCE_MODE bound to: TRUE - type: string 
+	Parameter IDELAY_TYPE bound to: FIXED - type: string 
+	Parameter IDELAY_VALUE bound to: 0 - type: integer 
+	Parameter PIPE_SEL bound to: FALSE - type: string 
+	Parameter REFCLK_FREQUENCY bound to: 1.980000e+02 - type: double 
+	Parameter SIGNAL_PATTERN bound to: DATA - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IDELAYE2' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85109]
+INFO: [Synth 8-6157] synthesizing module 'IDDR' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974]
+	Parameter DDR_CLK_EDGE bound to: SAME_EDGE_PIPELINED - type: string 
+	Parameter INIT_Q1 bound to: 1'b0 
+	Parameter INIT_Q2 bound to: 1'b0 
+	Parameter SRTYPE bound to: SYNC - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IDDR' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974]
+INFO: [Synth 8-6157] synthesizing module 'BUFIO' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2951]
+INFO: [Synth 8-6155] done synthesizing module 'BUFIO' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2951]
+INFO: [Synth 8-6157] synthesizing module 'BUFG' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2678]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2678]
+INFO: [Synth 8-6157] synthesizing module 'MMCME2_BASE' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:95964]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 8.000000e+00 - type: double 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000e+00 - type: double 
+	Parameter CLKIN1_PERIOD bound to: 6.734000e+00 - type: double 
+	Parameter CLKOUT0_DIVIDE_F bound to: 6.000000e+00 - type: double 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 5.000000e-01 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000e+00 - type: double 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter REF_JITTER1 bound to: 1.000000e-02 - type: double 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'MMCME2_BASE' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:95964]
+INFO: [Synth 8-6157] synthesizing module 'IDELAYCTRL' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85096]
+INFO: [Synth 8-6155] done synthesizing module 'IDELAYCTRL' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85096]
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c3r1_physical_frontend' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/video/physical_frontend.sv:11]
+INFO: [Synth 8-6157] synthesizing module 'v41_r1f_measurement_regs' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1f_measurement_regs.sv:5]
+	Parameter SAFE_PROBE_BANK bound to: 8'b00000000 
+	Parameter SAFE_PROBE_REGISTER bound to: 8'b10000101 
+	Parameter SAFE_PROBE_DATA bound to: 8'b00000000 
+	Parameter SAFE_PROBE_TARGET_PROVEN bound to: 1'b1 
+INFO: [Synth 8-6155] done synthesizing module 'v41_r1f_measurement_regs' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1f_measurement_regs.sv:5]
+INFO: [Synth 8-6157] synthesizing module 'v41_r1e_measurement_regs' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1e_measurement_regs.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'v41_axi_clock_measurement_regs' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_clock_measurement_regs.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'v41_axi_clock_measurement_regs' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_clock_measurement_regs.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'v41_r1e_measurement_regs' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/r1e_measurement_regs.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'v41_axi_lite_host_bridge' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_lite_host_bridge.sv:7]
+INFO: [Synth 8-6155] done synthesizing module 'v41_axi_lite_host_bridge' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/axi_lite_host_bridge.sv:7]
+INFO: [Synth 8-6157] synthesizing module 'v41_control_status_regs' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/control_status_regs.sv:6]
+	Parameter BLOCK_ID bound to: -1542845433 - type: integer 
+	Parameter GIT_SHA_W0 bound to: 32'b11100001000100101010010110101101 
+	Parameter GIT_SHA_W1 bound to: 32'b11011011011110101100011000100111 
+	Parameter GIT_SHA_W2 bound to: 32'b00000000101010011010011100011010 
+	Parameter GIT_SHA_W3 bound to: 32'b11111000000110111111001101101000 
+	Parameter GIT_SHA_W4 bound to: 32'b11111010110100001011101011011010 
+	Parameter BUILD_FLAGS bound to: 32'b00000000000000000000000000000010 
+INFO: [Synth 8-6155] done synthesizing module 'v41_control_status_regs' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/control_status_regs.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c2_capture_subsystem' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/video/video_capture.sv:3]
+	Parameter SLOT_COUNT bound to: 2 - type: integer 
+	Parameter BLOCK_OR_FW_ID bound to: -1542845433 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_async_rst' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+	Parameter DEST_SYNC_FF bound to: 4 - type: integer 
+	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
+	Parameter RST_ACTIVE_HIGH bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_async_rst' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c2_capture_mailbox' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/capture_mailbox.sv:5]
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c2_capture_mailbox' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/capture_mailbox.sv:5]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c2_bt656_slot_producer' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:3]
+	Parameter BLOCK_OR_FW_ID bound to: -1542845433 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c2_bt656_slot_producer' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c5a_pio_slot_adapter' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_slot_adapter.sv:6]
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c5a_pio_slot_adapter' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_slot_adapter.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'g0p8c2_bar_target' [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:3]
+	Parameter SLOT_COUNT bound to: 2 - type: integer 
+	Parameter BLOCK_OR_FW_ID bound to: -1542845433 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_sdpram' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+	Parameter MEMORY_SIZE bound to: 32768 - type: integer 
+	Parameter MEMORY_PRIMITIVE bound to: block - type: string 
+	Parameter CLOCKING_MODE bound to: independent_clock - type: string 
+	Parameter ECC_MODE bound to: no_ecc - type: string 
+	Parameter MEMORY_INIT_FILE bound to: none - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 0 - type: integer 
+	Parameter WAKEUP_TIME bound to: disable_sleep - type: string 
+	Parameter AUTO_SLEEP_TIME bound to: 0 - type: integer 
+	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
+	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
+	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
+	Parameter SIM_ASSERT_CHK bound to: 1 - type: integer 
+	Parameter WRITE_DATA_WIDTH_A bound to: 64 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_A bound to: 64 - type: integer 
+	Parameter ADDR_WIDTH_A bound to: 9 - type: integer 
+	Parameter READ_DATA_WIDTH_B bound to: 64 - type: integer 
+	Parameter ADDR_WIDTH_B bound to: 9 - type: integer 
+	Parameter READ_RESET_VALUE_B bound to: 0 - type: string 
+	Parameter READ_LATENCY_B bound to: 1 - type: integer 
+	Parameter WRITE_MODE_B bound to: read_first - type: string 
+	Parameter RST_MODE_B bound to: SYNC - type: string 
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_base' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_base' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_sdpram' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c2_bar_target' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'g0p8c2_capture_subsystem' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/video/video_capture.sv:3]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/synth/xdma_v41_m1.sv:53]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_core_top' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:60]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_axis_rq_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_rq_if.svh:3]
+	Parameter DATA_WIDTH bound to: 64 - type: integer 
+	Parameter USER_WIDTH bound to: 60 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_axis_rq_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_rq_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_axis_cc_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_cc_if.svh:3]
+	Parameter DATA_WIDTH bound to: 64 - type: integer 
+	Parameter USER_WIDTH bound to: 33 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_axis_cc_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_cc_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_axis_rc_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_rc_if.svh:3]
+	Parameter DATA_WIDTH bound to: 64 - type: integer 
+	Parameter USER_WIDTH bound to: 75 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_axis_rc_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_rc_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_axis_cq_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_cq_if.svh:3]
+	Parameter DATA_WIDTH bound to: 64 - type: integer 
+	Parameter USER_WIDTH bound to: 85 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_axis_cq_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_axis_cq_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_misc_output_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_misc_output_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_misc_output_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_misc_output_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_misc_input_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_misc_input_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_misc_input_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_misc_input_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_gic_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_gic_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_gic_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_gic_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_fabric_output_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_fabric_output_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_fabric_output_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_fabric_output_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_fabric_input_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_fabric_input_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_fabric_input_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_fabric_input_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_4Bx2048_4Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_4Bx2048_4Bwe_ram_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_4Bx2048_4Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_4Bx2048_4Bwe_ram_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_16Bx2048_4Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_16Bx2048_4Bwe_ram_if.svh:5]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_16Bx2048_4Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_16Bx2048_4Bwe_ram_if.svh:5]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_2Bx2048_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_2Bx2048_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_2Bx2048_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_2Bx2048_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_8Bx2048_4Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_8Bx2048_4Bwe_ram_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_8Bx2048_4Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_8Bx2048_4Bwe_ram_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpli_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpli_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpli_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpli_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpli_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpli_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpli_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpli_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpli_if.svh:4]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_dsc_in_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_dsc_in_if.svh:5]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_dsc_in_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_dsc_in_if.svh:5]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_dsc_out_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_dsc_out_if.svh:5]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_dsc_out_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_dsc_out_if.svh:5]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx512_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx512_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx512_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx512_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx2048_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx2048_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx2048_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx2048_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx1024_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx1024_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx1024_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx1024_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_64Bx256_32Bwe_ram_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_64Bx256_32Bwe_ram_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'dma_pcie_mi_dsc_cpld_if' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6155] done synthesizing module 'dma_pcie_mi_dsc_cpld_if' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/dma_pcie_mi_dsc_cpld_if.svh:3]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized0' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized0' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOAsync' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOAsync' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOHead' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOHead' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized1' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized1' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized0' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized0' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized1' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized1' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized2' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOHead__parameterized2' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:739]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized2' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized2' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOAsync__parameterized0' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOAsync__parameterized0' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOAsync__parameterized1' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOAsync__parameterized1' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:571]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized3' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized3' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized4' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized4' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFOHead2' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:927]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFOHead2' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:927]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized5' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized5' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized6' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v4_2_2_GenericFIFO__parameterized6' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:279]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_single' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:152]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_single' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:152]
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_sdpram__parameterized0' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_base__parameterized0' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6059] Synth Info: [XPM_MEMORY 20-2] MEMORY_INIT_FILE (none), MEMORY_INIT_PARAM together specify no memory initialization. Initial memory contents will be all 0's.   [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:524]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_base__parameterized0' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_sdpram__parameterized0' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_sdpram__parameterized1' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_base__parameterized1' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6059] Synth Info: [XPM_MEMORY 20-2] MEMORY_INIT_FILE (none), MEMORY_INIT_PARAM together specify no memory initialization. Initial memory contents will be all 0's.   [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:524]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_base__parameterized1' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_sdpram__parameterized1' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_pcie2_to_pcie3_wrapper' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_pcie2_to_pcie3_wrapper.sv:58]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_axi_stream_intf' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_axi_stream_intf.sv:58]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_rx_demux' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:78]
+INFO: [Synth 8-638] synthesizing module 'pcie2_fifo_generator_dma_cpl' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/synth/pcie2_fifo_generator_dma_cpl.vhd:81]
+	Parameter C_COMMON_CLOCK bound to: 1 - type: integer 
+	Parameter C_SELECT_XPM bound to: 0 - type: integer 
+	Parameter C_COUNT_TYPE bound to: 0 - type: integer 
+	Parameter C_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_DEFAULT_VALUE bound to: BlankString - type: string 
+	Parameter C_DIN_WIDTH bound to: 18 - type: integer 
+	Parameter C_DOUT_RST_VAL bound to: 0 - type: string 
+	Parameter C_DOUT_WIDTH bound to: 18 - type: integer 
+	Parameter C_ENABLE_RLOCS bound to: 0 - type: integer 
+	Parameter C_FAMILY bound to: artix7 - type: string 
+	Parameter C_FULL_FLAGS_RST_VAL bound to: 1 - type: integer 
+	Parameter C_HAS_ALMOST_EMPTY bound to: 0 - type: integer 
+	Parameter C_HAS_ALMOST_FULL bound to: 0 - type: integer 
+	Parameter C_HAS_BACKUP bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_INT_CLK bound to: 0 - type: integer 
+	Parameter C_HAS_MEMINIT_FILE bound to: 0 - type: integer 
+	Parameter C_HAS_OVERFLOW bound to: 0 - type: integer 
+	Parameter C_HAS_RD_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_RD_RST bound to: 0 - type: integer 
+	Parameter C_HAS_RST bound to: 1 - type: integer 
+	Parameter C_HAS_SRST bound to: 0 - type: integer 
+	Parameter C_HAS_UNDERFLOW bound to: 0 - type: integer 
+	Parameter C_HAS_VALID bound to: 0 - type: integer 
+	Parameter C_HAS_WR_ACK bound to: 0 - type: integer 
+	Parameter C_HAS_WR_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_WR_RST bound to: 0 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE bound to: 0 - type: integer 
+	Parameter C_INIT_WR_PNTR_VAL bound to: 0 - type: integer 
+	Parameter C_MEMORY_TYPE bound to: 1 - type: integer 
+	Parameter C_MIF_FILE_NAME bound to: BlankString - type: string 
+	Parameter C_OPTIMIZATION_MODE bound to: 0 - type: integer 
+	Parameter C_OVERFLOW_LOW bound to: 0 - type: integer 
+	Parameter C_PRELOAD_LATENCY bound to: 1 - type: integer 
+	Parameter C_PRELOAD_REGS bound to: 0 - type: integer 
+	Parameter C_PRIM_FIFO_TYPE bound to: 4kx4 - type: string 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL bound to: 2 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_NEGATE_VAL bound to: 3 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL bound to: 1022 - type: integer 
+	Parameter C_PROG_FULL_THRESH_NEGATE_VAL bound to: 1021 - type: integer 
+	Parameter C_PROG_FULL_TYPE bound to: 0 - type: integer 
+	Parameter C_RD_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_RD_DEPTH bound to: 1024 - type: integer 
+	Parameter C_RD_FREQ bound to: 1 - type: integer 
+	Parameter C_RD_PNTR_WIDTH bound to: 10 - type: integer 
+	Parameter C_UNDERFLOW_LOW bound to: 0 - type: integer 
+	Parameter C_USE_DOUT_RST bound to: 1 - type: integer 
+	Parameter C_USE_ECC bound to: 0 - type: integer 
+	Parameter C_USE_EMBEDDED_REG bound to: 0 - type: integer 
+	Parameter C_USE_PIPELINE_REG bound to: 0 - type: integer 
+	Parameter C_POWER_SAVING_MODE bound to: 0 - type: integer 
+	Parameter C_USE_FIFO16_FLAGS bound to: 0 - type: integer 
+	Parameter C_USE_FWFT_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_VALID_LOW bound to: 0 - type: integer 
+	Parameter C_WR_ACK_LOW bound to: 0 - type: integer 
+	Parameter C_WR_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_WR_DEPTH bound to: 1024 - type: integer 
+	Parameter C_WR_FREQ bound to: 1 - type: integer 
+	Parameter C_WR_PNTR_WIDTH bound to: 10 - type: integer 
+	Parameter C_WR_RESPONSE_LATENCY bound to: 1 - type: integer 
+	Parameter C_MSGON_VAL bound to: 1 - type: integer 
+	Parameter C_ENABLE_RST_SYNC bound to: 1 - type: integer 
+	Parameter C_EN_SAFETY_CKT bound to: 1 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE bound to: 0 - type: integer 
+	Parameter C_SYNCHRONIZER_STAGE bound to: 2 - type: integer 
+	Parameter C_INTERFACE_TYPE bound to: 1 - type: integer 
+	Parameter C_AXI_TYPE bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_WR_CHANNEL bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_RD_CHANNEL bound to: 1 - type: integer 
+	Parameter C_HAS_SLAVE_CE bound to: 0 - type: integer 
+	Parameter C_HAS_MASTER_CE bound to: 0 - type: integer 
+	Parameter C_ADD_NGC_CONSTRAINT bound to: 0 - type: integer 
+	Parameter C_USE_COMMON_OVERFLOW bound to: 0 - type: integer 
+	Parameter C_USE_COMMON_UNDERFLOW bound to: 0 - type: integer 
+	Parameter C_USE_DEFAULT_SETTINGS bound to: 0 - type: integer 
+	Parameter C_AXI_ID_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter C_AXI_DATA_WIDTH bound to: 64 - type: integer 
+	Parameter C_AXI_LEN_WIDTH bound to: 8 - type: integer 
+	Parameter C_AXI_LOCK_WIDTH bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_ID bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_AWUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_WUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_BUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_ARUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_RUSER bound to: 0 - type: integer 
+	Parameter C_AXI_ARUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_AWUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_WUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_BUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_RUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TDATA bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TID bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TDEST bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TUSER bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TREADY bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TLAST bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TSTRB bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TKEEP bound to: 1 - type: integer 
+	Parameter C_AXIS_TDATA_WIDTH bound to: 64 - type: integer 
+	Parameter C_AXIS_TID_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXIS_TDEST_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXIS_TUSER_WIDTH bound to: 22 - type: integer 
+	Parameter C_AXIS_TSTRB_WIDTH bound to: 8 - type: integer 
+	Parameter C_AXIS_TKEEP_WIDTH bound to: 8 - type: integer 
+	Parameter C_WACH_TYPE bound to: 0 - type: integer 
+	Parameter C_WDCH_TYPE bound to: 0 - type: integer 
+	Parameter C_WRCH_TYPE bound to: 0 - type: integer 
+	Parameter C_RACH_TYPE bound to: 0 - type: integer 
+	Parameter C_RDCH_TYPE bound to: 0 - type: integer 
+	Parameter C_AXIS_TYPE bound to: 0 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WACH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WDCH bound to: 1 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WRCH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_RACH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_RDCH bound to: 1 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_AXIS bound to: 1 - type: integer 
+	Parameter C_APPLICATION_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_PRIM_FIFO_TYPE_WACH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_WDCH bound to: 1kx36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_WRCH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_RACH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_RDCH bound to: 1kx36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_AXIS bound to: 512x72 - type: string 
+	Parameter C_USE_ECC_WACH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_WDCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_WRCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_RACH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_RDCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_AXIS bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_DIN_WIDTH_WACH bound to: 32 - type: integer 
+	Parameter C_DIN_WIDTH_WDCH bound to: 64 - type: integer 
+	Parameter C_DIN_WIDTH_WRCH bound to: 2 - type: integer 
+	Parameter C_DIN_WIDTH_RACH bound to: 32 - type: integer 
+	Parameter C_DIN_WIDTH_RDCH bound to: 64 - type: integer 
+	Parameter C_DIN_WIDTH_AXIS bound to: 95 - type: integer 
+	Parameter C_WR_DEPTH_WACH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_WDCH bound to: 1024 - type: integer 
+	Parameter C_WR_DEPTH_WRCH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_RACH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_RDCH bound to: 1024 - type: integer 
+	Parameter C_WR_DEPTH_AXIS bound to: 64 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WACH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WDCH bound to: 10 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WRCH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_RACH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_RDCH bound to: 10 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_AXIS bound to: 6 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WACH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WDCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WRCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_RACH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_RDCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_AXIS bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WACH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WDCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WRCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_RACH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_RDCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_AXIS bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_AXIS bound to: 1 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WACH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WDCH bound to: 1023 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WRCH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_RACH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_RDCH bound to: 1023 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_AXIS bound to: 45 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WACH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WDCH bound to: 1022 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WRCH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_RACH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_RDCH bound to: 1022 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS bound to: 62 - type: integer 
+	Parameter C_REG_SLICE_MODE_WACH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_WDCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_WRCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_RACH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_RDCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_AXIS bound to: 0 - type: integer 
+INFO: [Synth 8-3491] module 'fifo_generator_v13_2_14' declared at 'c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/hdl/fifo_generator_v13_2_vhsyn_rfs.vhd:38308' bound to instance 'U0' of component 'fifo_generator_v13_2_14' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/synth/pcie2_fifo_generator_dma_cpl.vhd:564]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_sync_rst' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1059]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_sync_rst' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1059]
+INFO: [Synth 8-256] done synthesizing module 'pcie2_fifo_generator_dma_cpl' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/synth/pcie2_fifo_generator_dma_cpl.vhd:81]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'pcie2_fifo_generator_dma_cpl' is unconnected for instance 'dma_cpl_fifo_inst' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:286]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'pcie2_fifo_generator_dma_cpl' is unconnected for instance 'dma_cpl_fifo_inst' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:286]
+WARNING: [Synth 8-7023] instance 'dma_cpl_fifo_inst' of module 'pcie2_fifo_generator_dma_cpl' has 17 connections declared, but only 15 given [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:286]
+INFO: [Synth 8-638] synthesizing module 'pcie2_fifo_generator_tgt_brdg' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_4/synth/pcie2_fifo_generator_tgt_brdg.vhd:81]
+	Parameter C_COMMON_CLOCK bound to: 1 - type: integer 
+	Parameter C_SELECT_XPM bound to: 0 - type: integer 
+	Parameter C_COUNT_TYPE bound to: 0 - type: integer 
+	Parameter C_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_DEFAULT_VALUE bound to: BlankString - type: string 
+	Parameter C_DIN_WIDTH bound to: 18 - type: integer 
+	Parameter C_DOUT_RST_VAL bound to: 0 - type: string 
+	Parameter C_DOUT_WIDTH bound to: 18 - type: integer 
+	Parameter C_ENABLE_RLOCS bound to: 0 - type: integer 
+	Parameter C_FAMILY bound to: artix7 - type: string 
+	Parameter C_FULL_FLAGS_RST_VAL bound to: 1 - type: integer 
+	Parameter C_HAS_ALMOST_EMPTY bound to: 0 - type: integer 
+	Parameter C_HAS_ALMOST_FULL bound to: 0 - type: integer 
+	Parameter C_HAS_BACKUP bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_INT_CLK bound to: 0 - type: integer 
+	Parameter C_HAS_MEMINIT_FILE bound to: 0 - type: integer 
+	Parameter C_HAS_OVERFLOW bound to: 0 - type: integer 
+	Parameter C_HAS_RD_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_RD_RST bound to: 0 - type: integer 
+	Parameter C_HAS_RST bound to: 1 - type: integer 
+	Parameter C_HAS_SRST bound to: 0 - type: integer 
+	Parameter C_HAS_UNDERFLOW bound to: 0 - type: integer 
+	Parameter C_HAS_VALID bound to: 0 - type: integer 
+	Parameter C_HAS_WR_ACK bound to: 0 - type: integer 
+	Parameter C_HAS_WR_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_HAS_WR_RST bound to: 0 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE bound to: 0 - type: integer 
+	Parameter C_INIT_WR_PNTR_VAL bound to: 0 - type: integer 
+	Parameter C_MEMORY_TYPE bound to: 1 - type: integer 
+	Parameter C_MIF_FILE_NAME bound to: BlankString - type: string 
+	Parameter C_OPTIMIZATION_MODE bound to: 0 - type: integer 
+	Parameter C_OVERFLOW_LOW bound to: 0 - type: integer 
+	Parameter C_PRELOAD_LATENCY bound to: 1 - type: integer 
+	Parameter C_PRELOAD_REGS bound to: 0 - type: integer 
+	Parameter C_PRIM_FIFO_TYPE bound to: 4kx4 - type: string 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL bound to: 2 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_NEGATE_VAL bound to: 3 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL bound to: 1022 - type: integer 
+	Parameter C_PROG_FULL_THRESH_NEGATE_VAL bound to: 1021 - type: integer 
+	Parameter C_PROG_FULL_TYPE bound to: 0 - type: integer 
+	Parameter C_RD_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_RD_DEPTH bound to: 1024 - type: integer 
+	Parameter C_RD_FREQ bound to: 1 - type: integer 
+	Parameter C_RD_PNTR_WIDTH bound to: 10 - type: integer 
+	Parameter C_UNDERFLOW_LOW bound to: 0 - type: integer 
+	Parameter C_USE_DOUT_RST bound to: 1 - type: integer 
+	Parameter C_USE_ECC bound to: 0 - type: integer 
+	Parameter C_USE_EMBEDDED_REG bound to: 0 - type: integer 
+	Parameter C_USE_PIPELINE_REG bound to: 0 - type: integer 
+	Parameter C_POWER_SAVING_MODE bound to: 0 - type: integer 
+	Parameter C_USE_FIFO16_FLAGS bound to: 0 - type: integer 
+	Parameter C_USE_FWFT_DATA_COUNT bound to: 0 - type: integer 
+	Parameter C_VALID_LOW bound to: 0 - type: integer 
+	Parameter C_WR_ACK_LOW bound to: 0 - type: integer 
+	Parameter C_WR_DATA_COUNT_WIDTH bound to: 10 - type: integer 
+	Parameter C_WR_DEPTH bound to: 1024 - type: integer 
+	Parameter C_WR_FREQ bound to: 1 - type: integer 
+	Parameter C_WR_PNTR_WIDTH bound to: 10 - type: integer 
+	Parameter C_WR_RESPONSE_LATENCY bound to: 1 - type: integer 
+	Parameter C_MSGON_VAL bound to: 1 - type: integer 
+	Parameter C_ENABLE_RST_SYNC bound to: 1 - type: integer 
+	Parameter C_EN_SAFETY_CKT bound to: 1 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE bound to: 0 - type: integer 
+	Parameter C_SYNCHRONIZER_STAGE bound to: 2 - type: integer 
+	Parameter C_INTERFACE_TYPE bound to: 1 - type: integer 
+	Parameter C_AXI_TYPE bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_WR_CHANNEL bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_RD_CHANNEL bound to: 1 - type: integer 
+	Parameter C_HAS_SLAVE_CE bound to: 0 - type: integer 
+	Parameter C_HAS_MASTER_CE bound to: 0 - type: integer 
+	Parameter C_ADD_NGC_CONSTRAINT bound to: 0 - type: integer 
+	Parameter C_USE_COMMON_OVERFLOW bound to: 0 - type: integer 
+	Parameter C_USE_COMMON_UNDERFLOW bound to: 0 - type: integer 
+	Parameter C_USE_DEFAULT_SETTINGS bound to: 0 - type: integer 
+	Parameter C_AXI_ID_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter C_AXI_DATA_WIDTH bound to: 64 - type: integer 
+	Parameter C_AXI_LEN_WIDTH bound to: 8 - type: integer 
+	Parameter C_AXI_LOCK_WIDTH bound to: 1 - type: integer 
+	Parameter C_HAS_AXI_ID bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_AWUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_WUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_BUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_ARUSER bound to: 0 - type: integer 
+	Parameter C_HAS_AXI_RUSER bound to: 0 - type: integer 
+	Parameter C_AXI_ARUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_AWUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_WUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_BUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_RUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TDATA bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TID bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TDEST bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TUSER bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TREADY bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TLAST bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TSTRB bound to: 0 - type: integer 
+	Parameter C_HAS_AXIS_TKEEP bound to: 1 - type: integer 
+	Parameter C_AXIS_TDATA_WIDTH bound to: 64 - type: integer 
+	Parameter C_AXIS_TID_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXIS_TDEST_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXIS_TUSER_WIDTH bound to: 22 - type: integer 
+	Parameter C_AXIS_TSTRB_WIDTH bound to: 8 - type: integer 
+	Parameter C_AXIS_TKEEP_WIDTH bound to: 8 - type: integer 
+	Parameter C_WACH_TYPE bound to: 0 - type: integer 
+	Parameter C_WDCH_TYPE bound to: 0 - type: integer 
+	Parameter C_WRCH_TYPE bound to: 0 - type: integer 
+	Parameter C_RACH_TYPE bound to: 0 - type: integer 
+	Parameter C_RDCH_TYPE bound to: 0 - type: integer 
+	Parameter C_AXIS_TYPE bound to: 0 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WACH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WDCH bound to: 1 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_WRCH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_RACH bound to: 2 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_RDCH bound to: 1 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE_AXIS bound to: 2 - type: integer 
+	Parameter C_APPLICATION_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_APPLICATION_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_PRIM_FIFO_TYPE_WACH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_WDCH bound to: 1kx36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_WRCH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_RACH bound to: 512x36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_RDCH bound to: 1kx36 - type: string 
+	Parameter C_PRIM_FIFO_TYPE_AXIS bound to: 512x72 - type: string 
+	Parameter C_USE_ECC_WACH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_WDCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_WRCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_RACH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_RDCH bound to: 0 - type: integer 
+	Parameter C_USE_ECC_AXIS bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_ERROR_INJECTION_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_DIN_WIDTH_WACH bound to: 32 - type: integer 
+	Parameter C_DIN_WIDTH_WDCH bound to: 64 - type: integer 
+	Parameter C_DIN_WIDTH_WRCH bound to: 2 - type: integer 
+	Parameter C_DIN_WIDTH_RACH bound to: 32 - type: integer 
+	Parameter C_DIN_WIDTH_RDCH bound to: 64 - type: integer 
+	Parameter C_DIN_WIDTH_AXIS bound to: 95 - type: integer 
+	Parameter C_WR_DEPTH_WACH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_WDCH bound to: 1024 - type: integer 
+	Parameter C_WR_DEPTH_WRCH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_RACH bound to: 16 - type: integer 
+	Parameter C_WR_DEPTH_RDCH bound to: 1024 - type: integer 
+	Parameter C_WR_DEPTH_AXIS bound to: 16 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WACH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WDCH bound to: 10 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_WRCH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_RACH bound to: 4 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_RDCH bound to: 10 - type: integer 
+	Parameter C_WR_PNTR_WIDTH_AXIS bound to: 4 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WACH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WDCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_WRCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_RACH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_RDCH bound to: 0 - type: integer 
+	Parameter C_HAS_DATA_COUNTS_AXIS bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WACH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WDCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_WRCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_RACH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_RDCH bound to: 0 - type: integer 
+	Parameter C_HAS_PROG_FLAGS_AXIS bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_PROG_FULL_TYPE_AXIS bound to: 1 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WACH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WDCH bound to: 1023 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_WRCH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_RACH bound to: 15 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_RDCH bound to: 1023 - type: integer 
+	Parameter C_PROG_FULL_THRESH_ASSERT_VAL_AXIS bound to: 9 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WACH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WDCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_WRCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_RACH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_RDCH bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_TYPE_AXIS bound to: 0 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WACH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WDCH bound to: 1022 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_WRCH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_RACH bound to: 14 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_RDCH bound to: 1022 - type: integer 
+	Parameter C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS bound to: 14 - type: integer 
+	Parameter C_REG_SLICE_MODE_WACH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_WDCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_WRCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_RACH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_RDCH bound to: 0 - type: integer 
+	Parameter C_REG_SLICE_MODE_AXIS bound to: 0 - type: integer 
+INFO: [Synth 8-3491] module 'fifo_generator_v13_2_14' declared at 'c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/hdl/fifo_generator_v13_2_vhsyn_rfs.vhd:38308' bound to instance 'U0' of component 'fifo_generator_v13_2_14' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_4/synth/pcie2_fifo_generator_tgt_brdg.vhd:564]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_async_rst__parameterized1' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_async_rst__parameterized1' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+INFO: [Synth 8-256] done synthesizing module 'pcie2_fifo_generator_tgt_brdg' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_4/synth/pcie2_fifo_generator_tgt_brdg.vhd:81]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'pcie2_fifo_generator_tgt_brdg' is unconnected for instance 'tgt_brdg_fifo_inst' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:311]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'pcie2_fifo_generator_tgt_brdg' is unconnected for instance 'tgt_brdg_fifo_inst' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:311]
+WARNING: [Synth 8-7023] instance 'tgt_brdg_fifo_inst' of module 'pcie2_fifo_generator_tgt_brdg' has 17 connections declared, but only 15 given [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:311]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_rx_destraddler' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_destraddler.sv:79]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_rx_destraddler' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_destraddler.sv:79]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_rx_demux' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_rx_demux.sv:78]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_tx_mux' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tx_mux.sv:77]
+INFO: [Synth 8-226] default block is never used [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tx_mux.sv:164]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_tx_mux' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tx_mux.sv:77]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_dma_req' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:76]
+INFO: [Synth 8-155] case statement is not full and has no default [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:215]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_dma_req' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:76]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_dma_cpl' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:76]
+INFO: [Synth 8-155] case statement is not full and has no default [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:199]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_dma_cpl' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:76]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_tgt_req' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:76]
+INFO: [Synth 8-155] case statement is not full and has no default [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:196]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_tgt_req' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:76]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_tgt_cpl' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:77]
+INFO: [Synth 8-155] case statement is not full and has no default [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:174]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_tgt_cpl' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:77]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_axi_stream_intf' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_axi_stream_intf.sv:58]
+INFO: [Synth 8-6157] synthesizing module 'xdma_v41_m1_cfg_sideband' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:58]
+INFO: [Common 17-14] Message 'Synth 8-6157' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_cfg_sideband' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:58]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_single__parameterized0' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:152]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_pcie2_ip_axi_basic_rx_pipeline' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_rx_pipeline.v:70]
+INFO: [Synth 8-226] default block is never used [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_rx_null_gen.v:253]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_pcie2_ip_axi_basic_rx_null_gen' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_rx_null_gen.v:71]
+INFO: [Synth 8-6155] done synthesizing module 'xdma_v41_m1_pcie2_ip_axi_basic_rx' (0#1) [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_rx.v:70]
+INFO: [Common 17-14] Message 'Synth 8-6155' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-226] default block is never used [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_tx_thrtl_ctl.v:573]
+WARNING: [Synth 8-11581] system function call 'time' not supported [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pcie_bram_top_7x.v:139]
+INFO: [Synth 8-251] [1'b0]  ROWS_TX 1 COLS_TX 4 [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pcie_bram_top_7x.v:139]
+WARNING: [Synth 8-11581] system function call 'time' not supported [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pcie_bram_top_7x.v:140]
+INFO: [Synth 8-251] [1'b0]  ROWS_RX 1 COLS_RX 4 [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pcie_bram_top_7x.v:140]
+INFO: [Synth 8-155] case statement is not full and has no default [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_gt_rx_valid_filter_7x.v:191]
+INFO: [Synth 8-226] default block is never used [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_eq.v:402]
+INFO: [Synth 8-226] default block is never used [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_user.v:354]
+INFO: [Synth 8-7071] port 'cfg_fc_vc_sel' of module 'xdma_v41_m1_core_top' is unconnected for instance 'inst' [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/synth/xdma_v41_m1.sv:558]
+INFO: [Synth 8-7023] instance 'inst' of module 'xdma_v41_m1_core_top' has 1313 connections declared, but only 1312 given [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/synth/xdma_v41_m1.sv:558]
+WARNING: [Synth 8-11357] Potential Runtime issue for 3D-RAM or RAM from Record/Structs for RAM  nack_index_memory_reg with 24576 registers
+WARNING: [Synth 8-6014] Unused sequential element ll_raddr_reached_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/nvp_i2c_tri_phase_probe.sv:372]
+WARNING: [Synth 8-6014] Unused sequential element ll_raddr_ack_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/v41/nvp_i2c_tri_phase_probe.sv:373]
+WARNING: [Synth 8-6014] Unused sequential element capture_single_v_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:166]
+WARNING: [Synth 8-6014] Unused sequential element capture_window_v_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:166]
+WARNING: [Synth 8-6014] Unused sequential element line_seq_v_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:169]
+WARNING: [Synth 8-6014] Unused sequential element round_robin_v_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:173]
+WARNING: [Synth 8-6014] Unused sequential element producer_process.requested_value_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:259]
+WARNING: [Synth 8-6014] Unused sequential element producer_process.frame_value_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:280]
+WARNING: [Synth 8-6014] Unused sequential element producer_process.line_value_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:281]
+WARNING: [Synth 8-6014] Unused sequential element producer_process.flags_value_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:282]
+WARNING: [Synth 8-6014] Unused sequential element producer_process.packed_word_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/record/bt656_record_producer.sv:336]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[0] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[1] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[2] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[3] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[4] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[5] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[6] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[7] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[8] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[9] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[10] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[11] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[12] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[13] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[14] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_prod_reg[15] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:142]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[0] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[1] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[2] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[3] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[4] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[5] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[6] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[7] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[8] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[9] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[10] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[11] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[12] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[13] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[14] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element generation_pcie_reg[15] was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:258]
+WARNING: [Synth 8-6014] Unused sequential element host_release_mask_pulse_reg was removed.  [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/rtl/pio/pio_bar_target.sv:263]
+WARNING: [Synth 8-6014] Unused sequential element rrq_did_nn1_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element rrq_dadr_nn1_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element rrq_did_nn1_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_awcacheq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_reqidq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_barq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_arcacheissueq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_reqidq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_arlenpendq_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element m_axi_barq_reg was removed. 
+WARNING: [Synth 8-4767] Trying to implement RAM 'MemArray_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/hdl/verilog/axidma_fifo.vh:1118]
+Reason is one or more of the following :
+	1: Only 1 word in RAM 
+WARNING: [Synth 8-6014] Unused sequential element tag_rrq_usr_ofst_mem_even_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element tag_rrq_usr_ofst_mem_odd_reg was removed. 
+WARNING: [Synth 8-6014] Unused sequential element gen_rd_b.gen_doutb_pipe.enb_pipe_reg[0] was removed.  [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:3087]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_ep_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:201]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_rid_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:202]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_tag_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:203]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_cid_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:204]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_tc_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:205]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_attr_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_req.sv:206]
+WARNING: [Synth 8-6014] Unused sequential element rc_64.wr_td_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:183]
+WARNING: [Synth 8-6014] Unused sequential element rc_64.wr_rid_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:187]
+WARNING: [Synth 8-6014] Unused sequential element rc_64.wr_be_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:190]
+WARNING: [Synth 8-6014] Unused sequential element rc_64.wr_addr_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:191]
+WARNING: [Synth 8-6014] Unused sequential element wr_data_reg_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_dma_cpl.sv:161]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_id_en_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:173]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_ep_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:180]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.req_lbe_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_req.sv:187]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.compl_cid_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:166]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.compl_tc_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:167]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.compl_attr_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:168]
+WARNING: [Synth 8-6014] Unused sequential element tx_64.compl_ecrc_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_tgt_cpl.sv:169]
+WARNING: [Synth 8-3848] Net pcie_rq_tag in module/entity xdma_v41_m1_axi_stream_intf does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_axi_stream_intf.sv:145]
+WARNING: [Synth 8-3848] Net pcie_rq_tag_vld in module/entity xdma_v41_m1_axi_stream_intf does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_axi_stream_intf.sv:146]
+WARNING: [Synth 8-6014] Unused sequential element s_axis_tx_tlast_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:787]
+WARNING: [Synth 8-3848] Net g2ip_pl_transmit_hot_rst in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:265]
+WARNING: [Synth 8-3848] Net g2ip_pl_downstream_deemph_source in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:266]
+WARNING: [Synth 8-3848] Net cfg_function_power_state in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:286]
+WARNING: [Synth 8-3848] Net cfg_link_power_state in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:287]
+WARNING: [Synth 8-3848] Net cfg_ltssm_state in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:305]
+WARNING: [Synth 8-3848] Net cfg_dpa_substate_change in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:307]
+WARNING: [Synth 8-3848] Net cfg_obff_enable in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:308]
+WARNING: [Synth 8-3848] Net cfg_pl_status_change in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:309]
+WARNING: [Synth 8-3848] Net cfg_msg_received in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:311]
+WARNING: [Synth 8-3848] Net cfg_msg_received_data in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:312]
+WARNING: [Synth 8-3848] Net cfg_msg_received_type in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:313]
+WARNING: [Synth 8-3848] Net cfg_msg_transmit_done in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:318]
+WARNING: [Synth 8-3848] Net cfg_per_func_status_data in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:329]
+WARNING: [Synth 8-3848] Net cfg_per_function_update_done in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:332]
+WARNING: [Synth 8-3848] Net cfg_power_state_change_interrupt in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:336]
+WARNING: [Synth 8-3848] Net cfg_ext_read_received in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:342]
+WARNING: [Synth 8-3848] Net cfg_ext_write_received in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:343]
+WARNING: [Synth 8-3848] Net cfg_ext_register_number in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:344]
+WARNING: [Synth 8-3848] Net cfg_ext_function_number in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:345]
+WARNING: [Synth 8-3848] Net cfg_ext_write_data in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:346]
+WARNING: [Synth 8-3848] Net cfg_ext_write_byte_enable in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:347]
+WARNING: [Synth 8-3848] Net cfg_interrupt_msi_mask_update in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:362]
+WARNING: [Synth 8-3848] Net cfg_interrupt_msi_data in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:363]
+WARNING: [Synth 8-3848] Net cfg_interrupt_msi_vf_enable in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:375]
+WARNING: [Synth 8-3848] Net cfg_vf_status in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:376]
+WARNING: [Synth 8-3848] Net cfg_vf_power_state in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:377]
+WARNING: [Synth 8-3848] Net cfg_tph_requester_enable in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:378]
+WARNING: [Synth 8-3848] Net cfg_tph_st_mode in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:379]
+WARNING: [Synth 8-3848] Net cfg_vf_tph_requester_enable in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:380]
+WARNING: [Synth 8-3848] Net cfg_vf_tph_st_mode in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:381]
+WARNING: [Synth 8-3848] Net cfg_flr_in_process in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:382]
+WARNING: [Synth 8-3848] Net cfg_vf_flr_in_process in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:383]
+WARNING: [Synth 8-3848] Net cfg_hot_reset_out in module/entity xdma_v41_m1_cfg_sideband does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_cfg_sideband.sv:388]
+INFO: [Synth 8-6014] Unused sequential element trn_rdllp_src_rdy_d_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_tx_thrtl_ctl.v:421]
+INFO: [Synth 8-6014] Unused sequential element reg_tlast_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_tx_thrtl_ctl.v:655]
+INFO: [Synth 8-6014] Unused sequential element flush_axi_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_axi_basic_tx_pipeline.v:528]
+INFO: [Synth 8-6014] Unused sequential element reg_eios_detected_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_gt_rx_valid_filter_7x.v:135]
+INFO: [Synth 8-6014] Unused sequential element gt_rx_is_skp0_q_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_gt_rx_valid_filter_7x.v:144]
+INFO: [Synth 8-6014] Unused sequential element gt_rx_is_skp1_q_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_gt_rx_valid_filter_7x.v:145]
+INFO: [Synth 8-6014] Unused sequential element pclk_sel_slave_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_clock.v:590]
+INFO: [Synth 8-6014] Unused sequential element gen3_rdy_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_user.v:562]
+WARNING: [Synth 8-6014] Unused sequential element rxsync_fsm_disable.rxsync_done_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_sync.v:613]
+INFO: [Synth 8-6014] Unused sequential element pipe_lane[0].gt_rxrcvrdet_c_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip_pipe_wrapper.v:1660]
+WARNING: [Synth 8-6014] Unused sequential element sys_rst_lock_reg_reg was removed.  [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:4090]
+WARNING: [Synth 8-3848] Net gt_drp_clk in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2429]
+WARNING: [Synth 8-3848] Net cfg_interrupt_msix_enable_int in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3844]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tuser_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2562]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tkeep_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2563]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tuser_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2569]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tkeep_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2570]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tuser_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2576]
+WARNING: [Synth 8-3848] Net m_axis_h2c_tkeep_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2577]
+WARNING: [Synth 8-3848] Net c2h_sts_0 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2720]
+WARNING: [Synth 8-3848] Net h2c_sts_0 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2721]
+WARNING: [Synth 8-3848] Net c2h_sts_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2724]
+WARNING: [Synth 8-3848] Net h2c_sts_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2725]
+WARNING: [Synth 8-3848] Net c2h_sts_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2728]
+WARNING: [Synth 8-3848] Net h2c_sts_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2729]
+WARNING: [Synth 8-3848] Net c2h_sts_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2732]
+WARNING: [Synth 8-3848] Net h2c_sts_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2733]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_128_0 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2358]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_ext_16_0 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2359]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_128_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2360]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_ext_16_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2361]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_128_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2362]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_ext_16_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2363]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_128_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2364]
+WARNING: [Synth 8-3848] Net pipe_debug_debug_out_ext_16_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2365]
+WARNING: [Synth 8-3848] Net pipe_debug_inject_tx_status in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2366]
+WARNING: [Synth 8-3848] Net pipe_debug_inject_rx_status in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2367]
+WARNING: [Synth 8-3848] Net pipe_rxprbserr in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2968]
+WARNING: [Synth 8-3848] Net pipe_rst_fsm in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2970]
+WARNING: [Synth 8-3848] Net pipe_qrst_fsm in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2971]
+WARNING: [Synth 8-3848] Net pipe_rate_fsm in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2972]
+WARNING: [Synth 8-3848] Net pipe_sync_fsm_tx in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2973]
+WARNING: [Synth 8-3848] Net pipe_sync_fsm_rx in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2974]
+WARNING: [Synth 8-3848] Net pipe_drp_fsm in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2975]
+WARNING: [Synth 8-3848] Net pipe_rst_idle in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2976]
+WARNING: [Synth 8-3848] Net pipe_qrst_idle in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2977]
+WARNING: [Synth 8-3848] Net pipe_rate_idle in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2978]
+WARNING: [Synth 8-3848] Net pipe_eyescandataerror in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2979]
+WARNING: [Synth 8-3848] Net pipe_rxstatus in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2980]
+WARNING: [Synth 8-3848] Net pipe_dmonitorout in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2981]
+WARNING: [Synth 8-3848] Net pipe_cpll_lock in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2982]
+WARNING: [Synth 8-3848] Net pipe_qpll_lock in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2983]
+WARNING: [Synth 8-3848] Net pipe_rxpmaresetdone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2984]
+WARNING: [Synth 8-3848] Net pipe_rxbufstatus in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2985]
+WARNING: [Synth 8-3848] Net pipe_txphaligndone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2986]
+WARNING: [Synth 8-3848] Net pipe_txphinitdone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2987]
+WARNING: [Synth 8-3848] Net pipe_txdlysresetdone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2988]
+WARNING: [Synth 8-3848] Net pipe_rxphaligndone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2989]
+WARNING: [Synth 8-3848] Net pipe_rxdlysresetdone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2990]
+WARNING: [Synth 8-3848] Net pipe_rxsyncdone in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2991]
+WARNING: [Synth 8-3848] Net pipe_rxdisperr in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2992]
+WARNING: [Synth 8-3848] Net pipe_rxnotintable in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2993]
+WARNING: [Synth 8-3848] Net pipe_rxcommadet in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2994]
+WARNING: [Synth 8-3848] Net gt_ch_drp_rdy in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2995]
+WARNING: [Synth 8-3848] Net pipe_debug_0 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2996]
+WARNING: [Synth 8-3848] Net pipe_debug_1 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2997]
+WARNING: [Synth 8-3848] Net pipe_debug_2 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2998]
+WARNING: [Synth 8-3848] Net pipe_debug_3 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:2999]
+WARNING: [Synth 8-3848] Net pipe_debug_4 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3000]
+WARNING: [Synth 8-3848] Net pipe_debug_5 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3001]
+WARNING: [Synth 8-3848] Net pipe_debug_6 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3002]
+WARNING: [Synth 8-3848] Net pipe_debug_7 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3003]
+WARNING: [Synth 8-3848] Net pipe_debug_8 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3004]
+WARNING: [Synth 8-3848] Net pipe_debug_9 in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3005]
+WARNING: [Synth 8-3848] Net pipe_debug in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3006]
+WARNING: [Synth 8-3848] Net gt_txelecidle in module/entity xdma_v41_m1_core_top does not have driver. [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v4_2/hdl/verilog/xdma_v41_m1_core_top.sv:3021]
+INFO: [Common 17-14] Message 'Synth 8-3848' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+WARNING: [Synth 8-7129] Port GT_RXDISPERR[7] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXDISPERR[6] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXDISPERR[5] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXDISPERR[4] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXNOTINTABLE[7] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXNOTINTABLE[6] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXNOTINTABLE[5] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXNOTINTABLE[4] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXCHBONDO[4] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_GEN3 in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RX_CONVERGE in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_GTREFCLK0 in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_CPLLPD in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_CPLLRESET in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXDFELPMRESET in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port GT_RXCHBONDI[4] in module xdma_v41_m1_pcie2_ip_gt_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CLK_CLK in module xdma_v41_m1_pcie2_ip_pipe_clock is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CLK_RXOUTCLK_IN[0] in module xdma_v41_m1_pcie2_ip_pipe_clock is either unconnected or has no load
+WARNING: [Synth 8-7129] Port INT_QPLLLOCK_OUT[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port INT_QPLLOUTCLK_OUT[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port INT_QPLLOUTREFCLK_OUT[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLRESET[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_PCLK_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_RXUSRCLK_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_RXOUTCLK_IN[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_DCLK_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_USERCLK1_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_USERCLK2_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_OOBCLK_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_MMCM_LOCK_IN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[11] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[10] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[9] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[8] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[7] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[6] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[5] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[4] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[3] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[2] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_CRSCODE[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[17] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[16] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[15] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[14] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[13] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[12] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[11] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[10] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[9] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[8] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[7] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[6] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[5] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[4] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[3] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[2] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_FSM[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_DONE[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_DONE[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_RESET[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_DRP_RESET[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLLOCK[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLLOCK[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLOUTCLK[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLOUTCLK[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLOUTREFCLK[1] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port QPLL_QPLLOUTREFCLK[0] in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PIPE_JTAG_EN in module xdma_v41_m1_pcie2_ip_pipe_wrapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PLM_IN_RS in module xdma_v41_m1_pcie2_ip_gt_rx_valid_filter_7x is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx_reset in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_rx1_polarity in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_compliance in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_char_is_k[1] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_char_is_k[0] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[15] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[14] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[13] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[12] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[11] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[10] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[9] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[8] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[7] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[6] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[5] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[4] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[3] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[2] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[1] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_data[0] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_elec_idle in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_powerdown[1] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx1_powerdown[0] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_rx2_polarity in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx2_compliance in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx2_char_is_k[1] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pipe_tx2_char_is_k[0] in module xdma_v41_m1_pcie2_ip_gt_top is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:02:00 ; elapsed = 00:02:13 . Memory (MB): peak = 2701.906 ; gain = 1837.973
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:05 ; elapsed = 00:02:18 . Memory (MB): peak = 2701.906 ; gain = 1837.973
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:02:05 ; elapsed = 00:02:18 . Memory (MB): peak = 2701.906 ; gain = 1837.973
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:08 ; elapsed = 00:00:07 . Memory (MB): peak = 2701.906 ; gain = 0.000
+WARNING: [Netlist 29-345] The value of SIM_DEVICE on instance 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1' of type 'BUFGCTRL' is 'ULTRASCALE'; it is being changed to match the current FPGA architecture, '7SERIES'. For functional simulation to match hardware behavior, the value of SIM_DEVICE should be changed in the source netlist. 
+INFO: [Netlist 29-17] Analyzing 30 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-140] Inserted 2 IBUFs to IO ports without IO buffers.
+INFO: [Opt 31-141] Inserted 4 OBUFs to IO ports without IO buffers.
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/xdma_pcie.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/xdma_pcie.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/xdma_pcie.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip-PCIE_X0Y0.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip-PCIE_X0Y0.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/xdma_v41_m1_pcie2_ip-PCIE_X0Y0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/pcie2_fifo_generator_dma_cpl.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_3/pcie2_fifo_generator_dma_cpl.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/dma_cpl_fifo_inst/U0'
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_4/pcie2_fifo_generator_tgt_brdg.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_4/pcie2_fifo_generator_tgt_brdg.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/xdma_v41_m1_axi_stream_intf_i/xdma_v41_m1_rx_demux_i/tgt_brdg_fifo_inst/U0'
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v41_m1_board.xdc] for cell 'XDMA/inst'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/xdma_v41_m1_board.xdc] for cell 'XDMA/inst'
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/source/xdma_v41_m1_pcie3_7vx_ip.xdc] for cell 'XDMA/inst'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/source/xdma_v41_m1_pcie3_7vx_ip.xdc] for cell 'XDMA/inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/source/xdma_v41_m1_pcie3_7vx_ip.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Timing 38-2] Deriving generated clocks
+write_xdc: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2815.512 ; gain = 7.496
+Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/ip_xilinx_pcie_2_1_7x_late.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst'
+Finished Parsing XDC File [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/ip_xilinx_pcie_2_1_7x_late.xdc] for cell 'XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [c:/FPGA/V41_NVP_R1G_FINAL_RTL_PREFLIGHT_WORK/.gen/sources_1/ip/xdma_v41_m1/ip_0/source/ip_xilinx_pcie_2_1_7x_late.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/pins.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/pins.xdc]
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/vdo_input_timing.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/vdo_input_timing.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/vdo_input_timing.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/pcie_pio.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/pcie_pio.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/pcie_pio.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/nvp_control.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/boards/current/nvp_control.xdc]
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/common/cdc.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/common/cdc.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/common/cdc.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/common/configuration_bank.xdc]
+Finished Parsing XDC File [C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/xdc/common/configuration_bank.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_single.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/ahd_capture_top_xdma_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/ahd_capture_top_xdma_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Project 1-1714] 28 XPM XDC files have been applied to the design.
+Completed Processing XDC Constraints
+
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.125 . Memory (MB): peak = 2817.504 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 3 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  MMCME2_BASE => MMCME2_ADV: 1 instance 
+
+RTL Elaboration Complete:  : Time (s): cpu = 00:04:42 ; elapsed = 00:04:50 . Memory (MB): peak = 2817.504 ; gain = 1953.570
+275 Infos, 289 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:04:47 ; elapsed = 00:05:19 . Memory (MB): peak = 2817.504 ; gain = 2139.621
+# set flow_rc [catch {
+#   file mkdir $work_root
+#   cd $work_root
+#   source $common_tcl
+#   if {$v41_xdma::part ne $expected_part} {
+#     error "shared XDMA part mismatch"
+#   }
+# 
+#   create_project -in_memory -part $expected_part
+#   set_property target_language Verilog [current_project]
+#   set_property simulator_language Mixed [current_project]
+#   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+#   config_ip_cache -use_cache_location [file join $work_root ip_cache]
+# 
+#   add_files -norecurse $sv_files
+#   set_property FILE_TYPE SystemVerilog [get_files $sv_files]
+#   add_files -norecurse $vhdl_files
+# 
+#   set input_xci_dir [file join $work_root input_xci]
+#   file mkdir $input_xci_dir
+#   set xdma_copy [file join $input_xci_dir xdma_v41_m1.xci]
+#   file copy $xdma_source $xdma_copy
+#   if {[sha256_file $xdma_copy] ne $expected_xdma_sha256} {
+#     error "copied XDMA XCI identity mismatch"
+#   }
+#   import_ip -files $xdma_copy
+#   set xdma_ip [get_ips -quiet xdma_v41_m1]
+#   if {[llength $xdma_ip] != 1} {
+#     error "expected exactly one imported XDMA IP"
+#   }
+#   v41_xdma::configure_minimal_c2h_stream $xdma_ip
+#   dict for {property expected} [v41_xdma::minimal_c2h_stream_config] {
+#     if {[get_property $property $xdma_ip] ne $expected} {
+#       error "queried imported XDMA property mismatch for $property"
+#     }
+#   }
+#   set imported_xci [get_property IP_FILE $xdma_ip]
+#   set imported_xci_object [get_files -quiet $imported_xci]
+#   if {[llength $imported_xci_object] != 1} {
+#     error "imported XDMA XCI object not found"
+#   }
+#   set_property GENERATE_SYNTH_CHECKPOINT false $imported_xci_object
+#   generate_target all $xdma_ip
+# 
+#   add_files -fileset constrs_1 -norecurse $xdc_files
+#   set_property PROCESSING_ORDER EARLY [get_files [lindex $xdc_files 0]]
+#   set_property PROCESSING_ORDER LATE [get_files [lrange $xdc_files 1 end]]
+#   set_property top $expected_top [get_filesets sources_1]
+#   set_property generic $generics [get_filesets sources_1]
+#   update_compile_order -fileset sources_1
+# 
+#   set queried_part [get_property PART [current_project]]
+#   set queried_top [get_property TOP [get_filesets sources_1]]
+#   set queried_generics [get_property GENERIC [get_filesets sources_1]]
+#   if {$queried_part ne $expected_part || $queried_top ne $expected_top ||
+#       $queried_generics ne $generics} {
+#     error "queried project part/top/generic contract mismatch"
+#   }
+# 
+#   set compile_lines [list]
+#   set compile_names [list]
+#   set compile_index 0
+#   foreach object [get_files -compile_order sources -used_in synthesis] {
+#     set name [get_property NAME $object]
+#     lappend compile_names $name
+#     lappend compile_lines \
+#       "[format %03d $compile_index]|[get_property FILE_TYPE $object]|[get_property LIBRARY $object]|$name"
+#     incr compile_index
+#   }
+#   set prior_index -1
+#   foreach required $vhdl_files {
+#     set this_index [compile_order_index $compile_names $required]
+#     if {$this_index < 0 || $this_index <= $prior_index} {
+#       error "queried VHDL compile order violates the frozen dependency order"
+#     }
+#     set object [get_files -quiet $required]
+#     if {[llength $object] != 1 || [get_property FILE_TYPE $object] ne "VHDL" ||
+#         [get_property LIBRARY $object] ne "xil_defaultlib"} {
+#       error "production VHDL file-type/library contract mismatch for $required"
+#     }
+#     set prior_index $this_index
+#   }
+#   write_lines [file join $evidence_root \
+#     R1G_FINAL_RTL_PREFLIGHT_COMPILE_ORDER.txt] $compile_lines
+# 
+#   # The only allowed final-preflight frontend invocation.
+#   synth_design -rtl -name r1g_rtl_preflight -top $expected_top \
+#     -part $expected_part
+# 
+#   if {[current_design] eq "" ||
+#       [llength [get_cells -quiet -hier]] == 0} {
+#     error "RTL elaboration returned no open design/cells"
+#   }
+#   write_lines [file join $evidence_root \
+#     R1G_FINAL_RTL_ELABORATION_RESULT.txt] [list \
+#     "FINAL_RTL_ELABORATION_PREFLIGHTS=1" \
+#     "FINAL_RTL_ELABORATION=PASS" \
+#     "SOURCE_GIT_COMMIT=$source_commit" \
+#     "SOURCE_GIT_TREE=$source_tree" \
+#     "R1G_PARENT_COMMIT=$actual_parent" \
+#     "R1G_COMMITS_ABOVE_R1F=$commits_above_r1f" \
+#     "PRODUCTION_VHDL_STANDARD=VIVADO_FILE_TYPE_VHDL_DEFAULT_NON_2008" \
+#     "GLOBAL_VHDL_STANDARD_CHANGE=NO" \
+#     "FILE_TYPE_VHDL2008_CHANGES=0" \
+#     "READ_VHDL_VHDL2008_OPTION_ADDED=NO" \
+#     "SYNTH_DESIGN_MODE=RTL_ELABORATION_ONLY" \
+#     "SYNTH_8_2757_COUNT=0" \
+#     "UNSUPPORTED_LANGUAGE_CONSTRUCT_ERRORS=0" \
+#     "TOP_ELABORATED=$queried_top" \
+#     "PART=$queried_part" \
+#     "VIVADO_VERSION=$vivado_short" \
+#     "VIVADO_SW_BUILD=$vivado_sw_build" \
+#     "OPT_DESIGN_INVOCATIONS=0" \
+#     "PLACE_DESIGN_INVOCATIONS=0" \
+#     "PHYS_OPT_DESIGN_INVOCATIONS=0" \
+#     "ROUTE_DESIGN_INVOCATIONS=0" \
+#     "WRITE_CHECKPOINT_INVOCATIONS=0" \
+#     "WRITE_BITSTREAM_INVOCATIONS=0" \
+#     "PROCESS_EXIT_CODE=0"]
+#   close_project
+# } flow_error flow_options]
+# if {$flow_rc != 0} {
+#   write_lines [file join $evidence_root \
+#     R1G_FINAL_RTL_ELABORATION_FAILURE.txt] [list \
+#     "FINAL_RTL_ELABORATION_PREFLIGHTS=1" \
+#     "FINAL_RTL_ELABORATION=FAIL" \
+#     "SOURCE_GIT_COMMIT=$source_commit" \
+#     "SOURCE_GIT_TREE=$source_tree" \
+#     "ERROR=$flow_error" \
+#     "ERROR_INFO=[dict get $flow_options -errorinfo]" \
+#     "PROGRAM_RETRY_AUTHORIZED=NO"]
+#   puts stderr "R1G_FINAL_RTL_ELABORATION=FAIL: $flow_error"
+#   exit 1
+# }
+# puts "R1G_FINAL_RTL_ELABORATION=PASS"
+R1G_FINAL_RTL_ELABORATION=PASS
+# puts "R1G_FINAL_RTL_ELABORATION_PREFLIGHTS=1"
+R1G_FINAL_RTL_ELABORATION_PREFLIGHTS=1
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 24 18:45:10 2026...

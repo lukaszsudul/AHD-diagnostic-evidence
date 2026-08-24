@@ -1,0 +1,30 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Aug 24 17:53:34 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/candidate_d2b_snapshot/xsim_script.tcl
+# xsim {candidate_d2b_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_d2b_attempt_01/candidate/run.tcl}
+Time resolution is 1 ps
+source C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_d2b_attempt_01/candidate/run.tcl
+## open_vcd {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_d2b_attempt_01/candidate/top_observables.vcd}
+## log_vcd [get_objects /tb_nvp_d2b_sequence/*]
+WARNING: HDL object /tb_nvp_d2b_sequence/transaction_count is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/retained_table_writes is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/helper_transactions is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/read_bit_idx is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/CLK_HZ is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/I2C_HZ is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_nvp_d2b_sequence/C_MODEL_ENTRY_BANK is of a type not supported for VCD or has zero size.
+## run all
+Note: PASS D2b full sequence is D1 + Z5-ALT with operations 1..148 disabled
+Time: 210762500 ns  Iteration: 0  Process: /tb_nvp_d2b_sequence/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/tests/nvp/tb_nvp_d2b_sequence.vhd
+$stop called at time : 210762500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1G_VHDL_COMPATIBILITY/tests/nvp/tb_nvp_d2b_sequence.vhd" Line 205
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:00:12 . Memory (MB): peak = 206.203 ; gain = 0.000
+## close_vcd
+## quit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 17:53:51 2026...

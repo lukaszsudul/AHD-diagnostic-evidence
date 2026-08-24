@@ -1,0 +1,1 @@
+xsim {candidate_tri_probe_production_timing_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/candidate_frozen_component_matrix_attempt_01/tri_probe_production_timing/run.tcl}

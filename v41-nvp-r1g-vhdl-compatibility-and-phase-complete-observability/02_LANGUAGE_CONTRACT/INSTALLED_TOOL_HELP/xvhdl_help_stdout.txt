@@ -1,0 +1,37 @@
+Usage: xvhdl [options] file...
+(Switches with double dash '--' can also be used with a single dash '-')
+
+Vivado Simulator xvhdl options:
+  -f [ --file ] arg     Read additional options from the specified file
+  -h [ --help ]         Print this help message
+  --version             Print the compiler version
+  --initfile arg        Use user defined simulator init file to add to or 
+                        override the settings provided by the default xsim.ini 
+                        file
+  -L [ --lib ] arg      Specify search libraries for the instantiated design 
+                        units in a Verilog or Mixed language design. Use 
+                        -L|--lib for each search library. The format of the 
+                        argument is <name>[=<dir>] where <name> is the logical 
+                        name of the library and <dir> is an optional physical 
+                        directory of the library
+  --nolog               Suppress log file generation
+  --log arg             Specify the log file name. Default is <application 
+                        name>.log
+  --prj arg             Specify Vivado Simulator  project file containing one 
+                        or more entries of 'vhdl|verilog <work lib> <HDL file 
+                        name>'
+  --relax               Relax strict HDL language checking rules
+  -v [ --verbose ] arg  Specify verbosity level for printing messages. Allowed 
+                        values are: 0, 1, 2 (Default:0)
+  --incr                Enable incremental parsing and compilation check point
+  --work arg            Specify the work library. The format of the argument is
+                        <name>[=<dir>] where <name> is the logical name of the 
+                        library and <dir> is an optional physical directory of 
+                        the library
+  --2008                Specify input files to be VHDL-2008 files
+  --2019                Specify input files to be VHDL-2019 files
+
+Examples:
+  xvhdl file1.vhd file2.vhd
+  xvhdl -work worklib file1.vhd file2.vhd
+  xvhdl -prj files.prj

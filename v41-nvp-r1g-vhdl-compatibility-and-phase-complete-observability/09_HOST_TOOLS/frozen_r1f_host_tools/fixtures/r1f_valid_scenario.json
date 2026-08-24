@@ -1,0 +1,32 @@
+{
+  "schema": "v41-r1f-offline-fixture-v1",
+  "safe_target": {"bank": 0, "register": 133, "data": 0},
+  "autoinit": {
+    "phase_opportunities": {"WADDR": 6, "REGADDR": 5, "DATA": 4, "RADDR": 2},
+    "phase_nacks": {"WADDR": 1, "REGADDR": 1, "DATA": 1, "RADDR": 0},
+    "transaction_starts": 4,
+    "transaction_completions": 4,
+    "failed_transactions": 1,
+    "timeout_transactions": 0
+  },
+  "failed_transaction": {
+    "transaction_index_16": 10,
+    "table_slot_index_16": 1,
+    "legacy_operation_index_8": 5,
+    "autoinit_phase": 1,
+    "transaction_kind": 6,
+    "phase_opportunity_bitmap": 7,
+    "phase_nack_bitmap": 7,
+    "register_address": 16,
+    "write_data": 32,
+    "requested_bank": 0,
+    "physical_bank_before": 0,
+    "physical_bank_after": 0
+  },
+  "probe_nack_indices_zero_based": {
+    "WADDR": [2],
+    "REGADDR": [10, 11],
+    "DATA": [9999]
+  },
+  "original_bank": 9
+}

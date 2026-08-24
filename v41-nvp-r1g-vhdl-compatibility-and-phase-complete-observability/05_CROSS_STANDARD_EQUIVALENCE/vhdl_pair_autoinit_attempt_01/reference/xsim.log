@@ -1,0 +1,153 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Aug 24 17:39:13 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/reference_autoinit_snapshot/xsim_script.tcl
+# xsim {reference_autoinit_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_autoinit_attempt_01/reference/run.tcl}
+Time resolution is 1 ps
+source C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_autoinit_attempt_01/reference/run.tcl
+## open_vcd {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/vhdl_pair_autoinit_attempt_01/reference/top_observables.vcd}
+## log_vcd [get_objects /tb_g0p8c5d_autoinit/*]
+WARNING: HDL object /tb_g0p8c5d_autoinit/r1f_record_pulse_count is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/r1f_records is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/fault_mode is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/pattern_nacks_injected is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/short_sda_glitch_cycles is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/transaction_count is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/checked_table_writes is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/checked_bank_select_writes is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/checked_bank_verify_reads is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/read_bit_idx is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/CLK_HZ is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/I2C_HZ is of a type not supported for VCD or has zero size.
+WARNING: HDL object /tb_g0p8c5d_autoinit/C_MODEL_ENTRY_BANK is of a type not supported for VCD or has zero size.
+## run all
+Note: PASS EVERY_R1F_TRANSACTION_KIND_EXERCISED
+Time: 341486500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS all transactions ACK
+Time: 341486500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at first operation
+Time: 682332500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode2 record=000000641E010000000000001B001E5C3377616500640086
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at middle table step and frozen metadata
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at final operation
+Time: 1365322500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f invariant error mode=4 count=8 first=83000120
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank invariant monitor flags pathological stuck-SDA context
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SDA stuck low
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: SCL timeout observed code=7 count=36 error='1'
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SCL stuck low and bounded controller timeout
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode6 record=000000D51E540000000000002B0000FF337741D600D500BD
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank-select write failure blocks wrong-bank target
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode7 record=000008D51E7A00FF00000000CDFF00FF300B51D600D50177
+Time: 2732028500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank-select readback mismatch blocks wrong-bank target
+Time: 2732028500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS two-cycle raw SDA glitch rejected by Z9 filter
+Time: 3073523500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode9 record=000000641E010000000000001B001E5C3117616500640086 pulses=1
+Time: 3415018500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS one isolated WADDR NACK
+Time: 3415018500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode10 record=000000641E010000000000001B001E5C3127616500640086 pulses=1
+Time: 3756513500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS one isolated REGADDR NACK
+Time: 3756513500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode11 record=000000641E010000000000001B001E5C3147616500640086 pulses=1
+Time: 4098008500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS one isolated DATA NACK
+Time: 4098008500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS one isolated RADDR NACK
+Time: 4440416500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS operation-86-like transitional bank context
+Time: 4440416500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode13 injected=13 nack_count=13 records=13
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=0 legacy=0001000000FF0100 r1f=000000001E00000000000000010000FF311B1000FFFF0000
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=1 legacy=0001000000FF0100 r1f=000000011E540000000000002B0000FF31172000FFFF0001
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=2 legacy=0001000000FF0102 r1f=000000001E000000000000002B0000FF31177202FFFF0002
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=3 legacy=0001000000080103 r1f=000000001E0000000000000009000008311B8303FFFF0003
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=4 legacy=0001000000090104 r1f=000000011E0000000000000009000009311B8304FFFF0004
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=5 legacy=00010000000A0105 r1f=000000021E000000000000000900000A311B8305FFFF0005
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=6 legacy=00010000000B0106 r1f=000000031E000000000000000900000B311B8306FFFF0006
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=7 legacy=0001000000810107 r1f=000000041E0000000000000009000081311B8307FFFF0007
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS LEGACY_FIRST8_RECONCILIATION
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS exact 13-event historical pattern
+Time: 4603667500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode14 injected=15 nack_count=15 records=15
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=0 legacy=0001000000FF0100 r1f=000000001E00000000000000010000FF311B1000FFFF0000
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=1 legacy=0001000000FF0100 r1f=000000011E540000000000002B0000FF31172000FFFF0001
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=2 legacy=0001000000FF0102 r1f=000000001E000000000000002B0000FF31177202FFFF0002
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=3 legacy=0001000000080103 r1f=000000001E0000000000000009000008311B8303FFFF0003
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=4 legacy=0001000000090104 r1f=000000011E0000000000000009000009311B8304FFFF0004
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=5 legacy=00010000000A0105 r1f=000000021E000000000000000900000A311B8305FFFF0005
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=6 legacy=00010000000B0106 r1f=000000031E000000000000000900000B311B8306FFFF0006
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=7 legacy=0001000000810107 r1f=000000041E0000000000000009000081311B8307FFFF0007
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS LEGACY_FIRST8_RECONCILIATION
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS exact 15-event historical pattern
+Time: 4766918500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode15 injected=36 nack_count=36 records=36
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=0 legacy=0001000000FF0100 r1f=000000001E00000000000000010000FF311B1000FFFF0000
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=1 legacy=0001000000FF0100 r1f=000000011E540000000000002B0000FF31172000FFFF0001
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=2 legacy=0001000000FF0102 r1f=000000001E000000000000002B0000FF31177202FFFF0002
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=3 legacy=0001000000080103 r1f=000000001E0000000000000009000008311B8303FFFF0003
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=4 legacy=0001000000090104 r1f=000000011E0000000000000009000009311B8304FFFF0004
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=5 legacy=00010000000A0105 r1f=000000021E000000000000000900000A311B8305FFFF0005
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=6 legacy=00010000000B0106 r1f=000000031E000000000000000900000B311B8306FFFF0006
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f reconcile index=7 legacy=0001000000810107 r1f=000000041E0000000000000009000081311B8307FFFF0007
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS LEGACY_FIRST8_RECONCILIATION
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS exact 36-event historical pattern
+Time: 4930169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS reset during init, table boundary, and done/error latch
+Time: 5273688500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS_STAGE6_G0P8C5D_AUTOINIT_SIMULATION
+Time: 5273688500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+$stop called at time : 5273688500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd" Line 664
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:02:21 . Memory (MB): peak = 207.547 ; gain = 0.508
+## close_vcd
+## quit
+INFO: xsimkernel Simulation Memory Usage: 13100 KB (Peak: 13100 KB), Simulation CPU Usage: 138437 ms
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 17:41:38 2026...

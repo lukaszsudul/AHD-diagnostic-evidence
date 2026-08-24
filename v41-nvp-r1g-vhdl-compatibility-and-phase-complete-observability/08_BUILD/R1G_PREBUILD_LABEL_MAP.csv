@@ -1,0 +1,31 @@
+record_kind,label_or_key,source_binding,required_before_generation
+META,SOURCE_GIT_COMMIT,exact R1g direct-child commit,YES_POST_COMMIT
+META,SOURCE_GIT_TREE,tree of exact R1g direct-child commit,YES_POST_COMMIT
+META,R1f required META set,exact hash-bound R1f manifest with source identity overridden,YES
+META,R1g language gates,02_LANGUAGE_CONTRACT plus static/compiler receipts,YES
+META,R1g equivalence gates,05_CROSS_STANDARD_EQUIVALENCE/R1G_CROSS_STANDARD_EQUIVALENCE_GATE.md,YES_FINAL_GATE
+META,R1g final preflight gates,sole final-preflight result plus consumed marker plus PASS console log,YES_POST_COMMIT
+META,R1g host-tool gates,09_HOST_TOOLS/R1G_HOST_TOOL_GATE.md,YES
+SOURCE_SHA256,all 51 exact R1f source records,recomputed from clean exact R1g worktree,YES_POST_COMMIT
+SOURCE_SHA256,rtl/nvp/nvp6134c_i2c_bringup.vhd,R1g committed mechanical rewrite SHA 66776D2A...,YES_POST_COMMIT
+ACCEPTED_LOG_SHA256,PRE_INIT_EQUIVALENCE,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,EFFECTIVE_PRE_INIT_ARBITRATION,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,AUTOINIT_PHASE_AND_FAILED_TXN_SCOREBOARD,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,LEGACY_FIRST8_RECONCILIATION,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRANSACTION_INDEX_16,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,FAILED_TXN_LOGGER_64_65,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_SUCCESS,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_ABORT_RESTORE,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_SCL_TIMEOUT,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_ATTEMPT_LIMIT,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_SECONDARY_RESTORE_FAILURE,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_INDEX_OVERFLOW,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TRI_PHASE_PROBE_IDLE_TIMEOUT,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,R1F_REGISTER_MAP,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,TOP_INTEGRATION,sole final RTL-elaboration PASS result,YES_POST_COMMIT
+ACCEPTED_LOG_SHA256,INHERITED_POWER_TIMING,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,INHERITED_D2B_SEQUENCE,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,R1F_PRODUCTION_TIMING_MODEL,R1g consolidated cross-standard/full-matrix equivalence gate,YES_FINAL_GATE
+ACCEPTED_LOG_SHA256,HOST_TOOL_FIXTURES,09_HOST_TOOLS/R1G_HOST_TOOL_GATE.md,YES
+ACCEPTED_LOG_SHA256,R1g additive evidence,source/language/static/rewrite/compiler/equivalence/preflight/build/host receipts and logs,YES
+

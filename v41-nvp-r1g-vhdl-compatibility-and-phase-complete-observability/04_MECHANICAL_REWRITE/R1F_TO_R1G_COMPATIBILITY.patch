@@ -1,0 +1,17 @@
+diff --git a/rtl/nvp/nvp6134c_i2c_bringup.vhd b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+index ff8ea1d17b54297a0dbd139b0688fc55116ebc0b..acde0bc1c90b37a5e5c2b12f31e045ad2b3bfcc2 100644
+--- a/rtl/nvp/nvp6134c_i2c_bringup.vhd
++++ b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+@@ -991,7 +991,11 @@ begin
+               r1f_tx_nack_bitmap_r <= (others => '0');
+               r1f_tx_nack_count_r <= (others => '0');
+               r1f_tx_reg_r <= reg_addr;
+-              r1f_tx_wdata_r <= write_data when is_read_op = '0' else x"00";
++              if is_read_op = '0' then
++                r1f_tx_wdata_r <= write_data;
++              else
++                r1f_tx_wdata_r <= x"00";
++              end if;
+               r1f_tx_wdata_valid_r <= not is_read_op;
+               if tx_kind_v = x"0" or tx_kind_v = x"1" then
+                 -- ORIGINAL_BANK_READ discovers rather than requests a bank.

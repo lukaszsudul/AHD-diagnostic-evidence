@@ -1,0 +1,29 @@
+setUpClass (test_r1g_hardware_binding_contract.R1gHardwareBindingContractTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_r1g_hardware_binding_contract.R1gHardwareBindingContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\09_HOST_TOOLS\frozen_r1f_host_tools\read_nvp_r1f.py", line 22, in <module>
+    import read_nvp_r1e as r1e
+ModuleNotFoundError: No module named 'read_nvp_r1e'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\fixtures\test_r1g_hardware_binding_contract.py", line 29, in setUpClass
+    cls.reader = load_reader()
+                 ~~~~~~~~~~~^^
+  File "C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\fixtures\test_r1g_hardware_binding_contract.py", line 22, in load_reader
+    spec.loader.exec_module(module)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1022, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\FPGA\V41_NVP_R1G_VHDL_COMPATIBILITY\09_HOST_TOOLS\frozen_r1f_host_tools\read_nvp_r1f.py", line 24, in <module>
+    from . import read_nvp_r1e as r1e
+ImportError: attempted relative import with no known parent package
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.368s
+
+FAILED (errors=1)

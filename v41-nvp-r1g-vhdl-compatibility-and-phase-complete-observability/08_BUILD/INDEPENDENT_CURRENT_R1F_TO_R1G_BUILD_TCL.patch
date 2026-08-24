@@ -1,0 +1,172 @@
+diff --git "a/C:\\FPGA\\WORKTREES\\V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY\\scripts\\v41\\r1f_build.tcl" "b/C:\\FPGA\\V41_NVP_R1G_VHDL_COMPATIBILITY\\scripts\\r1g_build.tcl"
+index 57ad15b..50467f7 100644
+--- "a/C:\\FPGA\\WORKTREES\\V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY\\scripts\\v41\\r1f_build.tcl"
++++ "b/C:\\FPGA\\V41_NVP_R1G_VHDL_COMPATIBILITY\\scripts\\r1g_build.tcl"
+@@ -1,4 +1,4 @@
+-# R1f provenance-correct, single-consumption diagnostic build.
++# R1g provenance-correct, single-consumption diagnostic build.
+ #
+ # There is deliberately no preflight-only or retry execution mode. All
+ # non-consuming checks finish before the sentinel is created. Creating that
+@@ -10,7 +10,7 @@
+ #   ACCEPTED_LOG_SHA256|LABEL|absolute_or_manifest_relative_path|64_HEX_SHA256
+ 
+ if {$argc != 7} {
+-  puts stderr "usage: r1f_build.tcl REPOSITORY_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT SOURCE_GIT_TREE PREBUILD_MANIFEST PREBUILD_MANIFEST_SHA256"
++  puts stderr "usage: r1g_build.tcl REPOSITORY_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_GIT_COMMIT SOURCE_GIT_TREE PREBUILD_MANIFEST PREBUILD_MANIFEST_SHA256"
+   exit 2
+ }
+ 
+@@ -22,13 +22,14 @@ set source_tree [string tolower [lindex $argv 4]]
+ set prebuild_manifest [file normalize [lindex $argv 5]]
+ set expected_prebuild_manifest_sha256 [string toupper [lindex $argv 6]]
+ 
+-set expected_branch diag/v41-nvp-r1f-phase-complete-observability
++set expected_branch diag/v41-nvp-r1g-vhdl-compatibility
+ set exact_r1e_base_commit f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
++set exact_r1f_parent_commit 225544084dbfcaadb8592fcecc947aa1cec4970e
+ set expected_vivado_version 2025.2
+ set expected_vivado_sw_build 6299465
+ set expected_part xc7a35tcsg325-2
+ set expected_top ahd_capture_top_xdma
+-set bit_filename ahd_capture_v41_i2c_25khz_r1f_phase_complete_observability.bit
++set bit_filename ahd_capture_v41_i2c_25khz_r1g_phase_complete_observability.bit
+ 
+ proc write_lines {path lines} {
+   file mkdir [file dirname $path]
+@@ -414,8 +415,13 @@ if {$merge_base ne $exact_r1e_base_commit} {
+ }
+ set source_commit_count [string trim [exec git -C $repo_root rev-list --count \
+   [format "%s..%s" $exact_r1e_base_commit $source_commit]]]
+-if {$source_commit_count ne "1"} {
+-  error "R1f branch must contain exactly one source commit above R1e base; got $source_commit_count"
++if {$source_commit_count ne "2"} {
++  error "R1g branch must contain exactly two source commits above R1e base; got $source_commit_count"
++}
++set actual_parent_commit [string tolower [string trim \
++  [exec git -C $repo_root rev-parse HEAD^]]]
++if {$actual_parent_commit ne $exact_r1f_parent_commit} {
++  error "R1g commit is not a direct child of exact R1f commit $exact_r1f_parent_commit"
+ }
+ 
+ set vivado_short [string trim [version -short]]
+@@ -641,13 +647,13 @@ set generics [join [list \
+   "BUILD_FLAGS=$build_flags" \
+   "ENABLE_MAREK_INIT_TABLE=1"] " "]
+ 
+-set sentinel [file join $evidence_root R1F_ONE_CLEAN_BUILD_CONSUMED.marker]
++set sentinel [file join $evidence_root R1G_ONE_CLEAN_BUILD_CONSUMED.marker]
+ set bit_path [file join $evidence_root artifacts $bit_filename]
+ if {[file exists $sentinel]} {
+-  error "the sole R1f clean build was already consumed: $sentinel"
++  error "the sole R1g clean build was already consumed: $sentinel"
+ }
+ if {[file exists $bit_path]} {
+-  error "R1f bit output already exists before the authorized build: $bit_path"
++  error "R1g bit output already exists before the authorized build: $bit_path"
+ }
+ 
+ file mkdir $evidence_root
+@@ -657,7 +663,8 @@ write_lines [file join $evidence_root R1F_PRECONSUMPTION_IDENTITY.txt] [list \
+   "SOURCE_BRANCH=$actual_branch" \
+   "SOURCE_TREE_CLEAN=YES" \
+   "R1E_BASE_COMMIT=$exact_r1e_base_commit" \
+-  "R1F_COMMITS_ABOVE_BASE=$source_commit_count" \
++  "R1G_PARENT_COMMIT=$actual_parent_commit" \
++  "R1G_COMMITS_ABOVE_R1E=$source_commit_count" \
+   "VIVADO_VERSION_ACTUAL=$vivado_short" \
+   "VIVADO_SW_BUILD_ACTUAL=$vivado_sw_build" \
+   "PART_EXPECTED=$expected_part" \
+@@ -727,7 +734,7 @@ write_lines [file join $evidence_root R1F_EXPECTED_RUNTIME_PROVENANCE.txt] [list
+ # Atomic creation is the irreversible one-build accounting boundary.
+ set sentinel_fh [open $sentinel {WRONLY CREAT EXCL}]
+ fconfigure $sentinel_fh -encoding utf-8 -translation lf
+-puts $sentinel_fh "R1F_ONE_CLEAN_BUILD_CONSUMED=YES"
++puts $sentinel_fh "R1G_ONE_CLEAN_BUILD_CONSUMED=YES"
+ puts $sentinel_fh "SOURCE_GIT_COMMIT=$source_commit"
+ puts $sentinel_fh "SOURCE_GIT_TREE=$source_tree"
+ puts $sentinel_fh "PREBUILD_MANIFEST_SHA256=$expected_prebuild_manifest_sha256"
+@@ -742,7 +749,7 @@ set flow_rc [catch {
+   file mkdir $build_root
+   cd $build_root
+ 
+-  set project_name v41_r1f_phase_complete_observability
++  set project_name v41_r1g_vhdl_compatibility
+   set project_dir [file join $build_root vivado_project]
+   create_project $project_name $project_dir -part $expected_part
+   set_property target_language Verilog [current_project]
+@@ -911,7 +918,7 @@ set flow_rc [catch {
+   if {$synthesis_status ne "PASS"} {
+     error "queried post-synthesis netlist is empty"
+   }
+-  write_checkpoint -force [file join $evidence_root R1F_synth.dcp]
++  write_checkpoint -force [file join $evidence_root R1G_synth.dcp]
+   report_utilization \
+     -file [file join $evidence_root R1F_utilization_post_synth.rpt]
+   report_timing_summary -delay_type min_max -max_paths 100 \
+@@ -933,7 +940,7 @@ set flow_rc [catch {
+   }
+   phys_opt_design -directive Explore
+   route_design -directive Explore
+-  write_checkpoint -force [file join $evidence_root R1F_routed.dcp]
++  write_checkpoint -force [file join $evidence_root R1G_routed.dcp]
+ 
+   set route_report [file join $evidence_root R1F_route_status.rpt]
+   set timing_report [file join $evidence_root R1F_timing_summary.rpt]
+@@ -1229,8 +1236,8 @@ set flow_rc [catch {
+     set source_commit_to_bit_provenance PASS
+   }
+ 
+-  write_lines [file join $evidence_root R1F_BUILD_RESULT.txt] [list \
+-    "TASK=V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY" \
++  write_lines [file join $evidence_root R1G_BUILD_RESULT.txt] [list \
++    "TASK=V41_NVP_R1G_VHDL_COMPATIBILITY_AND_PHASE_COMPLETE_OBSERVABILITY" \
+     "FULL_BUILDS=1" \
+     "SOURCE_GIT_COMMIT=$source_commit" \
+     "SOURCE_GIT_TREE=$source_tree" \
+@@ -1300,19 +1307,19 @@ set flow_rc [catch {
+     "XDC_SET_UNCHANGED=YES_HASH_BOUND" \
+     "PREBUILD_MANIFEST_BINDING=PASS" \
+     "SOURCE_COMMIT_TO_BIT_PROVENANCE=$source_commit_to_bit_provenance" \
+-    "R1F_ROUTED_DCP=[file join $evidence_root R1F_routed.dcp]" \
++    "R1G_ROUTED_DCP=[file join $evidence_root R1G_routed.dcp]" \
+     "BITSTREAM=$bit_path" \
+     "BITSTREAM_GENERATED=$bit_generated" \
+     "BITSTREAM_SHA256=$bit_sha256" \
+-    "R1F_IMPLEMENTATION_GATE=$implementation_gate"]
++    "R1G_IMPLEMENTATION_GATE=$implementation_gate"]
+ 
+   if {$implementation_gate ne "PASS"} {
+     error "R1f implementation gate failed; the one build is consumed and no bitstream was emitted"
+   }
+ 
+   close_project
+-  puts "R1F_IMPLEMENTATION_GATE=PASS"
+-  puts "R1F_BITSTREAM_SHA256=$bit_sha256"
++  puts "R1G_IMPLEMENTATION_GATE=PASS"
++  puts "R1G_BITSTREAM_SHA256=$bit_sha256"
+ } flow_error flow_options]
+ 
+ if {$flow_rc != 0} {
+@@ -1321,8 +1328,8 @@ if {$flow_rc != 0} {
+   if {[dict exists $flow_options -errorinfo]} {
+     set error_info [dict get $flow_options -errorinfo]
+   }
+-  write_lines [file join $evidence_root R1F_BUILD_TERMINAL_FAILURE.txt] [list \
+-    "R1F_ONE_CLEAN_BUILD_CONSUMED=YES" \
++  write_lines [file join $evidence_root R1G_BUILD_TERMINAL_FAILURE.txt] [list \
++    "R1G_ONE_CLEAN_BUILD_CONSUMED=YES" \
+     "SOURCE_GIT_COMMIT=$source_commit" \
+     "SOURCE_GIT_TREE=$source_tree" \
+     "PROGRAM_RETRY_AUTHORIZED=NO" \
+@@ -1330,8 +1337,8 @@ if {$flow_rc != 0} {
+     "ERROR_INFO_BEGIN" \
+     $error_info \
+     "ERROR_INFO_END"]
+-  puts stderr "R1F_ONE_CLEAN_BUILD_CONSUMED=YES"
+-  puts stderr "R1F_BUILD_TERMINAL_FAILURE=$flow_error"
++  puts stderr "R1G_ONE_CLEAN_BUILD_CONSUMED=YES"
++  puts stderr "R1G_BUILD_TERMINAL_FAILURE=$flow_error"
+   exit 1
+ }
+ 

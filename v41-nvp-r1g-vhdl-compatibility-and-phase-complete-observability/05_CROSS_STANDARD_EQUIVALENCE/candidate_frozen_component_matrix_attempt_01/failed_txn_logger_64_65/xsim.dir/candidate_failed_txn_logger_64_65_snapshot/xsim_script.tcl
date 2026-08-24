@@ -1,0 +1,1 @@
+xsim {candidate_failed_txn_logger_64_65_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1G_VHDL_COMPATIBILITY/05_CROSS_STANDARD_EQUIVALENCE/candidate_frozen_component_matrix_attempt_01/failed_txn_logger_64_65/run.tcl}
