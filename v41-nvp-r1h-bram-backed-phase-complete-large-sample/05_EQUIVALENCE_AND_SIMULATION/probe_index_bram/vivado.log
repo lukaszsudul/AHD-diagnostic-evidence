@@ -1,0 +1,308 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 23:25:47 2026
+# Process ID         : 16996
+# Current directory  : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram
+# Command line       : vivado.exe -mode batch -source inference_ooc.tcl -notrace
+# Log file           : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/vivado.log
+# Journal file       : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram\vivado.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 6579 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source inference_ooc.tcl -notrace
+read_verilog: Time (s): cpu = 00:00:46 ; elapsed = 00:01:12 . Memory (MB): peak = 538.809 ; gain = 222.926
+Command: synth_design -top r1h_probe_index_bram_store -part xc7a35tcsg325-2 -mode out_of_context -flatten_hierarchy none
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 19560
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:26 ; elapsed = 00:00:32 . Memory (MB): peak = 1267.262 ; gain = 540.109
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'r1h_probe_index_bram_store' [C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/v41/r1h_probe_index_bram_store.sv:9]
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_sdpram' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
+	Parameter MEMORY_PRIMITIVE bound to: block - type: string 
+	Parameter CLOCKING_MODE bound to: common_clock - type: string 
+	Parameter ECC_MODE bound to: no_ecc - type: string 
+	Parameter MEMORY_INIT_FILE bound to: none - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 0 - type: integer 
+	Parameter WAKEUP_TIME bound to: disable_sleep - type: string 
+	Parameter AUTO_SLEEP_TIME bound to: 0 - type: integer 
+	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
+	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
+	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
+	Parameter SIM_ASSERT_CHK bound to: 1 - type: integer 
+	Parameter WRITE_DATA_WIDTH_A bound to: 16 - type: integer 
+	Parameter BYTE_WRITE_WIDTH_A bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_A bound to: 9 - type: integer 
+	Parameter READ_DATA_WIDTH_B bound to: 16 - type: integer 
+	Parameter ADDR_WIDTH_B bound to: 9 - type: integer 
+	Parameter READ_RESET_VALUE_B bound to: 0 - type: string 
+	Parameter READ_LATENCY_B bound to: 1 - type: integer 
+	Parameter WRITE_MODE_B bound to: read_first - type: string 
+	Parameter RST_MODE_B bound to: SYNC - type: string 
+INFO: [Synth 8-6157] synthesizing module 'xpm_memory_base' [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_base' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:54]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_memory_sdpram' (0#1) [C:/AMDDesignTools/2025.2/Vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:8996]
+INFO: [Synth 8-6155] done synthesizing module 'r1h_probe_index_bram_store' (0#1) [C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/v41/r1h_probe_index_bram_store.sv:9]
+WARNING: [Synth 8-7129] Port sleep in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rsta in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port regcea in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectsbiterra in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectdbiterra in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clkb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port regceb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port web[0] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[15] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[14] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[13] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[12] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[11] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[10] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[9] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[8] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[7] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[6] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[5] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[4] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[3] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[2] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[1] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[0] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectsbiterrb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectdbiterrb in module xpm_memory_base is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:35 ; elapsed = 00:00:41 . Memory (MB): peak = 1388.844 ; gain = 661.691
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:35 ; elapsed = 00:00:41 . Memory (MB): peak = 1388.844 ; gain = 661.691
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:35 ; elapsed = 00:00:41 . Memory (MB): peak = 1388.844 ; gain = 661.691
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1388.844 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1449.395 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1449.395 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:01:05 ; elapsed = 00:01:17 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcsg325-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:01:05 ; elapsed = 00:01:17 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:01:05 ; elapsed = 00:01:17 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:06 ; elapsed = 00:01:18 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 3     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---RAMs : 
+	               8K Bit	(512 X 16 bit)          RAMs := 3     
++---Muxes : 
+	   4 Input   16 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7129] Port rsta in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port regcea in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectsbiterra in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectdbiterra in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clkb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port regceb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port web[0] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[15] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[14] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[13] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[12] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[11] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[10] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[9] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[8] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[7] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[6] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[5] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[4] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[3] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[2] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[1] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[0] in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectsbiterrb in module xpm_memory_base is either unconnected or has no load
+WARNING: [Synth 8-7129] Port injectdbiterrb in module xpm_memory_base is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:15 ; elapsed = 00:01:27 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name                             | RTL Object                       | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:01:15 ; elapsed = 00:01:27 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name                             | RTL Object                       | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
+|xpm_memory_sdpram:/xpm_memory_base_inst | gen_wr_a.gen_word_narrow.mem_reg | 512 x 16(READ_FIRST)   | W |   | 512 x 16(WRITE_FIRST)  |   | R | Port A and B     | 1      | 0      | 
++----------------------------------------+----------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance GEN_INDEX_BRAM[0].INDEX_PAYLOAD_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance GEN_INDEX_BRAM[1].INDEX_PAYLOAD_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance GEN_INDEX_BRAM[2].INDEX_PAYLOAD_RAM/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:15 ; elapsed = 00:01:27 . Memory (MB): peak = 1449.395 ; gain = 722.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:01:32 ; elapsed = 00:01:45 . Memory (MB): peak = 1665.609 ; gain = 938.457
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:32 ; elapsed = 00:01:45 . Memory (MB): peak = 1665.609 ; gain = 938.457
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:32 ; elapsed = 00:01:46 . Memory (MB): peak = 1665.609 ; gain = 938.457
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |LUT2     |     4|
+|2     |LUT3     |     6|
+|3     |LUT4     |     2|
+|4     |LUT6     |    16|
+|5     |RAMB18E1 |     3|
+|6     |FDRE     |     3|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:33 ; elapsed = 00:01:46 . Memory (MB): peak = 1665.609 ; gain = 938.457
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 25 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:53 ; elapsed = 00:01:38 . Memory (MB): peak = 1665.609 ; gain = 877.906
+Synthesis Optimization Complete : Time (s): cpu = 00:01:33 ; elapsed = 00:01:46 . Memory (MB): peak = 1665.609 ; gain = 938.457
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 1677.676 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1776.004 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: b723f22f
+INFO: [Common 17-83] Releasing license: Synthesis
+23 Infos, 51 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:48 ; elapsed = 00:02:48 . Memory (MB): peak = 1776.004 ; gain = 1237.195
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 24 23:31:00 2026...

@@ -1,0 +1,28 @@
+TOOL_ROOT=C:\AMDDesignTools\2025.2\Vivado\bin
+VIVADO_VERSION=2025.2
+VIVADO_SW_BUILD=6299465
+REFERENCE_SOURCE_COMMIT=e112a5addb7ac62700a9a71af81bf368fad0bada
+REFERENCE_SOURCE_PATH=C:\FPGA\WORKTREES\V41_NVP_R1G_VHDL_COMPATIBILITY\rtl\v41\r1f_measurement_regs.sv
+CANDIDATE_ROOT=C:\FPGA\WORKTREES\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE
+AUTHORITATIVE_RUN=C:\FPGA\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE\05_EQUIVALENCE_AND_SIMULATION\MMIO_INTEGRATION_EXHAUSTIVE_RUN_04
+
+XVLOG_INPUTS=
+  tests\v41\r1g_measurement_regs_reference.sv
+  rtl\v41\r1f_measurement_regs.sv
+  rtl\v41\r1h_mmio_read_service.sv
+  rtl\v41\control_status_regs.sv
+  tests\v41\tb_r1h_mmio_integration_exhaustive.sv
+
+XVLOG_COMMAND=
+  xvlog.bat --sv <XVLOG_INPUTS>
+
+XELAB_COMMAND=
+  xelab.bat tb_r1h_mmio_integration_exhaustive -s tb_r1h_mmio_integration_exhaustive_sim --debug typical
+
+XSIM_COMMAND=
+  xsim.bat tb_r1h_mmio_integration_exhaustive_sim --runall
+
+XVLOG_EXIT_CODE=0
+XELAB_EXIT_CODE=0
+XSIM_EXIT_CODE=0
+FINAL_MARKER=R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS

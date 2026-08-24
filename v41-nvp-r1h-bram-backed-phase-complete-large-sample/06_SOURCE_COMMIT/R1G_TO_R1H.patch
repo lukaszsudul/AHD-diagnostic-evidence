@@ -1,0 +1,3082 @@
+From c4f4bfcf577c92c3021d1fe83c05878dd12e001c Mon Sep 17 00:00:00 2001
+From: lukaszsudul <103749296+lukaszsudul@users.noreply.github.com>
+Date: Tue, 25 Aug 2026 00:35:19 +0200
+Subject: [PATCH] Back R1f observability storage with BRAM and synchronous MMIO
+ reads
+
+---
+ rtl/top/ahd_capture_top_xdma.sv               |  71 +-
+ rtl/v41/control_status_regs.sv                |  29 +-
+ rtl/v41/nvp_i2c_tri_phase_probe.sv            | 111 ++-
+ rtl/v41/r1f_failed_txn_logger.sv              | 164 +++--
+ rtl/v41/r1f_measurement_regs.sv               |  19 +-
+ rtl/v41/r1h_mmio_read_service.sv              | 162 +++++
+ rtl/v41/r1h_probe_index_bram_store.sv         | 108 +++
+ tests/v41/r1g_measurement_regs_reference.sv   | 260 +++++++
+ tests/v41/r1h_memory_inference_top.sv         |  69 ++
+ tests/v41/tb_nvp_i2c_tri_phase_probe.sv       |  69 +-
+ ...b_nvp_i2c_tri_phase_probe_abort_restore.sv |  13 +-
+ ...b_nvp_i2c_tri_phase_probe_attempt_limit.sv |   9 +-
+ ...tb_nvp_i2c_tri_phase_probe_idle_timeout.sv |   9 +-
+ ..._nvp_i2c_tri_phase_probe_index_overflow.sv |  32 +-
+ ...i_phase_probe_secondary_restore_failure.sv |   9 +-
+ .../v41/tb_nvp_i2c_tri_phase_probe_timeout.sv |   9 +-
+ tests/v41/tb_r1f_failed_txn_logger.sv         |  96 ++-
+ tests/v41/tb_r1f_measurement_regs.sv          |  39 +-
+ tests/v41/tb_r1f_preinit_arbitration.sv       |   5 +-
+ .../v41/tb_r1h_mmio_integration_exhaustive.sv | 652 ++++++++++++++++++
+ tests/v41/tb_r1h_mmio_read_service.sv         | 378 ++++++++++
+ tests/v41/tb_r1h_probe_index_bram_store.sv    | 116 ++++
+ 22 files changed, 2250 insertions(+), 179 deletions(-)
+ create mode 100644 rtl/v41/r1h_mmio_read_service.sv
+ create mode 100644 rtl/v41/r1h_probe_index_bram_store.sv
+ create mode 100644 tests/v41/r1g_measurement_regs_reference.sv
+ create mode 100644 tests/v41/r1h_memory_inference_top.sv
+ create mode 100644 tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+ create mode 100644 tests/v41/tb_r1h_mmio_read_service.sv
+ create mode 100644 tests/v41/tb_r1h_probe_index_bram_store.sv
+
+diff --git a/rtl/top/ahd_capture_top_xdma.sv b/rtl/top/ahd_capture_top_xdma.sv
+index e9ff9e3..1e34f92 100644
+--- a/rtl/top/ahd_capture_top_xdma.sv
++++ b/rtl/top/ahd_capture_top_xdma.sv
+@@ -207,9 +207,11 @@ module ahd_capture_top_xdma #(
+   logic [15:0] tri_data_index_stored_count;
+   logic tri_waddr_index_overflow, tri_regaddr_index_overflow;
+   logic tri_data_index_overflow;
++  logic tri_index_read_req;
+   logic [1:0] tri_index_read_phase;
+-  logic [7:0] tri_index_read_word;
+-  logic [31:0] tri_index_read_data;
++  logic [8:0] tri_index_read_address;
++  logic tri_index_read_valid;
++  logic [15:0] tri_index_read_data;
+   logic [1:0] tri_block_read_phase;
+   logic [3:0] tri_block_read_index;
+   logic [31:0] tri_block_read_nack_count;
+@@ -307,8 +309,10 @@ module ahd_capture_top_xdma #(
+     .waddr_nack_index_overflow(tri_waddr_index_overflow),
+     .regaddr_nack_index_overflow(tri_regaddr_index_overflow),
+     .data_nack_index_overflow(tri_data_index_overflow),
++    .index_read_req(tri_index_read_req),
+     .index_read_phase(tri_index_read_phase),
+-    .index_read_word(tri_index_read_word),
++    .index_read_address(tri_index_read_address),
++    .index_read_valid(tri_index_read_valid),
+     .index_read_data(tri_index_read_data),
+     .block_read_phase(tri_block_read_phase),
+     .block_read_index(tri_block_read_index),
+@@ -353,6 +357,11 @@ module ahd_capture_top_xdma #(
+ 
+   logic [5:0] r1f_record_read_index;
+   logic [2:0] r1f_record_read_word;
++  logic [5:0] r1f_record_decode_index;
++  logic [2:0] r1f_record_decode_word;
++  logic r1f_record_read_select;
++  logic r1f_record_read_enable;
++  logic r1f_record_read_valid;
+   logic [31:0] r1f_record_read_data;
+   logic [31:0] r1f_failed_txn_total_count;
+   logic [6:0] r1f_failed_txn_stored_count;
+@@ -368,8 +377,10 @@ module ahd_capture_top_xdma #(
+     .clk(autonomous_clk), .reset(nvp_por_reset),
+     .r1f_failed_txn_valid(r1f_failed_txn_record_valid),
+     .r1f_failed_txn_record(r1f_failed_txn_record),
++    .record_read_enable(r1f_record_read_enable),
+     .record_read_index(r1f_record_read_index),
+     .record_read_word(r1f_record_read_word),
++    .record_read_valid(r1f_record_read_valid),
+     .record_read_data(r1f_record_read_data),
+     .total_count(r1f_failed_txn_total_count),
+     .stored_count(r1f_failed_txn_stored_count),
+@@ -482,6 +493,12 @@ module ahd_capture_top_xdma #(
+   wire [31:0] app_rsp_rdata;
+   logic [31:0] measurement_read_data;
+   logic [31:0] r1f_read_data;
++  logic r1h_req_valid;
++  logic r1h_req_ready;
++  logic [13:0] r1h_req_offset;
++  logic r1h_rsp_valid;
++  logic r1h_rsp_ready;
++  logic [31:0] r1h_rsp_data;
+   logic [6:0] r1f_probe_detail_read_word;
+   logic r1f_probe_detail_read_select;
+   logic [31:0] r1f_probe_detail_read_data;
+@@ -668,9 +685,6 @@ module ahd_capture_top_xdma #(
+ 
+   assign tri_block_read_phase = r1f_probe_detail_read_word[6:5];
+   assign tri_block_read_index = r1f_probe_detail_read_word[4:0] - 5'd19;
+-  assign tri_index_read_phase = r1f_probe_index_read_phase;
+-  assign tri_index_read_word = r1f_probe_index_read_word;
+-
+   always_comb begin
+     integer phase_number;
+     logic [4:0] phase_word;
+@@ -773,7 +787,7 @@ module ahd_capture_top_xdma #(
+     .SAFE_PROBE_BANK(8'h00), .SAFE_PROBE_REGISTER(8'h85),
+     .SAFE_PROBE_DATA(8'h00), .SAFE_PROBE_TARGET_PROVEN(1'b1)
+   ) R1F_MEASUREMENT_REGS (
+-    .offset(host_req_addr[13:0]),
++    .offset(r1h_req_offset),
+     .autoinit_waddr_opportunities(r1f_phase_counters[31:0]),
+     .autoinit_waddr_nacks(r1f_phase_counters[63:32]),
+     .autoinit_regaddr_opportunities(r1f_phase_counters[95:64]),
+@@ -823,16 +837,46 @@ module ahd_capture_top_xdma #(
+     .probe_detail_read_word(r1f_probe_detail_read_word),
+     .probe_detail_read_select(r1f_probe_detail_read_select),
+     .probe_detail_read_data(r1f_probe_detail_read_data),
+-    .record_read_index(r1f_record_read_index),
+-    .record_read_word(r1f_record_read_word),
+-    .record_read_data(r1f_record_read_data),
++    .record_read_index(r1f_record_decode_index),
++    .record_read_word(r1f_record_decode_word),
++    .record_read_select(r1f_record_read_select),
+     .probe_index_read_phase(r1f_probe_index_read_phase),
+     .probe_index_read_word(r1f_probe_index_read_word),
+     .probe_index_read_select(r1f_probe_index_read_select),
+-    .probe_index_read_data(tri_index_read_data),
+     .read_data(r1f_read_data)
+   );
+ 
++  // The complete R1f/R1h page uses one registered, one-outstanding read
++  // service.  Scalar values are captured at request acceptance; record words
++  // use one BRAM read and packed index words use two ordered BRAM reads.
++  v41_r1h_mmio_read_service R1H_MMIO_READ_SERVICE (
++    .clk(axi_aclk), .reset((~axi_aresetn) || nvp_por_reset),
++    .req_valid(r1h_req_valid), .req_ready(r1h_req_ready),
++    .req_offset(r1h_req_offset),
++    .rsp_valid(r1h_rsp_valid), .rsp_ready(r1h_rsp_ready),
++    .rsp_data(r1h_rsp_data),
++    .scalar_read_data(r1f_read_data),
++    .record_select(r1f_record_read_select),
++    .record_index(r1f_record_decode_index),
++    .record_word(r1f_record_decode_word),
++    .probe_index_select(r1f_probe_index_read_select),
++    .probe_index_phase(r1f_probe_index_read_phase),
++    .probe_index_word(r1f_probe_index_read_word),
++    .record_read_enable(r1f_record_read_enable),
++    .record_read_index(r1f_record_read_index),
++    .record_read_word(r1f_record_read_word),
++    .record_read_valid(r1f_record_read_valid),
++    .record_read_data(r1f_record_read_data),
++    .index_read_enable(tri_index_read_req),
++    .index_read_phase(tri_index_read_phase),
++    .index_read_address(tri_index_read_address),
++    .index_read_valid(tri_index_read_valid),
++    .index_read_data(tri_index_read_data),
++    .waddr_index_stored_count(tri_waddr_index_stored_count),
++    .regaddr_index_stored_count(tri_regaddr_index_stored_count),
++    .data_index_stored_count(tri_data_index_stored_count)
++  );
++
+   v41_r1e_measurement_regs R1E_MEASUREMENT_REGS (
+     .offset(host_req_addr[7:0]),
+     .freerun_count(lifecycle_freerun_count),
+@@ -910,7 +954,10 @@ module ahd_capture_top_xdma #(
+     .app_rsp_valid(app_rsp_valid), .app_rsp_ready(app_rsp_ready),
+     .app_rsp_rdata(app_rsp_rdata),
+     .measurement_read_data(measurement_read_data),
+-    .r1f_read_data(r1f_read_data),
++    .r1h_req_valid(r1h_req_valid), .r1h_req_ready(r1h_req_ready),
++    .r1h_req_offset(r1h_req_offset),
++    .r1h_rsp_valid(r1h_rsp_valid), .r1h_rsp_ready(r1h_rsp_ready),
++    .r1h_rsp_data(r1h_rsp_data),
+     .capture_request_busy(telemetry_capture_request_busy),
+     .capture_busy(telemetry_capture_busy),
+     .capture_armed(telemetry_capture_armed),
+diff --git a/rtl/v41/control_status_regs.sv b/rtl/v41/control_status_regs.sv
+index 370fa72..0a6141c 100644
+--- a/rtl/v41/control_status_regs.sv
++++ b/rtl/v41/control_status_regs.sv
+@@ -36,7 +36,13 @@ module v41_control_status_regs #(
+   input  logic [31:0] app_rsp_rdata,
+ 
+   input  logic [31:0] measurement_read_data,
+-  input  logic [31:0] r1f_read_data,
++
++  output logic        r1h_req_valid,
++  input  logic        r1h_req_ready,
++  output logic [13:0] r1h_req_offset,
++  input  logic        r1h_rsp_valid,
++  output logic        r1h_rsp_ready,
++  input  logic [31:0] r1h_rsp_data,
+ 
+   input  logic        capture_request_busy,
+   input  logic        capture_busy,
+@@ -90,11 +96,11 @@ module v41_control_status_regs #(
+   wire         measurement_read_select = !host_req_write &&
+                                           host_req_addr >= 17'h02000 &&
+                                           host_req_addr <= 17'h0209f;
+-  wire         r1f_read_select = !host_req_write &&
++  wire         r1h_read_select = !host_req_write &&
+                                  host_req_addr >= 17'h020a0 &&
+                                  host_req_addr <= 17'h035ff;
+   wire         local_select = (host_req_addr[16:8] == 9'b0) ||
+-                              measurement_read_select || r1f_read_select;
++                              measurement_read_select || r1h_read_select;
+ 
+   function automatic [31:0] apply_be(
+     input [31:0] old_value, input [31:0] new_value, input [3:0] be);
+@@ -185,11 +191,16 @@ module v41_control_status_regs #(
+   assign app_req_addr = host_req_addr;
+   assign app_req_wdata = host_req_wdata;
+   assign app_req_be = host_req_be;
+-  assign host_req_ready = local_select ? !local_rsp_valid : app_req_ready;
++  assign r1h_req_valid = host_req_valid && r1h_read_select;
++  assign r1h_req_offset = host_req_addr[13:0];
++  assign host_req_ready = r1h_read_select ? r1h_req_ready :
++                          local_select ? !local_rsp_valid : app_req_ready;
+ 
+-  assign host_rsp_valid = local_rsp_valid || app_rsp_valid;
+-  assign host_rsp_rdata = local_rsp_valid ? local_rsp_rdata : app_rsp_rdata;
+-  assign app_rsp_ready = host_rsp_ready && !local_rsp_valid;
++  assign host_rsp_valid = local_rsp_valid || r1h_rsp_valid || app_rsp_valid;
++  assign host_rsp_rdata = local_rsp_valid ? local_rsp_rdata :
++                          r1h_rsp_valid ? r1h_rsp_data : app_rsp_rdata;
++  assign r1h_rsp_ready = host_rsp_ready && !local_rsp_valid;
++  assign app_rsp_ready = host_rsp_ready && !local_rsp_valid && !r1h_rsp_valid;
+ 
+   always_ff @(posedge clk) begin
+     if (reset) begin
+@@ -200,13 +211,13 @@ module v41_control_status_regs #(
+       if (local_rsp_valid && host_rsp_ready)
+         local_rsp_valid <= 1'b0;
+ 
+-      if (host_req_valid && host_req_ready && local_select) begin
++      if (host_req_valid && host_req_ready && local_select &&
++          !r1h_read_select) begin
+         if (host_req_write) begin
+           if (host_req_addr[7:0] == 8'h34)
+             scratch_rw <= apply_be(scratch_rw, host_req_wdata, host_req_be);
+         end else begin
+           local_rsp_rdata <= host_req_addr[1:0] != 2'b00 ? 32'b0 :
+-                             r1f_read_select ? r1f_read_data :
+                              measurement_read_select ? measurement_read_data :
+                              local_read(host_req_addr[7:0]);
+           local_rsp_valid <= 1'b1;
+diff --git a/rtl/v41/nvp_i2c_tri_phase_probe.sv b/rtl/v41/nvp_i2c_tri_phase_probe.sv
+index 13b55e9..6fe85f2 100644
+--- a/rtl/v41/nvp_i2c_tri_phase_probe.sv
++++ b/rtl/v41/nvp_i2c_tri_phase_probe.sv
+@@ -125,9 +125,11 @@ module nvp_i2c_tri_phase_probe #(
+   output logic        regaddr_nack_index_overflow,
+   output logic        data_nack_index_overflow,
+ 
++  input  logic        index_read_req,
+   input  logic [1:0]  index_read_phase,
+-  input  logic [7:0]  index_read_word,
+-  output logic [31:0] index_read_data,
++  input  logic [8:0]  index_read_address,
++  output logic        index_read_valid,
++  output logic [15:0] index_read_data,
+   input  logic [1:0]  block_read_phase,
+   input  logic [3:0]  block_read_index,
+   output logic [31:0] block_read_nack_count
+@@ -649,10 +651,21 @@ module nvp_i2c_tri_phase_probe #(
+   logic [31:0] consecutive_nacks [0:2];
+   logic previous_outcome_valid [0:2];
+   logic previous_outcome_nack [0:2];
++  // Completed blocks are sparse, single-write records.  With payload reset
++  // removed this 30x32 array is eligible for distributed RAM; separate valid
++  // metadata supplies deterministic zero for blocks that have not completed.
++  (* ram_style = "distributed" *)
+   logic [31:0] block_nack_count [0:2][0:BLOCK_COUNT_PER_PHASE-1];
+-  logic [15:0] nack_index_memory [0:2][0:NACK_INDEX_CAPACITY_PER_PHASE-1];
++  logic block_nack_count_valid [0:2][0:BLOCK_COUNT_PER_PHASE-1];
++  logic [31:0] block_live_nack_count [0:2];
++  logic [15:0] block_opportunity_position [0:2];
++  logic [3:0] block_current_index [0:2];
+   logic [15:0] nack_index_stored_count [0:2];
+   logic nack_index_overflow [0:2];
++  logic        index_payload_write_valid;
++  logic [1:0]  index_payload_write_phase;
++  logic [8:0]  index_payload_write_address;
++  logic [15:0] index_payload_write_data;
+ 
+   logic [31:0] reg_prereq_waddr_opportunities;
+   logic [31:0] reg_prereq_waddr_acks;
+@@ -666,7 +679,24 @@ module nvp_i2c_tri_phase_probe #(
+ 
+   integer reset_phase;
+   integer reset_block;
+-  integer target_block;
++
++  // Three physically independent 512x16 BRAM-backed payload stores.  The
++  // scientific count/overflow metadata remains local to this module; payload
++  // RAM is never reset and is exposed only through one synchronous entry-read
++  // port for the R1h one-outstanding MMIO service.
++  r1h_probe_index_bram_store INDEX_PAYLOAD_STORE (
++    .clk,
++    .rst,
++    .write_valid(index_payload_write_valid),
++    .write_phase(index_payload_write_phase),
++    .write_address(index_payload_write_address),
++    .write_data(index_payload_write_data),
++    .read_req(index_read_req),
++    .read_phase(index_read_phase),
++    .read_address(index_read_address),
++    .read_valid(index_read_valid),
++    .read_data(index_read_data)
++  );
+ 
+   task automatic launch_transaction(
+     input logic [1:0] kind,
+@@ -706,10 +736,33 @@ module nvp_i2c_tri_phase_probe #(
+     input integer phase_number,
+     input logic outcome_nack
+   );
+-    integer block_number;
++    logic [31:0] next_block_nack_count;
+     begin
+-      block_number = target_opportunities[phase_number] / BLOCK_SIZE;
++      next_block_nack_count = block_live_nack_count[phase_number] +
++                              (outcome_nack ? 32'd1 : 32'd0);
+       target_opportunities[phase_number] <= target_opportunities[phase_number] + 1'b1;
++
++      // Track the ten fixed-size blocks without division or modulo logic.
++      // The completing opportunity commits the updated count exactly once;
++      // the next opportunity starts the next block from zero.
++      if (block_opportunity_position[phase_number] + 1'b1 >= BLOCK_SIZE) begin
++        if (block_current_index[phase_number] < BLOCK_COUNT_PER_PHASE) begin
++          block_nack_count[phase_number][block_current_index[phase_number]] <=
++            next_block_nack_count;
++          block_nack_count_valid[phase_number][block_current_index[phase_number]] <=
++            1'b1;
++        end
++        block_live_nack_count[phase_number] <= 32'b0;
++        block_opportunity_position[phase_number] <= 16'b0;
++        if (block_current_index[phase_number] < BLOCK_COUNT_PER_PHASE)
++          block_current_index[phase_number] <=
++            block_current_index[phase_number] + 1'b1;
++      end else begin
++        block_live_nack_count[phase_number] <= next_block_nack_count;
++        block_opportunity_position[phase_number] <=
++          block_opportunity_position[phase_number] + 1'b1;
++      end
++
+       if (!previous_outcome_valid[phase_number]) begin
+         previous_outcome_valid[phase_number] <= 1'b1;
+         previous_outcome_nack[phase_number] <= outcome_nack;
+@@ -734,13 +787,13 @@ module nvp_i2c_tri_phase_probe #(
+         if (consecutive_nacks[phase_number] + 1'b1 >
+             max_consecutive_nacks[phase_number])
+           max_consecutive_nacks[phase_number] <= consecutive_nacks[phase_number] + 1'b1;
+-        if (block_number < BLOCK_COUNT_PER_PHASE)
+-          block_nack_count[phase_number][block_number] <=
+-            block_nack_count[phase_number][block_number] + 1'b1;
+         if (nack_index_stored_count[phase_number] <
+             NACK_INDEX_CAPACITY_PER_PHASE) begin
+-          nack_index_memory[phase_number][nack_index_stored_count[phase_number]] <=
+-            target_opportunities[phase_number][15:0];
++          index_payload_write_valid <= 1'b1;
++          index_payload_write_phase <= phase_number[1:0];
++          index_payload_write_address <=
++            nack_index_stored_count[phase_number][8:0];
++          index_payload_write_data <= target_opportunities[phase_number][15:0];
+           nack_index_stored_count[phase_number] <=
+             nack_index_stored_count[phase_number] + 1'b1;
+         end else begin
+@@ -804,6 +857,10 @@ module nvp_i2c_tri_phase_probe #(
+       data_prereq_regaddr_opportunities_i <= 32'b0;
+       data_prereq_regaddr_acks_i <= 32'b0;
+       data_prereq_regaddr_nacks_i <= 32'b0;
++      index_payload_write_valid <= 1'b0;
++      index_payload_write_phase <= 2'b0;
++      index_payload_write_address <= 9'b0;
++      index_payload_write_data <= 16'b0;
+       for (reset_phase = 0; reset_phase < 3; reset_phase = reset_phase + 1) begin
+         transaction_attempts[reset_phase] <= 32'b0;
+         target_opportunities[reset_phase] <= 32'b0;
+@@ -820,12 +877,16 @@ module nvp_i2c_tri_phase_probe #(
+         previous_outcome_nack[reset_phase] <= 1'b0;
+         nack_index_stored_count[reset_phase] <= 16'b0;
+         nack_index_overflow[reset_phase] <= 1'b0;
++        block_live_nack_count[reset_phase] <= 32'b0;
++        block_opportunity_position[reset_phase] <= 16'b0;
++        block_current_index[reset_phase] <= 4'b0;
+         for (reset_block = 0; reset_block < BLOCK_COUNT_PER_PHASE;
+              reset_block = reset_block + 1)
+-          block_nack_count[reset_phase][reset_block] <= 32'b0;
++          block_nack_count_valid[reset_phase][reset_block] <= 1'b0;
+       end
+     end else begin
+       ll_start <= 1'b0;
++      index_payload_write_valid <= 1'b0;
+       if (init_done)
+         legacy_init_done_seen_i <= 1'b1;
+       case (high_state)
+@@ -1173,27 +1234,13 @@ module nvp_i2c_tri_phase_probe #(
+     regaddr_nack_index_overflow = nack_index_overflow[1];
+     data_nack_index_overflow = nack_index_overflow[2];
+ 
+-    // Each 32-bit MMIO word packs two chronological 16-bit, zero-based
+-    // target-opportunity indices: {index[2w+1], index[2w]}.  Stored-count
+-    // bounds force every unused half-word to deterministic zero.
+-    index_read_data = 32'b0;
+-    if (index_read_phase < 3) begin
+-      if ({index_read_word, 1'b0} < NACK_INDEX_CAPACITY_PER_PHASE &&
+-          {index_read_word, 1'b0} <
+-            nack_index_stored_count[index_read_phase])
+-        index_read_data[15:0] =
+-          nack_index_memory[index_read_phase][{index_read_word, 1'b0}];
+-      if (({index_read_word, 1'b0} + 1'b1) <
+-            NACK_INDEX_CAPACITY_PER_PHASE &&
+-          ({index_read_word, 1'b0} + 1'b1) <
+-            nack_index_stored_count[index_read_phase])
+-        index_read_data[31:16] =
+-          nack_index_memory[index_read_phase][{index_read_word, 1'b0} + 1'b1];
+-    end
+-
+     block_read_nack_count = 32'b0;
+-    if (block_read_phase < 3 && block_read_index < BLOCK_COUNT_PER_PHASE)
+-      block_read_nack_count = block_nack_count[block_read_phase][block_read_index];
++    if (block_read_phase < 3 && block_read_index < BLOCK_COUNT_PER_PHASE) begin
++      if (block_read_index == block_current_index[block_read_phase])
++        block_read_nack_count = block_live_nack_count[block_read_phase];
++      else if (block_nack_count_valid[block_read_phase][block_read_index])
++        block_read_nack_count = block_nack_count[block_read_phase][block_read_index];
++    end
+ 
+     probe_status = 32'b0;
+     probe_status[0] = probe_done;
+diff --git a/rtl/v41/r1f_failed_txn_logger.sv b/rtl/v41/r1f_failed_txn_logger.sv
+index 98dc3ca..6325774 100644
+--- a/rtl/v41/r1f_failed_txn_logger.sv
++++ b/rtl/v41/r1f_failed_txn_logger.sv
+@@ -1,8 +1,9 @@
+ `timescale 1ns/1ps
+ 
+-// R1f append-only failed-transaction storage. The functional I2C sequencer
+-// supplies one already-finalized 192-bit record pulse per failed or timed-out
+-// transaction. This module has no output that can influence that sequencer.
++// R1f append-only failed-transaction storage with the R1h BRAM-backed payload
++// implementation. The functional I2C sequencer supplies one already-finalized
++// 192-bit record pulse per failed or timed-out transaction. This module has no
++// output that can influence that sequencer.
+ module v41_r1f_failed_txn_logger (
+   input  logic         clk,
+   input  logic         reset,
+@@ -10,8 +11,10 @@ module v41_r1f_failed_txn_logger (
+   input  logic         r1f_failed_txn_valid,
+   input  logic [191:0] r1f_failed_txn_record,
+ 
++  input  logic         record_read_enable,
+   input  logic [5:0]   record_read_index,
+   input  logic [2:0]   record_read_word,
++  output logic         record_read_valid,
+   output logic [31:0]  record_read_data,
+ 
+   output logic [31:0]  total_count,
+@@ -27,11 +30,13 @@ module v41_r1f_failed_txn_logger (
+   localparam integer RECORD_VALID_BIT = 32 + 29;
+   localparam integer RECORD_TIMEOUT_BIT = 32 + 27;
+ 
+-  // The validity bitmap is reset instead of clearing the payload RAM. This
+-  // preserves RAM inference while guaranteeing deterministic zero for every
+-  // unused entry at the read interface.
+-  (* ram_style = "distributed" *) logic [191:0] record_mem [0:63];
+-  logic [63:0] entry_valid;
++  logic        payload_write_enable;
++  logic [5:0]  payload_write_address;
++  logic [31:0] payload_read_data [0:5];
++  logic [5:0]  payload_read_enable;
++  logic [2:0]  read_word_q;
++  logic        read_entry_valid_q;
++  logic [31:0] selected_payload_read_data;
+ 
+   function automatic [2:0] popcount4(input logic [3:0] value);
+     begin
+@@ -55,24 +60,90 @@ module v41_r1f_failed_txn_logger (
+       (r1f_failed_txn_record[63:62] == 2'b0) &&
+       (r1f_failed_txn_record[191:176] == 16'b0);
+ 
++  // Every finalized record is accepted in one clock and written atomically as
++  // six parallel 32-bit words at one common row. Payload RAM is intentionally
++  // never reset. Resetting stored_count makes all old rows logically unused.
++  assign payload_write_enable = r1f_failed_txn_valid &&
++                                (stored_count < 7'd64);
++  assign payload_write_address = stored_count[5:0];
++
+   always_comb begin
+-    record_read_data = 32'b0;
+-    if (entry_valid[record_read_index]) begin
+-      case (record_read_word)
+-        3'd0: record_read_data = record_mem[record_read_index][31:0];
+-        3'd1: record_read_data = record_mem[record_read_index][63:32];
+-        3'd2: record_read_data = record_mem[record_read_index][95:64];
+-        3'd3: record_read_data = record_mem[record_read_index][127:96];
+-        3'd4: record_read_data = record_mem[record_read_index][159:128];
+-        3'd5: record_read_data = record_mem[record_read_index][191:160];
+-        default: record_read_data = 32'b0;
+-      endcase
++    payload_read_enable = 6'b0;
++    if (record_read_enable && (record_read_word < 3'd6))
++      payload_read_enable[record_read_word] = 1'b1;
++  end
++
++  genvar bank_index;
++  generate
++    for (bank_index = 0; bank_index < 6; bank_index = bank_index + 1) begin : GEN_R1H_RECORD_BANK
++      xpm_memory_sdpram #(
++        .ADDR_WIDTH_A(6),
++        .ADDR_WIDTH_B(6),
++        .AUTO_SLEEP_TIME(0),
++        .BYTE_WRITE_WIDTH_A(32),
++        .CLOCKING_MODE("common_clock"),
++        .ECC_MODE("no_ecc"),
++        .MEMORY_INIT_FILE("none"),
++        .MEMORY_INIT_PARAM("0"),
++        .MEMORY_OPTIMIZATION("true"),
++        .MEMORY_PRIMITIVE("block"),
++        .MEMORY_SIZE(2048),
++        .MESSAGE_CONTROL(0),
++        .READ_DATA_WIDTH_B(32),
++        .READ_LATENCY_B(1),
++        .READ_RESET_VALUE_B("0"),
++        .RST_MODE_B("SYNC"),
++        .SIM_ASSERT_CHK(1),
++        .USE_EMBEDDED_CONSTRAINT(0),
++        .USE_MEM_INIT(0),
++        .WAKEUP_TIME("disable_sleep"),
++        .WRITE_DATA_WIDTH_A(32),
++        .WRITE_MODE_B("read_first")
++      ) R1H_RECORD_PAYLOAD_RAM (
++        .clka(clk),
++        .ena(payload_write_enable),
++        .wea(payload_write_enable),
++        .addra(payload_write_address),
++        .dina(r1f_failed_txn_record[bank_index*32 +: 32]),
++        .clkb(clk),
++        .enb(payload_read_enable[bank_index]),
++        .addrb(record_read_index),
++        .doutb(payload_read_data[bank_index]),
++        .rstb(reset),
++        .regceb(1'b1),
++        .sleep(1'b0),
++        .injectsbiterra(1'b0),
++        .injectdbiterra(1'b0),
++        .sbiterrb(),
++        .dbiterrb()
++      );
+     end
++  endgenerate
++
++  always_comb begin
++    case (read_word_q)
++      3'd0: selected_payload_read_data = payload_read_data[0];
++      3'd1: selected_payload_read_data = payload_read_data[1];
++      3'd2: selected_payload_read_data = payload_read_data[2];
++      3'd3: selected_payload_read_data = payload_read_data[3];
++      3'd4: selected_payload_read_data = payload_read_data[4];
++      3'd5: selected_payload_read_data = payload_read_data[5];
++      default: selected_payload_read_data = 32'b0;
++    endcase
++
++    // read_entry_valid_q is a request-time snapshot. A concurrent append to
++    // the requested next row therefore remains logically unused for this read.
++    if (record_read_valid && read_entry_valid_q)
++      record_read_data = selected_payload_read_data;
++    else
++      record_read_data = 32'b0;
+   end
+ 
+   always_ff @(posedge clk) begin
+     if (reset) begin
+-      entry_valid <= 64'b0;
++      record_read_valid <= 1'b0;
++      read_word_q <= 3'b0;
++      read_entry_valid_q <= 1'b0;
+       total_count <= 32'b0;
+       stored_count <= 7'b0;
+       overflow <= 1'b0;
+@@ -82,30 +153,37 @@ module v41_r1f_failed_txn_logger (
+       last_failed_txn_index_valid <= 1'b0;
+       total_count_saturated <= 1'b0;
+       input_protocol_error <= 1'b0;
+-    end else if (r1f_failed_txn_valid) begin
+-      if (total_count != 32'hffff_ffff)
+-        total_count <= total_count + 1'b1;
+-      else
+-        total_count_saturated <= 1'b1;
+-
+-      if (!first_failed_txn_index_valid) begin
+-        first_failed_txn_index <= r1f_failed_txn_record[15:0];
+-        first_failed_txn_index_valid <= 1'b1;
++    end else begin
++      record_read_valid <= record_read_enable;
++      if (record_read_enable) begin
++        read_word_q <= record_read_word;
++        read_entry_valid_q <= (record_read_word < 3'd6) &&
++                              ({1'b0, record_read_index} < stored_count);
+       end
+-      last_failed_txn_index <= r1f_failed_txn_record[15:0];
+-      last_failed_txn_index_valid <= 1'b1;
+-
+-      if (!incoming_record_well_formed)
+-        input_protocol_error <= 1'b1;
+-
+-      if (stored_count < 7'd64) begin
+-        record_mem[stored_count[5:0]] <= r1f_failed_txn_record;
+-        entry_valid[stored_count[5:0]] <= 1'b1;
+-        stored_count <= stored_count + 1'b1;
+-      end else begin
+-        // Failure number 65 is the first event that sets overflow. No record
+-        // is overwritten and stored_count remains exactly 64.
+-        overflow <= 1'b1;
++
++      if (r1f_failed_txn_valid) begin
++        if (total_count != 32'hffff_ffff)
++          total_count <= total_count + 1'b1;
++        else
++          total_count_saturated <= 1'b1;
++
++        if (!first_failed_txn_index_valid) begin
++          first_failed_txn_index <= r1f_failed_txn_record[15:0];
++          first_failed_txn_index_valid <= 1'b1;
++        end
++        last_failed_txn_index <= r1f_failed_txn_record[15:0];
++        last_failed_txn_index_valid <= 1'b1;
++
++        if (!incoming_record_well_formed)
++          input_protocol_error <= 1'b1;
++
++        if (stored_count < 7'd64) begin
++          stored_count <= stored_count + 1'b1;
++        end else begin
++          // Failure number 65 is the first event that sets overflow. No record
++          // is overwritten and stored_count remains exactly 64.
++          overflow <= 1'b1;
++        end
+       end
+     end
+   end
+diff --git a/rtl/v41/r1f_measurement_regs.sv b/rtl/v41/r1f_measurement_regs.sv
+index 062fb70..74489fd 100644
+--- a/rtl/v41/r1f_measurement_regs.sv
++++ b/rtl/v41/r1f_measurement_regs.sv
+@@ -1,7 +1,9 @@
+ `timescale 1ns/1ps
+ 
+-// Read-only R1f map decoder. Storage remains behind narrow submodule read
+-// ports; no log or index array is flattened through this interface.
++// Read-only R1f/R1h map decoder.  Storage address classification remains
++// purely combinational, but payload data is returned by the R1h synchronous
++// one-outstanding read service.  Consequently no record or index payload is
++// flattened through this decoder.
+ module v41_r1f_measurement_regs #(
+   parameter logic [7:0] SAFE_PROBE_BANK = 8'h00,
+   parameter logic [7:0] SAFE_PROBE_REGISTER = 8'h00,
+@@ -66,12 +68,11 @@ module v41_r1f_measurement_regs #(
+ 
+   output logic [5:0]  record_read_index,
+   output logic [2:0]  record_read_word,
+-  input  logic [31:0] record_read_data,
++  output logic        record_read_select,
+ 
+   output logic [1:0]  probe_index_read_phase,
+   output logic [7:0]  probe_index_read_word,
+   output logic        probe_index_read_select,
+-  input  logic [31:0] probe_index_read_data,
+ 
+   output logic [31:0] read_data
+ );
+@@ -141,6 +142,7 @@ module v41_r1f_measurement_regs #(
+     probe_detail_read_select = 1'b0;
+     record_read_index = 6'b0;
+     record_read_word = 3'b0;
++    record_read_select = 1'b0;
+     probe_index_read_phase = 2'b0;
+     probe_index_read_word = 8'b0;
+     probe_index_read_select = 1'b0;
+@@ -226,22 +228,23 @@ module v41_r1f_measurement_regs #(
+       record_linear_word = record_byte_delta[10:2];
+       record_read_index = record_linear_word / 6;
+       record_read_word = record_linear_word % 6;
+-      read_data = record_read_data;
++      record_read_select = record_linear_word < 9'd384;
++      read_data = 32'b0;
+     end else if (offset >= 14'h2a00 && offset <= 14'h2dff) begin
+       probe_index_read_select = 1'b1;
+       probe_index_read_phase = 2'd0;
+       probe_index_read_word = (offset - 14'h2a00) >> 2;
+-      read_data = probe_index_read_data;
++      read_data = 32'b0;
+     end else if (offset >= 14'h2e00 && offset <= 14'h31ff) begin
+       probe_index_read_select = 1'b1;
+       probe_index_read_phase = 2'd1;
+       probe_index_read_word = (offset - 14'h2e00) >> 2;
+-      read_data = probe_index_read_data;
++      read_data = 32'b0;
+     end else if (offset >= 14'h3200 && offset <= 14'h35ff) begin
+       probe_index_read_select = 1'b1;
+       probe_index_read_phase = 2'd2;
+       probe_index_read_word = (offset - 14'h3200) >> 2;
+-      read_data = probe_index_read_data;
++      read_data = 32'b0;
+     end
+   end
+ endmodule
+diff --git a/rtl/v41/r1h_mmio_read_service.sv b/rtl/v41/r1h_mmio_read_service.sv
+new file mode 100644
+index 0000000..9ac1f56
+--- /dev/null
++++ b/rtl/v41/r1h_mmio_read_service.sv
+@@ -0,0 +1,162 @@
++`timescale 1ns/1ps
++
++// R1h read sequencer for the complete R1f diagnostic page.  The enclosing
++// AXI-Lite bridge already permits at most one request, but this module also
++// advertises ready only while idle and holds each response until accepted.
++// Ordinary registers take the registered scalar path.  Record words require
++// one synchronous BRAM transaction; packed index words require two ordered
++// 16-bit BRAM transactions.
++module v41_r1h_mmio_read_service (
++  input  logic        clk,
++  input  logic        reset,
++
++  input  logic        req_valid,
++  output logic        req_ready,
++  input  logic [13:0] req_offset,
++  output logic        rsp_valid,
++  input  logic        rsp_ready,
++  output logic [31:0] rsp_data,
++
++  input  logic [31:0] scalar_read_data,
++  input  logic        record_select,
++  input  logic [5:0]  record_index,
++  input  logic [2:0]  record_word,
++  input  logic        probe_index_select,
++  input  logic [1:0]  probe_index_phase,
++  input  logic [7:0]  probe_index_word,
++
++  output logic        record_read_enable,
++  output logic [5:0]  record_read_index,
++  output logic [2:0]  record_read_word,
++  input  logic        record_read_valid,
++  input  logic [31:0] record_read_data,
++
++  output logic        index_read_enable,
++  output logic [1:0]  index_read_phase,
++  output logic [8:0]  index_read_address,
++  input  logic        index_read_valid,
++  input  logic [15:0] index_read_data,
++  input  logic [15:0] waddr_index_stored_count,
++  input  logic [15:0] regaddr_index_stored_count,
++  input  logic [15:0] data_index_stored_count
++);
++  typedef enum logic [2:0] {
++    IDLE,
++    RECORD_WAIT,
++    INDEX_LOW_WAIT,
++    INDEX_HIGH_WAIT,
++    RESPONSE
++  } state_t;
++
++  state_t state;
++  logic [1:0] index_phase_q;
++  logic [7:0] index_word_q;
++  logic [15:0] index_count_q;
++  logic [15:0] index_low_q;
++
++  function automatic [15:0] selected_index_count(input logic [1:0] phase);
++    begin
++      case (phase)
++        2'd0: selected_index_count = waddr_index_stored_count;
++        2'd1: selected_index_count = regaddr_index_stored_count;
++        2'd2: selected_index_count = data_index_stored_count;
++        default: selected_index_count = 16'b0;
++      endcase
++    end
++  endfunction
++
++  // Never acknowledge a request while either reset domain has made the
++  // storage response pipelines unavailable. The top combines AXI reset and
++  // NVP-POR reset at this input, so reset also cancels a pending memory read.
++  assign req_ready = (state == IDLE) && !reset;
++  assign rsp_valid = (state == RESPONSE) && !reset;
++
++  // BRAM request pulses are derived from an accepted host request or from the
++  // completion of the low-half index read.  Address/control are stable for the
++  // complete cycle preceding the sampling clock edge.
++  always_comb begin
++    record_read_enable = 1'b0;
++    record_read_index = record_index;
++    record_read_word = record_word;
++    index_read_enable = 1'b0;
++    index_read_phase = probe_index_phase;
++    index_read_address = {probe_index_word, 1'b0};
++
++    if (state == IDLE && req_valid && req_ready) begin
++      if (record_select)
++        record_read_enable = 1'b1;
++      else if (probe_index_select)
++        index_read_enable = 1'b1;
++    end else if (state == INDEX_LOW_WAIT && index_read_valid) begin
++      index_read_enable = 1'b1;
++      index_read_phase = index_phase_q;
++      index_read_address = {index_word_q, 1'b1};
++    end
++  end
++
++  always_ff @(posedge clk) begin
++    if (reset) begin
++      state <= IDLE;
++      rsp_data <= 32'b0;
++      index_phase_q <= 2'b0;
++      index_word_q <= 8'b0;
++      index_count_q <= 16'b0;
++      index_low_q <= 16'b0;
++    end else begin
++      case (state)
++        IDLE: begin
++          if (req_valid && req_ready) begin
++            if (record_select) begin
++              state <= RECORD_WAIT;
++            end else if (probe_index_select) begin
++              index_phase_q <= probe_index_phase;
++              index_word_q <= probe_index_word;
++              index_count_q <= selected_index_count(probe_index_phase);
++              state <= INDEX_LOW_WAIT;
++            end else begin
++              rsp_data <= scalar_read_data;
++              state <= RESPONSE;
++            end
++          end
++        end
++
++        RECORD_WAIT: begin
++          if (record_read_valid) begin
++            rsp_data <= record_read_data;
++            state <= RESPONSE;
++          end
++        end
++
++        INDEX_LOW_WAIT: begin
++          if (index_read_valid) begin
++            index_low_q <= ({index_word_q, 1'b0} < index_count_q) ?
++                           index_read_data : 16'b0;
++            state <= INDEX_HIGH_WAIT;
++          end
++        end
++
++        INDEX_HIGH_WAIT: begin
++          if (index_read_valid) begin
++            rsp_data[15:0] <= index_low_q;
++            rsp_data[31:16] <= ({index_word_q, 1'b1} < index_count_q) ?
++                               index_read_data : 16'b0;
++            state <= RESPONSE;
++          end
++        end
++
++        RESPONSE: begin
++          if (rsp_ready)
++            state <= IDLE;
++        end
++
++        default: state <= IDLE;
++      endcase
++    end
++  end
++
++  // Keep the request offset in the interface contract for direct protocol
++  // assertions and traceability even though the decoder consumes it in the
++  // enclosing top level.
++  logic [13:0] unused_req_offset;
++  always_comb unused_req_offset = req_offset;
++endmodule
+diff --git a/rtl/v41/r1h_probe_index_bram_store.sv b/rtl/v41/r1h_probe_index_bram_store.sv
+new file mode 100644
+index 0000000..3da4db3
+--- /dev/null
++++ b/rtl/v41/r1h_probe_index_bram_store.sv
+@@ -0,0 +1,108 @@
++`timescale 1ns/1ps
++
++// R1h physical payload store for the three post-autoinit NACK-index logs.
++//
++// Scientific metadata (stored count and overflow) remains in the probe.  This
++// module owns payload bits only: three independent, append-only 512x16 block
++// memories.  Payload is intentionally not reset.  Callers must use the
++// request-time stored-count snapshot to mask logically unused locations.
++module r1h_probe_index_bram_store (
++  input  logic        clk,
++  input  logic        rst,
++
++  input  logic        write_valid,
++  input  logic [1:0]  write_phase,
++  input  logic [8:0]  write_address,
++  input  logic [15:0] write_data,
++
++  input  logic        read_req,
++  input  logic [1:0]  read_phase,
++  input  logic [8:0]  read_address,
++  output logic        read_valid,
++  output logic [15:0] read_data
++);
++  logic [2:0] write_enable;
++  logic [2:0] read_enable;
++  logic [15:0] read_bank_data [0:2];
++  logic [1:0] read_phase_q;
++
++  always_comb begin
++    write_enable = 3'b000;
++    if (write_valid && write_phase < 3)
++      write_enable[write_phase] = 1'b1;
++
++    read_enable = 3'b000;
++    if (read_req && read_phase < 3)
++      read_enable[read_phase] = 1'b1;
++  end
++
++  always_ff @(posedge clk) begin
++    if (rst) begin
++      read_valid <= 1'b0;
++      read_phase_q <= 2'b0;
++    end else begin
++      read_valid <= read_req;
++      if (read_req)
++        read_phase_q <= read_phase;
++    end
++  end
++
++  always_comb begin
++    read_data = 16'b0;
++    if (read_valid) begin
++      case (read_phase_q)
++        2'd0: read_data = read_bank_data[0];
++        2'd1: read_data = read_bank_data[1];
++        2'd2: read_data = read_bank_data[2];
++        default: read_data = 16'b0;
++      endcase
++    end
++  end
++
++  genvar phase_bank;
++  generate
++    for (phase_bank = 0; phase_bank < 3; phase_bank = phase_bank + 1) begin : GEN_INDEX_BRAM
++      xpm_memory_sdpram #(
++        .ADDR_WIDTH_A(9),
++        .ADDR_WIDTH_B(9),
++        .AUTO_SLEEP_TIME(0),
++        .BYTE_WRITE_WIDTH_A(16),
++        .CLOCKING_MODE("common_clock"),
++        .ECC_MODE("no_ecc"),
++        .MEMORY_INIT_FILE("none"),
++        .MEMORY_INIT_PARAM("0"),
++        .MEMORY_OPTIMIZATION("true"),
++        .MEMORY_PRIMITIVE("block"),
++        .MEMORY_SIZE(8192),
++        .MESSAGE_CONTROL(0),
++        .READ_DATA_WIDTH_B(16),
++        .READ_LATENCY_B(1),
++        .READ_RESET_VALUE_B("0"),
++        .RST_MODE_B("SYNC"),
++        .SIM_ASSERT_CHK(1),
++        .USE_EMBEDDED_CONSTRAINT(0),
++        .USE_MEM_INIT(0),
++        .WAKEUP_TIME("disable_sleep"),
++        .WRITE_DATA_WIDTH_A(16),
++        .WRITE_MODE_B("read_first")
++      ) INDEX_PAYLOAD_RAM (
++        .clka(clk),
++        .ena(write_enable[phase_bank]),
++        .wea(write_enable[phase_bank]),
++        .addra(write_address),
++        .dina(write_data),
++        .clkb(clk),
++        .enb(read_enable[phase_bank]),
++        .addrb(read_address),
++        .doutb(read_bank_data[phase_bank]),
++        .rstb(rst),
++        .regceb(1'b1),
++        .sleep(1'b0),
++        .injectsbiterra(1'b0),
++        .injectdbiterra(1'b0),
++        .sbiterrb(),
++        .dbiterrb()
++      );
++    end
++  endgenerate
++endmodule
+diff --git a/tests/v41/r1g_measurement_regs_reference.sv b/tests/v41/r1g_measurement_regs_reference.sv
+new file mode 100644
+index 0000000..ac8214a
+--- /dev/null
++++ b/tests/v41/r1g_measurement_regs_reference.sv
+@@ -0,0 +1,260 @@
++`timescale 1ns/1ps
++
++// Read-only R1f map decoder. Storage remains behind narrow submodule read
++// ports; no log or index array is flattened through this interface.
++module v41_r1g_measurement_regs_reference #(
++  parameter logic [7:0] SAFE_PROBE_BANK = 8'h00,
++  parameter logic [7:0] SAFE_PROBE_REGISTER = 8'h00,
++  parameter logic [7:0] SAFE_PROBE_DATA = 8'h00,
++  parameter logic       SAFE_PROBE_TARGET_PROVEN = 1'b0
++) (
++  input  logic [13:0] offset,
++
++  input  logic [31:0] autoinit_waddr_opportunities,
++  input  logic [31:0] autoinit_waddr_nacks,
++  input  logic [31:0] autoinit_regaddr_opportunities,
++  input  logic [31:0] autoinit_regaddr_nacks,
++  input  logic [31:0] autoinit_data_opportunities,
++  input  logic [31:0] autoinit_data_nacks,
++  input  logic [31:0] autoinit_raddr_opportunities,
++  input  logic [31:0] autoinit_raddr_nacks,
++  input  logic [31:0] autoinit_transaction_starts,
++  input  logic [31:0] autoinit_transaction_completions,
++  input  logic [31:0] autoinit_failed_transactions,
++  input  logic [31:0] autoinit_timeout_transactions,
++  input  logic        phase_counters_final,
++  input  logic        phase_counter_saturation,
++  input  logic [31:0] legacy_aggregate_nack_count,
++  input  logic        legacy_first8_reconciliation_supported,
++
++  input  logic [31:0] failed_txn_total_count,
++  input  logic [6:0]  failed_txn_stored_count,
++  input  logic        failed_txn_overflow,
++  input  logic [15:0] first_failed_txn_index,
++  input  logic        first_failed_txn_index_valid,
++  input  logic [15:0] last_failed_txn_index,
++  input  logic        last_failed_txn_index_valid,
++  input  logic [15:0] next_transaction_serial,
++  input  logic        transaction_serial_overflow,
++  input  logic        failed_txn_total_count_saturated,
++  input  logic        failed_txn_input_protocol_error,
++
++  input  logic [31:0] bank_invariant_check_count,
++  input  logic [31:0] bank_invariant_error_count,
++  input  logic [31:0] first_bank_invariant_error,
++  input  logic [7:0]  final_physical_bank,
++  input  logic        final_physical_bank_valid,
++
++  input  logic [31:0] tri_phase_probe_status,
++  input  logic [31:0] probe_timeout_count_total,
++  input  logic [31:0] probe_setup_restore_status,
++  input  logic [7:0]  safe_target_pre_readback,
++  input  logic        safe_target_pre_readback_valid,
++  input  logic [7:0]  safe_target_post_readback,
++  input  logic        safe_target_post_readback_valid,
++  input  logic [7:0]  original_bank_readback,
++  input  logic        original_bank_readback_valid,
++  input  logic [7:0]  restored_bank_readback,
++  input  logic        restored_bank_readback_valid,
++  input  logic        restored_bank_verified,
++  input  logic [47:0] probe_start_freerun,
++  input  logic [47:0] probe_done_freerun,
++
++  output logic [6:0]  probe_detail_read_word,
++  output logic        probe_detail_read_select,
++  input  logic [31:0] probe_detail_read_data,
++
++  output logic [5:0]  record_read_index,
++  output logic [2:0]  record_read_word,
++  input  logic [31:0] record_read_data,
++
++  output logic [1:0]  probe_index_read_phase,
++  output logic [7:0]  probe_index_read_word,
++  output logic        probe_index_read_select,
++  input  logic [31:0] probe_index_read_data,
++
++  output logic [31:0] read_data
++);
++  localparam logic [31:0] R1F_MAGIC = 32'h31463152;
++  localparam logic [31:0] R1F_VERSION = 32'd1;
++  localparam logic [31:0] R1F_CAPABILITIES = 32'h000007ff;
++
++  logic [33:0] phase_nack_sum_wide;
++  logic phase_nacks_le_opportunities;
++  logic transaction_counts_coherent;
++  logic log_stored_count_coherent;
++  logic [31:0] phase_counter_status;
++  logic [31:0] phase_reconciliation_status;
++  logic [31:0] log_status;
++  logic [14:0] record_byte_delta;
++  logic [8:0] record_linear_word;
++
++  always_comb begin
++    phase_nack_sum_wide = {2'b0, autoinit_waddr_nacks} +
++                          {2'b0, autoinit_regaddr_nacks} +
++                          {2'b0, autoinit_data_nacks} +
++                          {2'b0, autoinit_raddr_nacks};
++    phase_nacks_le_opportunities =
++        autoinit_waddr_nacks <= autoinit_waddr_opportunities &&
++        autoinit_regaddr_nacks <= autoinit_regaddr_opportunities &&
++        autoinit_data_nacks <= autoinit_data_opportunities &&
++        autoinit_raddr_nacks <= autoinit_raddr_opportunities;
++    transaction_counts_coherent =
++        autoinit_transaction_completions <= autoinit_transaction_starts &&
++        autoinit_failed_transactions <= autoinit_transaction_completions &&
++        autoinit_timeout_transactions <= autoinit_failed_transactions;
++    log_stored_count_coherent =
++        failed_txn_total_count < 32'd64
++          ? failed_txn_stored_count == failed_txn_total_count[6:0]
++          : failed_txn_stored_count == 7'd64;
++
++    phase_counter_status = 32'b0;
++    phase_counter_status[0] = phase_counters_final;
++    phase_counter_status[1] = !phase_counter_saturation;
++    phase_counter_status[2] = phase_nacks_le_opportunities;
++    phase_counter_status[3] = transaction_counts_coherent;
++
++    phase_reconciliation_status = 32'b0;
++    phase_reconciliation_status[0] =
++        phase_nack_sum_wide == {2'b0, legacy_aggregate_nack_count};
++    // Static capability bit only.  The host reader performs the measured
++    // legacy-first-eight reconciliation from both raw record sets.
++    phase_reconciliation_status[1] = legacy_first8_reconciliation_supported;
++    phase_reconciliation_status[2] =
++        autoinit_failed_transactions == failed_txn_total_count;
++
++    log_status = 32'b0;
++    log_status[0] = first_failed_txn_index_valid;
++    log_status[1] = last_failed_txn_index_valid;
++    log_status[2] = failed_txn_overflow;
++    log_status[3] = autoinit_failed_transactions == failed_txn_total_count;
++    log_status[4] = log_stored_count_coherent;
++    log_status[5] = 1'b1; // logger masks every unused entry to zero
++    log_status[6] = 1'b1; // append pointer never revisits a valid entry
++    log_status[7] = transaction_serial_overflow;
++    log_status[8] = failed_txn_input_protocol_error;
++    log_status[9] = failed_txn_total_count_saturated;
++  end
++
++  always_comb begin
++    probe_detail_read_word = 7'b0;
++    probe_detail_read_select = 1'b0;
++    record_read_index = 6'b0;
++    record_read_word = 3'b0;
++    probe_index_read_phase = 2'b0;
++    probe_index_read_word = 8'b0;
++    probe_index_read_select = 1'b0;
++    record_byte_delta = 15'b0;
++    record_linear_word = 9'b0;
++    read_data = 32'b0;
++
++    if (offset[1:0] != 2'b00) begin
++      read_data = 32'b0;
++    end else if (offset >= 14'h20a0 && offset <= 14'h21ff) begin
++      case (offset)
++        14'h20a0: read_data = R1F_MAGIC;
++        14'h20a4: read_data = R1F_VERSION;
++        14'h20a8: read_data = R1F_CAPABILITIES;
++        14'h20ac: read_data = 32'd1;
++        14'h20b0: read_data = 32'd192;
++        14'h20b4: read_data = 32'd6;
++        14'h20b8: read_data = 32'd64;
++        14'h20bc: read_data = 32'h00000007;
++        14'h20c0: read_data = {SAFE_PROBE_TARGET_PROVEN, 7'b0,
++                                  SAFE_PROBE_DATA, SAFE_PROBE_REGISTER,
++                                  SAFE_PROBE_BANK};
++        14'h20c4: read_data = 32'd25000;
++        14'h20c8: read_data = 32'd25000;
++        14'h20cc: read_data = 32'd10000;
++        14'h20d0: read_data = 32'd10;
++        14'h20d4: read_data = 32'd1000;
++        14'h20d8: read_data = 32'd12000;
++        14'h20dc: read_data = 32'd512;
++        14'h20e0: read_data = autoinit_waddr_opportunities;
++        14'h20e4: read_data = autoinit_waddr_nacks;
++        14'h20e8: read_data = autoinit_regaddr_opportunities;
++        14'h20ec: read_data = autoinit_regaddr_nacks;
++        14'h20f0: read_data = autoinit_data_opportunities;
++        14'h20f4: read_data = autoinit_data_nacks;
++        14'h20f8: read_data = autoinit_raddr_opportunities;
++        14'h20fc: read_data = autoinit_raddr_nacks;
++        14'h2100: read_data = autoinit_transaction_starts;
++        14'h2104: read_data = autoinit_transaction_completions;
++        14'h2108: read_data = autoinit_failed_transactions;
++        14'h210c: read_data = autoinit_timeout_transactions;
++        14'h2110: read_data = phase_counter_status;
++        14'h2114: read_data = legacy_aggregate_nack_count;
++        14'h2118: read_data = phase_nack_sum_wide[31:0];
++        14'h211c: read_data = phase_reconciliation_status;
++        14'h2120: read_data = failed_txn_total_count;
++        14'h2124: read_data = {25'b0, failed_txn_stored_count};
++        14'h2128: read_data = {31'b0, failed_txn_overflow};
++        14'h212c: read_data = {16'b0, first_failed_txn_index};
++        14'h2130: read_data = {16'b0, last_failed_txn_index};
++        14'h2134: read_data = log_status;
++        14'h2138: read_data = {15'b0, transaction_serial_overflow,
++                                  next_transaction_serial};
++        14'h213c: read_data = bank_invariant_check_count;
++        14'h2140: read_data = bank_invariant_error_count;
++        14'h2144: read_data = first_bank_invariant_error;
++        14'h2148: read_data = {23'b0, final_physical_bank_valid,
++                                  final_physical_bank};
++        14'h214c: read_data = tri_phase_probe_status;
++        14'h2150: read_data = probe_timeout_count_total;
++        14'h2154: read_data = probe_setup_restore_status;
++        14'h2158: read_data = {23'b0, safe_target_pre_readback_valid,
++                                  safe_target_pre_readback};
++        14'h215c: read_data = {23'b0, safe_target_post_readback_valid,
++                                  safe_target_post_readback};
++        14'h2160: read_data = {23'b0, original_bank_readback_valid,
++                                  original_bank_readback};
++        14'h2164: read_data = {22'b0, restored_bank_verified,
++                                  restored_bank_readback_valid,
++                                  restored_bank_readback};
++        14'h2168: read_data = probe_start_freerun[31:0];
++        14'h216c: read_data = {16'b0, probe_start_freerun[47:32]};
++        14'h2170: read_data = probe_done_freerun[31:0];
++        14'h2174: read_data = {16'b0, probe_done_freerun[47:32]};
++        default: read_data = 32'b0;
++      endcase
++    end else if (offset >= 14'h2200 && offset <= 14'h23ff) begin
++      probe_detail_read_select = 1'b1;
++      probe_detail_read_word = (offset - 14'h2200) >> 2;
++      read_data = probe_detail_read_data;
++    end else if (offset >= 14'h2400 && offset <= 14'h29ff) begin
++      record_byte_delta = offset - 14'h2400;
++      record_linear_word = record_byte_delta[10:2];
++      record_read_index = record_linear_word / 6;
++      record_read_word = record_linear_word % 6;
++      read_data = record_read_data;
++    end else if (offset >= 14'h2a00 && offset <= 14'h2dff) begin
++      probe_index_read_select = 1'b1;
++      probe_index_read_phase = 2'd0;
++      probe_index_read_word = (offset - 14'h2a00) >> 2;
++      read_data = probe_index_read_data;
++    end else if (offset >= 14'h2e00 && offset <= 14'h31ff) begin
++      probe_index_read_select = 1'b1;
++      probe_index_read_phase = 2'd1;
++      probe_index_read_word = (offset - 14'h2e00) >> 2;
++      read_data = probe_index_read_data;
++    end else if (offset >= 14'h3200 && offset <= 14'h35ff) begin
++      probe_index_read_select = 1'b1;
++      probe_index_read_phase = 2'd2;
++      probe_index_read_word = (offset - 14'h3200) >> 2;
++      read_data = probe_index_read_data;
++    end
++  end
++endmodule
++
++// Fixture-only source model of the exact formal Phase-2 decode over the R1f
++// address region. The source proof is that SLOT_COUNT=2 sends slot-2/3 reads
++// through the deterministic-zero branch. This module is never instantiated in
++// the R1f image; it exists for exhaustive host/map fixture compilation.
++module v41_r1g_formal_zero_model_reference (
++  input  logic [13:0] offset,
++  output logic [31:0] read_data
++);
++  always_comb begin
++    read_data = 32'b0;
++  end
++endmodule
+diff --git a/tests/v41/r1h_memory_inference_top.sv b/tests/v41/r1h_memory_inference_top.sv
+new file mode 100644
+index 0000000..43c6c38
+--- /dev/null
++++ b/tests/v41/r1h_memory_inference_top.sv
+@@ -0,0 +1,69 @@
++`timescale 1ns/1ps
++
++// Verification-only OOC synthesis top.  Every payload write/read and metadata
++// signal is kept at the boundary so the two R1h storage wrappers cannot be
++// optimized away during the pre-commit memory-mapping check.
++module r1h_memory_inference_top (
++  input  logic         clk,
++  input  logic         reset,
++  input  logic         failed_valid,
++  input  logic [191:0] failed_record,
++  input  logic         record_read_enable,
++  input  logic [5:0]   record_read_index,
++  input  logic [2:0]   record_read_word,
++  output logic         record_read_valid,
++  output logic [31:0]  record_read_data,
++  output logic [31:0]  failed_total_count,
++  output logic [6:0]   failed_stored_count,
++  output logic         failed_overflow,
++  output logic [15:0]  first_failed_index,
++  output logic         first_failed_valid,
++  output logic [15:0]  last_failed_index,
++  output logic         last_failed_valid,
++  output logic         total_saturated,
++  output logic         protocol_error,
++  input  logic         index_write_valid,
++  input  logic [1:0]   index_write_phase,
++  input  logic [8:0]   index_write_address,
++  input  logic [15:0]  index_write_data,
++  input  logic         index_read_req,
++  input  logic [1:0]   index_read_phase,
++  input  logic [8:0]   index_read_address,
++  output logic         index_read_valid,
++  output logic [15:0]  index_read_data
++);
++  v41_r1f_failed_txn_logger FAILED_RECORD_STORE (
++    .clk,
++    .reset,
++    .r1f_failed_txn_valid(failed_valid),
++    .r1f_failed_txn_record(failed_record),
++    .record_read_enable,
++    .record_read_index,
++    .record_read_word,
++    .record_read_valid,
++    .record_read_data,
++    .total_count(failed_total_count),
++    .stored_count(failed_stored_count),
++    .overflow(failed_overflow),
++    .first_failed_txn_index(first_failed_index),
++    .first_failed_txn_index_valid(first_failed_valid),
++    .last_failed_txn_index(last_failed_index),
++    .last_failed_txn_index_valid(last_failed_valid),
++    .total_count_saturated(total_saturated),
++    .input_protocol_error(protocol_error)
++  );
++
++  r1h_probe_index_bram_store PROBE_INDEX_STORE (
++    .clk,
++    .rst(reset),
++    .write_valid(index_write_valid),
++    .write_phase(index_write_phase),
++    .write_address(index_write_address),
++    .write_data(index_write_data),
++    .read_req(index_read_req),
++    .read_phase(index_read_phase),
++    .read_address(index_read_address),
++    .read_valid(index_read_valid),
++    .read_data(index_read_data)
++  );
++endmodule
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe.sv
+index f709474..7500338 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe.sv
+@@ -102,9 +102,11 @@ module tb_nvp_i2c_tri_phase_probe #(
+   logic waddr_nack_index_overflow;
+   logic regaddr_nack_index_overflow;
+   logic data_nack_index_overflow;
++  logic index_read_req = 1'b0;
+   logic [1:0] index_read_phase = 2'b0;
+-  logic [7:0] index_read_word = 8'b0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 9'b0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 2'b0;
+   logic [3:0] block_read_index = 4'b0;
+   logic [31:0] block_read_nack_count;
+@@ -222,7 +224,8 @@ module tb_nvp_i2c_tri_phase_probe #(
+     .waddr_nack_index_stored_count, .regaddr_nack_index_stored_count,
+     .data_nack_index_stored_count, .waddr_nack_index_overflow,
+     .regaddr_nack_index_overflow, .data_nack_index_overflow,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+@@ -246,8 +249,31 @@ module tb_nvp_i2c_tri_phase_probe #(
+              label_text, actual, actual, expected, expected);
+   endtask
+ 
++  task automatic read_index_entry(
++    input logic [1:0] phase_number,
++    input logic [8:0] entry_number,
++    input logic [15:0] expected
++  );
++    begin
++      @(negedge clk);
++      index_read_phase = phase_number;
++      index_read_address = entry_number;
++      index_read_req = 1'b1;
++      @(posedge clk);
++      #1;
++      if (!index_read_valid)
++        $fatal(1, "index read response missing phase=%0d entry=%0d",
++               phase_number, entry_number);
++      expect16("index entry", index_read_data, expected);
++      @(negedge clk);
++      index_read_req = 1'b0;
++    end
++  endtask
++
+   initial begin : run_test
+     integer watchdog;
++    integer production_phase;
++    integer production_block;
+     longint unsigned init_terminal_freerun;
+     longint unsigned probe_cycles_from_init;
+     real probe_seconds_from_init;
+@@ -337,6 +363,25 @@ module tb_nvp_i2c_tri_phase_probe #(
+       if (current_scheduler_phase != 2'd3 || attempt_limit_status != 3'b000)
+         $fatal(1, "production scheduler terminal mismatch phase=%0d limit=%03b",
+                current_scheduler_phase, attempt_limit_status);
++      for (production_phase = 0; production_phase < 3;
++           production_phase = production_phase + 1) begin
++        if (dut.block_current_index[production_phase] != 10 ||
++            dut.block_opportunity_position[production_phase] != 0 ||
++            dut.block_live_nack_count[production_phase] != 0)
++          $fatal(1, "production block cursor mismatch phase=%0d index=%0d position=%0d live=%0d",
++                 production_phase,
++                 dut.block_current_index[production_phase],
++                 dut.block_opportunity_position[production_phase],
++                 dut.block_live_nack_count[production_phase]);
++        for (production_block = 0; production_block < 10;
++             production_block = production_block + 1)
++          if (!dut.block_nack_count_valid[production_phase][production_block] ||
++              dut.block_nack_count[production_phase][production_block] != 0)
++            $fatal(1, "production completed block mismatch phase=%0d block=%0d valid=%b count=%0d",
++                   production_phase, production_block,
++                   dut.block_nack_count_valid[production_phase][production_block],
++                   dut.block_nack_count[production_phase][production_block]);
++      end
+       probe_cycles_from_init = probe_done_freerun - init_terminal_freerun;
+       probe_seconds_from_init = $itor(probe_cycles_from_init) / CLK_HZ;
+       modeled_complete_seconds =
+@@ -410,18 +455,12 @@ module tb_nvp_i2c_tri_phase_probe #(
+         data_nack_index_overflow)
+       $fatal(1, "unexpected index-log overflow");
+ 
+-    index_read_phase = 0; index_read_word = 0; #1;
+-    expect32("packed waddr index word0", index_read_data, 32'h00050001);
+-    index_read_word = 1; #1;
+-    expect32("unused waddr index word1", index_read_data, 0);
+-    index_read_phase = 1; index_read_word = 0; #1;
+-    expect32("packed reg index word0", index_read_data, 32'h00000002);
+-    index_read_phase = 2; index_read_word = 0; #1;
+-    expect32("packed data index word0", index_read_data, 32'h00010000);
+-    index_read_phase = 3; #1;
+-    expect32("invalid phase index word", index_read_data, 0);
+-    index_read_phase = 0; index_read_word = 8'hff; #1;
+-    expect32("out-of-capacity index word", index_read_data, 0);
++    read_index_entry(0, 0, 16'h0001);
++    read_index_entry(0, 1, 16'h0005);
++    read_index_entry(1, 0, 16'h0002);
++    read_index_entry(2, 0, 16'h0000);
++    read_index_entry(2, 1, 16'h0001);
++    read_index_entry(3, 0, 16'h0000);
+ 
+     block_read_phase = 0; block_read_index = 0; #1;
+     expect32("waddr block0", block_read_nack_count, 1);
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_abort_restore.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_abort_restore.sv
+index 6343054..1fff973 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_abort_restore.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_abort_restore.sv
+@@ -20,9 +20,11 @@ module tb_nvp_i2c_tri_phase_probe_abort_restore;
+   logic [31:0] regaddr_target_opportunities;
+   logic [31:0] data_target_opportunities;
+   logic [31:0] probe_timeout_count_total;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -84,7 +86,8 @@ module tb_nvp_i2c_tri_phase_probe_abort_restore;
+     .restored_bank_readback, .restored_bank_readback_valid,
+     .waddr_target_opportunities, .regaddr_target_opportunities,
+     .data_target_opportunities, .probe_timeout_count_total,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+@@ -126,8 +129,8 @@ module tb_nvp_i2c_tri_phase_probe_abort_restore;
+       $fatal(1, "unexpected timeout");
+     if (!probe_scl_release || !probe_sda_release)
+       $fatal(1, "lines not released after abort");
+-    if (index_read_data != 0 || block_read_nack_count != 0)
+-      $fatal(1, "unused diagnostic memory did not read zero");
++    if (block_read_nack_count != 0)
++      $fatal(1, "unused block statistics did not read zero");
+     $display("TRI_PHASE_PROBE_ABORT_RESTORE_PASS cycles=%0d", watchdog);
+     $finish;
+   end
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_attempt_limit.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_attempt_limit.sv
+index 40ffd95..4a1253c 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_attempt_limit.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_attempt_limit.sv
+@@ -17,9 +17,11 @@ module tb_nvp_i2c_tri_phase_probe_attempt_limit;
+   logic [31:0] round_robin_scheduler_rounds;
+   logic [1:0] current_scheduler_phase;
+   logic [2:0] attempt_limit_status;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -71,7 +73,8 @@ module tb_nvp_i2c_tri_phase_probe_attempt_limit;
+     .regaddr_target_opportunities, .data_target_opportunities,
+     .round_robin_scheduler_rounds, .current_scheduler_phase,
+     .attempt_limit_status,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_idle_timeout.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_idle_timeout.sv
+index 93c99c1..a3d6d05 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_idle_timeout.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_idle_timeout.sv
+@@ -10,9 +10,11 @@ module tb_nvp_i2c_tri_phase_probe_idle_timeout;
+   logic legacy_init_done_seen, legacy_guard_complete;
+   logic legacy_bus_idle_qualified, legacy_scl_timeout;
+   logic legacy_bus_idle_timeout;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -37,7 +39,8 @@ module tb_nvp_i2c_tri_phase_probe_idle_timeout;
+     .legacy_init_done_seen, .legacy_guard_complete,
+     .legacy_bus_idle_qualified, .legacy_scl_timeout,
+     .legacy_bus_idle_timeout,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_index_overflow.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_index_overflow.sv
+index 0f0d785..872aff0 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_index_overflow.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_index_overflow.sv
+@@ -19,9 +19,11 @@ module tb_nvp_i2c_tri_phase_probe_index_overflow;
+   logic [31:0] regaddr_max_consecutive_nacks, regaddr_adjacent_nack_pairs;
+   logic [31:0] data_max_consecutive_nacks, data_adjacent_nack_pairs;
+   logic [31:0] waddr_run_count, regaddr_run_count, data_run_count;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -79,21 +81,27 @@ module tb_nvp_i2c_tri_phase_probe_index_overflow;
+     .waddr_nack_index_stored_count, .regaddr_nack_index_stored_count,
+     .data_nack_index_stored_count, .waddr_nack_index_overflow,
+     .regaddr_nack_index_overflow, .data_nack_index_overflow,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+   task automatic check_phase(input logic [1:0] phase_number);
++    integer entry_number;
+     begin
+-      index_read_phase = phase_number; index_read_word = 0; #1;
+-      if (index_read_data !== 32'h00010000)
+-        $fatal(1, "phase %0d packed word0 mismatch", phase_number);
+-      index_read_word = 1; #1;
+-      if (index_read_data !== 32'h00030002)
+-        $fatal(1, "phase %0d packed word1 mismatch", phase_number);
+-      index_read_word = 2; #1;
+-      if (index_read_data !== 0)
+-        $fatal(1, "phase %0d out-of-capacity word not zero", phase_number);
++      for (entry_number = 0; entry_number < 4; entry_number = entry_number + 1) begin
++        @(negedge clk);
++        index_read_phase = phase_number;
++        index_read_address = entry_number[8:0];
++        index_read_req = 1'b1;
++        @(posedge clk);
++        #1;
++        if (!index_read_valid || index_read_data !== entry_number[15:0])
++          $fatal(1, "phase %0d entry %0d mismatch valid=%b data=%04x",
++                 phase_number, entry_number, index_read_valid, index_read_data);
++        @(negedge clk);
++        index_read_req = 1'b0;
++      end
+       block_read_phase = phase_number; block_read_index = 0; #1;
+       if (block_read_nack_count !== 3)
+         $fatal(1, "phase %0d block0 mismatch", phase_number);
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_secondary_restore_failure.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_secondary_restore_failure.sv
+index 16c8c28..fe24bab 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_secondary_restore_failure.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_secondary_restore_failure.sv
+@@ -10,9 +10,11 @@ module tb_nvp_i2c_tri_phase_probe_secondary_restore_failure;
+   logic original_bank_restored, original_bank_restore_verified;
+   logic [7:0] restored_bank_readback;
+   logic restored_bank_readback_valid;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -62,7 +64,8 @@ module tb_nvp_i2c_tri_phase_probe_secondary_restore_failure;
+     .probe_terminal, .probe_abort_code, .probe_restore_failure_code,
+     .original_bank_restored, .original_bank_restore_verified,
+     .restored_bank_readback, .restored_bank_readback_valid,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+diff --git a/tests/v41/tb_nvp_i2c_tri_phase_probe_timeout.sv b/tests/v41/tb_nvp_i2c_tri_phase_probe_timeout.sv
+index 465d136..7aa31ff 100644
+--- a/tests/v41/tb_nvp_i2c_tri_phase_probe_timeout.sv
++++ b/tests/v41/tb_nvp_i2c_tri_phase_probe_timeout.sv
+@@ -19,9 +19,11 @@ module tb_nvp_i2c_tri_phase_probe_timeout;
+   logic [31:0] waddr_target_opportunities;
+   logic [31:0] waddr_timeouts;
+   logic [31:0] probe_timeout_count_total;
++  logic index_read_req = 0;
+   logic [1:0] index_read_phase = 0;
+-  logic [7:0] index_read_word = 0;
+-  logic [31:0] index_read_data;
++  logic [8:0] index_read_address = 0;
++  logic index_read_valid;
++  logic [15:0] index_read_data;
+   logic [1:0] block_read_phase = 0;
+   logic [3:0] block_read_index = 0;
+   logic [31:0] block_read_nack_count;
+@@ -83,7 +85,8 @@ module tb_nvp_i2c_tri_phase_probe_timeout;
+     .restored_bank_readback, .restored_bank_readback_valid,
+     .waddr_transaction_attempts, .waddr_target_opportunities,
+     .waddr_timeouts, .probe_timeout_count_total,
+-    .index_read_phase, .index_read_word, .index_read_data,
++    .index_read_req, .index_read_phase, .index_read_address,
++    .index_read_valid, .index_read_data,
+     .block_read_phase, .block_read_index, .block_read_nack_count
+   );
+ 
+diff --git a/tests/v41/tb_r1f_failed_txn_logger.sv b/tests/v41/tb_r1f_failed_txn_logger.sv
+index 3db593f..7a21c7f 100644
+--- a/tests/v41/tb_r1f_failed_txn_logger.sv
++++ b/tests/v41/tb_r1f_failed_txn_logger.sv
+@@ -5,8 +5,10 @@ module tb_r1f_failed_txn_logger;
+   logic reset = 1'b1;
+   logic r1f_failed_txn_valid = 1'b0;
+   logic [191:0] r1f_failed_txn_record = '0;
++  logic record_read_enable = 1'b0;
+   logic [5:0] record_read_index = '0;
+   logic [2:0] record_read_word = '0;
++  wire record_read_valid;
+   wire [31:0] record_read_data;
+   wire [31:0] total_count;
+   wire [6:0] stored_count;
+@@ -69,12 +71,76 @@ module tb_r1f_failed_txn_logger;
+   task automatic expect_word(
+       input integer index, input integer word_number, input [31:0] expected);
+     begin
++      @(negedge clk);
+       record_read_index = index[5:0];
+       record_read_word = word_number[2:0];
+-      #1;
++      record_read_enable = 1'b1;
++      @(negedge clk);
++      record_read_enable = 1'b0;
++      if (!record_read_valid)
++        fail($sformatf("record %0d word %0d response was not valid",
++                       index, word_number));
+       if (record_read_data !== expected)
+         fail($sformatf("record %0d word %0d expected %08x got %08x",
+                        index, word_number, expected, record_read_data));
++      @(negedge clk);
++      if (record_read_valid)
++        fail("record response valid exceeded one cycle for a one-cycle request");
++    end
++  endtask
++
++  task automatic concurrent_append_and_expect_unused_zero(input integer txn_index);
++    begin
++      @(negedge clk);
++      r1f_failed_txn_record = make_record(txn_index);
++      r1f_failed_txn_valid = 1'b1;
++      record_read_index = txn_index[5:0];
++      record_read_word = 3'd0;
++      record_read_enable = 1'b1;
++      @(negedge clk);
++      r1f_failed_txn_valid = 1'b0;
++      r1f_failed_txn_record = '0;
++      record_read_enable = 1'b0;
++      if (!record_read_valid || record_read_data !== 32'b0)
++        fail("concurrent append made a request-time unused row visible");
++      @(negedge clk);
++      if (record_read_valid)
++        fail("concurrent append read response valid exceeded one cycle");
++    end
++  endtask
++
++  task automatic concurrent_append_and_read_existing(
++      input integer txn_index,
++      input integer existing_index,
++      input integer existing_word,
++      input [31:0] expected);
++    begin
++      @(negedge clk);
++      r1f_failed_txn_record = make_record(txn_index);
++      r1f_failed_txn_valid = 1'b1;
++      record_read_index = existing_index[5:0];
++      record_read_word = existing_word[2:0];
++      record_read_enable = 1'b1;
++      @(negedge clk);
++      r1f_failed_txn_valid = 1'b0;
++      r1f_failed_txn_record = '0;
++      record_read_enable = 1'b0;
++      if (!record_read_valid || record_read_data !== expected)
++        fail("read of existing row changed during append to a different row");
++      @(negedge clk);
++      if (record_read_valid)
++        fail("concurrent existing-row response valid exceeded one cycle");
++    end
++  endtask
++
++  task automatic expect_record_all_words(input integer index);
++    reg [191:0] expected_value;
++    integer word_index;
++    begin
++      expected_value = make_record(index);
++      for (word_index = 0; word_index < 6; word_index = word_index + 1)
++        expect_word(index, word_index,
++                    expected_value[word_index*32 +: 32]);
+     end
+   endtask
+ 
+@@ -89,7 +155,7 @@ module tb_r1f_failed_txn_logger;
+     if (total_count != 0 || stored_count != 0 || overflow)
+       fail("reset counters are not zero");
+ 
+-    push_record(0);
++    concurrent_append_and_expect_unused_zero(0);
+     expected_record = make_record(0);
+     if (total_count != 1 || stored_count != 1 || overflow)
+       fail("first append counters");
+@@ -102,14 +168,18 @@ module tb_r1f_failed_txn_logger;
+     expect_word(0, 5, expected_record[191:160]);
+     expect_word(1, 0, 32'b0);
+ 
+-    for (i = 1; i < 64; i = i + 1)
++    concurrent_append_and_read_existing(1, 0, 0, 32'hffff0000);
++    if (total_count != 2 || stored_count != 2 || overflow)
++      fail("concurrent append/read counters");
++
++    for (i = 2; i < 64; i = i + 1)
+       push_record(i);
+     if (total_count != 64 || stored_count != 64 || overflow)
+       fail("exact capacity must not overflow");
+     if (first_failed_txn_index != 0 || last_failed_txn_index != 63)
+       fail("first/last at exact capacity");
+-    expect_word(0, 0, 32'hffff0000);
+-    expect_word(63, 0, 32'hffff003f);
++    for (i = 0; i < 64; i = i + 1)
++      expect_record_all_words(i);
+ 
+     push_record(64);
+     if (total_count != 65 || stored_count != 64 || !overflow)
+@@ -134,12 +204,26 @@ module tb_r1f_failed_txn_logger;
+     #1;
+     if (total_count != 0 || stored_count != 0 || overflow)
+       fail("second reset counters");
+-    for (i = 0; i < 64; i = i + 1)
++    @(negedge clk);
++    reset = 1'b0;
++    for (i = 0; i < 64; i = i + 1) begin
+       expect_word(i, 0, 32'b0);
++      expect_word(i, 1, 32'b0);
++      expect_word(i, 2, 32'b0);
++      expect_word(i, 3, 32'b0);
++      expect_word(i, 4, 32'b0);
++      expect_word(i, 5, 32'b0);
++    end
++
++    // Invalid word selectors are acknowledged but deterministically return 0.
++    expect_word(0, 6, 32'b0);
++    expect_word(0, 7, 32'b0);
+ 
+     $display("R1F_FAILED_TRANSACTION_LOG_MATCH_SCOREBOARD=PASS");
+     $display("R1F_LOG_64_EXACT_OVERFLOW_65=PASS");
+     $display("R1F_LOG_UNUSED_ZERO_IMMUTABLE=PASS");
++    $display("R1H_LOG_SYNCHRONOUS_READ_AND_REQUEST_SNAPSHOT=PASS");
++    $display("R1H_LOG_ALL_64_X_6_WORDS_AND_ATOMIC_BANK_WRITE=PASS");
+     $finish;
+   end
+ endmodule
+diff --git a/tests/v41/tb_r1f_measurement_regs.sv b/tests/v41/tb_r1f_measurement_regs.sv
+index 6d64fba..51e1bec 100644
+--- a/tests/v41/tb_r1f_measurement_regs.sv
++++ b/tests/v41/tb_r1f_measurement_regs.sv
+@@ -53,22 +53,15 @@ module tb_r1f_measurement_regs;
+   logic [31:0] probe_detail_read_data;
+   wire [5:0] record_read_index;
+   wire [2:0] record_read_word;
+-  logic [31:0] record_read_data;
++  wire record_read_select;
+   wire [1:0] probe_index_read_phase;
+   wire [7:0] probe_index_read_word;
+   wire probe_index_read_select;
+-  logic [31:0] probe_index_read_data;
+   wire [31:0] read_data;
+   wire [31:0] formal_read_data;
+ 
+   always_comb begin
+     probe_detail_read_data = 32'hd0000000 | probe_detail_read_word;
+-    record_read_data = 32'ha0000000 |
+-                       ({26'b0, record_read_index} << 3) |
+-                       record_read_word;
+-    probe_index_read_data = 32'he0000000 |
+-                            ({30'b0, probe_index_read_phase} << 8) |
+-                            probe_index_read_word;
+   end
+ 
+   v41_r1f_measurement_regs #(
+@@ -137,36 +130,36 @@ module tb_r1f_measurement_regs;
+     if (!probe_detail_read_select || probe_detail_read_word != 7'h7f)
+       fail("probe detail end routing");
+ 
+-    expect_read(14'h2400, 32'ha0000000);
+-    if (record_read_index != 0 || record_read_word != 0)
++    expect_read(14'h2400, 32'b0);
++    if (!record_read_select || record_read_index != 0 || record_read_word != 0)
+       fail("record zero word zero routing");
+-    expect_read(14'h2414, 32'ha0000005);
+-    if (record_read_index != 0 || record_read_word != 5)
++    expect_read(14'h2414, 32'b0);
++    if (!record_read_select || record_read_index != 0 || record_read_word != 5)
+       fail("record zero word five routing");
+-    expect_read(14'h2418, 32'ha0000008);
+-    if (record_read_index != 1 || record_read_word != 0)
++    expect_read(14'h2418, 32'b0);
++    if (!record_read_select || record_read_index != 1 || record_read_word != 0)
+       fail("record one routing");
+-    expect_read(14'h29fc, 32'ha00001fd);
+-    if (record_read_index != 63 || record_read_word != 5)
++    expect_read(14'h29fc, 32'b0);
++    if (!record_read_select || record_read_index != 63 || record_read_word != 5)
+       fail("record 63 word five routing");
+ 
+-    expect_read(14'h2a00, 32'he0000000);
++    expect_read(14'h2a00, 32'b0);
+     if (!probe_index_read_select || probe_index_read_phase != 0 ||
+         probe_index_read_word != 0)
+       fail("WADDR index base routing");
+-    expect_read(14'h2dfc, 32'he00000ff);
+-    expect_read(14'h2e00, 32'he0000100);
++    expect_read(14'h2dfc, 32'b0);
++    expect_read(14'h2e00, 32'b0);
+     if (probe_index_read_phase != 1 || probe_index_read_word != 0)
+       fail("REGADDR index base routing");
+-    expect_read(14'h31fc, 32'he00001ff);
+-    expect_read(14'h3200, 32'he0000200);
++    expect_read(14'h31fc, 32'b0);
++    expect_read(14'h3200, 32'b0);
+     if (probe_index_read_phase != 2 || probe_index_read_word != 0)
+       fail("DATA index base routing");
+-    expect_read(14'h35fc, 32'he00002ff);
++    expect_read(14'h35fc, 32'b0);
+ 
+     offset = 14'h20a1;
+     #1;
+-    if (read_data != 0 || probe_detail_read_select ||
++    if (read_data != 0 || probe_detail_read_select || record_read_select ||
+         probe_index_read_select)
+       fail("unaligned read must return zero without submodule selection");
+     expect_read(14'h2000, 32'b0);
+diff --git a/tests/v41/tb_r1f_preinit_arbitration.sv b/tests/v41/tb_r1f_preinit_arbitration.sv
+index f224e50..21c5026 100644
+--- a/tests/v41/tb_r1f_preinit_arbitration.sv
++++ b/tests/v41/tb_r1f_preinit_arbitration.sv
+@@ -12,8 +12,9 @@ module tb_r1f_preinit_arbitration;
+   logic [47:0] freerun_count = 48'b0;
+   logic probe_scl_release, probe_sda_release;
+   logic probe_active, probe_done, probe_aborted, probe_terminal;
++  logic index_read_req = 1'b0;
+   logic [1:0] index_read_phase = 2'b0;
+-  logic [7:0] index_read_word = 8'b0;
++  logic [8:0] index_read_address = 9'b0;
+   logic [1:0] block_read_phase = 2'b0;
+   logic [3:0] block_read_index = 4'b0;
+ 
+@@ -38,7 +39,7 @@ module tb_r1f_preinit_arbitration;
+     .raw_scl_i, .raw_sda_i, .freerun_count,
+     .probe_scl_release, .probe_sda_release,
+     .probe_active, .probe_done, .probe_aborted, .probe_terminal,
+-    .index_read_phase, .index_read_word,
++    .index_read_req, .index_read_phase, .index_read_address,
+     .block_read_phase, .block_read_index
+   );
+ 
+diff --git a/tests/v41/tb_r1h_mmio_integration_exhaustive.sv b/tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+new file mode 100644
+index 0000000..121f1d9
+--- /dev/null
++++ b/tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+@@ -0,0 +1,652 @@
++`timescale 1ns/1ps
++
++// Exhaustive transaction-level integration test for the R1h diagnostic read
++// path.  The exact R1g measurement decoder is compiled separately under the
++// name v41_r1g_measurement_regs_reference and provides the value oracle.
++module tb_r1h_mmio_integration_exhaustive;
++  logic clk = 1'b0;
++  logic reset = 1'b1;
++
++  logic        host_req_valid = 1'b0;
++  logic        host_req_ready;
++  logic        host_req_write = 1'b0;
++  logic [16:0] host_req_addr = 17'b0;
++  logic [31:0] host_req_wdata = 32'b0;
++  logic [3:0]  host_req_be = 4'b0;
++  logic        host_rsp_valid;
++  logic        host_rsp_ready = 1'b0;
++  logic [31:0] host_rsp_rdata;
++
++  logic        app_req_valid;
++  logic        app_req_ready = 1'b1;
++  logic        app_req_write;
++  logic [16:0] app_req_addr;
++  logic [31:0] app_req_wdata;
++  logic [3:0]  app_req_be;
++  logic        app_rsp_valid = 1'b0;
++  logic        app_rsp_ready;
++  logic [31:0] app_rsp_rdata = 32'b0;
++
++  logic        r1h_req_valid;
++  logic        r1h_req_ready;
++  logic [13:0] r1h_req_offset;
++  logic        r1h_rsp_valid;
++  logic        r1h_rsp_ready;
++  logic [31:0] r1h_rsp_data;
++
++  logic [31:0] candidate_scalar_data;
++  logic [6:0]  candidate_detail_word;
++  logic        candidate_detail_select;
++  logic [31:0] candidate_detail_data;
++  logic [5:0]  candidate_record_index;
++  logic [2:0]  candidate_record_word;
++  logic        candidate_record_select;
++  logic [1:0]  candidate_index_phase;
++  logic [7:0]  candidate_index_word;
++  logic        candidate_index_select;
++
++  logic        record_read_enable;
++  logic [5:0]  record_read_index;
++  logic [2:0]  record_read_word;
++  logic        record_read_valid = 1'b0;
++  logic [31:0] record_read_data = 32'b0;
++  logic        index_read_enable;
++  logic [1:0]  index_read_phase;
++  logic [8:0]  index_read_address;
++  logic        index_read_valid = 1'b0;
++  logic [15:0] index_read_data = 16'b0;
++
++  logic [6:0]  reference_detail_word;
++  logic        reference_detail_select;
++  logic [31:0] reference_detail_data;
++  logic [5:0]  reference_record_index;
++  logic [2:0]  reference_record_word;
++  logic [31:0] reference_record_data;
++  logic [1:0]  reference_index_phase;
++  logic [7:0]  reference_index_word;
++  logic        reference_index_select;
++  logic [31:0] reference_index_data;
++  logic [31:0] reference_read_data;
++
++  localparam logic [31:0] WADDR_OPPORTUNITIES = 32'd1000;
++  localparam logic [31:0] WADDR_NACKS = 32'd11;
++  localparam logic [31:0] REGADDR_OPPORTUNITIES = 32'd1001;
++  localparam logic [31:0] REGADDR_NACKS = 32'd13;
++  localparam logic [31:0] DATA_OPPORTUNITIES = 32'd1002;
++  localparam logic [31:0] DATA_NACKS = 32'd17;
++  localparam logic [31:0] RADDR_OPPORTUNITIES = 32'd1003;
++  localparam logic [31:0] RADDR_NACKS = 32'd23;
++  localparam logic [31:0] TX_STARTS = 32'd80;
++  localparam logic [31:0] TX_COMPLETIONS = 32'd70;
++  localparam logic [31:0] FAILED_TXNS = 32'd64;
++  localparam logic [31:0] TIMEOUT_TXNS = 32'd3;
++  localparam logic [31:0] LEGACY_NACKS = 32'd64;
++  localparam logic [31:0] BANK_CHECKS = 32'h0102_0304;
++  localparam logic [31:0] BANK_ERRORS = 32'h0506_0708;
++  localparam logic [31:0] FIRST_BANK_ERROR = 32'h0910_1112;
++  localparam logic [31:0] PROBE_STATUS = 32'h1324_3546;
++  localparam logic [31:0] PROBE_TIMEOUTS = 32'h5768_798a;
++  localparam logic [31:0] SETUP_RESTORE = 32'h9bac_bdce;
++
++  integer read_count = 0;
++  integer write_count = 0;
++  integer unaligned_count = 0;
++
++  always #5 clk = ~clk;
++
++  function automatic [31:0] detail_value(input logic [6:0] word_index);
++    detail_value = {8'hd1, 17'b0, word_index};
++  endfunction
++
++  function automatic [31:0] record_value(
++      input logic [5:0] row_index, input logic [2:0] word_index);
++    record_value = {8'ha1, 10'b0, row_index, 5'b0, word_index};
++  endfunction
++
++  function automatic [15:0] index_value(
++      input logic [1:0] phase_index, input logic [8:0] entry_index);
++    begin
++      case (phase_index)
++        2'd0: index_value = {4'h1, 3'b0, entry_index};
++        2'd1: index_value = {4'h2, 3'b0, entry_index};
++        2'd2: index_value = {4'h3, 3'b0, entry_index};
++        default: index_value = 16'b0;
++      endcase
++    end
++  endfunction
++
++  function automatic [31:0] packed_index_value(
++      input logic [1:0] phase_index, input logic [7:0] word_index);
++    packed_index_value = {
++      index_value(phase_index, {word_index, 1'b1}),
++      index_value(phase_index, {word_index, 1'b0})
++    };
++  endfunction
++
++  assign candidate_detail_data = detail_value(candidate_detail_word);
++  assign reference_detail_data = detail_value(reference_detail_word);
++  assign reference_record_data = record_value(reference_record_index,
++                                               reference_record_word);
++  assign reference_index_data = packed_index_value(reference_index_phase,
++                                                    reference_index_word);
++
++  // One-cycle synchronous payload models.  Their deterministic contents make
++  // every row/word distinguishable while preserving the R1h BRAM protocol.
++  always_ff @(posedge clk) begin
++    if (reset) begin
++      record_read_valid <= 1'b0;
++      record_read_data <= 32'b0;
++      index_read_valid <= 1'b0;
++      index_read_data <= 16'b0;
++    end else begin
++      record_read_valid <= record_read_enable;
++      index_read_valid <= index_read_enable;
++      if (record_read_enable)
++        record_read_data <= record_value(record_read_index, record_read_word);
++      if (index_read_enable)
++        index_read_data <= index_value(index_read_phase, index_read_address);
++    end
++  end
++
++  v41_r1f_measurement_regs #(
++    .SAFE_PROBE_BANK(8'h00),
++    .SAFE_PROBE_REGISTER(8'h85),
++    .SAFE_PROBE_DATA(8'h00),
++    .SAFE_PROBE_TARGET_PROVEN(1'b1)
++  ) candidate_decoder (
++    .offset(r1h_req_offset),
++    .autoinit_waddr_opportunities(WADDR_OPPORTUNITIES),
++    .autoinit_waddr_nacks(WADDR_NACKS),
++    .autoinit_regaddr_opportunities(REGADDR_OPPORTUNITIES),
++    .autoinit_regaddr_nacks(REGADDR_NACKS),
++    .autoinit_data_opportunities(DATA_OPPORTUNITIES),
++    .autoinit_data_nacks(DATA_NACKS),
++    .autoinit_raddr_opportunities(RADDR_OPPORTUNITIES),
++    .autoinit_raddr_nacks(RADDR_NACKS),
++    .autoinit_transaction_starts(TX_STARTS),
++    .autoinit_transaction_completions(TX_COMPLETIONS),
++    .autoinit_failed_transactions(FAILED_TXNS),
++    .autoinit_timeout_transactions(TIMEOUT_TXNS),
++    .phase_counters_final(1'b1),
++    .phase_counter_saturation(1'b0),
++    .legacy_aggregate_nack_count(LEGACY_NACKS),
++    .legacy_first8_reconciliation_supported(1'b1),
++    .failed_txn_total_count(FAILED_TXNS),
++    .failed_txn_stored_count(7'd64),
++    .failed_txn_overflow(1'b0),
++    .first_failed_txn_index(16'h0123),
++    .first_failed_txn_index_valid(1'b1),
++    .last_failed_txn_index(16'h4567),
++    .last_failed_txn_index_valid(1'b1),
++    .next_transaction_serial(16'h89ab),
++    .transaction_serial_overflow(1'b0),
++    .failed_txn_total_count_saturated(1'b0),
++    .failed_txn_input_protocol_error(1'b0),
++    .bank_invariant_check_count(BANK_CHECKS),
++    .bank_invariant_error_count(BANK_ERRORS),
++    .first_bank_invariant_error(FIRST_BANK_ERROR),
++    .final_physical_bank(8'hcd),
++    .final_physical_bank_valid(1'b1),
++    .tri_phase_probe_status(PROBE_STATUS),
++    .probe_timeout_count_total(PROBE_TIMEOUTS),
++    .probe_setup_restore_status(SETUP_RESTORE),
++    .safe_target_pre_readback(8'h12),
++    .safe_target_pre_readback_valid(1'b1),
++    .safe_target_post_readback(8'h34),
++    .safe_target_post_readback_valid(1'b1),
++    .original_bank_readback(8'h56),
++    .original_bank_readback_valid(1'b1),
++    .restored_bank_readback(8'h78),
++    .restored_bank_readback_valid(1'b1),
++    .restored_bank_verified(1'b1),
++    .probe_start_freerun(48'h0123_4567_89ab),
++    .probe_done_freerun(48'hcdef_0123_4567),
++    .probe_detail_read_word(candidate_detail_word),
++    .probe_detail_read_select(candidate_detail_select),
++    .probe_detail_read_data(candidate_detail_data),
++    .record_read_index(candidate_record_index),
++    .record_read_word(candidate_record_word),
++    .record_read_select(candidate_record_select),
++    .probe_index_read_phase(candidate_index_phase),
++    .probe_index_read_word(candidate_index_word),
++    .probe_index_read_select(candidate_index_select),
++    .read_data(candidate_scalar_data)
++  );
++
++  // Exact R1g decoder, compiled from commit e112a5add... with only its module
++  // identifier macro-renamed.  Its combinational payload inputs are the oracle
++  // for the latency-insensitive R1g-to-R1h transaction comparison.
++  v41_r1g_measurement_regs_reference #(
++    .SAFE_PROBE_BANK(8'h00),
++    .SAFE_PROBE_REGISTER(8'h85),
++    .SAFE_PROBE_DATA(8'h00),
++    .SAFE_PROBE_TARGET_PROVEN(1'b1)
++  ) reference_decoder (
++    .offset(host_req_addr[13:0]),
++    .autoinit_waddr_opportunities(WADDR_OPPORTUNITIES),
++    .autoinit_waddr_nacks(WADDR_NACKS),
++    .autoinit_regaddr_opportunities(REGADDR_OPPORTUNITIES),
++    .autoinit_regaddr_nacks(REGADDR_NACKS),
++    .autoinit_data_opportunities(DATA_OPPORTUNITIES),
++    .autoinit_data_nacks(DATA_NACKS),
++    .autoinit_raddr_opportunities(RADDR_OPPORTUNITIES),
++    .autoinit_raddr_nacks(RADDR_NACKS),
++    .autoinit_transaction_starts(TX_STARTS),
++    .autoinit_transaction_completions(TX_COMPLETIONS),
++    .autoinit_failed_transactions(FAILED_TXNS),
++    .autoinit_timeout_transactions(TIMEOUT_TXNS),
++    .phase_counters_final(1'b1),
++    .phase_counter_saturation(1'b0),
++    .legacy_aggregate_nack_count(LEGACY_NACKS),
++    .legacy_first8_reconciliation_supported(1'b1),
++    .failed_txn_total_count(FAILED_TXNS),
++    .failed_txn_stored_count(7'd64),
++    .failed_txn_overflow(1'b0),
++    .first_failed_txn_index(16'h0123),
++    .first_failed_txn_index_valid(1'b1),
++    .last_failed_txn_index(16'h4567),
++    .last_failed_txn_index_valid(1'b1),
++    .next_transaction_serial(16'h89ab),
++    .transaction_serial_overflow(1'b0),
++    .failed_txn_total_count_saturated(1'b0),
++    .failed_txn_input_protocol_error(1'b0),
++    .bank_invariant_check_count(BANK_CHECKS),
++    .bank_invariant_error_count(BANK_ERRORS),
++    .first_bank_invariant_error(FIRST_BANK_ERROR),
++    .final_physical_bank(8'hcd),
++    .final_physical_bank_valid(1'b1),
++    .tri_phase_probe_status(PROBE_STATUS),
++    .probe_timeout_count_total(PROBE_TIMEOUTS),
++    .probe_setup_restore_status(SETUP_RESTORE),
++    .safe_target_pre_readback(8'h12),
++    .safe_target_pre_readback_valid(1'b1),
++    .safe_target_post_readback(8'h34),
++    .safe_target_post_readback_valid(1'b1),
++    .original_bank_readback(8'h56),
++    .original_bank_readback_valid(1'b1),
++    .restored_bank_readback(8'h78),
++    .restored_bank_readback_valid(1'b1),
++    .restored_bank_verified(1'b1),
++    .probe_start_freerun(48'h0123_4567_89ab),
++    .probe_done_freerun(48'hcdef_0123_4567),
++    .probe_detail_read_word(reference_detail_word),
++    .probe_detail_read_select(reference_detail_select),
++    .probe_detail_read_data(reference_detail_data),
++    .record_read_index(reference_record_index),
++    .record_read_word(reference_record_word),
++    .record_read_data(reference_record_data),
++    .probe_index_read_phase(reference_index_phase),
++    .probe_index_read_word(reference_index_word),
++    .probe_index_read_select(reference_index_select),
++    .probe_index_read_data(reference_index_data),
++    .read_data(reference_read_data)
++  );
++
++  v41_r1h_mmio_read_service read_service (
++    .clk(clk),
++    .reset(reset),
++    .req_valid(r1h_req_valid),
++    .req_ready(r1h_req_ready),
++    .req_offset(r1h_req_offset),
++    .rsp_valid(r1h_rsp_valid),
++    .rsp_ready(r1h_rsp_ready),
++    .rsp_data(r1h_rsp_data),
++    .scalar_read_data(candidate_scalar_data),
++    .record_select(candidate_record_select),
++    .record_index(candidate_record_index),
++    .record_word(candidate_record_word),
++    .probe_index_select(candidate_index_select),
++    .probe_index_phase(candidate_index_phase),
++    .probe_index_word(candidate_index_word),
++    .record_read_enable(record_read_enable),
++    .record_read_index(record_read_index),
++    .record_read_word(record_read_word),
++    .record_read_valid(record_read_valid),
++    .record_read_data(record_read_data),
++    .index_read_enable(index_read_enable),
++    .index_read_phase(index_read_phase),
++    .index_read_address(index_read_address),
++    .index_read_valid(index_read_valid),
++    .index_read_data(index_read_data),
++    .waddr_index_stored_count(16'd512),
++    .regaddr_index_stored_count(16'd512),
++    .data_index_stored_count(16'd512)
++  );
++
++  v41_control_status_regs control_regs (
++    .clk(clk),
++    .reset(reset),
++    .host_req_valid(host_req_valid),
++    .host_req_ready(host_req_ready),
++    .host_req_write(host_req_write),
++    .host_req_addr(host_req_addr),
++    .host_req_wdata(host_req_wdata),
++    .host_req_be(host_req_be),
++    .host_rsp_valid(host_rsp_valid),
++    .host_rsp_ready(host_rsp_ready),
++    .host_rsp_rdata(host_rsp_rdata),
++    .app_req_valid(app_req_valid),
++    .app_req_ready(app_req_ready),
++    .app_req_write(app_req_write),
++    .app_req_addr(app_req_addr),
++    .app_req_wdata(app_req_wdata),
++    .app_req_be(app_req_be),
++    .app_rsp_valid(app_rsp_valid),
++    .app_rsp_ready(app_rsp_ready),
++    .app_rsp_rdata(app_rsp_rdata),
++    .measurement_read_data(32'hfeed_cafe),
++    .r1h_req_valid(r1h_req_valid),
++    .r1h_req_ready(r1h_req_ready),
++    .r1h_req_offset(r1h_req_offset),
++    .r1h_rsp_valid(r1h_rsp_valid),
++    .r1h_rsp_ready(r1h_rsp_ready),
++    .r1h_rsp_data(r1h_rsp_data),
++    .capture_request_busy(1'b0),
++    .capture_busy(1'b0),
++    .capture_armed(1'b0),
++    .capture_done(1'b0),
++    .capture_aborted(1'b0),
++    .capture_generation(32'b0),
++    .captured_line_count(32'b0),
++    .first_source_line(32'b0),
++    .frame_sequence(32'b0),
++    .bad_marker_count(32'b0),
++    .bad_length_count(32'b0),
++    .capture_overflow_count(32'b0),
++    .malformed_count(32'b0),
++    .capture_dropped_count(32'b0),
++    .arm_rejected_count(32'b0),
++    .mailbox_rejected_count(32'b0),
++    .vclk_edge_count(32'b0),
++    .active_sav_count(32'b0),
++    .record_commit_count(32'b0),
++    .nvp_init_busy(1'b0),
++    .nvp_init_done(1'b0),
++    .nvp_init_error(1'b0),
++    .nvp_reset_released(1'b0),
++    .nvp_vdd1x_active(1'b0),
++    .nvp_vdd3x_active(1'b0),
++    .nvp_scl_sample(1'b0),
++    .nvp_sda_sample(1'b0),
++    .nvp_detail(192'b0),
++    .dma_status(32'b0),
++    .records_streamed(32'b0),
++    .dropped_records(32'b0),
++    .c2h_stall_cycles(64'b0),
++    .last_streamed_capture_sequence(32'b0),
++    .stream_protocol_errors(32'b0),
++    .user_irq_count(32'b0),
++    .h2c_attempt_count(32'b0)
++  );
++
++  task automatic require_true(input logic condition, input string message);
++    begin
++      if (condition !== 1'b1) begin
++        $display("FAIL: %s time=%0t addr=0x%05x", message, $time,
++                 host_req_addr);
++        $fatal(1);
++      end
++    end
++  endtask
++
++  task automatic read_and_compare(input logic [16:0] address,
++                                  input integer backpressure_cycles);
++    logic [31:0] expected;
++    integer wait_cycles;
++    integer hold_index;
++    begin
++      @(negedge clk);
++      host_req_addr = address;
++      host_req_write = 1'b0;
++      host_req_wdata = 32'b0;
++      host_req_be = 4'b0;
++      host_req_valid = 1'b1;
++      host_rsp_ready = 1'b0;
++      #1;
++      expected = reference_read_data;
++      require_true(host_req_ready, "diagnostic read not accepted from idle");
++      require_true(r1h_req_valid, "diagnostic read did not enter R1h service");
++      require_true(!app_req_valid, "diagnostic read leaked to app path");
++      @(posedge clk);
++      #1;
++      host_req_valid = 1'b0;
++
++      wait_cycles = 0;
++      while (!host_rsp_valid && wait_cycles < 16) begin
++        @(posedge clk);
++        #1;
++        wait_cycles = wait_cycles + 1;
++      end
++      require_true(host_rsp_valid, "diagnostic response timeout");
++      require_true(host_rsp_rdata === expected,
++                   "R1h response differs from exact R1g decoder");
++      require_true(!host_req_ready,
++                   "new request accepted while response outstanding");
++
++      for (hold_index = 0; hold_index < backpressure_cycles;
++           hold_index = hold_index + 1) begin
++        @(posedge clk);
++        #1;
++        require_true(host_rsp_valid, "response valid dropped under backpressure");
++        require_true(host_rsp_rdata === expected,
++                     "response data changed under backpressure");
++        require_true(!host_req_ready,
++                     "request ready rose under response backpressure");
++      end
++
++      @(negedge clk);
++      host_rsp_ready = 1'b1;
++      #1;
++      require_true(host_rsp_valid, "response vanished before ready handshake");
++      require_true(host_rsp_rdata === expected,
++                   "response changed before ready handshake");
++      @(posedge clk);
++      #1;
++      host_rsp_ready = 1'b0;
++      require_true(!host_rsp_valid, "response duplicated after acceptance");
++      read_count = read_count + 1;
++    end
++  endtask
++
++  task automatic check_forwarded_write(input logic [16:0] address);
++    logic [31:0] value;
++    begin
++      value = 32'h5a00_0000 ^ {15'b0, address};
++      @(negedge clk);
++      host_req_addr = address;
++      host_req_write = 1'b1;
++      host_req_wdata = value;
++      host_req_be = address[3:0];
++      host_req_valid = 1'b1;
++      #1;
++      require_true(host_req_ready, "forwarded write not accepted");
++      require_true(app_req_valid, "R1h-range write not forwarded to app");
++      require_true(app_req_write, "forwarded request lost write direction");
++      require_true(app_req_addr == address, "forwarded write address changed");
++      require_true(app_req_wdata == value, "forwarded write data changed");
++      require_true(app_req_be == address[3:0], "forwarded byte enables changed");
++      require_true(!r1h_req_valid, "R1h-range write entered read service");
++      @(posedge clk);
++      #1;
++      host_req_valid = 1'b0;
++      host_req_write = 1'b0;
++      write_count = write_count + 1;
++    end
++  endtask
++
++  task automatic check_order_and_busy_rejection;
++    logic [31:0] first_expected;
++    logic [31:0] second_expected;
++    integer wait_cycles;
++    begin
++      // Accept the first request.
++      @(negedge clk);
++      host_req_addr = 17'h020a0;
++      host_req_write = 1'b0;
++      host_req_valid = 1'b1;
++      host_rsp_ready = 1'b0;
++      #1;
++      first_expected = reference_read_data;
++      require_true(host_req_ready, "first ordering request not ready");
++      @(posedge clk);
++      #1;
++
++      // Present a second request while the first response is outstanding.
++      host_req_addr = 17'h020a4;
++      #1;
++      second_expected = reference_read_data;
++      wait_cycles = 0;
++      while (!host_rsp_valid && wait_cycles < 8) begin
++        require_true(!host_req_ready,
++                     "second request accepted before first response");
++        @(posedge clk);
++        #1;
++        wait_cycles = wait_cycles + 1;
++      end
++      require_true(host_rsp_valid, "first ordering response timeout");
++      require_true(host_rsp_rdata === first_expected,
++                   "first ordering response changed");
++      require_true(!host_req_ready,
++                   "second request ready before first response handshake");
++
++      // Consume the first while keeping the second request asserted.  It may
++      // only be accepted after the service returns to IDLE.
++      @(negedge clk);
++      host_rsp_ready = 1'b1;
++      @(posedge clk);
++      #1;
++      host_rsp_ready = 1'b0;
++      require_true(!host_rsp_valid, "first response duplicated");
++      require_true(host_req_ready, "second request not released after first response");
++      @(posedge clk);
++      #1;
++      host_req_valid = 1'b0;
++
++      wait_cycles = 0;
++      while (!host_rsp_valid && wait_cycles < 8) begin
++        @(posedge clk);
++        #1;
++        wait_cycles = wait_cycles + 1;
++      end
++      require_true(host_rsp_valid, "second ordering response timeout");
++      require_true(host_rsp_rdata === second_expected,
++                   "response order/value mismatch");
++      @(negedge clk);
++      host_rsp_ready = 1'b1;
++      @(posedge clk);
++      #1;
++      host_rsp_ready = 1'b0;
++      require_true(!host_rsp_valid, "second response duplicated");
++    end
++  endtask
++
++  task automatic check_reset_cancels_pending;
++    integer quiet_cycle;
++    begin
++      // Cancel a response which is already being held for the host.
++      @(negedge clk);
++      host_req_addr = 17'h020a0;
++      host_req_write = 1'b0;
++      host_req_valid = 1'b1;
++      host_rsp_ready = 1'b0;
++      #1;
++      require_true(host_req_ready, "reset-response request not accepted");
++      @(posedge clk);
++      #1;
++      host_req_valid = 1'b0;
++      require_true(host_rsp_valid, "scalar response not pending before reset");
++      @(negedge clk);
++      reset = 1'b1;
++      @(posedge clk);
++      #1;
++      require_true(!host_rsp_valid, "reset did not cancel held response");
++      @(negedge clk);
++      reset = 1'b0;
++
++      // Cancel an index request after its low-half BRAM request was accepted
++      // but before the packed response could be assembled.
++      host_req_addr = 17'h02a00;
++      host_req_valid = 1'b1;
++      #1;
++      require_true(host_req_ready, "reset-index request not accepted");
++      @(posedge clk);
++      #1;
++      host_req_valid = 1'b0;
++      require_true(!host_rsp_valid, "index response appeared before both halves");
++      @(negedge clk);
++      reset = 1'b1;
++      @(posedge clk);
++      #1;
++      require_true(!host_rsp_valid, "reset did not cancel pending index read");
++      @(negedge clk);
++      reset = 1'b0;
++
++      for (quiet_cycle = 0; quiet_cycle < 3; quiet_cycle = quiet_cycle + 1) begin
++        @(posedge clk);
++        #1;
++        require_true(!host_rsp_valid, "cancelled response leaked after reset");
++      end
++    end
++  endtask
++
++  integer address_iterator;
++  integer byte_offset;
++  initial begin
++    $display("R1H_MMIO_INTEGRATION_EXHAUSTIVE_BEGIN");
++    #1;
++    require_true(!r1h_req_ready && !r1h_rsp_valid,
++                 "R1h service advertised request/response during reset");
++    repeat (3) @(posedge clk);
++    #1;
++    reset = 1'b0;
++
++    check_reset_cancels_pending();
++    check_order_and_busy_rejection();
++
++    // Every aligned address in the complete R1f/R1g page, including reserved
++    // holes, must return the exact R1g value in order.  Backpressure varies by
++    // address and covers zero through four held cycles.
++    for (address_iterator = 17'h020a0;
++         address_iterator <= 17'h035fc;
++         address_iterator = address_iterator + 4)
++      read_and_compare(address_iterator[16:0],
++                       (address_iterator >> 2) % 5);
++
++    // Every unaligned byte address in the same page is an accepted local read
++    // whose implicit status is OKAY and whose value is deterministic zero.
++    for (address_iterator = 17'h020a0;
++         address_iterator <= 17'h035fc;
++         address_iterator = address_iterator + 4) begin
++      for (byte_offset = 1; byte_offset <= 3; byte_offset = byte_offset + 1) begin
++        read_and_compare((address_iterator + byte_offset),
++                         (address_iterator + byte_offset) % 3);
++        require_true(reference_read_data == 32'b0,
++                     "exact R1g unaligned reference was not zero");
++        unaligned_count = unaligned_count + 1;
++      end
++    end
++
++    // Writes are not part of the diagnostic read service.  Exhaustively prove
++    // that every aligned address retains R1g forwarding semantics.
++    for (address_iterator = 17'h020a0;
++         address_iterator <= 17'h035fc;
++         address_iterator = address_iterator + 4)
++      check_forwarded_write(address_iterator[16:0]);
++
++    require_true(read_count == 5472,
++                 "unexpected exhaustive diagnostic read count");
++    require_true(unaligned_count == 4104,
++                 "unexpected exhaustive unaligned read count");
++    require_true(write_count == 1368,
++                 "unexpected exhaustive forwarded-write count");
++
++    $display("R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=%0d forwarded_writes=%0d ordering_pairs=1 reset_cancellations=2",
++             unaligned_count, write_count);
++    $finish;
++  end
++
++  initial begin
++    #5_000_000;
++    $fatal(1, "timeout");
++  end
++endmodule
+diff --git a/tests/v41/tb_r1h_mmio_read_service.sv b/tests/v41/tb_r1h_mmio_read_service.sv
+new file mode 100644
+index 0000000..31c0f5f
+--- /dev/null
++++ b/tests/v41/tb_r1h_mmio_read_service.sv
+@@ -0,0 +1,378 @@
++`timescale 1ns/1ps
++
++module tb_r1h_mmio_read_service;
++  logic clk = 1'b0;
++  logic reset = 1'b1;
++
++  logic        req_valid = 1'b0;
++  logic        req_ready;
++  logic [13:0] req_offset = 14'b0;
++  logic        rsp_valid;
++  logic        rsp_ready = 1'b0;
++  logic [31:0] rsp_data;
++
++  logic [31:0] scalar_read_data = 32'b0;
++  logic        record_select = 1'b0;
++  logic [5:0]  record_index = 6'b0;
++  logic [2:0]  record_word = 3'b0;
++  logic        probe_index_select = 1'b0;
++  logic [1:0]  probe_index_phase = 2'b0;
++  logic [7:0]  probe_index_word = 8'b0;
++
++  logic        record_read_enable;
++  logic [5:0]  record_read_index;
++  logic [2:0]  record_read_word;
++  logic        record_read_valid = 1'b0;
++  logic [31:0] record_read_data = 32'b0;
++
++  logic        index_read_enable;
++  logic [1:0]  index_read_phase;
++  logic [8:0]  index_read_address;
++  logic        index_read_valid = 1'b0;
++  logic [15:0] index_read_data = 16'b0;
++  logic [15:0] waddr_index_stored_count = 16'b0;
++  logic [15:0] regaddr_index_stored_count = 16'b0;
++  logic [15:0] data_index_stored_count = 16'b0;
++
++  integer accepted_count = 0;
++  integer consumed_count = 0;
++
++  always #5 clk = ~clk;
++
++  always @(posedge clk) begin
++    if (!reset) begin
++      if (req_valid && req_ready)
++        accepted_count <= accepted_count + 1;
++      if (rsp_valid && rsp_ready)
++        consumed_count <= consumed_count + 1;
++    end
++  end
++
++  v41_r1h_mmio_read_service dut (
++    .clk(clk),
++    .reset(reset),
++    .req_valid(req_valid),
++    .req_ready(req_ready),
++    .req_offset(req_offset),
++    .rsp_valid(rsp_valid),
++    .rsp_ready(rsp_ready),
++    .rsp_data(rsp_data),
++    .scalar_read_data(scalar_read_data),
++    .record_select(record_select),
++    .record_index(record_index),
++    .record_word(record_word),
++    .probe_index_select(probe_index_select),
++    .probe_index_phase(probe_index_phase),
++    .probe_index_word(probe_index_word),
++    .record_read_enable(record_read_enable),
++    .record_read_index(record_read_index),
++    .record_read_word(record_read_word),
++    .record_read_valid(record_read_valid),
++    .record_read_data(record_read_data),
++    .index_read_enable(index_read_enable),
++    .index_read_phase(index_read_phase),
++    .index_read_address(index_read_address),
++    .index_read_valid(index_read_valid),
++    .index_read_data(index_read_data),
++    .waddr_index_stored_count(waddr_index_stored_count),
++    .regaddr_index_stored_count(regaddr_index_stored_count),
++    .data_index_stored_count(data_index_stored_count)
++  );
++
++  task automatic require_true(input logic condition, input string message);
++    begin
++      if (condition !== 1'b1) begin
++        $display("FAIL: %s", message);
++        $fatal(1);
++      end
++    end
++  endtask
++
++  task automatic clear_request;
++    begin
++      req_valid = 1'b0;
++      req_offset = 14'b0;
++      scalar_read_data = 32'b0;
++      record_select = 1'b0;
++      record_index = 6'b0;
++      record_word = 3'b0;
++      probe_index_select = 1'b0;
++      probe_index_phase = 2'b0;
++      probe_index_word = 8'b0;
++    end
++  endtask
++
++  task automatic clear_memory_response;
++    begin
++      record_read_valid = 1'b0;
++      record_read_data = 32'b0;
++      index_read_valid = 1'b0;
++      index_read_data = 16'b0;
++    end
++  endtask
++
++  task automatic synchronous_reset;
++    begin
++      @(negedge clk);
++      clear_request();
++      clear_memory_response();
++      rsp_ready = 1'b0;
++      reset = 1'b1;
++      @(posedge clk);
++      #1;
++      require_true(!req_ready, "service must not accept a request during reset");
++      require_true(!rsp_valid, "reset must cancel any pending response");
++      require_true(!record_read_enable, "reset must not leave a record request asserted");
++      require_true(!index_read_enable, "reset must not leave an index request asserted");
++      reset = 1'b0;
++      #1;
++      require_true(req_ready, "service did not return to IDLE after reset release");
++    end
++  endtask
++
++  task automatic start_scalar(input logic [13:0] offset,
++                              input logic [31:0] value);
++    begin
++      @(negedge clk);
++      req_offset = offset;
++      scalar_read_data = value;
++      record_select = 1'b0;
++      probe_index_select = 1'b0;
++      req_valid = 1'b1;
++      #1;
++      require_true(req_ready, "scalar request must be accepted from IDLE");
++      @(posedge clk);
++      #1;
++      clear_request();
++      require_true(rsp_valid, "scalar response must be registered after request acceptance");
++      require_true(rsp_data == value, "scalar response data mismatch");
++      require_true(!req_ready, "service must not accept another request while response is pending");
++    end
++  endtask
++
++  task automatic start_record(input logic [5:0] index_value,
++                              input logic [2:0] word_value);
++    begin
++      @(negedge clk);
++      req_offset = 14'h2400 + ((index_value * 6 + word_value) << 2);
++      record_select = 1'b1;
++      record_index = index_value;
++      record_word = word_value;
++      probe_index_select = 1'b0;
++      req_valid = 1'b1;
++      #1;
++      require_true(req_ready, "record request must be accepted from IDLE");
++      require_true(record_read_enable, "accepted record request must pulse BRAM enable");
++      require_true(record_read_index == index_value, "record BRAM row mismatch");
++      require_true(record_read_word == word_value, "record BRAM bank mismatch");
++      @(posedge clk);
++      #1;
++      clear_request();
++      require_true(!req_ready, "record wait must block a second request");
++      require_true(!rsp_valid, "record response must wait for record_read_valid");
++      require_true(!record_read_enable, "record BRAM request must be a single-cycle pulse");
++    end
++  endtask
++
++  task automatic complete_record(input logic [31:0] value);
++    begin
++      @(negedge clk);
++      record_read_data = value;
++      record_read_valid = 1'b1;
++      @(posedge clk);
++      #1;
++      record_read_valid = 1'b0;
++      require_true(rsp_valid, "record response missing after record_read_valid");
++      require_true(rsp_data == value, "record response data mismatch");
++      require_true(!req_ready, "pending record response must block requests");
++    end
++  endtask
++
++  task automatic start_index(input logic [1:0] phase_value,
++                             input logic [7:0] word_value,
++                             input logic [15:0] count_value);
++    begin
++      @(negedge clk);
++      case (phase_value)
++        2'd0: waddr_index_stored_count = count_value;
++        2'd1: regaddr_index_stored_count = count_value;
++        2'd2: data_index_stored_count = count_value;
++        default: begin end
++      endcase
++      req_offset = 14'h2A00 + ({6'b0, word_value} << 2);
++      record_select = 1'b0;
++      probe_index_select = 1'b1;
++      probe_index_phase = phase_value;
++      probe_index_word = word_value;
++      req_valid = 1'b1;
++      #1;
++      require_true(req_ready, "index request must be accepted from IDLE");
++      require_true(index_read_enable, "accepted index request must issue low-half read");
++      require_true(index_read_phase == phase_value, "low-half phase mismatch");
++      require_true(index_read_address == {word_value, 1'b0}, "low-half address mismatch");
++      @(posedge clk);
++      #1;
++      clear_request();
++      require_true(!req_ready, "index low wait must block a second request");
++      require_true(!rsp_valid, "packed index response must wait for both halves");
++      require_true(!index_read_enable, "low-half request must be a single-cycle pulse");
++    end
++  endtask
++
++  task automatic complete_index_low(input logic [15:0] value,
++                                    input logic [1:0] expected_phase,
++                                    input logic [8:0] expected_high_address);
++    begin
++      @(negedge clk);
++      index_read_data = value;
++      index_read_valid = 1'b1;
++      #1;
++      require_true(index_read_enable, "low-half completion must issue high-half read");
++      require_true(index_read_phase == expected_phase, "high-half phase must use latched phase");
++      require_true(index_read_address == expected_high_address, "high-half address mismatch");
++      @(posedge clk);
++      #1;
++      index_read_valid = 1'b0;
++      require_true(!rsp_valid, "index response must not appear after only the low half");
++      require_true(!req_ready, "index high wait must block a second request");
++      require_true(!index_read_enable, "high-half BRAM request must be a single-cycle pulse");
++    end
++  endtask
++
++  task automatic complete_index_high(input logic [15:0] value,
++                                     input logic [31:0] expected_value);
++    begin
++      @(negedge clk);
++      index_read_data = value;
++      index_read_valid = 1'b1;
++      @(posedge clk);
++      #1;
++      index_read_valid = 1'b0;
++      require_true(rsp_valid, "packed index response missing after high-half completion");
++      require_true(rsp_data == expected_value, "packed index response or masking mismatch");
++      require_true(!req_ready, "pending packed index response must block requests");
++    end
++  endtask
++
++  task automatic verify_busy_rejects_second_request;
++    begin
++      @(negedge clk);
++      req_valid = 1'b1;
++      req_offset = 14'h20A0;
++      scalar_read_data = 32'hBAD0_BAD0;
++      record_select = 1'b0;
++      probe_index_select = 1'b0;
++      #1;
++      require_true(!req_ready, "busy service exposed request ready");
++      require_true(!record_read_enable, "rejected busy request emitted record enable");
++      require_true(!index_read_enable, "rejected busy request emitted index enable");
++      @(posedge clk);
++      #1;
++      clear_request();
++    end
++  endtask
++
++  task automatic hold_response_and_consume(input logic [31:0] expected_value,
++                                           input integer hold_cycles);
++    integer cycle_index;
++    begin
++      rsp_ready = 1'b0;
++      for (cycle_index = 0; cycle_index < hold_cycles; cycle_index = cycle_index + 1) begin
++        @(posedge clk);
++        #1;
++        require_true(rsp_valid, "response valid dropped under backpressure");
++        require_true(rsp_data == expected_value, "response data changed under backpressure");
++        require_true(!req_ready, "service accepted a request under response backpressure");
++      end
++      @(negedge clk);
++      rsp_ready = 1'b1;
++      #1;
++      require_true(rsp_valid, "response vanished before ready handshake");
++      @(posedge clk);
++      #1;
++      rsp_ready = 1'b0;
++      require_true(!rsp_valid, "response duplicated after one ready handshake");
++      require_true(req_ready, "service did not return to IDLE after response handshake");
++    end
++  endtask
++
++  initial begin
++    $display("R1H_MMIO_TEST_BEGIN");
++    #1;
++    require_true(!req_ready && !rsp_valid,
++                 "service advertised request/response during reset");
++    synchronous_reset();
++
++    // Registered scalar response, arbitrary response backpressure and stability.
++    start_scalar(14'h20A0, 32'hDEAD_BEEF);
++    verify_busy_rejects_second_request();
++    hold_response_and_consume(32'hDEAD_BEEF, 3);
++
++    // Record path: request pulse, arbitrary memory latency and stable response.
++    start_record(6'd13, 3'd4);
++    verify_busy_rejects_second_request();
++    repeat (2) begin
++      @(posedge clk);
++      #1;
++      require_true(!rsp_valid, "record wait completed without record_read_valid");
++    end
++    complete_record(32'hA50D_0401);
++    hold_response_and_consume(32'hA50D_0401, 2);
++
++    // Packed index read.  Count is snapshotted at acceptance: changing the live
++    // REGADDR count to zero cannot suppress either already-valid half.
++    start_index(2'd1, 8'd1, 16'd4);
++    regaddr_index_stored_count = 16'd0;
++    complete_index_low(16'h2222, 2'd1, 9'd3);
++    complete_index_high(16'h3333, 32'h3333_2222);
++    hold_response_and_consume(32'h3333_2222, 1);
++
++    // Both addresses are beyond the request-time stored count and therefore
++    // read as deterministic zero despite non-zero physical payload outputs.
++    start_index(2'd0, 8'd4, 16'd2);
++    complete_index_low(16'h8888, 2'd0, 9'd9);
++    complete_index_high(16'h9999, 32'h0000_0000);
++    hold_response_and_consume(32'h0000_0000, 1);
++
++    // Last odd stored entry: index 4 is valid and index 5 is unused.  Growing
++    // the live count after acceptance must not expose the upper half.
++    start_index(2'd2, 8'd2, 16'd5);
++    data_index_stored_count = 16'd6;
++    complete_index_low(16'h4444, 2'd2, 9'd5);
++    complete_index_high(16'h5555, 32'h0000_4444);
++    hold_response_and_consume(32'h0000_4444, 2);
++
++    // Reset must cancel each pending state without leaking or duplicating a
++    // response.  These cancelled requests are intentionally not consumed.
++    start_record(6'd7, 3'd2);
++    synchronous_reset();
++
++    start_index(2'd0, 8'd3, 16'd8);
++    synchronous_reset();
++
++    start_index(2'd1, 8'd5, 16'd12);
++    complete_index_low(16'hAAAA, 2'd1, 9'd11);
++    synchronous_reset();
++
++    start_scalar(14'h21FC, 32'hC0DE_CAFE);
++    synchronous_reset();
++
++    // Service remains usable after all reset-abort paths.
++    start_scalar(14'h20A4, 32'h1357_9BDF);
++    hold_response_and_consume(32'h1357_9BDF, 1);
++
++    require_true(accepted_count == 10,
++                 "unexpected accepted-request count (lost or duplicate acceptance)");
++    require_true(consumed_count == 6,
++                 "unexpected consumed-response count (lost or duplicate response)");
++
++    $display("R1H_MMIO_READ_SERVICE_PASS accepted=%0d consumed=%0d reset_cancelled=4",
++             accepted_count, consumed_count);
++    $finish;
++  end
++
++  initial begin
++    #20000;
++    $fatal(1, "timeout");
++  end
++endmodule
+diff --git a/tests/v41/tb_r1h_probe_index_bram_store.sv b/tests/v41/tb_r1h_probe_index_bram_store.sv
+new file mode 100644
+index 0000000..3316278
+--- /dev/null
++++ b/tests/v41/tb_r1h_probe_index_bram_store.sv
+@@ -0,0 +1,116 @@
++`timescale 1ns/1ps
++
++module tb_r1h_probe_index_bram_store;
++  logic clk = 1'b0;
++  logic rst = 1'b1;
++  logic write_valid = 1'b0;
++  logic [1:0] write_phase = 2'b0;
++  logic [8:0] write_address = 9'b0;
++  logic [15:0] write_data = 16'b0;
++  logic read_req = 1'b0;
++  logic [1:0] read_phase = 2'b0;
++  logic [8:0] read_address = 9'b0;
++  logic read_valid;
++  logic [15:0] read_data;
++
++  always #5 clk = ~clk;
++
++  r1h_probe_index_bram_store dut (.*);
++
++  function automatic logic [15:0] payload_value(
++    input integer phase_number,
++    input integer entry_number
++  );
++    payload_value = {phase_number[1:0], 5'b10101, entry_number[8:0]};
++  endfunction
++
++  task automatic write_entry(
++    input logic [1:0] phase_number,
++    input logic [8:0] entry_number,
++    input logic [15:0] value
++  );
++    begin
++      @(negedge clk);
++      write_phase = phase_number;
++      write_address = entry_number;
++      write_data = value;
++      write_valid = 1'b1;
++      @(posedge clk);
++      #1;
++      @(negedge clk);
++      write_valid = 1'b0;
++    end
++  endtask
++
++  task automatic expect_entry(
++    input logic [1:0] phase_number,
++    input logic [8:0] entry_number,
++    input logic [15:0] expected
++  );
++    begin
++      @(negedge clk);
++      read_phase = phase_number;
++      read_address = entry_number;
++      read_req = 1'b1;
++      @(posedge clk);
++      #1;
++      if (!read_valid || read_data !== expected)
++        $fatal(1,
++               "probe index BRAM mismatch phase=%0d entry=%0d valid=%b actual=%04x expected=%04x",
++               phase_number, entry_number, read_valid, read_data, expected);
++      @(negedge clk);
++      read_req = 1'b0;
++    end
++  endtask
++
++  initial begin : run_test
++    integer phase_number;
++    integer entry_number;
++
++    repeat (4) @(posedge clk);
++    rst <= 1'b0;
++
++    for (phase_number = 0; phase_number < 3; phase_number = phase_number + 1)
++      for (entry_number = 0; entry_number < 512; entry_number = entry_number + 1)
++        write_entry(phase_number[1:0], entry_number[8:0],
++                    payload_value(phase_number, entry_number));
++
++    for (phase_number = 0; phase_number < 3; phase_number = phase_number + 1)
++      for (entry_number = 0; entry_number < 512; entry_number = entry_number + 1)
++        expect_entry(phase_number[1:0], entry_number[8:0],
++                     payload_value(phase_number, entry_number));
++
++    // A write into one physical bank must not perturb a simultaneous read from
++    // another bank.
++    @(negedge clk);
++    write_valid = 1'b1;
++    write_phase = 2'd1;
++    write_address = 9'd100;
++    write_data = 16'hbeef;
++    read_req = 1'b1;
++    read_phase = 2'd2;
++    read_address = 9'd100;
++    @(posedge clk);
++    #1;
++    if (!read_valid || read_data !== payload_value(2, 100))
++      $fatal(1, "independent-bank concurrent read/write failed");
++    @(negedge clk);
++    write_valid = 1'b0;
++    read_req = 1'b0;
++    expect_entry(2'd1, 9'd100, 16'hbeef);
++
++    // Invalid phase requests still complete deterministically with zero.
++    expect_entry(2'd3, 9'd0, 16'h0000);
++
++    // Reset clears only the output-valid pipeline, never payload RAM.
++    @(negedge clk);
++    rst = 1'b1;
++    repeat (2) @(posedge clk);
++    @(negedge clk);
++    rst = 1'b0;
++    expect_entry(2'd1, 9'd100, 16'hbeef);
++
++    $display("R1H_PROBE_INDEX_BRAM_STORE_PASS entries=1536 banks=3");
++    $finish;
++  end
++endmodule
+-- 
+2.53.0.windows.3
+

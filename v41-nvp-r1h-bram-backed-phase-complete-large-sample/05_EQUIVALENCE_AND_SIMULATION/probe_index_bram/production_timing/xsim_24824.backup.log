@@ -1,0 +1,38 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 23:35:55 2026
+# Process ID         : 24824
+# Current directory  : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/production_timing
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/r1h_production_snapshot/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/production_timing/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/production_timing\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 6879 MB
+#-----------------------------------------------------------
+source xsim.dir/r1h_production_snapshot/xsim_script.tcl
+# xsim {r1h_production_snapshot} -autoloadwcfg -tclbatch {run.tcl}
+Time resolution is 1 ps
+source run.tcl
+## run all
+PASS R1F_PRODUCTION_TIMING_MODEL
+R1F_PROBE_CYCLES_FROM_INIT_DONE=29415318
+R1F_PROBE_SECONDS_FROM_INIT_DONE=29.415318000
+MODELED_R1F_PROBE_COMPLETE_SECONDS_FROM_CONFIGURATION=31.536673744
+ARM_A_REQUIRED_WAIT_SECONDS=33.536673744
+$finish called at time : 29415337500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/tests/v41/tb_nvp_i2c_tri_phase_probe.sv" Line 378
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:01:41 . Memory (MB): peak = 206.637 ; gain = 0.520
+## quit
+INFO: xsimkernel Simulation Memory Usage: 13944 KB (Peak: 13944 KB), Simulation CPU Usage: 94452 ms
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 23:37:41 2026...

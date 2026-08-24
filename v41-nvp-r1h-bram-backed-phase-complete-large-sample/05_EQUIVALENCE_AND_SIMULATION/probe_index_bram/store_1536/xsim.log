@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 23:25:03 2026
+# Process ID         : 21720
+# Current directory  : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/store_1536
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/r1h_store_snapshot/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/store_1536/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/store_1536\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 6567 MB
+#-----------------------------------------------------------
+source xsim.dir/r1h_store_snapshot/xsim_script.tcl
+# xsim {r1h_store_snapshot} -autoloadwcfg -tclbatch {run.tcl}
+Time resolution is 1 ps
+source run.tcl
+## run all
+R1H_PROBE_INDEX_BRAM_STORE_PASS entries=1536 banks=3
+$finish called at time : 61580 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/tests/v41/tb_r1h_probe_index_bram_store.sv" Line 114
+## quit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 23:25:13 2026...

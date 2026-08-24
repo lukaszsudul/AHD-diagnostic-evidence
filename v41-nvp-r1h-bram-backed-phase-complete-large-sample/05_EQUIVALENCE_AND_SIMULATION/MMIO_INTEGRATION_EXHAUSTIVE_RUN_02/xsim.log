@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 23:34:02 2026
+# Process ID         : 1136
+# Current directory  : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/MMIO_INTEGRATION_EXHAUSTIVE_RUN_02
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/tb_r1h_mmio_integration_exhaustive_sim/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/MMIO_INTEGRATION_EXHAUSTIVE_RUN_02/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/MMIO_INTEGRATION_EXHAUSTIVE_RUN_02\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 6891 MB
+#-----------------------------------------------------------
+source xsim.dir/tb_r1h_mmio_integration_exhaustive_sim/xsim_script.tcl
+# xsim {tb_r1h_mmio_integration_exhaustive_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_BEGIN
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1
+$finish called at time : 210796 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/tests/v41/tb_r1h_mmio_integration_exhaustive.sv" Line 592
+exit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 23:34:09 2026...

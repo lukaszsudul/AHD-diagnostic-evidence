@@ -1,0 +1,29 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Aug 24 23:56:41 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1g_r1h_probe_pair_snapshot/xsim_script.tcl
+# xsim {r1g_r1h_probe_pair_snapshot} -autoloadwcfg -tclbatch {C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/scientific_equivalence/probe_pair/run_04/run.tcl}
+Time resolution is 1 ps
+source C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/scientific_equivalence/probe_pair/run_04/run.tcl
+## open_vcd {C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/scientific_equivalence/probe_pair/run_04/probe_pair_common_observables.vcd}
+## log_vcd [get_objects /tb_r1g_r1h_probe_functional_pair/*]
+INFO: HDL object /tb_r1g_r1h_probe_functional_pair/previous_stored_count is an unpacked array. VCD does not support unpacked array type according to IEEE LRM 1800-2009, section21.7.5.
+## run all
+R1G_R1H_PROBE_CYCLE_BY_CYCLE_COMMON_OUTPUT_EQUIVALENCE=PASS
+R1G_R1H_PROBE_I2C_AND_FSM_EVENT_STREAM_EQUIVALENCE=PASS
+R1G_R1H_PROBE_BLOCK_STATISTICS_EQUIVALENCE=PASS
+R1G_R1H_PROBE_INDEX_TRANSACTION_EQUIVALENCE=PASS
+COMPARED_CYCLES=39967
+TRANSACTION_START_EVENTS=35
+TRANSACTION_DONE_EVENTS=35
+INDEX_CREATION_EVENTS=5
+$finish called at time : 39974001 ns : File "C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/scientific_equivalence/probe_pair/tb_r1g_r1h_probe_functional_pair.sv" Line 245
+## close_vcd
+## quit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 23:56:52 2026...

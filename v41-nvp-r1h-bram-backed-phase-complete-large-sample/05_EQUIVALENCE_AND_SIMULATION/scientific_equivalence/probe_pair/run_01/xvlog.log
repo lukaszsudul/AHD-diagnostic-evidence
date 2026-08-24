@@ -1,0 +1,57 @@
+ERROR: [XSIM 43-3273] No HDL file(s) specified.
+Usage: xvlog [options] file...
+(Switches with double dash '--' can also be used with a single dash '-')
+
+Vivado Simulator xvlog options:
+  -f [ --file ] arg          Read additional options from the specified file
+  -h [ --help ]              Print this help message
+  --version                  Print the compiler version
+  --initfile arg             Use user defined simulator init file to add to or 
+                             override the settings provided by the default 
+                             xsim.ini file
+  -L [ --lib ] arg           Specify search libraries for the instantiated 
+                             design units in a Verilog or Mixed language 
+                             design. Use -L|--lib for each search library. The 
+                             format of the argument is <name>[=<dir>] where 
+                             <name> is the logical name of the library and 
+                             <dir> is an optional physical directory of the 
+                             library
+  --nolog                    Suppress log file generation
+  --log arg                  Specify the log file name. Default is <application
+                             name>.log
+  --prj arg                  Specify Vivado Simulator  project file containing 
+                             one or more entries of 'vhdl|verilog <work lib> 
+                             <HDL file name>'
+  --relax                    Relax strict HDL language checking rules
+  -v [ --verbose ] arg       Specify verbosity level for printing messages. 
+                             Allowed values are: 0, 1, 2 (Default:0)
+  --incr                     Enable incremental parsing and compilation check 
+                             point
+  -i [ --include ] arg       Specify directories to be searched for files 
+                             included using Verilog `include. Use -i|--include 
+                             for each specified search directory
+  -d [ --define ] arg        Define Verilog macros. Use -d|--define for each 
+                             Verilog macro. The format of the macro is 
+                             <name>[=<val>] where <name> is name of the macro 
+                             and <value> is an optional value of the macro
+  --sourcelibdir arg         Directory for Verilog source files of uncompiled 
+                             modules. Use -sourcelibdir|--sourcelibdir 
+                             <dirname> for each source directory.
+  --sourcelibext arg         File extension for Verilog source files of 
+                             uncompiled modules. Use -sourcelibext|--sourcelibe
+                             xt <file extension> for source file extension.
+  --sourcelibfile arg        Filename of a Verilog source file which has 
+                             uncompiled modules. Use -sourcelibfile|--sourcelib
+                             file <filename>.
+  --noname_unnamed_generate  Generate name for an unnamed generate block
+  --uvm_version arg          Specify the uvm version(default: 1.2)
+  --work arg                 Specify the work library. The format of the 
+                             argument is <name>[=<dir>] where <name> is the 
+                             logical name of the library and <dir> is an 
+                             optional physical directory of the library
+  --sv                       Compile input files in System Verilog mode
+
+Examples:
+  xvlog file1.v file2.v
+  xvlog -work worklib file1.v file2.v
+  xvlog -prj files.prj

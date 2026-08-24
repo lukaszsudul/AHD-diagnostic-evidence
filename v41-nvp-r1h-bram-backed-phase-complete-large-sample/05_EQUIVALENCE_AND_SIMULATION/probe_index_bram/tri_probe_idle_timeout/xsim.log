@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 23:23:27 2026
+# Process ID         : 23996
+# Current directory  : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/tri_probe_idle_timeout
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/r1h_tri_probe_idle_timeout_snapshot/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/tri_probe_idle_timeout/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/05_EQUIVALENCE_AND_SIMULATION/probe_index_bram/tri_probe_idle_timeout\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 6844 MB
+#-----------------------------------------------------------
+source xsim.dir/r1h_tri_probe_idle_timeout_snapshot/xsim_script.tcl
+# xsim {r1h_tri_probe_idle_timeout_snapshot} -autoloadwcfg -tclbatch {run.tcl}
+Time resolution is 1 ps
+source run.tcl
+## run all
+TRI_PHASE_PROBE_IDLE_TIMEOUT_COMPAT_PASS cycles=30
+$finish called at time : 33500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/tests/v41/tb_nvp_i2c_tri_phase_probe_idle_timeout.sv" Line 68
+## quit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 23:23:33 2026...

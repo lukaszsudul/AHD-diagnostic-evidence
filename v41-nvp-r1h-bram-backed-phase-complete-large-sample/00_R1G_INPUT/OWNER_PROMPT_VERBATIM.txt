@@ -1,0 +1,2384 @@
+CODEX MASTER PROMPT
+
+v41 NVP R1h — BRAM-backed phase-complete observability and large-sample paired A/B
+
+Immediate end-to-end execution: storage/MMIO architecture correction
+
+→ one clean build → A1/B1 → A2/B2 → A3/B3
+
+Preserve the complete R1f/R1g scientific scope
+
+FULL OWNER PRE-AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+
+```text
+PROJECT:
+    AHD Capture Card
+
+TASK:
+    V41_NVP_R1H_BRAM_BACKED_PHASE_COMPLETE_OBSERVABILITY_AND_LARGE_SAMPLE_AB
+
+EXPERIMENT_NAME:
+    R1h
+
+NAMING_BASIS:
+    R1h is the next experiment letter after terminal R1g.
+
+TASK_CHARACTER:
+    END_TO_END_RESOURCE_ARCHITECTURE_CORRECTION_AND_HARDWARE_CAMPAIGN
+
+PRIMARY_PURPOSE:
+    Obtain the expanded large-sample NVP/I2C dataset as quickly as safely
+    possible.
+
+    Preserve every scientific feature and address/field contract introduced by
+    R1f/R1g, but replace the resource-prohibitive storage and combinational MMIO
+    read architecture with BRAM-backed storage and a synchronous one-outstanding
+    read service.
+
+    After one clean build passes every resource/timing/DRC/provenance gate,
+    immediately execute the frozen interleaved hardware campaign:
+
+        A1 -> B1 -> A2 -> B2 -> A3 -> B3.
+
+LARGE_SAMPLE_SIZE:
+    Arm A repetitions:
+        3
+
+    Target-phase opportunities per Arm A:
+        10,000 WADDR
+        10,000 REGADDR
+        10,000 DATA
+
+    Total post-autoinit target-phase opportunities:
+        90,000
+
+    Additional data:
+        three complete autoinit phase-opportunity datasets;
+        three capacity-64 failed-transaction logs;
+        three full exact-formal control arms.
+
+SCIENTIFIC_SCOPE_REDUCTION:
+    FORBIDDEN
+
+FULL_CLEAN_BUILDS:
+    1
+
+SOURCE_COMMITS:
+    1
+
+PAIRED_REPETITIONS:
+    3
+
+FINAL_ACTIVE_IMAGE:
+    EXACT_FORMAL_PHASE2
+
+PHASE3_RESUME:
+    NO
+
+XDMA_DEVELOPMENT:
+    NO
+```
+
+===================================================================== -1. STANDING OWNER AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+
+```text
+OWNER_STANDING_AUTHORIZATION=
+    GRANTED
+
+OWNER_AUTHORIZATION_EFFECTIVE=
+    IMMEDIATELY_FOR_THE_ENTIRE_TASK
+
+OWNER_INTERACTIVE_APPROVAL_REQUIRED=
+    NO
+
+CODEX_MUST_REQUEST_ADDITIONAL_CONFIRMATION=
+    NO
+
+EXPECTED_OWNER_INTERACTIONS=
+    0
+```
+
+The owner grants prior approval for every action explicitly authorized by this
+prompt.
+
+Do not pause to request approval for:
+
+```text
+isolated branch/worktree creation;
+
+bounded exact-source recovery;
+
+the storage/MMIO architecture changes defined here;
+
+all simulations, elaboration, memory-inference and equivalence gates;
+
+one R1h source commit;
+
+one clean provenance-correct build;
+
+one normal diagnostic-branch push after build PASS;
+
+conditional exact formal bootstrap;
+
+three Arm-A R1h programs;
+
+three full Arm-B formal programs;
+
+all authorized warm reboots and exact pinned-driver loads;
+
+all bounded read-only MMIO/telemetry;
+
+evidence sealing and one normal evidence publication.
+```
+
+A passing gate means continue automatically.
+
+A failed or blocked gate means:
+
+```text
+preserve all available evidence;
+create the one authoritative final report;
+publish safely available evidence;
+hard-stop without asking whether to continue.
+```
+
+This authorization does not permit any action outside the explicit scope or
+above the numerical limits.
+
+===================================================================== 0. AUTHORITATIVE INPUTS
+
+────────
+
+0.1 Terminal R1g build
+
+```text
+R1G_SOURCE_COMMIT=
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+
+R1G_EVIDENCE_COMMIT=
+    31786f351a9b8aab86291b5058ce075da5fba46a
+
+R1G_AUTHORITATIVE_REPORT_SHA256=
+    6BD146E4B8A7C41BB6F407BC9FB4BAA42B4DA7767F6877EFD9DDF6BA3820638B
+
+R1G_EVIDENCE_PACKAGE_SHA256=
+    30B565A17B2E15D60321D549F93C0AA35D509D837A5C9DDCA5E2873915D3A7F5
+
+R1G_TERMINAL_CLASSIFICATION=
+    BLOCKED_ONE_CLEAN_BUILD_PLACE_PRECONDITION_RESOURCE_OVERUTILIZATION
+```
+
+R1g verified:
+
+```text
+VHDL compatibility rewrite:
+    PASS
+
+compiler/equivalence/RTL elaboration:
+    PASS
+
+synthesis:
+    PASS
+
+opt_design:
+    PASS
+
+place:
+    NOT_STARTED_PRE_PLACE_UTLZ_1
+
+route:
+    NOT_RUN
+
+bitstream:
+    NOT_GENERATED
+
+hardware:
+    NOT_RUN
+```
+
+Exact resource figures:
+
+```text
+POST_SYNTH_SLICE_LUTS=
+    33982
+
+POST_SYNTH_LOGIC_LUTS=
+    32615
+
+POST_SYNTH_FF=
+    45262
+
+POST_OPT_LOGIC_LUTS=
+    30926
+
+POST_OPT_FF=
+    44248
+
+DEVICE_LUTS=
+    20800
+
+DEVICE_FF=
+    41600
+```
+
+────────
+
+0.2 Independent resource-attribution audit
+
+```text
+RESOURCE_ATTRIBUTION_REPORT_SHA256=
+    45A5E7BE82D94BFB781BA6726F3FBD47236CD551703542EE4964C6C392C2ACB6
+
+RESOURCE_AUDIT_MANIFEST_SHA256=
+    776A900D108880230CFFA4CC0BC1AF989858E3A2C0298C5F0B38B0DC310A691F
+
+RESOURCE_AUDIT_MANIFEST_RESULT=
+    PASS_61_OF_61
+
+SOURCE_MUTATIONS=
+    0
+
+FULL_BUILDS=
+    0
+
+HARDWARE_ACTIONS=
+    0
+```
+
+At task start, locate the exact audit package/report and record:
+
+```text
+RESOURCE_AUDIT_REPORT_PATH=
+RESOURCE_AUDIT_EVIDENCE_COMMIT=
+RESOURCE_AUDIT_PACKAGE_SHA256=
+```
+
+Do not invent unavailable identities.
+
+Exact audit findings:
+
+```text
+THREE_PROBE_INDEX_LOGS=
+    3_X_512_X_16_IMPLEMENTED_AS_EXACTLY_24576_FDRE
+
+INDEX_LOG_SHARE_OF_FF_DELTA=
+    87.07_PERCENT
+
+FAILED_TRANSACTION_LOG=
+    64_X_192_IMPLEMENTED_AS_LUTRAM
+
+FAILED_TRANSACTION_LOG_PRIMITIVES=
+    55_RAM64M / 220_RAMD64E
+
+FAILED_TRANSACTION_LOG_LOGICAL_LUTRAM_COST=
+    220
+
+TRI_PHASE_PROBE_DELTA=
+    +13890_LOGIC_LUT
+    +27289_FF
+
+AXI_MMIO_RESPONSE_DELTA=
+    +3288_LOGIC_LUT
+
+AUTOINIT_OBSERVABILITY_DELTA=
+    +1324_LOGIC_LUT
+    +797_FF
+
+R1E_BASELINE_FREE_LOGIC_LUT=
+    6846
+
+R1E_BASELINE_FREE_FF=
+    24564
+
+R1E_BASELINE_FREE_BRAM_TILES=
+    27.5
+
+BASELINE_HEADROOM_HYPOTHESIS=
+    REJECTED
+
+R1G_VHDL_REWRITE_RESOURCE_CAUSE=
+    NOT_DETERMINABLE_FAIL_CLOSED
+```
+
+The resource audit recommends architecture A+:
+
+```text
+FAILED_RECORD_STORAGE=
+    SIX_64_X_32_RAMB18
+
+PROBE_INDEX_STORAGE=
+    THREE_BRAM18_ONE_PER_PHASE
+
+BLOCK_STATISTICS=
+    SMALL_30_X_32_LUTRAM
+
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+
+EXPECTED_RAMB18_DELTA=
+    +9
+
+EXPECTED_RAMB36_DELTA=
+    0
+
+EXPECTED_LOGIC_LUT_REDUCTION=
+    15300_TO_17200
+
+EXPECTED_FF_REDUCTION=
+    25250_TO_25450
+```
+
+────────
+
+0.3 Frozen R1f/R1g scientific identities
+
+```text
+R1F_SOURCE_COMMIT=
+    225544084dbfcaadb8592fcecc947aa1cec4970e
+
+R1F_SOURCE_TREE=
+    cfde8769af95cf20586391c411fab3ddfa2c87b6
+
+R1G_PARENT=
+    R1F_SOURCE_COMMIT
+
+R1E_SOURCE_COMMIT=
+    f3d9e5cdcacfb6fdebed5e5fe8b9143ef226aebd
+
+R1E_SOURCE_TREE=
+    db8b5581a237e19905fd01c6d453793047bc3ba7
+```
+
+The R1h source must be one direct child of exact R1g.
+
+────────
+
+0.4 Last valid hardware scientific input
+
+```text
+R7_EVIDENCE_COMMIT=
+    16beec37a266c421da5838fbb986301d072cbb50
+
+R7_EVIDENCE_PACKAGE_SHA256=
+    A1864DA7EC52AEE852169656808510C42D98FDCE27816D82449946B610DD2A56
+
+R7_PAIRED_RESULT=
+    COMPLETE_VALID_PAIRED_SAMPLE
+
+R7_POSTINIT_WADDR_PROBE=
+    29_NACK_OF_10000
+
+R7_ARM_A_AUTOINIT_NACKS=
+    13
+
+R7_ARM_B_AUTOINIT_NACKS=
+    15
+
+R7_FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+R7_FINAL_FORMAL_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+R7_FINAL_DIAGNOSTIC_MAGIC=
+    0
+
+R7_FINAL_DONE=
+    1
+```
+
+R7’s terminal hardware state is historical context only.
+
+Fresh R1h pre-hardware evidence is authoritative.
+
+=====================================================================
+
+1. FROZEN SCIENTIFIC CONTRACT
+=====================================================================
+
+R1h changes storage and MMIO-read implementation only.
+
+Everything below is immutable.
+
+────────
+
+1.1 Autoinit profile
+
+```text
+AUTOINIT_I2C_HZ=
+    25000
+
+AUTOINIT_CLOCK_HZ=
+    62500000
+
+ACTIVE_TICK_CYCLES=
+    1251
+
+EXPECTED_CNT_AT_INIT_DONE=
+    132584734
+```
+
+────────
+
+1.2 Safe active probe target
+
+```text
+PROBE_BANK=
+    0x00
+
+PROBE_REGISTER=
+    0x85
+
+PROBE_DATA=
+    0x00
+
+REGISTER_NAME=
+    SPL_MD_CH1
+
+SAFE_TARGET_CONTRACT=
+    VERIFIED_BANK0
+    PRE_READ_0x00
+    SAME_VALUE_WRITES_ONLY
+    POST_READ_0x00
+    ORIGINAL_BANK_RESTORED_AND_VERIFIED
+```
+
+────────
+
+1.3 Autoinit phase counters
+
+Preserve exactly:
+
+```text
+AUTOINIT_WADDR_ACK_OPPORTUNITIES
+AUTOINIT_WADDR_NACKS
+
+AUTOINIT_REGADDR_ACK_OPPORTUNITIES
+AUTOINIT_REGADDR_NACKS
+
+AUTOINIT_DATA_ACK_OPPORTUNITIES
+AUTOINIT_DATA_NACKS
+
+AUTOINIT_RADDR_ACK_OPPORTUNITIES
+AUTOINIT_RADDR_NACKS
+
+AUTOINIT_TRANSACTION_STARTS
+AUTOINIT_TRANSACTION_COMPLETIONS
+AUTOINIT_FAILED_TRANSACTIONS
+AUTOINIT_TIMEOUT_TRANSACTIONS
+```
+
+────────
+
+1.4 Failed-transaction log
+
+Preserve exactly:
+
+```text
+CAPACITY=
+    64
+
+RECORD_WIDTH=
+    192
+
+WORDS_PER_RECORD=
+    6
+
+RECORD_VERSION=
+    1
+
+TRANSACTION_INDEX_WIDTH=
+    16
+
+TABLE_SLOT_INDEX_WIDTH=
+    16
+
+APPEND_ONLY=
+    YES
+
+OVERWRITE=
+    NO
+
+OVERFLOW_ON=
+    FAILED_TRANSACTION_65
+
+UNUSED_RECORD_READ_VALUE=
+    ZERO
+```
+
+All field positions, valid bits and semantics remain exact R1g.
+
+────────
+
+1.5 Tri-phase probe
+
+Preserve exactly:
+
+```text
+PHASES=
+    WADDR
+    REGADDR
+    DATA
+
+TARGET_OPPORTUNITIES_PER_PHASE=
+    10000
+
+BLOCKS_PER_PHASE=
+    10
+
+OPPORTUNITIES_PER_BLOCK=
+    1000
+
+MAX_ATTEMPTS_PER_PHASE=
+    12000
+
+NACK_INDEX_CAPACITY_PER_PHASE=
+    512
+
+NACK_INDEX_WIDTH=
+    16
+
+INDEX_CONVENTION=
+    ZERO_BASED
+
+SCHEDULER=
+    ROUND_ROBIN_INTERLEAVED
+
+PROBE_I2C_HZ=
+    25000
+```
+
+Preserve all aggregate, prerequisite, run, adjacency, consecutive-NACK, block
+and index-log semantics.
+
+────────
+
+1.6 Register map
+
+Preserve every address and every returned bit:
+
+```text
+0x20A0..0x21FF
+0x2200..0x23FF
+0x2400..0x29FF
+0x2A00..0x2DFF
+0x2E00..0x31FF
+0x3200..0x35FF
+```
+
+Preserve:
+
+```text
+legacy R1e page;
+legacy ordered-NACK window;
+formal offsets;
+invalid/reserved behavior;
+formal complete-range deterministic zero.
+```
+
+Only read-response latency may change.
+
+Data values, address decoding and host-visible ordering may not change.
+
+────────
+
+1.7 Statistical plan
+
+Preserve the complete predeclared R1f/R1g statistical plan.
+
+Frozen hardware order:
+
+```text
+A1 -> B1 -> A2 -> B2 -> A3 -> B3
+```
+
+No test, threshold, correction or interpretation may be selected after
+hardware results are observed.
+
+===================================================================== 2. EXACT FORMAL, JTAG, HOST, AND DRIVER IDENTITIES
+
+Formal Phase 2:
+
+```text
+FORMAL_REPOSITORY=
+    lukaszsudul/FPGA_AHD
+
+FORMAL_BRANCH=
+    v41/xdma-v40.1.0-base
+
+FORMAL_COMMIT=
+    c89e88bcdf389614c884fb129e8b2d42a585bccb
+
+FORMAL_TREE=
+    417820c69c134161fcafae0947dc5976919814d1
+
+FORMAL_BIT_SHA256=
+    7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2
+
+FORMAL_RUNTIME_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FORMAL_DIAGNOSTIC_MAGIC=
+    0x00000000
+```
+
+Selected JTAG:
+
+```text
+JTAG_CANONICAL_ID=
+    Xilinx/80802026a98b01
+
+JTAG_PATH_SUFFIX=
+    /Xilinx/80802026a98b01
+
+PART=
+    xc7a35t
+
+IDCODE=
+    0362D093
+
+JTAG_FREQUENCY_POLICY=
+    RECORD_DEFAULT_NO_CHANGE
+```
+
+Ubuntu:
+
+```text
+IP=
+    10.132.1.111
+
+USER=
+    vcdeagent1
+
+REQUIRED_KERNEL=
+    7.0.0-29-generic
+
+CREDENTIAL_FILE=
+    C:\FPGA\VCDE-DUT-1.txt
+```
+
+Pinned XDMA:
+
+```text
+SOURCE_COMMIT=
+    8721136e74a66500b02d16cb41922d966139cd46
+
+MODULE_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+
+MODULE_SHA256=
+    1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+
+MODULE_VERSION=
+    2025.2.0
+
+MODULE_VERMAGIC_PREFIX=
+    7.0.0-29-generic
+
+LOADER_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+
+LOADER_SHA256=
+    7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+```
+
+Reuse exact accepted:
+
+```text
+R7 mode-aware programming observer;
+selected-target selector;
+Python BAR parser;
+credential/host-key procedure;
+R1g host readers and statistical scripts.
+```
+
+===================================================================== 3. AUTHORIZATION AND ABSOLUTE LIMITS
+
+Authorized source changes:
+
+```text
+replace the six-word failed-record payload store with BRAM-backed storage;
+
+replace each 512x16 probe-index payload with one BRAM-backed store;
+
+replace the combinational R1f/R1g memory-read/MMIO response path with one
+synchronous one-outstanding read service;
+
+make only the minimal adapters/pipelines required by the new read latency;
+
+add memory wrappers and verification logic;
+
+update testbenches for latency while preserving data semantics;
+
+update provenance/build scripts only as required for the new commit.
+```
+
+Authorized offline:
+
+```text
+one isolated R1h branch/worktree;
+one R1h source commit;
+all bounded simulations/equivalence/elaboration/memory-inference checks;
+one clean build;
+one routed-impact audit;
+one diagnostic-branch push after build PASS.
+```
+
+Authorized hardware:
+
+```text
+conditional exact formal bootstrap when fresh formal state is unproven;
+
+three Arm-A R1h samples;
+
+three full exact formal Arm-B samples;
+
+one warm reboot and at most one exact pinned-driver load after every valid
+program;
+
+read-only telemetry.
+```
+
+Maximum:
+
+```text
+R1H_SOURCE_COMMITS=
+    1
+
+FULL_CLEAN_BUILDS=
+    1
+
+CONDITIONAL_FORMAL_BOOTSTRAP_PROGRAMS<=
+    1
+
+ARM_A_PROGRAMS=
+    3
+
+ARM_B_PROGRAMS=
+    3
+
+FPGA_PROGRAM_INVOCATIONS_MAX=
+    7
+
+WARM_REBOOTS_MAX=
+    7
+
+POST_REBOOT_DRIVER_LOADS_MAX=
+    7
+
+PROGRAM_RETRIES=
+    0
+```
+
+Not authorized:
+
+```text
+reducing log capacity;
+reducing record width;
+reducing index-log capacity;
+reducing probe opportunities;
+removing a probe phase;
+changing probe target;
+changing register addresses or fields;
+changing statistical plan;
+changing functional NVP FSM/table/timing;
+changing XDC or XDMA XCI;
+second source commit;
+second build;
+source correction after full build starts;
+cold start;
+power cycle;
+physical action;
+JTAG/cable change;
+JTAG-frequency change;
+kernel/GRUB change;
+module rebuild;
+PCIe remove/rescan/reset;
+host AXI-Lite write;
+host NVP/I2C write;
+DMA;
+Phase 3;
+XDMA development;
+tag;
+Release.
+```
+
+===================================================================== 4. TASK ROOT AND GIT POLICY
+
+Create:
+
+```text
+C:\FPGA\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE\
+```
+
+Required structure:
+
+```text
+00_R1G_INPUT\
+01_RESOURCE_AUDIT_INPUT\
+02_SOURCE_IDENTITY\
+03_MEMORY_ARCHITECTURE\
+04_MMIO_READ_SERVICE\
+05_EQUIVALENCE_AND_SIMULATION\
+06_SOURCE_COMMIT\
+07_BUILD\
+08_RESOURCE_GATES\
+09_HOST_TOOLS\
+10_HARDWARE_PRECHECK\
+11_BOOTSTRAP\
+12_PAIR_1\
+13_PAIR_2\
+14_PAIR_3\
+15_ANALYSIS\
+16_FINAL\
+```
+
+Create immediately:
+
+```text
+OPERATION_LEDGER.md
+TIME_LEDGER.md
+```
+
+Save this prompt verbatim and record its SHA-256 before source mutation.
+
+Branch:
+
+```text
+diag/v41-nvp-r1h-bram-backed-large-sample
+```
+
+Exact parent:
+
+```text
+e112a5addb7ac62700a9a71af81bf368fad0bada
+```
+
+Required topology:
+
+```text
+R1F:
+    225544084dbfcaadb8592fcecc947aa1cec4970e
+
+R1G:
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+
+R1H:
+    one direct child of R1G
+```
+
+Do not amend/rebase R1f or R1g.
+
+Push only the R1h branch after build PASS.
+
+===================================================================== 5. P0 — EXACT SOURCE AND EVIDENCE RECOVERY
+
+Verify:
+
+```text
+R1G source commit/tree;
+R1g public evidence commit/package/report;
+resource-audit report and manifest;
+R1f/R1g host-tool identities;
+formal bit;
+R7 programming/host-tool identities.
+```
+
+Prefer exact local R1g commit.
+
+If absent, recover only from:
+
+```text
+exact R1f/R1g evidence patches;
+exact parent commits;
+exact source manifests.
+```
+
+Approximate reconstruction is forbidden.
+
+Create:
+
+```text
+02_SOURCE_IDENTITY\R1G_GIT_IDENTITY.md
+02_SOURCE_IDENTITY\R1G_SOURCE_SHA256.txt
+02_SOURCE_IDENTITY\INPUT_EVIDENCE_IDENTITY.md
+```
+
+Any mismatch:
+
+```text
+BLOCKED_EXACT_R1G_OR_AUDIT_IDENTITY
+```
+
+No source edit.
+
+===================================================================== 6. P1 — BRAM-BACKED FAILED-TRANSACTION STORE
+
+Replace only the payload implementation.
+
+Preferred architecture:
+
+```text
+six independent 64x32 simple dual-port block memories;
+
+one common write row;
+
+six simultaneous 32-bit writes for each finalized 192-bit record;
+
+one 32-bit synchronous read word selected by:
+    record index;
+    record word 0..5.
+```
+
+Use:
+
+```text
+XPM memory primitive with MEMORY_PRIMITIVE="block";
+or
+an exact Vivado-supported equivalent with separately proven RAMB18 mapping.
+```
+
+Required physical target:
+
+```text
+FAILED_RECORD_PAYLOAD_RAMB18=
+    6
+
+FAILED_RECORD_PAYLOAD_RAMB36=
+    0
+```
+
+Preserve:
+
+```text
+one-cycle acceptance of one complete finalized record;
+
+record atomicity;
+
+append-only order;
+
+64-entry capacity;
+
+overflow only on failed transaction 65;
+
+all field positions;
+
+all valid bits;
+
+stored/total/first/last counters.
+```
+
+Do not reset payload memory.
+
+Reset only:
+
+```text
+write pointer;
+stored count;
+total count;
+overflow;
+first/last metadata;
+output pipeline.
+```
+
+For:
+
+```text
+requested record index >= stored_count
+```
+
+return deterministic zero without reading uninitialized payload as valid data.
+
+Required:
+
+```text
+FAILED_RECORD_PAYLOAD_FDRE=
+    ZERO_EXCEPT_OUTPUT_PIPELINE_AND_METADATA
+
+FAILED_RECORD_PAYLOAD_RAM64M=
+    0
+
+FAILED_RECORD_PAYLOAD_RAMD64E=
+    0
+```
+
+===================================================================== 7. P2 — BRAM-BACKED PROBE-INDEX STORES
+
+Create one independent block memory per phase:
+
+```text
+WADDR
+REGADDR
+DATA
+```
+
+Each logical store remains:
+
+```text
+512 entries x 16 bits;
+append-only;
+zero-based indices;
+overflow on entry 513;
+no overwrite.
+```
+
+Preferred implementation per phase:
+
+```text
+one 512x16 block memory;
+
+one sequential 16-bit write port;
+
+one synchronous 16-bit read port;
+
+MMIO reads two sequential entries and packs:
+    RDATA[15:0]  = index[2n]
+    RDATA[31:16] = index[2n+1].
+```
+
+An exact one-RAMB18 asymmetric-width equivalent is allowed only when all
+semantics and primitive gates pass.
+
+Required physical target per phase:
+
+```text
+INDEX_PAYLOAD_RAMB18=
+    1
+
+INDEX_PAYLOAD_RAMB36=
+    0
+```
+
+Required combined target:
+
+```text
+TOTAL_INDEX_PAYLOAD_RAMB18=
+    3
+
+INDEX_PAYLOAD_FDRE_PER_PHASE<=
+    64
+```
+
+The FDRE allowance covers only:
+
+```text
+pointer/count/overflow;
+small read pipeline;
+temporary packing register.
+```
+
+The 8,192-bit payload may not be implemented in FDRE.
+
+Do not physically clear index memories.
+
+For:
+
+```text
+requested index >= stored_count
+```
+
+return zero.
+
+===================================================================== 8. P3 — BLOCK STATISTICS
+
+Keep the 30x32 block-statistics structure small.
+
+Preferred:
+
+```text
+distributed RAM / LUTRAM
+```
+
+Allowed:
+
+```text
+small FF bank if its exact cost remains below the resource budget.
+```
+
+Do not consume a full BRAM solely for the 30x32 statistics unless required by
+tool inference and separately justified.
+
+All block-counter semantics remain exact.
+
+===================================================================== 9. P4 — SYNCHRONOUS ONE-OUTSTANDING MMIO READ SERVICE
+
+The existing host bridge/slot protocol is authoritative.
+
+Do not assume a direct AXI-Lite signal name without auditing exact source.
+
+Implement one read service for the complete R1f/R1g diagnostic slot.
+
+Required protocol behavior:
+
+```text
+at most one outstanding read;
+
+latch the request address and source class;
+
+do not accept a second request while pending;
+
+for ordinary registers:
+    registered one-cycle response is allowed;
+
+for BRAM:
+    issue synchronous address;
+    wait the exact BRAM latency;
+    optionally perform the second index read;
+    assemble 32-bit RDATA;
+    assert response valid;
+
+hold response data/status stable until accepted;
+
+never lose a response when downstream ready is low;
+
+never duplicate a response;
+
+preserve error/invalid-address behavior.
+```
+
+Required functional contract:
+
+```text
+same request address -> same 32-bit value as R1g;
+
+only response latency may differ;
+
+all formal and legacy ranges unchanged;
+
+complete formal Phase-2 R1h range remains deterministic zero.
+```
+
+Forbidden:
+
+```text
+combinational access to all 512 index entries;
+
+combinational access to all 64x192 records;
+
+parallel export of complete payload arrays into a large response mux.
+```
+
+Required architecture classification:
+
+```text
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+
+COMBINATIONAL_512_TO_1_INDEX_MUX=
+    ABSENT
+
+COMBINATIONAL_64_X_192_RECORD_MUX=
+    ABSENT
+```
+
+===================================================================== 10. P5 — SOURCE-LEVEL SCIENTIFIC EQUIVALENCE
+
+Reference:
+
+```text
+exact R1g source.
+```
+
+Candidate:
+
+```text
+R1h BRAM/MMIO architecture.
+```
+
+Required equality excludes only response latency and internal storage
+implementation.
+
+Run cycle-by-cycle equality for all functional NVP behavior:
+
+```text
+reset/power;
+effective SCL/SDA drive/release;
+autoinit bytes;
+functional FSM;
+init_busy/done/error;
+legacy diagnostics;
+lifecycle;
+phase counters;
+failed-record creation event and 192-bit payload;
+probe scheduler and all I2C transactions;
+probe aggregate/block/index creation events;
+bank invariants.
+```
+
+Required:
+
+```text
+PRE_INIT_DONE_CYCLE_EQUIVALENCE=
+    PASS
+
+AUTOINIT_TRANSACTION_STREAM_BYTE_IDENTICAL=
+    YES
+
+FUNCTIONAL_STATE_SEQUENCE_IDENTICAL=
+    YES
+
+PROBE_TRANSACTION_STREAM_BYTE_IDENTICAL=
+    YES
+
+DIAGNOSTIC_EVENT_STREAM_IDENTICAL=
+    YES
+
+R1H_DIAGNOSTIC_TO_FUNCTIONAL_FANOUT=
+    0
+```
+
+For MMIO, use request/response transaction equivalence:
+
+```text
+same request sequence;
+arbitrary response backpressure;
+same response order;
+same response values/status;
+latency ignored within bounded protocol limits.
+```
+
+Required:
+
+```text
+MMIO_TRANSACTION_LEVEL_EQUIVALENCE=
+    PASS_ALL_ADDRESSES
+```
+
+===================================================================== 11. P6 — SIMULATION AND MEMORY TEST MATRIX
+
+Run the complete R1g accepted matrix plus architecture-specific tests.
+
+Required architecture tests:
+
+```text
+failed-record writes 0..63 and reads every word;
+
+failed record 64 stored;
+failed record 65 overflow with no overwrite;
+
+all six record banks written atomically;
+
+read while a different record is written;
+
+unused record reads zero without payload reset;
+
+index entries 0..511 for every phase;
+
+index entry 512 stored;
+index entry 513 overflow;
+
+odd/even packed MMIO index reads;
+
+last odd stored entry with next entry unused returns upper half zero;
+
+simultaneous probe write and host read where supported;
+
+read-response backpressure;
+
+new request while pending rejected/held per exact protocol;
+
+reset with response pending;
+
+reset after payload writes proves logical zero via metadata;
+
+all formal diagnostic addresses return zero;
+
+no record/index loss under minimum possible event spacing.
+```
+
+Memory inference/elaboration test must prove the wrappers are syntactically and
+semantically valid before source commit.
+
+Required:
+
+```text
+ALL_R1G_SCIENTIFIC_TESTS=
+    PASS
+
+BRAM_ARCHITECTURE_TESTS=
+    PASS
+
+MMIO_LATENCY_AND_BACKPRESSURE_TESTS=
+    PASS
+
+HOST_TOOL_FIXTURES=
+    PASS
+
+STATISTICAL_SCRIPT_FIXTURES=
+    PASS
+```
+
+===================================================================== 12. P7 — CREATE THE ONE R1h SOURCE COMMIT
+
+After every pre-commit gate passes:
+
+```text
+verify parent exact R1g;
+verify only authorized files changed;
+create one direct-child commit.
+```
+
+Suggested message:
+
+```text
+Back R1f observability storage with BRAM and synchronous MMIO reads
+```
+
+Require:
+
+```text
+R1H_PARENT_COMMIT=
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+
+R1H_COMMITS_ABOVE_R1G=
+    1
+
+R1H_SOURCE_COMMIT=
+R1H_SOURCE_TREE=
+```
+
+Create:
+
+```text
+06_SOURCE_COMMIT\R1H_COMMIT_TREE_PROOF.md
+06_SOURCE_COMMIT\R1H_SOURCE_SHA256.txt
+06_SOURCE_COMMIT\R1G_TO_R1H.patch
+```
+
+No second source commit.
+
+===================================================================== 13. P8 — ONE CLEAN BUILD WITH EARLY RESOURCE GATE
+
+Run one clean provenance-correct build.
+
+Use:
+
+```text
+Vivado 2025.2 build 6299465;
+part xc7a35tcsg325-2;
+top ahd_capture_top_xdma;
+exact unchanged XDMA XCI;
+exact unchanged XDC;
+exact production VHDL standard;
+R1h source commit.
+```
+
+Suggested bit:
+
+```text
+ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit
+```
+
+After synthesis and before placement, run the exact resource/primitive gate.
+
+────────
+
+13.1 Mandatory memory mapping gates
+
+Within exact R1h storage hierarchies require:
+
+```text
+FAILED_RECORD_PAYLOAD_RAMB18=
+    6
+
+WADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+REGADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+DATA_INDEX_PAYLOAD_RAMB18=
+    1
+
+R1H_NEW_PAYLOAD_RAMB18_TOTAL=
+    9
+
+R1H_NEW_PAYLOAD_RAMB36=
+    0_OR_EXACT_PACKING_EQUIVALENT_WITH_SAME_TOTAL_18K_CAPACITY
+```
+
+Also require:
+
+```text
+FAILED_RECORD_PAYLOAD_RAM64M=
+    0
+
+FAILED_RECORD_PAYLOAD_RAMD64E=
+    0
+
+INDEX_PAYLOAD_FDRE_TOTAL<=
+    192
+
+FAILED_RECORD_PAYLOAD_FDRE<=
+    192
+```
+
+No acceptance based only on a ram_style source attribute.
+
+Primitive/netlist evidence is mandatory.
+
+────────
+
+13.2 Mandatory total resource gates
+
+Hard gate before place_design:
+
+```text
+POST_SYNTH_SLICE_LUTS<=
+    18720
+
+POST_SYNTH_SLICE_REGISTERS<=
+    37440
+```
+
+These preserve at least 10% raw device headroom.
+
+Expected target, not a separate hard failure when the 10% gates pass:
+
+```text
+POST_SYNTH_LOGIC_LUT_EXPECTED<=
+    18000
+
+POST_SYNTH_FF_EXPECTED<=
+    25000
+```
+
+Record exact:
+
+```text
+Logic LUT;
+LUTRAM;
+FF;
+MUXF7/MUXF8;
+RAMB18/RAMB36;
+hierarchical deltas versus R1g and R1e.
+```
+
+If either hard resource gate fails:
+
+```text
+BLOCKED_R1H_POST_SYNTH_RESOURCE_MARGIN
+```
+
+No source correction, no second build, no placement.
+
+────────
+
+13.3 Full implementation gates
+
+After resource PASS continue automatically:
+
+```text
+opt_design;
+place_design;
+phys_opt only if already in exact accepted build flow;
+route_design;
+write_bitstream.
+```
+
+Require:
+
+```text
+FULL_CLEAN_BUILDS=
+    1
+
+SYNTHESIS=
+    PASS
+
+OPT_DESIGN=
+    PASS
+
+PLACE=
+    PASS
+
+ROUTE=
+    PASS
+
+ROUTE_ERRORS=
+    0
+
+WNS>=
+    0
+
+WHS>
+    0
+
+VDO_WNS>
+    0
+
+VDO_WHS>
+    0
+
+DRC_ERRORS=
+    0
+
+DRC_CRITICAL_WARNINGS=
+    0
+
+REQP_1839_SEMANTIC_COUNT=
+    4
+
+REQP_1839_RAW_TEXT_USED_AS_GATE=
+    NO
+
+CDC_CRITICAL=
+    0
+
+CDC_UNKNOWN=
+    0
+
+SOURCE_COMMIT_TO_BIT_PROVENANCE=
+    PASS
+```
+
+Freeze:
+
+```text
+R1H_BIT_SHA256=
+R1H_ROUTED_DCP_SHA256=
+```
+
+No second build.
+
+===================================================================== 14. P9 — POST-BUILD IMPACT AUDIT
+
+Compare R1h against exact R1g post-synthesis and exact R1e routed context.
+
+Required:
+
+```text
+resource delta;
+primitive delta;
+hierarchical delta;
+SCL/SDA IOBUF properties;
+OEN-to-IOBUF paths;
+pad-to-sync paths;
+synchronizer placement;
+clocking;
+routing congestion;
+total/dynamic power;
+VCCINT/VCCAUX/VCCO aggregate;
+NVP hierarchy power.
+```
+
+Classify:
+
+```text
+R1H_RESOURCE_ARCHITECTURE_CORRECTION=
+    PASS
+
+R1H_SCIENTIFIC_SCOPE=
+    UNCHANGED
+
+R1H_PLACEMENT_NEUTRAL=
+    NOT_CLAIMED
+```
+
+Push the diagnostic branch normally after build PASS.
+
+===================================================================== 15. P10 — HOST TOOL GATE
+
+The host-visible map/data format is unchanged.
+
+Reuse exact R1g readers and statistics when they already tolerate variable
+read response latency through the accepted bridge.
+
+If a host test assumption incorrectly requires combinational/zero-wait
+response, change only the host/test timeout/handshake handling.
+
+Do not change decoded semantics.
+
+Required:
+
+```text
+R1G_VS_R1H_DECODED_FIXTURE_EQUALITY=
+    PASS
+
+ALL_R1H_ADDRESSES_READABLE=
+    PASS
+
+FORMAL_R1H_RANGE_ZERO_FIXTURE=
+    PASS
+
+HOST_MMIO_WRITES=
+    0
+```
+
+===================================================================== 16. P11 — FRESH HARDWARE START-STATE GATE
+
+Fresh evidence is authoritative.
+
+Require read-only:
+
+```text
+selected JTAG exact/stable;
+kernel 7.0.0-29-generic;
+next reboot remains kernel 29;
+one endpoint 10ee:7011 / subsystem 0007 / class 058000;
+Gen1 x1;
+BAR0 128 KiB;
+BAR1 64 KiB;
+exact pinned driver or accepted clean loader-entry state;
+formal identity;
+diagnostic magic zero;
+no node owner;
+zero task DMA;
+kernel/AER health PASS.
+```
+
+If exact formal state is proven:
+
+```text
+BOOTSTRAP_RUN=
+    NO
+```
+
+If image is unproven but bootstrap is safe:
+
+```text
+BOOTSTRAP_RUN=
+    YES_EXACT_FORMAL_ONCE
+```
+
+Use accepted mode-aware observer.
+
+Bootstrap maximum:
+
+```text
+one program;
+one >=5-second wait;
+one warm reboot;
+one exact driver load;
+zero retry.
+```
+
+Bootstrap is not B1.
+
+If bootstrap cannot prove exact formal identity and DONE:
+
+```text
+BLOCKED_FORMAL_START_STATE
+```
+
+No A/B campaign.
+
+===================================================================== 17. P12 — THREE LARGE-SAMPLE PAIRED REPETITIONS
+
+Frozen sequence:
+
+```text
+A1 -> B1 -> A2 -> B2 -> A3 -> B3
+```
+
+Do not reorder after observing results.
+
+Every A starts from a freshly proven exact formal state.
+
+Every B is a full exact formal control and final restoration for its pair.
+
+────────
+
+17.1 Arm A
+
+For A1, A2 and A3:
+
+```text
+rehash exact R1h bit;
+
+require formal-ready receipt;
+
+program once with selected JTAG in transition mode;
+
+require:
+    pre-program DONE=1 stable;
+    vendor startup HIGH;
+    same-session DONE=1;
+    independent DONE=1;
+    one invocation;
+    exit code 0;
+    zero retry;
+
+wait:
+    >= max(
+        33.536673744,
+        MODELED_R1H_PROBE_COMPLETE_SECONDS + 2.0
+    )
+    with the final value frozen before hardware;
+
+one warm reboot;
+
+kernel 29;
+
+corrected BAR geometry;
+
+one exact explicit-path driver load;
+
+verify exact R1h runtime provenance/capabilities;
+
+collect two coherent full read-only snapshots;
+
+read fresh final DONE=1.
+```
+
+Valid Arm-A instrumentation requires:
+
+```text
+phase opportunity counters coherent;
+
+sum phase NACKs equals aggregate NACK_COUNT;
+
+failed-transaction total/stored coherent;
+
+failed-transaction overflow=0;
+
+bank invariant errors=0;
+
+all three probes DONE;
+
+all three probes ABORTED=0;
+
+WADDR target opportunities=10000;
+
+REGADDR target opportunities=10000;
+
+DATA target opportunities=10000;
+
+probe timeout total=0;
+
+safe target pre-read=0x00;
+
+safe target post-read=0x00;
+
+original bank restored and verified;
+
+all 64 record words and all stored index entries readable;
+
+final DONE=1.
+```
+
+Classify functional NVP PASS/FAIL separately.
+
+────────
+
+17.2 Arm B
+
+For B1, B2 and B3:
+
+```text
+rehash exact formal bit;
+
+program once with same selected JTAG in transition mode;
+
+require startup HIGH;
+same-session DONE=1;
+independent DONE=1;
+zero retry;
+
+wait >=5 seconds;
+
+one warm reboot;
+
+kernel 29;
+
+corrected BAR geometry;
+
+one exact pinned-driver load;
+
+formal runtime identity;
+diagnostic magic zero;
+
+two coherent normal NVP/video snapshots;
+
+legacy ordered-NACK window;
+
+complete R1h diagnostic range deterministic zero;
+
+fresh final DONE=1.
+```
+
+B1/B2/B3 are full controls, not restoration-only.
+
+────────
+
+17.3 Failure handling
+
+A valid scientific PASS or FAIL continues automatically to B and the next pair.
+
+If an A arm becomes infrastructure-invalid after a consumed program:
+
+```text
+run its immediate B restoration/control when safe;
+hard-stop after that B;
+do not continue later pairs.
+```
+
+If a B arm becomes infrastructure-invalid:
+
+```text
+hard-stop;
+do not start the next A.
+```
+
+No repeat of an invalid arm.
+
+===================================================================== 18. P13 — FROZEN STATISTICAL ANALYSIS
+
+Use the exact predeclared R1f/R1g statistical plan.
+
+For each A and each probe phase report:
+
+```text
+N=10000;
+ACK;
+NACK;
+timeout;
+rate;
+ppm;
+Wilson 95%;
+first/last NACK index;
+adjacent-pair count;
+run count;
+max consecutive NACKs;
+ten block rates;
+stationarity/independence classification.
+```
+
+For each A autoinit phase report:
+
+```text
+opportunities;
+NACKs;
+rate;
+confidence interval.
+```
+
+Compare matching contexts:
+
+```text
+autoinit WADDR vs post-init WADDR;
+autoinit REGADDR vs post-init REGADDR;
+autoinit DATA vs post-init DATA.
+```
+
+Report:
+
+```text
+rate difference;
+rate ratio;
+95% interval;
+exact/Fisher/score p;
+Holm-adjusted p.
+```
+
+Support criterion remains:
+
+```text
+corrected p<0.01;
+rate-ratio lower 95% bound>2;
+same direction in at least 2 of 3 A runs.
+```
+
+Required final classifications:
+
+```text
+POSTINIT_WADDR_PROCESS
+POSTINIT_REGADDR_PROCESS
+POSTINIT_DATA_PROCESS
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY
+
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA
+
+R1H_REPLICATE_HOMOGENEITY
+
+BANK_TRACKER_COHERENCE
+
+R7_OPERATION_86_SEMANTICS
+
+FAILED_TRANSACTION_DISTRIBUTION
+
+PAIRED_AB_RESULT
+```
+
+Always state:
+
+```text
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+BOARD_VCCO_DROOP_PROVEN=
+    NO
+
+GROUND_BOUNCE_PROVEN=
+    NO
+
+ANALOG_MARGIN_DIRECTLY_MEASURED=
+    NO
+```
+
+===================================================================== 19. FINAL STATE
+
+At successful end require:
+
+```text
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FINAL_DIAGNOSTIC_MAGIC=
+    0
+
+FINAL_PINNED_DRIVER_LOADED=
+    YES
+
+FINAL_DONE=
+    1
+```
+
+===================================================================== 20. EVIDENCE AND PUBLICATION
+
+Evidence repository:
+
+```text
+lukaszsudul/AHD-diagnostic-evidence
+```
+
+New path:
+
+```text
+v41-nvp-r1h-bram-backed-phase-complete-large-sample/
+```
+
+Include:
+
+```text
+verbatim prompt;
+R1g and resource-audit identities;
+exact source recovery;
+storage/MMIO architecture specification;
+source diff/commit/tree;
+equivalence and simulation evidence;
+memory primitive/inference evidence;
+resource gates;
+build artifacts and hashes;
+routed-impact audit;
+host tools/fixtures;
+bootstrap evidence if used;
+all six arm datasets;
+all raw and decoded logs/counters/probe indices;
+statistical scripts/results;
+operation ledger;
+single authoritative Markdown report;
+SHA-256 manifest.
+```
+
+Create:
+
+```text
+V41_NVP_R1H_BRAM_BACKED_PHASE_COMPLETE_LARGE_SAMPLE_EVIDENCE.zip
+
+V41_NVP_R1H_BRAM_BACKED_PHASE_COMPLETE_LARGE_SAMPLE_EVIDENCE_SHA256.txt
+
+SHA256_MANIFEST.txt
+```
+
+No PDF or DOCX.
+
+One normal evidence commit/push.
+
+No force-push.
+
+No tag or Release.
+
+===================================================================== 21. REQUIRED SINGLE FINAL REPORT BLOCK
+
+The final report must end with:
+
+```text
+TASK=
+    V41_NVP_R1H_BRAM_BACKED_PHASE_COMPLETE_OBSERVABILITY_AND_LARGE_SAMPLE_AB
+
+EXPERIMENT_NAME=
+    R1h
+
+R1G_SOURCE_COMMIT=
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+
+R1G_EVIDENCE_COMMIT=
+    31786f351a9b8aab86291b5058ce075da5fba46a
+
+R1G_TERMINAL_CLASSIFICATION=
+    BLOCKED_ONE_CLEAN_BUILD_PLACE_PRECONDITION_RESOURCE_OVERUTILIZATION
+
+RESOURCE_ATTRIBUTION_REPORT_SHA256=
+    45A5E7BE82D94BFB781BA6726F3FBD47236CD551703542EE4964C6C392C2ACB6
+
+RESOURCE_AUDIT_MANIFEST_SHA256=
+    776A900D108880230CFFA4CC0BC1AF989858E3A2C0298C5F0B38B0DC310A691F
+
+R1H_PARENT_COMMIT=
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+
+R1H_SOURCE_COMMIT=
+R1H_SOURCE_TREE=
+R1H_BIT_SHA256=
+R1H_ROUTED_DCP_SHA256=
+
+SCIENTIFIC_SCOPE_REDUCTION=
+    NO
+
+FAILED_RECORD_CAPACITY=
+    64
+
+FAILED_RECORD_WIDTH=
+    192
+
+INDEX_CAPACITY_PER_PHASE=
+    512
+
+PROBE_TARGET_OPPORTUNITIES_PER_PHASE=
+    10000
+
+ARM_A_REPETITIONS=
+    3
+
+TOTAL_TARGET_PHASE_OPPORTUNITIES=
+    90000
+
+FAILED_RECORD_PAYLOAD_RAMB18=
+WADDR_INDEX_PAYLOAD_RAMB18=
+REGADDR_INDEX_PAYLOAD_RAMB18=
+DATA_INDEX_PAYLOAD_RAMB18=
+R1H_NEW_PAYLOAD_RAMB18_TOTAL=
+
+FAILED_RECORD_PAYLOAD_FDRE=
+INDEX_PAYLOAD_FDRE_TOTAL=
+FAILED_RECORD_PAYLOAD_RAM64M=
+FAILED_RECORD_PAYLOAD_RAMD64E=
+
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+
+COMBINATIONAL_INDEX_512_TO_1_MUX=
+    ABSENT
+
+FULL_CLEAN_BUILDS=
+    1
+
+POST_SYNTH_SLICE_LUTS=
+POST_SYNTH_LOGIC_LUTS=
+POST_SYNTH_SLICE_REGISTERS=
+POST_SYNTH_RAMB18=
+POST_SYNTH_RAMB36=
+
+POST_SYNTH_RESOURCE_MARGIN_GATE=
+OPT_DESIGN=
+PLACE=
+ROUTE=
+ROUTE_ERRORS=
+WNS=
+WHS=
+DRC_ERRORS=
+DRC_CRITICAL_WARNINGS=
+REQP_1839_SEMANTIC_COUNT=
+CDC_CRITICAL=
+CDC_UNKNOWN=
+SOURCE_COMMIT_TO_BIT_PROVENANCE=
+
+PAIR_COUNT_PLANNED=
+    3
+
+PAIR_COUNT_VALID=
+
+BOOTSTRAP_RUN=
+BOOTSTRAP_RESULT=
+
+A1_AUTOINIT_WADDR_OPPORTUNITIES=
+A1_AUTOINIT_WADDR_NACKS=
+A1_AUTOINIT_REGADDR_OPPORTUNITIES=
+A1_AUTOINIT_REGADDR_NACKS=
+A1_AUTOINIT_DATA_OPPORTUNITIES=
+A1_AUTOINIT_DATA_NACKS=
+A1_AUTOINIT_RADDR_OPPORTUNITIES=
+A1_AUTOINIT_RADDR_NACKS=
+A1_FAILED_TXN_TOTAL=
+A1_FAILED_TXN_STORED=
+A1_FAILED_TXN_OVERFLOW=
+A1_BANK_INVARIANT_ERRORS=
+A1_PROBE_WADDR_NACKS=
+A1_PROBE_REGADDR_NACKS=
+A1_PROBE_DATA_NACKS=
+A1_PROBE_TIMEOUTS=
+A1_NVP_RESULT=
+
+B1_NACK_COUNT=
+B1_NVP_RESULT=
+
+A2_AUTOINIT_WADDR_OPPORTUNITIES=
+A2_AUTOINIT_WADDR_NACKS=
+A2_AUTOINIT_REGADDR_OPPORTUNITIES=
+A2_AUTOINIT_REGADDR_NACKS=
+A2_AUTOINIT_DATA_OPPORTUNITIES=
+A2_AUTOINIT_DATA_NACKS=
+A2_AUTOINIT_RADDR_OPPORTUNITIES=
+A2_AUTOINIT_RADDR_NACKS=
+A2_FAILED_TXN_TOTAL=
+A2_FAILED_TXN_STORED=
+A2_FAILED_TXN_OVERFLOW=
+A2_BANK_INVARIANT_ERRORS=
+A2_PROBE_WADDR_NACKS=
+A2_PROBE_REGADDR_NACKS=
+A2_PROBE_DATA_NACKS=
+A2_PROBE_TIMEOUTS=
+A2_NVP_RESULT=
+
+B2_NACK_COUNT=
+B2_NVP_RESULT=
+
+A3_AUTOINIT_WADDR_OPPORTUNITIES=
+A3_AUTOINIT_WADDR_NACKS=
+A3_AUTOINIT_REGADDR_OPPORTUNITIES=
+A3_AUTOINIT_REGADDR_NACKS=
+A3_AUTOINIT_DATA_OPPORTUNITIES=
+A3_AUTOINIT_DATA_NACKS=
+A3_AUTOINIT_RADDR_OPPORTUNITIES=
+A3_AUTOINIT_RADDR_NACKS=
+A3_FAILED_TXN_TOTAL=
+A3_FAILED_TXN_STORED=
+A3_FAILED_TXN_OVERFLOW=
+A3_BANK_INVARIANT_ERRORS=
+A3_PROBE_WADDR_NACKS=
+A3_PROBE_REGADDR_NACKS=
+A3_PROBE_DATA_NACKS=
+A3_PROBE_TIMEOUTS=
+A3_NVP_RESULT=
+
+B3_NACK_COUNT=
+B3_NVP_RESULT=
+
+POSTINIT_WADDR_PROCESS=
+POSTINIT_REGADDR_PROCESS=
+POSTINIT_DATA_PROCESS=
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY=
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA=
+
+R1H_REPLICATE_HOMOGENEITY=
+BANK_TRACKER_COHERENCE=
+R7_OPERATION_86_SEMANTICS=
+FAILED_TRANSACTION_DISTRIBUTION=
+PAIRED_AB_RESULT=
+
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+BOARD_VCCO_DROOP_PROVEN=
+    NO
+
+GROUND_BOUNCE_PROVEN=
+    NO
+
+ANALOG_MARGIN_DIRECTLY_MEASURED=
+    NO
+
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+FINAL_DIAGNOSTIC_MAGIC=
+FINAL_PINNED_DRIVER_LOADED=
+FINAL_DONE=
+
+CONDITIONAL_FORMAL_BOOTSTRAP_PROGRAMS=
+ARM_A_PROGRAMS=
+ARM_B_PROGRAMS=
+FPGA_PROGRAM_INVOCATIONS=
+WARM_REBOOTS=
+DRIVER_LOADS=
+
+PROGRAM_RETRIES=
+    0
+
+COLD_STARTS=
+    0
+
+PHYSICAL_ACTIONS=
+    0
+
+JTAG_FREQUENCY_CHANGES=
+    0
+
+PCI_REMOVE_RESCAN_RESETS=
+    0
+
+AXI_LITE_WRITES=
+    0
+
+C2H_TRANSFERS=
+    0
+
+H2C_TRANSFERS=
+    0
+
+PHASE3_RESUMED=
+    NO
+
+XDMA_DEVELOPMENT_CONTINUED=
+    NO
+
+FORMAL_REPOSITORY_MUTATIONS=
+    0
+
+OWNER_INTERACTIVE_APPROVAL_REQUESTS=
+    0
+
+OWNER_PROMPT_SHA256=
+EVIDENCE_PACKAGE_SHA256=
+EVIDENCE_REPOSITORY_COMMIT=
+PUBLIC_REMOTE_VERIFICATION=
+NEXT_ACTION=
+    OWNER_AND_AUDITOR_REVIEW_OF_R1H_LARGE_SAMPLE_RESULTS
+```
+
+===================================================================== 22. HARD STOPS
+
+Stop before source edit if:
+
+```text
+exact R1g source/evidence is unavailable;
+resource-audit identities fail;
+scientific contract cannot be frozen exactly.
+```
+
+Stop before source commit if:
+
+```text
+any scientific capacity/count/address/field changes;
+functional NVP behavior differs;
+MMIO response values/order differ;
+record/index loss is possible;
+BRAM architecture tests fail.
+```
+
+Stop after synthesis if:
+
+```text
+required BRAM mapping is absent;
+index payload remains in large FDRE banks;
+failed payload remains RAM64M/RAMD64E;
+Slice LUT >18720;
+Slice Registers >37440.
+```
+
+Stop before hardware if:
+
+```text
+place/route/timing/DRC/CDC/provenance fails;
+exact R1h bit is unavailable;
+host-tool fixtures fail;
+formal start state cannot be proven;
+selected JTAG/kernel/driver/BAR safety fails.
+```
+
+Stop during hardware if:
+
+```text
+programming fails;
+host does not return;
+kernel differs;
+driver cannot load once;
+runtime provenance mismatches;
+phase counters are incoherent;
+failed log overflows;
+bank invariant error count is nonzero;
+probe aborts;
+any target opportunity count differs from 10000;
+safe target restoration fails;
+MMIO data is incoherent;
+final DONE fails.
+```
+
+No:
+
+```text
+scope reduction;
+second source commit;
+second build;
+source patch after build start;
+probe-target/count change;
+extra pair;
+program retry;
+physical recovery;
+Phase-3 work.
+```
+
+===================================================================== 23. BEGIN
+
+```text
+save and hash this prompt
+    ->
+verify exact R1g and resource-audit evidence
+    ->
+recover exact R1g source
+    ->
+replace failed-record payload with six BRAM banks
+    ->
+replace three index payloads with one BRAM each
+    ->
+implement synchronous one-outstanding MMIO read service
+    ->
+preserve every address/field/count/statistical contract
+    ->
+run complete functional/event/MMIO equivalence
+    ->
+run BRAM and backpressure simulation matrix
+    ->
+create one R1h source commit
+    ->
+perform one clean build
+    ->
+at post-synthesis:
+        require exact BRAM mapping
+        require >=10% LUT/FF headroom
+    ->
+continue place/route/bitstream only on PASS
+    ->
+run routed-impact audit
+    ->
+push R1h diagnostic branch
+    ->
+prove fresh exact formal hardware start state
+    ->
+optional exact formal bootstrap only if required
+    ->
+run:
+        A1 -> B1 -> A2 -> B2 -> A3 -> B3
+    ->
+analyze:
+        90,000 target-phase opportunities
+        three complete autoinit phase datasets
+        three capacity-64 failed-transaction logs
+        three formal controls
+    ->
+leave exact formal Phase 2 active
+    ->
+create one authoritative Markdown report
+    ->
+seal and publish evidence
+    ->
+HARD STOP.
+```
+
+No interactive owner questions.
+No scientific-scope reduction.
+No second build.
+No host MMIO writes.
+No DMA.
+No Phase 3.
+No XDMA work.
