@@ -1,0 +1,55 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 11:40:12 2026
+# Process ID         : 11064
+# Current directory  : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard
+# Command line       : xsim.exe -log xsim.log -mode tcl -source {xsim.dir/r1f_observability_scoreboard/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7448 MB
+#-----------------------------------------------------------
+source xsim.dir/r1f_observability_scoreboard/xsim_script.tcl
+# xsim {r1f_observability_scoreboard} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS all transactions ACK
+Time: 341486500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at first operation
+Time: 682332500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode2 record=000000641E010000000000001B001E5C3377616500640086
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at middle table step and frozen metadata
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at final operation
+Time: 1365322500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f invariant error mode=4 count=8 first=83000120
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank invariant monitor flags pathological stuck-SDA context
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SDA stuck low
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: SCL timeout observed code=7 count=36 error='1'
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SCL stuck low and bounded controller timeout
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode6 record=000000D51E540000000000002B0000FF337741D600D500BD
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Failure: R1f selector-failure bank semantics mismatch
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+$finish called at time : 2260315500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd" Line 431
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:00:07 . Memory (MB): peak = 205.895 ; gain = 0.000
+exit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 11:40:23 2026...

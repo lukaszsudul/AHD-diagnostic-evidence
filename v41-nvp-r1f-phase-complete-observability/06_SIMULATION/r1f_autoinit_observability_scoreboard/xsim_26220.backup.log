@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 11:50:43 2026
+# Process ID         : 26220
+# Current directory  : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard
+# Command line       : xsim.exe -log xsim.log -mode tcl -source {xsim.dir/r1f_observability_scoreboard/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/r1f_autoinit_observability_scoreboard\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7100 MB
+#-----------------------------------------------------------
+source xsim.dir/r1f_observability_scoreboard/xsim_script.tcl
+# xsim {r1f_observability_scoreboard} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Failure: clean transaction sequence did not cross serial index 300
+Time: 341486500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+$finish called at time : 341486500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd" Line 437
+exit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 11:50:53 2026...

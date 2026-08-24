@@ -1,0 +1,17 @@
+candidate_bank,candidate_register,candidate_data_or_value,evidence,failed_criterion,disposition
+0x00,0xFF,any,"Exact R1e nvp6134c_diagnostics_pkg.vhd:51; accepted Z0 audit lines 52-73",Bank selector,REJECT
+0x00,0x00,0x00,"Datasheet p.37: PD_VCH1; exact table contains repeated 0x000000",Power control,REJECT
+0x00,0x80,0x0F,"Datasheet p.41: VIDEO_ENABLE & Delay / EACH_REG_SET; exact source lines 233 and 394 repeat it",Enable semantics are broader than the allowed inert configuration target and cannot exclude video-enable side effects,REJECT
+0x00,0x10,0x88,"Datasheet p.37: CONTRAST_1; exact source line 268",No exact in-sequence repeated-same-value source proof,REJECT_CONSERVATIVE
+0x00,0x44,0x00,"Datasheet p.39: U_GAIN_1; exact source line 273",No exact in-sequence repeated-same-value source proof,REJECT_CONSERVATIVE
+0x00,0x30,0x10,"Datasheet p.38: Y_DELAY_1 with reserved bits; exact source lines 241 and 331",Contains reserved bits,REJECT
+0x00,0x78,0x88,"Datasheet p.40: BGDCOL_1/BGDCOL_2; exact source line 412",No exact in-sequence repeated-same-value source proof,REJECT_CONSERVATIVE
+0x00,0xB8,0x00,"Datasheet p.42: RD_STATE_CLR/STATE_HOLD; exact source lines 252 and 301 use other values",Clear/state-hold semantics,REJECT
+0x01,0xCA,0x66,"Datasheet p.16: VCLK/VDO output enable; accepted Z0 audit line 145",Video-output enable,REJECT
+0x01,0xCD,profile-dependent,"Datasheet p.17: VCLK selector and delay",Clock/output timing control,REJECT
+0x03,0x3A,0x01_then_0x00,"Exact source lines 236-238 and 367-369: clean pulse assert/wait/release",Pulse/self-clearing-style control,REJECT
+0x05,0x59,0x11_or_0x00,"Exact source lines 251/264/370/373; accepted Z0 audit lines 133-145",Bank-5 semantics absent from public register chapter,REJECT_UNDOCUMENTED
+0x05,0x7C,0x11,"Exact source lines 350 and 352",Bank-5 semantics absent from public register chapter,REJECT_UNDOCUMENTED
+0x09,0x44,0x00,"Exact source lines 310 and 443 describe deterministic RMW/low-bit clear",Clear/RMW semantics; not a neutral target,REJECT
+0x00,0x85,0x00,"Datasheet p.12 Table 2.1; exact source lines 329 and 408",NONE,ACCEPT
+

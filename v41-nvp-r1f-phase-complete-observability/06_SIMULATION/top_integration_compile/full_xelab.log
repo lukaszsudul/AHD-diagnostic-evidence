@@ -1,0 +1,23 @@
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe ahd_capture_top_xdma -s r1f_top_integration --debug typical --log full_xelab.log 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+ERROR: [VRFC 10-2063] Module <IBUF> not found while processing module instance <PCIE_PERST_IBUF> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/top/ahd_capture_top_xdma.sv:41]
+ERROR: [VRFC 10-2063] Module <IBUFDS_GTE2> not found while processing module instance <PCIE_REFCLK_IBUF> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/top/ahd_capture_top_xdma.sv:42]
+ERROR: [VRFC 10-2063] Module <IOBUF> not found while processing module instance <NVP_SCL_IOBUF> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/top/ahd_capture_top_xdma.sv:88]
+WARNING: [VRFC 10-2832] instantiating unknown module IOBUF [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/top/ahd_capture_top_xdma.sv:91]
+WARNING: [VRFC 10-2832] instantiating unknown module IBUF [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:40]
+ERROR: [VRFC 10-2063] Module <BUFIO> not found while processing module instance <u_vclk1_bufio> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:43]
+ERROR: [VRFC 10-2063] Module <BUFG> not found while processing module instance <u_vclk1_bufg> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:44]
+ERROR: [VRFC 10-2063] Module <MMCME2_BASE> not found while processing module instance <u_idelay_refclk_mmcm> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:50]
+WARNING: [VRFC 10-2832] instantiating unknown module BUFG [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:77]
+WARNING: [VRFC 10-2832] instantiating unknown module BUFG [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:80]
+ERROR: [VRFC 10-2063] Module <IDELAYCTRL> not found while processing module instance <u_vdo_idelayctrl> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/physical_frontend.sv:93]
+ERROR: [VRFC 10-2063] Module <xpm_cdc_async_rst> not found while processing module instance <NVP_RESET_TO_NVP_SYNC> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/video_capture.sv:67]
+WARNING: [VRFC 10-2832] instantiating unknown module xpm_cdc_async_rst [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/video_capture.sv:75]
+WARNING: [VRFC 10-2832] instantiating unknown module xpm_cdc_async_rst [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/video/video_capture.sv:83]
+ERROR: [VRFC 10-2063] Module <xdma_v41_m1> not found while processing module instance <XDMA> [C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/rtl/top/ahd_capture_top_xdma.sv:968]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

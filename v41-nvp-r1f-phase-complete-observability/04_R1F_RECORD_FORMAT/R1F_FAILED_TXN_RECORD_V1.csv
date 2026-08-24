@@ -1,0 +1,37 @@
+word,word_byte_offset,bits,width,field,validity_or_encoding
+0,0x00,15:0,16,transaction_index_16,authoritative independent serial
+0,0x00,31:16,16,table_slot_index_16,0xFFFF when not applicable
+1,0x04,7:0,8,legacy_operation_index_8,compatibility only
+1,0x04,11:8,4,autoinit_phase,exact t_phase position 0..8
+1,0x04,15:12,4,transaction_kind,enumeration 1..13
+1,0x04,19:16,4,phase_opportunity_bitmap,bit0 WADDR bit1 REGADDR bit2 DATA bit3 RADDR
+1,0x04,23:20,4,phase_nack_bitmap,subset of opportunity bitmap
+1,0x04,26:24,3,nack_count_within_transaction,popcount phase_nack_bitmap
+1,0x04,27,1,timeout_flag,boolean
+1,0x04,28,1,transaction_completed,normal STORE_RESULT finalization
+1,0x04,29,1,record_valid,atomic finalization marker
+1,0x04,31:30,2,reserved,must be zero
+2,0x08,7:0,8,register_address,gated by register_address_valid
+2,0x08,15:8,8,write_data,gated by write_data_valid
+2,0x08,23:16,8,read_data,gated by read_data_valid
+2,0x08,24,1,register_address_valid,boolean
+2,0x08,25,1,write_data_valid,boolean
+2,0x08,26,1,read_data_valid,boolean
+2,0x08,27,1,requested_bank_valid,boolean
+2,0x08,28,1,physical_bank_before_valid,boolean
+2,0x08,29,1,selector_value_valid,boolean
+2,0x08,30,1,bank_verify_expected_valid,boolean
+2,0x08,31,1,bank_verify_observed_valid,boolean
+3,0x0C,7:0,8,requested_bank,gated by requested_bank_valid
+3,0x0C,15:8,8,physical_bank_before,gated by physical_bank_before_valid
+3,0x0C,23:16,8,selector_value_sent,gated by selector_value_valid
+3,0x0C,31:24,8,bank_verify_expected,gated by bank_verify_expected_valid
+4,0x10,7:0,8,bank_verify_observed,gated by bank_verify_observed_valid
+4,0x10,15:8,8,physical_bank_after,gated by physical_bank_after_valid
+4,0x10,16,1,physical_bank_after_valid,boolean
+4,0x10,19:17,3,bank_verify_result,enumerated 0..6
+4,0x10,23:20,4,bank_update_reason,enumerated 0..9
+4,0x10,31:24,8,fsm_state,exact inherited t_state position
+5,0x14,7:0,8,fsm_context,kind-specific context index
+5,0x14,15:8,8,terminal_error_code,zero when no separate terminal error
+5,0x14,31:16,16,reserved,must be zero

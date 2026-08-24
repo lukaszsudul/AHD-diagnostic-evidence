@@ -1,0 +1,34 @@
+start,end,name,access,size_or_count,notes
+0x2000,0x2094,R1e lifecycle and probe page,RO,existing,offset/decoder compatibility projection; WADDR counters plus full tri-phase lifecycle status; see normative map
+0x2098,0x209F,reserved,RAZ,8 bytes,preserved zero gap
+0x20A0,0x20A0,R1F_MAGIC,RO,1 dword,0x31463152
+0x20A4,0x20A4,R1F_VERSION,RO,1 dword,1
+0x20A8,0x20A8,R1F_CAPABILITIES,RO,1 dword,0x000007FF
+0x20AC,0x20AC,R1F_RECORD_VERSION,RO,1 dword,1
+0x20B0,0x20B0,R1F_RECORD_WIDTH_BITS,RO,1 dword,192
+0x20B4,0x20B4,R1F_RECORD_WORDS,RO,1 dword,6
+0x20B8,0x20B8,R1F_LOG_CAPACITY,RO,1 dword,64
+0x20BC,0x20BC,R1F_PROBE_PHASE_MASK,RO,1 dword,7
+0x20C0,0x20C0,R1F_SAFE_TARGET_BANK_REG_DATA,RO,1 dword,packed with proven bit31
+0x20C4,0x20C4,AUTOINIT_I2C_HZ,RO,1 dword,25000
+0x20C8,0x20C8,PROBE_I2C_HZ,RO,1 dword,25000
+0x20CC,0x20CC,PROBE_TARGET_OPPORTUNITIES_PER_PHASE,RO,1 dword,10000
+0x20D0,0x20D0,PROBE_BLOCKS_PER_PHASE,RO,1 dword,10
+0x20D4,0x20D4,PROBE_TARGET_OPPORTUNITIES_PER_BLOCK,RO,1 dword,1000
+0x20D8,0x20D8,PROBE_MAX_TRANSACTION_ATTEMPTS_PER_PHASE,RO,1 dword,12000
+0x20DC,0x20DC,PROBE_NACK_INDEX_LOG_CAPACITY_PER_PHASE,RO,1 dword,512
+0x20E0,0x210C,autoinit phase and transaction counters,RO,12 dwords,32-bit saturating
+0x2110,0x211C,phase counter reconciliation and legacy-reconciliation capability,RO,4 dwords,bit1 static support; host computes measured first8 result
+0x2120,0x2138,failed-log counters and transaction serial status,RO,7 dwords,append-only
+0x213C,0x2148,bank invariant and final-state summary,RO,4 dwords,passive observer
+0x214C,0x2174,probe setup restore and timestamp summary,RO,11 dwords,versioned
+0x2178,0x21FF,reserved,RAZ,34 dwords,zero
+0x2200,0x227F,WADDR probe phase block,RO,32 dwords,fixed generic layout
+0x2280,0x22FF,REGADDR probe phase block,RO,32 dwords,fixed generic layout
+0x2300,0x237F,DATA probe phase block,RO,32 dwords,fixed generic layout
+0x2380,0x23FF,probe scheduler setup restoration detail,RO,32 dwords,unlisted words zero
+0x2400,0x29FF,failed transaction records,RO,64 records,24 bytes each
+0x2A00,0x2DFF,WADDR target NACK indices,RO,512 indices,packed two x 16-bit per dword
+0x2E00,0x31FF,REGADDR target NACK indices,RO,512 indices,packed two x 16-bit per dword
+0x3200,0x35FF,DATA target NACK indices,RO,512 indices,packed two x 16-bit per dword
+0x10098,0x100D8,legacy NACK header and first-eight records,RO,17 dwords,preserved unchanged

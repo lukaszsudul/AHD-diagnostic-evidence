@@ -1,0 +1,66 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 11:41:47 2026
+# Process ID         : 2632
+# Current directory  : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/prebuild_auditor_current_scoreboard
+# Command line       : xsim.exe -log C:\FPGA\V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY\06_SIMULATION\prebuild_auditor_current_scoreboard\xsim_v2.log -mode tcl -source {xsim.dir/r1f_prebuild_auditor_scoreboard_v2/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/prebuild_auditor_current_scoreboard/xsim_v2.log
+# Journal file       : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/prebuild_auditor_current_scoreboard\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7461 MB
+#-----------------------------------------------------------
+source xsim.dir/r1f_prebuild_auditor_scoreboard_v2/xsim_script.tcl
+# xsim {r1f_prebuild_auditor_scoreboard_v2} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS all transactions ACK
+Time: 341486500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at first operation
+Time: 682332500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode2 record=000000641E010000000000001B001E5C3377616500640086
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at middle table step and frozen metadata
+Time: 1023827500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS NACK at final operation
+Time: 1365322500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f invariant error mode=4 count=8 first=83000120
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank invariant monitor flags pathological stuck-SDA context
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SDA stuck low
+Time: 1795169500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: SCL timeout observed code=7 count=36 error='1'
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS SCL stuck low and bounded controller timeout
+Time: 1958420500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode6 record=000000D51E540000000000002B0000FF337741D600D500BD
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank-select write failure blocks wrong-bank target
+Time: 2260315500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: R1f mode7 record=000008D51E7A00FF00000000CDFF00FF300B51D600D50177
+Time: 2732028500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS bank-select readback mismatch blocks wrong-bank target
+Time: 2732028500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS two-cycle raw SDA glitch rejected by Z9 filter
+Time: 3073523500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS reset during init, table boundary, and done/error latch
+Time: 3417042500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+Note: PASS_STAGE6_G0P8C5D_AUTOINIT_SIMULATION
+Time: 3417042500 ns  Iteration: 0  Process: /tb_g0p8c5d_autoinit/stimulus  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd
+$stop called at time : 3417042500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/nvp/tb_nvp_autoinit.vhd" Line 466
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 206.113 ; gain = 0.066
+exit
+INFO: xsimkernel Simulation Memory Usage: 12884 KB (Peak: 12884 KB), Simulation CPU Usage: 12249 ms
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 11:42:04 2026...

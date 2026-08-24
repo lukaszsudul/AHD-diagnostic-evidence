@@ -1,0 +1,38 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 12:29:06 2026
+# Process ID         : 21356
+# Current directory  : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/pre_init_equivalence/production_final
+# Command line       : xsim.exe -log xsim.log -mode tcl -source {xsim.dir/r1f_preinit_equivalence_production_final/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/pre_init_equivalence/production_final/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/pre_init_equivalence/production_final\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7331 MB
+#-----------------------------------------------------------
+source xsim.dir/r1f_preinit_equivalence_production_final/xsim_script.tcl
+# xsim {r1f_preinit_equivalence_production_final} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Note: PASS PRE_INIT_DONE_CYCLE_EQUIVALENCE
+Time: 2121355816 ns  Iteration: 0  Process: /tb_r1f_preinit_equivalence/cycle_equivalence  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/v41/tb_r1f_preinit_equivalence.vhd
+Note: PASS AUTOINIT_TRANSACTION_STREAM_BYTE_IDENTICAL
+Time: 2121355816 ns  Iteration: 0  Process: /tb_r1f_preinit_equivalence/cycle_equivalence  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/v41/tb_r1f_preinit_equivalence.vhd
+Note: PASS AUTOINIT_FUNCTIONAL_STATE_SEQUENCE_IDENTICAL
+Time: 2121355816 ns  Iteration: 0  Process: /tb_r1f_preinit_equivalence/cycle_equivalence  File: C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/v41/tb_r1f_preinit_equivalence.vhd
+$stop called at time : 2121355816 ns
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:13:20 . Memory (MB): peak = 198.844 ; gain = 0.500
+exit
+INFO: xsimkernel Simulation Memory Usage: 12428 KB (Peak: 12428 KB), Simulation CPU Usage: 721812 ms
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 12:42:30 2026...

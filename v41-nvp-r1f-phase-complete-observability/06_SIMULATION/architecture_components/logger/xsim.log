@@ -1,0 +1,33 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 10:52:20 2026
+# Process ID         : 24252
+# Current directory  : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/architecture_components/logger
+# Command line       : xsim.exe -log C:\FPGA\V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY\06_SIMULATION\architecture_components\logger\xsim.log -mode tcl -source {xsim.dir/r1f_logger_test/xsim_script.tcl}
+# Log file           : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/architecture_components/logger/xsim.log
+# Journal file       : C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/06_SIMULATION/architecture_components/logger\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4338 MB
+# Total Virtual      : 21366 MB
+# Available Virtual  : 7570 MB
+#-----------------------------------------------------------
+source xsim.dir/r1f_logger_test/xsim_script.tcl
+# xsim {r1f_logger_test} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1F_FAILED_TRANSACTION_LOG_MATCH_SCOREBOARD=PASS
+R1F_LOG_64_EXACT_OVERFLOW_65=PASS
+R1F_LOG_UNUSED_ZERO_IMMUTABLE=PASS
+$finish called at time : 1500 ns : File "C:/FPGA/WORKTREES/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/tests/v41/tb_r1f_failed_txn_logger.sv" Line 141
+exit
+INFO: [Common 17-206] Exiting xsim at Mon Aug 24 10:52:34 2026...

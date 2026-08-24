@@ -1,0 +1,107 @@
+{
+  "schema": "v41-r1f-statistical-plan-v1",
+  "status": "FROZEN_BEFORE_R1F_HARDWARE",
+  "frozen_utc": "2026-08-24T08:41:38Z",
+  "r1f_hardware_results_seen": false,
+  "sequence": ["A1", "B1", "A2", "B2", "A3", "B3"],
+  "confidence_level": 0.95,
+  "strict_p_comparison": true,
+  "mid_p": false,
+  "pseudocount": false,
+  "probe": {
+    "phases": ["WADDR", "REGADDR", "DATA"],
+    "n_per_phase_per_run": 10000,
+    "blocks": 10,
+    "block_size": 1000,
+    "analysis_index_origin": 1,
+    "tests_per_run_phase": [
+      "exact_conditional_10x2_block_homogeneity",
+      "exact_conditional_wald_wolfowitz_runs",
+      "exact_conditional_adjacent_pair"
+    ],
+    "stationarity_family_planned_tests": 27,
+    "stationarity_family_alpha": 0.05,
+    "stationarity_family_adjustment": "HOLM_GLOBAL_ACROSS_27",
+    "informative_min_events": 5,
+    "informative_min_non_events": 5,
+    "index_log_overflow_without_rejection": "INSUFFICIENT_EVENTS",
+    "classifications": [
+      "COMPATIBLE_WITH_STATIONARY_MEMORYLESS_PROCESS",
+      "EVIDENCE_AGAINST_STATIONARITY_OR_INDEPENDENCE",
+      "INSUFFICIENT_EVENTS"
+    ]
+  },
+  "autoinit_phase_heterogeneity": {
+    "phases": ["WADDR", "REGADDR", "DATA", "RADDR"],
+    "test": "EXACT_FISHER_FREEMAN_HALTON_4X2_PROBABILITY_ORDERING",
+    "run_p_family": 3,
+    "adjustment": "HOLM",
+    "alpha": 0.05,
+    "repeatable_min_runs": 2,
+    "classifications": [
+      "SUPPORTED_REPEATABLE",
+      "MIXED_OR_RUN_SPECIFIC",
+      "NOT_DETECTED_NOT_EQUALITY_PROOF",
+      "INSUFFICIENT_VALID_DENOMINATORS"
+    ]
+  },
+  "autoinit_vs_probe": {
+    "phases": ["WADDR", "REGADDR", "DATA"],
+    "direction": "AUTOINIT_GREATER_THAN_POSTINIT_PROBE",
+    "test": "ONE_SIDED_FISHER_EXACT_GREATER",
+    "difference_ci": "MIETTINEN_NURMINEN_SCORE_95",
+    "rate_ratio_ci": "PROFILE_BINOMIAL_LIKELIHOOD_95",
+    "family_per_run": 3,
+    "adjustment": "HOLM_FIXED_M3",
+    "adjusted_alpha": 0.01,
+    "rate_ratio_lower_bound_strict": 2.0,
+    "repeatable_min_runs": 2,
+    "classifications": ["SUPPORTED", "NOT_SUPPORTED", "MIXED", "INSUFFICIENT_EVENTS"]
+  },
+  "replicate_homogeneity": {
+    "autoinit_rate_tests": 4,
+    "autoinit_adjustment": "HOLM_ALPHA_0.05",
+    "probe_rate_tests": 3,
+    "probe_adjustment": "HOLM_ALPHA_0.05",
+    "failed_transaction_rate_test": "EXACT_3X2",
+    "failed_composition_categories": [
+      "HIGH_LEVEL_PHASE",
+      "TRANSACTION_KIND",
+      "PHASE_NACK_BITMAP",
+      "TABLE_SLOT",
+      "REQUESTED_BANK",
+      "VALID_PHYSICAL_BANK_BEFORE"
+    ],
+    "failed_composition_adjustment": "HOLM_ALPHA_0.05",
+    "classifications": [
+      "EVIDENCE_AGAINST_HOMOGENEITY",
+      "NO_HETEROGENEITY_DETECTED_NOT_EQUIVALENCE",
+      "INSUFFICIENT_VALID_DATA"
+    ]
+  },
+  "paired_direction": {
+    "metric": "SIGNED_AGGREGATE_AUTOINIT_NACK_COUNT_A_MINUS_B",
+    "primary_use": "DESCRIPTIVE_REPEATABILITY",
+    "sign_test_reported": true,
+    "labels": [
+      "DIRECTION_REPEATABLE_3_OF_3",
+      "DIRECTION_MAJORITY_2_OF_3",
+      "NO_REPEATABLE_DIRECTION",
+      "INSUFFICIENT_VALID_PAIRS"
+    ]
+  },
+  "zero_rules": {
+    "zero_denominator": "UNESTIMABLE_AND_P_EQUALS_1_FOR_HOLM_BOOKKEEPING_ONLY",
+    "both_event_counts_zero": "RR_NOT_IDENTIFIABLE_0_OVER_0",
+    "probe_zero_auto_positive": "RR_POSITIVE_INFINITY_PROFILE_LOWER_BOUND_DECIDES",
+    "auto_zero_probe_positive": "RR_ZERO_NO_ELEVATION_SUPPORT",
+    "counter_saturation": "INSTRUMENTATION_INVALID",
+    "failed_log_overflow": "INSTRUMENTATION_INVALID"
+  },
+  "always_no": {
+    "root_cause_solely_proven": "NO",
+    "board_vcco_droop_proven": "NO",
+    "ground_bounce_proven": "NO",
+    "analog_margin_directly_measured": "NO"
+  }
+}
