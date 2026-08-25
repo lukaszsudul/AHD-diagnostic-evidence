@@ -1,0 +1,15 @@
+contract,baseline,r1h_r2,delta,result,evidence
+FULL_HARNESS_OUTSIDE_SEMANTIC_GATE,exact R1h,byte-identical,0,PASS,whole-file region substitution comparison
+SYNTHESIS_IMPLEMENTATION_COMMAND_DELTA,exact R1h,exact R1h,0,PASS,ordered invocation comparison
+SOURCE_LIST_DELTA,17 SV + 4 VHDL,17 SV + 4 VHDL,0,PASS,exact source block comparison
+CONSTRAINT_DELTA,7 XDC,7 XDC,0,PASS,exact source block comparison
+XCI_DELTA,ip/v41/xdma_v41_m1.xci,ip/v41/xdma_v41_m1.xci,0,PASS,exact source block comparison
+PART_TOP_DELTA,xc7a35tcsg325-2 / ahd_capture_top_xdma,same,0,PASS,full harness outside gate byte-identical
+RESOURCE_GATE_DELTA,exact R1h,byte-identical,0,PASS,exact resource block comparison
+SCIENTIFIC_PARAMETER_DELTA,exact R1h,byte-identical,0,PASS,full harness outside gate byte-identical
+RELATIVE_SYSTEMVERILOG_POSITION_GATE,present,removed,removed,PASS,old SV-relative tokens absent
+VHDL_DEPENDENCY_ORDER_GATE,present,preserved,0,PASS,exact VHDL gate comparison
+REPORT_COMPILE_ORDER_EVIDENCE,absent,present,+1 evidence command,PASS,one invocation; never an SV relative-order gate
+PROJECT_SETUP_DRY_RUN_FORBIDDEN_BUILD_COMMANDS,not applicable,0,0,PASS,anchored command scan
+PROJECT_SETUP_DRY_RUN_CLOSE_BEFORE_PASS,not applicable,close_project precedes PASS receipt,0,PASS,ordinal source-position audit
+SEMANTIC_PREFLIGHT_FORBIDDEN_BUILD_COMMANDS,not applicable,0,0,PASS,anchored command scan

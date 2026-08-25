@@ -1,0 +1,257 @@
+diff --git "R1h/C:\\FPGA\\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE\\07_BUILD\\r1h_build.tcl" "R1h-R2/C:\\FPGA\\V41_NVP_R1H_R2_BUILD_HARNESS_CONTINUATION\\03_CORRECTED_BUILD_HARNESS\\r1h_r2_build.tcl"
+index fd4ccdf..063653a 100644
+--- "R1h/C:\\FPGA\\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE\\07_BUILD\\r1h_build.tcl"
++++ "R1h-R2/C:\\FPGA\\V41_NVP_R1H_R2_BUILD_HARNESS_CONTINUATION\\03_CORRECTED_BUILD_HARNESS\\r1h_r2_build.tcl"
+@@ -975,6 +975,11 @@ set flow_rc [catch {
+       "[format %03d $compile_index]|[get_property FILE_TYPE $object]|$name"
+     incr compile_index
+   }
++  report_compile_order -fileset sources_1 -used_in synthesis \
++    -file [file join $evidence_root R1H_R2_REPORT_COMPILE_ORDER.txt]
++  write_lines [file join $evidence_root R1H_QUERIED_SYNTHESIS_COMPILE_ORDER.txt] \
++    $actual_compile_lines
++
+   foreach required [concat $vhdl_files $sv_files] {
+     if {[compile_order_index $actual_compile_names $required] < 0} {
+       error "required synthesis source absent from queried compile order: $required"
+@@ -988,29 +993,219 @@ set flow_rc [catch {
+     }
+     set prior_index $this_index
+   }
+-  set top_compile_index [compile_order_index $actual_compile_names \
+-    [file join $repo_root rtl top ahd_capture_top_xdma.sv]]
+-  foreach required [list \
+-    [file join $repo_root rtl v41 r1h_probe_index_bram_store.sv] \
+-    [file join $repo_root rtl v41 nvp_i2c_tri_phase_probe.sv] \
+-    [file join $repo_root rtl v41 r1f_failed_txn_logger.sv] \
+-    [file join $repo_root rtl v41 r1f_measurement_regs.sv] \
+-    [file join $repo_root rtl v41 r1h_mmio_read_service.sv] \
+-    [file join $repo_root rtl v41 control_status_regs.sv]] {
+-    if {[compile_order_index $actual_compile_names $required] >=
+-        $top_compile_index} {
+-      error "R1h SystemVerilog dependency is not before the queried top compile unit: $required"
++
++  # R1h-R2 semantic SystemVerilog gate.  SystemVerilog module declarations
++  # and ordinary module instantiations are bound semantically; their relative
++  # file positions are recorded above, but are deliberately not a pass/fail
++  # condition.  The real VHDL package/entity analysis order remains gated.
++  set expected_semantic_sources [list \
++    [list PROBE_INDEX_WRAPPER \
++      [file join $repo_root rtl v41 r1h_probe_index_bram_store.sv] \
++      r1h_probe_index_bram_store] \
++    [list PROBE_CONSUMER \
++      [file join $repo_root rtl v41 nvp_i2c_tri_phase_probe.sv] \
++      nvp_i2c_tri_phase_probe] \
++    [list FAILED_RECORD_WRAPPER \
++      [file join $repo_root rtl v41 r1f_failed_txn_logger.sv] \
++      v41_r1f_failed_txn_logger] \
++    [list MEASUREMENT_REGS \
++      [file join $repo_root rtl v41 r1f_measurement_regs.sv] \
++      v41_r1f_measurement_regs] \
++    [list MMIO_READ_SERVICE \
++      [file join $repo_root rtl v41 r1h_mmio_read_service.sv] \
++      v41_r1h_mmio_read_service] \
++    [list CONTROL_STATUS_REGS \
++      [file join $repo_root rtl v41 control_status_regs.sv] \
++      v41_control_status_regs] \
++    [list TOP_CONSUMER \
++      [file join $repo_root rtl top ahd_capture_top_xdma.sv] \
++      ahd_capture_top_xdma]]
++
++  set semantic_gate_lines [list \
++    "R1H_R2_BUILD_HARNESS_CORRECTION_MODE=TASK_LOCAL_ZERO_REPOSITORY_MUTATION" \
++    "RELATIVE_SOURCE_POSITION_ASSERTION=REMOVED_OR_DISABLED" \
++    "RELATIVE_SOURCE_POSITION_USED_AS_GATE=NO" \
++    "COMPILE_ORDER_RECORDED=YES" \
++    "SYSTEMVERILOG_RELATIVE_COMPILE_ORDER_USED_AS_PASS_FAIL_GATE=NO" \
++    "VHDL_DEPENDENCY_ORDER_USED_AS_PASS_FAIL_GATE=YES"]
++
++  foreach semantic_source $expected_semantic_sources {
++    lassign $semantic_source label source_path module_name
++    set source_objects [get_files -quiet -all $source_path]
++    set source_file_count [llength $source_objects]
++    if {$source_file_count != 1} {
++      error "$label source query returned $source_file_count files; expected exactly one: $source_path"
++    }
++    set source_object [lindex $source_objects 0]
++    set source_file_type [get_property FILE_TYPE $source_object]
++    set source_library [get_property LIBRARY $source_object]
++    set source_used_in_synthesis [get_property USED_IN_SYNTHESIS $source_object]
++    if {$source_file_type ne "SystemVerilog"} {
++      error "$label FILE_TYPE mismatch: expected SystemVerilog, got '$source_file_type'"
++    }
++    if {$source_library ne "xil_defaultlib"} {
++      error "$label LIBRARY mismatch: expected xil_defaultlib, got '$source_library'"
++    }
++    if {!$source_used_in_synthesis} {
++      error "$label is not used in synthesis"
++    }
++    set source_text [read_text $source_path]
++    set declaration_pattern [format \
++      {^[ \t]*module[ \t]+%s([^A-Za-z0-9_$]|$)} $module_name]
++    set declaration_count [regexp -all -line -- $declaration_pattern $source_text]
++    if {$declaration_count != 1} {
++      error "$label module declaration count for $module_name is $declaration_count; expected one"
++    }
++    lappend semantic_gate_lines "$label\_SOURCE_FILE_COUNT=$source_file_count"
++    lappend semantic_gate_lines "$label\_MODULE_NAME=$module_name"
++    lappend semantic_gate_lines "$label\_MODULE_DECLARATION_COUNT=$declaration_count"
++    lappend semantic_gate_lines "$label\_FILE_TYPE=$source_file_type"
++    lappend semantic_gate_lines "$label\_LIBRARY=$source_library"
++    lappend semantic_gate_lines "$label\_USED_IN_SYNTHESIS=YES"
++    lappend semantic_gate_lines \
++      "$label\_SOURCE_PATH=[relative_path_from_repo $repo_root $source_path]"
++  }
++
++  array set module_definition_owner [list]
++  set module_definition_count 0
++  set duplicate_definition_count 0
++  set sv_include_count 0
++  set sv_package_declaration_count 0
++  set sv_import_count 0
++  foreach source_path $sv_files {
++    set source_text [read_text $source_path]
++    set definitions [regexp -all -inline -line -- \
++      {^[ \t]*module[ \t]+([A-Za-z_][A-Za-z0-9_$]*)} $source_text]
++    foreach {whole_match module_name} $definitions {
++      incr module_definition_count
++      if {[info exists module_definition_owner($module_name)]} {
++        incr duplicate_definition_count
++        lappend semantic_gate_lines \
++          "DUPLICATE_MODULE=$module_name|FIRST=$module_definition_owner($module_name)|SECOND=[relative_path_from_repo $repo_root $source_path]"
++      } else {
++        set module_definition_owner($module_name) \
++          [relative_path_from_repo $repo_root $source_path]
++      }
++    }
++    incr sv_include_count [regexp -all -line -- \
++      {^[ \t]*`include[ \t]+} $source_text]
++    incr sv_package_declaration_count [regexp -all -line -- \
++      {^[ \t]*package[ \t]+[A-Za-z_]} $source_text]
++    incr sv_import_count [regexp -all -line -- \
++      {^[ \t]*import[ \t]+[A-Za-z_]} $source_text]
++  }
++  if {$duplicate_definition_count != 0} {
++    error "duplicate SystemVerilog module definitions found: $duplicate_definition_count"
++  }
++  if {$sv_include_count != 0 || $sv_package_declaration_count != 0 ||
++      $sv_import_count != 0} {
++    error "unexpected SystemVerilog include/package/import dependency appeared in exact R1h source list"
++  }
++
++  array set vhdl_entity_owner [list]
++  set vhdl_entity_definition_count 0
++  set vhdl_duplicate_entity_count 0
++  foreach source_path $vhdl_files {
++    set source_text [read_text $source_path]
++    set definitions [regexp -all -inline -line -nocase -- \
++      {^[ \t]*entity[ \t]+([A-Za-z_][A-Za-z0-9_]*)[ \t]+is} $source_text]
++    foreach {whole_match entity_name} $definitions {
++      set entity_key [string tolower $entity_name]
++      incr vhdl_entity_definition_count
++      if {[info exists vhdl_entity_owner($entity_key)]} {
++        incr vhdl_duplicate_entity_count
++      } else {
++        set vhdl_entity_owner($entity_key) \
++          [relative_path_from_repo $repo_root $source_path]
++      }
+     }
+   }
+-  set index_store_compile_index [compile_order_index $actual_compile_names \
+-    [file join $repo_root rtl v41 r1h_probe_index_bram_store.sv]]
+-  set probe_compile_index [compile_order_index $actual_compile_names \
+-    [file join $repo_root rtl v41 nvp_i2c_tri_phase_probe.sv]]
+-  if {$index_store_compile_index >= $probe_compile_index} {
+-    error "R1h probe-index BRAM wrapper is not before its probe consumer"
+-  }
+-  write_lines [file join $evidence_root R1H_QUERIED_SYNTHESIS_COMPILE_ORDER.txt] \
+-    $actual_compile_lines
++  if {$vhdl_duplicate_entity_count != 0} {
++    error "duplicate VHDL entity definitions found: $vhdl_duplicate_entity_count"
++  }
++  set diagnostics_package_count [regexp -all -line -nocase -- \
++    {^[ \t]*package[ \t]+nvp6134c_diag_pkg_v38ek[ \t]+is} \
++    [read_text [lindex $vhdl_files 0]]]
++  set diagnostics_package_use_count [regexp -all -line -nocase -- \
++    {^[ \t]*use[ \t]+work\.nvp6134c_diag_pkg_v38ek\.all[ \t]*;} \
++    [read_text [lindex $vhdl_files 2]]]
++  if {$diagnostics_package_count != 1 || $diagnostics_package_use_count != 1} {
++    error "exact VHDL diagnostics package declaration/use contract is unresolved"
++  }
++
++  set index_wrapper_instantiation_count [regexp -all -line -- \
++    {^[ \t]*r1h_probe_index_bram_store([ \t#]+)} $tri_probe_text]
++  set logger_wrapper_instantiation_count [regexp -all -line -- \
++    {^[ \t]*v41_r1f_failed_txn_logger([ \t#]+)} $top_text]
++  set probe_consumer_instantiation_count [regexp -all -line -- \
++    {^[ \t]*nvp_i2c_tri_phase_probe([ \t#]+)} $top_text]
++  set measurement_regs_instantiation_count [regexp -all -line -- \
++    {^[ \t]*v41_r1f_measurement_regs([ \t#]+)} $top_text]
++  set mmio_service_instantiation_count [regexp -all -line -- \
++    {^[ \t]*v41_r1h_mmio_read_service([ \t#]+)} $top_text]
++  set control_regs_instantiation_count [regexp -all -line -- \
++    {^[ \t]*v41_control_status_regs([ \t#]+)} $top_text]
++  foreach {label count} [list \
++      PROBE_INDEX_WRAPPER $index_wrapper_instantiation_count \
++      FAILED_RECORD_WRAPPER $logger_wrapper_instantiation_count \
++      PROBE_CONSUMER $probe_consumer_instantiation_count \
++      MEASUREMENT_REGS $measurement_regs_instantiation_count \
++      MMIO_READ_SERVICE $mmio_service_instantiation_count \
++      CONTROL_STATUS_REGS $control_regs_instantiation_count] {
++    if {$count != 1} {
++      error "$label source-derived instantiation count is $count; expected one"
++    }
++    lappend semantic_gate_lines "$label\_INSTANTIATION_COUNT=$count"
++  }
++
++  set logger_generate_match_count [regexp -line -- \
++    {for[ \t]*\(bank_index[ \t]*=[ \t]*0;[ \t]*bank_index[ \t]*<[ \t]*([0-9]+);} \
++    $logger_text logger_generate_match failed_record_bram_bank_count]
++  set index_generate_match_count [regexp -line -- \
++    {for[ \t]*\(phase_bank[ \t]*=[ \t]*0;[ \t]*phase_bank[ \t]*<[ \t]*([0-9]+);} \
++    $index_store_text index_generate_match probe_index_bram_instance_count]
++  set logger_xpm_declaration_count [regexp -all -line -- \
++    {^[ \t]*xpm_memory_sdpram[ \t]*#\(} $logger_text]
++  set logger_xpm_instance_name_count [regexp -all -line -- \
++    {^[ \t]*\)[ \t]+R1H_RECORD_PAYLOAD_RAM[ \t]*\(} $logger_text]
++  set index_xpm_declaration_count [regexp -all -line -- \
++    {^[ \t]*xpm_memory_sdpram[ \t]*#\(} $index_store_text]
++  set index_xpm_instance_name_count [regexp -all -line -- \
++    {^[ \t]*\)[ \t]+INDEX_PAYLOAD_RAM[ \t]*\(} $index_store_text]
++  if {$logger_generate_match_count != 1 || $failed_record_bram_bank_count != 6 ||
++      $logger_xpm_declaration_count != 1 || $logger_xpm_instance_name_count != 1} {
++    error "failed-record source-derived six-bank XPM architecture gate failed"
++  }
++  if {$index_generate_match_count != 1 || $probe_index_bram_instance_count != 3 ||
++      $index_xpm_declaration_count != 1 || $index_xpm_instance_name_count != 1} {
++    error "probe-index source-derived three-bank XPM architecture gate failed"
++  }
++
++  lappend semantic_gate_lines \
++    "FAILED_RECORD_WRAPPER_MODULE_NAME=v41_r1f_failed_txn_logger" \
++    "FAILED_RECORD_WRAPPER_SOURCE_PATH=rtl/v41/r1f_failed_txn_logger.sv" \
++    "FAILED_RECORD_BRAM_BANK_COUNT=$failed_record_bram_bank_count" \
++    "FAILED_RECORD_XPM_DECLARATION_COUNT=$logger_xpm_declaration_count" \
++    "FAILED_RECORD_XPM_INSTANCE_NAME_COUNT=$logger_xpm_instance_name_count" \
++    "PROBE_INDEX_WRAPPER_MODULE_NAME=r1h_probe_index_bram_store" \
++    "PROBE_INDEX_WRAPPER_SOURCE_PATH=rtl/v41/r1h_probe_index_bram_store.sv" \
++    "PROBE_INDEX_BRAM_INSTANCE_COUNT=$probe_index_bram_instance_count" \
++    "PROBE_INDEX_XPM_DECLARATION_COUNT=$index_xpm_declaration_count" \
++    "PROBE_INDEX_XPM_INSTANCE_NAME_COUNT=$index_xpm_instance_name_count" \
++    "SYSTEMVERILOG_MODULE_DEFINITION_COUNT=$module_definition_count" \
++    "VHDL_ENTITY_DEFINITION_COUNT=$vhdl_entity_definition_count" \
++    "DUPLICATE_DEFINITIONS=0" \
++    "SYSTEMVERILOG_INCLUDE_DIRECTIVES=0" \
++    "SYSTEMVERILOG_PACKAGE_DECLARATIONS=0" \
++    "SYSTEMVERILOG_IMPORTS=0" \
++    "VHDL_DIAGNOSTICS_PACKAGE_DECLARATIONS=$diagnostics_package_count" \
++    "VHDL_DIAGNOSTICS_PACKAGE_USES=$diagnostics_package_use_count" \
++    "UNRESOLVED_INCLUDE_OR_PACKAGE_DEPENDENCIES=0" \
++    "R1H_FALSE_ASSERTION_TRIGGERED=NO" \
++    "PROJECT_SETUP_SEMANTIC_GATE=PASS" \
++    "BUILD_COMMAND_SEMANTICS_CHANGED=NO"
++  write_lines [file join $evidence_root R1H_R2_PROJECT_SETUP_SEMANTIC_GATE.txt] \
++    $semantic_gate_lines
+ 
+   write_lines [file join $evidence_root R1H_BUILD_PROVENANCE.txt] [list \
+     "SOURCE_GIT_COMMIT=$source_commit" \

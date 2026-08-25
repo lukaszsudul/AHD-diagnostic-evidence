@@ -1,0 +1,2652 @@
+CODEX MASTER PROMPT
+
+v41 NVP R1h-R2 — build-harness correction and immediate large-sample execution
+
+Keep experiment name R1h; this is a separately authorized continuation revision
+
+Correct only the false compile-order assertion
+
+→ one new clean build → A1/B1 → A2/B2 → A3/B3
+
+Preserve the complete BRAM-backed R1h scientific design
+
+FULL OWNER PRE-AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+
+```text
+PROJECT:
+    AHD Capture Card
+
+TASK:
+    V41_NVP_R1H_R2_BUILD_HARNESS_CORRECTION_AND_LARGE_SAMPLE_EXECUTION
+
+EXPERIMENT_NAME:
+    R1h
+
+CONTINUATION_REVISION:
+    R2
+
+NAMING_POLICY:
+    KEEP_R1H_NAME_AS_REQUESTED_BY_OWNER
+
+TASK_CHARACTER:
+    SEPARATELY_AUTHORIZED_CONTINUATION_OF_THE_SAME_R1H_EXPERIMENT
+
+PRIMARY_PURPOSE:
+    Continue from the exact terminal R1h source without changing scientific RTL.
+
+    Replace only the semantically invalid project-setup assertion:
+
+        "R1h probe-index BRAM wrapper is not before its probe consumer"
+
+    with semantic file/elaboration/binding checks.
+
+    Then consume one newly authorized clean build.
+
+    If and only if the full build, resource, timing, DRC, CDC and provenance
+    gates pass, immediately execute the frozen large-sample campaign:
+
+        A1 -> B1 -> A2 -> B2 -> A3 -> B3.
+
+R1H_SCIENTIFIC_SCOPE_CHANGE:
+    NO
+
+R1H_RTL_CHANGE:
+    NO
+
+R1H_STORAGE_ARCHITECTURE_CHANGE:
+    NO
+
+R1H_MMIO_ARCHITECTURE_CHANGE:
+    NO
+
+R1H_REGISTER_MAP_CHANGE:
+    NO
+
+R1H_PROBE_OR_STATISTICAL_CHANGE:
+    NO
+
+NEW_BUILD_AUTHORIZATION:
+    ONE_CLEAN_BUILD
+
+PAIRED_REPETITIONS:
+    3
+
+TOTAL_POSTINIT_TARGET_PHASE_OPPORTUNITIES:
+    90000
+
+FINAL_ACTIVE_IMAGE:
+    EXACT_FORMAL_PHASE2
+
+PHASE3_RESUME:
+    NO
+
+XDMA_DEVELOPMENT:
+    NO
+```
+
+===================================================================== -1. STANDING OWNER AUTHORIZATION — NO INTERACTIVE CONFIRMATIONS
+
+```text
+OWNER_STANDING_AUTHORIZATION=
+    GRANTED
+
+OWNER_AUTHORIZATION_EFFECTIVE=
+    IMMEDIATELY_FOR_THE_ENTIRE_TASK
+
+OWNER_INTERACTIVE_APPROVAL_REQUIRED=
+    NO
+
+CODEX_MUST_REQUEST_ADDITIONAL_CONFIRMATION=
+    NO
+
+EXPECTED_OWNER_INTERACTIONS=
+    0
+```
+
+The owner grants advance approval for every action explicitly authorized by
+this prompt.
+
+Do not pause to request approval for:
+
+```text
+task-root creation;
+
+read-only recovery and verification of R1h source/evidence;
+
+creation of a task-local corrected build harness;
+
+one conditional tracked build-harness-only commit when the task-local method is
+proven impossible;
+
+project-setup dry-run and semantic elaboration/binding checks;
+
+one clean provenance-correct full build;
+
+one normal diagnostic-branch push after build PASS;
+
+conditional exact formal bootstrap;
+
+three Arm-A R1h programs;
+
+three full Arm-B formal programs;
+
+all authorized warm reboots and exact pinned-driver loads;
+
+all bounded read-only MMIO/telemetry;
+
+evidence sealing and one normal evidence publication.
+```
+
+A passing gate means continue automatically.
+
+A failed or blocked gate means:
+
+```text
+preserve all available evidence;
+create the one authoritative final report;
+publish safely available evidence;
+hard-stop without asking whether to continue.
+```
+
+This authorization does not permit any operation outside the exact scope or
+above the numerical limits.
+
+===================================================================== 0. AUTHORITATIVE TERMINAL R1h INPUT
+
+Exact terminal R1h source:
+
+```text
+R1H_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+```
+
+Public R1h evidence:
+
+```text
+R1H_EVIDENCE_REPOSITORY=
+    lukaszsudul/AHD-diagnostic-evidence
+
+R1H_EVIDENCE_COMMIT=
+    7dc8b8fb07033148e7c232c235da012d8b14b621
+
+R1H_AUTHORITATIVE_REPORT_SHA256=
+    E7B41C0DD5CF21499BE55D8C4019F07694B1255252AB7539A1A376E7839B6468
+
+R1H_EVIDENCE_PACKAGE_SHA256=
+    C56FE89CE24403FE7BD4702B53778BA4C2B5403536185BCC66EB32B8118CBC78
+
+R1H_MANIFEST_RESULT=
+    PASS_1799_OF_1799
+
+R1H_ZIP_ENTRY_RESULT=
+    PASS_1800_OF_1800
+
+R1H_SECRET_SCAN=
+    PASS
+
+R1H_PUBLICATION_AUDIT=
+    PASS
+```
+
+R1h terminal classification:
+
+```text
+R1H_TERMINAL_CLASSIFICATION=
+    BLOCKED_ONE_CLEAN_BUILD_PROJECT_SETUP_COMPILE_ORDER_ASSERTION
+
+R1H_TERMINAL_ASSERTION=
+    R1h probe-index BRAM wrapper is not before its probe consumer
+
+R1H_BUILD_INVOCATIONS=
+    1
+
+R1H_SYNTH_DESIGN_INVOCATIONS=
+    0
+
+R1H_OPT_DESIGN_INVOCATIONS=
+    0
+
+R1H_PLACE_INVOCATIONS=
+    0
+
+R1H_ROUTE_INVOCATIONS=
+    0
+
+R1H_BITSTREAMS=
+    0
+
+R1H_HARDWARE_ACTIONS=
+    0
+```
+
+R1h offline results already passed:
+
+```text
+COMPILER=
+    PASS
+
+FUNCTIONAL_EQUIVALENCE=
+    PASS
+
+MMIO_TRANSACTION_EQUIVALENCE=
+    PASS
+
+RESET_TESTS=
+    PASS
+
+HOST_TOOL_TESTS=
+    PASS
+
+BRAM_ARCHITECTURE_TESTS=
+    PASS
+
+OOC_FAILED_RECORD_INFERENCE=
+    PASS_6_RAMB18
+
+OOC_PROBE_INDEX_INFERENCE=
+    PASS_3_RAMB18
+
+OOC_TOTAL_NEW_PAYLOAD_RAMB18=
+    9
+
+FULL_TOP_LEVEL_MEMORY_MAPPING=
+    NOT_AVAILABLE_NO_SYNTH_DESIGN
+```
+
+R1h source branch was not pushed because build PASS was a prerequisite.
+
+R1h made no FPGA, host, MMIO, DMA or physical mutation.
+
+R1h’s report is immutable historical evidence.
+
+R1h-R2 must not amend or overwrite it.
+
+=====================================================================
+
+1. EXACT PREDECESSOR IDENTITIES
+=====================================================================
+
+R1h parent:
+
+```text
+R1G_SOURCE_COMMIT=
+    e112a5addb7ac62700a9a71af81bf368fad0bada
+```
+
+R1g public evidence:
+
+```text
+R1G_EVIDENCE_COMMIT=
+    31786f351a9b8aab86291b5058ce075da5fba46a
+
+R1G_AUTHORITATIVE_REPORT_SHA256=
+    6BD146E4B8A7C41BB6F407BC9FB4BAA42B4DA7767F6877EFD9DDF6BA3820638B
+
+R1G_EVIDENCE_PACKAGE_SHA256=
+    30B565A17B2E15D60321D549F93C0AA35D509D837A5C9DDCA5E2873915D3A7F5
+```
+
+Resource-attribution audit:
+
+```text
+RESOURCE_ATTRIBUTION_REPORT_SHA256=
+    45A5E7BE82D94BFB781BA6726F3FBD47236CD551703542EE4964C6C392C2ACB6
+
+RESOURCE_AUDIT_MANIFEST_SHA256=
+    776A900D108880230CFFA4CC0BC1AF989858E3A2C0298C5F0B38B0DC310A691F
+```
+
+R7 valid scientific reference:
+
+```text
+R7_EVIDENCE_COMMIT=
+    16beec37a266c421da5838fbb986301d072cbb50
+
+R7_EVIDENCE_PACKAGE_SHA256=
+    A1864DA7EC52AEE852169656808510C42D98FDCE27816D82449946B610DD2A56
+
+R7_PAIRED_RESULT=
+    COMPLETE_VALID_PAIRED_SAMPLE
+
+R7_FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+R7_FINAL_FORMAL_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+R7_FINAL_DIAGNOSTIC_MAGIC=
+    0
+
+R7_FINAL_DONE=
+    1
+```
+
+R7 hardware state is historical context only.
+
+Fresh R1h-R2 evidence is authoritative before hardware.
+
+===================================================================== 2. FROZEN R1h SCIENTIFIC CONTRACT
+
+R1h-R2 changes only the build-harness gate.
+
+Every item below remains exact R1h.
+
+────────
+
+2.1 Autoinit profile
+
+```text
+AUTOINIT_I2C_HZ=
+    25000
+
+AUTOINIT_CLOCK_HZ=
+    62500000
+
+ACTIVE_TICK_CYCLES=
+    1251
+
+EXPECTED_CNT_AT_INIT_DONE=
+    132584734
+```
+
+────────
+
+2.2 Safe active probe target
+
+```text
+PROBE_BANK=
+    0x00
+
+PROBE_REGISTER=
+    0x85
+
+PROBE_DATA=
+    0x00
+
+REGISTER_NAME=
+    SPL_MD_CH1
+
+SAFE_TARGET_CONTRACT=
+    VERIFIED_BANK0
+    PRE_READ_0x00
+    SAME_VALUE_WRITES_ONLY
+    POST_READ_0x00
+    ORIGINAL_BANK_RESTORED_AND_VERIFIED
+```
+
+────────
+
+2.3 Autoinit phase counters
+
+Preserve exactly:
+
+```text
+AUTOINIT_WADDR_ACK_OPPORTUNITIES
+AUTOINIT_WADDR_NACKS
+
+AUTOINIT_REGADDR_ACK_OPPORTUNITIES
+AUTOINIT_REGADDR_NACKS
+
+AUTOINIT_DATA_ACK_OPPORTUNITIES
+AUTOINIT_DATA_NACKS
+
+AUTOINIT_RADDR_ACK_OPPORTUNITIES
+AUTOINIT_RADDR_NACKS
+
+AUTOINIT_TRANSACTION_STARTS
+AUTOINIT_TRANSACTION_COMPLETIONS
+AUTOINIT_FAILED_TRANSACTIONS
+AUTOINIT_TIMEOUT_TRANSACTIONS
+```
+
+────────
+
+2.4 Failed-transaction log
+
+```text
+CAPACITY=
+    64
+
+RECORD_WIDTH=
+    192
+
+WORDS_PER_RECORD=
+    6
+
+RECORD_VERSION=
+    1
+
+TRANSACTION_INDEX_WIDTH=
+    16
+
+TABLE_SLOT_INDEX_WIDTH=
+    16
+
+APPEND_ONLY=
+    YES
+
+OVERWRITE=
+    NO
+
+OVERFLOW_ON=
+    FAILED_TRANSACTION_65
+
+UNUSED_RECORD_READ_VALUE=
+    ZERO
+```
+
+────────
+
+2.5 Tri-phase probe
+
+```text
+PHASES=
+    WADDR
+    REGADDR
+    DATA
+
+TARGET_OPPORTUNITIES_PER_PHASE=
+    10000
+
+BLOCKS_PER_PHASE=
+    10
+
+OPPORTUNITIES_PER_BLOCK=
+    1000
+
+MAX_ATTEMPTS_PER_PHASE=
+    12000
+
+NACK_INDEX_CAPACITY_PER_PHASE=
+    512
+
+NACK_INDEX_WIDTH=
+    16
+
+INDEX_CONVENTION=
+    ZERO_BASED
+
+SCHEDULER=
+    ROUND_ROBIN_INTERLEAVED
+
+PROBE_I2C_HZ=
+    25000
+```
+
+────────
+
+2.6 BRAM-backed physical architecture
+
+Preserve exact R1h intent:
+
+```text
+FAILED_RECORD_STORAGE=
+    SIX_64_X_32_RAMB18
+
+WADDR_INDEX_STORAGE=
+    ONE_RAMB18
+
+REGADDR_INDEX_STORAGE=
+    ONE_RAMB18
+
+DATA_INDEX_STORAGE=
+    ONE_RAMB18
+
+NEW_PAYLOAD_RAMB18_TOTAL=
+    9
+
+BLOCK_STATISTICS=
+    SMALL_LUTRAM_OR_BOUNDED_SMALL_FF
+
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+```
+
+────────
+
+2.7 Register map
+
+Preserve every address and returned bit:
+
+```text
+0x20A0..0x21FF
+0x2200..0x23FF
+0x2400..0x29FF
+0x2A00..0x2DFF
+0x2E00..0x31FF
+0x3200..0x35FF
+```
+
+Preserve:
+
+```text
+legacy R1e page;
+legacy ordered-NACK window;
+formal offsets;
+invalid/reserved behavior;
+formal complete-range deterministic zero.
+```
+
+Only the already-approved R1h response latency differs from R1g.
+
+No R1h-R2 latency or data change is authorized.
+
+────────
+
+2.8 Statistical plan and pair order
+
+Frozen sequence:
+
+```text
+A1 -> B1 -> A2 -> B2 -> A3 -> B3
+```
+
+Frozen support criterion for context-rate elevation:
+
+```text
+Holm-corrected p < 0.01;
+
+rate-ratio lower 95% bound > 2;
+
+same direction in at least 2 of 3 Arm-A repetitions.
+```
+
+No statistical method, threshold or interpretation may change after hardware
+results are observed.
+
+===================================================================== 3. EXACT FORMAL, JTAG, HOST, AND DRIVER IDENTITIES
+
+Formal Phase 2:
+
+```text
+FORMAL_REPOSITORY=
+    lukaszsudul/FPGA_AHD
+
+FORMAL_BRANCH=
+    v41/xdma-v40.1.0-base
+
+FORMAL_COMMIT=
+    c89e88bcdf389614c884fb129e8b2d42a585bccb
+
+FORMAL_TREE=
+    417820c69c134161fcafae0947dc5976919814d1
+
+FORMAL_BIT_SHA256=
+    7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2
+
+FORMAL_RUNTIME_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FORMAL_DIAGNOSTIC_MAGIC=
+    0x00000000
+```
+
+Selected JTAG:
+
+```text
+JTAG_CANONICAL_ID=
+    Xilinx/80802026a98b01
+
+JTAG_PATH_SUFFIX=
+    /Xilinx/80802026a98b01
+
+PART=
+    xc7a35t
+
+IDCODE=
+    0362D093
+
+JTAG_FREQUENCY_POLICY=
+    RECORD_DEFAULT_NO_CHANGE
+```
+
+Ubuntu:
+
+```text
+IP=
+    10.132.1.111
+
+USER=
+    vcdeagent1
+
+REQUIRED_KERNEL=
+    7.0.0-29-generic
+
+CREDENTIAL_FILE=
+    C:\FPGA\VCDE-DUT-1.txt
+```
+
+Pinned XDMA:
+
+```text
+SOURCE_COMMIT=
+    8721136e74a66500b02d16cb41922d966139cd46
+
+MODULE_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+
+MODULE_SHA256=
+    1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+
+MODULE_VERSION=
+    2025.2.0
+
+MODULE_VERMAGIC_PREFIX=
+    7.0.0-29-generic
+
+LOADER_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+
+LOADER_SHA256=
+    7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+```
+
+Reuse exact accepted:
+
+```text
+R7 mode-aware programming observer;
+selected-target selector;
+Python BAR parser;
+credential/host-key procedure;
+R1h host readers and statistical scripts.
+```
+
+===================================================================== 4. AUTHORIZATION AND ABSOLUTE LIMITS
+
+Authorized build-harness work:
+
+```text
+locate and audit the exact false relative-order assertion;
+
+create a task-local corrected harness that reproduces the exact R1h build flow
+except for replacing that assertion with semantic checks;
+
+or, only if a task-local correction is proven impossible, create one tracked
+build-harness-only child commit.
+```
+
+Preferred mode:
+
+```text
+BUILD_HARNESS_CORRECTION_MODE=
+    TASK_LOCAL_ZERO_REPOSITORY_MUTATION
+```
+
+Fallback mode:
+
+```text
+BUILD_HARNESS_CORRECTION_MODE=
+    ONE_TRACKED_HARNESS_ONLY_CHILD_COMMIT
+```
+
+Fallback is allowed only when:
+
+```text
+the assertion resides in an inseparable tracked build script;
+
+a task-local wrapper cannot reproduce the exact flow without changing build
+semantics;
+
+the diff changes no RTL, XDC, XCI, register contract, host tool, testbench or
+scientific script.
+```
+
+Authorized offline:
+
+```text
+one project-setup dry-run;
+
+one semantic frontend/elaboration/binding preflight;
+
+one clean provenance-correct full build;
+
+one routed-impact audit;
+
+one diagnostic-branch push after build PASS.
+```
+
+Authorized hardware:
+
+```text
+conditional exact formal bootstrap when fresh formal state is unproven;
+
+three Arm-A R1h samples;
+
+three full exact formal Arm-B samples;
+
+one warm reboot and at most one exact pinned-driver load after every valid
+program;
+
+read-only telemetry.
+```
+
+Maximum:
+
+```text
+FPGA_RTL_SOURCE_COMMITS=
+    0
+
+TRACKED_BUILD_HARNESS_COMMITS<=
+    1
+
+PROJECT_SETUP_DRY_RUNS=
+    1
+
+SEMANTIC_ELABORATION_PREFLIGHTS=
+    1
+
+FULL_CLEAN_BUILDS=
+    1
+
+CONDITIONAL_FORMAL_BOOTSTRAP_PROGRAMS<=
+    1
+
+ARM_A_PROGRAMS=
+    3
+
+ARM_B_PROGRAMS=
+    3
+
+FPGA_PROGRAM_INVOCATIONS_MAX=
+    7
+
+WARM_REBOOTS_MAX=
+    7
+
+POST_REBOOT_DRIVER_LOADS_MAX=
+    7
+
+PROGRAM_RETRIES=
+    0
+```
+
+Not authorized:
+
+```text
+any R1h RTL edit;
+
+any memory-wrapper edit;
+
+any probe-consumer edit;
+
+manual source-file reordering as a substitute for semantic proof;
+
+scientific-scope reduction;
+
+register-map change;
+
+probe target/count/phase change;
+
+statistical-plan change;
+
+second harness commit;
+
+second full build;
+
+source correction after the full build begins;
+
+cold start;
+power cycle;
+physical action;
+JTAG/cable change;
+JTAG-frequency change;
+kernel/GRUB change;
+module rebuild;
+PCIe remove/rescan/reset;
+host AXI-Lite write;
+host NVP/I2C write;
+DMA;
+Phase 3;
+XDMA development;
+tag;
+Release.
+```
+
+===================================================================== 5. TASK ROOT AND GIT POLICY
+
+Create:
+
+```text
+C:\FPGA\V41_NVP_R1H_R2_BUILD_HARNESS_CONTINUATION\
+```
+
+Required structure:
+
+```text
+00_R1H_INPUT\
+01_SOURCE_AND_EVIDENCE_IDENTITY\
+02_FAILED_ASSERTION_AUDIT\
+03_CORRECTED_BUILD_HARNESS\
+04_PROJECT_SETUP_DRY_RUN\
+05_SEMANTIC_ELABORATION\
+06_BUILD\
+07_RESOURCE_GATES\
+08_ROUTED_IMPACT\
+09_HOST_TOOLS\
+10_HARDWARE_PRECHECK\
+11_BOOTSTRAP\
+12_PAIR_1\
+13_PAIR_2\
+14_PAIR_3\
+15_ANALYSIS\
+16_FINAL\
+scripts\
+fixtures\
+```
+
+Create immediately:
+
+```text
+OPERATION_LEDGER.md
+TIME_LEDGER.md
+```
+
+Save this prompt verbatim and record its SHA-256 before any build-harness
+modification.
+
+Preferred source branch after build PASS:
+
+```text
+diag/v41-nvp-r1h-bram-backed-large-sample-r2
+```
+
+Exact scientific RTL identity:
+
+```text
+R1H_SCIENTIFIC_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SCIENTIFIC_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+```
+
+If a tracked harness-only child commit is required:
+
+```text
+its direct parent must be exact R1h;
+
+all FPGA RTL/XDC/XCI/test/host/scientific blobs must remain byte-identical;
+
+runtime provenance may identify the harness child commit only when the existing
+provenance contract derives from repository HEAD.
+```
+
+Do not amend or rebase R1h.
+
+Do not push any source branch before full build PASS.
+
+Initial accounting:
+
+```text
+FPGA_RTL_SOURCE_CHANGES=0
+TRACKED_BUILD_HARNESS_COMMITS=0
+PROJECT_SETUP_DRY_RUNS=0
+SEMANTIC_ELABORATION_PREFLIGHTS=0
+FULL_CLEAN_BUILDS=0
+SYNTH_DESIGN_INVOCATIONS=0
+OPT_DESIGN_INVOCATIONS=0
+PLACE_INVOCATIONS=0
+ROUTE_INVOCATIONS=0
+BITSTREAMS=0
+FPGA_PROGRAMS=0
+WARM_REBOOTS=0
+DRIVER_LOADS=0
+PROGRAM_RETRIES=0
+AXI_LITE_WRITES=0
+DMA_TRANSFERS=0
+PHYSICAL_ACTIONS=0
+```
+
+===================================================================== 6. P0 — EXACT R1h SOURCE AND EVIDENCE RECOVERY
+
+Verify:
+
+```text
+R1h source commit/tree;
+R1h public evidence commit/report/package;
+R1g source/evidence;
+resource-attribution audit;
+R7 programming/host-tool identities;
+formal bit identity.
+```
+
+Prefer exact local R1h commit.
+
+If absent, recover only from:
+
+```text
+exact R1h evidence patch;
+exact R1g parent;
+exact source manifests.
+```
+
+Approximate reconstruction is forbidden.
+
+Create:
+
+```text
+01_SOURCE_AND_EVIDENCE_IDENTITY\
+    R1H_GIT_IDENTITY.md
+
+01_SOURCE_AND_EVIDENCE_IDENTITY\
+    R1H_SOURCE_SHA256.txt
+
+01_SOURCE_AND_EVIDENCE_IDENTITY\
+    INPUT_EVIDENCE_IDENTITY.md
+```
+
+Any mismatch:
+
+```text
+BLOCKED_EXACT_R1H_OR_EVIDENCE_IDENTITY
+```
+
+No harness change.
+
+===================================================================== 7. P1 — EXACT FAILED-ASSERTION AUDIT
+
+Locate the exact terminal assertion in:
+
+```text
+the exact terminal R1h build log;
+
+the exact build Tcl or task-local harness used by R1h.
+```
+
+Record:
+
+```text
+ASSERTION_FILE=
+ASSERTION_LINE=
+ASSERTION_EXPRESSION=
+WRAPPER_FILE_QUERY=
+CONSUMER_FILE_QUERY=
+WRAPPER_FILE_COUNT=
+CONSUMER_FILE_COUNT=
+OBSERVED_RELATIVE_POSITIONS=
+ASSERTION_EXECUTED_BEFORE_SYNTH_DESIGN=
+    YES
+```
+
+Prove from exact source and tool documentation whether the wrapper and consumer
+are:
+
+```text
+SystemVerilog modules;
+VHDL entities;
+packages;
+include files;
+or another construct.
+```
+
+Required classification:
+
+```text
+RELATIVE_FILE_POSITION_IS_SEMANTIC_REQUIREMENT=
+    NO_FOR_MODULE_ENTITY_BINDING
+```
+
+If exact source proves that the consumer depends on a package, macro include,
+configuration or other genuinely order-sensitive construct:
+
+```text
+RELATIVE_FILE_POSITION_IS_SEMANTIC_REQUIREMENT=
+    YES_WITH_EXACT_REASON
+```
+
+In that case, do not simply remove the gate.
+
+Create a correct semantic/order-specific solution within build-harness scope,
+or hard-stop if RTL/file changes would be required.
+
+Expected R1h finding:
+
+```text
+R1H_FALSE_ASSERTION_CLASSIFICATION=
+    REDUNDANT_RELATIVE_MODULE_FILE_ORDER_ASSERTION
+```
+
+Create:
+
+```text
+02_FAILED_ASSERTION_AUDIT\
+    ASSERTION_ROOT_CAUSE.md
+
+02_FAILED_ASSERTION_AUDIT\
+    EXACT_FILE_AND_MODULE_INVENTORY.csv
+
+02_FAILED_ASSERTION_AUDIT\
+    R1H_TERMINAL_LOG_EXTRACT.txt
+```
+
+===================================================================== 8. P2 — CORRECTED SEMANTIC BUILD-HARNESS GATE
+
+Do not gate on:
+
+```text
+wrapper source position < consumer source position
+```
+
+Replace it with semantic checks.
+
+Required checks before build:
+
+```text
+WRAPPER_SOURCE_FILE_COUNT=
+    exact source-derived expected count
+
+CONSUMER_SOURCE_FILE_COUNT=
+    exact source-derived expected count
+
+WRAPPER_MODULE_OR_ENTITY_DECLARATION_COUNT=
+    exact source-derived expected count
+
+CONSUMER_MODULE_OR_ENTITY_DECLARATION_COUNT=
+    exact source-derived expected count
+
+WRAPPER_USED_IN_SYNTHESIS=
+    YES
+
+CONSUMER_USED_IN_SYNTHESIS=
+    YES
+
+WRAPPER_LIBRARY=
+    exact expected library
+
+CONSUMER_LIBRARY=
+    exact expected library
+
+DUPLICATE_DEFINITIONS=
+    0
+
+UNRESOLVED_INCLUDE_OR_PACKAGE_DEPENDENCIES=
+    0
+```
+
+For the exact BRAM wrappers, derive and freeze from source:
+
+```text
+FAILED_RECORD_WRAPPER_MODULE_NAME=
+FAILED_RECORD_WRAPPER_SOURCE_PATH=
+FAILED_RECORD_WRAPPER_INSTANTIATION_COUNT=
+
+PROBE_INDEX_WRAPPER_MODULE_NAME=
+PROBE_INDEX_WRAPPER_SOURCE_PATH=
+PROBE_INDEX_WRAPPER_INSTANTIATION_COUNT=
+```
+
+Expected architectural counts:
+
+```text
+failed-record BRAM banks:
+    6
+
+probe-index BRAM instances:
+    3
+```
+
+Use exact source-derived names, not guessed names.
+
+report_compile_order is mandatory evidence.
+
+Its relative positions are:
+
+```text
+RECORDED=
+    YES
+
+USED_AS_PASS_FAIL_GATE=
+    NO
+```
+
+Required final gate:
+
+```text
+PROJECT_SETUP_SEMANTIC_GATE=
+    PASS
+
+RELATIVE_SOURCE_POSITION_ASSERTION=
+    REMOVED_OR_DISABLED
+
+BUILD_COMMAND_SEMANTICS_CHANGED=
+    NO
+```
+
+────────
+
+8.1 Task-local harness preference
+
+Preferred implementation:
+
+```text
+copy/freeze the exact R1h build Tcl into the task root;
+
+apply only the assertion-to-semantic-gate delta;
+
+hash both scripts;
+
+produce a line-by-line command comparison;
+
+run the task-local corrected harness against the exact R1h source.
+```
+
+Require:
+
+```text
+SYNTHESIS_IMPLEMENTATION_COMMAND_DELTA=
+    0
+
+SOURCE_LIST_DELTA=
+    0
+
+CONSTRAINT_DELTA=
+    0
+
+XCI_DELTA=
+    0
+
+PART_TOP_DELTA=
+    0
+
+RESOURCE_GATE_DELTA=
+    0
+
+SCIENTIFIC_PARAMETER_DELTA=
+    0
+```
+
+Create:
+
+```text
+03_CORRECTED_BUILD_HARNESS\
+    R1H_TO_R1H_R2_HARNESS.patch
+
+03_CORRECTED_BUILD_HARNESS\
+    BUILD_COMMAND_RECONCILIATION.csv
+
+03_CORRECTED_BUILD_HARNESS\
+    CORRECTED_GATE_SPECIFICATION.md
+```
+
+────────
+
+8.2 Conditional tracked harness-only commit
+
+Use only if the task-local method is proven impossible.
+
+Allowed diff:
+
+```text
+one tracked build-harness file;
+only the assertion and semantic replacement;
+no source-list reordering;
+no RTL/XDC/XCI/test/host change.
+```
+
+Required:
+
+```text
+TRACKED_HARNESS_COMMIT_CLASS=
+    BUILD_HARNESS_GATE_ONLY
+
+FPGA_RTL_SOURCE_CHANGES=
+    0
+
+SCIENTIFIC_BLOB_CHANGES=
+    0
+```
+
+No second commit.
+
+===================================================================== 9. P3 — PROJECT-SETUP DRY-RUN
+
+Run exactly one dry-run using the corrected harness.
+
+The dry-run must:
+
+```text
+create/open the exact disposable Vivado project or in-memory context;
+
+read the exact R1h source list;
+
+apply the exact libraries/file types/constraints/XCI registration needed for
+project setup;
+
+update and report compile order;
+
+execute the semantic file/module gate;
+
+stop before synth_design.
+```
+
+Static audit must prove zero:
+
+```text
+synth_design;
+opt_design;
+place_design;
+phys_opt_design;
+route_design;
+write_checkpoint;
+write_bitstream.
+```
+
+Required:
+
+```text
+PROJECT_SETUP_DRY_RUNS=
+    1
+
+PROJECT_SETUP_DRY_RUN=
+    PASS
+
+R1H_FALSE_ASSERTION_TRIGGERED=
+    NO
+
+PROCESS_EXIT_CODE=
+    0
+```
+
+No second dry-run.
+
+===================================================================== 10. P4 — SEMANTIC FRONTEND/ELABORATION PREFLIGHT
+
+Run exactly one non-build semantic preflight.
+
+Use the exact accepted R1h compiler/elaboration method or the installed
+Vivado-supported simulation/elaboration frontend.
+
+The preflight must prove:
+
+```text
+exact top:
+    ahd_capture_top_xdma
+
+exact part context:
+    xc7a35tcsg325-2
+
+all exact libraries and source files loaded;
+
+all wrapper modules/entities bound;
+
+all consumers bound;
+
+zero unresolved modules;
+
+zero black boxes attributable to R1h source;
+
+failed-record wrapper instance count exact;
+
+probe-index wrapper instance count exact;
+
+R1h MMIO read service bound;
+
+R1h test elaboration PASS.
+```
+
+Do not perform full synthesis.
+
+Allowed examples, selected from installed-tool help:
+
+```text
+xvlog/xvhdl + xelab;
+
+accepted simulation elaboration flow;
+
+supported RTL-only elaboration mode with no optimized netlist acceptance claim.
+```
+
+Static audit must prove zero:
+
+```text
+opt_design;
+place_design;
+route_design;
+write_checkpoint;
+write_bitstream.
+```
+
+Required:
+
+```text
+SEMANTIC_ELABORATION_PREFLIGHTS=
+    1
+
+SEMANTIC_ELABORATION=
+    PASS
+
+UNRESOLVED_MODULES=
+    0
+
+UNRESOLVED_BLACKBOXES=
+    0
+
+FAILED_RECORD_WRAPPER_BINDING=
+    PASS
+
+PROBE_INDEX_WRAPPER_BINDING=
+    PASS
+
+PROCESS_EXIT_CODE=
+    0
+```
+
+No second semantic preflight.
+
+===================================================================== 11. P5 — PREBUILD IDENTITY AND NO-RTL-CHANGE GATE
+
+Before the full build, prove:
+
+```text
+R1H_SCIENTIFIC_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SCIENTIFIC_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+
+R1H_RTL_BLOBS_UNCHANGED=
+    YES
+
+R1H_XDC_UNCHANGED=
+    YES
+
+R1H_XDMA_XCI_UNCHANGED=
+    YES
+
+R1H_REGISTER_MAP_UNCHANGED=
+    YES
+
+R1H_HOST_DECODERS_UNCHANGED=
+    YES
+
+R1H_STATISTICAL_PLAN_UNCHANGED=
+    YES
+
+R1H_SIMULATION_RESULTS_REPLAY=
+    PASS_OR_EXACT_PUBLISHED_PASS_REUSED
+
+R1H_OOC_BRAM_INFERENCE_REPLAY=
+    PASS_6_PLUS_3
+```
+
+If a harness-only child commit exists, separately record:
+
+```text
+BUILD_PROVENANCE_COMMIT=
+BUILD_PROVENANCE_TREE=
+
+R1H_RTL_MANIFEST_EQUAL_TO_C4F4BFCF=
+    YES
+```
+
+===================================================================== 12. P6 — ONE NEW CLEAN PROVENANCE-CORRECT BUILD
+
+R1h’s prior build authorization is consumed.
+
+R1h-R2 grants exactly one new clean build.
+
+Use:
+
+```text
+Vivado 2025.2 build 6299465;
+
+part xc7a35tcsg325-2;
+
+top ahd_capture_top_xdma;
+
+exact unchanged XDMA XCI;
+
+exact unchanged XDC;
+
+exact production language standards;
+
+exact R1h RTL.
+```
+
+Suggested bit:
+
+```text
+ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit
+```
+
+Use the corrected build harness.
+
+No source correction after this build begins.
+
+────────
+
+12.1 Mandatory full-top BRAM mapping gates
+
+After synthesis and before placement, require from the full top-level netlist:
+
+```text
+FAILED_RECORD_PAYLOAD_RAMB18=
+    6
+
+WADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+REGADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+DATA_INDEX_PAYLOAD_RAMB18=
+    1
+
+R1H_NEW_PAYLOAD_RAMB18_TOTAL=
+    9
+
+FAILED_RECORD_PAYLOAD_RAMB36=
+    0
+
+WADDR_INDEX_PAYLOAD_RAMB36=
+    0
+
+REGADDR_INDEX_PAYLOAD_RAMB36=
+    0
+
+DATA_INDEX_PAYLOAD_RAMB36=
+    0
+```
+
+An exact equivalent physical packing may be accepted only when:
+
+```text
+total 18K-equivalent block capacity is unchanged;
+
+all four logical stores remain independent as required;
+
+no payload returns to large FDRE/LUTRAM banks;
+
+the exact primitive mapping is documented.
+```
+
+Also require:
+
+```text
+FAILED_RECORD_PAYLOAD_RAM64M=
+    0
+
+FAILED_RECORD_PAYLOAD_RAMD64E=
+    0
+
+FAILED_RECORD_PAYLOAD_FDRE<=
+    192
+
+INDEX_PAYLOAD_FDRE_TOTAL<=
+    192
+
+COMBINATIONAL_512_TO_1_INDEX_MUX=
+    ABSENT
+
+COMBINATIONAL_64_X_192_RECORD_MUX=
+    ABSENT
+
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+```
+
+No acceptance based only on source attributes.
+
+Netlist primitive evidence is mandatory.
+
+────────
+
+12.2 Mandatory total resource gates
+
+Hard gate before place_design:
+
+```text
+POST_SYNTH_SLICE_LUTS<=
+    18720
+
+POST_SYNTH_SLICE_REGISTERS<=
+    37440
+```
+
+Record:
+
+```text
+POST_SYNTH_LOGIC_LUTS=
+POST_SYNTH_LUTRAM=
+POST_SYNTH_FF=
+POST_SYNTH_MUXF7=
+POST_SYNTH_MUXF8=
+POST_SYNTH_RAMB18=
+POST_SYNTH_RAMB36=
+```
+
+Expected, not a substitute for the hard gate:
+
+```text
+POST_SYNTH_LOGIC_LUT_EXPECTED<=
+    18000
+
+POST_SYNTH_FF_EXPECTED<=
+    25000
+```
+
+If a resource or BRAM gate fails:
+
+```text
+BLOCKED_R1H_R2_POST_SYNTH_RESOURCE_OR_MAPPING_GATE
+```
+
+No placement and no second build.
+
+────────
+
+12.3 Full implementation gates
+
+After all post-synthesis gates PASS, continue automatically:
+
+```text
+opt_design;
+place_design;
+phys_opt only when present in the exact accepted flow;
+route_design;
+write_bitstream.
+```
+
+Require:
+
+```text
+FULL_CLEAN_BUILDS=
+    1
+
+SYNTHESIS=
+    PASS
+
+OPT_DESIGN=
+    PASS
+
+PLACE=
+    PASS
+
+ROUTE=
+    PASS
+
+ROUTE_ERRORS=
+    0
+
+WNS>=
+    0
+
+WHS>
+    0
+
+VDO_WNS>
+    0
+
+VDO_WHS>
+    0
+
+DRC_ERRORS=
+    0
+
+DRC_CRITICAL_WARNINGS=
+    0
+
+REQP_1839_SEMANTIC_COUNT=
+    4
+
+REQP_1839_RAW_TEXT_USED_AS_GATE=
+    NO
+
+CDC_CRITICAL=
+    0
+
+CDC_UNKNOWN=
+    0
+
+SOURCE_COMMIT_TO_BIT_PROVENANCE=
+    PASS
+```
+
+Freeze:
+
+```text
+R1H_R2_BIT_SHA256=
+R1H_R2_ROUTED_DCP_SHA256=
+```
+
+No second build.
+
+===================================================================== 13. P7 — ROUTED IMPACT AUDIT AND SOURCE-BRANCH PUBLICATION
+
+Compare exact R1h-R2 result against:
+
+```text
+R1g post-synthesis resource report;
+
+R1e routed DCP;
+
+R1h OOC memory evidence.
+```
+
+At minimum report:
+
+```text
+resource delta;
+primitive delta;
+hierarchical utilization;
+SCL/SDA IOBUF properties;
+OEN-to-IOBUF paths;
+pad-to-synchronizer paths;
+synchronizer placement;
+clocking;
+routing congestion;
+total/dynamic power;
+VCCINT/VCCAUX/VCCO aggregate;
+NVP hierarchy power.
+```
+
+Required:
+
+```text
+R1H_RESOURCE_ARCHITECTURE_CORRECTION=
+    PASS
+
+R1H_SCIENTIFIC_SCOPE=
+    UNCHANGED
+
+R1H_PLACEMENT_NEUTRAL=
+    NOT_CLAIMED
+```
+
+After full build PASS:
+
+```text
+push the R1h-R2 diagnostic branch normally;
+
+no tag;
+
+no Release.
+```
+
+===================================================================== 14. P8 — HOST TOOL GATE
+
+Reuse exact R1h host readers and statistical scripts.
+
+Require hash equality with the R1h evidence manifest.
+
+Run all accepted fixtures.
+
+Required:
+
+```text
+HOST_TOOL_HASH_GATE=
+    PASS
+
+HOST_TOOL_FIXTURES=
+    PASS_ALL
+
+R1H_REGISTER_MAP=
+    UNCHANGED
+
+R1H_RECORD_VERSION=
+    1
+
+FORMAL_COMPLETE_R1H_RANGE_ZERO_FIXTURE=
+    PASS
+
+HOST_MMIO_WRITES=
+    0
+```
+
+===================================================================== 15. P9 — FRESH HARDWARE START-STATE GATE
+
+Fresh evidence is authoritative.
+
+Require read-only:
+
+```text
+selected JTAG exact and stable;
+
+kernel 7.0.0-29-generic;
+
+next reboot remains kernel 29;
+
+one endpoint:
+    10ee:7011 / subsystem 0007 / class 058000;
+
+Gen1 x1;
+
+BAR0 128 KiB;
+
+BAR1 64 KiB;
+
+exact pinned driver or accepted clean loader-entry state;
+
+formal identity;
+
+diagnostic magic zero;
+
+no node owner;
+
+zero task DMA;
+
+kernel/AER health PASS.
+```
+
+If exact formal state is proven:
+
+```text
+BOOTSTRAP_RUN=
+    NO
+```
+
+If current image is unproven but bootstrap is safe:
+
+```text
+BOOTSTRAP_RUN=
+    YES_EXACT_FORMAL_ONCE
+```
+
+Use the accepted mode-aware observer.
+
+Bootstrap maximum:
+
+```text
+one exact formal program;
+
+one >=5-second wait;
+
+one warm reboot;
+
+one exact pinned-driver load;
+
+zero retry.
+```
+
+Bootstrap is not B1.
+
+If bootstrap cannot prove exact formal identity and DONE:
+
+```text
+BLOCKED_FORMAL_START_STATE
+```
+
+No A/B campaign.
+
+===================================================================== 16. P10 — FREEZE ARM-A WAIT BEFORE HARDWARE
+
+Reuse the exact passed R1h model:
+
+```text
+R1H_MODELED_ARM_A_WAIT_SECONDS=
+    33.536673744
+```
+
+Confirm that no RTL/scientific parameter changed.
+
+Freeze:
+
+```text
+ARM_A_REQUIRED_WAIT_SECONDS=
+    max(
+        33.536673744,
+        exact current modeled probe-completion time + 2.0
+    )
+```
+
+Because R1h-R2 changes only the build harness, the expected value should remain:
+
+```text
+33.536673744 seconds
+```
+
+Any different value requires an exact model/input explanation.
+
+Do not change hardware parameters to fit the wait.
+
+===================================================================== 17. P11 — THREE LARGE-SAMPLE PAIRED REPETITIONS
+
+Frozen sequence:
+
+```text
+A1 -> B1 -> A2 -> B2 -> A3 -> B3
+```
+
+Do not reorder after observing results.
+
+Every A starts from a freshly proven exact formal state.
+
+Every B is a full exact formal control and restoration.
+
+────────
+
+17.1 Arm A procedure
+
+For A1, A2 and A3:
+
+```text
+rehash exact R1h-R2 bit;
+
+require formal-ready receipt;
+
+program once with selected JTAG in transition mode;
+
+require:
+    stable pre-program DONE=1;
+    vendor startup HIGH;
+    same-session DONE=1;
+    independent DONE=1;
+    one invocation;
+    process exit 0;
+    zero retry;
+
+wait >= frozen ARM_A_REQUIRED_WAIT_SECONDS;
+
+perform one warm reboot;
+
+require kernel 29;
+
+require corrected BAR geometry;
+
+invoke one exact explicit-path driver load;
+
+verify exact runtime provenance/capabilities;
+
+collect two coherent complete read-only snapshots;
+
+read fresh final DONE=1.
+```
+
+Valid Arm-A instrumentation requires:
+
+```text
+phase-opportunity counters coherent;
+
+sum phase NACKs equals aggregate NACK_COUNT;
+
+failed-transaction total/stored coherent;
+
+failed-transaction overflow=0;
+
+bank invariant errors=0;
+
+all three probes DONE;
+
+all three probes ABORTED=0;
+
+WADDR target opportunities=10000;
+
+REGADDR target opportunities=10000;
+
+DATA target opportunities=10000;
+
+probe timeout total=0;
+
+safe target pre-read=0x00;
+
+safe target post-read=0x00;
+
+original bank restored and verified;
+
+all stored failed-record words readable;
+
+all stored probe-index entries readable;
+
+final DONE=1.
+```
+
+Classify NVP PASS/FAIL separately.
+
+────────
+
+17.2 Arm B procedure
+
+For B1, B2 and B3:
+
+```text
+rehash exact formal bit;
+
+program once with the same selected JTAG in transition mode;
+
+require:
+    vendor startup HIGH;
+    same-session DONE=1;
+    independent DONE=1;
+    zero retry;
+
+wait >=5 seconds;
+
+perform one warm reboot;
+
+require kernel 29;
+
+require corrected BAR geometry;
+
+invoke one exact pinned-driver load;
+
+verify formal identity;
+
+verify diagnostic magic zero;
+
+collect two coherent normal NVP/video snapshots;
+
+read legacy ordered-NACK window;
+
+read complete R1h diagnostic range and require deterministic zero;
+
+read fresh final DONE=1.
+```
+
+B1/B2/B3 are full controls, not restoration-only.
+
+────────
+
+17.3 Failure handling
+
+A valid scientific PASS or FAIL continues automatically to B and the next pair.
+
+If an A arm becomes infrastructure-invalid after a consumed program:
+
+```text
+run its immediate B restoration/control when safe;
+
+hard-stop after that B;
+
+do not continue later pairs.
+```
+
+If a B arm becomes infrastructure-invalid:
+
+```text
+hard-stop;
+
+do not begin the next A.
+```
+
+No repeat of an invalid arm.
+
+===================================================================== 18. P12 — FROZEN STATISTICAL ANALYSIS
+
+Use the exact predeclared R1h statistical plan.
+
+For every A and every probe phase report:
+
+```text
+N=10000;
+ACK;
+NACK;
+timeout;
+rate;
+ppm;
+Wilson 95%;
+first/last NACK index;
+adjacent-pair count;
+run count;
+maximum consecutive NACKs;
+ten block rates;
+stationarity/independence classification.
+```
+
+For every A autoinit phase report:
+
+```text
+opportunities;
+NACKs;
+rate;
+confidence interval.
+```
+
+Compare:
+
+```text
+autoinit WADDR vs post-init WADDR;
+
+autoinit REGADDR vs post-init REGADDR;
+
+autoinit DATA vs post-init DATA.
+```
+
+Report:
+
+```text
+rate difference;
+rate ratio;
+95% interval;
+exact/Fisher/score p-value;
+Holm-adjusted p-value.
+```
+
+Support criterion remains:
+
+```text
+corrected p<0.01;
+
+rate-ratio lower 95% bound>2;
+
+same direction in at least 2 of 3 A runs.
+```
+
+Required final classifications:
+
+```text
+POSTINIT_WADDR_PROCESS
+
+POSTINIT_REGADDR_PROCESS
+
+POSTINIT_DATA_PROCESS
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY
+
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR
+
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR
+
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA
+
+R1H_REPLICATE_HOMOGENEITY
+
+BANK_TRACKER_COHERENCE
+
+R7_OPERATION_86_SEMANTICS
+
+FAILED_TRANSACTION_DISTRIBUTION
+
+PAIRED_AB_RESULT
+```
+
+Always state:
+
+```text
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+BOARD_VCCO_DROOP_PROVEN=
+    NO
+
+GROUND_BOUNCE_PROVEN=
+    NO
+
+ANALOG_MARGIN_DIRECTLY_MEASURED=
+    NO
+```
+
+===================================================================== 19. FINAL HARDWARE STATE
+
+At successful end require:
+
+```text
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FINAL_DIAGNOSTIC_MAGIC=
+    0
+
+FINAL_PINNED_DRIVER_LOADED=
+    YES
+
+FINAL_DONE=
+    1
+```
+
+===================================================================== 20. EVIDENCE AND PUBLICATION
+
+Evidence repository:
+
+```text
+lukaszsudul/AHD-diagnostic-evidence
+```
+
+New path:
+
+```text
+v41-nvp-r1h-r2-build-harness-continuation-and-large-sample/
+```
+
+Include:
+
+```text
+verbatim prompt;
+
+R1h source/evidence identities;
+
+exact terminal assertion and log extract;
+
+assertion root-cause audit;
+
+corrected task-local harness or tracked harness-only commit;
+
+exact build-command reconciliation;
+
+project-setup dry-run;
+
+semantic elaboration and binding evidence;
+
+full-top BRAM primitive mapping;
+
+resource gates;
+
+build artifacts, bit and DCP hashes;
+
+routed-impact audit;
+
+host tools and fixtures;
+
+bootstrap evidence if used;
+
+all six arm datasets;
+
+raw and decoded records/counters/probe indices;
+
+statistical scripts and results;
+
+operation ledger;
+
+single authoritative Markdown report;
+
+SHA-256 manifest.
+```
+
+Create:
+
+```text
+V41_NVP_R1H_R2_BUILD_HARNESS_CONTINUATION_AND_LARGE_SAMPLE_EVIDENCE.zip
+
+V41_NVP_R1H_R2_BUILD_HARNESS_CONTINUATION_AND_LARGE_SAMPLE_EVIDENCE_SHA256.txt
+
+SHA256_MANIFEST.txt
+```
+
+No PDF or DOCX.
+
+One normal evidence commit/push.
+
+No force-push.
+
+No tag or Release.
+
+===================================================================== 21. REQUIRED SINGLE FINAL REPORT BLOCK
+
+The final report must end with:
+
+```text
+TASK=
+    V41_NVP_R1H_R2_BUILD_HARNESS_CORRECTION_AND_LARGE_SAMPLE_EXECUTION
+
+EXPERIMENT_NAME=
+    R1h
+
+CONTINUATION_REVISION=
+    R2
+
+R1H_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+
+R1H_EVIDENCE_COMMIT=
+    7dc8b8fb07033148e7c232c235da012d8b14b621
+
+R1H_AUTHORITATIVE_REPORT_SHA256=
+    E7B41C0DD5CF21499BE55D8C4019F07694B1255252AB7539A1A376E7839B6468
+
+R1H_EVIDENCE_PACKAGE_SHA256=
+    C56FE89CE24403FE7BD4702B53778BA4C2B5403536185BCC66EB32B8118CBC78
+
+R1H_TERMINAL_CLASSIFICATION=
+    BLOCKED_ONE_CLEAN_BUILD_PROJECT_SETUP_COMPILE_ORDER_ASSERTION
+
+R1H_TERMINAL_ASSERTION=
+    R1h probe-index BRAM wrapper is not before its probe consumer
+
+R1H_R2_BUILD_HARNESS_CORRECTION_MODE=
+
+RELATIVE_SOURCE_POSITION_ASSERTION=
+    REMOVED_OR_DISABLED
+
+RELATIVE_SOURCE_POSITION_USED_AS_GATE=
+    NO
+
+COMPILE_ORDER_RECORDED=
+    YES
+
+PROJECT_SETUP_SEMANTIC_GATE=
+PROJECT_SETUP_DRY_RUNS=
+    1
+PROJECT_SETUP_DRY_RUN=
+SEMANTIC_ELABORATION_PREFLIGHTS=
+    1
+SEMANTIC_ELABORATION=
+UNRESOLVED_MODULES=
+UNRESOLVED_BLACKBOXES=
+FAILED_RECORD_WRAPPER_BINDING=
+PROBE_INDEX_WRAPPER_BINDING=
+
+FPGA_RTL_SOURCE_CHANGES=
+    0
+
+TRACKED_BUILD_HARNESS_COMMITS=
+BUILD_PROVENANCE_COMMIT=
+BUILD_PROVENANCE_TREE=
+
+R1H_RTL_BLOBS_UNCHANGED=
+R1H_XDC_UNCHANGED=
+R1H_XDMA_XCI_UNCHANGED=
+R1H_REGISTER_MAP_UNCHANGED=
+R1H_STATISTICAL_PLAN_UNCHANGED=
+
+R1H_R2_BIT_SHA256=
+R1H_R2_ROUTED_DCP_SHA256=
+
+FAILED_RECORD_PAYLOAD_RAMB18=
+WADDR_INDEX_PAYLOAD_RAMB18=
+REGADDR_INDEX_PAYLOAD_RAMB18=
+DATA_INDEX_PAYLOAD_RAMB18=
+R1H_NEW_PAYLOAD_RAMB18_TOTAL=
+
+FAILED_RECORD_PAYLOAD_FDRE=
+INDEX_PAYLOAD_FDRE_TOTAL=
+FAILED_RECORD_PAYLOAD_RAM64M=
+FAILED_RECORD_PAYLOAD_RAMD64E=
+
+MMIO_READ_SERVICE=
+    SYNCHRONOUS_ONE_OUTSTANDING
+
+COMBINATIONAL_INDEX_512_TO_1_MUX=
+    ABSENT
+
+COMBINATIONAL_RECORD_PAYLOAD_MUX=
+    ABSENT
+
+FULL_CLEAN_BUILDS=
+    1
+
+POST_SYNTH_SLICE_LUTS=
+POST_SYNTH_LOGIC_LUTS=
+POST_SYNTH_SLICE_REGISTERS=
+POST_SYNTH_RAMB18=
+POST_SYNTH_RAMB36=
+POST_SYNTH_RESOURCE_MARGIN_GATE=
+
+SYNTHESIS=
+OPT_DESIGN=
+PLACE=
+ROUTE=
+ROUTE_ERRORS=
+WNS=
+WHS=
+DRC_ERRORS=
+DRC_CRITICAL_WARNINGS=
+REQP_1839_SEMANTIC_COUNT=
+CDC_CRITICAL=
+CDC_UNKNOWN=
+SOURCE_COMMIT_TO_BIT_PROVENANCE=
+
+SCIENTIFIC_SCOPE_REDUCTION=
+    NO
+
+FAILED_RECORD_CAPACITY=
+    64
+
+FAILED_RECORD_WIDTH=
+    192
+
+INDEX_CAPACITY_PER_PHASE=
+    512
+
+PROBE_TARGET_OPPORTUNITIES_PER_PHASE=
+    10000
+
+ARM_A_REPETITIONS=
+    3
+
+TOTAL_TARGET_PHASE_OPPORTUNITIES=
+    90000
+
+PAIR_COUNT_PLANNED=
+    3
+
+PAIR_COUNT_VALID=
+
+BOOTSTRAP_RUN=
+BOOTSTRAP_RESULT=
+
+A1_AUTOINIT_WADDR_OPPORTUNITIES=
+A1_AUTOINIT_WADDR_NACKS=
+A1_AUTOINIT_REGADDR_OPPORTUNITIES=
+A1_AUTOINIT_REGADDR_NACKS=
+A1_AUTOINIT_DATA_OPPORTUNITIES=
+A1_AUTOINIT_DATA_NACKS=
+A1_AUTOINIT_RADDR_OPPORTUNITIES=
+A1_AUTOINIT_RADDR_NACKS=
+A1_FAILED_TXN_TOTAL=
+A1_FAILED_TXN_STORED=
+A1_FAILED_TXN_OVERFLOW=
+A1_BANK_INVARIANT_ERRORS=
+A1_PROBE_WADDR_NACKS=
+A1_PROBE_REGADDR_NACKS=
+A1_PROBE_DATA_NACKS=
+A1_PROBE_TIMEOUTS=
+A1_NVP_RESULT=
+
+B1_NACK_COUNT=
+B1_NVP_RESULT=
+
+A2_AUTOINIT_WADDR_OPPORTUNITIES=
+A2_AUTOINIT_WADDR_NACKS=
+A2_AUTOINIT_REGADDR_OPPORTUNITIES=
+A2_AUTOINIT_REGADDR_NACKS=
+A2_AUTOINIT_DATA_OPPORTUNITIES=
+A2_AUTOINIT_DATA_NACKS=
+A2_AUTOINIT_RADDR_OPPORTUNITIES=
+A2_AUTOINIT_RADDR_NACKS=
+A2_FAILED_TXN_TOTAL=
+A2_FAILED_TXN_STORED=
+A2_FAILED_TXN_OVERFLOW=
+A2_BANK_INVARIANT_ERRORS=
+A2_PROBE_WADDR_NACKS=
+A2_PROBE_REGADDR_NACKS=
+A2_PROBE_DATA_NACKS=
+A2_PROBE_TIMEOUTS=
+A2_NVP_RESULT=
+
+B2_NACK_COUNT=
+B2_NVP_RESULT=
+
+A3_AUTOINIT_WADDR_OPPORTUNITIES=
+A3_AUTOINIT_WADDR_NACKS=
+A3_AUTOINIT_REGADDR_OPPORTUNITIES=
+A3_AUTOINIT_REGADDR_NACKS=
+A3_AUTOINIT_DATA_OPPORTUNITIES=
+A3_AUTOINIT_DATA_NACKS=
+A3_AUTOINIT_RADDR_OPPORTUNITIES=
+A3_AUTOINIT_RADDR_NACKS=
+A3_FAILED_TXN_TOTAL=
+A3_FAILED_TXN_STORED=
+A3_FAILED_TXN_OVERFLOW=
+A3_BANK_INVARIANT_ERRORS=
+A3_PROBE_WADDR_NACKS=
+A3_PROBE_REGADDR_NACKS=
+A3_PROBE_DATA_NACKS=
+A3_PROBE_TIMEOUTS=
+A3_NVP_RESULT=
+
+B3_NACK_COUNT=
+B3_NVP_RESULT=
+
+POSTINIT_WADDR_PROCESS=
+POSTINIT_REGADDR_PROCESS=
+POSTINIT_DATA_PROCESS=
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY=
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA=
+
+R1H_REPLICATE_HOMOGENEITY=
+BANK_TRACKER_COHERENCE=
+R7_OPERATION_86_SEMANTICS=
+FAILED_TRANSACTION_DISTRIBUTION=
+PAIRED_AB_RESULT=
+
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+BOARD_VCCO_DROOP_PROVEN=
+    NO
+
+GROUND_BOUNCE_PROVEN=
+    NO
+
+ANALOG_MARGIN_DIRECTLY_MEASURED=
+    NO
+
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+FINAL_DIAGNOSTIC_MAGIC=
+FINAL_PINNED_DRIVER_LOADED=
+FINAL_DONE=
+
+CONDITIONAL_FORMAL_BOOTSTRAP_PROGRAMS=
+ARM_A_PROGRAMS=
+ARM_B_PROGRAMS=
+FPGA_PROGRAM_INVOCATIONS=
+WARM_REBOOTS=
+DRIVER_LOADS=
+
+PROGRAM_RETRIES=
+    0
+
+COLD_STARTS=
+    0
+
+PHYSICAL_ACTIONS=
+    0
+
+JTAG_FREQUENCY_CHANGES=
+    0
+
+PCI_REMOVE_RESCAN_RESETS=
+    0
+
+AXI_LITE_WRITES=
+    0
+
+C2H_TRANSFERS=
+    0
+
+H2C_TRANSFERS=
+    0
+
+PHASE3_RESUMED=
+    NO
+
+XDMA_DEVELOPMENT_CONTINUED=
+    NO
+
+FORMAL_REPOSITORY_MUTATIONS=
+    0
+
+OWNER_INTERACTIVE_APPROVAL_REQUESTS=
+    0
+
+OWNER_PROMPT_SHA256=
+EVIDENCE_PACKAGE_SHA256=
+EVIDENCE_REPOSITORY_COMMIT=
+PUBLIC_REMOTE_VERIFICATION=
+NEXT_ACTION=
+    OWNER_AND_AUDITOR_REVIEW_OF_R1H_LARGE_SAMPLE_RESULTS
+```
+
+===================================================================== 22. HARD STOPS
+
+Stop before harness change if:
+
+```text
+exact R1h source/evidence is unavailable;
+
+terminal assertion cannot be located exactly;
+
+resource/scientific contracts cannot be frozen exactly.
+```
+
+Stop before dry-run if:
+
+```text
+the proposed delta changes any RTL/XDC/XCI/test/host/scientific file;
+
+the proposed gate still relies on relative module-file position;
+
+build-command reconciliation differs outside the assertion/gate.
+```
+
+Stop after dry-run or semantic preflight if:
+
+```text
+the false assertion still triggers;
+
+wrapper/consumer source identity is ambiguous;
+
+duplicate module/entity definitions exist;
+
+unresolved module or black box exists;
+
+expected wrapper binding/count fails.
+```
+
+Stop after synthesis if:
+
+```text
+required full-top BRAM mapping is absent;
+
+index payload remains in large FDRE banks;
+
+failed payload remains RAM64M/RAMD64E;
+
+Slice LUT >18720;
+
+Slice Registers >37440.
+```
+
+Stop before hardware if:
+
+```text
+place/route/timing/DRC/CDC/provenance fails;
+
+exact R1h-R2 bit is unavailable;
+
+host-tool fixtures fail;
+
+formal start state cannot be proven;
+
+selected JTAG/kernel/driver/BAR safety fails.
+```
+
+Stop during hardware if:
+
+```text
+programming fails;
+
+host does not return;
+
+kernel differs;
+
+driver cannot load once;
+
+runtime provenance mismatches;
+
+phase counters are incoherent;
+
+failed log overflows;
+
+bank invariant error count is nonzero;
+
+probe aborts;
+
+any target opportunity count differs from 10000;
+
+safe target restoration fails;
+
+MMIO data is incoherent;
+
+final DONE fails.
+```
+
+No:
+
+```text
+new experiment letter;
+
+R1h RTL change;
+
+manual source-order workaround;
+
+second harness commit;
+
+second build;
+
+source patch after build start;
+
+scope reduction;
+
+probe-target/count change;
+
+extra pair;
+
+program retry;
+
+physical recovery;
+
+Phase-3 work.
+```
+
+===================================================================== 23. BEGIN
+
+```text
+save and hash this prompt
+    ->
+verify exact terminal R1h source/evidence
+    ->
+locate and freeze the false compile-order assertion
+    ->
+prove whether the dependency is semantically order-sensitive
+    ->
+replace relative-position gating with semantic file/module/binding gates
+    ->
+prefer a task-local corrected build harness with zero repository mutation
+    ->
+reconcile every build command against exact R1h
+    ->
+run one project-setup dry-run stopping before synth_design
+    ->
+run one semantic frontend/elaboration/binding preflight
+    ->
+prove exact R1h RTL/XDC/XCI/register/statistical equality
+    ->
+consume one newly authorized clean build
+    ->
+at full-top post-synthesis:
+        prove 6+3 RAMB18 payload mapping
+        prove large FDRE/LUTRAM payloads absent
+        prove >=10% raw LUT/FF headroom
+    ->
+continue opt/place/route/bitstream only on PASS
+    ->
+run routed-impact audit
+    ->
+push the R1h-R2 diagnostic branch
+    ->
+prove fresh exact formal hardware start state
+    ->
+optional exact formal bootstrap only if required
+    ->
+run:
+        A1 -> B1 -> A2 -> B2 -> A3 -> B3
+    ->
+analyze:
+        90,000 post-init target-phase opportunities
+        three complete autoinit phase datasets
+        three capacity-64 failed-transaction logs
+        three full formal controls
+    ->
+leave exact formal Phase 2 active
+    ->
+create one authoritative Markdown report
+    ->
+seal and publish evidence
+    ->
+HARD STOP.
+```
+
+No interactive owner questions.
+Keep experiment name R1h.
+No R1h RTL changes.
+No relative module-file-order gate.
+No second build.
+No host MMIO writes.
+No DMA.
+No Phase 3.
+No XDMA work.

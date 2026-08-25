@@ -1,0 +1,548 @@
+# R1h-R2 one-shot, non-synthesis project-setup dry-run.
+#
+# This script reconstructs the exact R1h project-registration context and
+# executes the R1h-R2 semantic source/module gate.  It intentionally contains
+# no synthesis, implementation, checkpoint, or bitstream command.
+
+if {$argc != 3} {
+  puts stderr "usage: r1h_r2_project_setup_dry_run.tcl REPOSITORY_ROOT DRY_RUN_ROOT EVIDENCE_ROOT"
+  exit 2
+}
+
+set repo_root [file normalize [lindex $argv 0]]
+set dry_run_root [file normalize [lindex $argv 1]]
+set evidence_root [file normalize [lindex $argv 2]]
+
+set expected_commit c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+set expected_tree 161e561f007912d73dba93c5ecd78e3cc3a6955b
+set expected_branch diag/v41-nvp-r1h-bram-backed-large-sample
+set expected_vivado_version 2025.2
+set expected_vivado_sw_build 6299465
+set expected_part xc7a35tcsg325-2
+set expected_top ahd_capture_top_xdma
+
+proc write_lines {path lines} {
+  file mkdir [file dirname $path]
+  set fh [open $path w]
+  fconfigure $fh -encoding utf-8 -translation lf
+  foreach line $lines {
+    puts $fh $line
+  }
+  close $fh
+}
+
+proc read_text {path} {
+  set fh [open $path r]
+  fconfigure $fh -encoding utf-8
+  set text [read $fh]
+  close $fh
+  return $text
+}
+
+proc require_files {paths} {
+  foreach path $paths {
+    if {![file isfile $path]} {
+      error "required file missing: $path"
+    }
+  }
+}
+
+proc sha256_file {path} {
+  set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
+  foreach line [split $output "\n"] {
+    set compact [string toupper \
+      [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
+    if {[regexp {^[0-9A-F]{64}$} $compact]} {
+      return $compact
+    }
+  }
+  error "certutil did not return a SHA-256 digest for $path"
+}
+
+proc directory_entries {path} {
+  set result [list]
+  if {![file exists $path]} {
+    return $result
+  }
+  if {![file isdirectory $path]} {
+    error "expected directory, found non-directory: $path"
+  }
+  foreach pattern [list * .*] {
+    foreach item [glob -nocomplain -directory $path $pattern] {
+      set tail [file tail $item]
+      if {$tail ne "." && $tail ne ".."} {
+        lappend result [file normalize $item]
+      }
+    }
+  }
+  return [lsort -unique $result]
+}
+
+proc path_inside_or_equal {child parent} {
+  set child_native [string tolower [file nativename [file normalize $child]]]
+  set parent_native [string trimright \
+    [string tolower [file nativename [file normalize $parent]]] "\\/"]
+  if {$child_native eq $parent_native} {
+    return 1
+  }
+  return [expr {
+    [string first "$parent_native\\" $child_native] == 0 ||
+    [string first "$parent_native/" $child_native] == 0
+  }]
+}
+
+proc relative_path_from_repo {repo_root absolute_path} {
+  set root_native [string trimright \
+    [file nativename [file normalize $repo_root]] "\\/"]
+  set path_native [file nativename [file normalize $absolute_path]]
+  set prefix "[string tolower $root_native]\\"
+  if {[string first $prefix [string tolower $path_native]] != 0} {
+    error "path is not inside repository: $absolute_path"
+  }
+  set rel_native [string range $path_native [string length "$root_native\\"] end]
+  return [string map [list "\\" "/"] $rel_native]
+}
+
+proc compile_order_index {compile_names wanted_path} {
+  set wanted [string tolower [file nativename [file normalize $wanted_path]]]
+  for {set index 0} {$index < [llength $compile_names]} {incr index} {
+    set candidate [string tolower \
+      [file nativename [file normalize [lindex $compile_names $index]]]]
+    if {$candidate eq $wanted} {
+      return $index
+    }
+  }
+  return -1
+}
+
+if {![file isdirectory $repo_root]} {
+  error "repository root is not a directory: $repo_root"
+}
+if {[path_inside_or_equal $dry_run_root $repo_root] ||
+    [path_inside_or_equal $evidence_root $repo_root]} {
+  error "dry-run and evidence roots must be outside the source repository"
+}
+if {[llength [directory_entries $dry_run_root]] != 0} {
+  error "project-setup dry-run root must be new or empty: $dry_run_root"
+}
+
+set actual_commit [string tolower [string trim \
+  [exec git -C $repo_root rev-parse HEAD]]]
+set actual_tree [string tolower [string trim \
+  [exec git -C $repo_root rev-parse {HEAD^{tree}}]]]
+set actual_branch [string trim \
+  [exec git -C $repo_root symbolic-ref --short HEAD]]
+set source_status [string trim \
+  [exec git -C $repo_root status --porcelain --untracked-files=all]]
+if {$actual_commit ne $expected_commit || $actual_tree ne $expected_tree} {
+  error "exact R1h commit/tree identity mismatch"
+}
+if {$actual_branch ne $expected_branch} {
+  error "exact R1h branch mismatch: expected $expected_branch, got $actual_branch"
+}
+if {$source_status ne ""} {
+  error "exact R1h worktree is not clean: $source_status"
+}
+
+set vivado_short [string trim [version -short]]
+set vivado_detail [version]
+set vivado_sw_build UNKNOWN
+regexp {SW Build[ \t]+([0-9]+)} $vivado_detail -> vivado_sw_build
+if {$vivado_short ne $expected_vivado_version ||
+    $vivado_sw_build ne $expected_vivado_sw_build} {
+  error "Vivado identity mismatch: expected 2025.2/6299465, got $vivado_short/$vivado_sw_build"
+}
+
+# Exact executable R1h source list: 17 SystemVerilog files, not the stale
+# planned markdown inventory that mentioned nvp_i2c_address_probe.sv.
+set sv_rel_files [list \
+  rtl/v41/axi_lite_host_bridge.sv \
+  rtl/v41/axi_clock_lifecycle_monitor.sv \
+  rtl/v41/axi_clock_measurement_regs.sv \
+  rtl/v41/r1e_measurement_regs.sv \
+  rtl/v41/r1h_probe_index_bram_store.sv \
+  rtl/v41/nvp_i2c_tri_phase_probe.sv \
+  rtl/v41/r1f_failed_txn_logger.sv \
+  rtl/v41/r1f_measurement_regs.sv \
+  rtl/v41/r1h_mmio_read_service.sv \
+  rtl/v41/control_status_regs.sv \
+  rtl/pio/pio_slot_adapter.sv \
+  rtl/pio/pio_bar_target.sv \
+  rtl/record/bt656_record_producer.sv \
+  rtl/record/capture_mailbox.sv \
+  rtl/video/video_capture.sv \
+  rtl/video/physical_frontend.sv \
+  rtl/top/ahd_capture_top_xdma.sv]
+set vhdl_rel_files [list \
+  rtl/nvp/nvp6134c_diagnostics_pkg.vhd \
+  rtl/nvp/r1f_transaction_serial_counter.vhd \
+  rtl/nvp/nvp6134c_i2c_bringup.vhd \
+  rtl/nvp/nvp6134c_autoinit.vhd]
+set xdc_rel_files [list \
+  xdc/boards/current/xdma_pcie.xdc \
+  xdc/boards/current/pins.xdc \
+  xdc/boards/current/vdo_input_timing.xdc \
+  xdc/boards/current/pcie_pio.xdc \
+  xdc/boards/current/nvp_control.xdc \
+  xdc/common/cdc.xdc \
+  xdc/common/configuration_bank.xdc]
+set xdma_rel_file ip/v41/xdma_v41_m1.xci
+
+set sv_files [list]
+foreach rel $sv_rel_files {
+  lappend sv_files [file normalize [file join $repo_root $rel]]
+}
+set vhdl_files [list]
+foreach rel $vhdl_rel_files {
+  lappend vhdl_files [file normalize [file join $repo_root $rel]]
+}
+set xdc_files [list]
+foreach rel $xdc_rel_files {
+  lappend xdc_files [file normalize [file join $repo_root $rel]]
+}
+set xdma_source [file normalize [file join $repo_root $xdma_rel_file]]
+set common_tcl [file normalize \
+  [file join $repo_root scripts v41 xdma_config_common.tcl]]
+require_files [concat $sv_files $vhdl_files $xdc_files \
+  [list $xdma_source $common_tcl]]
+
+source $common_tcl
+if {$v41_xdma::part ne $expected_part} {
+  error "shared XDMA part mismatch: expected $expected_part, got $v41_xdma::part"
+}
+
+set git_words [list]
+for {set word_index 0} {$word_index < 5} {incr word_index} {
+  set first [expr {$word_index * 8}]
+  lappend git_words [string range $expected_commit $first [expr {$first + 7}]]
+}
+set generics [join [list \
+  "SLOT_COUNT=2" \
+  "GIT_SHA_W0=32'h[lindex $git_words 0]" \
+  "GIT_SHA_W1=32'h[lindex $git_words 1]" \
+  "GIT_SHA_W2=32'h[lindex $git_words 2]" \
+  "GIT_SHA_W3=32'h[lindex $git_words 3]" \
+  "GIT_SHA_W4=32'h[lindex $git_words 4]" \
+  "BUILD_FLAGS=32'h00000002" \
+  "ENABLE_MAREK_INIT_TABLE=1"] " "]
+
+file mkdir $evidence_root
+set consumed_marker [file join $evidence_root \
+  R1H_R2_PROJECT_SETUP_DRY_RUN_CONSUMED.marker]
+if {[file exists $consumed_marker]} {
+  error "the sole R1h-R2 project-setup dry-run was already consumed"
+}
+set marker_fh [open $consumed_marker {WRONLY CREAT EXCL}]
+fconfigure $marker_fh -encoding utf-8 -translation lf
+puts $marker_fh "PROJECT_SETUP_DRY_RUNS=1"
+puts $marker_fh "R1H_SOURCE_COMMIT=$expected_commit"
+puts $marker_fh "R1H_SOURCE_TREE=$expected_tree"
+puts $marker_fh \
+  "CONSUMED_UTC=[clock format [clock seconds] -gmt true -format {%Y-%m-%dT%H:%M:%SZ}]"
+close $marker_fh
+
+set dry_run_rc [catch {
+  file mkdir $dry_run_root
+  cd $dry_run_root
+  set project_name v41_r1h_r2_project_setup_dry_run
+  set project_dir [file join $dry_run_root vivado_project]
+  create_project $project_name $project_dir -part $expected_part
+  set_property target_language Verilog [current_project]
+  set_property simulator_language Mixed [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  config_ip_cache -use_cache_location [file join $dry_run_root ip_cache]
+
+  add_files -norecurse $sv_files
+  set_property FILE_TYPE SystemVerilog [get_files $sv_files]
+  add_files -norecurse $vhdl_files
+
+  set input_xci_dir [file join $dry_run_root input_xci]
+  file mkdir $input_xci_dir
+  set xdma_copy [file join $input_xci_dir xdma_v41_m1.xci]
+  file copy $xdma_source $xdma_copy
+  if {[sha256_file $xdma_source] ne [sha256_file $xdma_copy]} {
+    error "dry-run XDMA import copy differs from exact R1h XCI"
+  }
+  import_ip -files $xdma_copy
+  set xdma_ip [get_ips -quiet xdma_v41_m1]
+  if {[llength $xdma_ip] != 1} {
+    error "expected exactly one imported XDMA IP"
+  }
+  v41_xdma::configure_minimal_c2h_stream $xdma_ip
+  dict for {property expected} [v41_xdma::minimal_c2h_stream_config] {
+    set actual [get_property $property $xdma_ip]
+    if {$actual ne $expected} {
+      error "queried imported XDMA property mismatch for $property"
+    }
+  }
+  set imported_xci [get_property IP_FILE $xdma_ip]
+  set imported_xci_object [get_files -quiet $imported_xci]
+  if {[llength $imported_xci_object] != 1} {
+    error "imported XDMA XCI object not found"
+  }
+  set_property GENERATE_SYNTH_CHECKPOINT false $imported_xci_object
+  generate_target all $xdma_ip
+
+  add_files -fileset constrs_1 -norecurse $xdc_files
+  set_property PROCESSING_ORDER EARLY [get_files [lindex $xdc_files 0]]
+  set_property PROCESSING_ORDER LATE [get_files [lrange $xdc_files 1 end]]
+
+  set_property top $expected_top [get_filesets sources_1]
+  set_property generic $generics [get_filesets sources_1]
+  update_compile_order -fileset sources_1
+
+  set queried_part [get_property PART [current_project]]
+  set queried_top [get_property TOP [get_filesets sources_1]]
+  set queried_generics [get_property GENERIC [get_filesets sources_1]]
+  if {$queried_part ne $expected_part || $queried_top ne $expected_top ||
+      $queried_generics ne $generics} {
+    error "dry-run queried part/top/generic contract differs from exact R1h"
+  }
+
+  for {set index 0} {$index < [llength $xdc_files]} {incr index} {
+    set xdc_path [lindex $xdc_files $index]
+    set expected_order [expr {$index == 0 ? "EARLY" : "LATE"}]
+    if {[get_property PROCESSING_ORDER [get_files $xdc_path]] ne $expected_order} {
+      error "XDC processing order mismatch for $xdc_path"
+    }
+  }
+
+  set actual_compile_objects \
+    [get_files -compile_order sources -used_in synthesis]
+  set actual_compile_names [list]
+  set actual_compile_lines [list]
+  set compile_index 0
+  foreach object $actual_compile_objects {
+    set name [get_property NAME $object]
+    lappend actual_compile_names $name
+    lappend actual_compile_lines \
+      "[format %03d $compile_index]|[get_property FILE_TYPE $object]|$name"
+    incr compile_index
+  }
+  report_compile_order -fileset sources_1 -used_in synthesis \
+    -file [file join $evidence_root R1H_R2_DRY_RUN_REPORT_COMPILE_ORDER.txt]
+  write_lines [file join $evidence_root \
+    R1H_R2_DRY_RUN_QUERIED_SYNTHESIS_COMPILE_ORDER.txt] $actual_compile_lines
+
+  foreach required [concat $vhdl_files $sv_files] {
+    if {[compile_order_index $actual_compile_names $required] < 0} {
+      error "required synthesis source absent from queried compile order: $required"
+    }
+  }
+  set prior_index -1
+  foreach required $vhdl_files {
+    set this_index [compile_order_index $actual_compile_names $required]
+    if {$this_index <= $prior_index} {
+      error "queried VHDL analysis order violates exact R1h dependency order"
+    }
+    set prior_index $this_index
+  }
+
+  set semantic_sources [list \
+    [list PROBE_INDEX_WRAPPER \
+      [file join $repo_root rtl v41 r1h_probe_index_bram_store.sv] \
+      r1h_probe_index_bram_store] \
+    [list PROBE_CONSUMER \
+      [file join $repo_root rtl v41 nvp_i2c_tri_phase_probe.sv] \
+      nvp_i2c_tri_phase_probe] \
+    [list FAILED_RECORD_WRAPPER \
+      [file join $repo_root rtl v41 r1f_failed_txn_logger.sv] \
+      v41_r1f_failed_txn_logger] \
+    [list MEASUREMENT_REGS \
+      [file join $repo_root rtl v41 r1f_measurement_regs.sv] \
+      v41_r1f_measurement_regs] \
+    [list MMIO_READ_SERVICE \
+      [file join $repo_root rtl v41 r1h_mmio_read_service.sv] \
+      v41_r1h_mmio_read_service] \
+    [list CONTROL_STATUS_REGS \
+      [file join $repo_root rtl v41 control_status_regs.sv] \
+      v41_control_status_regs] \
+    [list TOP_CONSUMER \
+      [file join $repo_root rtl top ahd_capture_top_xdma.sv] \
+      ahd_capture_top_xdma]]
+  set gate_lines [list \
+    "R1H_R2_BUILD_HARNESS_CORRECTION_MODE=TASK_LOCAL_ZERO_REPOSITORY_MUTATION" \
+    "R1H_SOURCE_COMMIT=$expected_commit" \
+    "R1H_SOURCE_TREE=$expected_tree" \
+    "VIVADO_VERSION=$vivado_short" \
+    "VIVADO_SW_BUILD=$vivado_sw_build" \
+    "PART=$queried_part" \
+    "TOP=$queried_top" \
+    "WRAPPER_SOURCE_FILE_COUNT=1" \
+    "CONSUMER_SOURCE_FILE_COUNT=1" \
+    "RELATIVE_SOURCE_POSITION_ASSERTION=REMOVED_OR_DISABLED" \
+    "RELATIVE_SOURCE_POSITION_USED_AS_GATE=NO" \
+    "COMPILE_ORDER_RECORDED=YES" \
+    "SYSTEMVERILOG_RELATIVE_COMPILE_ORDER_USED_AS_PASS_FAIL_GATE=NO" \
+    "VHDL_DEPENDENCY_ORDER_USED_AS_PASS_FAIL_GATE=YES"]
+  foreach semantic_source $semantic_sources {
+    lassign $semantic_source label source_path module_name
+    set objects [get_files -quiet -all $source_path]
+    if {[llength $objects] != 1} {
+      error "$label file count is [llength $objects]; expected one"
+    }
+    set object [lindex $objects 0]
+    set file_type [get_property FILE_TYPE $object]
+    set library [get_property LIBRARY $object]
+    set used_in_synthesis [get_property USED_IN_SYNTHESIS $object]
+    if {$file_type ne "SystemVerilog" || $library ne "xil_defaultlib" ||
+        !$used_in_synthesis} {
+      error "$label semantic file-property gate failed"
+    }
+    set declaration_pattern [format \
+      {^[ \t]*module[ \t]+%s([^A-Za-z0-9_$]|$)} $module_name]
+    set declaration_count [regexp -all -line -- $declaration_pattern \
+      [read_text $source_path]]
+    if {$declaration_count != 1} {
+      error "$label module declaration count is $declaration_count; expected one"
+    }
+    lappend gate_lines "$label\_SOURCE_FILE_COUNT=1"
+    lappend gate_lines "$label\_MODULE_NAME=$module_name"
+    lappend gate_lines "$label\_MODULE_DECLARATION_COUNT=1"
+    lappend gate_lines "$label\_FILE_TYPE=$file_type"
+    lappend gate_lines "$label\_LIBRARY=$library"
+    lappend gate_lines "$label\_USED_IN_SYNTHESIS=YES"
+    lappend gate_lines \
+      "$label\_SOURCE_PATH=[relative_path_from_repo $repo_root $source_path]"
+  }
+
+  array set module_definition_owner [list]
+  set module_definition_count 0
+  set duplicate_definition_count 0
+  set sv_include_count 0
+  set sv_package_declaration_count 0
+  set sv_import_count 0
+  foreach source_path $sv_files {
+    set text [read_text $source_path]
+    set definitions [regexp -all -inline -line -- \
+      {^[ \t]*module[ \t]+([A-Za-z_][A-Za-z0-9_$]*)} $text]
+    foreach {whole_match module_name} $definitions {
+      incr module_definition_count
+      if {[info exists module_definition_owner($module_name)]} {
+        incr duplicate_definition_count
+      } else {
+        set module_definition_owner($module_name) $source_path
+      }
+    }
+    incr sv_include_count [regexp -all -line -- \
+      {^[ \t]*`include[ \t]+} $text]
+    incr sv_package_declaration_count [regexp -all -line -- \
+      {^[ \t]*package[ \t]+[A-Za-z_]} $text]
+    incr sv_import_count [regexp -all -line -- \
+      {^[ \t]*import[ \t]+[A-Za-z_]} $text]
+  }
+  if {$duplicate_definition_count != 0 || $sv_include_count != 0 ||
+      $sv_package_declaration_count != 0 || $sv_import_count != 0} {
+    error "duplicate definition or unresolved SystemVerilog include/package dependency"
+  }
+
+  set diagnostics_package_count [regexp -all -line -nocase -- \
+    {^[ \t]*package[ \t]+nvp6134c_diag_pkg_v38ek[ \t]+is} \
+    [read_text [lindex $vhdl_files 0]]]
+  set diagnostics_package_use_count [regexp -all -line -nocase -- \
+    {^[ \t]*use[ \t]+work\.nvp6134c_diag_pkg_v38ek\.all[ \t]*;} \
+    [read_text [lindex $vhdl_files 2]]]
+  if {$diagnostics_package_count != 1 || $diagnostics_package_use_count != 1} {
+    error "exact VHDL package declaration/use contract is unresolved"
+  }
+
+  set top_text [read_text [file join $repo_root rtl top ahd_capture_top_xdma.sv]]
+  set probe_text [read_text \
+    [file join $repo_root rtl v41 nvp_i2c_tri_phase_probe.sv]]
+  set index_wrapper_instantiation_count [regexp -all -line -- \
+    {^[ \t]*r1h_probe_index_bram_store([ \t#]+)} $probe_text]
+  set logger_wrapper_instantiation_count [regexp -all -line -- \
+    {^[ \t]*v41_r1f_failed_txn_logger([ \t#]+)} $top_text]
+  set probe_consumer_instantiation_count [regexp -all -line -- \
+    {^[ \t]*nvp_i2c_tri_phase_probe([ \t#]+)} $top_text]
+  set measurement_regs_instantiation_count [regexp -all -line -- \
+    {^[ \t]*v41_r1f_measurement_regs([ \t#]+)} $top_text]
+  set mmio_service_instantiation_count [regexp -all -line -- \
+    {^[ \t]*v41_r1h_mmio_read_service([ \t#]+)} $top_text]
+  set control_regs_instantiation_count [regexp -all -line -- \
+    {^[ \t]*v41_control_status_regs([ \t#]+)} $top_text]
+  foreach {label count} [list \
+      PROBE_INDEX_WRAPPER $index_wrapper_instantiation_count \
+      FAILED_RECORD_WRAPPER $logger_wrapper_instantiation_count \
+      PROBE_CONSUMER $probe_consumer_instantiation_count \
+      MEASUREMENT_REGS $measurement_regs_instantiation_count \
+      MMIO_READ_SERVICE $mmio_service_instantiation_count \
+      CONTROL_STATUS_REGS $control_regs_instantiation_count] {
+    if {$count != 1} {
+      error "$label source-derived instantiation count is $count; expected one"
+    }
+    lappend gate_lines "$label\_INSTANTIATION_COUNT=$count"
+  }
+  set logger_text [read_text \
+    [file join $repo_root rtl v41 r1f_failed_txn_logger.sv]]
+  set index_store_text [read_text \
+    [file join $repo_root rtl v41 r1h_probe_index_bram_store.sv]]
+  set logger_generate_match_count [regexp -line -- \
+    {for[ \t]*\(bank_index[ \t]*=[ \t]*0;[ \t]*bank_index[ \t]*<[ \t]*([0-9]+);} \
+    $logger_text logger_generate_match failed_record_bram_bank_count]
+  set index_generate_match_count [regexp -line -- \
+    {for[ \t]*\(phase_bank[ \t]*=[ \t]*0;[ \t]*phase_bank[ \t]*<[ \t]*([0-9]+);} \
+    $index_store_text index_generate_match probe_index_bram_instance_count]
+  set logger_xpm_declaration_count [regexp -all -line -- \
+    {^[ \t]*xpm_memory_sdpram[ \t]*#\(} $logger_text]
+  set logger_xpm_instance_name_count [regexp -all -line -- \
+    {^[ \t]*\)[ \t]+R1H_RECORD_PAYLOAD_RAM[ \t]*\(} $logger_text]
+  set index_xpm_declaration_count [regexp -all -line -- \
+    {^[ \t]*xpm_memory_sdpram[ \t]*#\(} $index_store_text]
+  set index_xpm_instance_name_count [regexp -all -line -- \
+    {^[ \t]*\)[ \t]+INDEX_PAYLOAD_RAM[ \t]*\(} $index_store_text]
+  if {$logger_generate_match_count != 1 || $failed_record_bram_bank_count != 6 ||
+      $logger_xpm_declaration_count != 1 || $logger_xpm_instance_name_count != 1} {
+    error "failed-record source-derived six-bank XPM architecture gate failed"
+  }
+  if {$index_generate_match_count != 1 || $probe_index_bram_instance_count != 3 ||
+      $index_xpm_declaration_count != 1 || $index_xpm_instance_name_count != 1} {
+    error "probe-index source-derived three-bank XPM architecture gate failed"
+  }
+  lappend gate_lines \
+    "FAILED_RECORD_WRAPPER_MODULE_NAME=v41_r1f_failed_txn_logger" \
+    "FAILED_RECORD_WRAPPER_SOURCE_PATH=rtl/v41/r1f_failed_txn_logger.sv" \
+    "FAILED_RECORD_BRAM_BANK_COUNT=$failed_record_bram_bank_count" \
+    "FAILED_RECORD_XPM_DECLARATION_COUNT=$logger_xpm_declaration_count" \
+    "FAILED_RECORD_XPM_INSTANCE_NAME_COUNT=$logger_xpm_instance_name_count" \
+    "PROBE_INDEX_WRAPPER_MODULE_NAME=r1h_probe_index_bram_store" \
+    "PROBE_INDEX_WRAPPER_SOURCE_PATH=rtl/v41/r1h_probe_index_bram_store.sv" \
+    "PROBE_INDEX_BRAM_INSTANCE_COUNT=$probe_index_bram_instance_count" \
+    "PROBE_INDEX_XPM_DECLARATION_COUNT=$index_xpm_declaration_count" \
+    "PROBE_INDEX_XPM_INSTANCE_NAME_COUNT=$index_xpm_instance_name_count" \
+    "SYSTEMVERILOG_MODULE_DEFINITION_COUNT=$module_definition_count" \
+    "DUPLICATE_DEFINITIONS=0" \
+    "SYSTEMVERILOG_INCLUDE_DIRECTIVES=0" \
+    "SYSTEMVERILOG_PACKAGE_DECLARATIONS=0" \
+    "SYSTEMVERILOG_IMPORTS=0" \
+    "UNRESOLVED_INCLUDE_OR_PACKAGE_DEPENDENCIES=0" \
+    "R1H_FALSE_ASSERTION_TRIGGERED=NO" \
+    "PROJECT_SETUP_SEMANTIC_GATE=PASS" \
+    "PROJECT_SETUP_DRY_RUNS=1" \
+    "PROJECT_SETUP_DRY_RUN=PASS" \
+    "PROCESS_EXIT_CODE=0"
+  close_project
+  write_lines [file join $evidence_root \
+    R1H_R2_PROJECT_SETUP_DRY_RUN_RESULT.txt] $gate_lines
+} dry_run_error dry_run_options]
+
+if {$dry_run_rc != 0} {
+  set error_info $dry_run_error
+  if {[dict exists $dry_run_options -errorinfo]} {
+    set error_info [dict get $dry_run_options -errorinfo]
+  }
+  write_lines [file join $evidence_root \
+    R1H_R2_PROJECT_SETUP_DRY_RUN_FAILURE.txt] [list \
+    "PROJECT_SETUP_DRY_RUNS=1" \
+    "PROJECT_SETUP_DRY_RUN=FAIL" \
+    "PROCESS_EXIT_CODE=1" \
+    "ERROR=$dry_run_error" \
+    "ERROR_INFO_BEGIN" \
+    $error_info \
+    "ERROR_INFO_END"]
+  puts stderr $error_info
+  exit 1
+}
+
+puts "R1H_R2_PROJECT_SETUP_DRY_RUN=PASS"
+exit 0
