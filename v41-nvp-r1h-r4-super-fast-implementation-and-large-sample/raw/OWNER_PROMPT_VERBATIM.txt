@@ -1,0 +1,1262 @@
+CODEX MASTER PROMPT
+
+v41 NVP R1h-R4 — SUPER-FAST implementation, bitstream, and large-sample campaign
+
+OWNER ACCEPTS REDUCED PROCESS ASSURANCE AND DIAGNOSTIC RESOURCE RISK
+
+Exact R1h synthesized DCP → opt/place/route/bitstream
+
+→ mandatory formal bootstrap → A1/B1 → A2/B2 → A3/B3
+
+No source change, no new synthesis, no report-only preflight blockers
+
+```text
+PROJECT:
+    AHD Capture Card
+
+TASK:
+    V41_NVP_R1H_R4_SUPER_FAST_IMPLEMENTATION_AND_LARGE_SAMPLE
+
+EXPERIMENT_NAME:
+    R1h
+
+CONTINUATION_REVISION:
+    R4
+
+MODE:
+    SUPER_FAST_OWNER_RISK_ACCEPTED
+
+PRIMARY_GOAL:
+    Obtain the expanded R1h diagnostic dataset now.
+
+OWNER_PRIORITY:
+    SCIENTIFIC_HARDWARE_RESULT_OVER_PROCESS_FORMALISM
+
+OWNER_ACCEPTS:
+    reduced preflight coverage;
+    diagnostic-only implementation with 5–10% free Slice-LUT margin;
+    immediate hardware use after implementation PASS;
+    evidence packaging after—not before—the hardware campaign;
+    one controlled global JTAG programming retry for infrastructure failure;
+    host-only parser/reader correction during a live image when raw MMIO remains
+    read-only and coherent.
+
+OWNER_DOES_NOT_ACCEPT:
+    wrong DCP or bit identity;
+    negative timing;
+    failed placement/routing;
+    DRC errors or critical warnings;
+    less than 5% free Slice LUT after opt or in the final implemented design;
+    unsafe JTAG target;
+    host MMIO writes;
+    DMA;
+    physical intervention during the task;
+    failure to restore exact formal Phase 2 at the end.
+
+SOURCE_CHANGES:
+    0
+
+NEW_SYNTHESIS:
+    0
+
+IMPLEMENTATION_CONTINUATION:
+    1
+
+BITSTREAM_ATTEMPTS:
+    1
+
+PAIR_SEQUENCE:
+    A1 -> B1 -> A2 -> B2 -> A3 -> B3
+
+TOTAL_POSTINIT_TARGET_PHASE_OPPORTUNITIES:
+    90000
+
+FINAL_ACTIVE_IMAGE:
+    EXACT_FORMAL_PHASE2
+```
+
+===================================================================== -1. OWNER AUTHORIZATION — EXECUTE WITHOUT INTERACTIVE CONFIRMATION
+
+```text
+OWNER_STANDING_AUTHORIZATION=
+    GRANTED
+
+OWNER_SUPER_FAST_RISK_ACCEPTANCE=
+    GRANTED
+
+OWNER_5_PERCENT_POST_OPT_AND_FINAL_SLICE_LUT_MARGIN=
+    GRANTED
+
+OWNER_INTERACTIVE_APPROVAL_REQUIRED=
+    NO
+
+EXPECTED_OWNER_INTERACTIONS=
+    0
+```
+
+Continue automatically after every real PASS gate.
+
+Do not ask the owner to approve:
+
+```text
+DCP materialization;
+opt/place/route/bitstream;
+mandatory formal bootstrap;
+A1/B1/A2/B2/A3/B3;
+warm reboots;
+exact driver loads;
+read-only telemetry;
+one controlled global programming retry;
+task-local host-reader/parser correction;
+final evidence publication.
+```
+
+===================================================================== 0. EXACT INPUTS
+
+Exact R1h scientific source:
+
+```text
+R1H_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+```
+
+Exact synthesized checkpoint:
+
+```text
+R1H_SYNTH_DCP_FILENAME=
+    R1H_synth.dcp
+
+R1H_SYNTH_DCP_SHA256=
+    807D292909804FDE573867A681A3407366BF9AF0796E290E609951B7DD68E46E
+
+PART=
+    xc7a35tcsg325-2
+
+TOP=
+    ahd_capture_top_xdma
+
+VIVADO=
+    2025.2 build 6299465
+```
+
+Exact post-synthesis context:
+
+```text
+SLICE_LUTS=
+    19255
+
+LOGIC_LUTS=
+    18108
+
+SLICE_REGISTERS=
+    20395
+
+RAMB18E1=
+    12
+
+RAMB36E1=
+    21
+```
+
+Exact R1h payload mapping already proven in this DCP:
+
+```text
+FAILED_RECORD_PAYLOAD_RAMB18=
+    6
+
+WADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+REGADDR_INDEX_PAYLOAD_RAMB18=
+    1
+
+DATA_INDEX_PAYLOAD_RAMB18=
+    1
+
+NEW_R1H_PAYLOAD_RAMB18_TOTAL=
+    9
+
+FAILED_RECORD_PAYLOAD_FDRE=
+    81
+
+INDEX_PAYLOAD_FDRE_TOTAL=
+    3
+
+FAILED_RECORD_PAYLOAD_RAM64M=
+    0
+
+FAILED_RECORD_PAYLOAD_RAMD64E=
+    0
+```
+
+Exact formal Phase-2 control:
+
+```text
+FORMAL_BIT_SHA256=
+    7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2
+
+FORMAL_RUNTIME_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FORMAL_DIAGNOSTIC_MAGIC=
+    0x00000000
+```
+
+Selected JTAG:
+
+```text
+JTAG_CANONICAL_ID=
+    Xilinx/80802026a98b01
+
+PART=
+    xc7a35t
+
+IDCODE=
+    0362D093
+```
+
+Ubuntu and XDMA:
+
+```text
+DUT=
+    vcdeagent1@10.132.1.111
+
+REQUIRED_KERNEL=
+    7.0.0-29-generic
+
+CREDENTIAL_FILE=
+    C:\FPGA\VCDE-DUT-1.txt
+
+MODULE_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA/linux-kernel/xdma/xdma.ko
+
+MODULE_SHA256=
+    1AEF06244DF308FEE544A2662B73855C81BEB88BC929E7885D8D113E474B320A
+
+LOADER_PATH=
+    /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+
+LOADER_SHA256=
+    7279E316A2D647826B8D5EC6BEDF78A143B72D100B4008C7AC006C1B6653649F
+```
+
+=====================================================================
+
+1. R1h SCIENTIFIC CONTRACT — FROZEN
+=====================================================================
+
+Do not change:
+
+```text
+AUTOINIT_I2C_HZ=
+    25000
+
+EXPECTED_CNT_AT_INIT_DONE=
+    132584734
+
+FAILED_RECORD_CAPACITY=
+    64
+
+FAILED_RECORD_WIDTH_BITS=
+    192
+
+TRANSACTION_INDEX_WIDTH=
+    16
+
+TABLE_SLOT_INDEX_WIDTH=
+    16
+
+PROBE_PHASES=
+    WADDR / REGADDR / DATA
+
+TARGET_OPPORTUNITIES_PER_PHASE=
+    10000
+
+NACK_INDEX_CAPACITY_PER_PHASE=
+    512
+
+PROBE_BANK=
+    0x00
+
+PROBE_REGISTER=
+    0x85
+
+PROBE_DATA=
+    0x00
+
+ARM_A_REQUIRED_WAIT_SECONDS=
+    33.536673744
+```
+
+Keep the complete existing R1h register map and host-visible field encodings.
+
+===================================================================== 2. SUPER-FAST RULES
+
+The following are deliberately removed as blockers:
+
+```text
+separate read-only DCP preflight;
+raw nonempty ROUTE-property test;
+relative source-file-order assertion;
+report_property cardinality checks;
+raw textual REQP-1839 counting;
+intermediate evidence publication;
+intermediate branch push;
+full manifest generation before hardware;
+routed-impact/power reporting before hardware;
+optional report formatting/cardinality assertions.
+```
+
+Explicitly:
+
+```text
+RAW_NONEMPTY_ROUTE_PROPERTY=
+    RECORD_IF_ALREADY_AVAILABLE_BUT_NEVER_QUERY_OR_USE_AS_GATE
+
+RAW_ROUTE_PROPERTY_MEANS_TOP_LEVEL_ROUTED=
+    NO
+
+R1H_R3_ROUTE_PROPERTY_BLOCKER=
+    SUPERSEDED_BY_OWNER_AUTHORIZATION
+```
+
+Do not run a separate preflight session.
+
+Use one implementation session.
+
+Only the hard gates in Sections 4, 5, 7, 8 and 9 may stop execution.
+
+Optional report failures:
+
+```text
+log them;
+continue;
+do not convert them into a design failure.
+```
+
+Essential reports are only:
+
+```text
+post-opt utilization;
+post-route timing;
+route status;
+final utilization;
+write_bitstream success.
+```
+
+Hash policy:
+
+```text
+verify the one input DCP hash;
+verify the generated R1h bit hash;
+verify the formal bit hash;
+defer full evidence manifests until after final formal restoration.
+```
+
+===================================================================== 3. TASK ROOT AND LOCK
+
+Create:
+
+```text
+C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\
+```
+
+Create only:
+
+```text
+OPERATION_LEDGER.md
+TIME_LEDGER.md
+raw\
+implementation\
+hardware\
+final\
+scripts\
+```
+
+Before implementation:
+
+```text
+confirm no active Vivado implementation process from an older task;
+confirm no active hardware-owning task;
+acquire the shared implementation/hardware lock once.
+```
+
+Do not repeat the check after acquisition unless a process actually fails.
+
+===================================================================== 4. EXACT DCP → OPT_DESIGN
+
+Materialize the exact DCP from the existing local R1h-R2 task root or its
+published Git-LFS object.
+
+Hard gate:
+
+```text
+SHA256=
+    807D292909804FDE573867A681A3407366BF9AF0796E290E609951B7DD68E46E
+```
+
+A Git-LFS pointer is not the DCP.
+
+Start one Vivado implementation session.
+
+Run:
+
+```tcl
+open_checkpoint <exact R1H_synth.dcp>
+```
+
+Minimal same-session checks:
+
+```text
+PART=
+    xc7a35tcsg325-2
+
+DESIGN_STATE=
+    SYNTHESIZED_OR_UNPLACED
+
+SOURCE_PROVENANCE=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+```
+
+Do not query or gate on raw ROUTE properties.
+
+Run exactly the original R1h flow command:
+
+```tcl
+opt_design
+```
+
+No synthesis.
+
+No new constraints.
+
+No strategy/directive change.
+
+No second opt.
+
+===================================================================== 5. POST-OPT HARD GATE
+
+Record exact post-opt resources.
+
+Hard requirements:
+
+```text
+POST_OPT_SLICE_LUTS<=
+    19760
+
+POST_OPT_SLICE_REGISTERS<=
+    37440
+```
+
+Classification:
+
+```text
+POST_OPT_SLICE_LUTS<=18720:
+    PASS_STANDARD_MARGIN
+
+18721..19760:
+    PASS_DIAGNOSTIC_ONLY_5_TO_10_PERCENT_MARGIN
+
+>19760:
+    FAIL
+```
+
+Memory architecture:
+
+Try to enumerate the known nine R1h BRAM payload stores.
+
+Hard-stop only when there is positive proof of regression:
+
+```text
+known R1h payload RAMB18 count < 9;
+or
+payload FDRE count > 1000;
+or
+failed/index payload RAM64M/RAMD64E reappears.
+```
+
+If hierarchy names are changed by optimization and exact attribution cannot be
+resolved:
+
+```text
+MAPPING_QUERY=
+    NOT_RESOLVED_AFTER_OPT
+
+ACTION=
+    CONTINUE
+
+REASON=
+    exact input DCP mapping was already proven and total BRAM count is recorded.
+```
+
+This nonresolution is not a blocker in SUPER_FAST mode.
+
+===================================================================== 6. PLACE / ROUTE / BITSTREAM — ONE PASS
+
+After post-opt PASS, run the exact remaining original R1h implementation tail:
+
+```text
+place_design;
+phys_opt_design only if present in the original frozen flow;
+route_design.
+```
+
+Do not add directives or overrides.
+
+Hard gates:
+
+```text
+PLACE=
+    PASS
+
+ROUTE=
+    PASS
+
+ROUTE_ERRORS=
+    0
+
+UNROUTED_NETS=
+    0
+
+WNS>=
+    0
+
+WHS>
+    0
+
+FAILING_SETUP_PATHS=
+    0
+
+FAILING_HOLD_PATHS=
+    0
+
+FINAL_SLICE_LUTS<=
+    19760
+
+FINAL_SLICE_REGISTERS<=
+    37440
+```
+
+DRC policy:
+
+```text
+actual DRC errors:
+    0
+
+actual DRC critical warnings:
+    0
+
+REQP-1839:
+    accepted historical baseline;
+    record when available;
+    do not block on count/parser/report-format issues.
+```
+
+CDC policy:
+
+```text
+if report_cdc succeeds and reports CRITICAL or UNKNOWN:
+    hard stop;
+
+if the optional report command itself fails:
+    record and continue because exact RTL/source CDC gates previously passed.
+```
+
+Do not stop on:
+
+```text
+optional report-generation failure;
+raw ROUTE property;
+report formatting;
+text-count mismatch;
+missing nonessential power/congestion report.
+```
+
+After hard gates PASS, write exactly one bitstream:
+
+```text
+ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit
+```
+
+Require:
+
+```text
+write_bitstream exit=0;
+file exists;
+file nonzero;
+SHA-256 recorded.
+```
+
+No second bitstream attempt.
+
+===================================================================== 7. MINIMAL HOST/JTAG SAFETY GATE
+
+Do not publish or perform an extended audit before hardware.
+
+Minimal pre-bootstrap checks:
+
+```text
+Ubuntu reachable;
+kernel=7.0.0-29-generic;
+next reboot remains kernel 29;
+
+exact selected JTAG target present;
+part xc7a35t;
+IDCODE 0362D093;
+
+no XDMA node owner;
+no task DMA;
+no fatal kernel/AER state;
+exact formal bit available;
+exact R1h bit available.
+```
+
+Current FPGA image, endpoint, driver and DONE are not required to be formal.
+
+R1h-R4 uses a mandatory formal bootstrap.
+
+===================================================================== 8. PROGRAMMING POLICY
+
+Programming observer hard requirements after every successful program:
+
+```text
+vendor startup HIGH;
+same-session DONE=1;
+independent DONE=1;
+process exit=0.
+```
+
+Global infrastructure retry budget:
+
+```text
+GLOBAL_PROGRAM_RETRY_BUDGET=
+    1
+```
+
+The single retry may be used only when:
+
+```text
+the first attempt failed from JTAG transport/startup infrastructure;
+no reboot or telemetry followed;
+the same target, part and IDCODE are freshly re-established;
+no physical action occurs;
+the exact same bit is rehashed;
+the retry is the same role/image.
+```
+
+The retry may not be used for:
+
+```text
+functional NVP FAIL;
+runtime provenance mismatch;
+bad telemetry;
+resource/timing failure;
+host/driver failure.
+```
+
+If the retry is consumed and fails:
+
+```text
+hard stop;
+restore formal only when a separately unused safe program remains possible.
+```
+
+===================================================================== 9. MANDATORY FORMAL BOOTSTRAP
+
+Program exact formal Phase 2 once.
+
+Use the global retry only if eligible.
+
+Then:
+
+```text
+wait >=5 seconds;
+one warm reboot;
+kernel 29;
+one exact pinned-driver load if required;
+one endpoint 10ee:7011/subsystem 0007/class 058000;
+Gen1 x1;
+BAR0 128 KiB;
+BAR1 64 KiB;
+formal identity exact;
+diagnostic magic=0;
+DONE=1.
+```
+
+This creates:
+
+```text
+FORMAL_READY_RECEIPT=
+    PASS
+```
+
+Bootstrap is not B1.
+
+===================================================================== 10. ARM A — R1h LARGE SAMPLE
+
+For A1, A2 and A3:
+
+```text
+require the immediately preceding formal-ready state;
+
+program the exact same R1h bit;
+
+require programming observer PASS;
+
+wait >=33.536673744 seconds;
+
+one warm reboot;
+
+kernel 29;
+
+correct BAR geometry;
+
+one exact pinned-driver load if required;
+
+verify R1h runtime source commit and BUILD_FLAGS=0x00000002;
+
+read the complete R1h range twice, approximately one second apart;
+
+read fresh final DONE=1.
+```
+
+Each read must collect:
+
+```text
+normal NVP/video telemetry;
+lifecycle;
+all autoinit phase opportunities/NACKs;
+all failed-transaction counters;
+all 64 records x 6 words;
+all probe aggregate counters;
+all ten block counts per phase;
+all stored WADDR/REGADDR/DATA NACK indices;
+bank-invariant counters;
+safe-target pre/post/restore fields.
+```
+
+Valid Arm-A sample:
+
+```text
+INIT_DONE=1;
+
+phase counters coherent;
+
+sum phase NACKs equals aggregate NACK_COUNT;
+
+failed-record counters coherent;
+
+failed-record overflow=0;
+
+bank-invariant errors=0;
+
+WADDR probe DONE and ABORTED=0;
+
+REGADDR probe DONE and ABORTED=0;
+
+DATA probe DONE and ABORTED=0;
+
+each target opportunity count=10000;
+
+probe timeout total=0;
+
+safe target pre-read=0x00;
+
+safe target post-read=0x00;
+
+original bank restored/verified;
+
+static T0/T1 fields coherent;
+
+final DONE=1.
+```
+
+A valid scientific FAIL is a valid sample and continues automatically.
+
+Probe NACK-index-log overflow does not invalidate aggregate counters; it limits
+only exact positional analysis.
+
+────────
+
+10.1 Host-only correction allowance
+
+If the host reader/parser fails while:
+
+```text
+the image remains programmed;
+DONE=1;
+BAR access remains read-only;
+raw MMIO data can be captured;
+no write/DMA occurred;
+```
+
+authorize one task-local host-only correction cycle for that arm.
+
+Allowed:
+
+```text
+parser fix;
+address-loop fix;
+latency/timeout fix;
+re-read of the same image/boot;
+re-decode of raw MMIO.
+```
+
+Forbidden:
+
+```text
+FPGA source/bit change;
+host MMIO write;
+reboot;
+reprogram;
+DMA.
+```
+
+If the sample remains invalid after this correction cycle, proceed to its
+paired formal B when safe, then hard-stop.
+
+===================================================================== 11. ARM B — FULL FORMAL CONTROL
+
+After each A, program exact formal Phase 2.
+
+Then:
+
+```text
+wait >=5 seconds;
+one warm reboot;
+kernel 29;
+one exact pinned-driver load if required;
+formal identity exact;
+diagnostic magic=0;
+normal NVP/video T0/T1;
+legacy NACK window;
+fresh DONE=1.
+```
+
+Read the R1h diagnostic range and expect zero when practical.
+
+A reader/parser issue may use the same one host-only correction rule.
+
+The essential B validity gates are:
+
+```text
+formal identity;
+diagnostic magic=0;
+normal telemetry coherent;
+DONE=1.
+```
+
+B1/B2/B3 are full controls and restorations.
+
+After B3 require:
+
+```text
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+    A40A0C07 / 0000400B / 00031002
+
+FINAL_DIAGNOSTIC_MAGIC=
+    0
+
+FINAL_PINNED_DRIVER_LOADED=
+    YES
+
+FINAL_DONE=
+    1
+```
+
+===================================================================== 12. PAIR FAILURE POLICY
+
+Frozen order:
+
+```text
+A1 -> B1 -> A2 -> B2 -> A3 -> B3
+```
+
+Rules:
+
+```text
+valid A PASS:
+    continue;
+
+valid A FAIL:
+    continue;
+
+valid B PASS or FAIL:
+    continue;
+
+A infrastructure-invalid after programming:
+    run immediate B restoration/control when safe;
+    then hard-stop;
+
+B infrastructure-invalid:
+    hard-stop;
+    do not start next A.
+```
+
+No scientific rerun.
+
+No extra pair.
+
+===================================================================== 13. FROZEN ANALYSIS
+
+For each A and each phase calculate:
+
+```text
+probe ACK/NACK/timeout;
+rate and ppm;
+Wilson 95%;
+first/last NACK index;
+adjacent pairs;
+runs;
+maximum consecutive NACKs;
+ten block rates.
+```
+
+For each A autoinit phase calculate:
+
+```text
+opportunities;
+NACKs;
+rate;
+confidence interval.
+```
+
+Compare:
+
+```text
+autoinit WADDR vs post-init WADDR;
+autoinit REGADDR vs post-init REGADDR;
+autoinit DATA vs post-init DATA.
+```
+
+Use the frozen R1h statistical scripts and criteria:
+
+```text
+Holm-corrected p<0.01;
+rate-ratio lower 95% bound>2;
+same direction in at least 2 of 3 Arm-A repetitions.
+```
+
+Required classifications:
+
+```text
+POSTINIT_WADDR_PROCESS
+POSTINIT_REGADDR_PROCESS
+POSTINIT_DATA_PROCESS
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY
+
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA
+
+R1H_REPLICATE_HOMOGENEITY
+
+BANK_TRACKER_COHERENCE
+
+FAILED_TRANSACTION_DISTRIBUTION
+
+PAIRED_AB_RESULT
+```
+
+Always state:
+
+```text
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+BOARD_VCCO_DROOP_PROVEN=
+    NO
+
+GROUND_BOUNCE_PROVEN=
+    NO
+
+ANALOG_MARGIN_DIRECTLY_MEASURED=
+    NO
+```
+
+===================================================================== 14. EVIDENCE — AFTER THE TESTS
+
+Do not let evidence preparation delay implementation or hardware.
+
+After final formal restoration:
+
+```text
+save the implementation logs/reports;
+save raw and decoded A/B datasets;
+save the exact prompt;
+save the operation ledger;
+compute the final manifest;
+create one Markdown report;
+create one ZIP;
+publish one normal evidence commit.
+```
+
+Publication failure:
+
+```text
+does not change the scientific result;
+retain sealed local evidence;
+record the publication blocker;
+do not rerun hardware.
+```
+
+No PDF or DOCX.
+
+===================================================================== 15. ONLY HARD STOPS
+
+Implementation hard stops:
+
+```text
+DCP SHA mismatch;
+wrong part or provenance;
+opt_design failure;
+post-opt LUT >19760;
+post-opt registers >37440;
+place failure;
+route failure;
+unrouted nets;
+WNS<0;
+WHS<=0;
+final LUT >19760;
+final registers >37440;
+DRC error or critical warning;
+write_bitstream failure.
+```
+
+Hardware hard stops:
+
+```text
+wrong JTAG target/part/IDCODE;
+kernel not 7.0.0-29;
+node owner or task DMA;
+programming observer failure after retry budget;
+host does not return after reboot;
+BAR geometry invalid;
+driver cannot load once;
+runtime provenance mismatch;
+sample-integrity rules fail after allowed host-only correction;
+formal final restoration cannot be proven.
+```
+
+The following must never cause a hard stop:
+
+```text
+raw nonempty ROUTE property;
+optional report failure;
+report text-count mismatch;
+report_property cardinality;
+compile-order relative position;
+missing optional power report;
+missing optional routed-impact report;
+evidence publication failure.
+```
+
+===================================================================== 16. REQUIRED FINAL BLOCK
+
+```text
+TASK=
+    V41_NVP_R1H_R4_SUPER_FAST_IMPLEMENTATION_AND_LARGE_SAMPLE
+
+EXPERIMENT_NAME=
+    R1h
+
+CONTINUATION_REVISION=
+    R4
+
+SUPER_FAST_OWNER_RISK_ACCEPTED=
+    YES
+
+SOURCE_FILE_MUTATIONS=
+    0
+
+SOURCE_COMMITS=
+    0
+
+SYNTH_DESIGN_INVOCATIONS_THIS_TASK=
+    0
+
+R1H_SOURCE_COMMIT=
+    c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+
+R1H_SOURCE_TREE=
+    161e561f007912d73dba93c5ecd78e3cc3a6955b
+
+R1H_SYNTH_DCP_SHA256=
+    807D292909804FDE573867A681A3407366BF9AF0796E290E609951B7DD68E46E
+
+RAW_NONEMPTY_ROUTE_PROPERTY_USED_AS_GATE=
+    NO
+
+OPT_DESIGN_INVOCATIONS=
+    1
+
+POST_OPT_SLICE_LUTS=
+POST_OPT_SLICE_REGISTERS=
+POST_OPT_RESOURCE_CLASS=
+
+PLACE=
+ROUTE=
+ROUTE_ERRORS=
+UNROUTED_NETS=
+WNS=
+WHS=
+FINAL_SLICE_LUTS=
+FINAL_SLICE_REGISTERS=
+FINAL_RESOURCE_CLASS=
+
+R1H_BIT_SHA256=
+R1H_ROUTED_DCP_SHA256=
+SOURCE_COMMIT_TO_BIT_PROVENANCE=
+
+DIAGNOSTIC_ONLY_IMAGE=
+    YES
+
+PRODUCTION_ACCEPTANCE_CLAIM=
+    NO
+
+PAIR_COUNT_VALID=
+
+A1_PROBE_WADDR_NACKS=
+A1_PROBE_REGADDR_NACKS=
+A1_PROBE_DATA_NACKS=
+A1_AUTOINIT_WADDR_NACKS=
+A1_AUTOINIT_REGADDR_NACKS=
+A1_AUTOINIT_DATA_NACKS=
+A1_FAILED_TXN_TOTAL=
+A1_NVP_RESULT=
+
+B1_NACK_COUNT=
+B1_NVP_RESULT=
+
+A2_PROBE_WADDR_NACKS=
+A2_PROBE_REGADDR_NACKS=
+A2_PROBE_DATA_NACKS=
+A2_AUTOINIT_WADDR_NACKS=
+A2_AUTOINIT_REGADDR_NACKS=
+A2_AUTOINIT_DATA_NACKS=
+A2_FAILED_TXN_TOTAL=
+A2_NVP_RESULT=
+
+B2_NACK_COUNT=
+B2_NVP_RESULT=
+
+A3_PROBE_WADDR_NACKS=
+A3_PROBE_REGADDR_NACKS=
+A3_PROBE_DATA_NACKS=
+A3_AUTOINIT_WADDR_NACKS=
+A3_AUTOINIT_REGADDR_NACKS=
+A3_AUTOINIT_DATA_NACKS=
+A3_FAILED_TXN_TOTAL=
+A3_NVP_RESULT=
+
+B3_NACK_COUNT=
+B3_NVP_RESULT=
+
+POSTINIT_WADDR_PROCESS=
+POSTINIT_REGADDR_PROCESS=
+POSTINIT_DATA_PROCESS=
+
+AUTOINIT_PHASE_RATE_HETEROGENEITY=
+AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR=
+AUTOINIT_CONTEXT_RATE_ELEVATION_DATA=
+
+R1H_REPLICATE_HOMOGENEITY=
+BANK_TRACKER_COHERENCE=
+FAILED_TRANSACTION_DISTRIBUTION=
+PAIRED_AB_RESULT=
+
+GLOBAL_PROGRAM_RETRY_BUDGET=
+    1
+
+GLOBAL_PROGRAM_RETRIES_USED=
+
+HOST_ONLY_CORRECTION_CYCLES_USED=
+
+FPGA_PROGRAM_INVOCATIONS=
+WARM_REBOOTS=
+DRIVER_LOADS=
+
+AXI_LITE_WRITES=
+    0
+
+DMA_TRANSFERS=
+    0
+
+PHYSICAL_ACTIONS=
+    0
+
+FINAL_ACTIVE_IMAGE=
+    FORMAL_PHASE2
+
+FINAL_FORMAL_IDENTITY=
+FINAL_DIAGNOSTIC_MAGIC=
+FINAL_PINNED_DRIVER_LOADED=
+FINAL_DONE=
+
+ROOT_CAUSE_SOLELY_PROVEN=
+    NO
+
+EVIDENCE_PACKAGE_SHA256=
+EVIDENCE_REPOSITORY_COMMIT=
+PUBLICATION_RESULT=
+
+NEXT_ACTION=
+    OWNER_REVIEW_OF_THE_R1H_LARGE_SAMPLE_RESULT
+```
+
+===================================================================== 17. BEGIN
+
+```text
+acquire the shared lock
+    ->
+materialize and hash the exact R1h synth DCP once
+    ->
+open the DCP in one implementation session
+    ->
+do not query raw ROUTE metadata
+    ->
+run opt_design
+    ->
+require <=19760 Slice LUT and <=37440 registers
+    ->
+run place and route
+    ->
+require routing and timing PASS
+    ->
+require final 5% LUT margin
+    ->
+write one diagnostic bitstream
+    ->
+run minimal host/JTAG safety checks
+    ->
+program formal bootstrap
+    ->
+run A1/B1/A2/B2/A3/B3
+    ->
+allow task-local read-only host parser correction when needed
+    ->
+restore exact formal Phase 2
+    ->
+perform frozen statistical analysis
+    ->
+package and publish evidence
+    ->
+HARD STOP.
+```
+
+No extra preflight.
+No report-only blocker.
+No source change.
+No synthesis.
+No second implementation attempt.
+No host writes.
+No DMA.
+No Phase 3.

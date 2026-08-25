@@ -1,0 +1,1382 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Tue Aug 25 14:52:01 2026
+# Process ID         : 13628
+# Current directory  : C:/Users/£ukasz Sudu³/Documents/ChatGPT/AHD_20260807
+# Command line       : vivado.exe -mode batch -log C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\raw\r1h_r4_implementation_vivado.log -journal C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\raw\r1h_r4_implementation_vivado.jou -source C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\scripts\continue_exact_r1h_r4_super_fast.tcl -tclargs C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\raw\R1H_synth.dcp C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST
+# Log file           : C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/raw/r1h_r4_implementation_vivado.log
+# Journal file       : C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\raw\r1h_r4_implementation_vivado.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4497 MB
+# Total Virtual      : 21526 MB
+# Available Virtual  : 5569 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\V41_NVP_R1H_R4_SUPER_FAST\scripts\continue_exact_r1h_r4_super_fast.tcl}
+# if {$argc != 2} {
+#   puts stderr "usage: continue_exact_r1h_r4_super_fast.tcl EXACT_SYNTH_DCP TASK_ROOT"
+#   exit 2
+# }
+# set synth_dcp [file normalize [lindex $argv 0]]
+# set task_root [file normalize [lindex $argv 1]]
+# set expected_task_root [file normalize {C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST}]
+# set expected_dcp_sha256 807D292909804FDE573867A681A3407366BF9AF0796E290E609951B7DD68E46E
+# set expected_source_commit c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+# set expected_source_tree 161e561f007912d73dba93c5ecd78e3cc3a6955b
+# set expected_part xc7a35tcsg325-2
+# set expected_top ahd_capture_top_xdma
+# set expected_vivado_version 2025.2
+# set expected_vivado_sw_build 6299465
+# set expected_prompt_path [file normalize \
+#   {C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/raw/OWNER_PROMPT_VERBATIM.txt}]
+# set expected_prompt_sha256 61EC5F55015C28B5136251148D69FEED7071364EB7EE44002DD750E4CA15E4A1
+# set expected_lock_path [file normalize \
+#   {C:/FPGA/_VCDE_SHARED_BUILD_SLOT/OWNER.md}]
+# set expected_lock_sha256 B6D8A5D7DC18BC1BE3D40A2499833E41C984D72AA7524C0F8E4FB806157DA0A1
+# set expected_lock_nonce 68370740-036b-4bae-bcda-7fd7ada4b35f
+# set diagnostic_max_slice_luts 19760
+# set max_slice_registers 37440
+# set standard_max_slice_luts 18720
+# set bit_filename ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit
+# set raw_dir [file join $task_root raw]
+# set impl_dir [file join $task_root implementation]
+# set final_dir [file join $task_root final]
+# set marker_path [file join $impl_dir R1H_R4_IMPLEMENTATION_CONSUMED.marker]
+# set routed_dcp [file join $impl_dir R1H_routed.dcp]
+# set bit_path [file join $impl_dir $bit_filename]
+# proc write_text {path text} {
+#   file mkdir [file dirname $path]
+#   set fh [open $path w]
+#   fconfigure $fh -encoding utf-8 -translation lf
+#   puts -nonewline $fh $text
+#   close $fh
+# }
+# proc write_lines {path lines} {
+#   file mkdir [file dirname $path]
+#   set fh [open $path w]
+#   fconfigure $fh -encoding utf-8 -translation lf
+#   foreach line $lines {
+#     puts $fh $line
+#   }
+#   close $fh
+# }
+# proc read_text {path} {
+#   set fh [open $path r]
+#   fconfigure $fh -encoding utf-8
+#   set text [read $fh]
+#   close $fh
+#   return $text
+# }
+# proc sha256_file {path} {
+#   if {![file isfile $path]} {
+#     error "cannot hash missing file: $path"
+#   }
+#   set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
+#   foreach line [split $output "\n"] {
+#     set compact [string toupper \
+#       [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
+#     if {[regexp {^[0-9A-F]{64}$} $compact]} {
+#       return $compact
+#     }
+#   }
+#   error "certutil did not return a SHA-256 digest for $path"
+# }
+# proc safe_property {object property} {
+#   if {[catch {get_property $property $object} value]} {
+#     return NOT_AVAILABLE
+#   }
+#   if {$value eq ""} {
+#     return EMPTY
+#   }
+#   return $value
+# }
+# proc parse_nonnegative_integer {value description} {
+#   set compact [string map [list "," "" " " "" "\t" ""] \
+#     [string trim $value]]
+#   if {![regexp {^[0-9]+$} $compact]} {
+#     error "$description is not a nonnegative integer: '$value'"
+#   }
+#   return $compact
+# }
+# proc utilization_value {text wanted} {
+#   set normalized_wanted [string trimright $wanted "*"]
+#   foreach line [split $text "\n"] {
+#     set columns [split $line "|"]
+#     if {[llength $columns] < 7} {
+#       continue
+#     }
+#     set actual [string trimright [string trim [lindex $columns 1]] "*"]
+#     if {$actual eq $normalized_wanted} {
+#       return [parse_nonnegative_integer [lindex $columns 2] $wanted]
+#     }
+#   }
+#   error "essential utilization row '$wanted' not found"
+# }
+# proc utilization_snapshot {report_text} {
+#   return [dict create \
+#     SLICE_LUTS [utilization_value $report_text "Slice LUTs*"] \
+#     LOGIC_LUTS [utilization_value $report_text "LUT as Logic"] \
+#     LUTRAM [utilization_value $report_text "LUT as Memory"] \
+#     SLICE_REGISTERS [utilization_value $report_text "Slice Registers"] \
+#     RAMB18 [llength [get_cells -quiet -hier -filter {REF_NAME == RAMB18E1}]] \
+#     RAMB36 [llength [get_cells -quiet -hier -filter {REF_NAME == RAMB36E1}]]]
+# }
+# proc resource_class {slice_luts slice_registers} {
+#   if {$slice_registers > 37440 || $slice_luts > 19760} {
+#     return FAIL
+#   }
+#   if {$slice_luts <= 18720} {
+#     return PASS_STANDARD_MARGIN
+#   }
+#   return PASS_DIAGNOSTIC_ONLY_5_TO_10_PERCENT_MARGIN
+# }
+# proc cell_names_by_ref_patterns {ref_name patterns} {
+#   set result [list]
+#   foreach cell [get_cells -quiet -hier -filter "REF_NAME == $ref_name"] {
+#     set name [get_property NAME $cell]
+#     set name_lower [string tolower $name]
+#     set accepted 1
+#     foreach pattern $patterns {
+#       if {![regexp -- $pattern $name_lower]} {
+#         set accepted 0
+#         break
+#       }
+#     }
+#     if {$accepted} {
+#       lappend result $name
+#     }
+#   }
+#   return [lsort -dictionary -unique $result]
+# }
+# proc hierarchy_name_count {pattern} {
+#   set count 0
+#   foreach cell [get_cells -quiet -hier] {
+#     if {[regexp -- $pattern [string tolower [get_property NAME $cell]]]} {
+#       incr count
+#     }
+#   }
+#   return $count
+# }
+# proc mapping_snapshot {} {
+#   set record_region [list {r1f_failed_txn_logger}]
+#   set index_region [list {index_payload_store}]
+#   set waddr_region [list {index_payload_store} {gen_index_bram\[0\]}]
+#   set regaddr_region [list {index_payload_store} {gen_index_bram\[1\]}]
+#   set data_region [list {index_payload_store} {gen_index_bram\[2\]}]
+# 
+#   set record_ramb18 [cell_names_by_ref_patterns RAMB18E1 $record_region]
+#   set waddr_ramb18 [cell_names_by_ref_patterns RAMB18E1 $waddr_region]
+#   set regaddr_ramb18 [cell_names_by_ref_patterns RAMB18E1 $regaddr_region]
+#   set data_ramb18 [cell_names_by_ref_patterns RAMB18E1 $data_region]
+#   set record_ram64m [cell_names_by_ref_patterns RAM64M $record_region]
+#   set record_ramd64e [cell_names_by_ref_patterns RAMD64E $record_region]
+#   set index_ram64m [cell_names_by_ref_patterns RAM64M $index_region]
+#   set index_ramd64e [cell_names_by_ref_patterns RAMD64E $index_region]
+#   set record_fdre [cell_names_by_ref_patterns FDRE $record_region]
+#   set index_fdre [cell_names_by_ref_patterns FDRE $index_region]
+#   set record_scope_count [hierarchy_name_count {r1f_failed_txn_logger}]
+#   set index_scope_count [hierarchy_name_count {index_payload_store}]
+#   set total_ramb18 [llength [get_cells -quiet -hier -filter {REF_NAME == RAMB18E1}]]
+#   set known_ramb18_total [expr {
+#     [llength $record_ramb18] + [llength $waddr_ramb18] +
+#     [llength $regaddr_ramb18] + [llength $data_ramb18]
+#   }]
+#   # An incomplete hierarchy-name match is not proof of a mapping regression:
+#   # opt_design is allowed to rewrite names. Exact attribution is declared
+#   # resolved only when all nine expected payload primitives are enumerated.
+#   set mapping_resolved [expr {
+#     $record_scope_count > 0 && $index_scope_count > 0 &&
+#     $known_ramb18_total == 9
+#   }]
+#   set positive_regression 0
+#   set regression_reasons [list]
+#   if {$total_ramb18 < 9} {
+#     set positive_regression 1
+#     lappend regression_reasons TOTAL_DEVICE_RAMB18_BELOW_NINE_PAYLOAD_MINIMUM
+#   }
+#   if {[llength $record_fdre] + [llength $index_fdre] > 1000} {
+#     set positive_regression 1
+#     lappend regression_reasons PAYLOAD_FDRE_COUNT_ABOVE_1000
+#   }
+#   if {[llength $record_ram64m] + [llength $index_ram64m] > 0} {
+#     set positive_regression 1
+#     lappend regression_reasons PAYLOAD_RAM64M_REAPPEARED
+#   }
+#   if {[llength $record_ramd64e] + [llength $index_ramd64e] > 0} {
+#     set positive_regression 1
+#     lappend regression_reasons PAYLOAD_RAMD64E_REAPPEARED
+#   }
+#   return [dict create \
+#     MAPPING_QUERY [expr {$mapping_resolved ? "RESOLVED" : "NOT_RESOLVED_AFTER_OPT"}] \
+#     RECORD_SCOPE_CELL_COUNT $record_scope_count \
+#     INDEX_SCOPE_CELL_COUNT $index_scope_count \
+#     TOTAL_DEVICE_RAMB18 $total_ramb18 \
+#     FAILED_RECORD_PAYLOAD_RAMB18 [llength $record_ramb18] \
+#     WADDR_INDEX_PAYLOAD_RAMB18 [llength $waddr_ramb18] \
+#     REGADDR_INDEX_PAYLOAD_RAMB18 [llength $regaddr_ramb18] \
+#     DATA_INDEX_PAYLOAD_RAMB18 [llength $data_ramb18] \
+#     KNOWN_R1H_PAYLOAD_RAMB18_TOTAL $known_ramb18_total \
+#     FAILED_RECORD_PAYLOAD_FDRE [llength $record_fdre] \
+#     INDEX_PAYLOAD_FDRE_TOTAL [llength $index_fdre] \
+#     FAILED_RECORD_PAYLOAD_RAM64M [llength $record_ram64m] \
+#     FAILED_RECORD_PAYLOAD_RAMD64E [llength $record_ramd64e] \
+#     INDEX_PAYLOAD_RAM64M [llength $index_ram64m] \
+#     INDEX_PAYLOAD_RAMD64E [llength $index_ramd64e] \
+#     POSITIVE_MAPPING_REGRESSION [expr {$positive_regression ? "YES" : "NO"}] \
+#     REGRESSION_REASONS [expr {[llength $regression_reasons] == 0 ? "NONE" : [join $regression_reasons ,]}] \
+#     RECORD_RAMB18_CELLS $record_ramb18 \
+#     WADDR_RAMB18_CELLS $waddr_ramb18 \
+#     REGADDR_RAMB18_CELLS $regaddr_ramb18 \
+#     DATA_RAMB18_CELLS $data_ramb18]
+# }
+# proc write_mapping {path mapping} {
+#   set lines [list \
+#     "MAPPING_QUERY=[dict get $mapping MAPPING_QUERY]" \
+#     "RECORD_SCOPE_CELL_COUNT=[dict get $mapping RECORD_SCOPE_CELL_COUNT]" \
+#     "INDEX_SCOPE_CELL_COUNT=[dict get $mapping INDEX_SCOPE_CELL_COUNT]" \
+#     "TOTAL_DEVICE_RAMB18=[dict get $mapping TOTAL_DEVICE_RAMB18]" \
+#     "FAILED_RECORD_PAYLOAD_RAMB18=[dict get $mapping FAILED_RECORD_PAYLOAD_RAMB18]" \
+#     "WADDR_INDEX_PAYLOAD_RAMB18=[dict get $mapping WADDR_INDEX_PAYLOAD_RAMB18]" \
+#     "REGADDR_INDEX_PAYLOAD_RAMB18=[dict get $mapping REGADDR_INDEX_PAYLOAD_RAMB18]" \
+#     "DATA_INDEX_PAYLOAD_RAMB18=[dict get $mapping DATA_INDEX_PAYLOAD_RAMB18]" \
+#     "KNOWN_R1H_PAYLOAD_RAMB18_TOTAL=[dict get $mapping KNOWN_R1H_PAYLOAD_RAMB18_TOTAL]" \
+#     "FAILED_RECORD_PAYLOAD_FDRE=[dict get $mapping FAILED_RECORD_PAYLOAD_FDRE]" \
+#     "INDEX_PAYLOAD_FDRE_TOTAL=[dict get $mapping INDEX_PAYLOAD_FDRE_TOTAL]" \
+#     "FAILED_RECORD_PAYLOAD_RAM64M=[dict get $mapping FAILED_RECORD_PAYLOAD_RAM64M]" \
+#     "FAILED_RECORD_PAYLOAD_RAMD64E=[dict get $mapping FAILED_RECORD_PAYLOAD_RAMD64E]" \
+#     "INDEX_PAYLOAD_RAM64M=[dict get $mapping INDEX_PAYLOAD_RAM64M]" \
+#     "INDEX_PAYLOAD_RAMD64E=[dict get $mapping INDEX_PAYLOAD_RAMD64E]" \
+#     "POSITIVE_MAPPING_REGRESSION=[dict get $mapping POSITIVE_MAPPING_REGRESSION]" \
+#     "REGRESSION_REASONS=[dict get $mapping REGRESSION_REASONS]"]
+#   foreach key {RECORD_RAMB18_CELLS WADDR_RAMB18_CELLS REGADDR_RAMB18_CELLS DATA_RAMB18_CELLS} {
+#     foreach cell [dict get $mapping $key] {
+#       lappend lines "$key=$cell"
+#     }
+#   }
+#   write_lines $path $lines
+# }
+# proc try_parse_report_count {text patterns description} {
+#   foreach pattern $patterns {
+#     if {[regexp -nocase -- $pattern $text -> value]} {
+#       return [parse_nonnegative_integer $value $description]
+#     }
+#   }
+#   return -1
+# }
+# proc verify_no_output_collision {paths} {
+#   foreach path $paths {
+#     if {[file exists $path]} {
+#       error "one-shot implementation output already exists: $path"
+#     }
+#   }
+# }
+# set stage PRECONSUMPTION
+# set opt_runs 0
+# set place_runs 0
+# set phys_opt_runs 0
+# set route_runs 0
+# set bit_runs 0
+# set post_opt_resource_class NOT_RUN
+# set final_resource_class NOT_RUN
+# set place_status NOT_RUN
+# set route_status NOT_RUN
+# set bit_sha256 NOT_GENERATED
+# set routed_dcp_sha256 NOT_GENERATED
+# if {$task_root ne $expected_task_root} {
+#   puts stderr "BLOCKED_R1H_R4_TASK_ROOT_IDENTITY"
+#   exit 1
+# }
+# if {![file isfile $synth_dcp] || [file size $synth_dcp] < 1000000} {
+#   puts stderr "BLOCKED_R1H_R4_ACTUAL_SYNTH_DCP_UNAVAILABLE"
+#   exit 1
+# }
+# if {[sha256_file $synth_dcp] ne $expected_dcp_sha256} {
+#   puts stderr "BLOCKED_R1H_R4_SYNTH_DCP_SHA256_MISMATCH"
+#   exit 1
+# }
+# if {![file isfile $expected_prompt_path] ||
+#     [sha256_file $expected_prompt_path] ne $expected_prompt_sha256} {
+#   puts stderr "BLOCKED_R1H_R4_OWNER_PROMPT_IDENTITY"
+#   exit 1
+# }
+# if {![file isfile $expected_lock_path] ||
+#     [sha256_file $expected_lock_path] ne $expected_lock_sha256} {
+#   puts stderr "BLOCKED_R1H_R4_SHARED_LOCK_IDENTITY"
+#   exit 1
+# }
+# set lock_text [read_text $expected_lock_path]
+# if {[string first "STATUS=HELD" $lock_text] < 0 ||
+#     [string first "LOCK_NONCE=$expected_lock_nonce" $lock_text] < 0 ||
+#     [string first "TASK=V41_NVP_R1H_R4_SUPER_FAST_IMPLEMENTATION_AND_LARGE_SAMPLE" $lock_text] < 0} {
+#   puts stderr "BLOCKED_R1H_R4_SHARED_LOCK_CONTENT"
+#   exit 1
+# }
+# if {[file exists $marker_path]} {
+#   puts stderr "BLOCKED_R1H_R4_IMPLEMENTATION_ALREADY_CONSUMED"
+#   exit 1
+# }
+# set vivado_short [string trim [version -short]]
+# set vivado_detail [version]
+# set vivado_sw_build UNKNOWN
+# regexp {SW Build[ \t]+([0-9]+)} $vivado_detail -> vivado_sw_build
+# if {$vivado_short ne $expected_vivado_version ||
+#     $vivado_sw_build ne $expected_vivado_sw_build} {
+#   puts stderr "BLOCKED_R1H_R4_VIVADO_IDENTITY"
+#   exit 1
+# }
+# verify_no_output_collision [list \
+#   $routed_dcp $bit_path \
+#   [file join $impl_dir R1H_R4_IMPLEMENTATION_RESULT.txt] \
+#   [file join $final_dir R1H_R4_IMPLEMENTATION_TERMINAL_FAILURE.txt]]
+# file mkdir $raw_dir
+# file mkdir $impl_dir
+# file mkdir $final_dir
+# set marker_fh [open $marker_path {WRONLY CREAT EXCL}]
+# fconfigure $marker_fh -encoding utf-8 -translation lf
+# puts $marker_fh "IMPLEMENTATION_CONTINUATION_SESSIONS=1"
+# puts $marker_fh "SYNTH_DESIGN_INVOCATIONS_THIS_TASK=0"
+# puts $marker_fh "R1H_SYNTH_DCP_SHA256=$expected_dcp_sha256"
+# puts $marker_fh "OWNER_PROMPT_SHA256=$expected_prompt_sha256"
+# puts $marker_fh "SHARED_LOCK_SHA256=$expected_lock_sha256"
+# puts $marker_fh "SHARED_LOCK_NONCE=$expected_lock_nonce"
+# puts $marker_fh "UTC=[clock format [clock seconds] -gmt 1 -format {%Y-%m-%dT%H:%M:%SZ}]"
+# close $marker_fh
+Command: open_checkpoint C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/raw/R1H_synth.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.393 . Memory (MB): peak = 333.863 ; gain = 6.895
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 812.652 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2186 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 5 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 950.453 ; gain = 5.578
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.089 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.539 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.809 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1494.348 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.157 . Memory (MB): peak = 1494.348 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 306 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 10 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 267 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 18 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 9 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:02:39 ; elapsed = 00:04:07 . Memory (MB): peak = 1494.348 ; gain = 1178.148
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1494.348 ; gain = 0.000
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 1585.707 ; gain = 91.359
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.284 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.460 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Phase 1 Initialization | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.484 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Detect if minReqCache needed
+Phase 2.1 Detect if minReqCache needed | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.759 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 2.2 Timer Update
+Phase 2.2 Timer Update | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 2.3 Timing Data Collection
+Phase 2.3 Timing Data Collection | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Phase 2 Timer Update And Timing Data Collection | Checksum: 1a4b2396b
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-1566] Pulled 18 inverters resulting in an inversion of 154 pins
+INFO: [Opt 31-138] Pushed 5 inverter(s) to 53 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 18ee09d5e
+
+Time (s): cpu = 00:00:19 ; elapsed = 00:00:18 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Retarget | Checksum: 18ee09d5e
+INFO: [Opt 31-389] Phase Retarget created 50 cells and removed 1216 cells
+INFO: [Opt 31-1021] In phase Retarget, 21 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 1 inverter(s) to 8 load pin(s).
+Phase 4 Constant propagation | Checksum: 1da4d5759
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Constant propagation | Checksum: 1da4d5759
+INFO: [Opt 31-389] Phase Constant propagation created 434 cells and removed 758 cells
+INFO: [Opt 31-1021] In phase Constant propagation, 19 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.093 . Memory (MB): peak = 2039.406 ; gain = 0.000
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.085 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Phase 5 Sweep | Checksum: 17619802e
+
+Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Sweep | Checksum: 17619802e
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 1352 cells
+INFO: [Opt 31-1021] In phase Sweep, 385 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 6 BUFG optimization
+Phase 6 BUFG optimization | Checksum: 1cc76ec6c
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:36 . Memory (MB): peak = 2039.406 ; gain = 0.000
+BUFG optimization | Checksum: 1cc76ec6c
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 1cc76ec6c
+
+Time (s): cpu = 00:00:36 ; elapsed = 00:00:37 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Shift Register Optimization | Checksum: 1cc76ec6c
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 1bf93fd12
+
+Time (s): cpu = 00:00:36 ; elapsed = 00:00:37 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Post Processing Netlist | Checksum: 1bf93fd12
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Post Processing Netlist, 25 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 1ca019e16
+
+Time (s): cpu = 00:00:44 ; elapsed = 00:00:47 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.424 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 1ca019e16
+
+Time (s): cpu = 00:00:45 ; elapsed = 00:00:48 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Phase 9 Finalization | Checksum: 1ca019e16
+
+Time (s): cpu = 00:00:45 ; elapsed = 00:00:48 . Memory (MB): peak = 2039.406 ; gain = 0.000
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |              50  |            1216  |                                             21  |
+|  Constant propagation         |             434  |             758  |                                             19  |
+|  Sweep                        |               0  |            1352  |                                            385  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                             25  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 1ca019e16
+
+Time (s): cpu = 00:00:45 ; elapsed = 00:00:48 . Memory (MB): peak = 2039.406 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+INFO: [Pwropt 34-9] Applying IDT optimizations ...
+INFO: [Pwropt 34-10] Applying ODC optimizations ...
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+
+
+Starting PowerOpt Patch Enables Task
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 31 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
+Number of BRAM Ports augmented: 8 newly gated: 18 Total Ports: 62
+Ending PowerOpt Patch Enables Task | Checksum: 14a95f150
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Ending Power Optimization Task | Checksum: 14a95f150
+
+Time (s): cpu = 00:01:19 ; elapsed = 00:01:01 . Memory (MB): peak = 2161.473 ; gain = 122.066
+
+Starting Final Cleanup Task
+
+Starting Logic Optimization Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Logic Optimization Task | Checksum: 1df726fa6
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:25 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Ending Final Cleanup Task | Checksum: 1df726fa6
+
+Time (s): cpu = 00:00:50 ; elapsed = 00:00:54 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.110 . Memory (MB): peak = 2161.473 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+44 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:03:38 ; elapsed = 00:03:29 . Memory (MB): peak = 2161.473 ; gain = 667.125
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors, 13 Warnings
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.134 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 10d0a0184
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.164 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.159 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 1f5692425
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:33 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 2538e989f
+
+Time (s): cpu = 00:01:55 ; elapsed = 00:01:37 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 2538e989f
+
+Time (s): cpu = 00:01:56 ; elapsed = 00:01:37 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 2538e989f
+
+Time (s): cpu = 00:01:56 ; elapsed = 00:01:38 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 1fc3e2411
+
+Time (s): cpu = 00:02:48 ; elapsed = 00:02:10 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: 25e346327
+
+Time (s): cpu = 00:03:40 ; elapsed = 00:02:43 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: 25e346327
+
+Time (s): cpu = 00:03:40 ; elapsed = 00:02:43 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.4 Global Place Phase1
+Phase 2.4 Global Place Phase1 | Checksum: 1e7db3141
+
+Time (s): cpu = 00:07:08 ; elapsed = 00:05:25 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.5 Global Place Phase2
+
+Phase 2.5.1 UpdateTiming Before Physical Synthesis
+Phase 2.5.1 UpdateTiming Before Physical Synthesis | Checksum: 2154eb66c
+
+Time (s): cpu = 00:07:50 ; elapsed = 00:05:52 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.5.2 Physical Synthesis In Placer
+INFO: [Physopt 32-1035] Found 0 LUTNM shape to break, 865 LUT instances to create LUTNM shape
+INFO: [Physopt 32-1044] Break lutnm for timing: one critical 0, two critical 0, total 0, new lutff created 0
+INFO: [Physopt 32-1138] End 1 Pass. Optimized 360 nets or LUTs. Breaked 0 LUT, combined 360 existing LUTs and moved 0 existing LUT
+INFO: [Physopt 32-65] No nets found for high-fanout optimization.
+INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-670] No setup violation found.  DSP Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register to Pipeline Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  BRAM Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  URAM Register Optimization was not performed.
+INFO: [Physopt 32-949] No candidate nets found for dynamic/static region interface net replication
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.116 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization                                     |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT Combining                                    |            0  |            360  |                   360  |           0  |           1  |  00:00:08  |
+|  Retime                                           |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Very High Fanout                                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  DSP Register                                     |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register to Pipeline                       |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register                                   |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  BRAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  URAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Dynamic/Static Region Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Total                                            |            0  |            360  |                   360  |           0  |           4  |  00:00:08  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Phase 2.5.2 Physical Synthesis In Placer | Checksum: 1d39c810b
+
+Time (s): cpu = 00:08:38 ; elapsed = 00:06:31 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 2.5 Global Place Phase2 | Checksum: 215e2b61d
+
+Time (s): cpu = 00:08:44 ; elapsed = 00:06:40 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 2 Global Placement | Checksum: 215e2b61d
+
+Time (s): cpu = 00:08:45 ; elapsed = 00:06:40 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 20289bb9c
+
+Time (s): cpu = 00:09:21 ; elapsed = 00:07:04 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 21fb22fae
+
+Time (s): cpu = 00:10:24 ; elapsed = 00:07:47 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: 1e4abcb35
+
+Time (s): cpu = 00:10:27 ; elapsed = 00:07:49 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.4 Pipeline Register Optimization
+Phase 3.4 Pipeline Register Optimization | Checksum: 25148c101
+
+Time (s): cpu = 00:10:27 ; elapsed = 00:07:50 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.5 Small Shape Detail Placement
+Phase 3.5 Small Shape Detail Placement | Checksum: 25ec1d794
+
+Time (s): cpu = 00:12:15 ; elapsed = 00:09:59 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.6 Re-assign LUT pins
+Phase 3.6 Re-assign LUT pins | Checksum: 2bab4d008
+
+Time (s): cpu = 00:12:38 ; elapsed = 00:10:29 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 3.7 Pipeline Register Optimization
+Phase 3.7 Pipeline Register Optimization | Checksum: 181d9d930
+
+Time (s): cpu = 00:12:40 ; elapsed = 00:10:30 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 3 Detail Placement | Checksum: 181d9d930
+
+Time (s): cpu = 00:12:40 ; elapsed = 00:10:31 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: 25cc45df9
+
+Phase 4.1.1.1 BUFG Insertion
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=1.043 | TNS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 20db05b7a
+
+Time (s): cpu = 00:00:08 ; elapsed = 00:00:06 . Memory (MB): peak = 2161.473 ; gain = 0.000
+INFO: [Place 46-33] Processed net nvp_por_reset_reg_n_0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-33] Processed net XDMA/inst/udma_wrapper/dma_top/dma_pcie_req/dma_pcie_rc/u_dma_rc_mem_pfch/user_rst_n_3ff_reg[0], BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-56] BUFG insertion identified 2 candidate nets. Inserted BUFG: 0, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 2, Skipped due to Timing Degradation: 0, Skipped due to netlist editing failed: 0.
+Ending Physical Synthesis Task | Checksum: 2a19e4ea9
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:12 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 4.1.1.1 BUFG Insertion | Checksum: 25cc45df9
+
+Time (s): cpu = 00:14:23 ; elapsed = 00:11:49 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 4.1.1.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=1.043. For the most accurate timing information please run report_timing.
+Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: 20e2b54c9
+
+Time (s): cpu = 00:14:24 ; elapsed = 00:11:50 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Time (s): cpu = 00:14:24 ; elapsed = 00:11:50 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 4.1 Post Commit Optimization | Checksum: 20e2b54c9
+
+Time (s): cpu = 00:14:25 ; elapsed = 00:11:51 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 20e2b54c9
+
+Time (s): cpu = 00:14:27 ; elapsed = 00:11:53 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion 
+ ____________________________________________________
+|           | Global Congestion | Short Congestion  |
+| Direction | Region Size       | Region Size       |
+|___________|___________________|___________________|
+|      North|                1x1|                4x4|
+|___________|___________________|___________________|
+|      South|                1x1|                4x4|
+|___________|___________________|___________________|
+|       East|                1x1|                1x1|
+|___________|___________________|___________________|
+|       West|                1x1|                2x2|
+|___________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 20e2b54c9
+
+Time (s): cpu = 00:14:28 ; elapsed = 00:11:54 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 4.3 Placer Reporting | Checksum: 20e2b54c9
+
+Time (s): cpu = 00:14:29 ; elapsed = 00:11:55 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.150 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Time (s): cpu = 00:14:29 ; elapsed = 00:11:55 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 17d1183ba
+
+Time (s): cpu = 00:14:30 ; elapsed = 00:11:55 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Ending Placer Task | Checksum: 13e1c0f78
+
+Time (s): cpu = 00:14:30 ; elapsed = 00:11:56 . Memory (MB): peak = 2161.473 ; gain = 0.000
+75 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:15:02 ; elapsed = 00:12:21 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Command: phys_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+
+Starting Initial Update Timing Task
+
+Time (s): cpu = 00:01:15 ; elapsed = 00:00:49 . Memory (MB): peak = 2161.473 ; gain = 0.000
+INFO: [Vivado_Tcl 4-2279] Estimated Timing Summary | WNS= 0.661 | TNS= 0.000 | 
+INFO: [Vivado_Tcl 4-383] Design worst setup slack (WNS) is greater than or equal to 0.000 ns. All physical synthesis setup optimizations will be skipped.
+INFO: [Vivado_Tcl 4-232] No setup violation found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+80 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:01:16 ; elapsed = 00:00:51 . Memory (MB): peak = 2161.473 ; gain = 0.000
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: 80fb144a ConstDB: 0 ShapeSum: 1c9f9ed7 RouteDB: a0815c57
+Post Restoration Checksum: NetGraph: 2d666b2 | NumContArr: e13fc95e | Constraints: c2a8fa9d | Timing: c2a8fa9d
+Phase 1 Build RT Design | Checksum: 26968254a
+
+Time (s): cpu = 00:03:47 ; elapsed = 00:03:31 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 26968254a
+
+Time (s): cpu = 00:03:48 ; elapsed = 00:03:33 . Memory (MB): peak = 2161.473 ; gain = 0.000
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 26968254a
+
+Time (s): cpu = 00:03:49 ; elapsed = 00:03:33 . Memory (MB): peak = 2161.473 ; gain = 0.000
+ Number of Nodes with overlaps = 0
+
+Phase 2.3 Update Timing
+Phase 2.3 Update Timing | Checksum: 15b097541
+
+Time (s): cpu = 00:05:40 ; elapsed = 00:04:51 . Memory (MB): peak = 2161.473 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=1.170  | TNS=0.000  | WHS=-0.504 | THS=-1053.095|
+
+
+Phase 2.4 Update Timing for Bus Skew
+
+Phase 2.4.1 Update Timing
+Phase 2.4.1 Update Timing | Checksum: 120b856f5
+
+Time (s): cpu = 00:07:06 ; elapsed = 00:05:57 . Memory (MB): peak = 2161.473 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=1.170  | TNS=0.000  | WHS=-0.383 | THS=-11.055|
+
+Phase 2.4 Update Timing for Bus Skew | Checksum: 128426ed5
+
+Time (s): cpu = 00:07:52 ; elapsed = 00:06:57 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 2.5 Soft Constraint Pins - Fast Budgeting
+Phase 2.5 Soft Constraint Pins - Fast Budgeting | Checksum: 128426ed5
+
+Time (s): cpu = 00:07:54 ; elapsed = 00:06:58 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.000637806 %
+  Global Horizontal Routing Utilization  = 0.000130141 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 34037
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 34037
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 25cee4a1e
+
+Time (s): cpu = 00:07:56 ; elapsed = 00:07:00 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 3 Global Routing
+Phase 3 Global Routing | Checksum: 25cee4a1e
+
+Time (s): cpu = 00:07:56 ; elapsed = 00:07:00 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 4 Initial Routing
+
+Phase 4.1 Initial Net Routing Pass
+Phase 4.1 Initial Net Routing Pass | Checksum: 237f8c7c7
+
+Time (s): cpu = 00:08:55 ; elapsed = 00:07:38 . Memory (MB): peak = 2420.695 ; gain = 259.223
+Phase 4 Initial Routing | Checksum: 237f8c7c7
+
+Time (s): cpu = 00:08:55 ; elapsed = 00:07:39 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 5 Rip-up And Reroute
+
+Phase 5.1 Global Iteration 0
+ Number of Nodes with overlaps = 4395
+ Number of Nodes with overlaps = 592
+ Number of Nodes with overlaps = 116
+ Number of Nodes with overlaps = 31
+ Number of Nodes with overlaps = 6
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=0.801  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+
+Phase 5.1 Global Iteration 0 | Checksum: 27bfe6a87
+
+Time (s): cpu = 00:12:43 ; elapsed = 00:11:27 . Memory (MB): peak = 2420.695 ; gain = 259.223
+Phase 5 Rip-up And Reroute | Checksum: 27bfe6a87
+
+Time (s): cpu = 00:12:43 ; elapsed = 00:11:28 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 6 Delay and Skew Optimization
+
+Phase 6.1 Delay CleanUp
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: 334eedacc
+
+Time (s): cpu = 00:12:58 ; elapsed = 00:11:37 . Memory (MB): peak = 2420.695 ; gain = 259.223
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=0.868  | TNS=0.000  | WHS=N/A    | THS=N/A    |
+
+Phase 6.1 Delay CleanUp | Checksum: 2e2e6d713
+
+Time (s): cpu = 00:12:58 ; elapsed = 00:11:38 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 6.2 Clock Skew Optimization
+Phase 6.2 Clock Skew Optimization | Checksum: 2e2e6d713
+
+Time (s): cpu = 00:12:58 ; elapsed = 00:11:38 . Memory (MB): peak = 2420.695 ; gain = 259.223
+Phase 6 Delay and Skew Optimization | Checksum: 2e2e6d713
+
+Time (s): cpu = 00:12:59 ; elapsed = 00:11:38 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Hold Fix Iter
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=0.617  | TNS=0.000  | WHS=0.036  | THS=0.000  |
+
+Phase 7.1 Hold Fix Iter | Checksum: 28abe8fc6
+
+Time (s): cpu = 00:13:16 ; elapsed = 00:11:50 . Memory (MB): peak = 2420.695 ; gain = 259.223
+Phase 7 Post Hold Fix | Checksum: 28abe8fc6
+
+Time (s): cpu = 00:13:17 ; elapsed = 00:11:50 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 13.6348 %
+  Global Horizontal Routing Utilization  = 15.6015 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 8 Route finalize | Checksum: 28abe8fc6
+
+Time (s): cpu = 00:13:18 ; elapsed = 00:11:51 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: 28abe8fc6
+
+Time (s): cpu = 00:13:19 ; elapsed = 00:11:51 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 2b7186740
+
+Time (s): cpu = 00:13:56 ; elapsed = 00:12:33 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 11 Post Process Routing
+Phase 11 Post Process Routing | Checksum: 2b7186740
+
+Time (s): cpu = 00:13:57 ; elapsed = 00:12:34 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Phase 12 Post Router Timing
+INFO: [Route 35-57] Estimated Timing Summary | WNS=0.617  | TNS=0.000  | WHS=0.036  | THS=0.000  |
+
+INFO: [Route 35-327] The final timing numbers are based on the router estimated timing analysis. For a complete and accurate timing signoff, please run report_timing_summary.
+Phase 12 Post Router Timing | Checksum: 2b7186740
+
+Time (s): cpu = 00:13:58 ; elapsed = 00:12:35 . Memory (MB): peak = 2420.695 ; gain = 259.223
+Total Elapsed time in route_design: 754.795 secs
+
+Phase 13 Post-Route Event Processing
+Phase 13 Post-Route Event Processing | Checksum: 13afd1286
+
+Time (s): cpu = 00:13:58 ; elapsed = 00:12:35 . Memory (MB): peak = 2420.695 ; gain = 259.223
+INFO: [Route 35-16] Router Completed Successfully
+Ending Routing Task | Checksum: 13afd1286
+
+Time (s): cpu = 00:13:59 ; elapsed = 00:12:36 . Memory (MB): peak = 2420.695 ; gain = 259.223
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+91 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:14:02 ; elapsed = 00:12:39 . Memory (MB): peak = 2420.695 ; gain = 259.223
+report_route_status: Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2420.695 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:03:50 ; elapsed = 00:03:33 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Command: report_drc -file C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/implementation/R1H_R4_DRC.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/implementation/R1H_R4_DRC.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:43 ; elapsed = 00:00:34 . Memory (MB): peak = 2420.695 ; gain = 0.000
+INFO: [Timing 38-314] The report_cdc command only analyzes and reports clock domain crossing paths where clocks have been defined on both source and destination sides. Ports with no input delay constraint are skipped. Please run check_timing to verify there are no missing clock definitions in your design, nor any unconstrained input port.
+report_cdc: Time (s): cpu = 00:00:19 ; elapsed = 00:00:13 . Memory (MB): peak = 2420.695 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Write ShapeDB Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:00.711 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:08 ; elapsed = 00:00:02 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.428 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.067 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:34 ; elapsed = 00:00:16 . Memory (MB): peak = 2420.695 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/implementation/R1H_routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:42 ; elapsed = 00:00:29 . Memory (MB): peak = 2420.695 ; gain = 0.000
+Command: write_bitstream C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/implementation/ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado 12-3199] DRC finished with 0 Errors
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+Integrating Hard IP ELF/MEM with the PDI.
+INFO: [Designutils 20-2272] Running write_bitstream with 2 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream C:/FPGA/V41_NVP_R1H_R4_SUPER_FAST/implementation/ahd_capture_v41_i2c_25khz_r1h_phase_complete_observability.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Common 17-83] Releasing license: Implementation
+109 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:03:33 ; elapsed = 00:02:47 . Memory (MB): peak = 2509.570 ; gain = 88.875
+close_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2509.570 ; gain = 0.000
+R1H_R4_IMPLEMENTATION_RESULT=PASS
+R1H_BIT_SHA256=73E973A42083D7D22CF427ED09B73F8DE2D2C05506697EA36E1FA1B5F7163C41
+# set flow_rc [catch {
+#   set stage OPEN_EXACT_DCP
+#   open_checkpoint $synth_dcp
+#   if {[current_design] eq "" || [llength [get_cells -quiet -hier]] == 0} {
+#     error "opened checkpoint has no current design or netlist cells"
+#   }
+#   set actual_part [string tolower [safe_property [current_design] PART]]
+#   if {$actual_part ne $expected_part} {
+#     error "wrong checkpoint part: expected $expected_part, got $actual_part"
+#   }
+# 
+#   # Same-session state evidence. Missing report formatting is explicitly not a
+#   # blocker in R4; exact checkpoint SHA is the primary state/provenance anchor.
+#   set design_state NOT_RESOLVED_REPORT_FORMAT_NONBLOCKING
+#   set initial_state_report_status REPORT_FAILED_NONBLOCKING
+#   if {![catch {report_utilization -return_string} initial_util_text]} {
+#     set initial_state_report_status PASS
+#     if {[regexp -nocase {Design State[ \t]*:[ \t]*([^\r\n|]+)} \
+#         $initial_util_text -> state_value]} {
+#       set design_state [string toupper [string trim $state_value]]
+#       if {[string first "ROUTED" $design_state] >= 0 ||
+#           [string first "PLACED" $design_state] >= 0} {
+#         error "exact input checkpoint is not synthesized/unplaced: $design_state"
+#       }
+#     }
+#   }
+#   write_lines [file join $impl_dir R1H_R4_SAME_SESSION_DCP_IDENTITY.txt] [list \
+#     "R1H_SYNTH_DCP=$synth_dcp" \
+#     "R1H_SYNTH_DCP_SHA256=$expected_dcp_sha256" \
+#     "PART=$actual_part" \
+#     "TOP_FROM_AUTHORITATIVE_BUILD_MANIFEST=$expected_top" \
+#     "DESIGN_STATE=$design_state" \
+#     "INITIAL_STATE_REPORT_STATUS=$initial_state_report_status" \
+#     "R1H_SOURCE_COMMIT=$expected_source_commit" \
+#     "R1H_SOURCE_TREE=$expected_source_tree" \
+#     "SOURCE_PROVENANCE=PASS_BY_EXACT_SHA_BOUND_DCP" \
+#     "RAW_NONEMPTY_ROUTE_PROPERTY_QUERIED=NO" \
+#     "RAW_NONEMPTY_ROUTE_PROPERTY_USED_AS_GATE=NO" \
+#     "VIVADO_VERSION=$vivado_short" \
+#     "VIVADO_SW_BUILD=$vivado_sw_build"]
+# 
+#   set stage OPT_DESIGN
+#   set opt_runs 1
+#   opt_design
+# 
+#   set post_opt_util_text [report_utilization -return_string]
+#   write_text [file join $impl_dir R1H_R4_POST_OPT_UTILIZATION.rpt] $post_opt_util_text
+#   set post_opt_util [utilization_snapshot $post_opt_util_text]
+#   set post_opt_resource_class [resource_class \
+#     [dict get $post_opt_util SLICE_LUTS] \
+#     [dict get $post_opt_util SLICE_REGISTERS]]
+#   set post_opt_mapping [mapping_snapshot]
+#   write_mapping [file join $impl_dir R1H_R4_POST_OPT_MAPPING.txt] $post_opt_mapping
+#   set mapping_nonresolution_action NOT_APPLICABLE
+#   if {[dict get $post_opt_mapping MAPPING_QUERY] ne "RESOLVED"} {
+#     set mapping_nonresolution_action \
+#       CONTINUE_EXACT_INPUT_DCP_MAPPING_ALREADY_PROVEN
+#   }
+#   write_lines [file join $impl_dir R1H_R4_POST_OPT_HARD_GATE.txt] [list \
+#     "OPT_DESIGN_INVOCATIONS=$opt_runs" \
+#     "OPT_DESIGN_COMMAND=opt_design" \
+#     "POST_OPT_SLICE_LUTS=[dict get $post_opt_util SLICE_LUTS]" \
+#     "POST_OPT_LOGIC_LUTS=[dict get $post_opt_util LOGIC_LUTS]" \
+#     "POST_OPT_LUTRAM=[dict get $post_opt_util LUTRAM]" \
+#     "POST_OPT_SLICE_REGISTERS=[dict get $post_opt_util SLICE_REGISTERS]" \
+#     "POST_OPT_TOTAL_RAMB18E1=[dict get $post_opt_util RAMB18]" \
+#     "POST_OPT_TOTAL_RAMB36E1=[dict get $post_opt_util RAMB36]" \
+#     "POST_OPT_RESOURCE_CLASS=$post_opt_resource_class" \
+#     "MAPPING_QUERY=[dict get $post_opt_mapping MAPPING_QUERY]" \
+#     "POSITIVE_MAPPING_REGRESSION=[dict get $post_opt_mapping POSITIVE_MAPPING_REGRESSION]" \
+#     "MAPPING_NONRESOLUTION_ACTION=$mapping_nonresolution_action"]
+#   if {$post_opt_resource_class eq "FAIL"} {
+#     error "BLOCKED_R1H_R4_POST_OPT_RESOURCE_GATE"
+#   }
+#   if {[dict get $post_opt_mapping POSITIVE_MAPPING_REGRESSION] eq "YES"} {
+#     error "BLOCKED_R1H_R4_POSITIVE_POST_OPT_MAPPING_REGRESSION"
+#   }
+# 
+#   set stage PLACE_DESIGN
+#   set place_runs 1
+#   place_design
+#   set place_status PASS
+# 
+#   set stage PHYS_OPT_DESIGN
+#   set phys_opt_runs 1
+#   phys_opt_design
+# 
+#   set stage ROUTE_DESIGN
+#   set route_runs 1
+#   route_design
+# 
+#   set route_report [file join $impl_dir R1H_R4_ROUTE_STATUS.rpt]
+#   report_route_status -file $route_report
+#   set route_text [read_text $route_report]
+#   set route_errors [try_parse_report_count $route_text [list \
+#     {# of nets with routing errors[^:]*:[ \t]*([0-9,]+)} \
+#     {number of nets with routing errors[^:]*:[ \t]*([0-9,]+)}] ROUTE_ERRORS]
+#   set unrouted_nets [try_parse_report_count $route_text [list \
+#     {# of unrouted nets[^:]*:[ \t]*([0-9,]+)} \
+#     {number of unrouted nets[^:]*:[ \t]*([0-9,]+)}] UNROUTED_NETS]
+#   set routable_nets [try_parse_report_count $route_text [list \
+#     {# of routable nets[^:]*:[ \t]*([0-9,]+)} \
+#     {number of routable nets[^:]*:[ \t]*([0-9,]+)}] ROUTABLE_NETS]
+#   set fully_routed_nets [try_parse_report_count $route_text [list \
+#     {# of fully routed nets[^:]*:[ \t]*([0-9,]+)} \
+#     {number of fully routed nets[^:]*:[ \t]*([0-9,]+)}] FULLY_ROUTED_NETS]
+#   if {$unrouted_nets < 0 && $routable_nets >= 0 &&
+#       $fully_routed_nets >= 0 && $fully_routed_nets <= $routable_nets} {
+#     set unrouted_nets [expr {$routable_nets - $fully_routed_nets}]
+#   }
+#   set route_count_parse [expr {
+#     $route_errors >= 0 && $unrouted_nets >= 0 ? "RESOLVED" :
+#     "NOT_RESOLVED_REPORT_FORMAT_NONBLOCKING"
+#   }]
+#   if {$route_errors > 0 || $unrouted_nets > 0} {
+#     error "BLOCKED_R1H_R4_ROUTE_ERRORS_OR_UNROUTED_NETS"
+#   }
+#   set route_status PASS
+# 
+#   set timing_report [file join $impl_dir R1H_R4_TIMING_SUMMARY.rpt]
+#   report_timing_summary -delay_type min_max -max_paths 1000 -file $timing_report
+#   set worst_setup [get_timing_paths -quiet -delay_type max -max_paths 1 -nworst 1]
+#   set worst_hold [get_timing_paths -quiet -delay_type min -max_paths 1 -nworst 1]
+#   if {[llength $worst_setup] != 1 || [llength $worst_hold] != 1} {
+#     error "required global timing path class is empty"
+#   }
+#   set wns [get_property SLACK $worst_setup]
+#   set whs [get_property SLACK $worst_hold]
+#   if {![string is double -strict $wns] || ![string is double -strict $whs]} {
+#     error "global timing slack is not numeric"
+#   }
+#   set failing_setup_paths [llength [get_timing_paths -quiet -delay_type max \
+#     -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
+#   set failing_hold_paths [llength [get_timing_paths -quiet -delay_type min \
+#     -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
+#   if {$wns < 0.0 || $whs <= 0.0 ||
+#       $failing_setup_paths != 0 || $failing_hold_paths != 0} {
+#     error "BLOCKED_R1H_R4_TIMING_GATE"
+#   }
+# 
+#   set final_util_text [report_utilization -return_string]
+#   write_text [file join $impl_dir R1H_R4_FINAL_UTILIZATION.rpt] $final_util_text
+#   set final_util [utilization_snapshot $final_util_text]
+#   set final_resource_class [resource_class \
+#     [dict get $final_util SLICE_LUTS] \
+#     [dict get $final_util SLICE_REGISTERS]]
+#   if {$final_resource_class eq "FAIL"} {
+#     error "BLOCKED_R1H_R4_FINAL_RESOURCE_GATE"
+#   }
+# 
+#   set drc_report [file join $impl_dir R1H_R4_DRC.rpt]
+#   report_drc -file $drc_report
+#   set drc_errors 0
+#   set drc_critical_warnings 0
+#   set drc_warnings 0
+#   foreach violation [get_drc_violations -quiet] {
+#     set severity [string toupper [get_property SEVERITY $violation]]
+#     switch -- $severity {
+#       ERROR {incr drc_errors}
+#       {CRITICAL WARNING} {incr drc_critical_warnings}
+#       WARNING {incr drc_warnings}
+#     }
+#   }
+#   if {$drc_errors != 0 || $drc_critical_warnings != 0} {
+#     error "BLOCKED_R1H_R4_DRC_GATE"
+#   }
+# 
+#   set cdc_report_status REPORT_FAILED_NONBLOCKING
+#   set cdc_critical NOT_AVAILABLE
+#   set cdc_unknown NOT_AVAILABLE
+#   set cdc_error NONE
+#   if {[catch {report_cdc -details -return_string} cdc_text cdc_options]} {
+#     set cdc_error $cdc_text
+#     write_lines [file join $impl_dir R1H_R4_CDC_OPTIONAL_FAILURE.txt] [list \
+#       "CDC_REPORT_STATUS=REPORT_FAILED_NONBLOCKING" \
+#       "CDC_REPORT_ERROR=$cdc_error"]
+#   } else {
+#     set cdc_report_status PASS
+#     write_text [file join $impl_dir R1H_R4_CDC.rpt] $cdc_text
+#     set cdc_critical [regexp -all -nocase -line {CDC-[0-9]+[^\r\n]*Critical} $cdc_text]
+#     set cdc_unknown [regexp -all -nocase -line {CDC-[0-9]+[^\r\n]*Unknown} $cdc_text]
+#     if {$cdc_critical != 0 || $cdc_unknown != 0} {
+#       error "BLOCKED_R1H_R4_CDC_CRITICAL_OR_UNKNOWN"
+#     }
+#   }
+# 
+#   write_checkpoint -force $routed_dcp
+#   if {![file isfile $routed_dcp] || [file size $routed_dcp] == 0} {
+#     error "routed checkpoint was not created"
+#   }
+#   set routed_dcp_sha256 [sha256_file $routed_dcp]
+# 
+#   write_lines [file join $impl_dir R1H_R4_PRE_BITSTREAM_HARD_GATE.txt] [list \
+#     "PLACE=$place_status" \
+#     "ROUTE=$route_status" \
+#     "ROUTE_ERRORS=$route_errors" \
+#     "UNROUTED_NETS=$unrouted_nets" \
+#     "ROUTE_COUNT_PARSE=$route_count_parse" \
+#     "RAW_NONEMPTY_ROUTE_PROPERTY_QUERIED=NO" \
+#     "RAW_NONEMPTY_ROUTE_PROPERTY_USED_AS_GATE=NO" \
+#     "WNS=$wns" \
+#     "WHS=$whs" \
+#     "FAILING_SETUP_PATHS=$failing_setup_paths" \
+#     "FAILING_HOLD_PATHS=$failing_hold_paths" \
+#     "FINAL_SLICE_LUTS=[dict get $final_util SLICE_LUTS]" \
+#     "FINAL_SLICE_REGISTERS=[dict get $final_util SLICE_REGISTERS]" \
+#     "FINAL_RESOURCE_CLASS=$final_resource_class" \
+#     "DRC_ERRORS=$drc_errors" \
+#     "DRC_CRITICAL_WARNINGS=$drc_critical_warnings" \
+#     "DRC_WARNINGS=$drc_warnings" \
+#     "REQP_1839_COUNT_GATE=DISABLED_OWNER_SUPER_FAST" \
+#     "CDC_REPORT_STATUS=$cdc_report_status" \
+#     "CDC_CRITICAL=$cdc_critical" \
+#     "CDC_UNKNOWN=$cdc_unknown" \
+#     "R1H_ROUTED_DCP_SHA256=$routed_dcp_sha256" \
+#     "R1H_R4_PRE_BITSTREAM_HARD_GATE=PASS"]
+# 
+#   set stage WRITE_BITSTREAM
+#   set bit_runs 1
+#   write_bitstream $bit_path
+#   if {![file isfile $bit_path] || [file size $bit_path] == 0} {
+#     error "write_bitstream returned without a nonzero bitstream"
+#   }
+#   set bit_sha256 [sha256_file $bit_path]
+# 
+#   write_lines [file join $impl_dir R1H_R4_IMPLEMENTATION_RESULT.txt] [list \
+#     "TASK=V41_NVP_R1H_R4_SUPER_FAST_IMPLEMENTATION_AND_LARGE_SAMPLE" \
+#     "EXPERIMENT_NAME=R1h" \
+#     "CONTINUATION_REVISION=R4" \
+#     "SUPER_FAST_OWNER_RISK_ACCEPTED=YES" \
+#     "SOURCE_FILE_MUTATIONS=0" \
+#     "SOURCE_COMMITS=0" \
+#     "SYNTH_DESIGN_INVOCATIONS_THIS_TASK=0" \
+#     "R1H_SOURCE_COMMIT=$expected_source_commit" \
+#     "R1H_SOURCE_TREE=$expected_source_tree" \
+#     "R1H_SYNTH_DCP_SHA256=$expected_dcp_sha256" \
+#     "RAW_NONEMPTY_ROUTE_PROPERTY_USED_AS_GATE=NO" \
+#     "OPT_DESIGN_INVOCATIONS=$opt_runs" \
+#     "PLACE_DESIGN_INVOCATIONS=$place_runs" \
+#     "PHYS_OPT_DESIGN_INVOCATIONS=$phys_opt_runs" \
+#     "ROUTE_DESIGN_INVOCATIONS=$route_runs" \
+#     "WRITE_BITSTREAM_INVOCATIONS=$bit_runs" \
+#     "POST_OPT_SLICE_LUTS=[dict get $post_opt_util SLICE_LUTS]" \
+#     "POST_OPT_SLICE_REGISTERS=[dict get $post_opt_util SLICE_REGISTERS]" \
+#     "POST_OPT_RESOURCE_CLASS=$post_opt_resource_class" \
+#     "POST_OPT_MAPPING_QUERY=[dict get $post_opt_mapping MAPPING_QUERY]" \
+#     "POST_OPT_POSITIVE_MAPPING_REGRESSION=[dict get $post_opt_mapping POSITIVE_MAPPING_REGRESSION]" \
+#     "PLACE=$place_status" \
+#     "ROUTE=$route_status" \
+#     "ROUTE_ERRORS=$route_errors" \
+#     "UNROUTED_NETS=$unrouted_nets" \
+#     "WNS=$wns" \
+#     "WHS=$whs" \
+#     "FAILING_SETUP_PATHS=$failing_setup_paths" \
+#     "FAILING_HOLD_PATHS=$failing_hold_paths" \
+#     "FINAL_SLICE_LUTS=[dict get $final_util SLICE_LUTS]" \
+#     "FINAL_SLICE_REGISTERS=[dict get $final_util SLICE_REGISTERS]" \
+#     "FINAL_RESOURCE_CLASS=$final_resource_class" \
+#     "DRC_ERRORS=$drc_errors" \
+#     "DRC_CRITICAL_WARNINGS=$drc_critical_warnings" \
+#     "CDC_REPORT_STATUS=$cdc_report_status" \
+#     "CDC_CRITICAL=$cdc_critical" \
+#     "CDC_UNKNOWN=$cdc_unknown" \
+#     "R1H_BIT_SHA256=$bit_sha256" \
+#     "R1H_ROUTED_DCP_SHA256=$routed_dcp_sha256" \
+#     "SOURCE_COMMIT_TO_BIT_PROVENANCE=PASS_BY_EXACT_SHA_BOUND_DCP" \
+#     "DIAGNOSTIC_ONLY_IMAGE=YES" \
+#     "PRODUCTION_ACCEPTANCE_CLAIM=NO" \
+#     "R1H_R4_IMPLEMENTATION_RESULT=PASS"]
+# 
+#   close_design
+#   puts "R1H_R4_IMPLEMENTATION_RESULT=PASS"
+#   puts "R1H_BIT_SHA256=$bit_sha256"
+# } flow_error flow_options]
+# if {$flow_rc != 0} {
+#   catch {close_design}
+#   set error_info UNKNOWN
+#   if {[dict exists $flow_options -errorinfo]} {
+#     set error_info [dict get $flow_options -errorinfo]
+#   }
+#   write_lines [file join $final_dir R1H_R4_IMPLEMENTATION_TERMINAL_FAILURE.txt] [list \
+#     "IMPLEMENTATION_CONTINUATION_CONSUMED=YES" \
+#     "TERMINAL_STAGE=$stage" \
+#     "SYNTH_DESIGN_INVOCATIONS_THIS_TASK=0" \
+#     "OPT_DESIGN_INVOCATIONS=$opt_runs" \
+#     "PLACE_DESIGN_INVOCATIONS=$place_runs" \
+#     "PHYS_OPT_DESIGN_INVOCATIONS=$phys_opt_runs" \
+#     "ROUTE_DESIGN_INVOCATIONS=$route_runs" \
+#     "WRITE_BITSTREAM_INVOCATIONS=$bit_runs" \
+#     "POST_OPT_RESOURCE_CLASS=$post_opt_resource_class" \
+#     "FINAL_RESOURCE_CLASS=$final_resource_class" \
+#     "R1H_BIT_SHA256=$bit_sha256" \
+#     "R1H_ROUTED_DCP_SHA256=$routed_dcp_sha256" \
+#     "TERMINAL_ERROR=$flow_error" \
+#     "ERROR_INFO_BEGIN" \
+#     $error_info \
+#     "ERROR_INFO_END"]
+#   puts stderr "R1H_R4_IMPLEMENTATION_TERMINAL_FAILURE=$flow_error"
+#   exit 1
+# }
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Tue Aug 25 15:36:56 2026...

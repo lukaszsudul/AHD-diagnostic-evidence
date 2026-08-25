@@ -1,0 +1,1313 @@
+{
+  "accounting": {
+    "autoinit_totals": {
+      "DATA": {
+        "nacks": 13,
+        "opportunities": 659,
+        "rate": 0.019726858877086494,
+        "wilson95": [
+          0.01156411964253656,
+          0.033456387785871844
+        ]
+      },
+      "RADDR": {
+        "nacks": 1,
+        "opportunities": 165,
+        "rate": 0.006060606060606061,
+        "wilson95": [
+          0.001070648118628812,
+          0.03352665316918832
+        ]
+      },
+      "REGADDR": {
+        "nacks": 12,
+        "opportunities": 824,
+        "rate": 0.014563106796116505,
+        "wilson95": [
+          0.008350019727708253,
+          0.02528137010429632
+        ]
+      },
+      "WADDR": {
+        "nacks": 7,
+        "opportunities": 824,
+        "rate": 0.00849514563106796,
+        "wilson95": [
+          0.0041210274012898574,
+          0.017430754803614768
+        ]
+      }
+    },
+    "failed_transactions_total": 17,
+    "formal_exposure_equal": true,
+    "formal_nacks_total": 36,
+    "opportunity_audit": "PASS_90000_OF_90000",
+    "panel_count": 9,
+    "phase_pooled": {
+      "DATA": {
+        "nacks": 0,
+        "opportunities": 30000,
+        "wilson95": [
+          0.0,
+          0.00012803223300477719
+        ]
+      },
+      "REGADDR": {
+        "nacks": 0,
+        "opportunities": 30000,
+        "wilson95": [
+          0.0,
+          0.00012803223300477719
+        ]
+      },
+      "WADDR": {
+        "nacks": 0,
+        "opportunities": 30000,
+        "wilson95": [
+          0.0,
+          0.00012803223300477719
+        ]
+      }
+    },
+    "pooled_wilson95": [
+      0.0,
+      4.2681054035362495e-05
+    ],
+    "target_acks": 90000,
+    "target_nacks": 0,
+    "target_opportunities": 90000,
+    "target_timeouts": 0,
+    "transaction_starts_total": 824
+  },
+  "arm_a": {
+    "A1": {
+      "autoinit": {
+        "DATA": {
+          "acks": 212,
+          "nacks": 7,
+          "opportunities": 219,
+          "ppm": 31963.4703196347,
+          "rate": 0.0319634703196347,
+          "wilson95": [
+            0.015567715862581072,
+            0.06449574681224361
+          ]
+        },
+        "RADDR": {
+          "acks": 54,
+          "nacks": 0,
+          "opportunities": 54,
+          "ppm": 0.0,
+          "rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.0664135880908964
+          ]
+        },
+        "REGADDR": {
+          "acks": 268,
+          "nacks": 5,
+          "opportunities": 273,
+          "ppm": 18315.018315018315,
+          "rate": 0.018315018315018316,
+          "wilson95": [
+            0.007847820331598282,
+            0.042149961357809095
+          ]
+        },
+        "WADDR": {
+          "acks": 270,
+          "nacks": 3,
+          "opportunities": 273,
+          "ppm": 10989.01098901099,
+          "rate": 0.01098901098901099,
+          "wilson95": [
+            0.003744160426029113,
+            0.031804918323293206
+          ]
+        }
+      },
+      "bank_invariant_errors": 0,
+      "compositions": {
+        "HIGH_LEVEL_PHASE": {
+          "PH_INIT": 7
+        },
+        "PHASE_NACK_BITMAP": {
+          "0x4": 2,
+          "0x6": 2,
+          "0x7": 3
+        },
+        "REQUESTED_BANK": {
+          "0": 2,
+          "1": 2,
+          "5": 2,
+          "9": 1
+        },
+        "TABLE_SLOT": {
+          "1": 1,
+          "140": 1,
+          "37": 1,
+          "38": 1,
+          "44": 1,
+          "61": 1,
+          "80": 1
+        },
+        "TRANSACTION_KIND": {
+          "INIT_BANK_SELECT_WRITE": 1,
+          "INIT_TARGET_WRITE": 6
+        },
+        "VALID_PHYSICAL_BANK_BEFORE": {
+          "0": 3,
+          "1": 1,
+          "5": 2,
+          "9": 1
+        }
+      },
+      "failed_log_overflow": false,
+      "failed_log_stored": 7,
+      "failed_log_total": 7,
+      "failed_transactions": 7,
+      "legacy_aggregate_nacks": 15,
+      "nvp_result": "R1H_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "probe": {
+        "DATA": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "REGADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "WADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        }
+      },
+      "transaction_starts": 273
+    },
+    "A2": {
+      "autoinit": {
+        "DATA": {
+          "acks": 218,
+          "nacks": 2,
+          "opportunities": 220,
+          "ppm": 9090.90909090909,
+          "rate": 0.00909090909090909,
+          "wilson95": [
+            0.002496605724540895,
+            0.03253470108522863
+          ]
+        },
+        "RADDR": {
+          "acks": 54,
+          "nacks": 1,
+          "opportunities": 55,
+          "ppm": 18181.81818181818,
+          "rate": 0.01818181818181818,
+          "wilson95": [
+            0.003216780454841077,
+            0.09605776062162397
+          ]
+        },
+        "REGADDR": {
+          "acks": 271,
+          "nacks": 4,
+          "opportunities": 275,
+          "ppm": 14545.454545454546,
+          "rate": 0.014545454545454545,
+          "wilson95": [
+            0.005670598306999111,
+            0.03679603800589093
+          ]
+        },
+        "WADDR": {
+          "acks": 274,
+          "nacks": 1,
+          "opportunities": 275,
+          "ppm": 3636.3636363636365,
+          "rate": 0.0036363636363636364,
+          "wilson95": [
+            0.0006421961356207172,
+            0.020306836498907313
+          ]
+        }
+      },
+      "bank_invariant_errors": 0,
+      "compositions": {
+        "HIGH_LEVEL_PHASE": {
+          "PH_INIT": 2,
+          "PH_OUT_READ": 1,
+          "PH_WIN_READ": 2
+        },
+        "PHASE_NACK_BITMAP": {
+          "0x2": 1,
+          "0x3": 1,
+          "0x6": 2,
+          "0x8": 1
+        },
+        "REQUESTED_BANK": {
+          "0": 3,
+          "1": 1,
+          "2": 1
+        },
+        "TABLE_SLOT": {
+          "166": 1,
+          "65535": 3,
+          "88": 1
+        },
+        "TRANSACTION_KIND": {
+          "INIT_TARGET_WRITE": 2,
+          "OUTPUT_REGISTER_READ": 1,
+          "WINDOW_REGISTER_READ": 2
+        },
+        "VALID_PHYSICAL_BANK_BEFORE": {
+          "0": 3,
+          "1": 1,
+          "2": 1
+        }
+      },
+      "failed_log_overflow": false,
+      "failed_log_stored": 5,
+      "failed_log_total": 5,
+      "failed_transactions": 5,
+      "legacy_aggregate_nacks": 8,
+      "nvp_result": "R1H_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "probe": {
+        "DATA": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "REGADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "WADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        }
+      },
+      "transaction_starts": 275
+    },
+    "A3": {
+      "autoinit": {
+        "DATA": {
+          "acks": 216,
+          "nacks": 4,
+          "opportunities": 220,
+          "ppm": 18181.81818181818,
+          "rate": 0.01818181818181818,
+          "wilson95": [
+            0.0070927016399128864,
+            0.04580839578449052
+          ]
+        },
+        "RADDR": {
+          "acks": 56,
+          "nacks": 0,
+          "opportunities": 56,
+          "ppm": 0.0,
+          "rate": 0.0,
+          "wilson95": [
+            0.0,
+            0.06419393671876342
+          ]
+        },
+        "REGADDR": {
+          "acks": 273,
+          "nacks": 3,
+          "opportunities": 276,
+          "ppm": 10869.565217391304,
+          "rate": 0.010869565217391304,
+          "wilson95": [
+            0.003703388501720164,
+            0.03146459147582831
+          ]
+        },
+        "WADDR": {
+          "acks": 273,
+          "nacks": 3,
+          "opportunities": 276,
+          "ppm": 10869.565217391304,
+          "rate": 0.010869565217391304,
+          "wilson95": [
+            0.003703388501720164,
+            0.03146459147582831
+          ]
+        }
+      },
+      "bank_invariant_errors": 0,
+      "compositions": {
+        "HIGH_LEVEL_PHASE": {
+          "PH_INIT": 5
+        },
+        "PHASE_NACK_BITMAP": {
+          "0x3": 1,
+          "0x4": 2,
+          "0x7": 2
+        },
+        "REQUESTED_BANK": {
+          "0": 3,
+          "9": 2
+        },
+        "TABLE_SLOT": {
+          "149": 1,
+          "192": 1,
+          "210": 1,
+          "33": 1,
+          "39": 1
+        },
+        "TRANSACTION_KIND": {
+          "INIT_BANK_VERIFY_READ": 1,
+          "INIT_TARGET_WRITE": 4
+        },
+        "VALID_PHYSICAL_BANK_BEFORE": {
+          "0": 2,
+          "5": 1,
+          "9": 2
+        }
+      },
+      "failed_log_overflow": false,
+      "failed_log_stored": 5,
+      "failed_log_total": 5,
+      "failed_transactions": 5,
+      "legacy_aggregate_nacks": 10,
+      "nvp_result": "R1H_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "probe": {
+        "DATA": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "REGADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        },
+        "WADDR": {
+          "nacks": 0,
+          "opportunities": 10000,
+          "timeouts": 0
+        }
+      },
+      "transaction_starts": 276
+    }
+  },
+  "arm_b": {
+    "B1": {
+      "diagnostic_range_all_zero": true,
+      "nack_count": 12,
+      "nvp_result": "FORMAL_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "operation_index": 249,
+      "phase": 8,
+      "table_length": 214,
+      "timeout_count": 0
+    },
+    "B2": {
+      "diagnostic_range_all_zero": true,
+      "nack_count": 12,
+      "nvp_result": "FORMAL_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "operation_index": 249,
+      "phase": 8,
+      "table_length": 214,
+      "timeout_count": 0
+    },
+    "B3": {
+      "diagnostic_range_all_zero": true,
+      "nack_count": 12,
+      "nvp_result": "FORMAL_NVP_FAIL_VALID_SCIENTIFIC_RESULT",
+      "operation_index": 249,
+      "phase": 8,
+      "table_length": 214,
+      "timeout_count": 0
+    }
+  },
+  "autoinit_heterogeneity": {
+    "adjusted_p": {
+      "A1": 0.9904567714673504,
+      "A2": 0.9904567714673504,
+      "A3": 0.9904567714673504
+    },
+    "classification": "NOT_DETECTED_NOT_EQUALITY_PROOF",
+    "maximum_phase_sets": {
+      "A1": [
+        "DATA"
+      ],
+      "A2": [
+        "RADDR"
+      ],
+      "A3": [
+        "DATA"
+      ]
+    },
+    "raw_p": {
+      "A1": 0.3301522571557835,
+      "A2": 0.36370483139474247,
+      "A3": 0.8634576758257481
+    }
+  },
+  "classifications": {
+    "ANALOG_MARGIN_DIRECTLY_MEASURED": "NO",
+    "AUTOINIT_CONTEXT_RATE_ELEVATION_DATA": "SUPPORTED",
+    "AUTOINIT_CONTEXT_RATE_ELEVATION_REGADDR": "SUPPORTED",
+    "AUTOINIT_CONTEXT_RATE_ELEVATION_WADDR": "SUPPORTED",
+    "AUTOINIT_PHASE_RATE_HETEROGENEITY": "NOT_DETECTED_NOT_EQUALITY_PROOF",
+    "BANK_TRACKER_COHERENCE": "PASS_ZERO_INVARIANT_ERRORS",
+    "BOARD_VCCO_DROOP_PROVEN": "NO",
+    "FAILED_TRANSACTION_DISTRIBUTION": "REPEATABLE_FAILURE_COMPOSITION_CONCENTRATION_DENOMINATORS_LIMIT_RATE_CLAIM",
+    "GROUND_BOUNCE_PROVEN": "NO",
+    "PAIRED_AB_RESULT": "DIRECTION_MAJORITY_2_OF_3",
+    "POSTINIT_DATA_PROCESS": "INSUFFICIENT_EVENTS",
+    "POSTINIT_REGADDR_PROCESS": "INSUFFICIENT_EVENTS",
+    "POSTINIT_WADDR_PROCESS": "INSUFFICIENT_EVENTS",
+    "R1H_REPLICATE_HOMOGENEITY": "INSUFFICIENT_VALID_DATA",
+    "ROOT_CAUSE_SOLELY_PROVEN": "NO"
+  },
+  "context_elevation": {
+    "classification_by_phase": {
+      "DATA": "SUPPORTED",
+      "REGADDR": "SUPPORTED",
+      "WADDR": "SUPPORTED"
+    },
+    "comparisons": {
+      "A1": {
+        "DATA": {
+          "autoinit_rate": 0.0319634703196347,
+          "difference_ci95_miettinen_nurminen": [
+            0.01556718745614568,
+            0.0644978272176404
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 5.665014859097406e-12,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.0319634703196347,
+          "rate_ratio_profile_ci95": {
+            "lower": 145.1951206459874,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 1.888338286365802e-12,
+          "run_support_rule": true
+        },
+        "REGADDR": {
+          "autoinit_rate": 0.018315018315018316,
+          "difference_ci95_miettinen_nurminen": [
+            0.007847513715155732,
+            0.042151551291628606
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 2.5573092897242823e-08,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.018315018315018316,
+          "rate_ratio_profile_ci95": {
+            "lower": 78.44493381751185,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 1.2786546448621412e-08,
+          "run_support_rule": true
+        },
+        "WADDR": {
+          "autoinit_rate": 0.01098901098901099,
+          "difference_ci95_miettinen_nurminen": [
+            0.003743980864851427,
+            0.031806400719982864
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 1.8566746758760485e-05,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.01098901098901099,
+          "rate_ratio_profile_ci95": {
+            "lower": 40.94820342027695,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 1.8566746758760485e-05,
+          "run_support_rule": true
+        }
+      },
+      "A2": {
+        "DATA": {
+          "autoinit_rate": 0.00909090909090909,
+          "difference_ci95_miettinen_nurminen": [
+            0.0024964665008841832,
+            0.0325364608488643
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 0.0009226510841150238,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.00909090909090909,
+          "rate_ratio_profile_ci95": {
+            "lower": 28.267388900594675,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 0.0004613255420575119,
+          "run_support_rule": true
+        },
+        "REGADDR": {
+          "autoinit_rate": 0.014545454545454545,
+          "difference_ci95_miettinen_nurminen": [
+            0.005670355410610176,
+            0.036797564865571016
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 1.5068234547218164e-06,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.014545454545454545,
+          "rate_ratio_profile_ci95": {
+            "lower": 59.165333351571384,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 5.022744849072722e-07,
+          "run_support_rule": true
+        },
+        "WADDR": {
+          "autoinit_rate": 0.0036363636363636364,
+          "difference_ci95_miettinen_nurminen": [
+            0.0006421523762144347,
+            0.020308193074712395
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 0.0267639902676399,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.0036363636363636364,
+          "rate_ratio_profile_ci95": {
+            "lower": 6.251653338913169,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 0.0267639902676399,
+          "run_support_rule": false
+        }
+      },
+      "A3": {
+        "DATA": {
+          "autoinit_rate": 0.01818181818181818,
+          "difference_ci95_miettinen_nurminen": [
+            0.007092396176920291,
+            0.04581029177746248
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 6.271272773812571e-07,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.01818181818181818,
+          "rate_ratio_profile_ci95": {
+            "lower": 74.00827811681751,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 2.0904242579375236e-07,
+          "run_support_rule": true
+        },
+        "REGADDR": {
+          "autoinit_rate": 0.010869565217391304,
+          "difference_ci95_miettinen_nurminen": [
+            0.0037032109485549886,
+            0.03146605803049479
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 3.834218398747044e-05,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.010869565217391304,
+          "rate_ratio_profile_ci95": {
+            "lower": 40.50196492019487,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 1.917109199373522e-05,
+          "run_support_rule": true
+        },
+        "WADDR": {
+          "autoinit_rate": 0.010869565217391304,
+          "difference_ci95_miettinen_nurminen": [
+            0.0037032109485549886,
+            0.03146605803049479
+          ],
+          "estimable": true,
+          "holm_adjusted_p": 3.834218398747044e-05,
+          "identifiable_rate_ratio": true,
+          "probe_rate": 0.0,
+          "rate_difference": 0.010869565217391304,
+          "rate_ratio_profile_ci95": {
+            "lower": 40.50196492019487,
+            "point": "+INF",
+            "point_label": "+INF",
+            "upper": "+INF"
+          },
+          "raw_p_greater": 1.917109199373522e-05,
+          "run_support_rule": true
+        }
+      }
+    },
+    "supporting_runs": {
+      "DATA": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "REGADDR": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "WADDR": [
+        "A1",
+        "A3"
+      ]
+    }
+  },
+  "input_evidence": {
+    "hardware/02_A1/INDEPENDENT_HOST_ONLY_CORRECTION_AND_SAMPLE_AUDIT.md": {
+      "bytes": 7309,
+      "sha256": "A8D7BAA3C230CD391830D7D54CF10760D34696DA56D65B074EC07207ACC46705"
+    },
+    "hardware/02_A1/INDEPENDENT_PRIMARY_PROGRAM_AUDIT.md": {
+      "bytes": 2997,
+      "sha256": "1EA373722F4FB02E25F4C557D8C19DD01FD54055B9AD32DEA3F42F36362AD561"
+    },
+    "hardware/02_A1/TELEMETRY_EVIDENCE.log": {
+      "bytes": 76374,
+      "sha256": "078981D951DF3D1510CB88D36D8D4C2E4E07C4FF7994F48F0578C71094E4C975"
+    },
+    "hardware/02_A1/VALID_ARM_A_RECEIPT.txt": {
+      "bytes": 1652,
+      "sha256": "F078E2DD6359B1DF9717A8D64191F85A9AFDCB079B0971AABF0A748F4243EAB3"
+    },
+    "hardware/03_B1/FORMAL_READY_RECEIPT.txt": {
+      "bytes": 1646,
+      "sha256": "177B5D36ECCF36DC1AE47FB24AB0C1BE1B37D02223048AE7DA1A7A2337E88700"
+    },
+    "hardware/03_B1/INDEPENDENT_FORMAL_CONTROL_AUDIT.md": {
+      "bytes": 3301,
+      "sha256": "AD0AD0F3FA772AF8D004940908AF13FC12B485713DD0CD7892561B89CF1A58CA"
+    },
+    "hardware/03_B1/TELEMETRY_EVIDENCE.log": {
+      "bytes": 14130,
+      "sha256": "54AFF44DACBDFA89F97E15EEF33C0150C2005251BA06CF6CF1ACF28F3E3750BF"
+    },
+    "hardware/04_A2/INDEPENDENT_PRIMARY_PROGRAM_AUDIT.md": {
+      "bytes": 1797,
+      "sha256": "9A0FA82264689E736117C660237DC0D82F36D51A2117B56A48997CE5DF00C6EA"
+    },
+    "hardware/04_A2/INDEPENDENT_SAMPLE_AUDIT.md": {
+      "bytes": 3039,
+      "sha256": "CB62914C565D60547E42ACCAA5FF2C77D0DEC58949F0D4FC6A1C20C29CA7682D"
+    },
+    "hardware/04_A2/TELEMETRY_EVIDENCE.log": {
+      "bytes": 69161,
+      "sha256": "7B10298AC3434A0923B332ABCF3E2C95BEC1306062201518BA99E33C472BC649"
+    },
+    "hardware/04_A2/VALID_ARM_A_RECEIPT.txt": {
+      "bytes": 1652,
+      "sha256": "9C6AD64276C70724FAEC8FC409D8D1ED4013847F273C78C0886741F277B97C8B"
+    },
+    "hardware/05_B2/FORMAL_READY_RECEIPT.txt": {
+      "bytes": 1646,
+      "sha256": "8F856F672255B9C3ADE4ADBA1A56623B638E655A319C4CCDA9CACB65CD5C397B"
+    },
+    "hardware/05_B2/INDEPENDENT_FORMAL_CONTROL_AUDIT.md": {
+      "bytes": 2538,
+      "sha256": "50C9A847CB79BEAC58D07388346282F4F9786D3CEA70081DB0AAFCAAC91829D8"
+    },
+    "hardware/05_B2/TELEMETRY_EVIDENCE.log": {
+      "bytes": 14132,
+      "sha256": "89DB06410CB2CEBC1132FE015671ACE43D0984837D6F2052EC2D0148BC16EFBF"
+    },
+    "hardware/06_A3/INDEPENDENT_PRIMARY_PROGRAM_AUDIT.md": {
+      "bytes": 1500,
+      "sha256": "A10F3B2B430B587E8201D64FF40E36ABC9E52A2EE6C5EA1F7BD779C04DB08929"
+    },
+    "hardware/06_A3/INDEPENDENT_SAMPLE_AUDIT.md": {
+      "bytes": 2643,
+      "sha256": "C0EDCC312FA99FC66AD36952EF66413871F5288D3F9A4C1B022F339A34919DB4"
+    },
+    "hardware/06_A3/TELEMETRY_EVIDENCE.log": {
+      "bytes": 69314,
+      "sha256": "D7AF34FE1AD4568F2C83B75BB0557E1FE886E3EB6B9DC259E176F209D571C04E"
+    },
+    "hardware/06_A3/VALID_ARM_A_RECEIPT.txt": {
+      "bytes": 1652,
+      "sha256": "F71409473FE51B68AE433840F371A072AC3160DC1C0BB446EA9FB76C24B8D0C3"
+    },
+    "hardware/07_B3/FORMAL_READY_RECEIPT.txt": {
+      "bytes": 1646,
+      "sha256": "DC0EAAD18A9B29A64D0AB13B67A08ED985EC2C292971EC56C334C776E7A714BA"
+    },
+    "hardware/07_B3/TELEMETRY_EVIDENCE.log": {
+      "bytes": 14130,
+      "sha256": "A80E539292502BA24D03E2D8E0342D6CF3B04910BA86EA98F72E7B0436A99DCF"
+    }
+  },
+  "method": {
+    "context_support_rule": {
+      "holm_adjusted_p_less_than": 0.01,
+      "rate_ratio_lower_95_greater_than": 2.0,
+      "same_direction_minimum_runs": 2
+    },
+    "frozen_statistics_path": "C:\\FPGA\\WORKTREES\\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE\\scripts\\v41\\r1f_statistics.py",
+    "frozen_statistics_sha256": "C0188FF2AB7AC03034DAA7F412F447E3DBC21C15FB5458B126C0A96FEB771CCD"
+  },
+  "paired_direction": {
+    "differences": [
+      3,
+      -4,
+      -2
+    ],
+    "label": "DIRECTION_MAJORITY_2_OF_3",
+    "one_sided_sign_p": 0.5,
+    "two_sided_sign_p": 1.0
+  },
+  "probe_panels": {
+    "A1_DATA": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A1_REGADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A1_WADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A2_DATA": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A2_REGADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A2_WADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A3_DATA": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A3_REGADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    },
+    "A3_WADDR": {
+      "acks": 10000,
+      "adjacent_pairs": 0,
+      "block_nacks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "classification_before_global_holm": "INSUFFICIENT_EVENTS",
+      "first_analysis_one_based": null,
+      "first_raw_zero_based": null,
+      "hardware_adjacent_nack_pairs": 0,
+      "hardware_binary_run_count": 1,
+      "hardware_max_consecutive_nacks": 0,
+      "index_overflow": false,
+      "informative": false,
+      "last_analysis_one_based": null,
+      "last_raw_zero_based": null,
+      "maximum_consecutive_nacks": 0,
+      "n": 10000,
+      "nacks": 0,
+      "order_statistic_context": {
+        "estimable": false,
+        "reason": "NO_EVENTS"
+      },
+      "ppm": 0.0,
+      "rate": 0.0,
+      "raw_p": {
+        "adjacent_pairs": 1.0,
+        "block_homogeneity": 1.0,
+        "runs": 1.0
+      },
+      "run_count": 1,
+      "sequence_complete": true,
+      "timeouts": 0,
+      "wilson95": [
+        0.0,
+        0.00038399837067659573
+      ]
+    }
+  },
+  "replicate_homogeneity": {
+    "arm_b": {
+      "estimable": true,
+      "exact_multinomial_p": 1.0
+    },
+    "classification": "INSUFFICIENT_VALID_DATA",
+    "families": {
+      "autoinit_rates": {
+        "adjusted_p": {
+          "DATA": 0.7901526042136373,
+          "RADDR": 1.0,
+          "REGADDR": 1.0,
+          "WADDR": 1.0
+        },
+        "raw_p": {
+          "DATA": 0.19753815105340933,
+          "RADDR": 0.6606060606060606,
+          "REGADDR": 0.6696105956675629,
+          "WADDR": 0.64480765400543
+        }
+      },
+      "failed_composition": {
+        "adjusted_p": {
+          "HIGH_LEVEL_PHASE": 0.1764705882352941,
+          "PHASE_NACK_BITMAP": 0.9344381109086991,
+          "REQUESTED_BANK": 1.0,
+          "TABLE_SLOT": 1.0,
+          "TRANSACTION_KIND": 0.3329023917259211,
+          "VALID_PHYSICAL_BANK_BEFORE": 1.0
+        },
+        "raw_p": {
+          "HIGH_LEVEL_PHASE": 0.029411764705882353,
+          "PHASE_NACK_BITMAP": 0.23360952772717478,
+          "REQUESTED_BANK": 0.44001096942273416,
+          "TRANSACTION_KIND": 0.06658047834518423,
+          "VALID_PHYSICAL_BANK_BEFORE": 0.7914438502673797
+        }
+      },
+      "failed_transaction_rate": {
+        "raw_p": 0.7869873088615662
+      },
+      "probe_rates": {
+        "adjusted_p": {
+          "DATA": 1.0,
+          "REGADDR": 1.0,
+          "WADDR": 1.0
+        },
+        "raw_p": {
+          "DATA": 1.0,
+          "REGADDR": 1.0,
+          "WADDR": 1.0
+        }
+      }
+    },
+    "rejections": []
+  },
+  "schema": "R1H_R4_FROZEN_ANALYSIS_V1",
+  "stationarity": {
+    "adjusted_p": {
+      "A1_DATA:adjacent_pairs": 1.0,
+      "A1_DATA:block_homogeneity": 1.0,
+      "A1_DATA:runs": 1.0,
+      "A1_REGADDR:adjacent_pairs": 1.0,
+      "A1_REGADDR:block_homogeneity": 1.0,
+      "A1_REGADDR:runs": 1.0,
+      "A1_WADDR:adjacent_pairs": 1.0,
+      "A1_WADDR:block_homogeneity": 1.0,
+      "A1_WADDR:runs": 1.0,
+      "A2_DATA:adjacent_pairs": 1.0,
+      "A2_DATA:block_homogeneity": 1.0,
+      "A2_DATA:runs": 1.0,
+      "A2_REGADDR:adjacent_pairs": 1.0,
+      "A2_REGADDR:block_homogeneity": 1.0,
+      "A2_REGADDR:runs": 1.0,
+      "A2_WADDR:adjacent_pairs": 1.0,
+      "A2_WADDR:block_homogeneity": 1.0,
+      "A2_WADDR:runs": 1.0,
+      "A3_DATA:adjacent_pairs": 1.0,
+      "A3_DATA:block_homogeneity": 1.0,
+      "A3_DATA:runs": 1.0,
+      "A3_REGADDR:adjacent_pairs": 1.0,
+      "A3_REGADDR:block_homogeneity": 1.0,
+      "A3_REGADDR:runs": 1.0,
+      "A3_WADDR:adjacent_pairs": 1.0,
+      "A3_WADDR:block_homogeneity": 1.0,
+      "A3_WADDR:runs": 1.0
+    },
+    "final_by_phase": {
+      "DATA": "INSUFFICIENT_EVENTS",
+      "REGADDR": "INSUFFICIENT_EVENTS",
+      "WADDR": "INSUFFICIENT_EVENTS"
+    },
+    "panels": {
+      "A1_DATA": "INSUFFICIENT_EVENTS",
+      "A1_REGADDR": "INSUFFICIENT_EVENTS",
+      "A1_WADDR": "INSUFFICIENT_EVENTS",
+      "A2_DATA": "INSUFFICIENT_EVENTS",
+      "A2_REGADDR": "INSUFFICIENT_EVENTS",
+      "A2_WADDR": "INSUFFICIENT_EVENTS",
+      "A3_DATA": "INSUFFICIENT_EVENTS",
+      "A3_REGADDR": "INSUFFICIENT_EVENTS",
+      "A3_WADDR": "INSUFFICIENT_EVENTS"
+    },
+    "planned_test_count": 27
+  }
+}
