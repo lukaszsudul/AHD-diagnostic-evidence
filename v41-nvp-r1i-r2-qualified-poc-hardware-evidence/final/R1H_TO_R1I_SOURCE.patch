@@ -1,0 +1,2871 @@
+diff --git a/rtl/nvp/nvp6134c_autoinit.vhd b/rtl/nvp/nvp6134c_autoinit.vhd
+index 4316b7c249dd9946da5e6f5e39c469a5f37d1b41..ec070a399d16ce3370469ee1b0079c153a39b5c1 100644
+--- a/rtl/nvp/nvp6134c_autoinit.vhd
++++ b/rtl/nvp/nvp6134c_autoinit.vhd
+@@ -35,7 +35,8 @@ entity v40a_nvp_autoinit is
+     r1f_failed_txn_record : out std_logic_vector(191 downto 0);
+     r1f_bank_invariant_check_count : out std_logic_vector(31 downto 0);
+     r1f_bank_invariant_error_count : out std_logic_vector(31 downto 0);
+-    r1f_first_bank_invariant_error : out std_logic_vector(31 downto 0)
++    r1f_first_bank_invariant_error : out std_logic_vector(31 downto 0);
++    r1i_poc_telemetry : out std_logic_vector(1023 downto 0) := (others => '0')
+   );
+ end entity;
+ 
+@@ -251,6 +252,7 @@ begin
+       r1f_failed_txn_record_dbg => r1f_failed_txn_record,
+       r1f_bank_invariant_check_count_dbg => r1f_bank_invariant_check_count,
+       r1f_bank_invariant_error_count_dbg => r1f_bank_invariant_error_count,
+-      r1f_first_bank_invariant_error_dbg => r1f_first_bank_invariant_error
++      r1f_first_bank_invariant_error_dbg => r1f_first_bank_invariant_error,
++      r1i_poc_telemetry_dbg => r1i_poc_telemetry
+     );
+ end architecture;
+diff --git a/rtl/nvp/nvp6134c_i2c_bringup.vhd b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+index acde0bc1c90b37a5e5c2b12f31e045ad2b3bfcc2..3757acf2677d0a13b31a285095c38cc7b30e567c 100644
+--- a/rtl/nvp/nvp6134c_i2c_bringup.vhd
++++ b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+@@ -73,8 +73,9 @@ entity nvp_i2c_bringup_seq_v38ek is
+     timeout_count_dbg     : out std_logic_vector(15 downto 0);
+     i2c_fsm_dbg           : out std_logic_vector(7 downto 0);
+ 
+-    -- R1f passive phase accounting and transaction-event interface.  These
+-    -- outputs have no fanout into the inherited functional state machine.
++    -- R1f-compatible phase accounting and transaction-event interface.
++    -- R1i counts physical attempts here; logical serials remain fixed while
++    -- retrying, and the separate POC page distinguishes recovery/terminality.
+     -- phase counters pack {RADDR nack,opp, DATA nack,opp,
+     --                      REGADDR nack,opp, WADDR nack,opp} in 32-bit lanes.
+     r1f_phase_counters_dbg       : out std_logic_vector(255 downto 0);
+@@ -86,7 +87,10 @@ entity nvp_i2c_bringup_seq_v38ek is
+     r1f_failed_txn_record_dbg       : out std_logic_vector(191 downto 0);
+     r1f_bank_invariant_check_count_dbg : out std_logic_vector(31 downto 0);
+     r1f_bank_invariant_error_count_dbg : out std_logic_vector(31 downto 0);
+-    r1f_first_bank_invariant_error_dbg : out std_logic_vector(31 downto 0)
++    r1f_first_bank_invariant_error_dbg : out std_logic_vector(31 downto 0);
++    -- R1i: 32 little-lane read-only words.  Default permits legacy instances
++    -- to leave this diagnostic-only port unassociated.
++    r1i_poc_telemetry_dbg : out std_logic_vector(1023 downto 0) := (others => '0')
+   );
+ end entity;
+ 
+@@ -106,13 +110,37 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+     SEND_R_LOW, SEND_R_HIGH, ACK_R_LOW, ACK_R_HIGH,
+     READ_LOW, READ_HIGH,
+     MASTER_NACK_LOW, MASTER_NACK_HIGH,
+-    STOP_A, STOP_B, STORE_RESULT, NEXT_OP, WAIT_SLOT, WAIT_INIT, FINISH
++    STOP_A, STOP_B, STORE_RESULT, NEXT_OP, WAIT_SLOT, WAIT_INIT, FINISH,
++    -- Append only: retain every inherited state/debug encoding.
++    STOP_C, BUS_FREE, RETRY_BACKOFF, RETRY_START, ABORT_RELEASE,
++    ATTEMPT_PREPARE, ABORT_HIGH_RECOVERY
+   );
+ 
+   type t_phase is (PH_ORIGINAL, PH_INIT, PH_WIN_BANK, PH_WIN_READ, PH_OUT_BANK, PH_OUT_READ, PH_AFE_BANK, PH_AFE_READ, PH_RESTORE);
+   type t_preinit_action is (PREINIT_READ_ORIGINAL, PREINIT_FORCE_BANK0_WRITE, PREINIT_FORCE_BANK0_VERIFY);
+   type t_init_action is (INIT_DECODE, INIT_BANK_WRITE, INIT_BANK_VERIFY, INIT_TARGET_WRITE);
+   type t_nack_log is array (0 to 7) of std_logic_vector(63 downto 0);
++  type t_phase_counts is array (0 to 3) of unsigned(31 downto 0);
++
++  -- Exact R1h probe timing model: release in the HIGH state, hold/reset the
++  -- state divider while filtered physical SCL is low, then give HIGH a full
++  -- DIVIDER+1 base-clock dwell before sampling or changing SDA.
++  function requires_scl_high(s : t_state) return boolean is
++  begin
++    case s is
++      when START_W_A | START_W_B | SEND_W_HIGH | ACK_W_HIGH |
++           SEND_REG_HIGH | ACK_REG_HIGH | SEND_DATA_HIGH | ACK_DATA_HIGH |
++           REP_HIGH | REP_START_A | SEND_R_HIGH | ACK_R_HIGH | READ_HIGH |
++           MASTER_NACK_HIGH | STOP_B | STOP_C => return true;
++      when others => return false;
++    end case;
++  end function;
++
++  constant C_SCL_TIMEOUT_CYCLES : natural := CLK_HZ / 50000;
++  constant C_BUS_IDLE_TIMEOUT_CYCLES : natural := CLK_HZ / 1000;
++  constant C_RETRY_1_CYCLES : natural := CLK_HZ / 10000; -- 100 us
++  constant C_RETRY_2_CYCLES : natural := CLK_HZ / 2000;  -- 500 us
++  constant C_RETRY_3_CYCLES : natural := CLK_HZ / 500;   -- 2000 us
+ 
+   function sat_inc32(value : unsigned(31 downto 0)) return unsigned is
+   begin
+@@ -218,8 +246,8 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+   signal nack_log_r          : t_nack_log := (others => (others => '0'));
+   signal timeout_count_r     : unsigned(15 downto 0) := (others => '0');
+ 
+-  -- R1f passive phase counters.  Opportunity increments occur in the exact
+-  -- inherited ACK-sampling states before the corresponding ACK decision.
++  -- R1f-compatible raw phase counters.  Opportunity increments occur only
++  -- when an ACK is physically qualified and sampled, including retry attempts.
+   signal r1f_waddr_opp_r   : unsigned(31 downto 0) := (others => '0');
+   signal r1f_waddr_nack_r  : unsigned(31 downto 0) := (others => '0');
+   signal r1f_regaddr_opp_r : unsigned(31 downto 0) := (others => '0');
+@@ -233,8 +261,9 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+   signal r1f_failed_txns_r     : unsigned(31 downto 0) := (others => '0');
+   signal r1f_timeout_txns_r    : unsigned(31 downto 0) := (others => '0');
+ 
+-  -- Independent transaction accumulator.  Nothing below drives an inherited
+-  -- state, branch, byte, timing value, or bank-cache update.
++  -- R1f-format physical-attempt accumulator.  R1i retains the logical serial
++  -- across retries and emits every failed physical attempt without changing
++  -- the 192-bit record layout or its validity/phase encodings.
+   signal r1f_tx_serial_next_r : std_logic_vector(15 downto 0) := (others => '0');
+   signal r1f_tx_serial_overflow_r : std_logic := '0';
+   signal r1f_tx_index_r       : std_logic_vector(15 downto 0) := (others => '0');
+@@ -272,10 +301,34 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+   signal r1f_after_check_index_r : std_logic_vector(15 downto 0) := (others => '0');
+   signal r1f_after_check_kind_r : std_logic_vector(3 downto 0) := (others => '0');
+   signal r1f_after_check_phase_r : std_logic_vector(3 downto 0) := (others => '0');
+-  signal scl_low_released_count : natural range 0 to CLK_HZ/50000 := 0;
++  signal scl_low_released_count : natural range 0 to C_SCL_TIMEOUT_CYCLES := 0;
+   signal scl_timeout_seen_r  : std_logic := '0';
+-  signal scl_oen_previous_r  : std_logic := '1';
+-  signal scl_release_grace_r : natural range 0 to 5 := 0;
++  signal r1i_early_nack_r : std_logic := '0';
++  signal r1i_early_count_r : t_phase_counts := (others => (others => '0'));
++  signal r1i_false_early_count_r : t_phase_counts := (others => (others => '0'));
++  signal r1i_raw_nacks_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_recovered_txns_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_recovered_nacks_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_unrecovered_txns_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_retry_exhausted_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_retry_success_r : t_phase_counts := (others => (others => '0'));
++  signal r1i_scl_wait_max_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_scl_timeouts_r : unsigned(31 downto 0) := (others => '0');
++  signal r1i_first_false_early_r : std_logic_vector(31 downto 0) := (others => '1');
++  signal r1i_first_recovered_r : std_logic_vector(31 downto 0) := (others => '1');
++  signal r1i_first_unrecovered_r : std_logic_vector(31 downto 0) := (others => '1');
++  signal r1i_retry_index_r : natural range 0 to 3 := 0;
++  signal r1i_logical_nacks_r : natural range 0 to 4 := 0;
++  signal r1i_attempt_error_code_r : std_logic_vector(7 downto 0) := (others => '0');
++  signal r1i_backoff_count_r : natural range 0 to C_RETRY_3_CYCLES := 0;
++  signal r1i_backoff_target_r : natural range 0 to C_RETRY_3_CYCLES := 0;
++  signal r1i_idle_stable_count_r : natural range 0 to DIVIDER + 1 := 0;
++  signal r1i_idle_wait_count_r : natural range 0 to C_BUS_IDLE_TIMEOUT_CYCLES := 0;
++  signal r1i_bus_free_ok_r : std_logic := '0';
++  signal r1i_stop_completed_r : std_logic := '0';
++  signal r1i_abort_sda_r : std_logic := '1';
++  signal r1i_abort_wait_r : natural range 0 to C_BUS_IDLE_TIMEOUT_CYCLES := 0;
++  signal r1i_abort_high_r : natural range 0 to DIVIDER + 1 := 0;
+ 
+   -- Z9: the physical open-drain inputs are asynchronous to clk.  Each raw
+   -- input is confined to the first stage of a dedicated two-register
+@@ -367,6 +420,60 @@ begin
+   r1f_bank_invariant_error_count_dbg <= std_logic_vector(r1f_bank_inv_error_count_r);
+   r1f_first_bank_invariant_error_dbg <= r1f_first_bank_inv_error_r;
+ 
++  r1i_poc_telemetry_dbg <=
++    r1i_first_unrecovered_r & r1i_first_recovered_r & r1i_first_false_early_r &
++    std_logic_vector(r1i_scl_timeouts_r) & std_logic_vector(r1i_scl_wait_max_r) &
++    std_logic_vector(r1i_retry_success_r(3)) &
++    std_logic_vector(r1i_retry_success_r(2)) &
++    std_logic_vector(r1i_retry_success_r(1)) &
++    std_logic_vector(r1i_retry_exhausted_r) &
++    std_logic_vector(r1i_unrecovered_txns_r) &
++    std_logic_vector(r1i_recovered_nacks_r) &
++    std_logic_vector(r1i_recovered_txns_r) & std_logic_vector(r1i_raw_nacks_r) &
++    std_logic_vector(r1i_false_early_count_r(3)) &
++    std_logic_vector(r1f_raddr_nack_r) & std_logic_vector(r1i_early_count_r(3)) &
++    std_logic_vector(r1f_raddr_opp_r) &
++    std_logic_vector(r1i_false_early_count_r(2)) &
++    std_logic_vector(r1f_data_nack_r) & std_logic_vector(r1i_early_count_r(2)) &
++    std_logic_vector(r1f_data_opp_r) &
++    std_logic_vector(r1i_false_early_count_r(1)) &
++    std_logic_vector(r1f_regaddr_nack_r) & std_logic_vector(r1i_early_count_r(1)) &
++    std_logic_vector(r1f_regaddr_opp_r) &
++    std_logic_vector(r1i_false_early_count_r(0)) &
++    std_logic_vector(r1f_waddr_nack_r) & std_logic_vector(r1i_early_count_r(0)) &
++    std_logic_vector(r1f_waddr_opp_r) & x"0000003F" & x"00000001" & x"52314950";
++
++  -- Same open-drain phase decoder as the proven R1h tri-phase probe.  In
++  -- particular, entry to ACK_*_HIGH releases SCL; the sequential ACK decision
++  -- can occur only after that state has physically qualified and dwelled HIGH.
++  process(state, byte_tx, bit_idx, rst, r1i_abort_sda_r)
++  begin
++    scl_oen_r <= '1';
++    sda_oen_r <= '1';
++    if rst = '0' then
++      case state is
++        when START_W_B | REP_START_A =>
++          sda_oen_r <= '0';
++        when SEND_W_LOW | SEND_REG_LOW | SEND_DATA_LOW | SEND_R_LOW =>
++          scl_oen_r <= '0';
++          sda_oen_r <= byte_tx(bit_idx);
++        when SEND_W_HIGH | SEND_REG_HIGH | SEND_DATA_HIGH | SEND_R_HIGH =>
++          sda_oen_r <= byte_tx(bit_idx);
++        when ACK_W_LOW | ACK_REG_LOW | ACK_DATA_LOW | ACK_R_LOW |
++             READ_LOW | MASTER_NACK_LOW | REP_LOW =>
++          scl_oen_r <= '0';
++        when REP_START_B | STOP_A =>
++          scl_oen_r <= '0';
++          sda_oen_r <= '0';
++        when STOP_B =>
++          sda_oen_r <= '0';
++        when ABORT_HIGH_RECOVERY =>
++          sda_oen_r <= r1i_abort_sda_r;
++        when others => null;
++      end case;
++    end if;
++  end process;
++
+   gen_nack_log : for i in 0 to 7 generate
+     nack_log_dbg((i + 1) * 64 - 1 downto i * 64) <= nack_log_r(i);
+   end generate;
+@@ -414,43 +521,60 @@ begin
+     end if;
+   end process;
+ 
++  tick <= '1' when tick_cnt = DIVIDER else '0';
+   process(clk)
+   begin
+     if rising_edge(clk) then
+-      if tick_cnt = DIVIDER then
++      if rst = '1' or state = BUS_FREE or state = RETRY_BACKOFF or
++         state = RETRY_START or state = ABORT_RELEASE or
++         state = ABORT_HIGH_RECOVERY or
++         (requires_scl_high(state) and scl_filtered_r = '0') then
++        tick_cnt <= 0;
++      elsif tick_cnt = DIVIDER then
+         tick_cnt <= 0;
+-        tick <= '1';
+       else
+         tick_cnt <= tick_cnt + 1;
+-        tick <= '0';
+       end if;
+     end if;
+   end process;
+ 
+-  -- Passive controller watchdog.  It never retries or changes the transaction
+-  -- stream; it records a bounded first failure if released SCL remains low for
+-  -- 20 us cumulatively during one transaction.  The five-clk release grace is
+-  -- exactly the maximum two-FF plus three-sample-filter observation latency;
+-  -- it prevents that intentional latency from looking like clock stretching.
++  -- R1i reuses the existing 20-us released-SCL-low bound, now as an active
++  -- per-HIGH qualification timeout (the same model as the R1h probe).  The
++  -- sticky attempt flag is cleared only at a new logical/physical attempt.
++  -- A separate maximum exposes all base-clock waiting, including input-filter
++  -- latency.  Neither synchronizer nor filter is modified.
+   process(clk)
+   begin
+     if rising_edge(clk) then
+-      scl_oen_previous_r <= scl_oen_r;
+-      if rst = '1' or busy_r = '0' or state = SETUP_OP then
++      if rst = '1' or r1f_diag_run_clear_r = '1' then
++        r1i_scl_wait_max_r <= (others => '0');
++        r1i_scl_timeouts_r <= (others => '0');
++      end if;
++      if rst = '1' or busy_r = '0' or state = SETUP_OP or state = RETRY_START then
+         scl_low_released_count <= 0;
+         scl_timeout_seen_r <= '0';
+-        scl_release_grace_r <= 0;
+-      elsif scl_oen_r = '0' then
+-        scl_release_grace_r <= 0;
+-      elsif scl_oen_previous_r = '0' then
+-        scl_release_grace_r <= 5;
+-      elsif scl_release_grace_r > 0 then
+-        scl_release_grace_r <= scl_release_grace_r - 1;
+-      elsif scl_filtered_r = '0' and scl_timeout_seen_r = '0' then
+-        if scl_low_released_count = CLK_HZ/50000 then
++      elsif requires_scl_high(state) and scl_filtered_r = '0' then
++        if scl_low_released_count = C_SCL_TIMEOUT_CYCLES then
+           scl_timeout_seen_r <= '1';
++          if scl_timeout_seen_r = '0' then
++            r1i_scl_timeouts_r <= sat_inc32(r1i_scl_timeouts_r);
++          end if;
+         else
+           scl_low_released_count <= scl_low_released_count + 1;
++          if to_unsigned(scl_low_released_count + 1, 32) > r1i_scl_wait_max_r then
++            r1i_scl_wait_max_r <= to_unsigned(scl_low_released_count + 1, 32);
++          end if;
++        end if;
++      else
++        scl_low_released_count <= 0;
++        if state = BUS_FREE and
++           (r1i_idle_wait_count_r = C_BUS_IDLE_TIMEOUT_CYCLES or
++            (scl_filtered_r = '1' and sda_filtered_r = '1' and
++             r1i_idle_stable_count_r >= DIVIDER and r1i_stop_completed_r = '0')) then
++          scl_timeout_seen_r <= '1';
++          if scl_timeout_seen_r = '0' and scl_filtered_r = '0' then
++            r1i_scl_timeouts_r <= sat_inc32(r1i_scl_timeouts_r);
++          end if;
+         end if;
+       end if;
+     end if;
+@@ -502,13 +626,61 @@ begin
+       end if;
+       inv_errors_v := inv_errors_v + 1;
+     end procedure;
++    procedure clear_r1i_run is
++    begin
++      r1i_early_nack_r <= '0';
++      r1i_early_count_r <= (others => (others => '0'));
++      r1i_false_early_count_r <= (others => (others => '0'));
++      r1i_raw_nacks_r <= (others => '0');
++      r1i_recovered_txns_r <= (others => '0');
++      r1i_recovered_nacks_r <= (others => '0');
++      r1i_unrecovered_txns_r <= (others => '0');
++      r1i_retry_exhausted_r <= (others => '0');
++      r1i_retry_success_r <= (others => (others => '0'));
++      r1i_first_false_early_r <= (others => '1');
++      r1i_first_recovered_r <= (others => '1');
++      r1i_first_unrecovered_r <= (others => '1');
++      r1i_retry_index_r <= 0;
++      r1i_logical_nacks_r <= 0;
++      r1i_attempt_error_code_r <= (others => '0');
++      r1i_backoff_count_r <= 0;
++      r1i_backoff_target_r <= 0;
++      r1i_idle_stable_count_r <= 0;
++      r1i_idle_wait_count_r <= 0;
++      r1i_bus_free_ok_r <= '0';
++      r1i_stop_completed_r <= '0';
++      r1i_abort_sda_r <= '1';
++      r1i_abort_wait_r <= 0;
++      r1i_abort_high_r <= 0;
++    end procedure;
++    procedure capture_early_ack(constant p : natural) is
++    begin
++      -- End of LOW: this is the legacy sample edge, immediately before this
++      -- state transition releases physical SCL.  It never decides protocol.
++      r1i_early_nack_r <= sda_filtered_r;
++      if sda_filtered_r /= '0' then
++        r1i_early_count_r(p) <= sat_inc32(r1i_early_count_r(p));
++      end if;
++    end procedure;
++    procedure observe_qualified_ack(constant p : natural) is
++    begin
++      if sda_filtered_r /= '0' then
++        r1i_raw_nacks_r <= sat_inc32(r1i_raw_nacks_r);
++        r1i_logical_nacks_r <= r1i_logical_nacks_r + 1;
++        r1i_attempt_error_code_r <= std_logic_vector(to_unsigned(p + 1, 8));
++      elsif r1i_early_nack_r = '1' then
++        r1i_false_early_count_r(p) <= sat_inc32(r1i_false_early_count_r(p));
++        if r1i_first_false_early_r = x"FFFFFFFF" then
++          r1i_first_false_early_r <= x"0000" & r1f_tx_index_r;
++        end if;
++      end if;
++    end procedure;
+   begin
+     if rising_edge(clk) then
+       if rst = '1' then
++        clear_r1i_run;
+         state <= IDLE;
+         phase <= PH_ORIGINAL;
+-        scl_oen_r <= '1';
+-        sda_oen_r <= '1';
+         busy_r <= '0';
+         done_r <= '0';
+         start_latched <= '0';
+@@ -648,13 +820,42 @@ begin
+           start_latched <= '1';
+         end if;
+ 
+-        if tick = '1' then
++        -- Backoff elapsed time starts at completed STOP/bus-free, not at a
++        -- slow FSM tick.  STORE_RESULT bookkeeping is included in the elapsed
++        -- base-clock interval and never lengthens the programmed ladder.
++        if (state = STORE_RESULT or state = RETRY_BACKOFF) and
++           r1i_backoff_count_r < C_RETRY_3_CYCLES then
++          r1i_backoff_count_r <= r1i_backoff_count_r + 1;
++        end if;
++
++        if requires_scl_high(state) and scl_filtered_r = '0' then
++          if scl_low_released_count = C_SCL_TIMEOUT_CYCLES then
++            cur_error <= '1';
++            r1i_attempt_error_code_r <= x"07";
++            if state = STOP_B or state = STOP_C then
++              -- SCL is physically unavailable: release, then make one bounded
++              -- bus-free proof.  Never manufacture a STOP edge on low SCL.
++              state <= ABORT_RELEASE;
++            else
++              -- Finish the already released HIGH if the slave releases SCL
++              -- during bounded recovery.  This lets a pending slave ACK
++              -- finish its clock before STOP_A lowers SCL and releases it.
++              -- Immediately lowering an as-yet-low ACK clock would otherwise
++              -- clock the slave ACK in STOP_B and prevent a physical STOP.
++              r1i_abort_sda_r <= sda_oen_r;
++              r1i_abort_wait_r <= 0;
++              r1i_abort_high_r <= 0;
++              state <= ABORT_HIGH_RECOVERY;
++            end if;
++          end if;
++        elsif tick = '1' or state = BUS_FREE or state = RETRY_BACKOFF or
++              state = RETRY_START or state = ABORT_RELEASE or
++              state = ABORT_HIGH_RECOVERY then
+           case state is
+             when IDLE =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               busy_r <= '0';
+               if start = '1' or start_latched = '1' then
++                clear_r1i_run;
+                 start_latched <= '0';
+                 range_latched <= range_sel;
+                 window_latched <= window_sel;
+@@ -744,11 +945,15 @@ begin
+               end if;
+ 
+             when SETUP_OP =>
++              r1i_retry_index_r <= 0;
++              r1i_logical_nacks_r <= 0;
++              r1i_attempt_error_code_r <= (others => '0');
++              r1i_bus_free_ok_r <= '0';
++              r1i_stop_completed_r <= '0';
++              r1i_backoff_count_r <= 0;
+               data_rx <= (others => '0');
+               bit_idx <= 7;
+               cur_error <= '0';
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               reg_addr <= C_V38EK_BANK_SELECT_REG;
+               write_data <= (others => '0');
+               is_read_op <= '1';
+@@ -760,18 +965,8 @@ begin
+               do_i2c := true;
+               last_op_r <= "001"; -- read
+ 
+-              -- SDA must be released before a START.  Preserve this as a bus
+-              -- stuck diagnosis even though a low SDA would look like ACKs.
+-              if sda_filtered_r = '0' and first_error_valid_r = '0' then
+-                first_error_valid_r <= '1';
+-                first_error_code_r <= x"06"; -- SDA_STUCK_LOW
+-                first_error_step_r <= std_logic_vector(to_unsigned(op_idx, 8));
+-                first_error_meta_bank_r <= meta_bank_r;
+-                first_error_phys_bank_r <= phys_bank_r;
+-                first_error_reg_r <= reg_addr;
+-                first_error_data_r <= write_data;
+-                any_error_r <= '1';
+-              end if;
++              -- START/bus-stuck diagnosis is captured per attempt below;
++              -- terminal legacy error state is deferred until recovery fails.
+ 
+               case phase is
+                 when PH_ORIGINAL =>
+@@ -929,18 +1124,17 @@ begin
+ 
+               if do_i2c then
+                 byte_tx <= NVP_ADDR_W;
+-                state <= START_W_A;
++                state <= ATTEMPT_PREPARE;
+               end if;
+ 
+-            when START_W_A =>
+-              -- This is the inherited controller's actual START-command
+-              -- attempt.  In the normal case it performs the physical SDA
+-              -- high-to-low edge while SCL is released.  A pre-existing
+-              -- stuck-low SDA cannot create that edge, but still consumes one
+-              -- unique attempted-transaction serial and is recorded as the
+-              -- distinct terminal error class 0x06.  This diagnostic wording
+-              -- avoids aliasing failed START attempts without changing flow.
+-              r1f_transaction_start_r <= '1';
++            when ATTEMPT_PREPARE =>
++              -- Physical attempt accounting remains raw.  The R1h 192-bit
++              -- failure record is emitted once per failed attempt, with the
++              -- same logical serial on retries; no format bit is repurposed.
++              -- Only initial attempts consume a new logical serial.
++              if r1i_retry_index_r = 0 then
++                r1f_transaction_start_r <= '1';
++              end if;
+               r1f_txn_starts_r <= sat_inc32(r1f_txn_starts_r);
+               r1f_tx_legacy_op_r <= std_logic_vector(to_unsigned(op_idx, 8));
+               r1f_tx_phase_r <= std_logic_vector(to_unsigned(t_phase'pos(phase), 4));
+@@ -1025,22 +1219,24 @@ begin
+                 r1f_tx_verify_expected_r <= (others => '0');
+                 r1f_tx_verify_expected_valid_r <= '0';
+               end if;
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '0';
+-              state <= START_W_B;
++              state <= START_W_A;
++
++            when START_W_A =>
++              if r1f_tx_start_sda_stuck_r = '1' then
++                cur_error <= '1';
++                r1i_attempt_error_code_r <= x"06";
++                state <= STOP_A;
++              else
++                state <= START_W_B;
++              end if;
+ 
+             when START_W_B =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '0';
+               state <= SEND_W_LOW;
+ 
+             when SEND_W_LOW =>
+-              scl_oen_r <= '0';
+-              if byte_tx(bit_idx) = '1' then sda_oen_r <= '1'; else sda_oen_r <= '0'; end if;
+               state <= SEND_W_HIGH;
+ 
+             when SEND_W_HIGH =>
+-              scl_oen_r <= '1';
+               if bit_idx = 0 then
+                 state <= ACK_W_LOW;
+               else
+@@ -1049,41 +1245,33 @@ begin
+               end if;
+ 
+             when ACK_W_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
++              capture_early_ack(0);
+               state <= ACK_W_HIGH;
+ 
+             when ACK_W_HIGH =>
+-              scl_oen_r <= '1';
++              observe_qualified_ack(0);
+               r1f_waddr_opp_r <= sat_inc32(r1f_waddr_opp_r);
+               r1f_tx_opp_bitmap_r(0) <= '1';
+               if sda_filtered_r /= '0' then
+                 r1f_waddr_nack_r <= sat_inc32(r1f_waddr_nack_r);
+                 r1f_tx_nack_bitmap_r(0) <= '1';
+                 r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
+-                cur_error <= '1'; last_ack_r <= '0';
++                cur_error <= '1';
++                last_ack_r <= '0';
+                 if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+                 record_nack(x"01");
+-                if first_error_valid_r = '0' then
+-                  first_error_valid_r <= '1'; first_error_code_r <= x"01";
+-                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+-                  first_error_meta_bank_r <= meta_bank_r;
+-                  first_error_phys_bank_r <= phys_bank_r;
+-                  first_error_reg_r <= reg_addr;
+-                  first_error_data_r <= write_data;
+-                end if;
+-              else last_ack_r <= '1'; end if;
+-              byte_tx <= reg_addr;
+-              bit_idx <= 7;
+-              state <= SEND_REG_LOW;
++                state <= STOP_A; -- first qualified NACK: no later phase
++              else
++                last_ack_r <= '1';
++                byte_tx <= reg_addr;
++                bit_idx <= 7;
++                state <= SEND_REG_LOW;
++              end if;
+ 
+             when SEND_REG_LOW =>
+-              scl_oen_r <= '0';
+-              if byte_tx(bit_idx) = '1' then sda_oen_r <= '1'; else sda_oen_r <= '0'; end if;
+               state <= SEND_REG_HIGH;
+ 
+             when SEND_REG_HIGH =>
+-              scl_oen_r <= '1';
+               if bit_idx = 0 then
+                 state <= ACK_REG_LOW;
+               else
+@@ -1092,45 +1280,37 @@ begin
+               end if;
+ 
+             when ACK_REG_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
++              capture_early_ack(1);
+               state <= ACK_REG_HIGH;
+ 
+             when ACK_REG_HIGH =>
+-              scl_oen_r <= '1';
++              observe_qualified_ack(1);
+               r1f_regaddr_opp_r <= sat_inc32(r1f_regaddr_opp_r);
+               r1f_tx_opp_bitmap_r(1) <= '1';
+               if sda_filtered_r /= '0' then
+                 r1f_regaddr_nack_r <= sat_inc32(r1f_regaddr_nack_r);
+                 r1f_tx_nack_bitmap_r(1) <= '1';
+                 r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
+-                cur_error <= '1'; last_ack_r <= '0';
++                cur_error <= '1';
++                last_ack_r <= '0';
+                 if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+                 record_nack(x"02");
+-                if first_error_valid_r = '0' then
+-                  first_error_valid_r <= '1'; first_error_code_r <= x"02";
+-                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+-                  first_error_meta_bank_r <= meta_bank_r;
+-                  first_error_phys_bank_r <= phys_bank_r;
+-                  first_error_reg_r <= reg_addr;
+-                  first_error_data_r <= write_data;
+-                end if;
+-              else last_ack_r <= '1'; end if;
+-              if is_read_op = '1' then
+-                state <= REP_LOW;
++                state <= STOP_A; -- first qualified NACK: no later phase
+               else
+-                byte_tx <= write_data;
+-                bit_idx <= 7;
+-                state <= SEND_DATA_LOW;
++                last_ack_r <= '1';
++                if is_read_op = '1' then
++                  state <= REP_LOW;
++                else
++                  byte_tx <= write_data;
++                  bit_idx <= 7;
++                  state <= SEND_DATA_LOW;
++                end if;
+               end if;
+ 
+             when SEND_DATA_LOW =>
+-              scl_oen_r <= '0';
+-              if byte_tx(bit_idx) = '1' then sda_oen_r <= '1'; else sda_oen_r <= '0'; end if;
+               state <= SEND_DATA_HIGH;
+ 
+             when SEND_DATA_HIGH =>
+-              scl_oen_r <= '1';
+               if bit_idx = 0 then
+                 state <= ACK_DATA_LOW;
+               else
+@@ -1139,61 +1319,45 @@ begin
+               end if;
+ 
+             when ACK_DATA_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
++              capture_early_ack(2);
+               state <= ACK_DATA_HIGH;
+ 
+             when ACK_DATA_HIGH =>
+-              scl_oen_r <= '1';
++              observe_qualified_ack(2);
+               r1f_data_opp_r <= sat_inc32(r1f_data_opp_r);
+               r1f_tx_opp_bitmap_r(2) <= '1';
+               if sda_filtered_r /= '0' then
+                 r1f_data_nack_r <= sat_inc32(r1f_data_nack_r);
+                 r1f_tx_nack_bitmap_r(2) <= '1';
+                 r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
+-                cur_error <= '1'; last_ack_r <= '0';
++                cur_error <= '1';
++                last_ack_r <= '0';
+                 if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+                 record_nack(x"03");
+-                if first_error_valid_r = '0' then
+-                  first_error_valid_r <= '1'; first_error_code_r <= x"03";
+-                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+-                  first_error_meta_bank_r <= meta_bank_r;
+-                  first_error_phys_bank_r <= phys_bank_r;
+-                  first_error_reg_r <= reg_addr;
+-                  first_error_data_r <= write_data;
+-                end if;
+-              else last_ack_r <= '1'; end if;
+-              state <= STOP_A;
++                state <= STOP_A; -- first qualified NACK: no later phase
++              else
++                last_ack_r <= '1';
++                state <= STOP_A;
++              end if;
+ 
+             when REP_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
+               state <= REP_HIGH;
+ 
+             when REP_HIGH =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               state <= REP_START_A;
+ 
+             when REP_START_A =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '0';
+               state <= REP_START_B;
+ 
+             when REP_START_B =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '0';
+               byte_tx <= NVP_ADDR_R;
+               bit_idx <= 7;
+               state <= SEND_R_LOW;
+ 
+             when SEND_R_LOW =>
+-              scl_oen_r <= '0';
+-              if byte_tx(bit_idx) = '1' then sda_oen_r <= '1'; else sda_oen_r <= '0'; end if;
+               state <= SEND_R_HIGH;
+ 
+             when SEND_R_HIGH =>
+-              scl_oen_r <= '1';
+               if bit_idx = 0 then
+                 state <= ACK_R_LOW;
+               else
+@@ -1202,40 +1366,32 @@ begin
+               end if;
+ 
+             when ACK_R_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
++              capture_early_ack(3);
+               state <= ACK_R_HIGH;
+ 
+             when ACK_R_HIGH =>
+-              scl_oen_r <= '1';
++              observe_qualified_ack(3);
+               r1f_raddr_opp_r <= sat_inc32(r1f_raddr_opp_r);
+               r1f_tx_opp_bitmap_r(3) <= '1';
+               if sda_filtered_r /= '0' then
+                 r1f_raddr_nack_r <= sat_inc32(r1f_raddr_nack_r);
+                 r1f_tx_nack_bitmap_r(3) <= '1';
+                 r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
+-                cur_error <= '1'; last_ack_r <= '0';
++                cur_error <= '1';
++                last_ack_r <= '0';
+                 if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+                 record_nack(x"04");
+-                if first_error_valid_r = '0' then
+-                  first_error_valid_r <= '1'; first_error_code_r <= x"04";
+-                  first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+-                  first_error_meta_bank_r <= meta_bank_r;
+-                  first_error_phys_bank_r <= phys_bank_r;
+-                  first_error_reg_r <= reg_addr;
+-                  first_error_data_r <= write_data;
+-                end if;
+-              else last_ack_r <= '1'; end if;
+-              bit_idx <= 7;
+-              state <= READ_LOW;
++                state <= STOP_A; -- first qualified NACK: no later phase
++              else
++                last_ack_r <= '1';
++                bit_idx <= 7;
++                state <= READ_LOW;
++              end if;
+ 
+             when READ_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
+               state <= READ_HIGH;
+ 
+             when READ_HIGH =>
+-              scl_oen_r <= '1';
+               data_rx(bit_idx) <= sda_filtered_r;
+               if bit_idx = 0 then
+                 state <= MASTER_NACK_LOW;
+@@ -1245,28 +1401,96 @@ begin
+               end if;
+ 
+             when MASTER_NACK_LOW =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '1';
+               state <= MASTER_NACK_HIGH;
+ 
+             when MASTER_NACK_HIGH =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               state <= STOP_A;
+ 
+             when STOP_A =>
+-              scl_oen_r <= '0';
+-              sda_oen_r <= '0';
+               state <= STOP_B;
+ 
+             when STOP_B =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+-              state <= STORE_RESULT;
++              -- SCL has been physically HIGH for a complete qualified dwell;
++              -- only entry to STOP_C releases SDA to create the legal STOP.
++              state <= STOP_C;
++
++            when STOP_C =>
++              r1i_idle_stable_count_r <= 0;
++              r1i_idle_wait_count_r <= 0;
++              r1i_bus_free_ok_r <= '0';
++              -- Require the resolved SDA release, not just our output enable.
++              r1i_stop_completed_r <= sda_filtered_r;
++              state <= BUS_FREE;
++
++            when ABORT_RELEASE =>
++              r1i_idle_stable_count_r <= 0;
++              r1i_idle_wait_count_r <= 0;
++              r1i_bus_free_ok_r <= '0';
++              r1i_stop_completed_r <= '0';
++              state <= BUS_FREE;
++
++            when ABORT_HIGH_RECOVERY =>
++              if scl_filtered_r = '1' and r1i_abort_high_r >= DIVIDER then
++                state <= STOP_A;
++              elsif r1i_abort_wait_r = C_BUS_IDLE_TIMEOUT_CYCLES then
++                state <= ABORT_RELEASE;
++              else
++                r1i_abort_wait_r <= r1i_abort_wait_r + 1;
++                if scl_filtered_r = '1' then
++                  r1i_abort_high_r <= r1i_abort_high_r + 1;
++                else
++                  r1i_abort_high_r <= 0;
++                end if;
++              end if;
++
++            when BUS_FREE =>
++              -- Same filtered idle qualification and one-ms bound as R1h.
++              -- The total bound also covers a chattering, never-stable bus.
++              if scl_filtered_r = '1' and sda_filtered_r = '1' and
++                 r1i_idle_stable_count_r >= DIVIDER then
++                r1i_bus_free_ok_r <= r1i_stop_completed_r;
++                if r1i_stop_completed_r = '0' then
++                  cur_error <= '1';
++                  r1i_attempt_error_code_r <= x"07";
++                end if;
++                r1i_backoff_count_r <= 0;
++                state <= STORE_RESULT;
++              elsif r1i_idle_wait_count_r = C_BUS_IDLE_TIMEOUT_CYCLES then
++                cur_error <= '1';
++                r1i_attempt_error_code_r <= x"07";
++                r1i_bus_free_ok_r <= '0';
++                r1i_backoff_count_r <= 0;
++                state <= STORE_RESULT;
++              else
++                r1i_idle_wait_count_r <= r1i_idle_wait_count_r + 1;
++                if scl_filtered_r = '1' and sda_filtered_r = '1' then
++                  r1i_idle_stable_count_r <= r1i_idle_stable_count_r + 1;
++                else
++                  r1i_idle_stable_count_r <= 0;
++                end if;
++              end if;
++
++            when RETRY_BACKOFF =>
++              if r1i_backoff_count_r + 1 >= r1i_backoff_target_r then
++                state <= RETRY_START;
++              end if;
++
++            when RETRY_START =>
++              -- No SETUP_OP replay: byte identity, table/operation/result
++              -- indices, phase, requested bank and logical serial are frozen.
++              cur_error <= '0';
++              r1i_attempt_error_code_r <= (others => '0');
++              r1i_bus_free_ok_r <= '0';
++              r1i_stop_completed_r <= '0';
++              data_rx <= (others => '0');
++              byte_tx <= NVP_ADDR_W;
++              bit_idx <= 7;
++              bank_verify_ok_r <= '0';
++              state <= ATTEMPT_PREPARE;
+ 
+             when STORE_RESULT =>
+-              -- R1f transaction finalization is diagnostic-only.  Compute the
+-              -- effective next bank state explicitly so the new record never
++              -- Each physical attempt gets exact original-format R1h
++              -- finalization.  Compute the effective next bank state so it never
+               -- exposes the old VHDL signal value from this same clock edge.
+               phys_after_v := r1f_tx_phys_before_r;
+               phys_after_valid_v := r1f_tx_phys_before_valid_r;
+@@ -1333,7 +1557,7 @@ begin
+                       bank_update_reason_v := "0010";
+                     end if;
+                   end if;
+-                elsif defer_phys_bank_update = '1' then
++                else
+                   phys_after_v := (others => '0');
+                   phys_after_valid_v := '0';
+                   bank_update_reason_v := "0101";
+@@ -1344,9 +1568,20 @@ begin
+               transaction_failed_v :=
+                 r1f_tx_nack_bitmap_r /= "0000" or
+                 scl_timeout_seen_r = '1' or terminal_error_v /= x"00";
++              if transaction_failed_v and
++                 (r1f_tx_selector_valid_r = '1' or is_bank_verify_rd = '1' or
++                  r1i_retry_index_r = 3 or r1i_bus_free_ok_r = '0') then
++                -- Never preserve a trustworthy bank after failed selection,
++                -- failed verification, exhaustion or unsafe bus recovery.
++                phys_after_v := (others => '0');
++                phys_after_valid_v := '0';
++              end if;
+               r1f_txn_completions_r <= sat_inc32(r1f_txn_completions_r);
+               if scl_timeout_seen_r = '1' then
+                 r1f_timeout_txns_r <= sat_inc32(r1f_timeout_txns_r);
++                if timeout_count_r /= x"FFFF" then
++                  timeout_count_r <= timeout_count_r + 1;
++                end if;
+               end if;
+               if transaction_failed_v then
+                 r1f_failed_txns_r <= sat_inc32(r1f_failed_txns_r);
+@@ -1531,9 +1766,56 @@ begin
+               r1f_after_check_phase_r <= r1f_tx_phase_r;
+               r1f_after_check_pending_r <= '1';
+ 
++              -- Apply only the bank safety effect of a failed physical
++              -- attempt.  Recovered attempts must not touch terminal masks,
++              -- functional readback, first error, operation or table index.
++              phys_bank_valid_r <= phys_after_valid_v;
++              if phys_after_valid_v = '1' then phys_bank_r <= phys_after_v; end if;
++              if transaction_failed_v and r1i_retry_index_r < 3 and
++                 r1i_bus_free_ok_r = '1' then
++                case r1i_retry_index_r is
++                  when 0 => r1i_backoff_target_r <= C_RETRY_1_CYCLES;
++                  when 1 => r1i_backoff_target_r <= C_RETRY_2_CYCLES;
++                  when others => r1i_backoff_target_r <= C_RETRY_3_CYCLES;
++                end case;
++                r1i_retry_index_r <= r1i_retry_index_r + 1;
++                state <= RETRY_BACKOFF;
++              else
++                if transaction_failed_v then
++                  r1i_unrecovered_txns_r <= sat_inc32(r1i_unrecovered_txns_r);
++                  if r1i_retry_index_r = 3 then
++                    r1i_retry_exhausted_r <= sat_inc32(r1i_retry_exhausted_r);
++                  end if;
++                  if r1i_first_unrecovered_r = x"FFFFFFFF" then
++                    r1i_first_unrecovered_r <= x"0000" & r1f_tx_index_r;
++                  end if;
++                  any_error_r <= '1';
++                  if first_error_valid_r = '0' then
++                    first_error_valid_r <= '1';
++                    if terminal_error_v /= x"00" then
++                      first_error_code_r <= terminal_error_v;
++                    else
++                      first_error_code_r <= r1i_attempt_error_code_r;
++                    end if;
++                    first_error_step_r <= std_logic_vector(to_unsigned(op_idx, 8));
++                    first_error_meta_bank_r <= meta_bank_r;
++                    first_error_phys_bank_r <= phys_bank_r;
++                    first_error_reg_r <= reg_addr;
++                    first_error_data_r <= write_data;
++                  end if;
++                elsif r1i_retry_index_r > 0 then
++                  r1i_recovered_txns_r <= sat_inc32(r1i_recovered_txns_r);
++                  r1i_recovered_nacks_r <=
++                    sat_add32(r1i_recovered_nacks_r, r1i_logical_nacks_r);
++                  r1i_retry_success_r(r1i_retry_index_r) <=
++                    sat_inc32(r1i_retry_success_r(r1i_retry_index_r));
++                  if r1i_first_recovered_r = x"FFFFFFFF" then
++                    r1i_first_recovered_r <= x"0000" & r1f_tx_index_r;
++                  end if;
++                end if;
++
+               if scl_timeout_seen_r = '1' then
+                 any_error_r <= '1';
+-                if timeout_count_r /= x"FFFF" then timeout_count_r <= timeout_count_r + 1; end if;
+                 if first_error_valid_r = '0' then
+                   first_error_valid_r <= '1'; first_error_code_r <= x"07";
+                   first_error_step_r <= std_logic_vector(to_unsigned(op_idx,8));
+@@ -1661,6 +1943,7 @@ begin
+                 end if;
+               end if;
+               state <= NEXT_OP;
++              end if; -- retry decision versus one final logical result
+ 
+             when NEXT_OP =>
+               case phase is
+@@ -1805,8 +2088,6 @@ begin
+               end case;
+ 
+             when WAIT_SLOT =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               if slot_wait_count >= slot_wait_target then
+                 state <= NEXT_OP;
+               else
+@@ -1814,8 +2095,6 @@ begin
+               end if;
+ 
+             when WAIT_INIT =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               if wait_cnt < C_INIT_SETTLE_TICKS then
+                 wait_cnt <= wait_cnt + 1;
+               else
+@@ -1825,8 +2104,6 @@ begin
+               end if;
+ 
+             when FINISH =>
+-              scl_oen_r <= '1';
+-              sda_oen_r <= '1';
+               busy_r <= '0';
+               done_r <= '1';
+               state <= IDLE;
+diff --git a/rtl/top/ahd_capture_top_xdma.sv b/rtl/top/ahd_capture_top_xdma.sv
+index 1e34f9299000147b6028c731ab0dc2252f56f43e..d04ff833994bc83e29647c0a7cce4cc941c3410e 100644
+--- a/rtl/top/ahd_capture_top_xdma.sv
++++ b/rtl/top/ahd_capture_top_xdma.sv
+@@ -75,6 +75,7 @@ module ahd_capture_top_xdma #(
+   logic [31:0] r1f_bank_invariant_check_count;
+   logic [31:0] r1f_bank_invariant_error_count;
+   logic [31:0] r1f_first_bank_invariant_error;
++  logic [1023:0] r1i_poc_telemetry;
+ 
+   always_ff @(posedge autonomous_clk) begin
+     if (nvp_por_reset) begin
+@@ -111,7 +112,8 @@ module ahd_capture_top_xdma #(
+     .r1f_failed_txn_record(r1f_failed_txn_record),
+     .r1f_bank_invariant_check_count(r1f_bank_invariant_check_count),
+     .r1f_bank_invariant_error_count(r1f_bank_invariant_error_count),
+-    .r1f_first_bank_invariant_error(r1f_first_bank_invariant_error)
++    .r1f_first_bank_invariant_error(r1f_first_bank_invariant_error),
++    .r1i_poc_telemetry(r1i_poc_telemetry)
+   );
+ 
+   logic [47:0] lifecycle_freerun_count;
+@@ -493,6 +495,7 @@ module ahd_capture_top_xdma #(
+   wire [31:0] app_rsp_rdata;
+   logic [31:0] measurement_read_data;
+   logic [31:0] r1f_read_data;
++  logic [31:0] r1i_scalar_read_data;
+   logic r1h_req_valid;
+   logic r1h_req_ready;
+   logic [13:0] r1h_req_offset;
+@@ -846,7 +849,15 @@ module ahd_capture_top_xdma #(
+     .read_data(r1f_read_data)
+   );
+ 
+-  // The complete R1f/R1h page uses one registered, one-outstanding read
++  // Only the new, unused 0x3600..0x367f page is overlaid. All old scalar,
++  // failed-record and probe-index decode/BRAM latency remain unchanged.
++  v41_r1i_poc_scalar_mux R1I_POC_SCALAR_MUX (
++    .offset(r1h_req_offset), .telemetry(r1i_poc_telemetry),
++    .legacy_scalar_read_data(r1f_read_data),
++    .scalar_read_data(r1i_scalar_read_data)
++  );
++
++  // The complete R1f/R1h page plus R1i uses one registered, one-outstanding read
+   // service.  Scalar values are captured at request acceptance; record words
+   // use one BRAM read and packed index words use two ordered BRAM reads.
+   v41_r1h_mmio_read_service R1H_MMIO_READ_SERVICE (
+@@ -855,7 +866,7 @@ module ahd_capture_top_xdma #(
+     .req_offset(r1h_req_offset),
+     .rsp_valid(r1h_rsp_valid), .rsp_ready(r1h_rsp_ready),
+     .rsp_data(r1h_rsp_data),
+-    .scalar_read_data(r1f_read_data),
++    .scalar_read_data(r1i_scalar_read_data),
+     .record_select(r1f_record_read_select),
+     .record_index(r1f_record_decode_index),
+     .record_word(r1f_record_decode_word),
+diff --git a/rtl/v41/control_status_regs.sv b/rtl/v41/control_status_regs.sv
+index 0a6141c1809e408ad69179de63c29a5aa1263022..16fc122686a7c11f99c5bc9750dad586d713e05f 100644
+--- a/rtl/v41/control_status_regs.sv
++++ b/rtl/v41/control_status_regs.sv
+@@ -98,7 +98,7 @@ module v41_control_status_regs #(
+                                           host_req_addr <= 17'h0209f;
+   wire         r1h_read_select = !host_req_write &&
+                                  host_req_addr >= 17'h020a0 &&
+-                                 host_req_addr <= 17'h035ff;
++                                 host_req_addr <= 17'h0367f;
+   wire         local_select = (host_req_addr[16:8] == 9'b0) ||
+                               measurement_read_select || r1h_read_select;
+ 
+@@ -226,3 +226,23 @@ module v41_control_status_regs #(
+     end
+   end
+ endmodule
++
++// R1i's 32-word, read-only causal telemetry page. The input is in the same
++// axi_aclk/autonomous clock domain. The unchanged R1h read service captures
++// one scalar word at accepted request and holds it under host backpressure.
++// No old address, payload store, write path or latency is changed here.
++module v41_r1i_poc_scalar_mux (
++  input  logic [13:0]   offset,
++  input  logic [1023:0] telemetry,
++  input  logic [31:0]   legacy_scalar_read_data,
++  output logic [31:0]   scalar_read_data
++);
++  always_comb begin
++    scalar_read_data = legacy_scalar_read_data;
++    if (offset >= 14'h3600 && offset <= 14'h367f) begin
++      scalar_read_data = 32'b0;
++      if (offset[1:0] == 2'b00)
++        scalar_read_data = telemetry[offset[6:2]*32 +: 32];
++    end
++  end
++endmodule
+diff --git a/scripts/v41/r1i_build.tcl b/scripts/v41/r1i_build.tcl
+new file mode 100644
+index 0000000000000000000000000000000000000000..843d644d1214bb2bc56b6afe50a42231df234ebc
+--- /dev/null
++++ b/scripts/v41/r1i_build.tcl
+@@ -0,0 +1,332 @@
++# R1i-R2 PoC. Successful R1h-R2 synthesis setup + R1h-R4 implementation tail.
++# No source, constraint, directive or strategy edits during the build.
++if {$argc != 5} { error "expected REPO_ROOT BUILD_ROOT COMMIT TREE ATTEMPT" }
++lassign $argv repo_root build_root source_commit source_tree attempt
++set repo_root [file normalize $repo_root]
++set build_root [file normalize $build_root]
++set source_commit [string tolower $source_commit]
++set source_tree [string tolower $source_tree]
++set base_commit c4f4bfcf577c92c3021d1fe83c05878dd12e001c
++set expected_branch diag/v41-nvp-r1i-r2-qualified-ack-readiness-poc
++set expected_part xc7a35tcsg325-2
++set top ahd_capture_top_xdma
++set bit_path [file join $build_root ahd_capture_v41_i2c_25khz_r1i_qualified_ack_readiness_poc.bit]
++set routed_dcp [file join $build_root R1I_routed.dcp]
++proc write_lines {path lines} {
++  set f [open $path w]
++  fconfigure $f -encoding utf-8 -translation lf
++  foreach line $lines { puts $f $line }
++  close $f
++}
++proc write_text {path value} {
++  set f [open $path w]
++  fconfigure $f -encoding utf-8 -translation lf
++  puts -nonewline $f $value
++  close $f
++}
++proc read_text {path} {
++  set f [open $path r]
++  fconfigure $f -encoding utf-8
++  set text [read $f]
++  close $f
++  return $text
++}
++proc sha256_file {path} {
++  set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
++  foreach line [split $output "\n"] {
++    set v [string toupper [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
++    if {[regexp {^[0-9A-F]{64}$} $v]} { return $v }
++  }
++  error "SHA256 unavailable for $path"
++}
++proc git_value {args} {
++  global repo_root
++  return [string trim [exec git --no-optional-locks -C $repo_root {*}$args]]
++}
++proc optional_report {label command} {
++  global build_root
++  if {[catch {uplevel 1 $command} msg]} {
++    set f [open [file join $build_root OPTIONAL_REPORT_FAILURES.txt] a]
++    puts $f "$label=$msg"
++    close $f
++    puts "OPTIONAL_REPORT_NONBLOCKING: $label: $msg"
++  }
++}
++proc utilization_value {text wanted} {
++  foreach line [split $text "\n"] {
++    set cols [split $line "|"]
++    if {[llength $cols] < 7} { continue }
++    if {[string trimright [string trim [lindex $cols 1]] "*"] eq $wanted} {
++      set value [string map [list "," "" " " ""] [string trim [lindex $cols 2]]]
++      if {[string is integer -strict $value]} { return $value }
++    }
++  }
++  error "required utilization value unavailable: $wanted"
++}
++proc resources {stage} {
++  global build_root
++  set t [report_utilization -return_string]
++  write_text [file join $build_root [format %s_UTILIZATION.rpt $stage]] $t
++  set luts [utilization_value $t "Slice LUTs"]
++  set regs [utilization_value $t "Slice Registers"]
++  set class PASS_STANDARD_MARGIN
++  if {$luts > 18720} { set class PASS_DIAGNOSTIC_ONLY_5_TO_10_PERCENT_MARGIN }
++  if {$luts > 19760 || $regs > 37440} { set class FAIL }
++  set result [dict create SLICE_LUTS $luts SLICE_REGISTERS $regs RESOURCE_CLASS $class]
++  write_lines [file join $build_root [format %s_RESOURCE_GATE.txt $stage]] [list \
++    "SLICE_LUTS=$luts" "SLICE_REGISTERS=$regs" "RESOURCE_CLASS=$class" \
++    "DEVICE_SLICE_LUTS=20800" "DEVICE_SLICE_REGISTERS=41600" \
++    "RAMB18E1=[llength [get_cells -quiet -hier -filter {REF_NAME == RAMB18E1}]]" \
++    "RAMB36E1=[llength [get_cells -quiet -hier -filter {REF_NAME == RAMB36E1}]]"]
++  return $result
++}
++proc record_action {action} {
++  global counts build_root stage
++  dict incr counts $action
++  set lines [list "STAGE=$stage"]
++  dict for {key value} $counts { lappend lines "$key=$value" }
++  write_lines [file join $build_root OPERATION_COUNTS.txt] $lines
++}
++if {$attempt ni {1 2}} { error "build attempt must be 1 or 2" }
++if {![regexp {^[0-9a-f]{40}$} $source_commit] || ![regexp {^[0-9a-f]{40}$} $source_tree]} {
++  error "invalid requested Git identity"
++}
++if {[git_value rev-parse HEAD] ne $source_commit ||
++    [git_value rev-parse {HEAD^{tree}}] ne $source_tree ||
++    [git_value symbolic-ref --short HEAD] ne $expected_branch ||
++    [git_value status --porcelain --untracked-files=all] ne ""} {
++  error "source commit/tree/branch/cleanliness mismatch"
++}
++if {[git_value merge-base $base_commit $source_commit] ne $base_commit} {
++  error "source is not based on exact R1h"
++}
++if {[git_value rev-list --count [format %s..%s $base_commit $source_commit]] ne $attempt} {
++  error "source commit count differs from authorized build attempt"
++}
++set vivado_version [string trim [version -short]]
++set sw_build UNKNOWN
++regexp {SW Build[ \t]+([0-9]+)} [version] -> sw_build
++if {$vivado_version ne "2025.2" || $sw_build ne "6299465"} { error "wrong Vivado version/build" }
++set marker [file join $build_root BUILD_CONSUMED.marker]
++if {[file exists $marker] || [file exists $bit_path]} { error "build output/attempt already consumed" }
++file mkdir $build_root
++set f [open $marker {WRONLY CREAT EXCL}]
++puts $f "POC_BUILD_ATTEMPT=$attempt"
++puts $f "SOURCE_COMMIT=$source_commit"
++puts $f "SOURCE_TREE=$source_tree"
++puts $f "UTC=[clock format [clock seconds] -gmt true -format {%Y-%m-%dT%H:%M:%SZ}]"
++close $f
++set sv_rel_files {
++  rtl/v41/axi_lite_host_bridge.sv
++  rtl/v41/axi_clock_lifecycle_monitor.sv
++  rtl/v41/axi_clock_measurement_regs.sv
++  rtl/v41/r1e_measurement_regs.sv
++  rtl/v41/r1h_probe_index_bram_store.sv
++  rtl/v41/nvp_i2c_tri_phase_probe.sv
++  rtl/v41/r1f_failed_txn_logger.sv
++  rtl/v41/r1f_measurement_regs.sv
++  rtl/v41/r1h_mmio_read_service.sv
++  rtl/v41/control_status_regs.sv
++  rtl/pio/pio_slot_adapter.sv
++  rtl/pio/pio_bar_target.sv
++  rtl/record/bt656_record_producer.sv
++  rtl/record/capture_mailbox.sv
++  rtl/video/video_capture.sv
++  rtl/video/physical_frontend.sv
++  rtl/top/ahd_capture_top_xdma.sv
++}
++set vhdl_rel_files {
++  rtl/nvp/nvp6134c_diagnostics_pkg.vhd
++  rtl/nvp/r1f_transaction_serial_counter.vhd
++  rtl/nvp/nvp6134c_i2c_bringup.vhd
++  rtl/nvp/nvp6134c_autoinit.vhd
++}
++set xdc_rel_files {
++  xdc/boards/current/xdma_pcie.xdc
++  xdc/boards/current/pins.xdc
++  xdc/boards/current/vdo_input_timing.xdc
++  xdc/boards/current/pcie_pio.xdc
++  xdc/boards/current/nvp_control.xdc
++  xdc/common/cdc.xdc
++  xdc/common/configuration_bank.xdc
++}
++set sv_files [list]
++set vhdl_files [list]
++set xdc_files [list]
++set input_hashes [list]
++foreach kind {sv vhdl xdc} {
++  foreach rel [set [format %s_rel_files $kind]] {
++    set path [file join $repo_root $rel]
++    lappend [format %s_files $kind] $path
++    lappend input_hashes "$rel|[sha256_file $path]"
++  }
++}
++set xdma_source [file join $repo_root ip/v41/xdma_v41_m1.xci]
++set common_tcl [file join $repo_root scripts/v41/xdma_config_common.tcl]
++lappend input_hashes "ip/v41/xdma_v41_m1.xci|[sha256_file $xdma_source]"
++lappend input_hashes "scripts/v41/xdma_config_common.tcl|[sha256_file $common_tcl]"
++write_lines [file join $build_root BUILD_INPUT_SHA256.txt] $input_hashes
++source $common_tcl
++set git_words [list]
++for {set i 0} {$i < 5} {incr i} {
++  lappend git_words [string range $source_commit [expr {$i*8}] [expr {$i*8+7}]]
++}
++set generics "SLOT_COUNT=2"
++for {set i 0} {$i < 5} {incr i} { append generics " GIT_SHA_W$i=32'h[lindex $git_words $i]" }
++append generics " BUILD_FLAGS=32'h00000002 ENABLE_MAREK_INIT_TABLE=1"
++set counts [dict create SYNTH_DESIGN 0 OPT_DESIGN 0 PLACE_DESIGN 0 PHYS_OPT_DESIGN 0 ROUTE_DESIGN 0 WRITE_BITSTREAM 0]
++set stage PROJECT_SETUP
++set bit_sha NOT_GENERATED
++set routed_sha NOT_GENERATED
++set result [catch {
++  cd $build_root
++  create_project v41_r1i_qualified_ack_readiness [file join $build_root vivado_project] -part $expected_part
++  set_property target_language Verilog [current_project]
++  set_property simulator_language Mixed [current_project]
++  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
++  config_ip_cache -use_cache_location [file join $build_root ip_cache]
++  add_files -norecurse $sv_files
++  set_property FILE_TYPE SystemVerilog [get_files $sv_files]
++  add_files -norecurse $vhdl_files
++  file mkdir [file join $build_root input_xci]
++  set xdma_copy [file join $build_root input_xci xdma_v41_m1.xci]
++  file copy $xdma_source $xdma_copy
++  if {[sha256_file $xdma_copy] ne [sha256_file $xdma_source]} { error "XDMA input-copy mismatch" }
++  import_ip -files $xdma_copy
++  set xdma_ip [get_ips -quiet xdma_v41_m1]
++  v41_xdma::configure_minimal_c2h_stream $xdma_ip
++  set imported_xci [get_files [get_property IP_FILE $xdma_ip]]
++  set_property GENERATE_SYNTH_CHECKPOINT false $imported_xci
++  generate_target all $xdma_ip
++  add_files -fileset constrs_1 -norecurse $xdc_files
++  set_property PROCESSING_ORDER EARLY [get_files [lindex $xdc_files 0]]
++  set_property PROCESSING_ORDER LATE [get_files [lrange $xdc_files 1 end]]
++  set_property top $top [get_filesets sources_1]
++  set_property generic $generics [get_filesets sources_1]
++  update_compile_order -fileset sources_1
++  if {[get_property PART [current_project]] ne $expected_part ||
++      [get_property TOP [get_filesets sources_1]] ne $top ||
++      [get_property GENERIC [get_filesets sources_1]] ne $generics} {
++    error "project part/top/runtime provenance mismatch"
++  }
++  optional_report COMPILE_ORDER {
++    report_compile_order -fileset sources_1 -used_in synthesis -file [file join $build_root COMPILE_ORDER.rpt]
++  }
++  write_lines [file join $build_root BUILD_PROVENANCE.txt] [list \
++    "SOURCE_COMMIT=$source_commit" "SOURCE_TREE=$source_tree" "SOURCE_CLEAN=YES" \
++    "BASE_COMMIT=$base_commit" "PART=$expected_part" "TOP=$top" \
++    "GENERIC=$generics" "BUILD_FLAGS=0x00000002" \
++    "VIVADO_VERSION=$vivado_version" "VIVADO_SW_BUILD=$sw_build" \
++    "FLOW=R1H_R2_SYNTH_SETUP_PLUS_SUCCESSFUL_R1H_R4_IMPLEMENTATION" \
++    "NEW_CONSTRAINTS=0" "RAW_ROUTE_PROPERTY_QUERIED=NO"]
++  set stage SYNTHESIS
++  record_action SYNTH_DESIGN
++  synth_design -top $top -part $expected_part -flatten_hierarchy rebuilt
++  if {[llength [get_cells -quiet -hier]] == 0} { error "empty synthesized design" }
++  optional_report SYNTH_CHECKPOINT { write_checkpoint [file join $build_root R1I_synth.dcp] }
++  optional_report SYNTH_UTILIZATION { report_utilization -file [file join $build_root POST_SYNTH_UTILIZATION.rpt] }
++  set stage OPT_DESIGN
++  record_action OPT_DESIGN
++  opt_design
++  set post_opt [resources POST_OPT]
++  if {[dict get $post_opt RESOURCE_CLASS] eq "FAIL"} { error "post-opt resource floor violated" }
++  optional_report POST_OPT_CHECKPOINT { write_checkpoint [file join $build_root R1I_post_opt.dcp] }
++  set stage PLACE_DESIGN
++  record_action PLACE_DESIGN
++  place_design
++  set stage PHYS_OPT_DESIGN
++  record_action PHYS_OPT_DESIGN
++  phys_opt_design
++  set stage ROUTE_DESIGN
++  record_action ROUTE_DESIGN
++  route_design
++  set stage ROUTED_HARD_GATES
++  # Semantic 2025.2 route API, not raw ROUTE metadata or report-text counts.
++  # Do not use -quiet: it would mask errors inside report_route_status.
++  set fully_routed [report_route_status -boolean_check ROUTED_FULLY]
++  set errors_in_routes [report_route_status -boolean_check ERRORS_IN_ROUTES]
++  set unrouted [llength [report_route_status -return_nets -route_type UNROUTED]]
++  set partial [llength [report_route_status -return_nets -route_type PARTIAL]]
++  optional_report ROUTE_STATUS {
++    report_route_status -file [file join $build_root ROUTE_STATUS.rpt]
++  }
++  if {$fully_routed ne "1" || $errors_in_routes ne "0" || $unrouted || $partial} {
++    error "actual route failure: fully=$fully_routed errors=$errors_in_routes unrouted=$unrouted partial=$partial"
++  }
++  set route_errors 0
++  optional_report TIMING_SUMMARY {
++    report_timing_summary -delay_type min_max -max_paths 1000 -file [file join $build_root TIMING_SUMMARY.rpt]
++  }
++  set setup [get_timing_paths -quiet -delay_type max -max_paths 1 -nworst 1]
++  set hold [get_timing_paths -quiet -delay_type min -max_paths 1 -nworst 1]
++  if {[llength $setup] == 0 || [llength $hold] == 0} { error "required timing class absent" }
++  set wns [get_property SLACK $setup]
++  set whs [get_property SLACK $hold]
++  if {![string is double -strict $wns] || ![string is double -strict $whs]} {
++    error "required actual timing slack is not numeric"
++  }
++  set failing_setup [llength [get_timing_paths -quiet -delay_type max -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
++  set failing_hold [llength [get_timing_paths -quiet -delay_type min -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
++  if {$wns < 0.0 || $whs <= 0.0 || $failing_setup || $failing_hold} {
++    error "timing failure: WNS=$wns WHS=$whs"
++  }
++  set final [resources FINAL]
++  if {[dict get $final RESOURCE_CLASS] eq "FAIL"} { error "final resource floor violated" }
++  report_drc -file [file join $build_root DRC.rpt]
++  set drc_errors 0
++  set drc_critical 0
++  foreach v [get_drc_violations -quiet] {
++    set severity [string toupper [get_property SEVERITY $v]]
++    if {$severity eq "ERROR"} { incr drc_errors }
++    if {$severity eq "CRITICAL WARNING"} { incr drc_critical }
++  }
++  if {$drc_errors || $drc_critical} { error "actual DRC error or critical warning" }
++  if {[catch {report_cdc -details -return_string} cdc_text]} {
++    write_lines [file join $build_root CDC_OPTIONAL_FAILURE.txt] [list "REPORT_FAILED_NONBLOCKING=$cdc_text"]
++  } else {
++    write_text [file join $build_root CDC.rpt] $cdc_text
++    set cdc_critical [regexp -all -nocase -line {CDC-[0-9]+[^\r\n]*Critical} $cdc_text]
++    set cdc_unknown [regexp -all -nocase -line {CDC-[0-9]+[^\r\n]*Unknown} $cdc_text]
++    if {$cdc_critical || $cdc_unknown} { error "CDC report identifies actual critical or unknown crossing" }
++  }
++  optional_report HIERARCHY { report_utilization -hierarchical -hierarchical_depth 20 -file [file join $build_root FINAL_HIERARCHY.rpt] }
++  write_checkpoint $routed_dcp
++  set routed_sha [sha256_file $routed_dcp]
++  if {[git_value rev-parse HEAD] ne $source_commit ||
++      [git_value status --porcelain --untracked-files=all] ne ""} {
++    error "source mutated during build"
++  }
++  write_lines [file join $build_root PRE_BITSTREAM_HARD_GATE.txt] [list \
++    "SYNTHESIS=PASS" "PLACE=PASS" "ROUTE=PASS" "ROUTE_ERRORS=$route_errors" \
++    "FULLY_ROUTED=$fully_routed" "PARTIALLY_ROUTED_NETS=$partial" \
++    "UNROUTED_NETS=$unrouted" "WNS=$wns" "WHS=$whs" \
++    "FAILING_SETUP_PATHS=$failing_setup" "FAILING_HOLD_PATHS=$failing_hold" \
++    "DRC_ERRORS=$drc_errors" "DRC_CRITICAL_WARNINGS=$drc_critical" \
++    "FINAL_SLICE_LUTS=[dict get $final SLICE_LUTS]" \
++    "FINAL_SLICE_REGISTERS=[dict get $final SLICE_REGISTERS]" \
++    "FINAL_RESOURCE_CLASS=[dict get $final RESOURCE_CLASS]" \
++    "SOURCE_TO_BIT_PROVENANCE=PASS" "SOURCE_COMMIT=$source_commit" \
++    "R1I_ROUTED_DCP_SHA256=$routed_sha" "RESULT=PASS"]
++  set stage WRITE_BITSTREAM
++  record_action WRITE_BITSTREAM
++  write_bitstream $bit_path
++  if {![file isfile $bit_path] || [file size $bit_path] == 0} { error "bitstream missing or empty" }
++  set bit_sha [sha256_file $bit_path]
++  set stage COMPLETE
++} failure options]
++set terminal_lines [list "POC_BUILD_ATTEMPT=$attempt" "STAGE=$stage" \
++  "POC_SOURCE_COMMIT=$source_commit" "POC_SOURCE_TREE=$source_tree" \
++  "POC_BIT_SHA256=$bit_sha" "POC_ROUTED_DCP_SHA256=$routed_sha"]
++dict for {key value} $counts { lappend terminal_lines "$key=$value" }
++if {$result != 0} {
++  lappend terminal_lines "BUILD=FAIL" "ERROR=$failure" "ERROR_INFO=[dict get $options -errorinfo]"
++  write_lines [file join $build_root BUILD_RESULT.txt] $terminal_lines
++  puts stderr "R1I_BUILD_FAIL: $failure"
++  catch {close_project}
++  exit 1
++}
++lappend terminal_lines "BUILD=PASS" "SOURCE_TO_BIT_PROVENANCE=PASS"
++write_lines [file join $build_root BUILD_RESULT.txt] $terminal_lines
++catch {close_project}
++puts "R1I_BUILD_PASS BIT_SHA256=$bit_sha"
++exit 0
+diff --git a/scripts/v41/r1i_vivado_portable_launch.ps1 b/scripts/v41/r1i_vivado_portable_launch.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..e0e4dc50932710a46a0e4095593c18e9388c6dbe
+--- /dev/null
++++ b/scripts/v41/r1i_vivado_portable_launch.ps1
+@@ -0,0 +1,66 @@
++[CmdletBinding()]
++param(
++    [Parameter(Mandatory)][string]$RepositoryRoot,
++    [Parameter(Mandatory)][string]$BuildRoot,
++    [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{40}$')][string]$SourceCommit,
++    [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{40}$')][string]$SourceTree,
++    [Parameter(Mandatory)][ValidateSet(1,2)][int]$Attempt
++)
++# R1i-R2's one bounded harness correction. Vivado initializes the Tcl Store
++# before -source runs. Isolate only its child APPDATA to a writable ASCII path;
++# do not modify the real user profile, Tcl installation, RTL, XDC or flow.
++$ErrorActionPreference='Stop'
++Set-StrictMode -Version Latest
++$repo=$RepositoryRoot
++$out=$BuildRoot
++foreach($path in @($repo,$out)){
++    if($path -notmatch '^[A-Za-z]:\\[\x20-\x7e]+$' -or $path -match '["&|<>^%!]'){
++        throw 'Build paths must be absolute local ASCII paths without shell metacharacters'
++    }
++}
++$portableAppData=Join-Path (Split-Path $out -Parent) 'portable_vivado_appdata'
++[void][IO.Directory]::CreateDirectory($portableAppData)
++$vivado='C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat'
++$arguments=@('-mode','batch','-source',(Join-Path $repo 'scripts\v41\r1i_build.tcl'),
++    '-log',(Join-Path $out 'vivado.log'),'-journal',(Join-Path $out 'vivado.jou'),
++    '-tclargs',$repo,$out,$SourceCommit,$SourceTree,[string]$Attempt)
++$quoted=@($vivado)+$arguments | ForEach-Object { [char]34+[string]$_+[char]34 }
++$psi=[Diagnostics.ProcessStartInfo]::new()
++$psi.FileName=$env:ComSpec
++$psi.Arguments='/d /s /c '+[char]34+($quoted -join ' ')+[char]34
++$psi.WorkingDirectory=$out
++$psi.UseShellExecute=$false
++$psi.CreateNoWindow=$true
++$psi.WindowStyle=[Diagnostics.ProcessWindowStyle]::Hidden
++$psi.RedirectStandardOutput=$true
++$psi.RedirectStandardError=$true
++$psi.Environment['APPDATA']=$portableAppData
++$utf8=[Text.UTF8Encoding]::new($false)
++$receipt=[ordered]@{
++    Attempt=$Attempt;SourceCommit=$SourceCommit;SourceTree=$SourceTree;
++    Correction='CHILD_ONLY_PORTABLE_APPDATA';ChildAppData=$portableAppData;
++    ParentAppDataChanged=$false;SourceOrConstraintDelta=$false;
++    ImplementationCommandDelta=$false;Executable=$vivado;Arguments=$arguments;
++    StartedUtc=[DateTime]::UtcNow.ToString('o');ProcessId=$null;ProcessExitCode=$null;EndedUtc=$null
++}
++$process=[Diagnostics.Process]::new()
++$process.StartInfo=$psi
++try{
++    if(-not $process.Start()){throw 'Vivado child did not start'}
++    $receipt.ProcessId=$process.Id
++    [IO.File]::WriteAllText((Join-Path $out 'PORTABLE_LAUNCH.json'),($receipt|ConvertTo-Json -Depth 8),$utf8)
++    $stdoutTask=$process.StandardOutput.ReadToEndAsync()
++    $stderrTask=$process.StandardError.ReadToEndAsync()
++    Write-Output "VIVADO_PORTABLE_CHILD_STARTED PID=$($process.Id) ATTEMPT=$Attempt"
++    $process.WaitForExit()
++    $stdout=$stdoutTask.GetAwaiter().GetResult()
++    $stderr=$stderrTask.GetAwaiter().GetResult()
++    [IO.File]::WriteAllText((Join-Path $out 'PROCESS_STDOUT.log'),$stdout,$utf8)
++    [IO.File]::WriteAllText((Join-Path $out 'PROCESS_STDERR.log'),$stderr,$utf8)
++    $code=$process.ExitCode
++    $receipt.ProcessExitCode=$code
++    $receipt.EndedUtc=[DateTime]::UtcNow.ToString('o')
++    [IO.File]::WriteAllText((Join-Path $out 'PORTABLE_PROCESS_EXIT.json'),($receipt|ConvertTo-Json -Depth 8),$utf8)
++    Write-Output "VIVADO_PORTABLE_CHILD_EXIT=$code"
++}finally{$process.Dispose()}
++exit $code
+diff --git a/scripts/v41/read_nvp_r1i.py b/scripts/v41/read_nvp_r1i.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..ae16ddce315ef10cf50e2f31f74068ca36104093
+--- /dev/null
++++ b/scripts/v41/read_nvp_r1i.py
+@@ -0,0 +1,400 @@
++#!/usr/bin/env python3
++"""Bounded read-only R1i PoC reader; exact R1h reader remains unmodified.
++
++R1i retains all old wire fields. A failed-record entry now means a failed
++physical attempt, so up to four consecutive entries may share one logical
++transaction serial. R1i-only checks model first-NACK abort and qualified
++timeouts explicitly; the unmodified R1h control uses its original decoder.
++No write, ioctl, mmap, DMA or device-control primitive is implemented.
++"""
++from __future__ import annotations
++
++import argparse
++import csv
++import itertools
++import json
++import os
++import re
++import sys
++import time
++from pathlib import Path
++from typing import Any, Mapping, Sequence
++
++try:
++    import read_nvp_r1f as r1h
++except ModuleNotFoundError:
++    from . import read_nvp_r1f as r1h
++
++R1IDecodeError = r1h.R1FDecodeError
++_word = r1h._word
++_require = r1h._require
++_reserved_zero = r1h._reserved_zero
++_nullable = r1h._nullable
++POC_BASE = 0x3600
++POC_END_EXCLUSIVE = 0x3680
++POC_OFFSETS = tuple(range(POC_BASE, POC_END_EXCLUSIVE, 4))
++READ_OFFSETS = tuple(sorted(set(r1h.READ_OFFSETS + POC_OFFSETS)))
++POC_MAGIC = 0x52314950
++POC_VERSION = 1
++POLICY_FLAGS = 0x3F
++PHASE_NAMES = ("WADDR", "REGADDR", "DATA", "RADDR")
++PHASE_FIELDS = ("ack_opportunities", "legacy_early_would_nack",
++                "qualified_nack", "early_nack_but_qualified_ack")
++TAIL_FIELDS = (
++    "raw_qualified_nack_count", "recovered_transaction_count",
++    "recovered_nack_count", "unrecovered_transaction_count",
++    "retry_exhausted_count", "retry_success_on_retry_1",
++    "retry_success_on_retry_2", "retry_success_on_retry_3",
++    "scl_high_wait_max_base_cycles", "scl_high_timeout_count",
++    "first_early_false_nack_transaction", "first_recovered_transaction",
++    "first_unrecovered_transaction",
++)
++R1H_SOURCE_COMMIT = "c4f4bfcf577c92c3021d1fe83c05878dd12e001c"
++
++
++def collect_word_map(fd: int, os_module=os) -> dict[int, int]:
++    """Keep the exact inherited read inventory, then read all32 POC words."""
++    result = r1h.collect_word_map(fd, os_module)
++    for offset in POC_OFFSETS:
++        result[offset] = r1h.read_word(fd, offset, os_module)
++    return result
++
++
++def _decode_record(raw: Sequence[int], entry: int) -> dict[str, Any]:
++    """Decode the unchanged64x192 wire format with R1i attempt semantics."""
++    _require(len(raw) == 6, "record must contain six words")
++    w0, w1, w2, w3, w4, w5 = map(int, raw)
++    transaction_index, table_slot = w0 & 0xFFFF, (w0 >> 16) & 0xFFFF
++    legacy_operation, phase, kind = w1 & 0xFF, (w1 >> 8) & 0xF, (w1 >> 12) & 0xF
++    opportunity_bitmap, nack_bitmap = (w1 >> 16) & 0xF, (w1 >> 20) & 0xF
++    nack_count, timeout = (w1 >> 24) & 7, bool((w1 >> 27) & 1)
++    completed, valid = bool((w1 >> 28) & 1), bool((w1 >> 29) & 1)
++    register_raw, write_raw, read_raw = w2 & 0xFF, (w2 >> 8) & 0xFF, (w2 >> 16) & 0xFF
++    reg_valid, write_valid, read_valid = (bool((w2 >> bit) & 1) for bit in (24, 25, 26))
++    requested_valid, physical_before_valid = (bool((w2 >> bit) & 1) for bit in (27, 28))
++    selector_valid, verify_expected_valid, verify_observed_valid = (
++        bool((w2 >> bit) & 1) for bit in (29, 30, 31))
++    requested_raw, physical_before_raw = w3 & 0xFF, (w3 >> 8) & 0xFF
++    selector_raw, verify_expected_raw = (w3 >> 16) & 0xFF, (w3 >> 24) & 0xFF
++    verify_observed_raw, physical_after_raw = w4 & 0xFF, (w4 >> 8) & 0xFF
++    physical_after_valid = bool((w4 >> 16) & 1)
++    verify_result, update_reason, fsm_state = (w4 >> 17) & 7, (w4 >> 20) & 0xF, (w4 >> 24) & 0xFF
++    fsm_context, terminal_error = w5 & 0xFF, (w5 >> 8) & 0xFF
++    _require(w1 >> 30 == 0 and w5 >> 16 == 0,
++             f"record {entry}: reserved bits nonzero")
++    _require(valid, f"record {entry}: record_valid=0")
++    _require(phase in r1h.AUTOINIT_PHASE_NAMES, f"record {entry}: reserved phase")
++    _require(kind in r1h.TRANSACTION_KIND_NAMES, f"record {entry}: reserved kind")
++    _require(nack_bitmap & ~opportunity_bitmap == 0,
++             f"record {entry}: NACK outside attempted phase")
++    _require(nack_count == nack_bitmap.bit_count() and nack_count <= 1,
++             f"record {entry}: first-NACK abort permits at most one NACK")
++    _require(nack_bitmap != 0 or timeout or terminal_error != 0,
++             f"record {entry}: no failure cause")
++    _require(completed or timeout, f"record {entry}: incomplete non-timeout attempt")
++    # ACK opportunities are sampled qualified phases, not bytes merely sent.
++    # A timeout before the first ACK legitimately has an empty bitmap.
++    prefixes = (0, 1, 3, 11) if kind in r1h.READ_KINDS else (0, 1, 3, 7)
++    _require(opportunity_bitmap in prefixes, f"record {entry}: non-prefix opportunities")
++    _require(opportunity_bitmap != 0 or timeout or terminal_error == 0x06,
++             f"record {entry}: empty opportunities without timeout or START-SDA-stuck")
++    if nack_bitmap:
++        _require(opportunity_bitmap == {1: 1, 2: 3, 4: 7, 8: 11}[nack_bitmap],
++                 f"record {entry}: later phase attempted after first NACK")
++    if kind in r1h.READ_KINDS:
++        _require(not write_valid, f"record {entry}: read kind has write data")
++    else:
++        _require(not read_valid, f"record {entry}: write kind has read data")
++    _require((table_slot != 0xFFFF) == (kind in r1h.INIT_TABLE_KINDS),
++             f"record {entry}: table-slot validity mismatch")
++    if selector_valid:
++        _require(reg_valid and register_raw == 0xFF,
++                 f"record {entry}: selector without register0xFF")
++    _require(verify_result in r1h.BANK_VERIFY_RESULT_NAMES,
++             f"record {entry}: reserved verify result")
++    _require(update_reason in r1h.BANK_UPDATE_REASON_NAMES,
++             f"record {entry}: reserved bank update reason")
++    if verify_result == 1:
++        _require(verify_expected_valid and verify_observed_valid and
++                 verify_expected_raw == verify_observed_raw,
++                 f"record {entry}: matched verify lacks equal valid bytes")
++    # The byte encoding is unchanged; R1i appends bounded-wait/retry states.
++    _require(fsm_state < 42, f"record {entry}: reserved R1i FSM state")
++    return {
++        "entry": entry, "raw_words": [f"0x{value:08X}" for value in raw],
++        "transaction_index_16": transaction_index,
++        "table_slot_index_16": table_slot,
++        "legacy_operation_index_8": legacy_operation,
++        "legacy_operation_index_authoritative": False,
++        "autoinit_phase_code": phase, "autoinit_phase": r1h.AUTOINIT_PHASE_NAMES[phase],
++        "transaction_kind_code": kind, "transaction_kind": r1h.TRANSACTION_KIND_NAMES[kind],
++        "phase_opportunity_bitmap": opportunity_bitmap,
++        "phase_nack_bitmap": nack_bitmap, "nack_count_within_transaction": nack_count,
++        "timeout": timeout, "transaction_completed": completed, "record_valid": valid,
++        "register_address": _nullable(register_raw, reg_valid),
++        "write_data": _nullable(write_raw, write_valid), "read_data": _nullable(read_raw, read_valid),
++        "requested_bank": _nullable(requested_raw, requested_valid),
++        "physical_bank_before": _nullable(physical_before_raw, physical_before_valid),
++        "selector_value_sent": _nullable(selector_raw, selector_valid),
++        "bank_verify_expected": _nullable(verify_expected_raw, verify_expected_valid),
++        "bank_verify_observed": _nullable(verify_observed_raw, verify_observed_valid),
++        "physical_bank_after": _nullable(physical_after_raw, physical_after_valid),
++        "valid_bits": {
++            "register_address": reg_valid, "write_data": write_valid, "read_data": read_valid,
++            "requested_bank": requested_valid, "physical_bank_before": physical_before_valid,
++            "selector_value": selector_valid, "verify_expected": verify_expected_valid,
++            "verify_observed": verify_observed_valid, "physical_bank_after": physical_after_valid},
++        "bank_verify_result_code": verify_result,
++        "bank_verify_result": r1h.BANK_VERIFY_RESULT_NAMES[verify_result],
++        "bank_update_reason_code": update_reason,
++        "bank_update_reason": r1h.BANK_UPDATE_REASON_NAMES[update_reason],
++        "fsm_state": fsm_state, "fsm_context": fsm_context,
++        "terminal_error_code": terminal_error,
++    }
++
++
++def _decode_log(words: Mapping[int, int], failed_attempts: int) -> dict[str, Any]:
++    total, stored = _word(words, 0x2120), _word(words, 0x2124)
++    overflow_word = _word(words, 0x2128)
++    _reserved_zero(overflow_word, 1, "R1I_FAILED_TXN_OVERFLOW")
++    overflow = bool(overflow_word)
++    first, last = _word(words, 0x212C), _word(words, 0x2130)
++    status, next_serial = _word(words, 0x2134), _word(words, 0x2138)
++    _reserved_zero(first, 0xFFFF, "FIRST_FAILED_TXN_INDEX")
++    _reserved_zero(last, 0xFFFF, "LAST_FAILED_TXN_INDEX")
++    _reserved_zero(status, 0x3FF, "LOG_STATUS")
++    _reserved_zero(next_serial, 0xFFFF, "NEXT_TRANSACTION_SERIAL")
++    _require(total == failed_attempts, "failed-log total differs from failed attempts")
++    _require(stored == min(total, 64), "stored failed attempts not min(total,64)")
++    _require(overflow == (total > 64), "failed-log overflow must start at attempt65")
++    _require(bool(status & 4) == overflow and status & 0x78 == 0x78 and status & 0x380 == 0,
++             "failed-log coherence/protocol/saturation status invalid")
++    _require(bool(status & 1) == (total > 0) and bool(status & 2) == (total > 0),
++             "failed-log endpoint validity mismatch")
++    raw_records = [[_word(words, 0x2400 + entry*24 + word*4) for word in range(6)]
++                   for entry in range(64)]
++    records = [_decode_record(raw_records[entry], entry) for entry in range(stored)]
++    _require(all(not any(raw) for raw in raw_records[stored:]),
++             "unused failed-record entry must be zero")
++    serials = [record["transaction_index_16"] for record in records]
++    _require(all(a <= b for a, b in zip(serials, serials[1:])),
++             "R1i failed attempt serials must be nondecreasing")
++    for serial, group in itertools.groupby(records, key=lambda rec: rec["transaction_index_16"]):
++        attempts = list(group)
++        _require(len(attempts) <= 4, f"logical transaction {serial} exceeds four failed attempts")
++        identity_fields = ("table_slot_index_16", "legacy_operation_index_8",
++                           "autoinit_phase_code", "transaction_kind_code", "register_address",
++                           "write_data", "requested_bank")
++        identity = tuple(attempts[0][key] for key in identity_fields)
++        _require(all(tuple(item[key] for key in identity_fields) == identity for item in attempts),
++                 f"logical transaction {serial} changed bytes/context across retry")
++    if records:
++        _require(first == serials[0] and (overflow or last == serials[-1]),
++                 "failed-log first/last serial mismatch")
++    else:
++        _require(first == 0 and last == 0, "empty failed log endpoints must be zero")
++    return {
++        "total": total, "stored": stored, "overflow": overflow,
++        "first_index": first if total else None, "last_index": last if total else None,
++        "next_transaction_serial": next_serial, "records": records,
++        "all_64_entries_raw_words": [[f"0x{value:08X}" for value in raw] for raw in raw_records],
++        "structural_consistency": "PASS",
++        "record_semantics": "FAILED_PHYSICAL_ATTEMPTS_LOGICAL_SERIAL_REPEATS_AT_MOST_FOUR",
++    }
++
++
++def decode_poc_page(words: Mapping[int, int], phase_counters: Mapping[str, Any]) -> dict[str, Any]:
++    for word_index, expected in enumerate((POC_MAGIC, POC_VERSION, POLICY_FLAGS)):
++        _require(_word(words, POC_BASE + word_index*4) == expected,
++                 f"R1i POC header word{word_index} mismatch")
++    phases = {
++        phase: {field: _word(words, POC_BASE + (3 + index*4 + lane)*4)
++                for lane, field in enumerate(PHASE_FIELDS)}
++        for index, phase in enumerate(PHASE_NAMES)
++    }
++    result = {field: _word(words, POC_BASE + (19 + index)*4)
++              for index, field in enumerate(TAIL_FIELDS)}
++    for phase, fields in phases.items():
++        old = phase_counters[phase]
++        _require(fields["ack_opportunities"] == old["opportunities"] and
++                 fields["qualified_nack"] == old["nacks"],
++                 f"R1i {phase} counters disagree with inherited R1h page")
++        _require(fields["early_nack_but_qualified_ack"] <= fields["legacy_early_would_nack"] and
++                 fields["early_nack_but_qualified_ack"] <= old["acks"],
++                 f"R1i {phase} early-false-NACK count inconsistent")
++        # An early observation can be captured before a qualified-high timeout
++        # prevents that phase's ACK decision; it is not an ACK opportunity.
++        _require(fields["legacy_early_would_nack"] <=
++                 old["opportunities"] + result["scl_high_timeout_count"],
++                 f"R1i {phase} early observation exceeds attempts")
++    raw_nacks = sum(fields["qualified_nack"] for fields in phases.values())
++    _require(result["raw_qualified_nack_count"] == raw_nacks,
++             "R1i raw qualified NACK total differs from phase sum")
++    _require(result["recovered_nack_count"] <= raw_nacks,
++             "R1i recovered NACKs exceed raw NACKs")
++    _require(result["recovered_transaction_count"] ==
++             sum(result[f"retry_success_on_retry_{index}"] for index in (1, 2, 3)),
++             "R1i recovered transaction count differs from retry-success sum")
++    # A bus which stays unsafe after bounded STOP recovery terminates without
++    # attempting a new START. Such a terminal failure need not consume all4
++    # attempts; exhaustion is therefore a subset of unrecovered transactions.
++    _require(result["retry_exhausted_count"] <= result["unrecovered_transaction_count"],
++             "R1i exhausted transactions exceed unrecovered transactions")
++    result["early_false_nack_count"] = sum(
++        fields["early_nack_but_qualified_ack"] for fields in phases.values())
++    for counter, first_field in (
++        ("early_false_nack_count", "first_early_false_nack_transaction"),
++        ("recovered_transaction_count", "first_recovered_transaction"),
++        ("unrecovered_transaction_count", "first_unrecovered_transaction"),
++    ):
++        value = result[first_field]
++        _require((value == 0xFFFFFFFF) == (result[counter] == 0),
++                 f"R1i {first_field} sentinel/event-count mismatch")
++        _require(value == 0xFFFFFFFF or value <= 0xFFFF,
++                 f"R1i {first_field} exceeds logical serial width")
++    return {"magic": POC_MAGIC, "version": POC_VERSION, "policy_flags": POLICY_FLAGS,
++            "phases": phases, **result}
++
++
++def validate_runtime(words: Mapping[int, int], expect: str,
++                     expected_source: str | None = None) -> dict[str, Any]:
++    _require([_word(words, address) for address in (0, 4, 8)] ==
++             [0xA40A0C07, 0x0000400B, 0x00031002], "runtime common identity mismatch")
++    actual_source = "".join(f"{_word(words, address):08x}" for address in range(0x10, 0x24, 4))
++    if expect == "r1h":
++        expected_source = R1H_SOURCE_COMMIT
++    if expected_source is not None:
++        _require(re.fullmatch(r"[0-9a-fA-F]{40}", expected_source) is not None,
++                 "expected source must be exact40-hex commit")
++        _require(actual_source == expected_source.lower(), "runtime source commit mismatch")
++    flags = _word(words, 0x2C)
++    if expect in ("r1i", "r1h"):
++        _require(flags == 2, "diagnostic runtime BUILD_FLAGS mismatch")
++    else:
++        _require(_word(words, 0x2000) == 0 and _word(words, 0x2040) == 0,
++                 "formal diagnostic magic is nonzero")
++    return {"common_identity": "A40A0C07 / 0000400B / 00031002",
++            "source_commit": actual_source, "build_flags": flags}
++
++
++def decode_word_map(words: Mapping[int, int], expect: str = "r1i",
++                    require_scientific_valid: bool = True,
++                    expected_source: str | None = None,
++                    require_runtime: bool = False) -> dict[str, Any]:
++    if expect not in ("r1i", "r1h", "formal"):
++        raise ValueError("expect must be r1i, r1h or formal")
++    runtime = (validate_runtime(words, expect, expected_source)
++               if require_runtime or expected_source is not None else None)
++    if expect != "r1i":
++        result = r1h.decode_word_map(words, "r1f" if expect == "r1h" else "formal",
++                                     require_scientific_valid)
++        _require(all(_word(words, offset) == 0 for offset in POC_OFFSETS),
++                 "unmodified control/formal POC range must be zero")
++        result = {**result, "image": expect, "poc_range_zero": True}
++    else:
++        legacy = r1h._decode_legacy(words)
++        header = r1h._decode_header(words)
++        phase_counters = r1h._decode_phase_counters(words, legacy)
++        log = _decode_log(words, phase_counters["transactions"]["failed"])
++        poc = decode_poc_page(words, phase_counters)
++        result = {
++            "image": "r1i", "header": header, "phase_counters": phase_counters,
++            "failed_transaction_log": log,
++            "legacy_reconciliation": r1h._reconcile_legacy(log, legacy),
++            "bank_invariants": r1h._decode_bank_invariants(words),
++            "probe": r1h._decode_probe(words), "poc": poc,
++            "raw_local_telemetry": {f"0x{address:05X}": _word(words, address)
++                                    for address in r1h.LOCAL_OFFSETS},
++            "raw_r1e_page": {f"0x{address:05X}": _word(words, address)
++                             for address in r1h.R1E_OFFSETS},
++            "legacy_17_words": [f"0x{_word(words, address):08X}" for address in r1h.LEGACY17_OFFSETS],
++            "legacy_ordered_nack": legacy, "lifecycle": r1h._decode_lifecycle(words),
++            "init_done": bool(_word(words, 0x8C) & 1),
++            "init_error": bool(_word(words, 0x8C) & 2),
++        }
++        if require_scientific_valid:
++            # Same R1h probe/log/bank integrity; only image label is adapted.
++            r1h.validate_scientific_sample({**result, "image": "r1f"})
++            _require(result["init_done"], "R1i INIT_DONE is not set")
++    result["raw_poc_page"] = {f"0x{address:05X}": _word(words, address) for address in POC_OFFSETS}
++    if runtime is not None:
++        result["runtime"] = runtime
++    return result
++
++
++def static_projection(decoded: Mapping[str, Any]) -> dict[str, Any]:
++    result = r1h.static_projection(decoded)
++    for key in ("poc", "raw_poc_page", "poc_range_zero", "runtime", "init_done", "init_error"):
++        if key in decoded:
++            result[key] = decoded[key]
++    return result
++
++
++def write_outputs(decoded: Mapping[str, Any], words: Mapping[int, int], output_dir: Path) -> None:
++    r1h.write_outputs(decoded, words, output_dir)
++    # Expand the inventory without changing the inherited decoder/export file.
++    with (output_dir / "raw_mmio_inventory.csv").open("w", newline="", encoding="utf-8") as handle:
++        writer = csv.writer(handle)
++        writer.writerow(("offset", "value"))
++        writer.writerows((f"0x{address:05X}", f"0x{_word(words, address):08X}")
++                         for address in READ_OFFSETS)
++
++
++def main(argv: Sequence[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    source = parser.add_mutually_exclusive_group(required=True)
++    source.add_argument("--node", help="exact already-proven XDMA user node; O_RDONLY only")
++    source.add_argument("--input-json", type=Path, help="offline sparse word map")
++    parser.add_argument("--expect", choices=("r1i", "r1h", "formal"), required=True)
++    parser.add_argument("--expected-source", help="exact local POC40-hex commit; required for live R1i")
++    parser.add_argument("--twice", action="store_true")
++    parser.add_argument("--delay", type=float, default=1.0)
++    parser.add_argument("--output-dir", type=Path)
++    args = parser.parse_args(argv)
++    if args.node and args.expect == "r1i":
++        _require(args.expected_source is not None, "live R1i requires --expected-source")
++    fd = None
++    captures: list[tuple[dict[int, int], float]] = []
++    try:
++        if args.node:
++            fd = os.open(args.node, os.O_RDONLY | os.O_CLOEXEC)
++        for index in range(2 if args.twice else 1):
++            if index:
++                time.sleep(max(args.delay, 0.0))
++            words = r1h._load_fixture(args.input_json) if args.input_json else collect_word_map(fd)
++            captures.append((words, time.monotonic()))
++            if args.output_dir:
++                # Preserve complete read-only raw data before any decode gate.
++                folder = args.output_dir / f"T{index}"
++                folder.mkdir(parents=True, exist_ok=True)
++                (folder / "raw_word_map.json").write_text(json.dumps({
++                    "words": {f"0x{key:05X}": f"0x{value:08X}" for key, value in words.items()}
++                }, indent=2) + "\n", encoding="utf-8")
++    finally:
++        if fd is not None:
++            os.close(fd)
++    decoded = [decode_word_map(words, args.expect, expected_source=args.expected_source,
++                               require_runtime=bool(args.node or args.expected_source))
++               for words, _ in captures]
++    if len(decoded) == 2:
++        _require(static_projection(decoded[0]) == static_projection(decoded[1]),
++                 "R1i/control T0/T1 static telemetry mismatch")
++    result = {"T0": decoded[0], "T1": decoded[1] if len(decoded) == 2 else None,
++              "READ_ONLY": "YES", "STATIC_SNAPSHOTS_MATCH": "YES" if len(decoded) == 2 else "NOT_REQUESTED",
++              "capture_monotonic_seconds": [timestamp for _, timestamp in captures]}
++    if args.output_dir:
++        for index, ((words, _), item) in enumerate(zip(captures, decoded)):
++            write_outputs(item, words, args.output_dir / f"T{index}")
++        (args.output_dir / "snapshots.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
++    print(json.dumps(result, indent=2, sort_keys=True))
++    print("READ_ONLY=YES")
++    print(f"STATIC_SNAPSHOTS_MATCH={result['STATIC_SNAPSHOTS_MATCH']}")
++    return 0
++
++
++if __name__ == "__main__":
++    try:
++        raise SystemExit(main())
++    except R1IDecodeError as error:
++        print(f"R1I_DECODE_ERROR={error}", file=sys.stderr)
++        raise SystemExit(2)
+diff --git a/tests/python/test_nvp_r1i_tools.py b/tests/python/test_nvp_r1i_tools.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..1bddd9e9b6182b42ab6ebbf5ade5cdc71c2a39ed
+--- /dev/null
++++ b/tests/python/test_nvp_r1i_tools.py
+@@ -0,0 +1,232 @@
++#!/usr/bin/env python3
++"""R1i host fixtures; no device access and no FPGA-programming operations."""
++from __future__ import annotations
++
++import contextlib
++import io
++import json
++import struct
++import sys
++import tempfile
++import unittest
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++REPOSITORY = HERE.parents[1]
++sys.path.insert(0, str(REPOSITORY / "scripts" / "v41"))
++sys.path.insert(0, str(HERE))
++import read_nvp_r1i as reader
++import read_nvp_r1f as old_reader
++import test_nvp_r1f_tools as old_fixtures
++
++POC_COMMIT = "0123456789abcdef0123456789abcdef01234567"
++
++
++def make_valid_words() -> dict[int, int]:
++    words = old_fixtures.make_valid_words()
++    words.update({0: 0xA40A0C07, 4: 0x0000400B, 8: 0x00031002,
++                  0x2C: 2, 0x8C: 1, 0x2100: 14, 0x2104: 14, 0x2108: 3,
++                  0x2120: 3, 0x2124: 3})
++    for index in range(5):
++        words[0x10 + index*4] = int(POC_COMMIT[index*8:index*8 + 8], 16)
++    # Same logical transaction, successively failing WADDR, REGADDR, DATA;
++    # byte/context fields stay identical and the final fourth attempt succeeds.
++    old_record = [words[0x2400 + index*4] for index in range(6)]
++    for entry, (opps, nack) in enumerate(((1, 1), (3, 2), (7, 4))):
++        record = list(old_record)
++        record[1] = (old_record[1] & 0xFFFF) | (opps << 16) | (nack << 20) | (1 << 24) | (1 << 28) | (1 << 29)
++        for index, value in enumerate(record):
++            words[0x2400 + entry*24 + index*4] = value
++    page = [reader.POC_MAGIC, 1, reader.POLICY_FLAGS]
++    for phase in reader.PHASE_NAMES:
++        opp_address, nack_address = old_reader.PHASES[phase]
++        nacks = words[nack_address]
++        page.extend((words[opp_address], nacks + 2, nacks, 2))
++    page.extend((3, 1, 3, 0, 0, 0, 0, 1, 9, 0, 0, 10, 0xFFFFFFFF))
++    assert len(page) == 32
++    words.update({reader.POC_BASE + index*4: value for index, value in enumerate(page)})
++    return words
++
++
++class ReadOnlyOS:
++    def __init__(self, words: dict[int, int]) -> None:
++        self.words = words
++        self.calls: list[tuple[int, int, int]] = []
++
++    def pread(self, fd: int, count: int, offset: int) -> bytes:
++        assert fd == 91 and count == 4
++        self.calls.append((fd, count, offset))
++        return struct.pack("<I", self.words.get(offset, 0))
++
++    def write(self, *args):
++        raise AssertionError("MMIO writes forbidden")
++
++    pwrite = write
++    ioctl = write
++    mmap = write
++
++
++class R1IReaderTests(unittest.TestCase):
++    def test_complete_valid_poc_page_and_retry_log(self):
++        words = make_valid_words()
++        result = reader.decode_word_map(words, expected_source=POC_COMMIT, require_runtime=True)
++        self.assertEqual(result["image"], "r1i")
++        self.assertTrue(result["init_done"])
++        self.assertFalse(result["init_error"])
++        self.assertEqual(result["poc"]["early_false_nack_count"], 8)
++        self.assertEqual(result["poc"]["recovered_transaction_count"], 1)
++        self.assertEqual(result["poc"]["recovered_nack_count"], 3)
++        self.assertEqual(result["poc"]["retry_success_on_retry_3"], 1)
++        self.assertEqual(result["poc"]["first_unrecovered_transaction"], 0xFFFFFFFF)
++        self.assertEqual([record["transaction_index_16"] for record in result["failed_transaction_log"]["records"]], [10, 10, 10])
++        self.assertEqual(result["legacy_reconciliation"]["expanded_event_count"], 3)
++
++    def test_old_reader_is_not_relaxed_for_r1i_serials(self):
++        with self.assertRaisesRegex(old_reader.R1FDecodeError, "strictly chronological"):
++            old_reader.decode_word_map(make_valid_words())
++
++    def test_retry_cannot_change_bytes_or_context(self):
++        words = make_valid_words()
++        words[0x2420] ^= 0x10
++        with self.assertRaisesRegex(reader.R1IDecodeError, "changed bytes/context"):
++            reader.decode_word_map(words)
++
++    def test_nonmonotonic_logical_serial_is_rejected(self):
++        words = make_valid_words()
++        words[0x2418] -= 1
++        with self.assertRaisesRegex(reader.R1IDecodeError, "nondecreasing"):
++            reader.decode_word_map(words)
++
++    def test_maximum_four_failed_attempts(self):
++        words = make_valid_words()
++        raw = [words[0x2400 + index*4] for index in range(6)]
++        for entry in range(5):
++            for index, value in enumerate(raw):
++                words[0x2400 + entry*24 + index*4] = value
++        words[0x2120] = words[0x2124] = 5
++        with self.assertRaisesRegex(reader.R1IDecodeError, "exceeds four"):
++            reader._decode_log(words, 5)
++
++    def test_abort_bitmap_forbids_later_attempted_phase(self):
++        words = make_valid_words()
++        words[0x2404] |= 2 << 16
++        with self.assertRaisesRegex(reader.R1IDecodeError, "later phase"):
++            reader.decode_word_map(words)
++
++    def test_timeout_before_first_ack_and_new_fsm_decode(self):
++        words = make_valid_words()
++        raw = [words[0x2400 + index*4] for index in range(6)]
++        raw[1] = (raw[1] & 0xFFFF) | (1 << 27) | (1 << 29)
++        raw[4] = (raw[4] & 0xFFFFFF) | (41 << 24)
++        result = reader._decode_record(raw, 0)
++        self.assertEqual(result["phase_opportunity_bitmap"], 0)
++        self.assertTrue(result["timeout"])
++        self.assertEqual(result["fsm_state"], 41)
++        raw[1] &= ~(1 << 27)
++        with self.assertRaises(reader.R1IDecodeError):
++            reader._decode_record(raw, 0)
++
++    def test_start_sda_stuck_before_ack_has_exact_failure_code(self):
++        words = make_valid_words()
++        raw = [words[0x2400 + index*4] for index in range(6)]
++        raw[1] = (raw[1] & 0xFFFF) | (1 << 28) | (1 << 29)
++        raw[5] = (raw[5] & 0xFF) | (6 << 8)
++        result = reader._decode_record(raw, 0)
++        self.assertEqual(result["phase_opportunity_bitmap"], 0)
++        self.assertFalse(result["timeout"])
++        self.assertEqual(result["terminal_error_code"], 6)
++        raw[5] = (raw[5] & 0xFF) | (8 << 8)
++        with self.assertRaisesRegex(reader.R1IDecodeError, "empty opportunities"):
++            reader._decode_record(raw, 0)
++
++    def test_magic_version_policy_and_sentinel_gates(self):
++        for address in (0x3600, 0x3604, 0x3608):
++            words = make_valid_words()
++            words[address] ^= 1
++            with self.assertRaisesRegex(reader.R1IDecodeError, "header"):
++                reader.decode_word_map(words)
++        words = make_valid_words()
++        words[0x367C] = 0
++        with self.assertRaisesRegex(reader.R1IDecodeError, "sentinel"):
++            reader.decode_word_map(words)
++
++    def test_causal_counter_cross_page_coherence(self):
++        for address in (0x360C, 0x3614, 0x364C, 0x3650):
++            words = make_valid_words()
++            words[address] += 1
++            with self.assertRaises(reader.R1IDecodeError):
++                reader.decode_word_map(words)
++
++    def test_terminal_unsafe_bus_is_not_falsely_retry_exhaustion(self):
++        words = make_valid_words()
++        words[0x3658] = 1
++        words[0x367C] = 12
++        result = reader.decode_word_map(words)
++        self.assertEqual(result["poc"]["unrecovered_transaction_count"], 1)
++        self.assertEqual(result["poc"]["retry_exhausted_count"], 0)
++
++    def test_control_and_formal_use_frozen_decoder_and_zero_page(self):
++        words = old_fixtures.make_valid_words()
++        control = reader.decode_word_map(words, expect="r1h")
++        self.assertEqual(control["phase_counters"], old_reader.decode_word_map(words)["phase_counters"])
++        self.assertTrue(control["poc_range_zero"])
++        words[0x3600] = reader.POC_MAGIC
++        with self.assertRaisesRegex(reader.R1IDecodeError, "must be zero"):
++            reader.decode_word_map(words, expect="r1h")
++        formal = reader.decode_word_map({}, expect="formal")
++        self.assertTrue(formal["r1f_reserved_range_zero"])
++        self.assertTrue(formal["poc_range_zero"])
++
++    def test_runtime_provenance_and_build_flags(self):
++        words = make_valid_words()
++        reader.validate_runtime(words, "r1i", POC_COMMIT)
++        with self.assertRaisesRegex(reader.R1IDecodeError, "commit mismatch"):
++            reader.validate_runtime(words, "r1i", reader.R1H_SOURCE_COMMIT)
++        with self.assertRaisesRegex(reader.R1IDecodeError, "commit mismatch"):
++            reader.decode_word_map(words, expected_source=reader.R1H_SOURCE_COMMIT)
++        words[0x2C] = 0
++        with self.assertRaisesRegex(reader.R1IDecodeError, "BUILD_FLAGS"):
++            reader.validate_runtime(words, "r1i", POC_COMMIT)
++
++    def test_read_inventory_is_bounded_and_read_only(self):
++        words = make_valid_words()
++        backend = ReadOnlyOS(words)
++        actual = reader.collect_word_map(91, backend)
++        self.assertEqual(set(actual), set(reader.READ_OFFSETS))
++        self.assertTrue(set(old_reader.READ_OFFSETS).issubset(reader.READ_OFFSETS))
++        self.assertEqual(len(set(reader.READ_OFFSETS) - set(old_reader.READ_OFFSETS)), 32)
++        self.assertEqual(len(backend.calls), len(reader.READ_OFFSETS) + 12)
++        self.assertEqual(actual[0x3600], reader.POC_MAGIC)
++
++    def test_static_projection_includes_entire_poc_page(self):
++        a = reader.decode_word_map(make_valid_words())
++        b = reader.decode_word_map(make_valid_words())
++        self.assertEqual(reader.static_projection(a), reader.static_projection(b))
++        b["raw_poc_page"]["0x03600"] ^= 1
++        self.assertNotEqual(reader.static_projection(a), reader.static_projection(b))
++
++    def test_cli_preserves_raw_before_decode_and_full_inventory(self):
++        with tempfile.TemporaryDirectory() as folder:
++            root = Path(folder)
++            fixture = root / "fixture.json"
++            fixture.write_text(json.dumps({"words": {hex(key): value for key, value in make_valid_words().items()}}))
++            output = root / "valid"
++            with contextlib.redirect_stdout(io.StringIO()):
++                self.assertEqual(reader.main(["--input-json", str(fixture), "--expect", "r1i", "--twice", "--delay", "0", "--output-dir", str(output)]), 0)
++            snapshots = json.loads((output / "snapshots.json").read_text())
++            self.assertEqual(snapshots["STATIC_SNAPSHOTS_MATCH"], "YES")
++            inventory = (output / "T1" / "raw_mmio_inventory.csv").read_text()
++            self.assertIn("0x0367C,0xFFFFFFFF", inventory)
++            self.assertTrue((output / "T0" / "raw_word_map.json").is_file())
++            bad = make_valid_words()
++            bad[0x3604] = 2
++            fixture.write_text(json.dumps({"words": {hex(key): value for key, value in bad.items()}}))
++            output = root / "invalid"
++            with self.assertRaises(reader.R1IDecodeError):
++                reader.main(["--input-json", str(fixture), "--expect", "r1i", "--twice", "--delay", "0", "--output-dir", str(output)])
++            self.assertTrue((output / "T0" / "raw_word_map.json").is_file())
++            self.assertTrue((output / "T1" / "raw_word_map.json").is_file())
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/v41/r1i_master_test_adapter.vhd b/tests/v41/r1i_master_test_adapter.vhd
+new file mode 100644
+index 0000000000000000000000000000000000000000..a6660722945e0dca922a12f9f197c27b152ef3d4
+--- /dev/null
++++ b/tests/v41/r1i_master_test_adapter.vhd
+@@ -0,0 +1,100 @@
++library ieee;
++use ieee.std_logic_1164.all;
++library r1h_ref;
++
++-- A test-only adapter binds the exact immutable R1h master in a separate
++-- library. No reference RTL is reconstructed or modified for this test.
++entity r1i_master_test_adapter is
++  generic (REF_MODE : natural := 0; CLK_HZ : positive := 1000000;
++           I2C_HZ : positive := 25000);
++  port (
++    clk, rst, start, scl_i, sda_i : in std_logic;
++    scl_oen, sda_oen, busy, done, any_error : out std_logic;
++    values, afe_values : out std_logic_vector(127 downto 0);
++    output_values : out std_logic_vector(63 downto 0);
++    read_errors, aux_errors, afe_errors : out std_logic_vector(15 downto 0);
++    write_errors, original_ff, restored_ff, meta_bank, phys_bank : out std_logic_vector(7 downto 0);
++    phys_bank_valid, first_valid : out std_logic;
++    phase_dbg, step_dbg, last_reg, last_wdata, last_rdata, i2c_state, first_code : out std_logic_vector(7 downto 0);
++    last_op : out std_logic_vector(2 downto 0);
++    nack_count, timeout_count, serial_next : out std_logic_vector(15 downto 0);
++    phase_counts : out std_logic_vector(255 downto 0);
++    txn_counts : out std_logic_vector(127 downto 0);
++    record_valid : out std_logic;
++    failed_record : out std_logic_vector(191 downto 0);
++    bank_errors : out std_logic_vector(31 downto 0);
++    poc : out std_logic_vector(1023 downto 0)
++  );
++end entity;
++
++architecture sim of r1i_master_test_adapter is
++begin
++  candidate : if REF_MODE = 0 generate
++    dut : entity work.nvp_i2c_bringup_seq_v38ek
++      generic map (CLK_HZ => CLK_HZ, I2C_HZ => I2C_HZ)
++      port map (
++        clk=>clk, rst=>rst, start=>start, range_sel=>"10", window_sel=>"000",
++        poll_only=>'0', output_sel=>x"A", channel_sel=>"00", auto_enable=>'0', stage_sel=>"10",
++        scl_i=>scl_i, sda_i=>sda_i, scl_oen=>scl_oen, sda_oen=>sda_oen,
++        busy=>busy, done=>done, any_error=>any_error, values=>values,
++        output_values=>output_values, afe_values=>afe_values,
++        read_error_mask=>read_errors, aux_error_mask=>aux_errors,
++        afe_error_mask=>afe_errors, write_error_mask=>write_errors,
++        original_ff=>original_ff, restored_ff=>restored_ff,
++        meta_bank=>meta_bank, phys_bank=>phys_bank, phys_bank_valid=>phys_bank_valid,
++        range_dbg=>open, window_dbg=>open, poll_only_dbg=>open,
++        output_dbg=>open, stage_dbg=>open, op_index_dbg=>open, state_dbg=>open,
++        autoinit_fsm_dbg=>phase_dbg, step_index_dbg=>step_dbg, table_length_dbg=>open,
++        last_op_dbg=>last_op, last_reg_dbg=>last_reg, last_wdata_dbg=>last_wdata,
++        last_rdata_dbg=>last_rdata, last_ack_dbg=>open,
++        first_error_valid_dbg=>first_valid, first_error_code_dbg=>first_code,
++        first_error_step_dbg=>open, first_error_meta_bank_dbg=>open,
++        first_error_phys_bank_dbg=>open, first_error_reg_dbg=>open,
++        first_error_data_dbg=>open, nack_count_dbg=>nack_count,
++        nack_log_count_dbg=>open, nack_log_overflow_dbg=>open, nack_log_dbg=>open,
++        timeout_count_dbg=>timeout_count, i2c_fsm_dbg=>i2c_state,
++        r1f_phase_counters_dbg=>phase_counts, r1f_transaction_counters_dbg=>txn_counts,
++        r1f_transaction_serial_next_dbg=>serial_next,
++        r1f_transaction_serial_overflow_dbg=>open,
++        r1f_failed_txn_record_valid_dbg=>record_valid,
++        r1f_failed_txn_record_dbg=>failed_record,
++        r1f_bank_invariant_check_count_dbg=>open,
++        r1f_bank_invariant_error_count_dbg=>bank_errors,
++        r1f_first_bank_invariant_error_dbg=>open,
++        r1i_poc_telemetry_dbg=>poc);
++  end generate;
++  reference : if REF_MODE = 1 generate
++    poc <= (others => '0');
++    dut : entity r1h_ref.nvp_i2c_bringup_seq_v38ek
++      generic map (CLK_HZ => CLK_HZ, I2C_HZ => I2C_HZ)
++      port map (
++        clk=>clk, rst=>rst, start=>start, range_sel=>"10", window_sel=>"000",
++        poll_only=>'0', output_sel=>x"A", channel_sel=>"00", auto_enable=>'0', stage_sel=>"10",
++        scl_i=>scl_i, sda_i=>sda_i, scl_oen=>scl_oen, sda_oen=>sda_oen,
++        busy=>busy, done=>done, any_error=>any_error, values=>values,
++        output_values=>output_values, afe_values=>afe_values,
++        read_error_mask=>read_errors, aux_error_mask=>aux_errors,
++        afe_error_mask=>afe_errors, write_error_mask=>write_errors,
++        original_ff=>original_ff, restored_ff=>restored_ff,
++        meta_bank=>meta_bank, phys_bank=>phys_bank, phys_bank_valid=>phys_bank_valid,
++        range_dbg=>open, window_dbg=>open, poll_only_dbg=>open,
++        output_dbg=>open, stage_dbg=>open, op_index_dbg=>open, state_dbg=>open,
++        autoinit_fsm_dbg=>phase_dbg, step_index_dbg=>step_dbg, table_length_dbg=>open,
++        last_op_dbg=>last_op, last_reg_dbg=>last_reg, last_wdata_dbg=>last_wdata,
++        last_rdata_dbg=>last_rdata, last_ack_dbg=>open,
++        first_error_valid_dbg=>first_valid, first_error_code_dbg=>first_code,
++        first_error_step_dbg=>open, first_error_meta_bank_dbg=>open,
++        first_error_phys_bank_dbg=>open, first_error_reg_dbg=>open,
++        first_error_data_dbg=>open, nack_count_dbg=>nack_count,
++        nack_log_count_dbg=>open, nack_log_overflow_dbg=>open, nack_log_dbg=>open,
++        timeout_count_dbg=>timeout_count, i2c_fsm_dbg=>i2c_state,
++        r1f_phase_counters_dbg=>phase_counts, r1f_transaction_counters_dbg=>txn_counts,
++        r1f_transaction_serial_next_dbg=>serial_next,
++        r1f_transaction_serial_overflow_dbg=>open,
++        r1f_failed_txn_record_valid_dbg=>record_valid,
++        r1f_failed_txn_record_dbg=>failed_record,
++        r1f_bank_invariant_check_count_dbg=>open,
++        r1f_bank_invariant_error_count_dbg=>bank_errors,
++        r1f_first_bank_invariant_error_dbg=>open);
++  end generate;
++end architecture;
+diff --git a/tests/v41/run_r1i_focused_sim.ps1 b/tests/v41/run_r1i_focused_sim.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..47fc3c65b3b73976a41b2821a4606d7ad10a2695
+--- /dev/null
++++ b/tests/v41/run_r1i_focused_sim.ps1
+@@ -0,0 +1,56 @@
++param(
++  [string]$RepoRoot,
++  [string]$EvidenceRoot,
++  [string]$ReferenceRoot = 'C:\FPGA\WORKTREES\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE',
++  [string]$VivadoBin = 'C:\AMDDesignTools\2025.2\Vivado\bin'
++)
++$ErrorActionPreference='Stop'
++if(-not $EvidenceRoot) { throw 'Explicit task-local EvidenceRoot required' }
++if(-not $RepoRoot) { throw 'Explicit ASCII RepoRoot required' }
++if($RepoRoot -match '[^\x00-\x7F]' -or $EvidenceRoot -match '[^\x00-\x7F]') { throw 'Xilinx paths must retain approved ASCII short-path spelling' }
++$simRoot=Join-Path $EvidenceRoot 'wire_focused'
++New-Item -ItemType Directory -Path $simRoot -Force | Out-Null
++$referenceCommit = & git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse HEAD
++if($LASTEXITCODE -ne 0 -or $referenceCommit.Trim() -ne 'c4f4bfcf577c92c3021d1fe83c05878dd12e001c') { throw 'Immutable reference commit mismatch' }
++$referenceTree = & git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse 'HEAD^{tree}'
++if($referenceTree.Trim() -ne '161e561f007912d73dba93c5ecd78e3cc3a6955b') { throw 'Immutable reference tree mismatch' }
++$refStatus = & git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot status --porcelain
++if($refStatus) { throw 'Immutable reference source is not clean' }
++$inputPaths=@('rtl/nvp/nvp6134c_diagnostics_pkg.vhd','rtl/nvp/r1f_transaction_serial_counter.vhd',
++  'rtl/nvp/nvp6134c_i2c_bringup.vhd','tests/v41/r1i_master_test_adapter.vhd',
++  'tests/v41/tb_r1i_qualified_ack_readiness.sv')
++$inputHashes=@{}
++foreach($inputPath in $inputPaths) {
++  $inputHashes[$inputPath]=(Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $inputPath)).Hash
++  Write-Output "TEST_INPUT_SHA256=$($inputHashes[$inputPath]) $inputPath"
++}
++
++function Run-SimTool([string]$Tool,[string[]]$ToolArguments,[string]$Label) {
++  Write-Output "SIM_STEP=$Label"
++  & (Join-Path $VivadoBin "$Tool.bat") @ToolArguments 2>&1 | Tee-Object -FilePath (Join-Path $simRoot "$Label.console.log")
++  if($LASTEXITCODE -ne 0) { throw "$Label failed: exit $LASTEXITCODE" }
++}
++Push-Location $simRoot
++try {
++  $rtl=@('rtl/nvp/nvp6134c_diagnostics_pkg.vhd','rtl/nvp/r1f_transaction_serial_counter.vhd','rtl/nvp/nvp6134c_i2c_bringup.vhd')
++  Run-SimTool xvhdl (@('--work','r1h_ref') + ($rtl | ForEach-Object { Join-Path $ReferenceRoot $_ })) reference_compile
++  Run-SimTool xvhdl (@('--work','work') + ($rtl | ForEach-Object { Join-Path $RepoRoot $_ }) + @((Join-Path $RepoRoot 'tests/v41/r1i_master_test_adapter.vhd'))) candidate_compile
++  Run-SimTool xvlog @('--sv','--work','work',(Join-Path $RepoRoot 'tests/v41/tb_r1i_qualified_ack_readiness.sv')) testbench_compile
++  Run-SimTool xelab @('work.tb_r1h_allack_reference','-s','r1h_allack_reference','--debug','typical','--relax') reference_elaborate
++  Run-SimTool xsim @('r1h_allack_reference','-runall','-log','reference_xsim.log') reference_run
++  if(-not (Select-String -LiteralPath reference_xsim.log -SimpleMatch 'PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=1')) { throw 'Reference semantic completion marker absent' }
++  Run-SimTool xelab @('work.tb_r1i_qualified_ack_readiness','-s','r1i_focused','--debug','typical','--relax') candidate_elaborate
++  Run-SimTool xsim @('r1i_focused','-runall','-log','candidate_xsim.log') candidate_run
++  if(-not (Select-String -LiteralPath candidate_xsim.log -SimpleMatch 'PASS R1I_FOCUSED_WIRE_SEMANTIC_SUITE')) { throw 'Focused semantic completion marker absent' }
++  $refTrace=Get-FileHash -Algorithm SHA256 -LiteralPath 'r1h_reference_allack.trace'
++  $candTrace=Get-FileHash -Algorithm SHA256 -LiteralPath 'r1i_candidate_allack.trace'
++  if($refTrace.Hash -ne $candTrace.Hash) { throw 'All-ACK physical transaction stream/output equivalence failed' }
++  foreach($inputPath in $inputPaths) {
++    if((Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $inputPath)).Hash -ne $inputHashes[$inputPath]) {
++      throw "Test input changed while compiled simulation ran: $inputPath"
++    }
++  }
++  Write-Output 'TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS'
++  Write-Output "CASE11_ALL_ACK_BYTE_SEQUENCE_FUNCTIONAL_OUTPUT_EQUIVALENCE=PASS SHA256=$($refTrace.Hash)"
++  Write-Output 'FIRST_NACK_ABORT=PASS QUALIFIED_SCL_HIGH_SAMPLE=PASS BOUNDED_RETRY=PASS BANK_CACHE_SAFETY=PASS'
++} finally { Pop-Location }
+diff --git a/tests/v41/tb_r1i_poc_mmio.sv b/tests/v41/tb_r1i_poc_mmio.sv
+new file mode 100644
+index 0000000000000000000000000000000000000000..98a2ea8b63a97315a34b04357682a8390de48e33
+--- /dev/null
++++ b/tests/v41/tb_r1i_poc_mmio.sv
+@@ -0,0 +1,166 @@
++`timescale 1ns/1ps
++
++// Focused R1i overlay/protocol proof. Run beside the unchanged exhaustive
++// R1h integration test, which checks every old address against the R1g oracle.
++module tb_r1i_poc_mmio;
++  logic clk = 0;
++  logic reset = 1;
++  always #5 clk = ~clk;
++  logic host_req_valid = 0, host_req_ready, host_req_write = 0;
++  logic [16:0] host_req_addr = 0;
++  logic [31:0] host_req_wdata = 0;
++  logic [3:0] host_req_be = 0;
++  logic host_rsp_valid, host_rsp_ready = 0;
++  logic [31:0] host_rsp_rdata;
++  logic app_req_valid, app_req_write;
++  logic [16:0] app_req_addr;
++  logic [31:0] app_req_wdata;
++  logic [3:0] app_req_be;
++  logic app_rsp_ready;
++  logic r1h_req_valid, r1h_req_ready, r1h_rsp_valid, r1h_rsp_ready;
++  logic [13:0] r1h_req_offset;
++  logic [31:0] r1h_rsp_data, scalar_read_data;
++  logic [1023:0] telemetry = 0;
++  logic [31:0] legacy_data;
++  logic record_read_enable, index_read_enable;
++  logic [5:0] record_read_index;
++  logic [2:0] record_read_word;
++  logic [1:0] index_read_phase;
++  logic [8:0] index_read_address;
++  integer reads = 0;
++  integer writes = 0;
++
++  assign legacy_data = {18'h2ad55, r1h_req_offset};
++  v41_r1i_poc_scalar_mux page (
++    .offset(r1h_req_offset), .telemetry(telemetry),
++    .legacy_scalar_read_data(legacy_data), .scalar_read_data(scalar_read_data)
++  );
++  v41_r1h_mmio_read_service service (
++    .clk(clk), .reset(reset), .req_valid(r1h_req_valid),
++    .req_ready(r1h_req_ready), .req_offset(r1h_req_offset),
++    .rsp_valid(r1h_rsp_valid), .rsp_ready(r1h_rsp_ready),
++    .rsp_data(r1h_rsp_data), .scalar_read_data(scalar_read_data),
++    .record_select(1'b0), .record_index(6'b0), .record_word(3'b0),
++    .probe_index_select(1'b0), .probe_index_phase(2'b0),
++    .probe_index_word(8'b0), .record_read_enable(record_read_enable),
++    .record_read_index(record_read_index), .record_read_word(record_read_word),
++    .record_read_valid(1'b0), .record_read_data(32'b0),
++    .index_read_enable(index_read_enable), .index_read_phase(index_read_phase),
++    .index_read_address(index_read_address), .index_read_valid(1'b0),
++    .index_read_data(16'b0), .waddr_index_stored_count(16'b0),
++    .regaddr_index_stored_count(16'b0), .data_index_stored_count(16'b0)
++  );
++  v41_control_status_regs control_regs (
++    .clk(clk), .reset(reset), .host_req_valid(host_req_valid),
++    .host_req_ready(host_req_ready), .host_req_write(host_req_write),
++    .host_req_addr(host_req_addr), .host_req_wdata(host_req_wdata),
++    .host_req_be(host_req_be), .host_rsp_valid(host_rsp_valid),
++    .host_rsp_ready(host_rsp_ready), .host_rsp_rdata(host_rsp_rdata),
++    .app_req_valid(app_req_valid), .app_req_ready(1'b1),
++    .app_req_write(app_req_write), .app_req_addr(app_req_addr),
++    .app_req_wdata(app_req_wdata), .app_req_be(app_req_be),
++    .app_rsp_valid(1'b0), .app_rsp_ready(app_rsp_ready), .app_rsp_rdata(32'b0),
++    .measurement_read_data(32'b0),
++    .r1h_req_valid(r1h_req_valid), .r1h_req_ready(r1h_req_ready),
++    .r1h_req_offset(r1h_req_offset), .r1h_rsp_valid(r1h_rsp_valid),
++    .r1h_rsp_ready(r1h_rsp_ready), .r1h_rsp_data(r1h_rsp_data)
++  );
++
++  task automatic require_true(input bit condition, input string reason);
++    if (!condition) $fatal(1, "R1I_POC_MMIO_FAIL %s", reason);
++  endtask
++
++  task automatic read_and_check(input logic [16:0] address,
++                                input logic [31:0] expected);
++    logic [1023:0] saved_telemetry;
++    begin
++      saved_telemetry = telemetry;
++      @(negedge clk);
++      host_req_valid = 1;
++      host_req_write = 0;
++      host_req_addr = address;
++      #1;
++      require_true(host_req_ready && r1h_req_valid && !app_req_valid,
++                   "read must use the unchanged one-outstanding service");
++      @(posedge clk);
++      #1;
++      require_true(host_rsp_valid && host_rsp_rdata === expected,
++                   "one-cycle scalar response/value mismatch");
++      host_req_valid = 0;
++      // Once captured, a changing counter/offset cannot alter a stalled reply.
++      telemetry = ~saved_telemetry;
++      host_req_addr = 17'h03600;
++      repeat (3) begin
++        @(posedge clk);
++        #1;
++        require_true(host_rsp_valid && !host_req_ready &&
++                     host_rsp_rdata === expected,
++                     "response not held stable under backpressure");
++        require_true(!record_read_enable && !index_read_enable,
++                     "POC scalar access triggered payload memory");
++      end
++      @(negedge clk);
++      host_rsp_ready = 1;
++      @(posedge clk);
++      #1;
++      host_rsp_ready = 0;
++      telemetry = saved_telemetry;
++      require_true(!host_rsp_valid && host_req_ready,
++                   "response duplicated or service did not return idle");
++      reads = reads + 1;
++    end
++  endtask
++
++  integer i;
++  initial begin
++    for (i = 0; i < 32; i = i + 1)
++      telemetry[i*32 +: 32] = 32'h52310000 + i;
++    repeat (3) @(posedge clk);
++    #1 reset = 0;
++    // Old address fallback cannot be changed by this page overlay.
++    read_and_check(17'h020a0, {18'h2ad55, 14'h20a0});
++    read_and_check(17'h035fc, {18'h2ad55, 14'h35fc});
++    for (i = 0; i < 128; i = i + 1)
++      read_and_check(17'h03600 + i,
++                     ((i % 4) == 0) ? 32'h52310000 + i/4 : 32'b0);
++
++    for (i = 0; i < 32; i = i + 1) begin
++      @(negedge clk);
++      host_req_valid = 1;
++      host_req_write = 1;
++      host_req_addr = 17'h03600 + 4*i;
++      host_req_wdata = 32'hdeadbeef;
++      host_req_be = 4'hf;
++      #1;
++      require_true(app_req_valid && app_req_write && host_req_ready &&
++                   !r1h_req_valid && app_req_addr == host_req_addr &&
++                   app_req_wdata == 32'hdeadbeef && app_req_be == 4'hf,
++                   "read-only page changed inherited write forwarding");
++      @(posedge clk);
++      #1 host_req_valid = 0;
++      writes = writes + 1;
++    end
++
++    @(negedge clk);
++    host_req_valid = 1;
++    host_req_write = 0;
++    host_req_addr = 17'h03680;
++    #1;
++    require_true(app_req_valid && !r1h_req_valid,
++                 "new page incorrectly claims address beyond0x367f");
++    host_req_valid = 0;
++
++    // A formal/old-control zero telemetry model must remain zero throughout
++    // the entire POC page, including unaligned addresses.
++    telemetry = 0;
++    for (i = 0; i < 128; i = i + 1)
++      read_and_check(17'h03600 + i, 32'b0);
++    $display("R1I_POC_MMIO_PASS reads=%0d writes=%0d old_fallback=2 poc_page_bytes=128 formal_zero_bytes=128", reads, writes);
++    $finish;
++  end
++
++  initial begin
++    #1_000_000;
++    $fatal(1, "R1I_POC_MMIO_TIMEOUT");
++  end
++endmodule
+diff --git a/tests/v41/tb_r1i_qualified_ack_readiness.sv b/tests/v41/tb_r1i_qualified_ack_readiness.sv
+new file mode 100644
+index 0000000000000000000000000000000000000000..a73020fa8631306584000f9b4351a7eed7ef78ec
+--- /dev/null
++++ b/tests/v41/tb_r1i_qualified_ack_readiness.sv
+@@ -0,0 +1,411 @@
++`timescale 1ns/1ps
++
++// Pin-level, open-drain slave: receive bytes from physical SCL edges, drive
++// ACKs/data as a slave, and recognize master START/STOP transitions. Internal
++// telemetry is an independent scoreboard, never the source of ACK timing.
++module r1i_wire_test #(parameter integer REF_MODE=0, SELECT_MODE=-1);
++  localparam integer CLK_HZ=1000000, I2C_HZ=25000, TICK=21;
++  logic clk=0, rst=1, start=0;
++  always #500 clk=~clk;
++  wire scl_oen,sda_oen,busy,done,any_error;
++  logic slave_sda=1,slave_scl=1;
++  wire scl_i=scl_oen & slave_scl, sda_i=sda_oen & slave_sda;
++  wire [127:0] values,afe_values;
++  wire [63:0] output_values;
++  wire [15:0] read_errors,aux_errors,afe_errors,nack_count,timeout_count,serial_next;
++  wire [7:0] write_errors,original_ff,restored_ff,meta_bank,phys_bank;
++  wire phys_bank_valid,first_valid,record_valid;
++  wire [7:0] phase_dbg,step_dbg,last_reg,last_wdata,last_rdata,i2c_state,first_code;
++  wire [2:0] last_op;
++  wire [255:0] phase_counts;
++  wire [127:0] txn_counts;
++  wire [191:0] failed_record;
++  wire [31:0] bank_errors;
++  wire [1023:0] poc;
++  r1i_master_test_adapter #(.REF_MODE(REF_MODE),.CLK_HZ(CLK_HZ),.I2C_HZ(I2C_HZ)) dut(.*);
++
++  function automatic int unsigned p(input integer w);
++    p=poc[32*w +: 32];
++  endfunction
++  typedef enum {RX_BITS,RX_ACK,TX_BITS,TX_NACK,WAIT_STOP} slave_state_t;
++  slave_state_t bstate=RX_BITS;
++  integer mode=0,cycle=0,starts=0,stops=0,byte_count=0,read_bits=0;
++  integer bits=0,byte_role=0,ack_phase=0,read_bit=7,late_count=0;
++  integer target_serial=-1,target_attempt=0,attempt_failures=0;
++  integer nack_injections=0,record_count=0,nack_tail_rises=0;
++  integer target_records=0,first_record_serial=-1,read_changes_high=0;
++  integer timeout_hold_cycles=0,stop_cycle=0,expected_backoff=0;
++  integer trace_fd=0,txn_wire_bytes=0,allack_cycles=0,only_mode=SELECT_MODE;
++  integer previous_i2c_state=0,busfree_cycle=0,retry_timer_checks=0;
++  integer physical_high_cycles=0;
++  logic [255:0] previous_phase_counts=0;
++  logic active=0,repeat_start=0,previous_scl=1,previous_master_sda=1;
++  logic ack_bad=0,nack_seen=0,ack_has_risen=0,late_pending=0;
++  logic current_target=0,timeout_injected=0,first_error_prev=0;
++  integer first_error_edges=0,stable_guard_errors=0;
++  logic [7:0] rx_byte=0,wire_reg=0,wire_wdata=0,model_bank=8'h07;
++  logic [7:0] read_value=0,txn_bytes[0:3];
++  logic [31:0] target_signature=0;
++  logic [15:0] target_slot=0;
++
++  function automatic int failures_for_mode(input int m);
++    if(m==7) return 3;
++    if(m==8 || m==15 || m==16) return 4;
++    return 1;
++  endfunction
++  function automatic bit choose_target(input int m);
++    if(m==4 || m==12 || m==15) return last_op==3'b101;
++    if(m==13 || m==14 || m==16) return last_op==3'b110;
++    return 1;
++  endfunction
++  function automatic bit inject_nack(input int phase);
++    if(!current_target || target_attempt>failures_for_mode(mode)) return 0;
++    case(mode)
++      2,6,7,8: return phase==0;
++      3: return phase==1;
++      4,12,15: return phase==2;
++      5,13,16: return phase==3;
++      default: return 0;
++    endcase
++  endfunction
++  function automatic int backoff(input int failed_attempt);
++    case(failed_attempt) 1:return 100; 2:return 500; default:return 2000; endcase
++  endfunction
++
++  always @(negedge clk) begin : wire_bfm
++    bit sc,begin_evt,end_evt,rise_evt,fall_evt;
++    logic [7:0] completed;
++    cycle=cycle+1;
++    if(rst) begin
++      slave_sda=1; slave_scl=1; bstate=RX_BITS; active=0;
++      previous_scl=1; previous_master_sda=1; bits=0; byte_role=0;
++      starts=0; stops=0; byte_count=0; read_bits=0; model_bank=8'h07;
++      rx_byte=0; wire_reg=0; wire_wdata=0; read_value=0;
++      target_serial=-1; target_attempt=0; current_target=0;
++      nack_injections=0; record_count=0; target_records=0;
++      first_record_serial=-1; timeout_injected=0; timeout_hold_cycles=0;
++      late_pending=0; late_count=0; read_changes_high=0;
++      nack_seen=0; ack_has_risen=0; first_error_prev=0;
++      first_error_edges=0; stop_cycle=0; expected_backoff=0;
++      txn_wire_bytes=0; stable_guard_errors=0;
++      previous_i2c_state=0; busfree_cycle=0; retry_timer_checks=0;
++      physical_high_cycles=0; previous_phase_counts=0;
++    end else begin
++      if(mode==9 && timeout_injected && slave_scl==0) begin
++        timeout_hold_cycles=timeout_hold_cycles+1;
++        // Let the actual RTL timeout, not a synthetic timer, cause release.
++        if(p(28)>0) slave_scl=1;
++      end
++      sc=scl_oen & slave_scl;
++      if(REF_MODE==0) begin
++        for(integer ph=0;ph<4;ph=ph+1)
++          if(phase_counts[64*ph +: 32]!=previous_phase_counts[64*ph +: 32] &&
++             (!previous_scl || physical_high_cycles<TICK))
++            $fatal(1,"ACK decision lacked prior physically-high full dwell phase%0d cycles%0d",ph,physical_high_cycles);
++      end
++      previous_phase_counts=phase_counts;
++      if(sc) physical_high_cycles=physical_high_cycles+1;
++      else physical_high_cycles=0;
++      begin_evt=previous_master_sda && !sda_oen && sc && previous_scl;
++      end_evt=!previous_master_sda && sda_oen && sc;
++      rise_evt=!previous_scl && sc;
++      fall_evt=previous_scl && !sc;
++      if(end_evt && active && !slave_sda)
++        $fatal(1,"intended master STOP did not raise physical SDA: slave still owns ACK/data; mode%0d state%0d",mode,i2c_state);
++      if(REF_MODE==0 && end_evt && active && physical_high_cycles<TICK)
++        $fatal(1,"STOP SDA release before qualified physical SCL high dwell");
++      if(begin_evt) begin
++        repeat_start=active;
++        if(!active) begin
++          starts=starts+1; txn_wire_bytes=0; nack_seen=0; nack_tail_rises=0;
++          if(target_serial<0 && mode>1 && choose_target(mode)) target_serial=serial_next;
++          current_target=serial_next==target_serial;
++          if(current_target) begin
++            target_attempt=target_attempt+1;
++            if(target_attempt==1) begin
++              target_signature={phase_dbg,last_op,5'b0,last_reg,last_wdata};
++              target_slot={8'b0,step_dbg};
++            end else begin
++              if({phase_dbg,last_op,5'b0,last_reg,last_wdata}!==target_signature ||
++                 {8'b0,step_dbg}!==target_slot)
++                $fatal(1,"retry changed logical transaction bytes/phase/slot");
++              if(expected_backoff>0 && cycle-stop_cycle<expected_backoff+TICK)
++                $fatal(1,"retry began before completed STOP/bus-free plus fixed backoff");
++            end
++          end
++          if(phase_dbg==1 && last_op==3'b010 &&
++             (!phys_bank_valid || phys_bank!==meta_bank))
++            $fatal(1,"target write before exact verified bank");
++        end
++        active=1; bstate=RX_BITS; bits=0; rx_byte=0;
++        byte_role=repeat_start ? 3:0; slave_sda=1;
++      end else if(end_evt && active) begin
++        stops=stops+1;
++        if(nack_seen && nack_tail_rises>1)
++          $fatal(1,"first-NACK abort emitted later byte/data clocks: %0d",nack_tail_rises);
++        if(!nack_seen && txn_wire_bytes==3 && txn_bytes[0]==8'h60 &&
++           txn_bytes[1]==8'hff && byte_role==2)
++          model_bank=wire_wdata;
++        if(current_target && (nack_seen || (mode==9 && target_attempt==1))) begin
++          stop_cycle=cycle; expected_backoff=backoff(target_attempt);
++        end
++        if(trace_fd!=0 && mode==0) begin
++          if(txn_wire_bytes==3 && byte_role==3)
++            $fdisplay(trace_fd,"TX %0d %02x %02x %02x R%02x",stops,
++              txn_bytes[0],txn_bytes[1],txn_bytes[2],read_value);
++          else
++            $fdisplay(trace_fd,"TX %0d %02x %02x %02x W",stops,
++              txn_bytes[0],txn_bytes[1],txn_bytes[2]);
++        end
++        active=0; slave_sda=1; late_pending=0; bstate=RX_BITS; bits=0;
++      end else if(active) begin
++        if(rise_evt) begin
++          case(bstate)
++            RX_BITS: begin
++              rx_byte={rx_byte[6:0],sda_i}; bits=bits+1;
++              if(bits==8) begin
++                completed=rx_byte;
++                if(txn_wire_bytes>=4) $fatal(1,"unexpected extra transaction byte");
++                txn_bytes[txn_wire_bytes]=completed;
++                txn_wire_bytes=txn_wire_bytes+1; byte_count=byte_count+1;
++                case(byte_role)
++                  0: begin
++                    if(completed!==8'h60) $fatal(1,"wrong write address %02x",completed);
++                    ack_phase=0;
++                  end
++                  1: begin
++                    if(completed!==last_reg) $fatal(1,"wire register differs from requested byte");
++                    wire_reg=completed; ack_phase=1;
++                  end
++                  2: begin
++                    if(completed!==last_wdata) $fatal(1,"wire data differs from requested byte");
++                    wire_wdata=completed; ack_phase=2;
++                  end
++                  3: begin
++                    if(completed!==8'h61) $fatal(1,"wrong repeated read address");
++                    ack_phase=3;
++                  end
++                endcase
++              end
++            end
++            RX_ACK: begin
++              ack_has_risen=1;
++              if(ack_bad) begin
++                nack_seen=1; nack_tail_rises=0; nack_injections=nack_injections+1;
++              end else if(mode==1) begin
++                late_pending=1; late_count=2;
++              end
++            end
++            TX_BITS: begin
++              read_bits=read_bits+1;
++              if(mode==10 || mode==1) begin late_pending=1; late_count=2; end
++            end
++            TX_NACK: if(sda_oen!==1'b1) $fatal(1,"master did not NACK last read byte");
++            WAIT_STOP: if(nack_seen) nack_tail_rises=nack_tail_rises+1;
++          endcase
++        end
++        if(fall_evt) begin
++          case(bstate)
++            RX_BITS: if(bits==8) begin
++              bstate=RX_ACK; ack_bad=inject_nack(ack_phase); ack_has_risen=0;
++              slave_sda=(ack_bad || mode==1) ? 1:0;
++              if((mode==9 || mode==17) && current_target && target_attempt==1 && ack_phase==0 &&
++                 !timeout_injected) begin
++                slave_scl=0; timeout_injected=1;
++              end
++            end
++            RX_ACK: if(ack_has_risen) begin
++              late_pending=0; slave_sda=1;
++              if(ack_bad) bstate=WAIT_STOP;
++              else if(byte_role==3) begin
++                read_value=(wire_reg==8'hff) ? model_bank:8'ha6;
++                if(mode==14 && current_target && target_attempt==1) read_value=~model_bank;
++                read_bit=7; bstate=TX_BITS;
++                slave_sda=(mode==10 || mode==1) ? ~read_value[7]:read_value[7];
++              end else if(byte_role==2) bstate=WAIT_STOP;
++              else begin bstate=RX_BITS; bits=0; rx_byte=0; byte_role=byte_role+1; end
++            end
++            TX_BITS: begin
++              late_pending=0;
++              if(read_bit==0) begin bstate=TX_NACK; slave_sda=1; end
++              else begin
++                read_bit=read_bit-1;
++                slave_sda=(mode==10 || mode==1) ? ~read_value[read_bit]:read_value[read_bit];
++              end
++            end
++            TX_NACK: begin bstate=WAIT_STOP; slave_sda=1; end
++            default: begin end
++          endcase
++        end
++        if(late_pending && !rise_evt) begin
++          if(late_count>0) late_count=late_count-1;
++          else begin
++            if(!sc) $fatal(1,"late slave stimulus was not during physical SCL high");
++            if(bstate==RX_ACK) slave_sda=0;
++            else if(bstate==TX_BITS) begin
++              slave_sda=read_value[read_bit]; read_changes_high=read_changes_high+1;
++            end
++            late_pending=0;
++          end
++        end
++      end
++      if(first_valid && !first_error_prev) first_error_edges=first_error_edges+1;
++      first_error_prev=first_valid;
++      // BUS_FREE36 -> STORE_RESULT30 is the completed filtered bus-free proof.
++      // RETRY_START38 begins only after the exact fixed base-clock backoff.
++      if(previous_i2c_state==36 && i2c_state==30) busfree_cycle=cycle;
++      if(i2c_state==38 && previous_i2c_state!=38) begin
++        if(cycle-busfree_cycle!=backoff(target_attempt))
++          $fatal(1,"fixed backoff mismatch from completed bus-free: observed%0d expected%0d",
++            cycle-busfree_cycle,backoff(target_attempt));
++        retry_timer_checks=retry_timer_checks+1;
++      end
++      previous_i2c_state=i2c_state;
++      if(record_valid) begin
++        record_count=record_count+1;
++        if(failed_record[55:52]!=0) begin
++          if(failed_record[58:56]!==3'd1)
++            $fatal(1,"failed attempt must contain exactly first qualified NACK");
++          case(failed_record[55:52])
++            4'h1: if(failed_record[51:48]!==4'h1) $fatal(1,"WADDR abort reached later phase");
++            4'h2: if(failed_record[51:48]!==4'h3) $fatal(1,"REG abort reached later phase");
++            4'h4: if(failed_record[51:48]!==4'h7) $fatal(1,"DATA abort bitmap invalid");
++            4'h8: if(failed_record[51:48]!==4'hb || failed_record[90])
++              $fatal(1,"RADDR abort read data or bitmap invalid");
++            default: $fatal(1,"multiple NACK phases in an aborted attempt");
++          endcase
++        end
++        if(first_record_serial<0) first_record_serial=failed_record[15:0];
++        if(mode!=14 && mode!=17 && failed_record[15:0]!=first_record_serial)
++          $fatal(1,"retry changed logical transaction index");
++        target_records=target_records+1;
++      end
++      previous_scl=sc; previous_master_sda=sda_oen;
++    end
++  end
++
++  task automatic begin_run(input integer m);
++    @(posedge clk); #50; rst=1; start=0; mode=m;
++    repeat(12) @(posedge clk);
++    #50; rst=0;
++    repeat(12) @(posedge clk);
++    #50; start=1;
++    repeat(3) @(posedge clk);
++    #50; start=0;
++  endtask
++  task automatic await_done;
++    integer c;
++    c=0;
++    while(!done && c<2000000) begin @(posedge clk); c=c+1; end
++    if(!done) $fatal(1,"mode%0d bounded completion timeout state%0d",mode,i2c_state);
++    repeat(4) @(posedge clk);
++    if(bank_errors!=0) $fatal(1,"mode%0d bank invariant errors %0d",mode,bank_errors);
++    if(mode!=17 && (txn_counts[31:0]!=starts || txn_counts[63:32]!=starts || stops!=starts))
++      $fatal(1,"mode%0d wire start/stop and physical attempt counters differ %0d/%0d/%0d/%0d",
++        mode,starts,stops,txn_counts[31:0],txn_counts[63:32]);
++    if(nack_count!=nack_injections ||
++       phase_counts[63:32]+phase_counts[127:96]+phase_counts[191:160]+
++       phase_counts[255:224]!=nack_count)
++      $fatal(1,"mode%0d raw/phase NACK counters disagree with physical injection",mode);
++    if(REF_MODE==0 && (p(0)!=32'h52314950 || p(1)!=1 || p(2)!=32'h3f))
++      $fatal(1,"POC identity changed");
++    if(REF_MODE==0 && p(19)!=nack_count) $fatal(1,"raw qualified count hidden");
++  endtask
++  task automatic expect_recovery(input integer n,input integer success_word);
++    if(any_error || first_valid || p(20)!=1 || p(21)!=n || p(22)!=0 || p(23)!=0 ||
++       p(success_word)!=1 || p(19)!=n || record_count!=n)
++      $fatal(1,"mode%0d bad recovery err%0d first%0d recovered%0d/%0d terminal%0d/%0d raw%0d records%0d",
++        mode,any_error,first_valid,p(20),p(21),p(22),p(23),p(19),record_count);
++  endtask
++
++  initial begin
++    if(only_mode>=0) begin
++      begin_run(only_mode); await_done();
++      $display("SINGLE_MODE_RESULT mode%0d error%0d raw%0d recovered%0d terminal%0d/%0d earlyfalse%0d original%02x restored%02x timeouts%0d readchanges%0d records%0d",
++        mode,any_error,p(19),p(20),p(22),p(23),p(6)+p(10)+p(14)+p(18),original_ff,restored_ff,p(28),read_changes_high,record_count);
++      $finish;
++    end
++    trace_fd=$fopen(REF_MODE ? "r1h_reference_allack.trace":"r1i_candidate_allack.trace","w");
++    if(trace_fd==0) $fatal(1,"trace open failed");
++    begin_run(0); await_done(); allack_cycles=cycle;
++    if(any_error || first_valid || nack_count || timeout_count || original_ff!=7 || restored_ff!=7)
++      $fatal(1,"allACK functional behavior failed");
++    if(REF_MODE==0 && (p(4)+p(8)+p(12)+p(16)!=0 || p(6)+p(10)+p(14)+p(18)!=0))
++      $fatal(1,"normal ACK stimulus falsely counted legacy-early NACK");
++    $fdisplay(trace_fd,"FINAL %032x %016x %032x %04x %04x %04x %02x %02x %02x %02x %01x",
++      values,output_values,afe_values,read_errors,aux_errors,afe_errors,write_errors,
++      original_ff,restored_ff,phys_bank,phys_bank_valid);
++    $fclose(trace_fd); trace_fd=0;
++    $display("PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=%0d cycles=%0d tx=%0d bytes=%0d",
++      REF_MODE,allack_cycles,starts,byte_count);
++    if(REF_MODE==1) $finish;
++    begin_run(1); await_done();
++    for(integer ph=0;ph<4;ph=ph+1)
++      if(p(3+4*ph)!=p(4+4*ph) || p(4+4*ph)!=p(6+4*ph) || p(5+4*ph)!=0)
++        $fatal(1,"late ACK causal per-phase counter mismatch phase%0d",ph);
++    if(any_error || p(19)!=0 || p(20)!=0 || p(6)+p(10)+p(14)+p(18)==0 ||
++       read_changes_high==0 || original_ff!=7 || restored_ff!=7)
++      $fatal(1,"late ACK/read data qualification failed err%0d raw%0d recovered%0d false%0d reads%0d original%02x restored%02x",
++        any_error,p(19),p(20),p(6)+p(10)+p(14)+p(18),read_changes_high,original_ff,restored_ff);
++    $display("PASS CASE1_LATE_ACK_QUALIFIED_NO_RETRY false=%0d",p(6)+p(10)+p(14)+p(18));
++    begin_run(2); await_done(); expect_recovery(1,24);
++    $display("PASS CASE2_WADDR_FIRST_ABORT_CASE6_RETRY1_RECOVERY");
++    begin_run(3); await_done(); expect_recovery(1,24);
++    $display("PASS CASE3_REGADDR_FIRST_ABORT");
++    begin_run(4); await_done(); expect_recovery(1,24);
++    $display("PASS CASE4_DATA_FIRST_ABORT");
++    begin_run(5); await_done(); expect_recovery(1,24);
++    $display("PASS CASE5_RADDR_FIRST_ABORT_NO_READ_DATA");
++    begin_run(7); await_done(); expect_recovery(3,26);
++    $display("PASS CASE7_RETRY3_FINAL_ALLOWED_ATTEMPT_RECOVERY");
++    begin_run(8); await_done();
++    if(!any_error || !first_valid || p(22)!=1 || p(23)!=1 || p(19)!=4 ||
++       p(20)!=0 || record_count!=4 || first_error_edges!=1 || target_attempt!=4)
++      $fatal(1,"four-attempt exhaustion/terminal-error behavior failed");
++    $display("PASS CASE8_EXACT_FOUR_ATTEMPTS_ONE_TERMINAL_ERROR");
++    begin_run(9); await_done();
++    if(!timeout_injected || timeout_hold_cycles<20 || p(28)!=1 || p(20)!=1 ||
++       p(22)!=0 || p(23)!=0 || any_error || record_count!=1)
++      $fatal(1,"bounded physical SCL timeout recovery failed timeout=%0d recovered=%0d records=%0d",
++        p(28),p(20),record_count);
++    $display("PASS CASE9_PHYSICAL_SCL_LOW_BOUNDED_TIMEOUT_STOP_RETRY");
++    begin_run(10); await_done();
++    if(any_error || original_ff!=7 || restored_ff!=7 ||
++       values!=={16{8'ha6}} || output_values!=={8{8'ha6}} || read_changes_high<8)
++      $fatal(1,"qualified-high read byte reconstruction failed");
++    $display("PASS CASE10_READ_DATA_CHANGES_ONLY_PHYSICAL_SCL_HIGH");
++    begin_run(12); await_done(); expect_recovery(1,24);
++    $display("PASS CASE12_BANK_SELECTOR_FAILURE_RECOVERY_NO_UNVERIFIED_TARGET");
++    begin_run(13); await_done(); expect_recovery(1,24);
++    $display("PASS CASE12_BANK_VERIFY_NACK_RECOVERY_NO_UNVERIFIED_TARGET");
++    begin_run(14); await_done();
++    if(target_records<1 || bank_errors!=0)
++      $fatal(1,"bank-verify mismatch not visible or cache unsafe");
++    $display("PASS CASE12_BANK_VERIFY_MISMATCH_CACHE_INVALIDATION");
++    begin_run(15); await_done();
++    if(!any_error || p(22)!=1 || p(23)!=1 || p(19)!=4 || target_attempt!=4)
++      $fatal(1,"selector exhaustion not bounded");
++    $display("PASS CASE12_BANK_SELECTOR_EXHAUSTION_NO_UNVERIFIED_TARGET");
++    begin_run(16); await_done();
++    if(!any_error || p(22)!=1 || p(23)!=1 || p(19)!=4 || target_attempt!=4)
++      $fatal(1,"verify exhaustion not bounded");
++    $display("PASS CASE12_BANK_VERIFY_EXHAUSTION_NO_UNVERIFIED_TARGET");
++    begin_run(17); await_done();
++    if(!timeout_injected || !any_error || p(22)==0 || p(23)!=0 ||
++       starts!=1 || stops!=0 || retry_timer_checks!=0 || scl_oen!==1'b1 || sda_oen!==1'b1)
++      $fatal(1,"persistent SCL-low did not terminate safely without retry/newphysicalSTART");
++    $display("PASS CASE9_PERSISTENT_SCL_LOW_BOUNDED_SAFE_TERMINAL_NO_RETRY");
++    $display("PASS R1I_FOCUSED_WIRE_SEMANTIC_SUITE");
++    $finish;
++  end
++endmodule
++
++module tb_r1i_qualified_ack_readiness;
++  r1i_wire_test #(.REF_MODE(0)) testbench();
++endmodule
++module tb_r1h_allack_reference;
++  r1i_wire_test #(.REF_MODE(1)) testbench();
++endmodule
++module tb_r1i_timeout_recovery;
++  r1i_wire_test #(.REF_MODE(0),.SELECT_MODE(9)) testbench();
++endmodule
