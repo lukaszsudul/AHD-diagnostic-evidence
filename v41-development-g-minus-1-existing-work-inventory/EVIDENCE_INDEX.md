@@ -12,6 +12,8 @@
 
 The intervening `aff7e32...` commit added the unrelated `v41-research-r0-r1i-causal-isolation-design` package. It did not touch the G-1 target path. The isolated publication history was rebased onto that remote head before the normal fast-forward push.
 
+The audited G-1 payload was published and remotely read back at commit `510cb2ead5dc49d36031b745022742f912b54e77`. `STATE.json` records that immutable payload commit. A child commit finalizes the PASS state and its dependent hash manifest; the remote branch head/Git history is the authoritative identity of that finalization because a commit cannot contain its own SHA.
+
 ## Qualified R1i anchors
 
 - R1h source commit/tree: `c4f4bfcf577c92c3021d1fe83c05878dd12e001c` / `161e561f007912d73dba93c5ecd78e3cc3a6955b`

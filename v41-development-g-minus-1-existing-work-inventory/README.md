@@ -5,6 +5,7 @@ This directory is the sanitized public evidence package for Gate G-1 of the AHD 
 ## Verdict
 
 - Engineering gate: **PASS**
+- Evidence publication: **PASS** (audited payload commit `510cb2ead5dc49d36031b745022742f912b54e77` remotely read back)
 - Source workspace remained read-only: **YES**
 - Qualified R1i identity: **PASS**
 - Recommended primary XDMA donor candidate for G0 review: `v41/xdma-v40.1.0-base`
