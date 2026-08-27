@@ -1,0 +1,32 @@
+AHD v41 reconstructed branch lineage (G-1)
+
+main be94f88ee8d179f12928ab791bdae27c22cd1762
+|-- original XDMA line (15 commits)
+|   `-- f3cfa6bf72f3cdcc5688f3a28ff16e80afc5d875
+|       |-- v41/xdma
+|       `-- archive/v41-xdma-pre-v40.1.0-20260817 (exact alias)
+`-- 67f6513bc11d65b3bdaa6d018df69537020ff5f7
+    |-- archive D3 experimental line
+    |   `-- 770724344ae35fb65f177c04b050f666e70439dc
+    |       `-- 01acf496b2b920c40f8564b08b9cefd9c7186e5a
+    `-- K1/K2/K3 NVP line
+        `-- release/v40.1.0-nvp 55ce0df41552bb74e0923f89eff43977b040f2e5
+            `-- replay original XDMA assets 3a5e80a
+                `-- Phase 0 8f5fd0f
+                    `-- Phase 1 fd32fcb65be3f1a59c569874195d1faeaf7d27e9
+                        `-- Phase 2 acceptance 9306c25a48dedd2372bf5d06e37344ae2aa3e85a
+                            `-- v41/xdma-v40.1.0-base c89e88bcdf389614c884fb129e8b2d42a585bccb
+                                |-- dev/v41-xdma-offline-next 8464af66611f7c22b8a36a4aab915d598eedda3f
+                                |   |-- diag/v41-nvp-address-ack-probe-r1d 1beb70536d8e57305813f377a9e2c0e810b0bfc0
+                                |   `-- diag/v41-nvp-i2c-25khz-r1 f007dc172d43d30b02729755e60382f8ce3dbff4
+                                `-- diag/v41-nvp-axi-clock-measure-r1 0af44dee3bc091eaff805704dd5c687eeaa01bbd
+
+Public evidence patch lineage from reachable f007dc1:
+f007dc1 -> R1e -> R1f -> R1g -> R1h c4f4bfcf577c92c3021d1fe83c05878dd12e001c
+        -> R1i 20c3323d79d3896edc586d6db1df7deee60f9e41
+
+R1h/R1i source commits are not currently advertised by FPGA_AHD refs. Ordered public
+patch replay reproduced exact R1h tree 161e561f007912d73dba93c5ecd78e3cc3a6955b
+and exact R1i tree 70d801fd7a879080da399bfa9ee95fd6eb008e16.
+
+This graph is an archaeological reconstruction, not a G0 donor-selection decision.
