@@ -1,0 +1,628 @@
+{
+  "project": "AHD_v41",
+  "project_state_revision": 1,
+  "state_type": "CURRENT_ACCEPTED_STATE",
+  "governance_version": 1,
+  "last_update": "2026-08-28",
+  "accepted_by_role": "OWNER_ARCHITECT",
+  "acceptance_authorization": "META-0_TASK_DIRECTIVE",
+  "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
+  "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+  "lifecycle_status_enum": [
+    "ACCEPTED",
+    "FROZEN",
+    "ACTIVE",
+    "PLANNED",
+    "PROVISIONAL",
+    "SUPERSEDED",
+    "OPEN",
+    "BLOCKED",
+    "REJECTED"
+  ],
+  "initial_creation": {
+    "status": "ACCEPTED",
+    "task": "META-0",
+    "expected_previous_project_state_revision": null,
+    "initial_creation_expected_absence": true,
+    "absence_verified_at_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+    "acceptance_basis": "ACCEPTED_BY_CREATION_TASK",
+    "ssot_write_authorization": "SSOT WRITE AUTHORIZED"
+  },
+  "tracks": {
+    "product": {
+      "status": "ACTIVE",
+      "last_accepted_gate": "G1",
+      "active_gate": "G2A",
+      "next_gate": "G2B",
+      "accepted_gates": [
+        "G-1",
+        "G0",
+        "G1"
+      ]
+    },
+    "research": {
+      "status": "ACTIVE",
+      "last_accepted_gate": "R0",
+      "active_gate": "R1",
+      "research_candidates": [
+        {
+          "name": "R1i-a",
+          "status": "PROVISIONAL",
+          "scope": "RESEARCH_ONLY",
+          "product_baseline": false
+        },
+        {
+          "name": "R1i-b",
+          "status": "PROVISIONAL",
+          "scope": "RESEARCH_ONLY",
+          "product_baseline": false
+        }
+      ]
+    },
+    "linux_video": {
+      "status": "PLANNED",
+      "last_accepted_gate": null,
+      "active_gate": null,
+      "next_gate": "L0"
+    },
+    "meta": {
+      "status": "ACCEPTED",
+      "current_task": "META-0",
+      "acceptance_basis": "ACCEPTED_BY_CREATION_TASK"
+    }
+  },
+  "qualified_fpga_baseline": {
+    "name": "R1i",
+    "status": "ACCEPTED",
+    "preservation_status": "FROZEN",
+    "repository": "lukaszsudul/FPGA_AHD",
+    "branch": "baseline/v41-r1i-qualified-poc",
+    "commit": "20c3323d79d3896edc586d6db1df7deee60f9e41",
+    "tree": "70d801fd7a879080da399bfa9ee95fd6eb008e16",
+    "tag": "v41-r1i-qualified-poc-20260827",
+    "tag_object": "f7847a259dbe43bf99fa6d6515ed85131fafffc0",
+    "bitstream_sha256": "F6A6905DD4AA40FD5F68923629AC3C02929D7D5628895AB43FDADB248929D3C6",
+    "bitstream_lfs_size_bytes": 2192144,
+    "scientific_result": "THESIS_CONFIRMED",
+    "frozen_outcome": "STRONG_PASS",
+    "scope": "QUALIFIED_POC_BASELINE",
+    "exact_causal_mechanism": "INCONCLUSIVE",
+    "production_qualification_claimed": false,
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "source_evidence_commit": "955ba0cd2462f4dec9dcb086175ab6eca57365bb",
+    "evidence_directory": "v41-nvp-r1i-r2-qualified-poc-hardware-evidence"
+  },
+  "r1i_proven_behavior": {
+    "status": "ACCEPTED",
+    "r1i": {
+      "autoinit_nack_count": 0,
+      "init_error": 0,
+      "video": "PRESENT"
+    },
+    "r1h_control": {
+      "autoinit_nack_count": 4,
+      "init_error": 1,
+      "video": "ABSENT"
+    },
+    "post_init_selected_phase_observations": {
+      "observed": 60000,
+      "target": 60000
+    },
+    "limitations": [
+      "NOT_PRODUCTION_QUALIFICATION",
+      "EXACT_CAUSAL_MECHANISM_INCONCLUSIVE"
+    ],
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "source_evidence_commit": "955ba0cd2462f4dec9dcb086175ab6eca57365bb"
+  },
+  "protected_behavior": {
+    "status": "FROZEN",
+    "items": [
+      "NVP_INITIALIZATION_BEHAVIOR",
+      "I2C_25_KHZ_SEMANTICS",
+      "PHYSICAL_FILTERED_SCL_QUALIFICATION",
+      "QUALIFIED_ACK_TIMING",
+      "FIRST_QUALIFIED_NACK_ABORT",
+      "LEGAL_STOP",
+      "BUS_FREE_CONFIRMATION",
+      "BOUNDED_RETRY_BACKOFF",
+      "TIMEOUT_HANDLING",
+      "RECOVERED_VS_TERMINAL_ERROR_DISTINCTION",
+      "BANK_SAFETY_INVALIDATION",
+      "EXISTING_MMIO_SEMANTICS",
+      "R1I_TELEMETRY_PAGE"
+    ],
+    "research_instrumentation_reduction_condition": "OWNER_ARCHITECT_ACCEPTED_R_TRACK_CLOSURE_AND_SEPARATE_META_UPDATE",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d"
+  },
+  "xdma_donors": {
+    "primary": {
+      "status": "FROZEN",
+      "role": "PRIMARY_XDMA_DONOR",
+      "branch": "v41/xdma-v40.1.0-base",
+      "head": "c89e88bcdf389614c884fb129e8b2d42a585bccb",
+      "tree": "417820c69c134161fcafae0947dc5976919814d1",
+      "tag": "v41-xdma-primary-donor-g0-20260827",
+      "tag_object": "c834c1ea77d24fcc4d9b8e01ee7f4ed1e1754db1",
+      "current_pcie_configuration": "GEN1_X1",
+      "classification": "PROVEN_CONTROL_PLANE_DONOR",
+      "final_throughput_configuration": false,
+      "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d"
+    },
+    "secondary": {
+      "status": "FROZEN",
+      "adoption_status": "PROVISIONAL",
+      "branch": "dev/v41-xdma-offline-next",
+      "head": "8464af66611f7c22b8a36a4aab915d598eedda3f",
+      "tree": "4bf1988785baf4bae46bdfaf5bb12d0d25f26e68",
+      "role": "PROVENANCE_HARDENING_ONLY",
+      "functional_baseline": false,
+      "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d"
+    },
+    "r1i_inherits_required_substrate": {
+      "status": "ACCEPTED",
+      "value": true,
+      "substrate": [
+        "XDMA_ENDPOINT",
+        "AXI_LITE",
+        "BAR_ARCHITECTURE",
+        "CAPTURE_RECORD_CONTEXT",
+        "CONSTRAINTS",
+        "BUILD_SUBSTRATE"
+      ],
+      "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    }
+  },
+  "active_working_context": {
+    "integration": [
+      {
+        "branch": "integration/v41-r1i-gen2-g2a",
+        "head_at_meta0_audit": "22f15a6befe911172073e46a95d50b53afe1fc33",
+        "status": "ACTIVE",
+        "remote_ref_advertised": false,
+        "accepted_baseline": false
+      }
+    ],
+    "research": [
+      {
+        "branch": "research/v41-r1i-causal-isolation",
+        "head_at_meta0_audit": "20c3323d79d3896edc586d6db1df7deee60f9e41",
+        "status": "ACTIVE",
+        "remote_ref_advertised": false,
+        "product_baseline": false
+      },
+      {
+        "branch": "research/v41-r1i-a",
+        "head_at_meta0_audit": "8b8ec0fa9c22965e46d0421c25e63d83e7971597",
+        "status": "PROVISIONAL",
+        "remote_ref_advertised": false,
+        "product_baseline": false
+      },
+      {
+        "branch": "research/v41-r1i-b",
+        "head_at_meta0_audit": "e4d10bb8e85e3797d078144fd0965e9625ee727c",
+        "status": "PROVISIONAL",
+        "remote_ref_advertised": false,
+        "product_baseline": false
+      }
+    ]
+  },
+  "video": {
+    "status": "FROZEN",
+    "format": "1080p25",
+    "physical_inputs_per_card": 4,
+    "max_active_per_card": 2,
+    "planned_cards_per_host": 2,
+    "derived_physical_inputs_per_host": 8,
+    "derived_max_active_per_host": 4,
+    "two_card_hardware_qualified": false,
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-0_TASK_DIRECTIVE",
+    "evidence_boundary": "PER_CARD_G0_G1_EVIDENCE_EXISTS; TWO_CARD_HOST_DIRECTION_HAS_NO_MATCHING_EVIDENCE_PACKAGE"
+  },
+  "pcie": {
+    "status": "FROZEN",
+    "required_payload_mb_s_per_card": 288,
+    "payload_requirement_operator": ">=",
+    "payload_unit": "DECIMAL_MB_PER_SECOND",
+    "minimum_target": "GEN2_X1_OR_BETTER",
+    "preferred_target": "GEN2_X1",
+    "current_donor_configuration": "GEN1_X1",
+    "current_donor_role": "PROVEN_CONTROL_PLANE_DONOR",
+    "current_donor_meets_payload_requirement": false,
+    "gen2_qualified": false,
+    "required_payload_qualified": false,
+    "g1_classification": "G2_IMPLEMENTATION_ALLOWED",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+  },
+  "requirements": [
+    {
+      "id": "REQ-VIDEO-FORMAT",
+      "status": "FROZEN",
+      "requirement": "1080p25",
+      "qualification": "PARTIAL_R1I_VIDEO_PRESENCE_ONLY",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "source_evidence_commit": "955ba0cd2462f4dec9dcb086175ab6eca57365bb"
+    },
+    {
+      "id": "REQ-INPUTS-CARD",
+      "status": "FROZEN",
+      "requirement": "4_PHYSICAL_INPUTS_PER_CARD",
+      "qualification": "FULL_MULTI_INPUT_PATH_NOT_YET_QUALIFIED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    },
+    {
+      "id": "REQ-ACTIVE-CARD",
+      "status": "FROZEN",
+      "requirement": "MAX_2_ACTIVE_PER_CARD",
+      "qualification": "NOT_YET_QUALIFIED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    },
+    {
+      "id": "REQ-CARDS-HOST",
+      "status": "FROZEN",
+      "requirement": "PLANNED_2_CARDS_PER_HOST",
+      "qualification": "NOT_YET_QUALIFIED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-0_TASK_DIRECTIVE",
+      "source_evidence_commit": null
+    },
+    {
+      "id": "REQ-PCIE-PAYLOAD",
+      "status": "FROZEN",
+      "requirement": ">= 288 MB/s per card",
+      "implementation_target": "PCIe Gen2 x1 or better",
+      "qualification": "NOT_YET_QUALIFIED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    },
+    {
+      "id": "REQ-LINUX-V4L2",
+      "status": "FROZEN",
+      "requirement": "NATIVE_LINUX_V4L2_WITH_TRANSPORT_ABSTRACTION",
+      "implementation_target": "XDMA_FIRST_BACKEND",
+      "qualification": "PLANNED_NOT_IMPLEMENTED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-0_TASK_DIRECTIVE",
+      "source_evidence_commit": null
+    }
+  ],
+  "c2h_architecture": {
+    "status": "ACCEPTED",
+    "xdma_c2h_channels_per_card": 1,
+    "logical_channels_per_card": 2,
+    "private_rings": 2,
+    "records_per_ring": 4,
+    "record_size_bytes": 4096,
+    "planned_useful_payload_bytes": 3840,
+    "shared_formatter_engine": true,
+    "scheduler": "WORK_CONSERVING_RECORD_BOUNDARY_ROUND_ROBIN",
+    "channel_tagged_records": true,
+    "record_family": "v41D",
+    "record_family_status": "PROVISIONAL",
+    "transport_abi_status": "PROVISIONAL",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+  },
+  "application_dma": {
+    "pcie_endpoint": {
+      "status": "ACCEPTED",
+      "maturity": "IMPLEMENTED_PROVEN"
+    },
+    "bar_mmio": {
+      "status": "ACCEPTED",
+      "maturity": "IMPLEMENTED_PROVEN"
+    },
+    "axi_lite": {
+      "status": "ACCEPTED",
+      "maturity": "IMPLEMENTED_PROVEN"
+    },
+    "application_c2h_payload": {
+      "status": "PLANNED",
+      "qualification": "NOT_YET_ACCEPTED"
+    },
+    "record_to_axi_stream_data_plane": {
+      "status": "PLANNED",
+      "target_gate": "G2B"
+    },
+    "one_channel_dma": {
+      "status": "PLANNED",
+      "qualification": "NOT_YET_QUALIFIED"
+    },
+    "two_channel_dma": {
+      "status": "PLANNED",
+      "qualification": "NOT_YET_QUALIFIED"
+    },
+    "required_payload_288_mb_s": {
+      "status": "PLANNED",
+      "qualification": "NOT_YET_QUALIFIED"
+    },
+    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+  },
+  "interfaces": {
+    "identity": {
+      "status": "FROZEN",
+      "block_id": "0xA40A0C07",
+      "protocol": "0x0000400B",
+      "protocol_name": "v40B",
+      "capabilities": "0x00031002",
+      "build_id_schema": "0x00010000",
+      "transport_signature": "0x58444D41"
+    },
+    "bar_structure": {
+      "status": "FROZEN",
+      "user_axi_lite_bar_observed": "BAR0",
+      "user_axi_lite_aperture_bytes": 131072,
+      "xdma_configuration_bar_observed": "BAR1",
+      "xdma_configuration_aperture_bytes": 65536,
+      "host_must_discover_assignments": true
+    },
+    "legacy_mmio": {
+      "status": "FROZEN",
+      "inclusive_end": "0x35FF"
+    },
+    "r1i_telemetry": {
+      "status": "FROZEN",
+      "start": "0x3600",
+      "end": "0x367F",
+      "access": "READ_ONLY"
+    },
+    "transport_abi": {
+      "status": "PROVISIONAL",
+      "current_transport_abi_status": "PROVISIONAL",
+      "record_family": "v41D"
+    },
+    "channel_identity": {
+      "status": "ACCEPTED",
+      "logical_channel_ids": [
+        0,
+        1
+      ],
+      "physical_input_ids": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "encoded_record_fields": "PROVISIONAL"
+    },
+    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+  },
+  "resources": {
+    "status": "ACCEPTED",
+    "qualified_build": "R1i",
+    "lut": {
+      "used": 18181,
+      "total": 20800,
+      "percent_approx": 87.41
+    },
+    "ff": {
+      "used": 20083,
+      "total": 41600,
+      "percent_approx": 48.28
+    },
+    "bram_tile_equivalents": {
+      "used": 26,
+      "total": 50,
+      "percent": 52
+    },
+    "diagnostic_research_overhead": "SUBSTANTIAL",
+    "exact_removable_diagnostic_lut_count": "UNKNOWN",
+    "production_resource_expectation": false,
+    "interpretation": "CURRENT_DIAGNOSTIC_QUALIFIED_BUILD_RESULT_NOT_FINAL_PRODUCTION_REQUIREMENT",
+    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+  },
+  "diagnostic_reduction": {
+    "status": "PLANNED",
+    "currently_authorized": false,
+    "requires_accepted_r_track_closure": true,
+    "requires_owner_architect_decision": true,
+    "requires_separate_meta_update": true
+  },
+  "linux_video": {
+    "status": "PLANNED",
+    "architecture_direction": "V4L2",
+    "transport_abstraction_required": true,
+    "common_core": "AHD_COMMON_VIDEO_CAPTURE_CORE",
+    "xdma_backend": "PLANNED_FIRST_BACKEND",
+    "litepcie_backend": "FUTURE_OPTION",
+    "standard_device_presentation": "/dev/videoX",
+    "compatibility_goals": [
+      "FFMPEG",
+      "GSTREAMER",
+      "OPENCV"
+    ],
+    "multi_card_support": true,
+    "logical_inputs_per_card": 4,
+    "logical_input_semantics": "LINUX_V4L2_INPUT_IDENTITIES_NOT_FOUR_SIMULTANEOUS_FPGA_C2H_CHANNELS",
+    "max_streamon_per_card": 2,
+    "stable_card_input_identity_required": true,
+    "future_zero_copy_dmabuf": true,
+    "implemented": false,
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-0_TASK_DIRECTIVE",
+    "source_evidence_commit": null
+  },
+  "open_decisions": [
+    {
+      "id": "OD-01",
+      "topic": "R1I_EXACT_CAUSAL_MECHANISM",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-02",
+      "topic": "R1I_TIMING_MARGIN",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-03",
+      "topic": "DIAGNOSTIC_REDUCTION",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-04",
+      "topic": "ACTUAL_GEN2_TRAINING",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-05",
+      "topic": "ACTUAL_USER_CLK_AFTER_GEN2",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-06",
+      "topic": "FINAL_C2H_ABI",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-07",
+      "topic": "FINAL_V4L2_PIXEL_FORMAT",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-08",
+      "topic": "TIMESTAMP_ARCHITECTURE",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-09",
+      "topic": "PERSISTENT_CARD_IDENTITY",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-10",
+      "topic": "LITEPCIE_FUTURE_ROLE",
+      "status": "OPEN"
+    }
+  ],
+  "governance": {
+    "status": "FROZEN",
+    "ssot_write_role": "META_UPDATE_AGENT",
+    "ssot_write_authorization_literal": "SSOT WRITE AUTHORIZED",
+    "owner_architect_acceptance_required": true,
+    "execution_pass_auto_promotes_state": false,
+    "gate_agents_ssot_read_only": true,
+    "project_state_revision_increment": 1,
+    "optimistic_revision_control": true,
+    "revision_conflict_result": "BLOCKED — SSOT_REVISION_CONFLICT",
+    "automatic_concurrent_merge": false,
+    "stale_agent_detection": true,
+    "changelog_append_only": true,
+    "force_push_allowed": false,
+    "remote_readback_required": true
+  },
+  "evidence_references": [
+    {
+      "id": "EVID-R1I",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "955ba0cd2462f4dec9dcb086175ab6eca57365bb",
+      "payload_commit": "c1c552fa4fc693d6c375db9478abecd7960ec3ce",
+      "directory": "v41-nvp-r1i-r2-qualified-poc-hardware-evidence",
+      "files": [
+        "final/AHD_v41_R1i_R2_DEPLOYMENT_AND_TEST_STATE.json",
+        "final/R1I_R2_AUTHORITATIVE_CONCLUSION.md",
+        "final/R1I_R2_MEASUREMENTS.md",
+        "final/R1I_R2_SOURCE_PROVENANCE.md",
+        "final/R1I_R2_KNOWN_LIMITATIONS.md",
+        "implementation/AHD_v41_R1i_R2_FINAL_BUILD_REPORT.md"
+      ],
+      "supports": [
+        "STMT-R1I-ID",
+        "STMT-R1I-BEHAVIOR",
+        "STMT-R1I-LIMIT"
+      ],
+      "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    },
+    {
+      "id": "EVID-GM1",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "654b9adf7d02cbf8946e420538955ffaaeae7eb2",
+      "payload_commit": "510cb2ead5dc49d36031b745022742f912b54e77",
+      "directory": "v41-development-g-minus-1-existing-work-inventory",
+      "files": [
+        "STATE.json",
+        "V41_EXISTING_WORK_INVENTORY_AND_REUSE_REPORT.md"
+      ],
+      "supports": [
+        "STMT-GM1",
+        "STMT-APP-DMA",
+        "STMT-INTERFACES"
+      ],
+      "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    },
+    {
+      "id": "EVID-G0",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d",
+      "payload_commit": "64eca0cfbb76593d7e875df7b3271651668cbe61",
+      "directory": "v41-development-g0-baseline-freeze",
+      "files": [
+        "V41_G0_STATE.json",
+        "V41_G0_BASELINE_FREEZE_REPORT.md",
+        "V41_R1I_PROTECTED_BEHAVIOR_CONTRACT.md",
+        "V41_288MBPS_ACCEPTANCE_CONTRACT.md"
+      ],
+      "supports": [
+        "STMT-G0",
+        "STMT-PROTECTED",
+        "STMT-XDMA-PRIMARY",
+        "STMT-XDMA-SECONDARY",
+        "STMT-PCIE",
+        "STMT-VIDEO"
+      ],
+      "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    },
+    {
+      "id": "EVID-G1",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+      "payload_commit": "221f65aef9664a6d6ad35c3ec7644badd69ba381",
+      "directory": "v41-development-g1-integration-architecture",
+      "files": [
+        "V41_G1_STATE.json",
+        "V41_G1_ARCHITECTURE_REPORT.md",
+        "V41_G1_C2H_DATA_PLANE_ARCHITECTURE.md",
+        "V41_G1_MMIO_MAP_PLAN.md",
+        "V41_G1_RESOURCE_DECOMPOSITION.md",
+        "V41_G1_RESOURCE_HEADROOM_POLICY.md",
+        "V41_G1_THROUGHPUT_BUDGET.md",
+        "V41_G1_GEN2_HARDWARE_FEASIBILITY.md"
+      ],
+      "supports": [
+        "STMT-G1",
+        "STMT-INHERITANCE",
+        "STMT-PCIE",
+        "STMT-VIDEO",
+        "STMT-C2H-ARCH",
+        "STMT-ABI",
+        "STMT-APP-DMA",
+        "STMT-INTERFACES",
+        "STMT-RESOURCES"
+      ],
+      "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    },
+    {
+      "id": "EVID-R0",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "aff7e32edc1cf71bde95b6c19e54e6f307764237",
+      "payload_commit": "aff7e32edc1cf71bde95b6c19e54e6f307764237",
+      "directory": "v41-research-r0-r1i-causal-isolation-design",
+      "files": [
+        "R0_STATE.json",
+        "R0_R1I_CAUSAL_ISOLATION_EXPERIMENT_PLAN.md",
+        "R0_VARIANT_DEFINITION_MATRIX.csv",
+        "R0_R1_IMPLEMENTATION_CONTRACT.md"
+      ],
+      "supports": [
+        "STMT-R0",
+        "STMT-R1I-LIMIT",
+        "STMT-RESEARCH"
+      ],
+      "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    }
+  ]
+}

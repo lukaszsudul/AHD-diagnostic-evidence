@@ -1,0 +1,131 @@
+{
+  "project": "AHD_v41",
+  "project_state_revision": 1,
+  "state_type": "CURRENT_TRACK_STATUS",
+  "governance_version": 1,
+  "last_update": "2026-08-28",
+  "accepted_by_role": "OWNER_ARCHITECT",
+  "acceptance_authorization": "META-0_TASK_DIRECTIVE",
+  "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
+  "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+  "product_track": {
+    "status": "ACTIVE",
+    "last_accepted_gate": "G1",
+    "active_gate": "G2A",
+    "next_gate": "G2B",
+    "gates": [
+      {
+        "gate": "G-1",
+        "status": "ACCEPTED",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": "654b9adf7d02cbf8946e420538955ffaaeae7eb2",
+        "evidence_directory": "v41-development-g-minus-1-existing-work-inventory"
+      },
+      {
+        "gate": "G0",
+        "status": "ACCEPTED",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d",
+        "evidence_directory": "v41-development-g0-baseline-freeze"
+      },
+      {
+        "gate": "G1",
+        "status": "ACCEPTED",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+        "evidence_directory": "v41-development-g1-integration-architecture"
+      },
+      {
+        "gate": "G2A",
+        "status": "ACTIVE",
+        "progress": "IN_PROGRESS",
+        "accepted_by_role": null,
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": null,
+        "evidence_directory": null
+      },
+      {
+        "gate": "G2B",
+        "status": "PLANNED",
+        "accepted_by_role": null,
+        "depends_on": "OWNER_ARCHITECT_ACCEPTED_G2A"
+      }
+    ]
+  },
+  "research_track": {
+    "status": "ACTIVE",
+    "last_accepted_gate": "R0",
+    "active_gate": "R1",
+    "next_gate": null,
+    "gates": [
+      {
+        "gate": "R0",
+        "status": "ACCEPTED",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": "aff7e32edc1cf71bde95b6c19e54e6f307764237",
+        "evidence_directory": "v41-research-r0-r1i-causal-isolation-design"
+      },
+      {
+        "gate": "R1",
+        "status": "ACTIVE",
+        "progress": "IN_PROGRESS",
+        "accepted_by_role": null,
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": null,
+        "evidence_directory": null
+      }
+    ],
+    "candidates": [
+      {
+        "name": "R1i-a",
+        "status": "PROVISIONAL",
+        "scope": "RESEARCH_ONLY",
+        "product_baseline": false
+      },
+      {
+        "name": "R1i-b",
+        "status": "PROVISIONAL",
+        "scope": "RESEARCH_ONLY",
+        "product_baseline": false
+      }
+    ]
+  },
+  "linux_video_track": {
+    "status": "PLANNED",
+    "last_accepted_gate": null,
+    "active_gate": null,
+    "next_gate": "L0",
+    "gates": [
+      {
+        "gate": "L0",
+        "status": "PLANNED",
+        "accepted_by_role": null,
+        "decision_source": "META-0_TASK_DIRECTIVE",
+        "source_evidence_commit": null,
+        "evidence_directory": null
+      }
+    ]
+  },
+  "meta_track": {
+    "status": "ACCEPTED",
+    "current_task": "META-0",
+    "active_gate": null,
+    "next_gate": null,
+    "acceptance_basis": "ACCEPTED_BY_CREATION_TASK",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-0_TASK_DIRECTIVE"
+  },
+  "reporting_requirements": {
+    "record_project_state_rev_at_start": true,
+    "record_project_state_rev_at_end": true,
+    "stale_state_classifications": [
+      "NO_IMPACT",
+      "REVALIDATION_REQUIRED",
+      "TASK_INVALIDATED"
+    ]
+  }
+}
