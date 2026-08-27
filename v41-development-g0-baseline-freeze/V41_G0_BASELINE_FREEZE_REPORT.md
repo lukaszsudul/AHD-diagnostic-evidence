@@ -6,9 +6,9 @@ Gate date: 2026-08-27
 
 - Engineering gate: `PASS`
 - Source refs publication: `PASS`
-- Evidence publication: `PENDING_PUBLICATION`
-- Overall result at payload-commit creation: `PENDING_PUBLICATION`
-- G1 readiness after successful evidence publication: `READY`
+- Evidence publication: `PASS`
+- Overall result: `PASS`
+- G1 readiness: `READY`
 
 G0 permanently preserves the exact qualified R1i source state, freezes both XDMA donor identities and roles, freezes the v41 integration inputs, rejects Gen1 x1 as the final throughput configuration, and freezes PCIe Gen2 x1 or better with measured sustained application payload of at least 288 MB/s.
 
@@ -116,8 +116,10 @@ Existing branch heads modified: `NO`.
 - Repository: `lukaszsudul/AHD-diagnostic-evidence`
 - Branch: `main`
 - Directory: `v41-development-g0-baseline-freeze`
-- Payload commit: `PENDING_PUBLICATION`
-- Final remote HEAD/read-back: `PENDING_PUBLICATION`
+- Payload commit: `64eca0cfbb76593d7e875df7b3271651668cbe61`
+- Payload directory tree: `2e6c37ca6e650b716a652a93dd55cfe51d58dcd8`
+- Fresh-clone payload read-back: `PASS` (`origin/main` at the payload commit; 16 files present)
+- Final receipt commit: the current Git commit containing this finalized report; its remote HEAD is verified after the non-force finalization push
 
 ## Final invariant audit
 
@@ -132,4 +134,4 @@ Existing branch heads modified: `NO`.
 
 ## Gate conclusion
 
-Engineering G0 is `PASS`. Source-ref publication is `PASS`. Evidence-publication status becomes final only after the isolated evidence commit, non-force push, and remote read-back. On that condition, G1 input readiness is `READY`, with a hard stop after G0.
+Engineering G0 is `PASS`. Source-ref publication is `PASS`. Evidence publication and payload remote read-back are `PASS`. G1 input readiness is `READY`, with a hard stop after G0.

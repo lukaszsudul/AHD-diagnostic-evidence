@@ -30,4 +30,3 @@ PCIe enumeration must never be reported as completed XDMA application functional
 ## Gate boundary
 
 G0 records the gap; it does not design or implement its resolution. The exact data-path and Gen2-capable integration design belongs to G1, with implementation deferred to later gates.
-

@@ -53,4 +53,3 @@ The run passes only when all of the following are true for the declared measurem
 7. Dropped bytes and dropped records are both zero.
 
 Any unmet condition is a throughput-acceptance failure, regardless of negotiated link speed or raw link-rate calculation.
-

@@ -49,8 +49,9 @@
 
 ## Publication receipt
 
-- Payload commit: `PENDING_PUBLICATION`
-- Final remote HEAD: `PENDING_PUBLICATION`
-- Remote read-back: `PENDING_PUBLICATION`
+- Payload commit: `64eca0cfbb76593d7e875df7b3271651668cbe61`
+- Payload directory tree: `2e6c37ca6e650b716a652a93dd55cfe51d58dcd8`
+- Payload remote read-back: `PASS`
+- Final receipt commit: current Git commit containing this index; verified as remote `origin/main` after the finalization push
 
 The SHA-256 manifest deliberately excludes itself to avoid recursive identity.

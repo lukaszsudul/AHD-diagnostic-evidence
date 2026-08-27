@@ -29,4 +29,3 @@ Training or enumerating at Gen2 does not qualify throughput. Acceptance requires
 ## Gate boundary
 
 G0 freezes this architecture requirement only. It does not edit the XDMA XCI, choose exact IP parameters, design the transition, implement a data path, build, run Vivado, or qualify hardware. The read-only feasibility audit is architectural evidence for G1; it is not hardware qualification.
-
