@@ -1,0 +1,756 @@
+diff --git a/research_tests/r1i_a/run_r1i_a_focused_sim.ps1 b/research_tests/r1i_a/run_r1i_a_focused_sim.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..c8518e396380e578c1af3f8994822d52aabdebe0
+--- /dev/null
++++ b/research_tests/r1i_a/run_r1i_a_focused_sim.ps1
+@@ -0,0 +1,180 @@
++param(
++  [Parameter(Mandatory=$true)][string]$RepoRoot,
++  [Parameter(Mandatory=$true)][string]$EvidenceRoot,
++  [string]$ReferenceRoot = 'C:\FPGA\WORKTREES\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE',
++  [string]$VivadoBin = 'C:\AMDDesignTools\2025.2\Vivado\bin'
++)
++$ErrorActionPreference = 'Stop'
++if($RepoRoot -match '[^\x00-\x7F]' -or $EvidenceRoot -match '[^\x00-\x7F]') {
++  throw 'Xilinx paths must use the approved short ASCII spelling'
++}
++if($env:XILINX_LOCAL_USER_DATA -ne 'NO' -or
++   $env:XILINX_TCLAPP_REPO -ne 'C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore' -or
++   [string]::IsNullOrWhiteSpace($env:TEMP) -or $env:TEMP -ne $env:TMP -or
++   $env:TEMP -match '[^\x00-\x7F]') {
++  throw 'Canonical isolated Xilinx environment mismatch'
++}
++Write-Output "XILINX_LOCAL_USER_DATA=$env:XILINX_LOCAL_USER_DATA"
++Write-Output "XILINX_TCLAPP_REPO=$env:XILINX_TCLAPP_REPO"
++Write-Output "TEMP=$env:TEMP"
++Write-Output "TMP=$env:TMP"
++
++$expected = @{
++  'tests/v41/tb_r1i_qualified_ack_readiness.sv' = '75B7B5B330CB4CCB41234E91BE56633A0EBA1944CB28A9F13BD48AA718B2143B'
++  'tests/v41/r1i_master_test_adapter.vhd' = '0A4948D6FCD444015DB56772B455FF45F62862F754E5022478547A4954830711'
++  'rtl/nvp/nvp6134c_diagnostics_pkg.vhd' = '36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156'
++  'rtl/nvp/r1f_transaction_serial_counter.vhd' = 'FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E'
++}
++foreach($relative in $expected.Keys) {
++  $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $relative)).Hash
++  if($actual -ne $expected[$relative]) { throw "Frozen inherited input mismatch: $relative $actual" }
++  Write-Output "FROZEN_INPUT_SHA256=$actual $relative"
++}
++$testInputs = @(
++  'rtl/nvp/nvp6134c_i2c_bringup.vhd',
++  'research_tests/r1i_a/tb_r1i_a_c1_semantics.sv',
++  'research_tests/r1i_a/run_r1i_a_focused_sim.ps1'
++)
++$testInputHashes = @{}
++foreach($relative in $testInputs) {
++  $testInputHashes[$relative] =
++    (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $relative)).Hash
++  Write-Output "TEST_INPUT_SHA256=$($testInputHashes[$relative]) $relative"
++}
++
++$referenceCommit = (& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse HEAD).Trim()
++$referenceTree = (& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse 'HEAD^{tree}').Trim()
++if($referenceCommit -ne 'c4f4bfcf577c92c3021d1fe83c05878dd12e001c' -or
++   $referenceTree -ne '161e561f007912d73dba93c5ecd78e3cc3a6955b') {
++  throw 'Immutable R1h reference identity mismatch'
++}
++if(& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot status --porcelain) {
++  throw 'Immutable R1h reference worktree is dirty'
++}
++
++New-Item -ItemType Directory -Path $EvidenceRoot -Force | Out-Null
++$derivedTb = Join-Path $EvidenceRoot 'tb_r1i_a_candidate_aware.sv'
++$sourceTb = Join-Path $RepoRoot 'tests/v41/tb_r1i_qualified_ack_readiness.sv'
++$sourceText = [System.IO.File]::ReadAllText($sourceTb)
++$normalized = $sourceText -replace "`r`n", "`n"
++function Replace-ExactlyOnce([string]$Text, [string]$Old, [string]$New, [string]$Label) {
++  $count = ([regex]::Matches($Text, [regex]::Escape($Old))).Count
++  if($count -ne 1) { throw "Expected exactly one $Label block, found $count" }
++  return $Text.Replace($Old, $New)
++}
++$fallOld = @'
++              slave_sda=(ack_bad || mode==1) ? 1:0;
++              if((mode==9 || mode==17) && current_target && target_attempt==1 && ack_phase==0 &&
++'@ -replace "`r`n", "`n"
++$fallNew = @'
++              slave_sda=(ack_bad || mode==1) ? 1:0;
++              // C1 adapter: keep the end-of-LOW filtered observation at NACK,
++              // then qualify ACK before the first filtered-SCL-HIGH edge.
++              if(mode==1) begin late_pending=1; late_count=17; end
++              if((mode==9 || mode==17) && current_target && target_attempt==1 && ack_phase==0 &&
++'@ -replace "`r`n", "`n"
++$caseOld = '    begin_run(1); await_done();'
++$caseNew = @'
++    $display("PASS CASE1_C1_FIRST_FILTERED_HIGH_STIMULUS_ADAPTER");
++    begin_run(1); await_done();
++'@ -replace "`r`n", "`n"
++$derivedText = Replace-ExactlyOnce $normalized $fallOld $fallNew 'mode1 ACK-low'
++$guardOld = '            if(!sc) $fatal(1,"late slave stimulus was not during physical SCL high");'
++$guardNew = '            if(!sc && !(mode==1 && bstate==RX_ACK)) $fatal(1,"late slave stimulus was not during physical SCL high");'
++$derivedText = Replace-ExactlyOnce $derivedText $guardOld $guardNew 'mode1 pre-HIGH guard'
++$actionOld = '            if(bstate==RX_ACK) slave_sda=0;'
++$actionNew = '            if(bstate==RX_ACK) slave_sda=(mode==1 && sc) ? 1:0;'
++$derivedText = Replace-ExactlyOnce $derivedText $actionOld $actionNew 'mode1 post-HIGH live-NACK'
++$derivedText = Replace-ExactlyOnce $derivedText $caseOld $caseNew 'mode1 lifecycle'
++[System.IO.File]::WriteAllText($derivedTb, $derivedText, [System.Text.UTF8Encoding]::new($false))
++$derivedHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $derivedTb).Hash
++Write-Output "CANDIDATE_AWARE_TB_SHA256=$derivedHash"
++Write-Output 'CANDIDATE_AWARE_TB_DELTA=MODE1_ACK_STIMULUS_TIMING_ONLY_FULL_LIFECYCLE_RETAINED'
++
++function Run-SimTool([string]$Tool, [string[]]$Arguments, [string]$Label) {
++  Write-Output "SIM_STEP=$Label"
++  & (Join-Path $VivadoBin "$Tool.bat") @Arguments 2>&1 |
++    Tee-Object -FilePath (Join-Path $EvidenceRoot "$Label.console.log")
++  if($LASTEXITCODE -ne 0) { throw "$Label failed: exit $LASTEXITCODE" }
++}
++
++Push-Location $EvidenceRoot
++try {
++  $rtl = @('rtl/nvp/nvp6134c_diagnostics_pkg.vhd',
++           'rtl/nvp/r1f_transaction_serial_counter.vhd',
++           'rtl/nvp/nvp6134c_i2c_bringup.vhd')
++  Run-SimTool xvhdl ((@('--work','r1h_ref')) +
++    ($rtl | ForEach-Object { Join-Path $ReferenceRoot $_ })) 'reference_compile'
++  Run-SimTool xvhdl ((@('--work','work')) +
++    ($rtl | ForEach-Object { Join-Path $RepoRoot $_ }) +
++    @((Join-Path $RepoRoot 'tests/v41/r1i_master_test_adapter.vhd'))) 'candidate_compile'
++  Run-SimTool xvlog @('--sv','--work','work',$derivedTb,
++    (Join-Path $RepoRoot 'research_tests/r1i_a/tb_r1i_a_c1_semantics.sv')) 'testbench_compile'
++
++  Run-SimTool xelab @('work.tb_r1h_allack_reference','-s','r1h_allack_reference',
++    '--debug','typical','--relax') 'reference_elaborate'
++  Run-SimTool xsim @('r1h_allack_reference','-runall','-log','reference_xsim.log') 'reference_run'
++  if(-not (Select-String -LiteralPath 'reference_xsim.log' -SimpleMatch 'PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=1')) {
++    throw 'Reference semantic completion marker absent'
++  }
++
++  Run-SimTool xelab @('work.tb_r1i_qualified_ack_readiness','-s','r1i_a_inherited',
++    '--debug','typical','--relax') 'candidate_aware_elaborate'
++  Run-SimTool xsim @('r1i_a_inherited','-runall','-log','candidate_aware_xsim.log') 'candidate_aware_run'
++  foreach($marker in @(
++      'PASS CASE1_C1_FIRST_FILTERED_HIGH_STIMULUS_ADAPTER',
++      'PASS CASE1_LATE_ACK_QUALIFIED_NO_RETRY',
++      'PASS CASE2_WADDR_FIRST_ABORT_CASE6_RETRY1_RECOVERY',
++      'PASS CASE3_REGADDR_FIRST_ABORT', 'PASS CASE4_DATA_FIRST_ABORT',
++      'PASS CASE5_RADDR_FIRST_ABORT_NO_READ_DATA',
++      'PASS CASE7_RETRY3_FINAL_ALLOWED_ATTEMPT_RECOVERY',
++      'PASS CASE8_EXACT_FOUR_ATTEMPTS_ONE_TERMINAL_ERROR',
++      'PASS CASE9_PHYSICAL_SCL_LOW_BOUNDED_TIMEOUT_STOP_RETRY',
++      'PASS CASE10_READ_DATA_CHANGES_ONLY_PHYSICAL_SCL_HIGH',
++      'PASS CASE12_BANK_SELECTOR_FAILURE_RECOVERY_NO_UNVERIFIED_TARGET',
++      'PASS CASE12_BANK_VERIFY_NACK_RECOVERY_NO_UNVERIFIED_TARGET',
++      'PASS CASE12_BANK_VERIFY_MISMATCH_CACHE_INVALIDATION',
++      'PASS CASE12_BANK_SELECTOR_EXHAUSTION_NO_UNVERIFIED_TARGET',
++      'PASS CASE12_BANK_VERIFY_EXHAUSTION_NO_UNVERIFIED_TARGET',
++      'PASS CASE9_PERSISTENT_SCL_LOW_BOUNDED_SAFE_TERMINAL_NO_RETRY',
++      'PASS R1I_FOCUSED_WIRE_SEMANTIC_SUITE')) {
++    if(-not (Select-String -LiteralPath 'candidate_aware_xsim.log' -SimpleMatch $marker)) {
++      throw "Candidate-aware inherited marker absent: $marker"
++    }
++  }
++
++  Run-SimTool xelab @('work.tb_r1i_a_c1_semantics','-s','r1i_a_c1_semantics',
++    '--debug','typical','--relax') 'c1_elaborate'
++  Run-SimTool xsim @('r1i_a_c1_semantics','-runall','-log','c1_xsim.log') 'c1_run'
++  if(-not (Select-String -LiteralPath 'c1_xsim.log' -SimpleMatch 'PASS R1I_A_C1_SEMANTIC_SUITE')) {
++    throw 'C1 semantic completion marker absent'
++  }
++  foreach($phase in 0..3) {
++    if(-not (Select-String -LiteralPath 'c1_xsim.log' -SimpleMatch "PASS C1_PHASE${phase}_FIRST_FILTERED_HIGH_ACK_HELD")) {
++      throw "C1 phase $phase first-HIGH selection marker absent"
++    }
++    if(-not (Select-String -LiteralPath 'c1_xsim.log' -SimpleMatch "PASS C1_PHASE${phase}_FIRST_FILTERED_HIGH_NACK_HELD")) {
++      throw "C1 phase $phase held-NACK marker absent"
++    }
++  }
++
++  $referenceTrace = (Get-FileHash -Algorithm SHA256 -LiteralPath 'r1h_reference_allack.trace').Hash
++  $candidateTrace = (Get-FileHash -Algorithm SHA256 -LiteralPath 'r1i_candidate_allack.trace').Hash
++  if($referenceTrace -ne $candidateTrace) { throw 'All-ACK wire/output trace equivalence failed' }
++  if((Get-FileHash -Algorithm SHA256 -LiteralPath $derivedTb).Hash -ne $derivedHash) {
++    throw 'Generated candidate-aware testbench changed during simulation'
++  }
++  foreach($relative in $expected.Keys) {
++    $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $relative)).Hash
++    if($actual -ne $expected[$relative]) { throw "Frozen test input changed during run: $relative" }
++  }
++  foreach($relative in $testInputs) {
++    $actual = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $relative)).Hash
++    if($actual -ne $testInputHashes[$relative]) { throw "Candidate test input changed during run: $relative" }
++  }
++  Write-Output 'TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS'
++  Write-Output "ALL_ACK_TRACE_EQUIVALENCE_SHA256=$candidateTrace"
++  Write-Output 'R1I_A_FOCUSED_SIMULATION=PASS'
++} finally {
++  Pop-Location
++}
+diff --git a/research_tests/r1i_a/tb_r1i_a_c1_semantics.sv b/research_tests/r1i_a/tb_r1i_a_c1_semantics.sv
+new file mode 100644
+index 0000000000000000000000000000000000000000..146c666f6a025ad2022cca6734a5ea8fb8341946
+--- /dev/null
++++ b/research_tests/r1i_a/tb_r1i_a_c1_semantics.sv
+@@ -0,0 +1,295 @@
++`timescale 1ns/1ps
++
++// Pin-level C1 isolation proof. The test observes only the unchanged public
++// debug state and open-drain pins; it never reaches into candidate internals.
++module tb_r1i_a_c1_semantics;
++  localparam integer TICK = 20;
++  // Frozen C3 path: five filter-pipeline clocks before the first protocol
++  // observation, then the unchanged DIVIDER+1 dwell and terminal edge.
++  localparam integer C3_ACK_HIGH_RESIDENCY = TICK + 6;
++  localparam logic [7:0] ACK_W_LOW = 8'd6;
++  localparam logic [7:0] ACK_W_HIGH = 8'd7;
++  localparam logic [7:0] SEND_REG_LOW = 8'd8;
++  localparam logic [7:0] ACK_REG_LOW = 8'd10;
++  localparam logic [7:0] ACK_REG_HIGH = 8'd11;
++  localparam logic [7:0] ACK_DATA_LOW = 8'd14;
++  localparam logic [7:0] ACK_DATA_HIGH = 8'd15;
++  localparam logic [7:0] REP_LOW = 8'd16;
++  localparam logic [7:0] ACK_R_LOW = 8'd22;
++  localparam logic [7:0] ACK_R_HIGH = 8'd23;
++  localparam logic [7:0] READ_LOW = 8'd24;
++  localparam logic [7:0] READ_HIGH = 8'd25;
++  localparam logic [7:0] STOP_A = 8'd28;
++
++  logic clk = 0;
++  logic rst = 1;
++  logic start = 0;
++  logic slave_scl = 1;
++  logic slave_sda = 1;
++  wire scl_oen, sda_oen;
++  wire scl_i = scl_oen & slave_scl;
++  wire sda_i = sda_oen & slave_sda;
++  wire busy, done, any_error;
++  wire [127:0] values, afe_values;
++  wire [63:0] output_values;
++  wire [15:0] read_errors, aux_errors, afe_errors, nack_count;
++  wire [15:0] timeout_count, serial_next;
++  wire [7:0] write_errors, original_ff, restored_ff, meta_bank, phys_bank;
++  wire phys_bank_valid, first_valid, record_valid;
++  wire [7:0] phase_dbg, step_dbg, last_reg, last_wdata, last_rdata;
++  wire [7:0] i2c_state, first_code;
++  wire [2:0] last_op;
++  wire [255:0] phase_counts;
++  wire [127:0] txn_counts;
++  wire [191:0] failed_record;
++  wire [31:0] bank_errors;
++  wire [1023:0] poc;
++  integer cycle = 0;
++  logic automatic_slave = 0;
++
++  always #500 clk = ~clk;
++  always @(posedge clk) cycle <= cycle + 1;
++  always @(negedge clk) begin
++    if (rst) begin
++      slave_scl = 1;
++      slave_sda = 1;
++    end else if (automatic_slave) begin
++      slave_scl = 1;
++      case (i2c_state)
++        ACK_W_LOW, ACK_W_HIGH, ACK_REG_LOW, ACK_REG_HIGH,
++        ACK_DATA_LOW, ACK_DATA_HIGH, ACK_R_LOW, ACK_R_HIGH,
++        READ_LOW, READ_HIGH: slave_sda = 0;
++        default: slave_sda = 1;
++      endcase
++    end
++  end
++
++  r1i_master_test_adapter #(.CLK_HZ(1000000), .I2C_HZ(25000)) dut (
++    .clk(clk), .rst(rst), .start(start), .scl_i(scl_i), .sda_i(sda_i),
++    .scl_oen(scl_oen), .sda_oen(sda_oen), .busy(busy), .done(done),
++    .any_error(any_error), .values(values), .afe_values(afe_values),
++    .output_values(output_values), .read_errors(read_errors),
++    .aux_errors(aux_errors), .afe_errors(afe_errors),
++    .write_errors(write_errors), .original_ff(original_ff),
++    .restored_ff(restored_ff), .meta_bank(meta_bank), .phys_bank(phys_bank),
++    .phys_bank_valid(phys_bank_valid), .first_valid(first_valid),
++    .phase_dbg(phase_dbg), .step_dbg(step_dbg), .last_reg(last_reg),
++    .last_wdata(last_wdata), .last_rdata(last_rdata), .i2c_state(i2c_state),
++    .first_code(first_code), .last_op(last_op), .nack_count(nack_count),
++    .timeout_count(timeout_count), .serial_next(serial_next),
++    .phase_counts(phase_counts), .txn_counts(txn_counts),
++    .record_valid(record_valid), .failed_record(failed_record),
++    .bank_errors(bank_errors), .poc(poc));
++
++  task automatic require_true(input bit condition, input string reason);
++    if (!condition) $fatal(1, "R1I_A_C1_FAIL %s state=%0d cycle=%0d", reason, i2c_state, cycle);
++  endtask
++
++  task automatic wait_state(input logic [7:0] wanted, input integer limit);
++    integer count;
++    begin
++      count = 0;
++      while (i2c_state !== wanted && count < limit) begin
++        @(posedge clk); #1; count = count + 1;
++      end
++      require_true(i2c_state === wanted, "state wait timed out");
++    end
++  endtask
++
++  function automatic logic [7:0] ack_low_state(input integer phase);
++    case (phase)
++      0: return ACK_W_LOW;
++      1: return ACK_REG_LOW;
++      2: return ACK_DATA_LOW;
++      default: return ACK_R_LOW;
++    endcase
++  endfunction
++
++  function automatic logic [7:0] ack_high_state(input integer phase);
++    case (phase)
++      0: return ACK_W_HIGH;
++      1: return ACK_REG_HIGH;
++      2: return ACK_DATA_HIGH;
++      default: return ACK_R_HIGH;
++    endcase
++  endfunction
++
++  function automatic logic [7:0] ack_successor(input integer phase);
++    case (phase)
++      0: return SEND_REG_LOW;
++      1: return REP_LOW;
++      2: return STOP_A;
++      default: return READ_LOW;
++    endcase
++  endfunction
++
++  task automatic start_to_ack_low(input integer phase);
++    begin
++      rst = 1; start = 0; automatic_slave = 1;
++      slave_scl = 1; slave_sda = 1;
++      repeat (10) @(posedge clk);
++      #1 rst = 0;
++      repeat (10) @(posedge clk);
++      #1 start = 1;
++      repeat (3) @(posedge clk);
++      #1 start = 0;
++      wait_state(ack_low_state(phase), 200000);
++      automatic_slave = 0;
++      require_true(scl_i === 1'b0 && sda_oen === 1'b1,
++                   "ACK low must hold SCL low and release SDA");
++    end
++  endtask
++
++  task automatic wait_ack_exit(input logic [7:0] high_state,
++                               input integer entered,
++                               output logic [7:0] next_state,
++                               output integer high_cycles);
++    begin
++      while (i2c_state === high_state && cycle - entered < 200) begin
++        @(posedge clk); #1;
++      end
++      require_true(i2c_state !== high_state, "ACK high did not terminate");
++      high_cycles = cycle - entered;
++      next_state = i2c_state;
++    end
++  endtask
++
++  logic [7:0] next_state;
++  integer high_cycles;
++  integer normal_ack_cycles;
++  integer ack_entry_cycle;
++  integer phase;
++
++  initial begin
++    // C1-A: exercise the complete three-stage observation at every ACK phase:
++    // passive end-of-LOW=NACK, first filtered-HIGH=ACK, terminal live SDA=NACK.
++    // The selected result is ACK while early/false-early telemetry reconciles.
++    for (phase = 0; phase < 4; phase = phase + 1) begin
++      start_to_ack_low(phase);
++      slave_sda = 1;
++      // Make raw SDA lead raw SCL by four clocks. The unchanged filters make
++      // selected SDA become ACK on the first observed-SCL-HIGH edge, then raw
++      // SDA returns NACK so filtered SDA changes exactly one clock later.
++      repeat (TICK - 3) @(posedge clk); #1;
++      require_true(i2c_state === ack_low_state(phase),
++                   "ACK-low preparation did not retain frozen dwell");
++      slave_sda = 0;
++      wait_state(ack_high_state(phase), 100);
++      ack_entry_cycle = cycle;
++      repeat (1) @(posedge clk); #1;
++      slave_sda = 1;
++      repeat (TICK - 2) begin
++        @(posedge clk); #1;
++        require_true(i2c_state === ack_high_state(phase),
++                     "decision moved earlier than the original terminal tick");
++      end
++      wait_ack_exit(ack_high_state(phase), ack_entry_cycle,
++                    next_state, high_cycles);
++      require_true(next_state === ack_successor(phase),
++                   "terminal decision used live SDA instead of held first-HIGH ACK");
++      require_true(high_cycles == C3_ACK_HIGH_RESIDENCY,
++                   "terminal timing differs from the frozen qualified-C3 schedule");
++      require_true(poc[(3 + 4*phase)*32 +: 32] == 1 &&
++                   poc[(4 + 4*phase)*32 +: 32] == 1 &&
++                   poc[(5 + 4*phase)*32 +: 32] == 0 &&
++                   poc[(6 + 4*phase)*32 +: 32] == 1,
++                   "opportunity/early/selected/false-early lane mismatch");
++      require_true(poc[19*32 +: 32] == 0 && nack_count == 0,
++                   "held ACK was counted as selected NACK");
++      if (phase == 0)
++        normal_ack_cycles = high_cycles;
++      else
++        require_true(high_cycles == normal_ack_cycles,
++                     "ACK phase changed the frozen terminal schedule");
++      $display("PASS C1_PHASE%0d_FIRST_FILTERED_HIGH_ACK_HELD terminal_cycles=%0d",
++               phase, high_cycles);
++    end
++
++    // C1-B: symmetric all-phase proof. First-HIGH NACK remains selected after
++    // live SDA becomes ACK, and every phase aborts before any later phase.
++    for (phase = 0; phase < 4; phase = phase + 1) begin
++      start_to_ack_low(phase);
++      slave_sda = 1;
++      wait_state(ack_high_state(phase), 100);
++      ack_entry_cycle = cycle;
++      // Raw SDA changes one clock after raw SCL release, so the unchanged
++      // filters change SDA exactly one controller edge after first SCL-HIGH.
++      repeat (1) @(posedge clk); #1;
++      slave_sda = 0;
++      wait_ack_exit(ack_high_state(phase), ack_entry_cycle,
++                    next_state, high_cycles);
++      require_true(next_state === STOP_A,
++                   "terminal decision did not retain first-HIGH NACK");
++      require_true(high_cycles == normal_ack_cycles,
++                   "selected value changed the frozen terminal schedule");
++      require_true(poc[(3 + 4*phase)*32 +: 32] == 1 &&
++                   poc[(4 + 4*phase)*32 +: 32] == 1 &&
++                   poc[(5 + 4*phase)*32 +: 32] == 1 &&
++                   poc[(6 + 4*phase)*32 +: 32] == 0,
++                   "held-NACK phase lane mismatch");
++      require_true(poc[19*32 +: 32] == 1 && nack_count == 1,
++                   "held NACK was not counted exactly once");
++      $display("PASS C1_PHASE%0d_FIRST_FILTERED_HIGH_NACK_HELD terminal_cycles=%0d",
++               phase, high_cycles);
++    end
++
++    // C1-C: break the first HIGH interval after it selected NACK. The broken
++    // interval must invalidate that value; the completing interval selects ACK.
++    start_to_ack_low(0);
++    slave_sda = 1;
++    wait_state(ACK_W_HIGH, 100);
++    ack_entry_cycle = cycle;
++    repeat (7) @(posedge clk); #1;
++    slave_scl = 0;
++    repeat (7) @(posedge clk); #1;
++    require_true(i2c_state === ACK_W_HIGH,
++                 "broken HIGH interval advanced the protocol");
++    // On the completing interval, give SDA the same four-clock physical lead
++    // and one-clock filtered trailing transition used by the first-edge test.
++    slave_sda = 0;
++    repeat (4) @(posedge clk); #1;
++    slave_scl = 1;
++    repeat (1) @(posedge clk); #1;
++    slave_sda = 1;
++    wait_ack_exit(ACK_W_HIGH, ack_entry_cycle, next_state, high_cycles);
++    require_true(next_state === SEND_REG_LOW,
++                 "broken-interval value was not invalidated/resampled");
++    require_true(high_cycles == normal_ack_cycles + 18,
++                 "broken interval did not restart the exact qualified dwell schedule");
++    $display("PASS C1_COMPLETING_INTERVAL_RESAMPLE terminal_cycles=%0d", high_cycles);
++
++    // C1-D: delayed physical HIGH retains the exact C3 wait shell and then a
++    // full terminal dwell. This is below the inherited 20-cycle timeout bound.
++    start_to_ack_low(0);
++    slave_sda = 0;
++    slave_scl = 0;
++    wait_state(ACK_W_HIGH, 100);
++    ack_entry_cycle = cycle;
++    repeat (8) @(posedge clk); #1;
++    require_true(i2c_state === ACK_W_HIGH && phase_counts[31:0] == 0,
++                 "SCL-low interval sampled or advanced ACK");
++    slave_scl = 1;
++    repeat (1) @(posedge clk); #1;
++    slave_sda = 1;
++    wait_ack_exit(ACK_W_HIGH, ack_entry_cycle, next_state, high_cycles);
++    require_true(next_state === SEND_REG_LOW,
++                 "delayed filtered HIGH did not complete normally");
++    require_true(high_cycles == normal_ack_cycles + 8,
++                 "delayed HIGH did not retain the exact divider reset/stall schedule");
++    require_true(timeout_count == 0,
++                 "sub-timeout delayed HIGH entered recovery");
++    $display("PASS C1_DELAYED_FILTERED_HIGH_FULL_DWELL terminal_cycles=%0d", high_cycles);
++
++    require_true(poc[31:0] == 32'h52314950 && poc[63:32] == 1 &&
++                 poc[95:64] == 32'h3f,
++                 "telemetry magic/version/policy changed");
++    require_true(bank_errors == 0, "bank invariant changed");
++    $display("PASS R1I_A_C1_SEMANTIC_SUITE");
++    $finish;
++  end
++
++  initial begin
++    #100000000;
++    $fatal(1, "R1I_A_C1_TIMEOUT state=%0d", i2c_state);
++  end
++endmodule
+diff --git a/rtl/nvp/nvp6134c_i2c_bringup.vhd b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+index 3757acf2677d0a13b31a285095c38cc7b30e567c..0ba5aca7a98f6b00f0a33a9dc7641ef62dbdb03c 100644
+--- a/rtl/nvp/nvp6134c_i2c_bringup.vhd
++++ b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+@@ -304,6 +304,8 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+   signal scl_low_released_count : natural range 0 to C_SCL_TIMEOUT_CYCLES := 0;
+   signal scl_timeout_seen_r  : std_logic := '0';
+   signal r1i_early_nack_r : std_logic := '0';
++  signal r1i_selected_ack_r : std_logic := '1';
++  signal r1i_selected_ack_valid_r : std_logic := '0';
+   signal r1i_early_count_r : t_phase_counts := (others => (others => '0'));
+   signal r1i_false_early_count_r : t_phase_counts := (others => (others => '0'));
+   signal r1i_raw_nacks_r : unsigned(31 downto 0) := (others => '0');
+@@ -652,6 +654,8 @@ begin
+       r1i_abort_sda_r <= '1';
+       r1i_abort_wait_r <= 0;
+       r1i_abort_high_r <= 0;
++      r1i_selected_ack_r <= '1';
++      r1i_selected_ack_valid_r <= '0';
+     end procedure;
+     procedure capture_early_ack(constant p : natural) is
+     begin
+@@ -662,9 +666,11 @@ begin
+         r1i_early_count_r(p) <= sat_inc32(r1i_early_count_r(p));
+       end if;
+     end procedure;
+-    procedure observe_qualified_ack(constant p : natural) is
++    procedure observe_qualified_ack(
++      constant p : natural;
++      constant selected_ack : std_logic) is
+     begin
+-      if sda_filtered_r /= '0' then
++      if selected_ack /= '0' then
+         r1i_raw_nacks_r <= sat_inc32(r1i_raw_nacks_r);
+         r1i_logical_nacks_r <= r1i_logical_nacks_r + 1;
+         r1i_attempt_error_code_r <= std_logic_vector(to_unsigned(p + 1, 8));
+@@ -828,6 +834,21 @@ begin
+           r1i_backoff_count_r <= r1i_backoff_count_r + 1;
+         end if;
+ 
++        -- C1 selects SDA on the first controller edge that observes filtered
++        -- SCL HIGH in the interval that ultimately completes qualification.
++        -- A broken HIGH interval invalidates the selection before the existing
++        -- divider/watchdog shell restarts that interval unchanged.
++        case state is
++          when ACK_W_HIGH | ACK_REG_HIGH | ACK_DATA_HIGH | ACK_R_HIGH =>
++            if scl_filtered_r = '0' then
++              r1i_selected_ack_valid_r <= '0';
++            elsif r1i_selected_ack_valid_r = '0' then
++              r1i_selected_ack_r <= sda_filtered_r;
++              r1i_selected_ack_valid_r <= '1';
++            end if;
++          when others => null;
++        end case;
++
+         if requires_scl_high(state) and scl_filtered_r = '0' then
+           if scl_low_released_count = C_SCL_TIMEOUT_CYCLES then
+             cur_error <= '1';
+@@ -1246,26 +1267,37 @@ begin
+ 
+             when ACK_W_LOW =>
+               capture_early_ack(0);
++              r1i_selected_ack_r <= '1';
++              r1i_selected_ack_valid_r <= '0';
+               state <= ACK_W_HIGH;
+ 
+             when ACK_W_HIGH =>
+-              observe_qualified_ack(0);
+-              r1f_waddr_opp_r <= sat_inc32(r1f_waddr_opp_r);
+-              r1f_tx_opp_bitmap_r(0) <= '1';
+-              if sda_filtered_r /= '0' then
+-                r1f_waddr_nack_r <= sat_inc32(r1f_waddr_nack_r);
+-                r1f_tx_nack_bitmap_r(0) <= '1';
+-                r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++              if r1i_selected_ack_valid_r = '0' then
+                 cur_error <= '1';
+-                last_ack_r <= '0';
+-                if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+-                record_nack(x"01");
+-                state <= STOP_A; -- first qualified NACK: no later phase
++                r1i_attempt_error_code_r <= x"07";
++                r1i_abort_sda_r <= sda_oen_r;
++                r1i_abort_wait_r <= 0;
++                r1i_abort_high_r <= 0;
++                state <= ABORT_HIGH_RECOVERY;
+               else
+-                last_ack_r <= '1';
+-                byte_tx <= reg_addr;
+-                bit_idx <= 7;
+-                state <= SEND_REG_LOW;
++                observe_qualified_ack(0, r1i_selected_ack_r);
++                r1f_waddr_opp_r <= sat_inc32(r1f_waddr_opp_r);
++                r1f_tx_opp_bitmap_r(0) <= '1';
++                if r1i_selected_ack_r /= '0' then
++                  r1f_waddr_nack_r <= sat_inc32(r1f_waddr_nack_r);
++                  r1f_tx_nack_bitmap_r(0) <= '1';
++                  r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++                  cur_error <= '1';
++                  last_ack_r <= '0';
++                  if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
++                  record_nack(x"01");
++                  state <= STOP_A; -- first qualified NACK: no later phase
++                else
++                  last_ack_r <= '1';
++                  byte_tx <= reg_addr;
++                  bit_idx <= 7;
++                  state <= SEND_REG_LOW;
++                end if;
+               end if;
+ 
+             when SEND_REG_LOW =>
+@@ -1281,29 +1313,40 @@ begin
+ 
+             when ACK_REG_LOW =>
+               capture_early_ack(1);
++              r1i_selected_ack_r <= '1';
++              r1i_selected_ack_valid_r <= '0';
+               state <= ACK_REG_HIGH;
+ 
+             when ACK_REG_HIGH =>
+-              observe_qualified_ack(1);
+-              r1f_regaddr_opp_r <= sat_inc32(r1f_regaddr_opp_r);
+-              r1f_tx_opp_bitmap_r(1) <= '1';
+-              if sda_filtered_r /= '0' then
+-                r1f_regaddr_nack_r <= sat_inc32(r1f_regaddr_nack_r);
+-                r1f_tx_nack_bitmap_r(1) <= '1';
+-                r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++              if r1i_selected_ack_valid_r = '0' then
+                 cur_error <= '1';
+-                last_ack_r <= '0';
+-                if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+-                record_nack(x"02");
+-                state <= STOP_A; -- first qualified NACK: no later phase
++                r1i_attempt_error_code_r <= x"07";
++                r1i_abort_sda_r <= sda_oen_r;
++                r1i_abort_wait_r <= 0;
++                r1i_abort_high_r <= 0;
++                state <= ABORT_HIGH_RECOVERY;
+               else
+-                last_ack_r <= '1';
+-                if is_read_op = '1' then
+-                  state <= REP_LOW;
++                observe_qualified_ack(1, r1i_selected_ack_r);
++                r1f_regaddr_opp_r <= sat_inc32(r1f_regaddr_opp_r);
++                r1f_tx_opp_bitmap_r(1) <= '1';
++                if r1i_selected_ack_r /= '0' then
++                  r1f_regaddr_nack_r <= sat_inc32(r1f_regaddr_nack_r);
++                  r1f_tx_nack_bitmap_r(1) <= '1';
++                  r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++                  cur_error <= '1';
++                  last_ack_r <= '0';
++                  if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
++                  record_nack(x"02");
++                  state <= STOP_A; -- first qualified NACK: no later phase
+                 else
+-                  byte_tx <= write_data;
+-                  bit_idx <= 7;
+-                  state <= SEND_DATA_LOW;
++                  last_ack_r <= '1';
++                  if is_read_op = '1' then
++                    state <= REP_LOW;
++                  else
++                    byte_tx <= write_data;
++                    bit_idx <= 7;
++                    state <= SEND_DATA_LOW;
++                  end if;
+                 end if;
+               end if;
+ 
+@@ -1320,24 +1363,35 @@ begin
+ 
+             when ACK_DATA_LOW =>
+               capture_early_ack(2);
++              r1i_selected_ack_r <= '1';
++              r1i_selected_ack_valid_r <= '0';
+               state <= ACK_DATA_HIGH;
+ 
+             when ACK_DATA_HIGH =>
+-              observe_qualified_ack(2);
+-              r1f_data_opp_r <= sat_inc32(r1f_data_opp_r);
+-              r1f_tx_opp_bitmap_r(2) <= '1';
+-              if sda_filtered_r /= '0' then
+-                r1f_data_nack_r <= sat_inc32(r1f_data_nack_r);
+-                r1f_tx_nack_bitmap_r(2) <= '1';
+-                r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++              if r1i_selected_ack_valid_r = '0' then
+                 cur_error <= '1';
+-                last_ack_r <= '0';
+-                if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+-                record_nack(x"03");
+-                state <= STOP_A; -- first qualified NACK: no later phase
++                r1i_attempt_error_code_r <= x"07";
++                r1i_abort_sda_r <= sda_oen_r;
++                r1i_abort_wait_r <= 0;
++                r1i_abort_high_r <= 0;
++                state <= ABORT_HIGH_RECOVERY;
+               else
+-                last_ack_r <= '1';
+-                state <= STOP_A;
++                observe_qualified_ack(2, r1i_selected_ack_r);
++                r1f_data_opp_r <= sat_inc32(r1f_data_opp_r);
++                r1f_tx_opp_bitmap_r(2) <= '1';
++                if r1i_selected_ack_r /= '0' then
++                  r1f_data_nack_r <= sat_inc32(r1f_data_nack_r);
++                  r1f_tx_nack_bitmap_r(2) <= '1';
++                  r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++                  cur_error <= '1';
++                  last_ack_r <= '0';
++                  if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
++                  record_nack(x"03");
++                  state <= STOP_A; -- first qualified NACK: no later phase
++                else
++                  last_ack_r <= '1';
++                  state <= STOP_A;
++                end if;
+               end if;
+ 
+             when REP_LOW =>
+@@ -1367,25 +1421,36 @@ begin
+ 
+             when ACK_R_LOW =>
+               capture_early_ack(3);
++              r1i_selected_ack_r <= '1';
++              r1i_selected_ack_valid_r <= '0';
+               state <= ACK_R_HIGH;
+ 
+             when ACK_R_HIGH =>
+-              observe_qualified_ack(3);
+-              r1f_raddr_opp_r <= sat_inc32(r1f_raddr_opp_r);
+-              r1f_tx_opp_bitmap_r(3) <= '1';
+-              if sda_filtered_r /= '0' then
+-                r1f_raddr_nack_r <= sat_inc32(r1f_raddr_nack_r);
+-                r1f_tx_nack_bitmap_r(3) <= '1';
+-                r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++              if r1i_selected_ack_valid_r = '0' then
+                 cur_error <= '1';
+-                last_ack_r <= '0';
+-                if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
+-                record_nack(x"04");
+-                state <= STOP_A; -- first qualified NACK: no later phase
++                r1i_attempt_error_code_r <= x"07";
++                r1i_abort_sda_r <= sda_oen_r;
++                r1i_abort_wait_r <= 0;
++                r1i_abort_high_r <= 0;
++                state <= ABORT_HIGH_RECOVERY;
+               else
+-                last_ack_r <= '1';
+-                bit_idx <= 7;
+-                state <= READ_LOW;
++                observe_qualified_ack(3, r1i_selected_ack_r);
++                r1f_raddr_opp_r <= sat_inc32(r1f_raddr_opp_r);
++                r1f_tx_opp_bitmap_r(3) <= '1';
++                if r1i_selected_ack_r /= '0' then
++                  r1f_raddr_nack_r <= sat_inc32(r1f_raddr_nack_r);
++                  r1f_tx_nack_bitmap_r(3) <= '1';
++                  r1f_tx_nack_count_r <= r1f_tx_nack_count_r + 1;
++                  cur_error <= '1';
++                  last_ack_r <= '0';
++                  if nack_count_r /= x"FFFF" then nack_count_r <= nack_count_r + 1; end if;
++                  record_nack(x"04");
++                  state <= STOP_A; -- first qualified NACK: no later phase
++                else
++                  last_ack_r <= '1';
++                  bit_idx <= 7;
++                  state <= READ_LOW;
++                end if;
+               end if;
+ 
+             when READ_LOW =>

@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 27 20:19:05 2026
+# Process ID         : 3756
+# Current directory  : V:/R1I_RCA_A/offline_tests/mmio_final_v2
+# Command line       : xsim.exe -log r1h_mmio_read_service_xsim.log -mode tcl -source {xsim.dir/r1h_mmio_read_service/xsim_script.tcl}
+# Log file           : V:/R1I_RCA_A/offline_tests/mmio_final_v2/r1h_mmio_read_service_xsim.log
+# Journal file       : V:/R1I_RCA_A/offline_tests/mmio_final_v2\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4497 MB
+# Total Virtual      : 21525 MB
+# Available Virtual  : 5058 MB
+#-----------------------------------------------------------
+source xsim.dir/r1h_mmio_read_service/xsim_script.tcl
+# xsim {r1h_mmio_read_service} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_TEST_BEGIN
+R1H_MMIO_READ_SERVICE_PASS accepted=10 consumed=6 reset_cancelled=4
+$finish called at time : 436 ns : File "V:/R1I_RCA_A_SRC/tests/v41/tb_r1h_mmio_read_service.sv" Line 371
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:19:13 2026...

@@ -1,0 +1,146 @@
+XILINX_LOCAL_USER_DATA=NO
+XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore
+TEMP=V:\R1I_RCA_A\temp
+TMP=V:\R1I_RCA_A\temp
+MMIO_INPUT_SHA256=EC246486BD0F5DF0966F6DC81BC8A8EAC17741E2641F8DFE68E276EDBE567542 rtl/v41/r1f_measurement_regs.sv
+MMIO_INPUT_SHA256=00ECE27375BE07D52E8FA4BF07F535AB29DC39A099AF4FC148BF654E0073BA2B rtl/v41/r1h_mmio_read_service.sv
+MMIO_INPUT_SHA256=77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16 rtl/v41/control_status_regs.sv
+MMIO_INPUT_SHA256=58AB2C44693FA89B60430B583B4FB117FD41EEE5C69359F170BA644B728AC686 tests/v41/r1g_measurement_regs_reference.sv
+MMIO_INPUT_SHA256=50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062 tests/v41/tb_r1i_poc_mmio.sv
+MMIO_INPUT_SHA256=2EA788E5A9CA5D9F5663A0A1595009BDB20D7D1F81F8BE917721F79BFE802B40 tests/v41/tb_r1h_mmio_read_service.sv
+MMIO_INPUT_SHA256=6DE31F62629E0C64D35700DD1A57193C5F4240A224B4BF4763D69076FD61BD68 tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+MMIO_STEP=compile
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/rtl/v41/r1f_measurement_regs.sv" into library work
+INFO: [VRFC 10-311] analyzing module v41_r1f_measurement_regs
+INFO: [VRFC 10-311] analyzing module v41_r1f_formal_zero_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/rtl/v41/r1h_mmio_read_service.sv" into library work
+INFO: [VRFC 10-311] analyzing module v41_r1h_mmio_read_service
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/rtl/v41/control_status_regs.sv" into library work
+INFO: [VRFC 10-311] analyzing module v41_control_status_regs
+INFO: [VRFC 10-311] analyzing module v41_r1i_poc_scalar_mux
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/tests/v41/r1g_measurement_regs_reference.sv" into library work
+INFO: [VRFC 10-311] analyzing module v41_r1g_measurement_regs_reference
+INFO: [VRFC 10-311] analyzing module v41_r1g_formal_zero_model_reference
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/tests/v41/tb_r1i_poc_mmio.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_r1i_poc_mmio
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/tests/v41/tb_r1h_mmio_read_service.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_r1h_mmio_read_service
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_A_SRC/tests/v41/tb_r1h_mmio_integration_exhaustive.sv" into library work
+INFO: [VRFC 10-311] analyzing module tb_r1h_mmio_integration_exhaustive
+MMIO_STEP=r1i_poc_mmio_elaborate
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe work.tb_r1i_poc_mmio -s r1i_poc_mmio --debug typical --relax --log r1i_poc_mmio_xelab.log 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.v41_r1i_poc_scalar_mux
+Compiling module work.v41_r1h_mmio_read_service
+Compiling module work.v41_control_status_regs
+Compiling module work.tb_r1i_poc_mmio
+Built simulation snapshot r1i_poc_mmio
+MMIO_STEP=r1i_poc_mmio_run
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 20:17:56 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1i_poc_mmio/xsim_script.tcl
+# xsim {r1i_poc_mmio} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1I_POC_MMIO_PASS reads=258 writes=32 old_fallback=2 poc_page_bytes=128 formal_zero_bytes=128
+$finish called at time : 13256 ns : File "V:/R1I_RCA_A_SRC/tests/v41/tb_r1i_poc_mmio.sv" Line 159
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:18:05 2026...
+MMIO_MARKER=PASS R1I_POC_MMIO_PASS
+MMIO_STEP=r1h_mmio_read_service_elaborate
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe work.tb_r1h_mmio_read_service -s r1h_mmio_read_service --debug typical --relax --log r1h_mmio_read_service_xelab.log 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.v41_r1h_mmio_read_service
+Compiling module work.tb_r1h_mmio_read_service
+Built simulation snapshot r1h_mmio_read_service
+MMIO_STEP=r1h_mmio_read_service_run
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 20:19:05 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1h_mmio_read_service/xsim_script.tcl
+# xsim {r1h_mmio_read_service} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_TEST_BEGIN
+R1H_MMIO_READ_SERVICE_PASS accepted=10 consumed=6 reset_cancelled=4
+$finish called at time : 436 ns : File "V:/R1I_RCA_A_SRC/tests/v41/tb_r1h_mmio_read_service.sv" Line 371
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:19:13 2026...
+MMIO_MARKER=PASS R1H_MMIO_READ_SERVICE_PASS
+MMIO_STEP=r1h_mmio_exhaustive_elaborate
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe work.tb_r1h_mmio_integration_exhaustive -s r1h_mmio_exhaustive --debug typical --relax --log r1h_mmio_exhaustive_xelab.log 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.v41_r1f_measurement_regs(SAFE_PR...
+Compiling module work.v41_r1g_measurement_regs_referen...
+Compiling module work.v41_r1h_mmio_read_service
+Compiling module work.v41_control_status_regs
+Compiling module work.tb_r1h_mmio_integration_exhausti...
+Built simulation snapshot r1h_mmio_exhaustive
+MMIO_STEP=r1h_mmio_exhaustive_run
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 20:20:17 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1h_mmio_exhaustive/xsim_script.tcl
+# xsim {r1h_mmio_exhaustive} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_BEGIN
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1 reset_cancellations=2
+$finish called at time : 210866 ns : File "V:/R1I_RCA_A_SRC/tests/v41/tb_r1h_mmio_integration_exhaustive.sv" Line 645
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:20:28 2026...
+MMIO_MARKER=PASS R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS
+MMIO_POSTRUN_SHA256=EC246486BD0F5DF0966F6DC81BC8A8EAC17741E2641F8DFE68E276EDBE567542 rtl/v41/r1f_measurement_regs.sv
+MMIO_POSTRUN_SHA256=00ECE27375BE07D52E8FA4BF07F535AB29DC39A099AF4FC148BF654E0073BA2B rtl/v41/r1h_mmio_read_service.sv
+MMIO_POSTRUN_SHA256=77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16 rtl/v41/control_status_regs.sv
+MMIO_POSTRUN_SHA256=58AB2C44693FA89B60430B583B4FB117FD41EEE5C69359F170BA644B728AC686 tests/v41/r1g_measurement_regs_reference.sv
+MMIO_POSTRUN_SHA256=50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062 tests/v41/tb_r1i_poc_mmio.sv
+MMIO_POSTRUN_SHA256=2EA788E5A9CA5D9F5663A0A1595009BDB20D7D1F81F8BE917721F79BFE802B40 tests/v41/tb_r1h_mmio_read_service.sv
+MMIO_POSTRUN_SHA256=6DE31F62629E0C64D35700DD1A57193C5F4240A224B4BF4763D69076FD61BD68 tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+R1I_A_MMIO_ABI_SUITE=PASS

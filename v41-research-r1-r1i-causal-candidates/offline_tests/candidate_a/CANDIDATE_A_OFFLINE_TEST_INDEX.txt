@@ -1,0 +1,94 @@
+Candidate A (R1i-a / C1) offline-test evidence index
+=====================================================
+
+Candidate branch: research/v41-r1i-a
+Candidate commit: 8b8ec0fa9c22965e46d0421c25e63d83e7971597
+Candidate tree: a0fcbdbfb2b01049b357a8f8bf68bd448d6394f7
+Direct parent: 20c3323d79d3896edc586d6db1df7deee60f9e41
+Execution boundary: offline simulation/static/host tests only; no hardware access.
+
+Final results and copied PASS receipts
+--------------------------------------
+CANDIDATE-AWARE QUALIFIED-R1i XSIM: PASS
+  Receipt: focused/R1I_A_FINAL_FOCUSED_RECEIPT.txt
+  Final marker: R1I_A_FOCUSED_SIMULATION=PASS
+  Full inherited lifecycle retained, including the 825-opportunity mode-1 run.
+  The sole derived mode-1 change makes the C1 first-filtered-HIGH sample ACK
+  and the later live terminal value NACK; all other inherited scenario
+  assertions and postconditions remain active.
+  Mode-1 result: PASS CASE1_LATE_ACK_QUALIFIED_NO_RETRY false=825
+  Modes 2-17: PASS for first-NACK abort, no later phase, retry ladder,
+  terminal exhaustion, timeout/recovery, read timing, and bank safety.
+  Trace equivalence: PASS
+    R1h reference SHA256=7C5D7F767B2E9CAEB1B587D3F258C295AD0F454141B2A8C84240B966133A4B49
+    R1i-a candidate SHA256=7C5D7F767B2E9CAEB1B587D3F258C295AD0F454141B2A8C84240B966133A4B49
+
+C1 DIRECTED XSIM: PASS
+  Log: focused/c1_xsim.log
+  WADDR/REGADDR/DATA/RADDR first-HIGH selected ACK: 4/4 PASS, 26 cycles.
+  WADDR/REGADDR/DATA/RADDR first-HIGH selected NACK: 4/4 PASS, 26 cycles.
+  Broken-HIGH invalidation and completing-interval resample: PASS, 44 cycles.
+  Delayed filtered-HIGH full dwell: PASS, 34 cycles (normal + 8).
+  Final marker: PASS R1I_A_C1_SEMANTIC_SUITE
+
+MMIO/ABI XSIM: PASS
+  Receipt: mmio/R1I_A_MMIO_ABI_RECEIPT.txt
+  mmio/r1i_poc_mmio_xsim.log:
+    R1I_POC_MMIO_PASS reads=258 writes=32 old_fallback=2 poc_page_bytes=128 formal_zero_bytes=128
+  mmio/r1h_mmio_read_service_xsim.log:
+    R1H_MMIO_READ_SERVICE_PASS accepted=10 consumed=6 reset_cancelled=4
+  mmio/r1h_mmio_exhaustive_xsim.log:
+    R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1 reset_cancellations=2
+  All seven MMIO source/test inputs passed pre/post SHA-256 stability checks.
+
+HOST READER/MODEL TESTS: PASS (40/40)
+  Receipt: python/R1I_A_PYTHON_FIXTURE_RECEIPT.txt
+  R1f decoder/statistics: 16 PASS.
+  R1f tri-phase model: 8 PASS.
+  R1i reader/ABI/provenance: 16 PASS.
+  All seven Python source/test inputs passed pre/post SHA-256 checks.
+
+Candidate and focused-test SHA-256 inputs
+-----------------------------------------
+6345A67E369A3AED2460722F9040B7DA1E80F0FFC142F9E33A87BEBEB89238A9  rtl/nvp/nvp6134c_i2c_bringup.vhd
+36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156  rtl/nvp/nvp6134c_diagnostics_pkg.vhd
+FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E  rtl/nvp/r1f_transaction_serial_counter.vhd
+0A4948D6FCD444015DB56772B455FF45F62862F754E5022478547A4954830711  tests/v41/r1i_master_test_adapter.vhd
+75B7B5B330CB4CCB41234E91BE56633A0EBA1944CB28A9F13BD48AA718B2143B  tests/v41/tb_r1i_qualified_ack_readiness.sv
+140DEC99EB2A727EDFB40F60314C2555D6CD2BC6AF6D04B033E5A644359EA5EC  focused/tb_r1i_a_candidate_aware.sv
+EDD79B52932AB330CE176991556C46CC6B014AA0A947D1DE8C39F4A5B897AFEA  source_tests/run_r1i_a_focused_sim.ps1
+8DB841F5BB560BDF8C81EA1C78256745223029BC32BDBF06633E3F6D451469B4  source_tests/tb_r1i_a_c1_semantics.sv
+
+Frozen MMIO/test SHA-256 inputs
+------------------------------
+77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16  rtl/v41/control_status_regs.sv
+00ECE27375BE07D52E8FA4BF07F535AB29DC39A099AF4FC148BF654E0073BA2B  rtl/v41/r1h_mmio_read_service.sv
+EC246486BD0F5DF0966F6DC81BC8A8EAC17741E2641F8DFE68E276EDBE567542  rtl/v41/r1f_measurement_regs.sv
+58AB2C44693FA89B60430B583B4FB117FD41EEE5C69359F170BA644B728AC686  tests/v41/r1g_measurement_regs_reference.sv
+50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062  tests/v41/tb_r1i_poc_mmio.sv
+2EA788E5A9CA5D9F5663A0A1595009BDB20D7D1F81F8BE917721F79BFE802B40  tests/v41/tb_r1h_mmio_read_service.sv
+6DE31F62629E0C64D35700DD1A57193C5F4240A224B4BF4763D69076FD61BD68  tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+
+Canonical Xilinx environment
+----------------------------
+XILINX_LOCAL_USER_DATA=NO
+XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore
+TEMP=V:\R1I_RCA_A\temp
+TMP=V:\R1I_RCA_A\temp
+Vivado Simulator: 2025.2 build 6299465
+
+Payload manifest
+----------------
+CANDIDATE_A_PAYLOAD_SHA256.txt lists the 14 preserved payload files.
+Manifest/aggregate SHA-256:
+1853B1D249D3D6B6BDE922517A990B724DC79FEA493AD8D399656DD6388DCA1F
+
+Packaging audit
+---------------
+Only final PASS receipts, final xsim logs, the two all-ACK traces, the
+hash-derived candidate-aware testbench, and committed Candidate A research
+test sources are included. Simulator work directories, WDB files, compiled
+databases, .pb files, journals, backups, and superseded failed harness
+development attempts are excluded. The immutable C3 aggregate's known
+mode-1 late-sample incompatibility is not represented as a Candidate A pass;
+the hash-guarded full-lifecycle C1 adaptation is the superseding evidence.

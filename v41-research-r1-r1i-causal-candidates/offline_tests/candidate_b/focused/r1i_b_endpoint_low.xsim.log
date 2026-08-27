@@ -1,0 +1,31 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 27 19:41:38 2026
+# Process ID         : 21348
+# Current directory  : V:/R1I_RCA_B_TESTS_FINAL_FOCUSED_R2/candidate_b_focused
+# Command line       : xsim.exe -log r1i_b_endpoint_low.xsim.log -mode tcl -source {xsim.dir/r1i_b_endpoint_low/xsim_script.tcl}
+# Log file           : V:/R1I_RCA_B_TESTS_FINAL_FOCUSED_R2/candidate_b_focused/r1i_b_endpoint_low.xsim.log
+# Journal file       : V:/R1I_RCA_B_TESTS_FINAL_FOCUSED_R2/candidate_b_focused\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4497 MB
+# Total Virtual      : 21525 MB
+# Available Virtual  : 3960 MB
+#-----------------------------------------------------------
+source xsim.dir/r1i_b_endpoint_low/xsim_script.tcl
+# xsim {r1i_b_endpoint_low} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS R1I_B_ENDPOINT_LOW_NO_SAMPLE_NO_ADVANCE_AND_SAFE_RECOVERY dwell=21
+$finish called at time : 687 us : File "V:/R1I_RCA_B_SRC/research_tests/r1i_b/tb_r1i_b_c2.sv" Line 225
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 19:41:55 2026...

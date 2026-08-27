@@ -1,0 +1,228 @@
+INHERITED_SIM_ENV XILINX_LOCAL_USER_DATA=NO
+INHERITED_SIM_ENV XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore
+INHERITED_SIM_ENV TEMP=V:\R1I_RCA_B_TESTS_FINAL_INHERITED_ENV\temp
+INHERITED_SIM_ENV TMP=V:\R1I_RCA_B_TESTS_FINAL_INHERITED_ENV\temp
+TEST_INPUT_SHA256=36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156 rtl/nvp/nvp6134c_diagnostics_pkg.vhd
+TEST_INPUT_SHA256=FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E rtl/nvp/r1f_transaction_serial_counter.vhd
+TEST_INPUT_SHA256=8121E4B2D8B0519B1D0718D8CFA97802389367FBF4948A4F371BE6D6B808E908 rtl/nvp/nvp6134c_i2c_bringup.vhd
+TEST_INPUT_SHA256=0A4948D6FCD444015DB56772B455FF45F62862F754E5022478547A4954830711 tests/v41/r1i_master_test_adapter.vhd
+TEST_INPUT_SHA256=75B7B5B330CB4CCB41234E91BE56633A0EBA1944CB28A9F13BD48AA718B2143B tests/v41/tb_r1i_qualified_ack_readiness.sv
+SIM_STEP=reference_compile
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd" into library r1h_ref
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/r1f_transaction_serial_counter.vhd" into library r1h_ref
+INFO: [VRFC 10-3107] analyzing entity 'r1f_transaction_serial_counter'
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_i2c_bringup.vhd" into library r1h_ref
+INFO: [VRFC 10-3107] analyzing entity 'nvp_i2c_bringup_seq_v38ek'
+SIM_STEP=candidate_compile
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd" into library work
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/R1I_RCA_B_SRC/rtl/nvp/r1f_transaction_serial_counter.vhd" into library work
+INFO: [VRFC 10-3107] analyzing entity 'r1f_transaction_serial_counter'
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_i2c_bringup.vhd" into library work
+INFO: [VRFC 10-3107] analyzing entity 'nvp_i2c_bringup_seq_v38ek'
+INFO: [VRFC 10-163] Analyzing VHDL file "V:/R1I_RCA_B_SRC/tests/v41/r1i_master_test_adapter.vhd" into library work
+INFO: [VRFC 10-3107] analyzing entity 'r1i_master_test_adapter'
+SIM_STEP=testbench_compile
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "V:/R1I_RCA_B_SRC/tests/v41/tb_r1i_qualified_ack_readiness.sv" into library work
+INFO: [VRFC 10-311] analyzing module r1i_wire_test
+INFO: [VRFC 10-311] analyzing module tb_r1i_qualified_ack_readiness
+INFO: [VRFC 10-311] analyzing module tb_r1h_allack_reference
+INFO: [VRFC 10-311] analyzing module tb_r1i_timeout_recovery
+SIM_STEP=reference_elaborate
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe work.tb_r1h_allack_reference -s r1h_allack_reference --debug typical --relax 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:479]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:480]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:481]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:482]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:484]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:485]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:400]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:401]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:402]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:403]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:404]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:405]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:406]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:407]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:419]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:420]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:421]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:422]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:187]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:423]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:424]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:425]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:426]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:429]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:430]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:431]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:432]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:433]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:434]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:435]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:437]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:444]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:445]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:446]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:447]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:448]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:449]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:450]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:451]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:452]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:453]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:454]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:455]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:456]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:457]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:458]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/WORKTREES/V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:459]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package r1h_ref.nvp6134c_diag_pkg_v38ek
+Compiling architecture rtl of entity r1h_ref.r1f_transaction_serial_counter [r1f_transaction_serial_counter_d...]
+Compiling architecture rtl of entity r1h_ref.nvp_i2c_bringup_seq_v38ek [\nvp_i2c_bringup_seq_v38ek(clk_h...]
+Compiling architecture sim of entity work.r1i_master_test_adapter [\r1i_master_test_adapter(ref_mod...]
+Compiling module work.r1i_wire_test(REF_MODE=1)
+Compiling module work.tb_r1h_allack_reference
+Built simulation snapshot r1h_allack_reference
+SIM_STEP=reference_run
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 19:55:04 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1h_allack_reference/xsim_script.tcl
+# xsim {r1h_allack_reference} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=1 cycles=651929 tx=275 bytes=825
+$finish called at time : 651929500 ns : File "V:/R1I_RCA_B_SRC/tests/v41/tb_r1i_qualified_ack_readiness.sv" Line 341
+run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:15 . Memory (MB): peak = 206.695 ; gain = 0.566
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 19:55:29 2026...
+SIM_STEP=candidate_elaborate
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe work.tb_r1i_qualified_ack_readiness -s r1i_focused --debug typical --relax 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:479]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:480]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:481]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:482]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:484]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:485]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:400]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:401]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:402]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:403]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:404]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:405]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:406]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:407]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:419]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:420]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:421]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:422]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:187]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:423]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:424]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:425]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:426]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:429]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:430]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:431]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:432]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:433]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:434]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:435]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:437]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:444]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:445]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:446]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:447]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:448]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:449]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:450]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:451]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:452]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:453]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:454]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:455]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:456]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:457]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:458]
+WARNING: [VRFC 10-8759] array bounds of function return type do not match array bounds of function return value [V:/R1I_RCA_B_SRC/rtl/nvp/nvp6134c_diagnostics_pkg.vhd:459]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package work.nvp6134c_diag_pkg_v38ek
+Compiling architecture rtl of entity work.r1f_transaction_serial_counter [r1f_transaction_serial_counter_d...]
+Compiling architecture rtl of entity work.nvp_i2c_bringup_seq_v38ek [\nvp_i2c_bringup_seq_v38ek(clk_h...]
+Compiling architecture sim of entity work.r1i_master_test_adapter [r1i_master_test_adapter_default]
+Compiling module work.r1i_wire_test_default
+Compiling module work.tb_r1i_qualified_ack_readiness
+Built simulation snapshot r1i_focused
+SIM_STEP=candidate_run
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 19:58:25 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r1i_focused/xsim_script.tcl
+# xsim {r1i_focused} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=0 cycles=670620 tx=275 bytes=825
+PASS CASE1_LATE_ACK_QUALIFIED_NO_RETRY false=825
+PASS CASE2_WADDR_FIRST_ABORT_CASE6_RETRY1_RECOVERY
+PASS CASE3_REGADDR_FIRST_ABORT
+PASS CASE4_DATA_FIRST_ABORT
+PASS CASE5_RADDR_FIRST_ABORT_NO_READ_DATA
+PASS CASE7_RETRY3_FINAL_ALLOWED_ATTEMPT_RECOVERY
+PASS CASE8_EXACT_FOUR_ATTEMPTS_ONE_TERMINAL_ERROR
+PASS CASE9_PHYSICAL_SCL_LOW_BOUNDED_TIMEOUT_STOP_RETRY
+PASS CASE10_READ_DATA_CHANGES_ONLY_PHYSICAL_SCL_HIGH
+PASS CASE12_BANK_SELECTOR_FAILURE_RECOVERY_NO_UNVERIFIED_TARGET
+PASS CASE12_BANK_VERIFY_NACK_RECOVERY_NO_UNVERIFIED_TARGET
+PASS CASE12_BANK_VERIFY_MISMATCH_CACHE_INVALIDATION
+PASS CASE12_BANK_SELECTOR_EXHAUSTION_NO_UNVERIFIED_TARGET
+PASS CASE12_BANK_VERIFY_EXHAUSTION_NO_UNVERIFIED_TARGET
+PASS CASE9_PERSISTENT_SCL_LOW_BOUNDED_SAFE_TERMINAL_NO_RETRY
+PASS R1I_FOCUSED_WIRE_SEMANTIC_SUITE
+$finish called at time : 9707596500 ns : File "V:/R1I_RCA_B_SRC/tests/v41/tb_r1i_qualified_ack_readiness.sv" Line 399
+run: Time (s): cpu = 00:00:04 ; elapsed = 00:03:26 . Memory (MB): peak = 207.504 ; gain = 1.113
+exit
+INFO: xsimkernel Simulation Memory Usage: 13268 KB (Peak: 13268 KB), Simulation CPU Usage: 128030 ms
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:02:02 2026...
+TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS
+CASE11_ALL_ACK_BYTE_SEQUENCE_FUNCTIONAL_OUTPUT_EQUIVALENCE=PASS SHA256=7C5D7F767B2E9CAEB1B587D3F258C295AD0F454141B2A8C84240B966133A4B49
+FIRST_NACK_ABORT=PASS QUALIFIED_SCL_HIGH_SAMPLE=PASS BOUNDED_RETRY=PASS BANK_CACHE_SAFETY=PASS
+R1I_B_INHERITED_R1I_SUITE_WITH_MANDATED_ENV=PASS

@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 27 19:43:29 2026
+# Process ID         : 18436
+# Current directory  : V:/R1I_RCA_B_TESTS_FINAL_MMIO_R2/candidate_b_mmio
+# Command line       : xsim.exe -log tb_r1h_mmio_integration_exhaustive_candidate_b.xsim.log -mode tcl -source {xsim.dir/tb_r1h_mmio_integration_exhaustive_candidate_b/xsim_script.tcl}
+# Log file           : V:/R1I_RCA_B_TESTS_FINAL_MMIO_R2/candidate_b_mmio/tb_r1h_mmio_integration_exhaustive_candidate_b.xsim.log
+# Journal file       : V:/R1I_RCA_B_TESTS_FINAL_MMIO_R2/candidate_b_mmio\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4497 MB
+# Total Virtual      : 21525 MB
+# Available Virtual  : 4386 MB
+#-----------------------------------------------------------
+source xsim.dir/tb_r1h_mmio_integration_exhaustive_candidate_b/xsim_script.tcl
+# xsim {tb_r1h_mmio_integration_exhaustive_candidate_b} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_BEGIN
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1 reset_cancellations=2
+$finish called at time : 210866 ns : File "V:/R1I_RCA_B_SRC/tests/v41/tb_r1h_mmio_integration_exhaustive.sv" Line 645
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 19:43:42 2026...

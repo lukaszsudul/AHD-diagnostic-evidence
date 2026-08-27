@@ -1,0 +1,72 @@
+Candidate B (R1i-b / C2) offline-test evidence index
+=====================================================
+
+Candidate branch: research/v41-r1i-b
+Candidate commit: e4d10bb8e85e3797d078144fd0965e9625ee727c
+Candidate tree: 2658cf45e36c3dab81005117056b1f8e6cf3ddc1
+Direct parent: 20c3323d79d3896edc586d6db1df7deee60f9e41
+Execution boundary: offline simulation/static/host tests only; no hardware access.
+
+Final results and copied PASS receipts
+--------------------------------------
+STATIC CONTRACT: PASS (10/10)
+  Receipt: STATIC_CONTRACT_TESTS.log (Ran 10 tests; OK)
+CANDIDATE-SPECIFIC FOCUSED XSIM: PASS
+  focused/r1i_b_endpoint_high.xsim.log:
+    PASS R1I_B_ENDPOINT_HIGH_AND_DIVIDER_INDEPENDENCE dwell=21
+  focused/r1i_b_endpoint_low.xsim.log:
+    PASS R1I_B_ENDPOINT_LOW_NO_SAMPLE_NO_ADVANCE_AND_SAFE_RECOVERY dwell=21
+INHERITED QUALIFIED-R1i XSIM: PASS
+  Receipt: INHERITED_ENV_STAMPED_RECEIPT.log
+  Final marker: R1I_B_INHERITED_R1I_SUITE_WITH_MANDATED_ENV=PASS
+  Input stability: TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS
+  Trace equivalence: CASE11_ALL_ACK_BYTE_SEQUENCE_FUNCTIONAL_OUTPUT_EQUIVALENCE=PASS
+    SHA256=7C5D7F767B2E9CAEB1B587D3F258C295AD0F454141B2A8C84240B966133A4B49
+  Recorded environment:
+    XILINX_LOCAL_USER_DATA=NO
+    XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore
+    TEMP=V:\R1I_RCA_B_TESTS_FINAL_INHERITED_ENV\temp
+    TMP=V:\R1I_RCA_B_TESTS_FINAL_INHERITED_ENV\temp
+MMIO/ABI XSIM: PASS
+  mmio/tb_r1i_poc_mmio_candidate_b.xsim.log:
+    R1I_POC_MMIO_PASS reads=258 writes=32 old_fallback=2 poc_page_bytes=128 formal_zero_bytes=128
+  mmio/tb_r1h_mmio_read_service_candidate_b.xsim.log:
+    R1H_MMIO_READ_SERVICE_PASS accepted=10 consumed=6 reset_cancelled=4
+  mmio/tb_r1h_mmio_integration_exhaustive_candidate_b.xsim.log:
+    R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1 reset_cancellations=2
+HOST READER/MODEL TESTS: PASS (40/40)
+  Receipt: HOST_PYTHON_READER_TESTS.log (Ran 40 tests; OK)
+
+Candidate and focused-test SHA-256 inputs
+-----------------------------------------
+8121E4B2D8B0519B1D0718D8CFA97802389367FBF4948A4F371BE6D6B808E908  rtl/nvp/nvp6134c_i2c_bringup.vhd
+36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156  rtl/nvp/nvp6134c_diagnostics_pkg.vhd
+FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E  rtl/nvp/r1f_transaction_serial_counter.vhd
+0A4948D6FCD444015DB56772B455FF45F62862F754E5022478547A4954830711  tests/v41/r1i_master_test_adapter.vhd
+09FF99B052A8807CE77BA6D2B24F629F4F6F95397981F0009A5305B7BF013384  research_tests/r1i_b/tb_r1i_b_c2.sv
+E5AC95A6D657CA1F96EFF5808594018B3CC8DA8895E826ED3BDFDEBDBB6FBEC7  research_tests/r1i_b/run_r1i_b_focused_sim.ps1
+1171F913C7CD79A2A0288441C9C889A13A4BDD9CD853A974D3B57FFAC49A6851  research_tests/r1i_b/run_r1i_b_mmio_sim.ps1
+20CB9B88330274AE065DB64628D6A68C68AF1DCD3E99ADF7ABBBDFDC966BE68B  research_tests/r1i_b/run_inherited_r1i_with_env.ps1
+AA606C0343AFC27F457320F80B64E690825FC5C7E5E8E8CF63FF705BF27F8373  research_tests/r1i_b/test_r1i_b_contract.py
+D7950823C8145B4059FD1E9DF9BA4BFDCAEA38ED97E9AF213840CDA08264704B  tests/v41/run_r1i_focused_sim.ps1
+
+Frozen MMIO/test SHA-256 inputs
+------------------------------
+77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16  rtl/v41/control_status_regs.sv
+00ECE27375BE07D52E8FA4BF07F535AB29DC39A099AF4FC148BF654E0073BA2B  rtl/v41/r1h_mmio_read_service.sv
+EC246486BD0F5DF0966F6DC81BC8A8EAC17741E2641F8DFE68E276EDBE567542  rtl/v41/r1f_measurement_regs.sv
+58AB2C44693FA89B60430B583B4FB117FD41EEE5C69359F170BA644B728AC686  tests/v41/r1g_measurement_regs_reference.sv
+50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062  tests/v41/tb_r1i_poc_mmio.sv
+2EA788E5A9CA5D9F5663A0A1595009BDB20D7D1F81F8BE917721F79BFE802B40  tests/v41/tb_r1h_mmio_read_service.sv
+6DE31F62629E0C64D35700DD1A57193C5F4240A224B4BF4763D69076FD61BD68  tests/v41/tb_r1h_mmio_integration_exhaustive.sv
+
+Top-level receipt SHA-256
+------------------------
+02A6C00720B85D7A6AFD14FC4514F607F1ECCC5F4B3F630A05914E2E95F0FC40  INHERITED_ENV_STAMPED_RECEIPT.log
+BEC5DE7E9A54624F7C88ECE775D7B88A002F9C597132D3FA8E47A78EFA2A63A8  HOST_PYTHON_READER_TESTS.log
+BEAECEAABECFD7E6CCA8FB4F49E88DB6583F333B9D81DB013E3CAB6186974C68  STATIC_CONTRACT_TESTS.log
+
+Packaging audit
+---------------
+Only text console/xsim logs and receipts are copied here. No WDB, xsim.dir,
+compiled simulator database, or simulator work directory is included.

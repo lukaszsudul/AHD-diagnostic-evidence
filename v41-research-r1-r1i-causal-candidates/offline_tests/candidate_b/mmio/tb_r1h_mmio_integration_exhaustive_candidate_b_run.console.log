@@ -1,0 +1,18 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Aug 27 19:43:30 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_r1h_mmio_integration_exhaustive_candidate_b/xsim_script.tcl
+# xsim {tb_r1h_mmio_integration_exhaustive_candidate_b} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_BEGIN
+R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS aligned_reads=1368 unaligned_reads=4104 forwarded_writes=1368 ordering_pairs=1 reset_cancellations=2
+$finish called at time : 210866 ns : File "V:/R1I_RCA_B_SRC/tests/v41/tb_r1h_mmio_integration_exhaustive.sv" Line 645
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 19:43:42 2026...

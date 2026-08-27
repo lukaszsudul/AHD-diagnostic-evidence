@@ -1,0 +1,654 @@
+diff --git a/research_tests/r1i_b/run_inherited_r1i_with_env.ps1 b/research_tests/r1i_b/run_inherited_r1i_with_env.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..f020b85220a33cdb8370186ec017b9e9205d14f7
+--- /dev/null
++++ b/research_tests/r1i_b/run_inherited_r1i_with_env.ps1
+@@ -0,0 +1,26 @@
++[CmdletBinding()]
++param(
++    [Parameter(Mandatory)][string]$RepoRoot,
++    [Parameter(Mandatory)][string]$EvidenceRoot,
++    [string]$ReferenceRoot='V:\WORKTREES\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE'
++)
++$ErrorActionPreference='Stop'
++Set-StrictMode -Version Latest
++foreach($path in @($RepoRoot,$EvidenceRoot,$ReferenceRoot)) {
++    if($path -notmatch '^[A-Za-z]:\\[\x20-\x7e]+$' -or $path -match '["&|<>^%!]') {
++        throw 'Inherited R1i simulation paths must be absolute local ASCII paths without shell metacharacters'
++    }
++}
++$localTemp=Join-Path $EvidenceRoot 'temp'
++[void][IO.Directory]::CreateDirectory($localTemp)
++$env:XILINX_LOCAL_USER_DATA='NO'
++$env:XILINX_TCLAPP_REPO='C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'
++$env:TEMP=$localTemp
++$env:TMP=$localTemp
++Write-Output "INHERITED_SIM_ENV XILINX_LOCAL_USER_DATA=$($env:XILINX_LOCAL_USER_DATA)"
++Write-Output "INHERITED_SIM_ENV XILINX_TCLAPP_REPO=$($env:XILINX_TCLAPP_REPO)"
++Write-Output "INHERITED_SIM_ENV TEMP=$($env:TEMP)"
++Write-Output "INHERITED_SIM_ENV TMP=$($env:TMP)"
++& (Join-Path $RepoRoot 'tests/v41/run_r1i_focused_sim.ps1') `
++    -RepoRoot $RepoRoot -EvidenceRoot $EvidenceRoot -ReferenceRoot $ReferenceRoot
++Write-Output 'R1I_B_INHERITED_R1I_SUITE_WITH_MANDATED_ENV=PASS'
+diff --git a/research_tests/r1i_b/run_r1i_b_focused_sim.ps1 b/research_tests/r1i_b/run_r1i_b_focused_sim.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2af130dbdc75e6843b8d3c7cfbe8b31fbb71096
+--- /dev/null
++++ b/research_tests/r1i_b/run_r1i_b_focused_sim.ps1
+@@ -0,0 +1,82 @@
++[CmdletBinding()]
++param(
++    [Parameter(Mandatory)][string]$RepoRoot,
++    [Parameter(Mandatory)][string]$EvidenceRoot,
++    [string]$ReferenceRoot='V:\WORKTREES\V41_NVP_R1H_BRAM_BACKED_LARGE_SAMPLE',
++    [string]$VivadoBin='C:\AMDDesignTools\2025.2\Vivado\bin'
++)
++$ErrorActionPreference='Stop'
++Set-StrictMode -Version Latest
++foreach($path in @($RepoRoot,$EvidenceRoot)) {
++    if($path -notmatch '^[A-Za-z]:\\[\x20-\x7e]+$' -or $path -match '["&|<>^%!]') {
++        throw 'Candidate-B simulation paths must be absolute local ASCII paths without shell metacharacters'
++    }
++}
++$referenceCommit=(& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse HEAD).Trim()
++$referenceTree=(& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot rev-parse 'HEAD^{tree}').Trim()
++if($referenceCommit -ne 'c4f4bfcf577c92c3021d1fe83c05878dd12e001c' -or
++   $referenceTree -ne '161e561f007912d73dba93c5ecd78e3cc3a6955b' -or
++   (& git --no-optional-locks -c "safe.directory=$ReferenceRoot" -C $ReferenceRoot status --porcelain)) {
++    throw 'Immutable R1h test reference identity/cleanliness mismatch'
++}
++$simRoot=Join-Path $EvidenceRoot 'candidate_b_focused'
++[void][IO.Directory]::CreateDirectory($simRoot)
++$localTemp=Join-Path $EvidenceRoot 'temp'
++[void][IO.Directory]::CreateDirectory($localTemp)
++$inputs=@(
++    'rtl/nvp/nvp6134c_diagnostics_pkg.vhd',
++    'rtl/nvp/r1f_transaction_serial_counter.vhd',
++    'rtl/nvp/nvp6134c_i2c_bringup.vhd',
++    'tests/v41/r1i_master_test_adapter.vhd',
++    'research_tests/r1i_b/tb_r1i_b_c2.sv'
++)
++$inputHashes=@{}
++foreach($input in $inputs) {
++    $hash=(Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $input)).Hash
++    $inputHashes[$input]=$hash
++    Write-Output "TEST_INPUT_SHA256=$hash $input"
++}
++function Invoke-SimTool([string]$Tool,[string[]]$Arguments,[string]$Label) {
++    $env:XILINX_LOCAL_USER_DATA='NO'
++    $env:XILINX_TCLAPP_REPO='C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'
++    $env:TEMP=$localTemp
++    $env:TMP=$localTemp
++    Write-Output "SIM_ENV=$Label XILINX_LOCAL_USER_DATA=$($env:XILINX_LOCAL_USER_DATA) XILINX_TCLAPP_REPO=$($env:XILINX_TCLAPP_REPO) TEMP=$($env:TEMP) TMP=$($env:TMP)"
++    Write-Output "SIM_STEP=$Label"
++    & (Join-Path $VivadoBin "$Tool.bat") @Arguments 2>&1 |
++        Tee-Object -FilePath (Join-Path $simRoot "$Label.console.log")
++    if($LASTEXITCODE -ne 0) { throw "$Label failed with exit $LASTEXITCODE" }
++}
++Push-Location $simRoot
++try {
++    Invoke-SimTool xvhdl @('--work','r1h_ref',
++        (Join-Path $ReferenceRoot 'rtl/nvp/nvp6134c_diagnostics_pkg.vhd'),
++        (Join-Path $ReferenceRoot 'rtl/nvp/r1f_transaction_serial_counter.vhd'),
++        (Join-Path $ReferenceRoot 'rtl/nvp/nvp6134c_i2c_bringup.vhd')) 'reference_compile'
++    Invoke-SimTool xvhdl @('--work','work',
++        (Join-Path $RepoRoot 'rtl/nvp/nvp6134c_diagnostics_pkg.vhd'),
++        (Join-Path $RepoRoot 'rtl/nvp/r1f_transaction_serial_counter.vhd'),
++        (Join-Path $RepoRoot 'rtl/nvp/nvp6134c_i2c_bringup.vhd'),
++        (Join-Path $RepoRoot 'tests/v41/r1i_master_test_adapter.vhd')) 'candidate_b_compile'
++    Invoke-SimTool xvlog @('--sv','--work','work',
++        (Join-Path $RepoRoot 'research_tests/r1i_b/tb_r1i_b_c2.sv')) 'candidate_b_testbench_compile'
++    foreach($case in @(
++        @{Top='tb_r1i_b_endpoint_high';Snapshot='r1i_b_endpoint_high';Marker='PASS R1I_B_ENDPOINT_HIGH_AND_DIVIDER_INDEPENDENCE'},
++        @{Top='tb_r1i_b_endpoint_low';Snapshot='r1i_b_endpoint_low';Marker='PASS R1I_B_ENDPOINT_LOW_NO_SAMPLE_NO_ADVANCE_AND_SAFE_RECOVERY'}
++    )) {
++        Invoke-SimTool xelab @("work.$($case.Top)",'-s',$case.Snapshot,'--debug','typical','--relax') "$($case.Snapshot)_elaborate"
++        Invoke-SimTool xsim @($case.Snapshot,'-runall','-log',"$($case.Snapshot).xsim.log") "$($case.Snapshot)_run"
++        if(-not (Select-String -LiteralPath "$($case.Snapshot).xsim.log" -SimpleMatch $case.Marker)) {
++            throw "Completion marker absent for $($case.Top)"
++        }
++    }
++    foreach($input in $inputs) {
++        if((Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $input)).Hash -ne $inputHashes[$input]) {
++            throw "Test input changed during Candidate-B focused simulation: $input"
++        }
++    }
++    Write-Output 'TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS'
++    Write-Output 'R1I_B_CANDIDATE_SPECIFIC_FOCUSED_SIM=PASS'
++} finally {
++    Pop-Location
++}
+diff --git a/research_tests/r1i_b/run_r1i_b_mmio_sim.ps1 b/research_tests/r1i_b/run_r1i_b_mmio_sim.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..3ec98e532d71fb3f1c97c8cee508fed0622c22be
+--- /dev/null
++++ b/research_tests/r1i_b/run_r1i_b_mmio_sim.ps1
+@@ -0,0 +1,69 @@
++[CmdletBinding()]
++param(
++    [Parameter(Mandatory)][string]$RepoRoot,
++    [Parameter(Mandatory)][string]$EvidenceRoot,
++    [string]$VivadoBin='C:\AMDDesignTools\2025.2\Vivado\bin'
++)
++$ErrorActionPreference='Stop'
++Set-StrictMode -Version Latest
++foreach($path in @($RepoRoot,$EvidenceRoot)) {
++    if($path -notmatch '^[A-Za-z]:\\[\x20-\x7e]+$' -or $path -match '["&|<>^%!]') {
++        throw 'Candidate-B MMIO simulation paths must be absolute local ASCII paths without shell metacharacters'
++    }
++}
++$simRoot=Join-Path $EvidenceRoot 'candidate_b_mmio'
++[void][IO.Directory]::CreateDirectory($simRoot)
++$localTemp=Join-Path $EvidenceRoot 'temp'
++[void][IO.Directory]::CreateDirectory($localTemp)
++$inputs=@(
++    'rtl/v41/control_status_regs.sv',
++    'rtl/v41/r1h_mmio_read_service.sv',
++    'rtl/v41/r1f_measurement_regs.sv',
++    'tests/v41/r1g_measurement_regs_reference.sv',
++    'tests/v41/tb_r1i_poc_mmio.sv',
++    'tests/v41/tb_r1h_mmio_read_service.sv',
++    'tests/v41/tb_r1h_mmio_integration_exhaustive.sv'
++)
++$inputHashes=@{}
++foreach($input in $inputs) {
++    $hash=(Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $input)).Hash
++    $inputHashes[$input]=$hash
++    Write-Output "TEST_INPUT_SHA256=$hash $input"
++}
++function Invoke-SimTool([string]$Tool,[string[]]$Arguments,[string]$Label) {
++    $env:XILINX_LOCAL_USER_DATA='NO'
++    $env:XILINX_TCLAPP_REPO='C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'
++    $env:TEMP=$localTemp
++    $env:TMP=$localTemp
++    Write-Output "SIM_ENV=$Label XILINX_LOCAL_USER_DATA=$($env:XILINX_LOCAL_USER_DATA) XILINX_TCLAPP_REPO=$($env:XILINX_TCLAPP_REPO) TEMP=$($env:TEMP) TMP=$($env:TMP)"
++    Write-Output "SIM_STEP=$Label"
++    & (Join-Path $VivadoBin "$Tool.bat") @Arguments 2>&1 |
++        Tee-Object -FilePath (Join-Path $simRoot "$Label.console.log")
++    if($LASTEXITCODE -ne 0) { throw "$Label failed with exit $LASTEXITCODE" }
++}
++Push-Location $simRoot
++try {
++    Invoke-SimTool xvlog (@('--sv','--work','work') +
++        ($inputs | ForEach-Object { Join-Path $RepoRoot $_ })) 'mmio_compile'
++    foreach($case in @(
++        @{Top='tb_r1i_poc_mmio';Marker='R1I_POC_MMIO_PASS'},
++        @{Top='tb_r1h_mmio_read_service';Marker='R1H_MMIO_READ_SERVICE_PASS'},
++        @{Top='tb_r1h_mmio_integration_exhaustive';Marker='R1H_MMIO_INTEGRATION_EXHAUSTIVE_PASS'}
++    )) {
++        $snapshot="$($case.Top)_candidate_b"
++        Invoke-SimTool xelab @("work.$($case.Top)",'-s',$snapshot,'--debug','typical','--relax') "$snapshot`_elaborate"
++        Invoke-SimTool xsim @($snapshot,'-runall','-log',"$snapshot.xsim.log") "$snapshot`_run"
++        if(-not (Select-String -LiteralPath "$snapshot.xsim.log" -SimpleMatch $case.Marker)) {
++            throw "Completion marker absent for $($case.Top)"
++        }
++    }
++    foreach($input in $inputs) {
++        if((Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $RepoRoot $input)).Hash -ne $inputHashes[$input]) {
++            throw "Test input changed during Candidate-B MMIO simulation: $input"
++        }
++    }
++    Write-Output 'TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS'
++    Write-Output 'R1I_B_MMIO_AND_ABI_SIM=PASS'
++} finally {
++    Pop-Location
++}
+diff --git a/research_tests/r1i_b/tb_r1i_b_c2.sv b/research_tests/r1i_b/tb_r1i_b_c2.sv
+new file mode 100644
+index 0000000000000000000000000000000000000000..a308b3a36d5aa4a83d60bdbd449be5c3119c33cb
+--- /dev/null
++++ b/research_tests/r1i_b/tb_r1i_b_c2.sv
+@@ -0,0 +1,236 @@
++`timescale 1ns/1ps
++
++// Candidate-B-only pin-level scheduling tests.  This source is compiled only
++// by research_tests/r1i_b/run_r1i_b_focused_sim.ps1 and is not in a production
++// synthesis fileset.
++module r1i_b_c2_test #(parameter integer TEST_MODE=0);
++  localparam integer CLK_HZ=1000000;
++  localparam integer I2C_HZ=25000;
++  localparam integer DIVIDER=CLK_HZ/(I2C_HZ*2);
++  localparam integer EXPECTED_DWELL=DIVIDER+1;
++
++  localparam [7:0] ST_START_W_A=8'd2;
++  localparam [7:0] ST_START_W_B=8'd3;
++  localparam [7:0] ST_SEND_W_LOW=8'd4;
++  localparam [7:0] ST_SEND_W_HIGH=8'd5;
++  localparam [7:0] ST_ACK_W_LOW=8'd6;
++  localparam [7:0] ST_ACK_W_HIGH=8'd7;
++  localparam [7:0] ST_SEND_REG_LOW=8'd8;
++  localparam [7:0] ST_STOP_A=8'd28;
++  localparam [7:0] ST_STOP_B=8'd29;
++  localparam [7:0] ST_STORE_RESULT=8'd30;
++  localparam [7:0] ST_STOP_C=8'd35;
++  localparam [7:0] ST_BUS_FREE=8'd36;
++  localparam [7:0] ST_RETRY_BACKOFF=8'd37;
++  localparam [7:0] ST_ABORT_HIGH_RECOVERY=8'd41;
++
++  logic clk=0, rst=1, start=0;
++  always #500 clk=~clk;
++  wire scl_oen,sda_oen,busy,done,any_error;
++  logic slave_sda=1,slave_scl=1;
++  wire scl_i=scl_oen & slave_scl;
++  wire sda_i=sda_oen & slave_sda;
++  wire [127:0] values,afe_values;
++  wire [63:0] output_values;
++  wire [15:0] read_errors,aux_errors,afe_errors,nack_count,timeout_count,serial_next;
++  wire [7:0] write_errors,original_ff,restored_ff,meta_bank,phys_bank;
++  wire phys_bank_valid,first_valid,record_valid;
++  wire [7:0] phase_dbg,step_dbg,last_reg,last_wdata,last_rdata,i2c_state,first_code;
++  wire [2:0] last_op;
++  wire [255:0] phase_counts;
++  wire [127:0] txn_counts;
++  wire [191:0] failed_record;
++  wire [31:0] bank_errors;
++  wire [1023:0] poc;
++
++  r1i_master_test_adapter #(
++    .REF_MODE(0),.CLK_HZ(CLK_HZ),.I2C_HZ(I2C_HZ)
++  ) dut(.*);
++
++  function automatic integer unsigned p(input integer word_index);
++    p=poc[32*word_index +: 32];
++  endfunction
++
++  task automatic boot_candidate;
++    begin
++      rst=1; start=0; slave_sda=1; slave_scl=1;
++      repeat(12) @(posedge clk);
++      #50; rst=0;
++      repeat(12) @(posedge clk);
++      #50; start=1;
++      repeat(3) @(posedge clk);
++      #50; start=0;
++    end
++  endtask
++
++  task automatic wait_state(input [7:0] wanted,input integer limit);
++    integer waited;
++    begin
++      waited=0;
++      while(i2c_state!==wanted && waited<limit) begin
++        @(negedge clk);
++        waited=waited+1;
++      end
++      if(i2c_state!==wanted)
++        $fatal(1,"timeout waiting state %0d; observed %0d",wanted,i2c_state);
++    end
++  endtask
++
++  task automatic require_nominal_dwell(input integer observed,input integer tag);
++    begin
++      // Sampling state_dbg on negedges may include either boundary negedge;
++      // the accepted one-cycle aperture still rejects any SCL-dependent stall.
++      if(observed<EXPECTED_DWELL-1 || observed>EXPECTED_DWELL+1)
++        $fatal(1,"ordinary HIGH tag%0d dwell %0d expected %0d",tag,observed,EXPECTED_DWELL);
++    end
++  endtask
++
++  integer dwell;
++  integer held;
++  integer safety_wait;
++  initial begin
++    boot_candidate();
++    if(TEST_MODE==0) begin : endpoint_high_case
++      // Immediate-HIGH START scheduling retains the exact divider dwell.
++      wait_state(ST_START_W_A,20000);
++      dwell=0;
++      while(i2c_state==ST_START_W_A && dwell<100) begin
++        @(negedge clk); dwell=dwell+1;
++      end
++      require_nominal_dwell(dwell,1);
++      if(i2c_state!==ST_START_W_B)
++        $fatal(1,"immediate-HIGH START_W_A did not advance normally: %0d",i2c_state);
++
++      // Delay physical SCL HIGH inside one SEND_W_HIGH interval.  Candidate B
++      // must not restart its divider, yet endpoint-HIGH progression stays legal.
++      wait_state(ST_SEND_W_LOW,2000);
++      slave_scl=0;
++      wait_state(ST_SEND_W_HIGH,2000);
++      dwell=0;
++      repeat(7) begin
++        @(negedge clk); dwell=dwell+1;
++        if(i2c_state!==ST_SEND_W_HIGH)
++          $fatal(1,"delayed-HIGH SEND_W_HIGH exited before divider endpoint");
++      end
++      slave_scl=1;
++      while(i2c_state==ST_SEND_W_HIGH && dwell<100) begin
++        @(negedge clk); dwell=dwell+1;
++      end
++      require_nominal_dwell(dwell,2);
++      if(i2c_state!==ST_SEND_W_LOW)
++        $fatal(1,"endpoint-HIGH SEND_W_HIGH did not advance normally: %0d",i2c_state);
++      if(p(28)!=0)
++        $fatal(1,"sub-deadline delayed HIGH falsely counted an SCL deadline");
++
++      // Preserve the passive end-of-LOW observation, then change SDA during
++      // ACK_W_HIGH.  The live filtered endpoint value must decide the ACK.
++      wait_state(ST_ACK_W_LOW,10000);
++      slave_sda=1;
++      wait_state(ST_ACK_W_HIGH,2000);
++      dwell=0;
++      repeat(8) begin
++        @(negedge clk); dwell=dwell+1;
++        if(i2c_state!==ST_ACK_W_HIGH)
++          $fatal(1,"ACK_W_HIGH exited before its nominal endpoint");
++      end
++      slave_sda=0;
++      while(i2c_state==ST_ACK_W_HIGH && dwell<100) begin
++        @(negedge clk); dwell=dwell+1;
++      end
++      require_nominal_dwell(dwell,3);
++      if(i2c_state!==ST_SEND_REG_LOW)
++        $fatal(1,"endpoint-HIGH ACK did not enter register phase: %0d",i2c_state);
++      if(p(3)!=1 || p(4)!=1 || p(5)!=0 || p(6)!=1 || p(19)!=0 || nack_count!=0)
++        $fatal(1,"live endpoint ACK/passive early telemetry mismatch opp=%0d early=%0d nack=%0d false=%0d raw=%0d",
++          p(3),p(4),p(5),p(6),p(19));
++      $display("PASS R1I_B_ENDPOINT_HIGH_AND_DIVIDER_INDEPENDENCE dwell=%0d",dwell);
++      $finish;
++    end else begin : endpoint_low_and_safety_case
++      // Reach the first ACK, keep resolved SCL LOW for the entire ordinary
++      // ACK-HIGH interval, and present SDA=1.  No selected opportunity or NACK
++      // may be consumed; the only legal endpoint is inherited recovery.
++      wait_state(ST_ACK_W_LOW,30000);
++      slave_scl=0;
++      slave_sda=1;
++      wait_state(ST_ACK_W_HIGH,2000);
++      dwell=0;
++      while(i2c_state==ST_ACK_W_HIGH && dwell<100) begin
++        @(negedge clk); dwell=dwell+1;
++      end
++      require_nominal_dwell(dwell,4);
++      if(i2c_state!==ST_ABORT_HIGH_RECOVERY)
++        $fatal(1,"endpoint-LOW ACK advanced outside recovery: state=%0d",i2c_state);
++      if(p(3)!=0 || p(4)!=1 || p(5)!=0 || p(6)!=0 || p(19)!=0 || nack_count!=0)
++        $fatal(1,"endpoint-LOW selected/passive telemetry mismatch opp=%0d early=%0d nack=%0d false=%0d raw=%0d legacy=%0d",
++          p(3),p(4),p(5),p(6),p(19),nack_count);
++      if(p(28)!=1)
++        $fatal(1,"endpoint-LOW did not record exactly one existing SCL deadline: %0d",p(28));
++
++      // Recovery body is untouched.  Let it finish the released HIGH, then
++      // prove STOP_B and STOP_C still wait on physical SCL qualification.
++      slave_scl=1;
++      wait_state(ST_STOP_A,10000);
++      slave_scl=0;
++      wait_state(ST_STOP_B,2000);
++      repeat(8) begin
++        @(negedge clk);
++        if(i2c_state!==ST_STOP_B || sda_oen!==1'b0)
++          $fatal(1,"STOP_B progressed/released SDA while physical SCL LOW");
++      end
++      slave_scl=1;
++      safety_wait=0;
++      while(i2c_state==ST_STOP_B && safety_wait<100) begin
++        @(negedge clk); safety_wait=safety_wait+1;
++      end
++      if(i2c_state!==ST_STOP_C || safety_wait<EXPECTED_DWELL)
++        $fatal(1,"STOP_B lacked filtered-HIGH full dwell: next=%0d wait=%0d",i2c_state,safety_wait);
++
++      slave_scl=0;
++      repeat(8) begin
++        @(negedge clk);
++        if(i2c_state!==ST_STOP_C)
++          $fatal(1,"STOP_C progressed while physical SCL LOW");
++      end
++      slave_scl=1;
++      safety_wait=0;
++      while(i2c_state==ST_STOP_C && safety_wait<100) begin
++        @(negedge clk); safety_wait=safety_wait+1;
++      end
++      if(i2c_state!==ST_BUS_FREE || safety_wait<EXPECTED_DWELL)
++        $fatal(1,"STOP_C lacked filtered-HIGH full dwell: next=%0d wait=%0d",i2c_state,safety_wait);
++
++      // BUS_FREE remains a filtered-idle proof and cannot be bypassed by the
++      // ordinary-HIGH divider change.
++      slave_scl=0;
++      repeat(30) begin
++        @(negedge clk);
++        if(i2c_state!==ST_BUS_FREE)
++          $fatal(1,"BUS_FREE completed while physical SCL LOW");
++      end
++      slave_scl=1;
++      safety_wait=0;
++      while(i2c_state==ST_BUS_FREE && safety_wait<200) begin
++        @(negedge clk); safety_wait=safety_wait+1;
++      end
++      if(i2c_state!==ST_STORE_RESULT || safety_wait<EXPECTED_DWELL)
++        $fatal(1,"BUS_FREE did not require a stable physical idle: next=%0d wait=%0d",i2c_state,safety_wait);
++      if(p(28)!=1)
++        $fatal(1,"STOP/BUS_FREE safety observation double-counted endpoint deadline: %0d",p(28));
++      wait_state(ST_RETRY_BACKOFF,200);
++      if(!record_valid || failed_record[175:168]!==8'h07 || !failed_record[59] ||
++         failed_record[55:48]!==8'h00 || !failed_record[61])
++        $fatal(1,"endpoint-LOW record/retry mismatch valid=%0d code=%02x timeout=%0d opp_nack=%02x atomic=%0d",
++          record_valid,failed_record[175:168],failed_record[59],failed_record[55:48],failed_record[61]);
++      $display("PASS R1I_B_ENDPOINT_LOW_NO_SAMPLE_NO_ADVANCE_AND_SAFE_RECOVERY dwell=%0d",dwell);
++      $finish;
++    end
++  end
++endmodule
++
++module tb_r1i_b_endpoint_high;
++  r1i_b_c2_test #(.TEST_MODE(0)) testbench();
++endmodule
++
++module tb_r1i_b_endpoint_low;
++  r1i_b_c2_test #(.TEST_MODE(1)) testbench();
++endmodule
+diff --git a/research_tests/r1i_b/test_r1i_b_contract.py b/research_tests/r1i_b/test_r1i_b_contract.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..0cec0890641176af647b3bf77eb1c31a236340e6
+--- /dev/null
++++ b/research_tests/r1i_b/test_r1i_b_contract.py
+@@ -0,0 +1,155 @@
++#!/usr/bin/env python3
++"""Static C2 contract checks; reads Git/source only and never accesses hardware."""
++from __future__ import annotations
++
++import re
++import subprocess
++import unittest
++from pathlib import Path
++
++BASE = "20c3323d79d3896edc586d6db1df7deee60f9e41"
++REL = "rtl/nvp/nvp6134c_i2c_bringup.vhd"
++ROOT = Path(__file__).resolve().parents[2]
++SOURCE = (ROOT / REL).read_text(encoding="utf-8")
++BASE_SOURCE = subprocess.run(
++    ["git", "-C", str(ROOT), "show", f"{BASE}:{REL}"],
++    check=True,
++    stdout=subprocess.PIPE,
++    text=True,
++    encoding="utf-8",
++).stdout
++
++
++def block(text: str, start: str, end: str) -> str:
++    left = text.index(start)
++    right = text.index(end, left)
++    return text[left:right]
++
++
++def state_body(text: str, start: str, end: str) -> str:
++    """Select the main FSM occurrence, after any decoder/predicate occurrence."""
++    left = text.rindex(start)
++    right = text.index(end, left)
++    return text[left:right]
++
++
++class CandidateBContractTests(unittest.TestCase):
++    def test_exact_frozen_ordinary_high_set(self) -> None:
++        function = block(
++            SOURCE,
++            "function is_ordinary_protocol_high",
++            "end function;",
++        )
++        true_clause = re.search(
++            r"case\s+s\s+is\s+when\s+(.*?)\s*=>\s*return\s+true;",
++            function,
++            re.DOTALL,
++        )
++        self.assertIsNotNone(true_clause)
++        states = set(re.findall(r"\b[A-Z][A-Z0-9_]*\b", true_clause.group(1)))
++        self.assertEqual(states, {
++            "START_W_A", "START_W_B", "SEND_W_HIGH", "ACK_W_HIGH",
++            "SEND_REG_HIGH", "ACK_REG_HIGH", "SEND_DATA_HIGH", "ACK_DATA_HIGH",
++            "REP_HIGH", "REP_START_A", "SEND_R_HIGH", "ACK_R_HIGH",
++            "READ_HIGH", "MASTER_NACK_HIGH",
++        })
++        self.assertNotIn("STOP_B", function)
++        self.assertNotIn("STOP_C", function)
++
++    def test_requires_scl_high_predicate_is_exact_base(self) -> None:
++        self.assertEqual(
++            block(SOURCE, "function requires_scl_high", "end function;"),
++            block(BASE_SOURCE, "function requires_scl_high", "end function;"),
++        )
++
++    def test_divider_only_removes_scl_stall_for_exact_set(self) -> None:
++        divider = block(SOURCE, "tick <= '1'", "-- R1i reuses")
++        self.assertIn("not is_ordinary_protocol_high(state)", divider)
++        self.assertIn("scl_filtered_r = '0'", divider)
++        self.assertEqual(divider.count("is_ordinary_protocol_high"), 1)
++
++    def test_endpoint_low_reuses_existing_deadline_and_recovery(self) -> None:
++        guard = "(is_ordinary_protocol_high(state) and tick = '1')"
++        self.assertEqual(SOURCE.count(guard), 2)
++        self.assertEqual(SOURCE.count("constant C_SCL_TIMEOUT_CYCLES"), 1)
++        self.assertIn("state <= ABORT_HIGH_RECOVERY;", SOURCE)
++        self.assertNotIn("C_R1I_B", SOURCE)
++
++    def test_ack_and_read_bodies_are_exact_base(self) -> None:
++        anchors = [
++            ("when ACK_W_HIGH =>", "when SEND_REG_LOW =>"),
++            ("when ACK_REG_HIGH =>", "when SEND_DATA_LOW =>"),
++            ("when ACK_DATA_HIGH =>", "when REP_LOW =>"),
++            ("when ACK_R_HIGH =>", "when READ_LOW =>"),
++            ("when READ_HIGH =>", "when MASTER_NACK_LOW =>"),
++        ]
++        for start, end in anchors:
++            self.assertEqual(state_body(SOURCE, start, end), state_body(BASE_SOURCE, start, end))
++
++    def test_non_ack_ordinary_high_bodies_are_exact_base(self) -> None:
++        anchors = [
++            ("when START_W_A =>", "when START_W_B =>"),
++            ("when START_W_B =>", "when SEND_W_LOW =>"),
++            ("when SEND_W_HIGH =>", "when ACK_W_LOW =>"),
++            ("when SEND_REG_HIGH =>", "when ACK_REG_LOW =>"),
++            ("when SEND_DATA_HIGH =>", "when ACK_DATA_LOW =>"),
++            ("when REP_HIGH =>", "when REP_START_A =>"),
++            ("when REP_START_A =>", "when REP_START_B =>"),
++            ("when SEND_R_HIGH =>", "when ACK_R_LOW =>"),
++            ("when MASTER_NACK_HIGH =>", "when STOP_A =>"),
++        ]
++        for start, end in anchors:
++            self.assertEqual(state_body(SOURCE, start, end), state_body(BASE_SOURCE, start, end))
++
++    def test_stop_abort_busfree_retry_and_bank_bodies_are_exact_base(self) -> None:
++        anchors = [
++            ("when STOP_B =>", "when STOP_C =>"),
++            ("when STOP_C =>", "when ABORT_RELEASE =>"),
++            ("when ABORT_RELEASE =>", "when ABORT_HIGH_RECOVERY =>"),
++            ("when ABORT_HIGH_RECOVERY =>", "when BUS_FREE =>"),
++            ("when BUS_FREE =>", "when STORE_RESULT =>"),
++            ("when RETRY_BACKOFF =>", "when RETRY_START =>"),
++            ("when RETRY_START =>", "when FINISH =>"),
++        ]
++        for start, end in anchors:
++            self.assertEqual(state_body(SOURCE, start, end), state_body(BASE_SOURCE, start, end))
++        self.assertEqual(
++            block(SOURCE, "if r1f_after_check_pending_r", "if start = '1'"),
++            block(BASE_SOURCE, "if r1f_after_check_pending_r", "if start = '1'"),
++        )
++
++    def test_frozen_state_encoding_filters_decoder_and_abi(self) -> None:
++        for start, end in [
++            ("type t_state is", "type t_phase is"),
++            ("process(state, byte_tx", "gen_nack_log"),
++            ("process(clk)\n  begin\n    if rising_edge(clk) then\n      if rst = '1' then\n        sda_sync_r", "tick <= '1'"),
++            ("r1i_poc_telemetry_dbg <=", "-- Same open-drain phase decoder"),
++        ]:
++            self.assertEqual(block(SOURCE, start, end), block(BASE_SOURCE, start, end))
++
++    def test_no_candidate_a_selected_sample_latch(self) -> None:
++        lowered = SOURCE.lower()
++        for forbidden in (
++            "selected_ack", "ack_selected", "ack_sample_valid",
++            "selected sample latch", "first_high_ack",
++        ):
++            self.assertNotIn(forbidden, lowered)
++
++    def test_only_allowlisted_source_and_isolated_tests_differ(self) -> None:
++        names = subprocess.run(
++            ["git", "-C", str(ROOT), "status", "--porcelain", "--untracked-files=all"],
++            check=True,
++            stdout=subprocess.PIPE,
++            text=True,
++            encoding="utf-8",
++        ).stdout.splitlines()
++        allowed_prefix = "research_tests/r1i_b/"
++        for entry in names:
++            path = entry[3:].replace("\\", "/")
++            self.assertTrue(path == REL or path.startswith(allowed_prefix), path)
++        production_build = (ROOT / "scripts/v41/r1i_build.tcl").read_text(encoding="utf-8")
++        self.assertNotIn("research_tests", production_build)
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)
+diff --git a/rtl/nvp/nvp6134c_i2c_bringup.vhd b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+index 3757acf2677d0a13b31a285095c38cc7b30e567c..5bac385cdf0350371f060d40b7aeac1d74b250d6 100644
+--- a/rtl/nvp/nvp6134c_i2c_bringup.vhd
++++ b/rtl/nvp/nvp6134c_i2c_bringup.vhd
+@@ -136,6 +136,21 @@ architecture rtl of nvp_i2c_bringup_seq_v38ek is
+     end case;
+   end function;
+ 
++  -- R1i-b/C2: only this frozen ordinary protocol-HIGH set advances from the
++  -- internal divider without retiming that divider on filtered physical SCL.
++  -- The existing requires_scl_high predicate remains the passive legality and
++  -- timeout observer for these states and the physical progress gate for STOP.
++  function is_ordinary_protocol_high(s : t_state) return boolean is
++  begin
++    case s is
++      when START_W_A | START_W_B | SEND_W_HIGH | ACK_W_HIGH |
++           SEND_REG_HIGH | ACK_REG_HIGH | SEND_DATA_HIGH | ACK_DATA_HIGH |
++           REP_HIGH | REP_START_A | SEND_R_HIGH | ACK_R_HIGH | READ_HIGH |
++           MASTER_NACK_HIGH => return true;
++      when others => return false;
++    end case;
++  end function;
++
+   constant C_SCL_TIMEOUT_CYCLES : natural := CLK_HZ / 50000;
+   constant C_BUS_IDLE_TIMEOUT_CYCLES : natural := CLK_HZ / 1000;
+   constant C_RETRY_1_CYCLES : natural := CLK_HZ / 10000; -- 100 us
+@@ -528,7 +543,8 @@ begin
+       if rst = '1' or state = BUS_FREE or state = RETRY_BACKOFF or
+          state = RETRY_START or state = ABORT_RELEASE or
+          state = ABORT_HIGH_RECOVERY or
+-         (requires_scl_high(state) and scl_filtered_r = '0') then
++         (requires_scl_high(state) and not is_ordinary_protocol_high(state) and
++          scl_filtered_r = '0') then
+         tick_cnt <= 0;
+       elsif tick_cnt = DIVIDER then
+         tick_cnt <= 0;
+@@ -554,7 +570,8 @@ begin
+         scl_low_released_count <= 0;
+         scl_timeout_seen_r <= '0';
+       elsif requires_scl_high(state) and scl_filtered_r = '0' then
+-        if scl_low_released_count = C_SCL_TIMEOUT_CYCLES then
++        if scl_low_released_count = C_SCL_TIMEOUT_CYCLES or
++           (is_ordinary_protocol_high(state) and tick = '1') then
+           scl_timeout_seen_r <= '1';
+           if scl_timeout_seen_r = '0' then
+             r1i_scl_timeouts_r <= sat_inc32(r1i_scl_timeouts_r);
+@@ -829,7 +846,8 @@ begin
+         end if;
+ 
+         if requires_scl_high(state) and scl_filtered_r = '0' then
+-          if scl_low_released_count = C_SCL_TIMEOUT_CYCLES then
++          if scl_low_released_count = C_SCL_TIMEOUT_CYCLES or
++             (is_ordinary_protocol_high(state) and tick = '1') then
+             cur_error <= '1';
+             r1i_attempt_error_code_r <= x"07";
+             if state = STOP_B or state = STOP_C then

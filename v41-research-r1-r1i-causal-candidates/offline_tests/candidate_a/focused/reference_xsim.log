@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Aug 27 20:04:36 2026
+# Process ID         : 17780
+# Current directory  : V:/R1I_RCA_A/offline_tests/candidate_aware_v6_final
+# Command line       : xsim.exe -log reference_xsim.log -mode tcl -source {xsim.dir/r1h_allack_reference/xsim_script.tcl}
+# Log file           : V:/R1I_RCA_A/offline_tests/candidate_aware_v6_final/reference_xsim.log
+# Journal file       : V:/R1I_RCA_A/offline_tests/candidate_aware_v6_final\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4497 MB
+# Total Virtual      : 21525 MB
+# Available Virtual  : 4773 MB
+#-----------------------------------------------------------
+source xsim.dir/r1h_allack_reference/xsim_script.tcl
+# xsim {r1h_allack_reference} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS ALL_ACK_WIRE_SEQUENCE_AND_OUTPUT_CAPTURE REF=1 cycles=651929 tx=275 bytes=825
+$finish called at time : 651929500 ns : File "V:/R1I_RCA_A/offline_tests/candidate_aware_v6_final/tb_r1i_a_candidate_aware.sv" Line 344
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:00:12 . Memory (MB): peak = 206.559 ; gain = 0.000
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Aug 27 20:05:30 2026...
