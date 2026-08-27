@@ -31,5 +31,6 @@ The first long local checkout attempt encountered Windows path-length errors in 
 | Requested Git LFS attributes for ZIP/bit/LTX/DCP | PASS |
 | R1i/R1h/Formal `.bit` attribute resolves to LFS | PASS |
 | Public ZIP attribute resolves to LFS | PASS |
+| Independent post-publication provenance-path audit | PASS_WITH_CORRECTION: seven XDC labels corrected to their exact repository-relative `xdc/` paths; hashes and source content were unchanged |
 
-The payload manifest and ZIP were sealed after these gates. The ZIP SHA receipt is external to the ZIP to avoid recursive self-hashing. Git commit, push, LFS upload, and remote read-back are recorded in the local publishing report and are independently observable from the published `main` commit.
+The payload manifest and ZIP were resealed after the independent path-label correction. The ZIP SHA receipt is external to the ZIP to avoid recursive self-hashing. Git commits, pushes, LFS uploads, and remote read-back are recorded in the local publishing report and are independently observable from the published `main` history.

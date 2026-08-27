@@ -10,5 +10,6 @@ All times are recorded in Europe/Warsaw and UTC where available.
 | Short isolated worktree ready | 2026-08-27 12:22:02 +02:00 | 2026-08-27 10:22:02Z |
 | Public evidence assembly reached documentation gate | 2026-08-27 12:29:50 +02:00 | 2026-08-27 10:29:50Z |
 | Pre-publication secret and LFS attribute gates passed | 2026-08-27 12:32:36 +02:00 | 2026-08-27 10:32:36Z |
+| Independent audit corrected XDC provenance path labels | 2026-08-27 12:52 +02:00 | 2026-08-27 10:52Z |
 
-The immutable package was sealed immediately after the pre-publication gates. Commit, push, and remote read-back timestamps are recorded in the separate local publishing report so the single published commit remains immutable.
+The package was first sealed after the pre-publication gates, then resealed after the independent audit corrected documentation-only XDC path labels. Commit, push, and remote read-back timestamps are recorded in the separate local publishing report.
