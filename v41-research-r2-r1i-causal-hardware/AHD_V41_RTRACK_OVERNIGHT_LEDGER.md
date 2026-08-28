@@ -1,0 +1,22 @@
+# AHD v41 R-track Autonomous Overnight Ledger
+
+Deadline: `2026-08-28 08:00 Europe/Warsaw`
+
+| Timestamp (Europe/Warsaw) | Stage | Scenario | Action | Artifact / firmware identity | Result | Decision | Next action |
+|---|---|---|---|---|---|---|---|
+| 2026-08-28 05:59:52 +02:00 | Deadline gate | Preflight | Checked authoritative local Warsaw time against the 07:45 no-new-work cutoff and 08:00 hard stop. | N/A | Before both cutoffs. | Offline preflight authorized; no hardware action yet. | Read SSOT and frozen R0 evidence. |
+| 2026-08-28 06:00:00 +02:00 | R1 verification | Scenario A | Reused the completed and remotely verified R1 package. | R1 evidence commit `d02a3dbc41075764ecf915e4e2d0a1da3c0ce07e`; C1 bit `847B2ECE6BAD25A5802677D0125EF0C6A12C87B949E0AD96954500F30434534D`; C2 bit `2092322C1C7A06A727691D8A666623FFE1C460CDD7B445DCD836293CAC5E5C1D` | R1 engineering, tests, builds, ancestry, source allowlist, runtime identity, publication, and remote read-back all PASS. | Scenario A eligibility established subject to SSOT/R0/lock/hardware preflight. | Read current project SSOT. |
+| 2026-08-28 06:08:48 +02:00 | SSOT preflight | Scenario A | Read required `project-current-state` documents at evidence `main` without writing them. | `PROJECT_STATE_REV_AT_START=1`; evidence HEAD `d02a3dbc41075764ecf915e4e2d0a1da3c0ce07e` | SSOT present; G2A ACTIVE, R1 ACTIVE, R0 ACCEPTED, R1i qualified/frozen; gate agent is SSOT read-only. | Preserve revision 1 and re-read at finalization. | Read frozen R0 protocols and locate lock/safe hardware procedure. |
+| 2026-08-28 06:13:55 +02:00 | R0 protocol gate | Scenario A | Verified authoritative R0 commit and extracted the frozen four-cell, cold-start, timing, interpretation, and safe-restore protocols. | R0 commit `aff7e32edc1cf71bde95b6c19e54e6f307764237` | Exact primary denominator is 32 runs (8/cell); cold denominator is 10 consecutive valid starts; timing requires at least 20 atomic samples over at least 10 seconds. | Do not shorten or reinterpret the protocol. | Verify proven automation, artifact identities, exclusive hardware lock, and remaining time before any hardware action. |
+| 2026-08-28 06:23:48 +02:00 | Artifact gate | Scenario A | Rehashed C0, C1, C2, C3, and Formal Phase-2 artifacts locally. | C0 `73E973...63C41`; C1 `847B2E...534D`; C2 `209232...5C1D`; C3 `F6A690...3C6`; Formal `7E4E90...49A2` | All five expected 2,192,144-byte artifacts matched their frozen SHA-256 identities. | Artifact identity PASS does not override lock/schedule gates. | Complete shared-lock and campaign-feasibility audit. |
+| 2026-08-28 06:31:03 +02:00 | R2 go/no-go | Scenario A / R2 blocker | Completed read-only process, historical-lock, harness, and schedule audit. | `FPGA_AHD_HW_LOCK`; frozen 32-run campaign | Canonical shared-lock state `NOT_PROVABLE`; no compliant shared executable/current receipt exists. Proven per-run-plus-restore wall time projects 32 cycles to about 7.07 hours, while only about 74 minutes remained to the 07:45 cutoff. Prior harness is not candidate-aware and cannot seal the required pre-post-init-probe snapshot/counter-clear receipt. | `R2=BLOCKED`; do not invent a private lock, shorten the denominator, run a partial row, or access hardware. | Evaluate independently authorized R2A subset without crossing the lock gate. |
+| 2026-08-28 06:31:03 +02:00 | R2A go/no-go | Scenario B-independent subset | Audited exact-R1i cold-start and INIT_DONE timing prerequisites. | Exact R1i `F6A690...3C6`; R0 cold/timing protocols | Lock still not provable. No proven full-rail power control/30-second absence/first-image enforcement exists; no timing event-bracket sequence may begin without exclusive ownership. | Cold starts `NOT_RUN`; timing `NOT_RUN`; no historical values relabeled as new measurements. | Seal blocker evidence and publish without hardware access. |
+| 2026-08-28 06:42:18 +02:00 | SSOT final read | Deadline finalization | Re-read current evidence `origin/main` and `PROJECT_STATE.json` read-only. | `PROJECT_STATE_REV_AT_END=1` | Start and end revisions match. | `SSOT_STALENESS=NONE`; do not update SSOT. | Seal manifests and publish R2/R2A blocker evidence. |
+
+## Corrective iterations
+
+No corrective R1 iterations have been used. Count: `0 / 10`.
+
+## Hardware-access status
+
+As of `2026-08-28 06:31:03 +02:00`, no hardware lock has been acquired and no SSH, connectivity probe, JTAG, FPGA programming, MMIO, PCIe, DMA, reboot, power-cycle, driver, or DUT operation has been performed by this continuation.
