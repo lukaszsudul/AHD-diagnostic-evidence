@@ -1,0 +1,2330 @@
+diff --git a/ip/v41/xdma_v41_m1.xci b/ip/v41/xdma_v41_m1.xci
+index 5065b919254fe164ac831192b93c29734737b859..450aa334e2bda4396cd5a7270ba15895c7f7ed54 100644
+--- a/ip/v41/xdma_v41_m1.xci
++++ b/ip/v41/xdma_v41_m1.xci
+@@ -13,7 +13,7 @@
+         "device_port_type": [ { "value": "PCI_Express_Endpoint_device", "resolve_type": "user", "enabled": false, "usage": "all" } ],
+         "pcie_blk_locn": [ { "value": "X0Y0", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+         "pl_link_cap_max_link_width": [ { "value": "X1", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+-        "pl_link_cap_max_link_speed": [ { "value": "2.5_GT/s", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
++        "pl_link_cap_max_link_speed": [ { "value": "5.0_GT/s", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+         "ref_clk_freq": [ { "value": "100_MHz", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+         "drp_clk_sel": [ { "value": "Internal", "resolve_type": "user", "enabled": false, "usage": "all" } ],
+         "free_run_freq": [ { "value": "100_MHz", "resolve_type": "user", "usage": "all" } ],
+@@ -1631,4 +1631,4 @@
+     }
+   },
+   "checksum": "0f8673e4"
+-}
+\ No newline at end of file
++}
+diff --git a/scripts/v41/g2a_build.tcl b/scripts/v41/g2a_build.tcl
+new file mode 100644
+index 0000000000000000000000000000000000000000..990557711e2bb231806bb3b8f6286ce62bc165d4
+--- /dev/null
++++ b/scripts/v41/g2a_build.tcl
+@@ -0,0 +1,1350 @@
++# AHD v41 G2A: qualified R1i plus PCIe Gen2 x1, offline build only.
++#
++# Build-flow authority: scripts/v41/r1i_build.tcl from qualified R1i commit
++# 20c3323d79d3896edc586d6db1df7deee60f9e41.  The source/XDC set and the
++# synth_design/opt_design/place_design/phys_opt_design/route_design sequence
++# below intentionally match that oracle.  No checkpoint is read or reused.
++#
++# Provenance hardening is narrowly ported from secondary provenance donor
++# dev/v41-xdma-offline-next at 8464af66611f7c22b8a36a4aab915d598eedda3f,
++# scripts/v41/phase3_build.tcl: FULL_BUILD/PROVENANCE_ONLY selection, exact
++# lowercase 40-hex validation, clean exact HEAD, five 8-hex words, SHA
++# round-trip validation, explicit PASS receipts, and provenance-only exit.
++# No implementation-flow logic from that donor is imported.
++
++if {$argc != 6 && $argc != 7} {
++  puts stderr "usage: g2a_build.tcl REPO_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_COMMIT SOURCE_TREE BIT_FILENAME ?PROVENANCE_ONLY?"
++  exit 2
++}
++
++lassign [lrange $argv 0 5] repo_root build_root evidence_root source_commit source_tree bit_filename
++set execution_mode FULL_BUILD
++if {$argc == 7} {
++  set execution_mode [lindex $argv 6]
++  if {$execution_mode ne "PROVENANCE_ONLY"} {
++    error "optional execution mode must be exactly PROVENANCE_ONLY"
++  }
++}
++
++set repo_root [file normalize $repo_root]
++set build_root [file normalize $build_root]
++set evidence_root [file normalize $evidence_root]
++
++set qualified_base_commit 20c3323d79d3896edc586d6db1df7deee60f9e41
++set qualified_base_tree 70d801fd7a879080da399bfa9ee95fd6eb008e16
++set qualified_base_tag v41-r1i-qualified-poc-20260827
++set expected_branch integration/v41-r1i-gen2-g2a
++set expected_part xc7a35tcsg325-2
++set expected_top ahd_capture_top_xdma
++set expected_vivado_version 2025.2
++set expected_vivado_sw_build 6299465
++set expected_user_clock_mhz 62.5
++set clock_tolerance_mhz 0.1
++
++proc write_lines {path lines} {
++  file mkdir [file dirname $path]
++  set fh [open $path w]
++  fconfigure $fh -encoding utf-8 -translation lf
++  foreach line $lines { puts $fh $line }
++  close $fh
++}
++
++proc write_text {path value} {
++  file mkdir [file dirname $path]
++  set fh [open $path w]
++  fconfigure $fh -encoding utf-8 -translation lf
++  puts -nonewline $fh $value
++  close $fh
++}
++
++proc read_text {path} {
++  set fh [open $path r]
++  fconfigure $fh -encoding utf-8
++  set value [read $fh]
++  close $fh
++  return $value
++}
++
++proc single_line {value} {
++  return [string map [list "\r" {\r} "\n" {\n}] $value]
++}
++
++proc path_key {path} {
++  return [string tolower [string trimright [file normalize $path] "/\\"]]
++}
++
++proc path_is_within {child parent} {
++  set child_key [path_key $child]
++  set parent_key [path_key $parent]
++  if {$child_key eq $parent_key} { return 1 }
++  return [expr {[string first "${parent_key}/" $child_key] == 0}]
++}
++
++proc git_value {args} {
++  global repo_root
++  return [string trim [exec git --no-optional-locks -C $repo_root {*}$args]]
++}
++
++proc sha256_file {path} {
++  set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
++  foreach line [split $output "\n"] {
++    set candidate [string toupper [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
++    if {[regexp {^[0-9A-F]{64}$} $candidate]} { return $candidate }
++  }
++  error "SHA-256 unavailable for $path"
++}
++
++proc require_files {paths} {
++  foreach path $paths {
++    if {![file isfile $path]} { error "required input missing: $path" }
++  }
++}
++
++proc effective_config_dict {ip} {
++  set result [dict create]
++  foreach property [lsort [list_property $ip]] {
++    if {[string match {CONFIG.*} $property]} {
++      dict set result $property [get_property $property $ip]
++    }
++  }
++  return $result
++}
++
++proc assert_config_dict_equal {expected actual label} {
++  set expected_keys [lsort [dict keys $expected]]
++  set actual_keys [lsort [dict keys $actual]]
++  if {$expected_keys ne $actual_keys} {
++    error "$label CONFIG property-name drift"
++  }
++  foreach property $expected_keys {
++    set expected_value [dict get $expected $property]
++    set actual_value [dict get $actual $property]
++    if {$actual_value ne $expected_value} {
++      error "$label CONFIG drift for $property: expected '$expected_value', got '$actual_value'"
++    }
++  }
++}
++
++proc utilization_row {text wanted} {
++  set normalized_wanted [string trimright $wanted "*"]
++  foreach line [split $text "\n"] {
++    set columns [split $line "|"]
++    if {[llength $columns] < 7} { continue }
++    set actual [string trimright [string trim [lindex $columns 1]] "*"]
++    if {$actual ne $normalized_wanted} { continue }
++    set used [string map [list "," "" " " ""] [string trim [lindex $columns 2]]]
++    set available [string map [list "," "" " " ""] [string trim [lindex $columns 5]]]
++    if {![string is double -strict $used] || ![string is double -strict $available] || $available <= 0.0} {
++      error "non-numeric utilization row '$wanted': used='$used' available='$available'"
++    }
++    return [list $used $available]
++  }
++  error "utilization row '$wanted' not found"
++}
++
++proc resource_metrics {stage} {
++  global evidence_root
++  set text [report_utilization -return_string]
++  write_text [file join $evidence_root "${stage}_UTILIZATION_FLAT.rpt"] $text
++  lassign [utilization_row $text "Slice LUTs"] lut_used lut_available
++  lassign [utilization_row $text "Slice Registers"] ff_used ff_available
++  lassign [utilization_row $text "Block RAM Tile"] bram_used bram_available
++  lassign [utilization_row $text "DSPs"] dsp_used dsp_available
++  return [dict create \
++    LUT_USED $lut_used LUT_AVAILABLE $lut_available \
++    LUT_PERCENT [expr {100.0 * $lut_used / $lut_available}] \
++    FF_USED $ff_used FF_AVAILABLE $ff_available \
++    FF_PERCENT [expr {100.0 * $ff_used / $ff_available}] \
++    BRAM_USED $bram_used BRAM_AVAILABLE $bram_available \
++    BRAM_PERCENT [expr {100.0 * $bram_used / $bram_available}] \
++    DSP_USED $dsp_used DSP_AVAILABLE $dsp_available \
++    DSP_PERCENT [expr {100.0 * $dsp_used / $dsp_available}]]
++}
++
++proc enforce_resource_gate {stage metrics} {
++  global evidence_root
++  set lut_percent [dict get $metrics LUT_PERCENT]
++  set ff_percent [dict get $metrics FF_PERCENT]
++  set bram_percent [dict get $metrics BRAM_PERCENT]
++  set dsp_percent [dict get $metrics DSP_PERCENT]
++  set gate PASS
++  set reason NONE
++  if {$lut_percent > 90.0} {
++    set gate FAIL
++    set reason LUT_GT_90_PERCENT
++  } elseif {$ff_percent > 80.0} {
++    set gate FAIL
++    set reason FF_GT_80_PERCENT
++  } elseif {$bram_percent > 80.0} {
++    set gate FAIL
++    set reason BRAM_GT_80_PERCENT
++  } elseif {$dsp_percent > 85.0} {
++    set gate FAIL
++    set reason DSP_GT_85_PERCENT
++  }
++  write_lines [file join $evidence_root "${stage}_RESOURCE_GATE.txt"] [list \
++    "STAGE=$stage" \
++    "LUT_USED=[dict get $metrics LUT_USED]" \
++    "LUT_AVAILABLE=[dict get $metrics LUT_AVAILABLE]" \
++    "LUT_PERCENT=[format %.3f $lut_percent]" \
++    "LUT_LIMIT_PERCENT=90.000" \
++    "FF_USED=[dict get $metrics FF_USED]" \
++    "FF_AVAILABLE=[dict get $metrics FF_AVAILABLE]" \
++    "FF_PERCENT=[format %.3f $ff_percent]" \
++    "FF_LIMIT_PERCENT=80.000" \
++    "BRAM_USED=[dict get $metrics BRAM_USED]" \
++    "BRAM_AVAILABLE=[dict get $metrics BRAM_AVAILABLE]" \
++    "BRAM_PERCENT=[format %.3f $bram_percent]" \
++    "BRAM_LIMIT_PERCENT=80.000" \
++    "DSP_USED=[dict get $metrics DSP_USED]" \
++    "DSP_AVAILABLE=[dict get $metrics DSP_AVAILABLE]" \
++    "DSP_PERCENT=[format %.3f $dsp_percent]" \
++    "DSP_LIMIT_PERCENT=85.000" \
++    "RESOURCE_GATE=$gate" "RESOURCE_GATE_REASON=$reason"]
++  if {$gate ne "PASS"} { error "$stage resource gate failed: $reason" }
++}
++
++proc record_action {action} {
++  global action_counts evidence_root stage
++  dict incr action_counts $action
++  set lines [list "STAGE=$stage"]
++  dict for {key value} $action_counts { lappend lines "$key=$value" }
++  write_lines [file join $evidence_root G2A_OPERATION_COUNTS.txt] $lines
++}
++
++proc unique_objects_by_name {objects} {
++  set by_name [dict create]
++  foreach object $objects {
++    set name [get_property NAME $object]
++    dict set by_name $name $object
++  }
++  set result [list]
++  foreach name [lsort [dict keys $by_name]] { lappend result [dict get $by_name $name] }
++  return $result
++}
++
++proc clocks_for_pattern {pattern} {
++  set result [list]
++  foreach clock [get_clocks -quiet] {
++    if {[string match $pattern [get_property NAME $clock]]} { lappend result $clock }
++  }
++  foreach net [get_nets -quiet -hier $pattern] {
++    if {![catch {get_clocks -quiet -of_objects $net} clocks]} {
++      foreach clock $clocks { lappend result $clock }
++    }
++    foreach pin [get_pins -quiet -of_objects $net] {
++      if {![catch {get_clocks -quiet -of_objects $pin} clocks]} {
++        foreach clock $clocks { lappend result $clock }
++      }
++    }
++  }
++  foreach pin [get_pins -quiet -hier $pattern] {
++    if {![catch {get_clocks -quiet -of_objects $pin} clocks]} {
++      foreach clock $clocks { lappend result $clock }
++    }
++  }
++  return [unique_objects_by_name $result]
++}
++
++proc property_or_unknown {property object} {
++  if {[catch {get_property $property $object} value] || $value eq ""} { return UNKNOWN }
++  return $value
++}
++
++proc check_timing_table_count {text wanted} {
++  foreach line [split $text "\n"] {
++    set columns [split $line "|"]
++    for {set index 0} {$index + 1 < [llength $columns]} {incr index} {
++      if {[string trim [lindex $columns $index]] ne $wanted} { continue }
++      set count [string trim [lindex $columns [expr {$index + 1}]]]
++      if {[string is integer -strict $count]} { return $count }
++    }
++    if {[regexp [format {^[ \t]*%s[ \t]+([0-9]+)} $wanted] $line -> count]} {
++      return $count
++    }
++    if {[regexp [format {checking[ \t]+%s[ \t]*\(([0-9]+)\)} $wanted] $line -> count]} {
++      return $count
++    }
++  }
++  return UNKNOWN
++}
++
++proc cdc_severity_counts {text} {
++  set critical 0
++  set unknown 0
++  foreach line [split $text "\n"] {
++    if {![regexp -nocase {CDC-[0-9]+} $line]} { continue }
++    if {[regexp -nocase {Critical} $line]} { incr critical }
++    if {[regexp -nocase {Unknown} $line]} { incr unknown }
++  }
++  return [list $critical $unknown]
++}
++
++# Vivado 2025.2 reports two Critical CDC-13 clock views for the Gen2-only
++# XDMA PIPE BUFGCTRL select path.  AMD's generated XDC applies an exact false
++# path to the selector pins and declares the 125/250 MHz mux clocks physically
++# exclusive.  Frozen G1 requires these generated-clock exceptions to be
++# resolved, not broadly suppressed.  Accept only this exact signature; every
++# other Critical/Critical Warning or Unknown CDC object remains a hard stop.
++proc enforce_gen2_xdma_pipe_cdc_disposition {cdc_path cdc_violations} {
++  global build_root evidence_root
++
++  set critical_names [list]
++  foreach violation $cdc_violations {
++    set severity [string toupper [property_or_unknown SEVERITY $violation]]
++    if {$severity eq "CRITICAL" || $severity eq "CRITICAL WARNING"} {
++      lappend critical_names [get_property NAME $violation]
++    }
++  }
++  set critical_names [lsort $critical_names]
++  set expected_names [list CDC-13#1 CDC-13#2]
++  if {$critical_names ne $expected_names} {
++    error "unexpected critical CDC object set: expected '$expected_names', got '$critical_names'"
++  }
++
++  set cdc_text [read_text $cdc_path]
++  set source_endpoint {XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_sel_reg/C}
++  set destination_endpoint {XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S1}
++  set expected_row "1 CDC-13 Critical 1-bit CDC path on a non-FD primitive 0 False Path $source_endpoint $destination_endpoint"
++  set exact_row_count 0
++  set summary_count 0
++  foreach line [split $cdc_text "\n"] {
++    set normalized [join [regexp -all -inline {\S+} $line] " "]
++    if {$normalized eq $expected_row} { incr exact_row_count }
++    if {$normalized eq {CDC-13 Critical 2 1-bit CDC path on a non-FD primitive}} {
++      incr summary_count
++    }
++  }
++  if {$exact_row_count != 2 || $summary_count != 1} {
++    error "Gen2 XDMA CDC-13 report signature mismatch: rows=$exact_row_count summary=$summary_count"
++  }
++
++  set normalized_report [join [regexp -all -inline {\S+} $cdc_text] " "]
++  foreach context [list \
++      {Source Clock: clk_125mhz_mux_x0y0 Destination Clock: clk_250mhz_x0y0 CDC Type: User Ignored} \
++      {Source Clock: clk_250mhz_mux_x0y0 Destination Clock: clk_250mhz_x0y0 CDC Type: User Ignored}] {
++    if {[string first $context $normalized_report] < 0} {
++      error "Gen2 XDMA CDC-13 clock/type context missing: $context"
++    }
++  }
++
++  set generated_xdc_pattern [file join $build_root vivado_project *.gen sources_1 ip \
++    xdma_v41_m1 ip_0 source xdma_v41_m1_pcie2_ip-PCIE_X0Y0.xdc]
++  set generated_xdc_files [glob -nocomplain -types f -- $generated_xdc_pattern]
++  if {[llength $generated_xdc_files] != 1} {
++    error "expected one generated XDMA PCIe XDC, found [llength $generated_xdc_files]"
++  }
++  set generated_xdc [lindex $generated_xdc_files 0]
++  set generated_xdc_text [read_text $generated_xdc]
++  foreach required_clause [list \
++      {set_false_path -to [get_pins {inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S0}]} \
++      {set_false_path -to [get_pins {inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S1}]} \
++      {set_clock_groups -name pcieclkmux -physically_exclusive -group clk_125mhz_mux_x0y0 -group clk_250mhz_mux_x0y0}] {
++    if {[string first $required_clause $generated_xdc_text] < 0} {
++      error "required generated-XDC CDC clause missing: $required_clause"
++    }
++  }
++
++  write_lines [file join $evidence_root G2A_CDC_EXACT_DISPOSITION.txt] [list \
++    {DISPOSITION=PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX} \
++    {CDC_CRITICAL_TOTAL=2} \
++    {CDC_CRITICAL_DISPOSITIONED=2} \
++    {CDC_UNKNOWN=0} \
++    {CDC_IDS=CDC-13#1,CDC-13#2} \
++    {CDC_TYPE=User Ignored} \
++    {EXCEPTION=False Path} \
++    "SOURCE_ENDPOINT=$source_endpoint" \
++    "DESTINATION_ENDPOINT=$destination_endpoint" \
++    {CLOCK_PAIR_0=clk_125mhz_mux_x0y0->clk_250mhz_x0y0} \
++    {CLOCK_PAIR_1=clk_250mhz_mux_x0y0->clk_250mhz_x0y0} \
++    "GENERATED_XDC=$generated_xdc" \
++    {GENERATED_XDC_S0_FALSE_PATH=PASS} \
++    {GENERATED_XDC_S1_FALSE_PATH=PASS} \
++    {GENERATED_XDC_CLOCKS_PHYSICALLY_EXCLUSIVE=PASS} \
++    {APPLICATION_CDC_DISPOSITIONED=0} \
++    {BROAD_CDC_WAIVER_APPLIED=NO}]
++  return 2
++}
++
++proc enforce_named_bus_skew_constraint {text label source_token destination_token} {
++  set matches 0
++  set lines [split $text "\n"]
++  for {set index 0} {$index < [llength $lines]} {incr index} {
++    set line [lindex $lines $index]
++    if {![string match {set_bus_skew *} [string trimleft $line]] ||
++        [string first $source_token $line] < 0 ||
++        [string first $destination_token $line] < 0} {
++      continue
++    }
++    incr matches
++    set met_count 0
++    set violated_count 0
++    for {set scan [expr {$index + 1}]} {$scan < [llength $lines]} {incr scan} {
++      set scan_line [lindex $lines $scan]
++      if {[regexp {^[ \t]*Id:[ \t]*[0-9]+} $scan_line]} { break }
++      if {[regexp -nocase {Slack[ \t]*\([ \t]*MET[ \t]*\)} $scan_line]} { incr met_count }
++      if {[regexp -nocase {Slack[ \t]*\([ \t]*VIOLATED[ \t]*\)} $scan_line]} { incr violated_count }
++    }
++    if {$met_count != 1 || $violated_count != 0} {
++      error "$label bus-skew constraint failed: met=$met_count violated=$violated_count"
++    }
++  }
++  if {$matches != 1} {
++    error "$label bus-skew constraint resolution failed: command_matches=$matches"
++  }
++}
++
++# Path and argument validation happens before either execution mode writes.
++if {![file isdirectory $repo_root]} { error "REPO_ROOT is not a directory: $repo_root" }
++if {[path_is_within $build_root $repo_root] || [path_is_within $evidence_root $repo_root]} {
++  error "BUILD_ROOT and EVIDENCE_ROOT must both be outside REPO_ROOT"
++}
++if {[path_is_within $evidence_root $build_root] || [path_is_within $build_root $evidence_root]} {
++  error "BUILD_ROOT and EVIDENCE_ROOT must be disjoint"
++}
++if {$bit_filename eq "" || [file tail $bit_filename] ne $bit_filename ||
++    ![string equal -nocase [file extension $bit_filename] ".bit"]} {
++  error "BIT_FILENAME must be a leaf filename ending in .bit"
++}
++if {![regexp {^[0-9a-f]{40}$} $source_commit]} {
++  error "SOURCE_COMMIT must be exactly 40 lowercase hex digits"
++}
++if {![regexp {^[0-9a-f]{40}$} $source_tree]} {
++  error "SOURCE_TREE must be exactly 40 lowercase hex digits"
++}
++
++# Exact integration source identity.  The single integration commit must be a
++# direct child of the frozen qualified R1i commit; merges and stacked commits
++# are rejected rather than silently widening G2A scope.
++set actual_commit [git_value rev-parse HEAD]
++set actual_tree [git_value rev-parse {HEAD^{tree}}]
++set actual_branch [git_value symbolic-ref --short HEAD]
++set actual_status [git_value status --porcelain --untracked-files=all]
++set actual_base_tree [git_value rev-parse "${qualified_base_commit}^{tree}"]
++set actual_tag_commit [git_value rev-list -n 1 $qualified_base_tag]
++set actual_merge_base [git_value merge-base $qualified_base_commit $source_commit]
++set direct_parent [git_value rev-parse "${source_commit}^"]
++set integration_commit_count [git_value rev-list --count "${qualified_base_commit}..${source_commit}"]
++
++if {$actual_commit ne $source_commit} { error "repository HEAD does not match requested SOURCE_COMMIT" }
++if {$actual_tree ne $source_tree} { error "repository HEAD tree does not match requested SOURCE_TREE" }
++if {$actual_branch ne $expected_branch} { error "source branch mismatch: expected $expected_branch, got $actual_branch" }
++if {$actual_status ne ""} { error "G2A full source tree is not clean: $actual_status" }
++if {$actual_base_tree ne $qualified_base_tree} { error "BLOCKED - G2A_BASE_TREE_MISMATCH" }
++if {$actual_tag_commit ne $qualified_base_commit} { error "qualified immutable tag does not resolve to frozen base commit" }
++if {$actual_merge_base ne $qualified_base_commit || $direct_parent ne $qualified_base_commit ||
++    $integration_commit_count ne "1"} {
++  error "integration commit is not a single direct child of frozen qualified R1i"
++}
++
++# Five-word round trip: narrowly adopted provenance intent from the secondary
++# donor.  Keep the reconstructed_commit assignment stable for negative tests.
++set git_words [list]
++for {set word_index 0} {$word_index < 5} {incr word_index} {
++  set first [expr {$word_index * 8}]
++  set word [string range $source_commit $first [expr {$first + 7}]]
++  if {![regexp {^[0-9a-f]{8}$} $word]} { error "invalid 8-hex provenance word $word_index" }
++  lappend git_words $word
++}
++set reconstructed_commit [join $git_words ""]
++if {$reconstructed_commit ne $source_commit} {
++  error "provenance round-trip mismatch: $reconstructed_commit != $source_commit"
++}
++
++set build_flags 32'h00000002
++set generics "SLOT_COUNT=2"
++for {set word_index 0} {$word_index < 5} {incr word_index} {
++  append generics " GIT_SHA_W$word_index=32'h[lindex $git_words $word_index]"
++}
++append generics " BUILD_FLAGS=$build_flags ENABLE_MAREK_INIT_TABLE=1"
++
++# The evidence root is the only path created in provenance-only mode.
++file mkdir $evidence_root
++set provenance_lines [list \
++  "TASK=AHD_V41_G2A_R1I_GEN2_OFFLINE_INTEGRATION" \
++  "EXECUTION_MODE=$execution_mode" \
++  "SOURCE_COMMIT_REQUESTED=$source_commit" \
++  "SOURCE_COMMIT_ACTUAL=$actual_commit" \
++  "SOURCE_TREE_REQUESTED=$source_tree" \
++  "SOURCE_TREE_ACTUAL=$actual_tree" \
++  "SOURCE_BRANCH_EXPECTED=$expected_branch" \
++  "SOURCE_BRANCH_ACTUAL=$actual_branch" \
++  "QUALIFIED_BASE_COMMIT=$qualified_base_commit" \
++  "QUALIFIED_BASE_TREE=$qualified_base_tree" \
++  "QUALIFIED_BASE_TAG=$qualified_base_tag" \
++  "QUALIFIED_TAG_RESOLUTION=PASS" \
++  "DIRECT_PARENT=$direct_parent" \
++  "DIRECT_BASE_RELATION=PASS" \
++  "INTEGRATION_COMMIT_COUNT=$integration_commit_count" \
++  "SOURCE_HEAD_MATCH=PASS" \
++  "SOURCE_TREE_MATCH=PASS" \
++  "SOURCE_BRANCH_MATCH=PASS" \
++  "SOURCE_CLEAN=PASS" \
++  "GIT_SHA_W0=[lindex $git_words 0]" \
++  "GIT_SHA_W1=[lindex $git_words 1]" \
++  "GIT_SHA_W2=[lindex $git_words 2]" \
++  "GIT_SHA_W3=[lindex $git_words 3]" \
++  "GIT_SHA_W4=[lindex $git_words 4]" \
++  "RECONSTRUCTED_SOURCE_COMMIT=$reconstructed_commit" \
++  "PROVENANCE_ROUND_TRIP=PASS" \
++  "VIVADO_GENERIC_STRING=$generics" \
++  "PROVENANCE_PREFLIGHT=PASS"]
++if {$execution_mode eq "PROVENANCE_ONLY"} {
++  lappend provenance_lines "PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS"
++} else {
++  lappend provenance_lines "PROVENANCE_ONLY_EXIT_BEFORE_BUILD=NOT_APPLICABLE"
++}
++write_lines [file join $evidence_root G2A_EXPECTED_RUNTIME_PROVENANCE.txt] $provenance_lines
++puts "G2A_PROVENANCE_ROUND_TRIP=PASS SOURCE_COMMIT=$source_commit SOURCE_TREE=$source_tree"
++if {$execution_mode eq "PROVENANCE_ONLY"} {
++  puts "G2A_PROVENANCE_ONLY_PREFLIGHT=PASS"
++  exit 0
++}
++
++# Nothing below this point is reached by PROVENANCE_ONLY.
++set stage FULL_BUILD_PREFLIGHT
++set action_counts [dict create \
++  SYNTH_DESIGN 0 OPT_DESIGN 0 PLACE_DESIGN 0 PHYS_OPT_DESIGN 0 \
++  ROUTE_DESIGN 0 WRITE_BITSTREAM 0 WRITE_DEBUG_PROBES 0]
++set project_creation NOT_RUN
++set ip_generation NOT_RUN
++set synthesis NOT_RUN
++set optimization NOT_RUN
++set placement NOT_RUN
++set physical_optimization NOT_RUN
++set routing NOT_RUN
++set timing_gate NOT_RUN
++set drc_gate NOT_RUN
++set cdc_gate NOT_RUN
++set bus_skew_gate NOT_RUN
++set black_box_gate NOT_RUN
++set clock_gate NOT_RUN
++set resource_gate NOT_RUN
++set congestion_gate NOT_RUN
++set source_post_build NOT_RUN
++set fully_routed UNKNOWN
++set errors_in_routes UNKNOWN
++set unrouted_nets UNKNOWN
++set partial_nets UNKNOWN
++set wns UNKNOWN
++set tns UNKNOWN
++set whs UNKNOWN
++set ths UNKNOWN
++set failing_setup UNKNOWN
++set failing_hold UNKNOWN
++set no_clock_count UNKNOWN
++set unconstrained_internal_count UNKNOWN
++set drc_errors UNKNOWN
++set drc_critical_warnings UNKNOWN
++set drc_warnings UNKNOWN
++set cdc_critical UNKNOWN
++set cdc_unknown UNKNOWN
++set cdc_critical_dispositioned 0
++set cdc_disposition NOT_RUN
++set bus_skew_violations UNKNOWN
++set bus_skew_met_constraints UNKNOWN
++set black_box_count UNKNOWN
++set post_opt_metrics [dict create]
++set final_metrics [dict create]
++set effective_axi_clock_mhz UNKNOWN
++set effective_user_clock_mhz UNKNOWN
++set bit_generated NO
++set bit_sha NONE
++set ltx_generated NO
++set ltx_sha NONE
++set ltx_error NONE
++set routed_clock_object_count UNKNOWN
++set nvp_clock_pin_count UNKNOWN
++set axi_bridge_clock_pin_count UNKNOWN
++set xdc_collection_gate NOT_RUN
++set cfg_src_count UNKNOWN
++set cfg_dst_count UNKNOWN
++set status_src_count UNKNOWN
++set status_dst_count UNKNOWN
++set toggle_first_stage_count UNKNOWN
++set toggle_first_d_count UNKNOWN
++set diag_gray_source_count UNKNOWN
++set diag_gray_first_d_count UNKNOWN
++set nvp_init_async_reset_pin_count UNKNOWN
++set pcie_refclk_ibuf_count UNKNOWN
++set gt_channel_count UNKNOWN
++set gt_common_count UNKNOWN
++set pcie_hard_block_count UNKNOWN
++set vivado_version UNKNOWN
++set vivado_sw_build UNKNOWN
++set ip_config_property_count UNKNOWN
++set bufg_used UNKNOWN
++set mmcm_used UNKNOWN
++set pll_used UNKNOWN
++set synth_dcp_sha NONE
++set post_opt_dcp_sha NONE
++set routed_dcp_sha NONE
++
++set bit_path [file join $evidence_root artifacts $bit_filename]
++set ltx_filename "[file rootname $bit_filename].ltx"
++set ltx_path [file join $evidence_root artifacts $ltx_filename]
++
++set build_result [catch {
++  if {![info exists ::env(XILINX_LOCAL_USER_DATA)] || $::env(XILINX_LOCAL_USER_DATA) ne "NO"} {
++    error "XILINX_LOCAL_USER_DATA must be NO in the Vivado child environment"
++  }
++  if {![info exists ::env(XILINX_TCLAPP_REPO)]} {
++    error "XILINX_TCLAPP_REPO is missing from the Vivado child environment"
++  }
++  set expected_tclapp_repo [file normalize C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore]
++  if {![string equal -nocase [path_key $::env(XILINX_TCLAPP_REPO)] [path_key $expected_tclapp_repo]]} {
++    error "XILINX_TCLAPP_REPO does not identify the frozen Vivado 2025.2 Tcl store"
++  }
++  if {![info exists ::env(TEMP)] || ![info exists ::env(TMP)] ||
++      ![string equal -nocase [path_key $::env(TEMP)] [path_key $::env(TMP)]]} {
++    error "TEMP and TMP must identify the same child-only directory"
++  }
++  if {![string is ascii -strict $::env(TEMP)] || ![string is ascii -strict $build_root] ||
++      ![string is ascii -strict $evidence_root]} {
++    error "TEMP, BUILD_ROOT, and EVIDENCE_ROOT must be ASCII-only"
++  }
++
++  set vivado_version [string trim [version -short]]
++  regexp {SW Build[ \t]+([0-9]+)} [version] -> vivado_sw_build
++  if {$vivado_version ne $expected_vivado_version || $vivado_sw_build ne $expected_vivado_sw_build} {
++    error "wrong Vivado version/build: version=$vivado_version SW_BUILD=$vivado_sw_build"
++  }
++
++  if {[file exists $build_root]} {
++    set existing [glob -nocomplain -directory $build_root *]
++    foreach candidate [glob -nocomplain -directory $build_root .*] {
++      if {[file tail $candidate] ni {. ..}} { lappend existing $candidate }
++    }
++    if {[llength $existing] != 0} { error "BUILD_ROOT is not empty; clean full build required" }
++  }
++  set evidence_entries [glob -nocomplain -directory $evidence_root *]
++  foreach candidate [glob -nocomplain -directory $evidence_root .*] {
++    if {[file tail $candidate] ni {. ..}} { lappend evidence_entries $candidate }
++  }
++  set expected_receipt [file join $evidence_root G2A_EXPECTED_RUNTIME_PROVENANCE.txt]
++  foreach candidate $evidence_entries {
++    if {[path_key $candidate] ne [path_key $expected_receipt]} {
++      error "EVIDENCE_ROOT is not fresh; unexpected pre-existing entry: $candidate"
++    }
++  }
++  if {[file exists $bit_path] || [file exists $ltx_path] ||
++      [file exists [file join $evidence_root G2A_BUILD_RESULT.txt]]} {
++    error "G2A build evidence/output is already consumed; use a new clean launch root"
++  }
++  file mkdir $build_root
++  set marker [file join $build_root G2A_BUILD_CONSUMED.marker]
++  set marker_fh [open $marker {WRONLY CREAT EXCL}]
++  puts $marker_fh "SOURCE_COMMIT=$source_commit"
++  puts $marker_fh "SOURCE_TREE=$source_tree"
++  puts $marker_fh "UTC=[clock format [clock seconds] -gmt true -format {%Y-%m-%dT%H:%M:%SZ}]"
++  close $marker_fh
++  file mkdir [file dirname $bit_path]
++
++  set sv_rel_files {
++    rtl/v41/axi_lite_host_bridge.sv
++    rtl/v41/axi_clock_lifecycle_monitor.sv
++    rtl/v41/axi_clock_measurement_regs.sv
++    rtl/v41/r1e_measurement_regs.sv
++    rtl/v41/r1h_probe_index_bram_store.sv
++    rtl/v41/nvp_i2c_tri_phase_probe.sv
++    rtl/v41/r1f_failed_txn_logger.sv
++    rtl/v41/r1f_measurement_regs.sv
++    rtl/v41/r1h_mmio_read_service.sv
++    rtl/v41/control_status_regs.sv
++    rtl/pio/pio_slot_adapter.sv
++    rtl/pio/pio_bar_target.sv
++    rtl/record/bt656_record_producer.sv
++    rtl/record/capture_mailbox.sv
++    rtl/video/video_capture.sv
++    rtl/video/physical_frontend.sv
++    rtl/top/ahd_capture_top_xdma.sv
++  }
++  set vhdl_rel_files {
++    rtl/nvp/nvp6134c_diagnostics_pkg.vhd
++    rtl/nvp/r1f_transaction_serial_counter.vhd
++    rtl/nvp/nvp6134c_i2c_bringup.vhd
++    rtl/nvp/nvp6134c_autoinit.vhd
++  }
++  set xdc_rel_files {
++    xdc/boards/current/xdma_pcie.xdc
++    xdc/boards/current/pins.xdc
++    xdc/boards/current/vdo_input_timing.xdc
++    xdc/boards/current/pcie_pio.xdc
++    xdc/boards/current/nvp_control.xdc
++    xdc/common/cdc.xdc
++    xdc/common/configuration_bank.xdc
++  }
++
++  set sv_files [list]
++  set vhdl_files [list]
++  set xdc_files [list]
++  set input_hashes [list]
++  foreach kind {sv vhdl xdc} {
++    foreach rel [set [format %s_rel_files $kind]] {
++      set path [file join $repo_root $rel]
++      lappend [format %s_files $kind] $path
++    }
++  }
++  set xdma_source [file join $repo_root ip v41 xdma_v41_m1.xci]
++  set common_tcl [file join $repo_root scripts v41 xdma_config_common.tcl]
++  require_files [concat $sv_files $vhdl_files $xdc_files [list $xdma_source $common_tcl]]
++  foreach kind {sv vhdl xdc} {
++    foreach rel [set [format %s_rel_files $kind]] {
++      lappend input_hashes "$rel|[sha256_file [file join $repo_root $rel]]"
++    }
++  }
++  lappend input_hashes "ip/v41/xdma_v41_m1.xci|[sha256_file $xdma_source]"
++  lappend input_hashes "scripts/v41/xdma_config_common.tcl|[sha256_file $common_tcl]"
++  foreach rel {scripts/v41/g2a_build.tcl tests/v41/run_g2a_offline_checks.ps1} {
++    set path [file join $repo_root $rel]
++    if {![file isfile $path]} { error "required G2A harness input missing: $path" }
++    lappend input_hashes "$rel|[sha256_file $path]"
++  }
++  write_lines [file join $evidence_root G2A_BUILD_INPUT_SHA256.txt] $input_hashes
++
++  source $common_tcl
++  if {![namespace exists ::v41_xdma] || ![llength [info commands ::v41_xdma::configure_minimal_c2h_stream]]} {
++    error "authoritative XDMA configuration namespace/procedure unavailable"
++  }
++  if {$v41_xdma::part ne $expected_part} { error "XDMA helper part drift" }
++
++  set stage PROJECT_SETUP
++  cd $build_root
++  set project_dir [file join $build_root vivado_project]
++  set project_creation FAIL
++  create_project v41_g2a_r1i_gen2_offline $project_dir -part $expected_part
++  set project_creation PASS
++  set_property target_language Verilog [current_project]
++  set_property simulator_language Mixed [current_project]
++  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
++  config_ip_cache -use_cache_location [file join $build_root ip_cache]
++
++  add_files -norecurse $sv_files
++  set_property FILE_TYPE SystemVerilog [get_files $sv_files]
++  add_files -norecurse $vhdl_files
++
++  set input_xci_dir [file join $build_root input_xci]
++  file mkdir $input_xci_dir
++  set xdma_copy [file join $input_xci_dir xdma_v41_m1.xci]
++  file copy $xdma_source $xdma_copy
++  if {[sha256_file $xdma_copy] ne [sha256_file $xdma_source]} {
++    error "local XDMA XCI copy does not match committed input"
++  }
++  set ip_generation FAIL
++  import_ip -files $xdma_copy
++  set xdma_ip [get_ips -quiet xdma_v41_m1]
++  if {[llength $xdma_ip] != 1} { error "expected exactly one local XDMA IP object" }
++  v41_xdma::configure_minimal_c2h_stream $xdma_ip
++  v41_xdma::assert_frozen_g1_invariants $xdma_ip
++  if {[get_property CONFIG.pl_link_cap_max_link_speed $xdma_ip] ne "5.0_GT/s" ||
++      [get_property CONFIG.pl_link_cap_max_link_width $xdma_ip] ne "X1" ||
++      [get_property CONFIG.axisten_freq $xdma_ip] ne "62.5"} {
++    error "BLOCKED - UNEXPECTED_XDMA_CONFIG_DRIFT"
++  }
++  set configured_effective_config [effective_config_dict $xdma_ip]
++  set ip_config_property_count [dict size $configured_effective_config]
++  if {$ip_config_property_count == 0} { error "no effective XDMA CONFIG properties found" }
++
++  set imported_xci [get_property IP_FILE $xdma_ip]
++  set imported_xci_object [get_files -quiet $imported_xci]
++  if {[llength $imported_xci_object] != 1} { error "imported local XCI file object unavailable" }
++  set_property GENERATE_SYNTH_CHECKPOINT false $imported_xci_object
++  set synth_checkpoint_property [string tolower [get_property GENERATE_SYNTH_CHECKPOINT $imported_xci_object]]
++  if {$synth_checkpoint_property ni {false 0}} {
++    error "XDMA synthesis checkpoint must be disabled for integrated clean synthesis"
++  }
++  generate_target all $xdma_ip
++  set generated_effective_config [effective_config_dict $xdma_ip]
++  assert_config_dict_equal $configured_effective_config $generated_effective_config \
++    "post-generation XDMA"
++  v41_xdma::assert_frozen_g1_invariants $xdma_ip
++  v41_xdma::dump_effective_config $xdma_ip \
++    [file join $evidence_root G2A_XDMA_EFFECTIVE_CONFIG.txt]
++  report_property -file [file join $evidence_root G2A_XDMA_IP_PROPERTIES.txt] $xdma_ip
++  report_ip_status -file [file join $evidence_root G2A_XDMA_IP_STATUS.rpt]
++  set ip_generation PASS
++
++  add_files -fileset constrs_1 -norecurse $xdc_files
++  set_property PROCESSING_ORDER EARLY [get_files [lindex $xdc_files 0]]
++  set_property PROCESSING_ORDER LATE [get_files [lrange $xdc_files 1 end]]
++  set_property top $expected_top [get_filesets sources_1]
++  set_property generic $generics [get_filesets sources_1]
++  update_compile_order -fileset sources_1
++  if {[get_property PART [current_project]] ne $expected_part ||
++      [get_property TOP [get_filesets sources_1]] ne $expected_top ||
++      [get_property GENERIC [get_filesets sources_1]] ne $generics} {
++    error "project part/top/runtime provenance mismatch"
++  }
++  report_compile_order -fileset sources_1 -used_in synthesis \
++    -file [file join $evidence_root G2A_COMPILE_ORDER.rpt]
++
++  write_lines [file join $evidence_root G2A_BUILD_PROVENANCE.txt] [list \
++    "SOURCE_COMMIT=$source_commit" "SOURCE_TREE=$source_tree" \
++    "SOURCE_BRANCH=$expected_branch" "SOURCE_CLEAN=PASS" \
++    "QUALIFIED_BASE_COMMIT=$qualified_base_commit" \
++    "QUALIFIED_BASE_TREE=$qualified_base_tree" \
++    "DIRECT_BASE_RELATION=PASS" \
++    "PART=$expected_part" "TOP=$expected_top" "GENERIC=$generics" \
++    "BUILD_FLAGS=0x00000002" \
++    "VIVADO_VERSION=$vivado_version" "VIVADO_SW_BUILD=$vivado_sw_build" \
++    "VIVADO_PROCESS_ID=[pid]" "HARNESS_VIVADO_PROCESS_COUNT=1" \
++    "FLOW=QUALIFIED_R1I_DEFAULT_SYNTH_OPT_PLACE_PHYS_OPT_ROUTE" \
++    "CHECKPOINT_REUSE=NO" "IP_CACHE=LOCAL_CLEAN" \
++    "GENERATE_SYNTH_CHECKPOINT=false" \
++    "XDMA_EFFECTIVE_CONFIG_PROPERTIES=$ip_config_property_count" \
++    "SOURCE_TO_BIT_PROVENANCE=PENDING"]
++
++  set stage SYNTHESIS
++  record_action SYNTH_DESIGN
++  set synthesis FAIL
++  synth_design -top $expected_top -part $expected_part -flatten_hierarchy rebuilt
++  if {[llength [get_cells -quiet -hier]] == 0} { error "empty synthesized design" }
++  set synthesis PASS
++  set synth_dcp_path [file join $evidence_root G2A_SYNTH.dcp]
++  write_checkpoint -force $synth_dcp_path
++  set synth_dcp_sha [sha256_file $synth_dcp_path]
++  report_utilization -file [file join $evidence_root POST_SYNTH_UTILIZATION_FLAT.rpt]
++  report_utilization -hierarchical -hierarchical_depth 20 \
++    -file [file join $evidence_root POST_SYNTH_UTILIZATION_HIER.rpt]
++  report_timing_summary -delay_type min_max -max_paths 100 \
++    -file [file join $evidence_root POST_SYNTH_TIMING_SUMMARY.rpt]
++
++  set stage OPT_DESIGN
++  record_action OPT_DESIGN
++  set optimization FAIL
++  opt_design
++  set optimization PASS
++  set post_opt_metrics [resource_metrics POST_OPT]
++  set post_opt_dcp_path [file join $evidence_root G2A_POST_OPT.dcp]
++  write_checkpoint -force $post_opt_dcp_path
++  set post_opt_dcp_sha [sha256_file $post_opt_dcp_path]
++  report_utilization -hierarchical -hierarchical_depth 20 \
++    -file [file join $evidence_root POST_OPT_UTILIZATION_HIER.rpt]
++  if {[catch {enforce_resource_gate POST_OPT $post_opt_metrics} resource_failure]} {
++    set resource_gate FAIL
++    error $resource_failure
++  }
++
++  set stage PLACE_DESIGN
++  record_action PLACE_DESIGN
++  set placement FAIL
++  place_design
++  set placement PASS
++
++  set stage PHYS_OPT_DESIGN
++  record_action PHYS_OPT_DESIGN
++  set physical_optimization FAIL
++  phys_opt_design
++  set physical_optimization PASS
++
++  set stage ROUTE_DESIGN
++  record_action ROUTE_DESIGN
++  set routing FAIL
++  route_design
++
++  set stage ROUTED_REPORTS
++  report_route_status -file [file join $evidence_root ROUTE_STATUS.rpt]
++  set fully_routed [report_route_status -boolean_check ROUTED_FULLY]
++  set errors_in_routes [report_route_status -boolean_check ERRORS_IN_ROUTES]
++  set unrouted_nets [llength [report_route_status -return_nets -route_type UNROUTED]]
++  set partial_nets [llength [report_route_status -return_nets -route_type PARTIAL]]
++
++  set timing_summary_path [file join $evidence_root TIMING_SUMMARY.rpt]
++  report_timing_summary -delay_type min_max -max_paths 1000 \
++    -report_unconstrained -check_timing_verbose -file $timing_summary_path
++  report_timing -delay_type max -max_paths 1000 -nworst 10 \
++    -file [file join $evidence_root ROUTED_SETUP_TIMING.rpt]
++  report_timing -delay_type min -max_paths 1000 -nworst 10 \
++    -file [file join $evidence_root ROUTED_HOLD_TIMING.rpt]
++  set check_timing_path [file join $evidence_root CHECK_TIMING.rpt]
++  check_timing -verbose -file $check_timing_path
++  report_drc -file [file join $evidence_root DRC.rpt]
++  set cdc_path [file join $evidence_root CDC.rpt]
++  report_cdc -details -file $cdc_path
++  set bus_skew_path [file join $evidence_root BUS_SKEW.rpt]
++  report_bus_skew -warn_on_violation -file $bus_skew_path
++  report_exceptions -coverage -file [file join $evidence_root EXCEPTION_COVERAGE.rpt]
++  report_clocks -file [file join $evidence_root CLOCKS.rpt]
++  report_clock_utilization -file [file join $evidence_root CLOCK_UTILIZATION.rpt]
++  report_clock_interaction -file [file join $evidence_root CLOCK_INTERACTION.rpt]
++  report_ram_utilization -file [file join $evidence_root RAM_UTILIZATION.rpt]
++  set congestion_path [file join $evidence_root CONGESTION.rpt]
++  report_design_analysis -congestion -min_congestion_level 5 -file $congestion_path
++  report_methodology -file [file join $evidence_root METHODOLOGY.rpt]
++  report_property -file [file join $evidence_root ROUTED_DESIGN_PROPERTIES.txt] [current_design]
++  set final_metrics [resource_metrics ROUTED]
++  report_utilization -hierarchical -hierarchical_depth 20 \
++    -file [file join $evidence_root ROUTED_UTILIZATION_HIER.rpt]
++
++  # Re-resolve every active project-owned CDC/XDC collection in the routed
++  # netlist.  Textual constraint identity is insufficient: empty queries are
++  # an implementation-gate failure even if a generic report is otherwise
++  # clean.  Source/destination widths must also remain paired.
++  set cfg_src [get_cells -quiet -hier -regexp {.*MAILBOX/cfg_hold_pcie_reg\[[0-9]+\]}]
++  set cfg_dst [get_cells -quiet -hier -regexp {.*MAILBOX/nvp_cfg_(abort|arm|capture_generation|clear_errors|line_count_requested|single_line|target_line|window_16_lines)_reg(\[[0-9]+\])?}]
++  set status_src [get_cells -quiet -hier -regexp {.*MAILBOX/status_hold_nvp_reg\[[0-9]+\]}]
++  set status_dst [get_cells -quiet -hier -regexp {.*MAILBOX/status_bus_pcie_reg\[[0-9]+\]}]
++  set toggle_first_stages [get_cells -quiet -hier -regexp {.*(MAILBOX/(cfg_req_sync1_nvp|cfg_ack_sync1_pcie|status_req_sync1_pcie|status_ack_sync1_nvp)_reg|BAR_TARGET/(release_sync1_reg|commit_sync1_reg)(\[[0-9]+\])?)}]
++  set toggle_first_d [get_pins -quiet -of_objects $toggle_first_stages -filter {REF_PIN_NAME == D}]
++  set diag_gray_sources [get_cells -quiet -hier -regexp {.*(active_sav_gray_nvp_reg|slot_commit_gray_nvp_reg|vclk_edge_gray_nvp_reg)\[[0-9]+\]}]
++  set diag_gray_first_stages [get_cells -quiet -hier -regexp {.*(active_sav_gray_sync1_pcie_reg|slot_commit_gray_sync1_pcie_reg|vclk_edge_gray_sync1_user_reg)\[[0-9]+\]}]
++  set diag_gray_first_d [get_pins -quiet -of_objects $diag_gray_first_stages -filter {REF_PIN_NAME == D}]
++  set nvp_init_async_reset_pins [get_pins -quiet -hier -regexp {.*(NVP_PHYSICAL_FRONTEND/ingress_reset_sync_reg\[[0-9]+\]/PRE|nvp_ready_sync_reg\[[0-9]+\]/CLR)}]
++  set pcie_refclk_ibufs [get_cells -quiet -hier PCIE_REFCLK_IBUF]
++  set gt_channels [get_cells -quiet -hier -filter {REF_NAME == GTPE2_CHANNEL}]
++  set gt_commons [get_cells -quiet -hier -filter {REF_NAME == GTPE2_COMMON}]
++  set pcie_hard_blocks [get_cells -quiet -hier -filter {REF_NAME == PCIE_2_1}]
++
++  set cfg_src_count [llength $cfg_src]
++  set cfg_dst_count [llength $cfg_dst]
++  set status_src_count [llength $status_src]
++  set status_dst_count [llength $status_dst]
++  set toggle_first_stage_count [llength $toggle_first_stages]
++  set toggle_first_d_count [llength $toggle_first_d]
++  set diag_gray_source_count [llength $diag_gray_sources]
++  set diag_gray_first_d_count [llength $diag_gray_first_d]
++  set nvp_init_async_reset_pin_count [llength $nvp_init_async_reset_pins]
++  set pcie_refclk_ibuf_count [llength $pcie_refclk_ibufs]
++  set gt_channel_count [llength $gt_channels]
++  set gt_common_count [llength $gt_commons]
++  set pcie_hard_block_count [llength $pcie_hard_blocks]
++  write_lines [file join $evidence_root G2A_ROUTED_XDC_CDC_OBJECT_COVERAGE.txt] [list \
++    "CFG_SRC=$cfg_src_count" "CFG_DST=$cfg_dst_count" \
++    "STATUS_SRC=$status_src_count" "STATUS_DST=$status_dst_count" \
++    "TOGGLE_FIRST_STAGES=$toggle_first_stage_count" \
++    "TOGGLE_FIRST_D=$toggle_first_d_count" \
++    "DIAG_GRAY_SOURCES=$diag_gray_source_count" \
++    "DIAG_GRAY_FIRST_D=$diag_gray_first_d_count" \
++    "NVP_INIT_ASYNC_RESET_PINS=$nvp_init_async_reset_pin_count" \
++    "PCIE_REFCLK_IBUF=$pcie_refclk_ibuf_count" \
++    "GTPE2_CHANNEL=$gt_channel_count" "GTPE2_COMMON=$gt_common_count" \
++    "PCIE_2_1=$pcie_hard_block_count"]
++
++  if {$cfg_src_count == 0 || $cfg_src_count != $cfg_dst_count ||
++      $status_src_count == 0 || $status_src_count != $status_dst_count ||
++      $toggle_first_stage_count == 0 || $toggle_first_stage_count != $toggle_first_d_count ||
++      $diag_gray_source_count == 0 || $diag_gray_source_count != $diag_gray_first_d_count ||
++      $nvp_init_async_reset_pin_count == 0 || $pcie_refclk_ibuf_count != 1 ||
++      $gt_channel_count != 1 || $gt_common_count != 1 || $pcie_hard_block_count != 1} {
++    set xdc_collection_gate FAIL
++    error "routed XDC/CDC collection gate failed; see G2A_ROUTED_XDC_CDC_OBJECT_COVERAGE.txt"
++  }
++  set xdc_collection_gate PASS
++
++  report_timing -delay_type max -from $cfg_src -to $cfg_dst -max_paths 100 \
++    -file [file join $evidence_root MAX_DELAY_CFG.rpt]
++  report_timing -delay_type max -from $status_src -to $status_dst -max_paths 100 \
++    -file [file join $evidence_root MAX_DELAY_STATUS.rpt]
++  report_timing -delay_type max -from $diag_gray_sources -to $diag_gray_first_d -max_paths 100 \
++    -file [file join $evidence_root MAX_DELAY_DIAG_GRAY.rpt]
++
++  set stage ROUTED_HARD_GATES
++  if {$fully_routed != 1 || $errors_in_routes != 0 || $unrouted_nets != 0 || $partial_nets != 0} {
++    set routing FAIL
++    error "route gate failed: fully=$fully_routed errors=$errors_in_routes unrouted=$unrouted_nets partial=$partial_nets"
++  }
++  set routing PASS
++  set congestion_text [read_text $congestion_path]
++  set placer_congestion_clear [regexp -nocase \
++    {No congestion windows are found above level 5} $congestion_text]
++  set router_congestion_clear [regexp -nocase \
++    {No initial estimated congestion windows are found above level 5} $congestion_text]
++  if {!$placer_congestion_clear || !$router_congestion_clear} {
++    set congestion_gate FAIL
++    error "congestion gate failed: unresolved level-5-or-higher hotspot"
++  }
++  set congestion_gate PASS
++
++  set worst_setup [get_timing_paths -quiet -delay_type max -max_paths 1 -nworst 1]
++  set worst_hold [get_timing_paths -quiet -delay_type min -max_paths 1 -nworst 1]
++  if {[llength $worst_setup] != 1 || [llength $worst_hold] != 1} {
++    set timing_gate FAIL
++    error "required setup/hold timing path class is absent"
++  }
++  set wns [get_property SLACK $worst_setup]
++  set whs [get_property SLACK $worst_hold]
++  if {![string is double -strict $wns] || ![string is double -strict $whs]} {
++    set timing_gate FAIL
++    error "actual timing slack is not numeric"
++  }
++  set failing_setup [llength [get_timing_paths -quiet -delay_type max \
++    -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
++  set failing_hold [llength [get_timing_paths -quiet -delay_type min \
++    -slack_lesser_than 0.0 -max_paths 1 -nworst 1]]
++  set tns [expr {$failing_setup == 0 ? 0.0 : "NEGATIVE_SEE_TIMING_SUMMARY"}]
++  set ths [expr {$failing_hold == 0 ? 0.0 : "NEGATIVE_SEE_TIMING_SUMMARY"}]
++  if {$wns <= 0.0 || $whs <= 0.0 || $failing_setup != 0 || $failing_hold != 0} {
++    set timing_gate FAIL
++    error "timing gate failed: WNS=$wns TNS=$tns WHS=$whs THS=$ths"
++  }
++  set check_timing_text [read_text $check_timing_path]
++  set no_clock_count [check_timing_table_count $check_timing_text no_clock]
++  set unconstrained_internal_count \
++    [check_timing_table_count $check_timing_text unconstrained_internal_endpoints]
++  if {$no_clock_count eq "UNKNOWN" || $unconstrained_internal_count eq "UNKNOWN"} {
++    set timing_gate FAIL
++    error "check_timing did not expose required no_clock/unconstrained counts"
++  }
++  if {$no_clock_count != 0 || $unconstrained_internal_count != 0} {
++    set timing_gate FAIL
++    error "unconstrained critical timing gate failed: no_clock=$no_clock_count unconstrained_internal_endpoints=$unconstrained_internal_count"
++  }
++  set timing_gate PASS
++
++  set drc_errors 0
++  set drc_critical_warnings 0
++  set drc_warnings 0
++  foreach violation [get_drc_violations -quiet] {
++    set severity [string toupper [get_property SEVERITY $violation]]
++    if {$severity eq "ERROR"} { incr drc_errors }
++    if {$severity eq "CRITICAL WARNING"} { incr drc_critical_warnings }
++    if {$severity eq "WARNING"} { incr drc_warnings }
++  }
++  if {$drc_errors != 0 || $drc_critical_warnings != 0} {
++    set drc_gate FAIL
++    error "DRC gate failed: errors=$drc_errors critical_warnings=$drc_critical_warnings"
++  }
++  set drc_gate PASS
++
++  if {[catch {get_cdc_violations -quiet} cdc_violations]} {
++    set cdc_gate FAIL
++    error "CDC violation objects unavailable: $cdc_violations"
++  }
++  set cdc_critical 0
++  set cdc_unknown 0
++  set cdc_object_lines [list "CDC_VIOLATION_OBJECTS=[llength $cdc_violations]"]
++  foreach violation $cdc_violations {
++    set severity [string toupper [property_or_unknown SEVERITY $violation]]
++    if {$severity eq "CRITICAL" || $severity eq "CRITICAL WARNING"} { incr cdc_critical }
++    if {$severity eq "UNKNOWN"} { incr cdc_unknown }
++    lappend cdc_object_lines \
++      "CDC_VIOLATION=[get_property NAME $violation]|SEVERITY=$severity"
++  }
++  write_lines [file join $evidence_root CDC_VIOLATION_OBJECTS.txt] $cdc_object_lines
++  if {$cdc_unknown != 0} {
++    set cdc_gate FAIL
++    error "CDC gate failed: unknown=$cdc_unknown"
++  }
++  if {$cdc_critical == 0} {
++    set cdc_disposition NOT_REQUIRED
++  } else {
++    set cdc_critical_dispositioned \
++      [enforce_gen2_xdma_pipe_cdc_disposition $cdc_path $cdc_violations]
++    set cdc_disposition PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX
++  }
++  if {$cdc_critical_dispositioned != $cdc_critical} {
++    set cdc_gate FAIL
++    error "CDC gate failed: critical=$cdc_critical dispositioned=$cdc_critical_dispositioned"
++  }
++  set cdc_gate PASS
++
++  set bus_skew_violations [regexp -all -nocase \
++    {Slack[ \t]*\([ \t]*VIOLATED[ \t]*\)} [read_text $bus_skew_path]]
++  set bus_skew_met_constraints [regexp -all -nocase \
++    {Slack[ \t]*\([ \t]*MET[ \t]*\)} [read_text $bus_skew_path]]
++  set bus_skew_text [read_text $bus_skew_path]
++  if {[catch {
++    enforce_named_bus_skew_constraint $bus_skew_text CONFIG \
++      {MAILBOX/cfg_hold_pcie_reg} {MAILBOX/nvp_cfg_}
++    enforce_named_bus_skew_constraint $bus_skew_text STATUS \
++      {MAILBOX/status_hold_nvp_reg} {MAILBOX/status_bus_pcie_reg}
++    enforce_named_bus_skew_constraint $bus_skew_text DIAG_GRAY \
++      {active_sav_gray_nvp_reg|slot_commit_gray_nvp_reg|vclk_edge_gray_nvp_reg} \
++      {active_sav_gray_sync1_pcie_reg|slot_commit_gray_sync1_pcie_reg|vclk_edge_gray_sync1_user_reg}
++  } bus_skew_failure] || $bus_skew_violations != 0 || $bus_skew_met_constraints < 3} {
++    set bus_skew_gate FAIL
++    error "bus-skew gate failed: violations=$bus_skew_violations met=$bus_skew_met_constraints detail=$bus_skew_failure"
++  }
++  set bus_skew_gate PASS
++
++  set black_boxes [get_cells -quiet -hier -filter {IS_BLACKBOX == 1}]
++  set black_box_count [llength $black_boxes]
++  set black_box_lines [list "BLACK_BOX_COUNT=$black_box_count"]
++  foreach cell $black_boxes {
++    lappend black_box_lines "BLACK_BOX=[get_property NAME $cell]|REF_NAME=[property_or_unknown REF_NAME $cell]"
++  }
++  lappend black_box_lines "BLACK_BOX_GATE=[expr {$black_box_count == 0 ? {PASS} : {FAIL}}]"
++  write_lines [file join $evidence_root BLACK_BOXES.txt] $black_box_lines
++  if {$black_box_count != 0} {
++    set black_box_gate FAIL
++    error "unresolved black-box gate failed: count=$black_box_count"
++  }
++  set black_box_gate PASS
++
++  if {[catch {enforce_resource_gate ROUTED $final_metrics} resource_failure]} {
++    set resource_gate FAIL
++    error $resource_failure
++  }
++  set resource_gate PASS
++  set bufg_used [llength [get_cells -quiet -hier -filter {REF_NAME =~ BUFG*}]]
++  set mmcm_used [llength [get_cells -quiet -hier -filter {REF_NAME =~ MMCM*}]]
++  set pll_used [llength [get_cells -quiet -hier -filter {REF_NAME =~ PLL*}]]
++  set routed_dcp_path [file join $evidence_root G2A_ROUTED.dcp]
++  write_checkpoint -force $routed_dcp_path
++  set routed_dcp_sha [sha256_file $routed_dcp_path]
++
++  # The exported XDMA axi_aclk is the application/user clock consumed by R1i.
++  # Resolve it from routed timing objects; interface metadata is not accepted
++  # as proof of its implementation frequency.
++  set nvp_clock_pins [get_pins -quiet -hier -regexp {.*NVP_AUTOINIT.*/C}]
++  set axi_bridge_clock_pins [get_pins -quiet -hier -regexp {.*AXI_LITE_HOST_BRIDGE.*/C}]
++  set nvp_clock_pin_count [llength $nvp_clock_pins]
++  set axi_bridge_clock_pin_count [llength $axi_bridge_clock_pins]
++  set nvp_application_clocks [unique_objects_by_name \
++    [get_clocks -quiet -of_objects $nvp_clock_pins]]
++  set axi_application_clocks [unique_objects_by_name \
++    [get_clocks -quiet -of_objects $axi_bridge_clock_pins]]
++  set nvp_application_clock_names [list]
++  foreach clock_object $nvp_application_clocks {
++    lappend nvp_application_clock_names [get_property NAME $clock_object]
++  }
++  set nvp_application_clock_names [lsort $nvp_application_clock_names]
++  set axi_application_clock_names [list]
++  foreach clock_object $axi_application_clocks {
++    lappend axi_application_clock_names [get_property NAME $clock_object]
++  }
++  set axi_application_clock_names [lsort $axi_application_clock_names]
++  set axi_clock_objects [unique_objects_by_name [concat \
++    [clocks_for_pattern *axi_aclk*] \
++    [get_clocks -quiet userclk1] \
++    $nvp_application_clocks $axi_application_clocks]]
++  set clock_binding AXI_ACLK_NET_PIN_PLUS_PROTECTED_CONSUMERS_AND_USERCLK1
++  set routed_clock_object_count [llength $axi_clock_objects]
++  set clock_receipt [list \
++    "XCI_REQUESTED_AXISTEN_FREQ=[get_property CONFIG.axisten_freq $xdma_ip]" \
++    "XCI_REQUESTED_FREE_RUN_FREQ=[get_property CONFIG.free_run_freq $xdma_ip]" \
++    "CLOCK_BINDING=$clock_binding" \
++    "NVP_AUTOINIT_CLOCK_PIN_COUNT=$nvp_clock_pin_count" \
++    "NVP_AUTOINIT_CLOCK_OBJECTS=[join $nvp_application_clock_names ,]" \
++    "AXI_BRIDGE_CLOCK_PIN_COUNT=$axi_bridge_clock_pin_count" \
++    "AXI_BRIDGE_CLOCK_OBJECTS=[join $axi_application_clock_names ,]" \
++    "AXI_USER_CLOCK_OBJECT_COUNT=$routed_clock_object_count"]
++  if {$nvp_clock_pin_count == 0 || $axi_bridge_clock_pin_count == 0 ||
++      [llength $nvp_application_clocks] == 0 || [llength $axi_application_clocks] == 0 ||
++      $nvp_application_clock_names ne $axi_application_clock_names ||
++      $routed_clock_object_count == 0} {
++    set clock_gate BLOCKED
++    lappend clock_receipt "EFFECTIVE_AXI_CLOCK_MHZ=UNKNOWN" \
++      "EFFECTIVE_USER_CLOCK_MHZ=UNKNOWN" "CLOCK_GATE=BLOCKED" \
++      "CLOCK_BLOCKER=GEN2_CHANGED_APPLICATION_CLOCK"
++    write_lines [file join $evidence_root G2A_CLOCK_OBJECT_RECEIPT.txt] $clock_receipt
++    error "BLOCKED - GEN2_CHANGED_APPLICATION_CLOCK: routed axi_aclk timing object unavailable"
++  }
++  set clock_index 0
++  set first_frequency UNKNOWN
++  set clock_frequency_mismatch 0
++  foreach clock_object $axi_clock_objects {
++    set period [get_property PERIOD $clock_object]
++    if {![string is double -strict $period] || $period <= 0.0} {
++      lappend clock_receipt "CLOCK_${clock_index}_PERIOD=INVALID"
++      set clock_frequency_mismatch 1
++      incr clock_index
++      continue
++    }
++    set frequency [expr {1000.0 / $period}]
++    if {$first_frequency eq "UNKNOWN"} { set first_frequency $frequency }
++    if {abs($frequency - $expected_user_clock_mhz) > $clock_tolerance_mhz} {
++      set clock_frequency_mismatch 1
++    }
++    lappend clock_receipt \
++      "CLOCK_${clock_index}_NAME=[get_property NAME $clock_object]" \
++      "CLOCK_${clock_index}_PERIOD_NS=[format %.6f $period]" \
++      "CLOCK_${clock_index}_FREQUENCY_MHZ=[format %.6f $frequency]" \
++      "CLOCK_${clock_index}_SOURCE_PINS=[property_or_unknown SOURCE_PINS $clock_object]" \
++      "CLOCK_${clock_index}_WAVEFORM=[property_or_unknown WAVEFORM $clock_object]"
++    incr clock_index
++  }
++  if {$first_frequency ne "UNKNOWN"} {
++    set effective_axi_clock_mhz [format %.6f $first_frequency]
++    set effective_user_clock_mhz $effective_axi_clock_mhz
++  }
++  if {$clock_frequency_mismatch} {
++    set clock_gate BLOCKED
++    lappend clock_receipt "EFFECTIVE_AXI_CLOCK_MHZ=$effective_axi_clock_mhz" \
++      "EFFECTIVE_USER_CLOCK_MHZ=$effective_user_clock_mhz" "CLOCK_GATE=BLOCKED" \
++      "CLOCK_BLOCKER=GEN2_CHANGED_APPLICATION_CLOCK"
++    write_lines [file join $evidence_root G2A_CLOCK_OBJECT_RECEIPT.txt] $clock_receipt
++    error "BLOCKED - GEN2_CHANGED_APPLICATION_CLOCK: routed application clock is not approximately 62.5 MHz"
++  }
++  lappend clock_receipt "EFFECTIVE_AXI_CLOCK_MHZ=$effective_axi_clock_mhz" \
++    "EFFECTIVE_USER_CLOCK_MHZ=$effective_user_clock_mhz" \
++    "EXPECTED_APPLICATION_CLOCK_MHZ=$expected_user_clock_mhz" \
++    "CLOCK_TOLERANCE_MHZ=$clock_tolerance_mhz" "CLOCK_GATE=PASS"
++  write_lines [file join $evidence_root G2A_CLOCK_OBJECT_RECEIPT.txt] $clock_receipt
++  set clock_gate PASS
++
++  foreach action {SYNTH_DESIGN OPT_DESIGN PLACE_DESIGN PHYS_OPT_DESIGN ROUTE_DESIGN} {
++    if {[dict get $action_counts $action] != 1} { error "flow invocation count mismatch for $action" }
++  }
++  if {[dict get $action_counts WRITE_BITSTREAM] != 0 ||
++      [dict get $action_counts WRITE_DEBUG_PROBES] != 0} {
++    error "output writers ran before all hard gates passed"
++  }
++
++  if {[git_value rev-parse HEAD] ne $source_commit ||
++      [git_value rev-parse {HEAD^{tree}}] ne $source_tree ||
++      [git_value symbolic-ref --short HEAD] ne $expected_branch ||
++      [git_value status --porcelain --untracked-files=all] ne ""} {
++    error "source commit/tree/branch/cleanliness changed before bitstream"
++  }
++
++  write_lines [file join $evidence_root G2A_PRE_BITSTREAM_HARD_GATE.txt] [list \
++    "SOURCE_COMMIT=$source_commit" "SOURCE_TREE=$source_tree" \
++    "SOURCE_TO_BIT_PROVENANCE=PASS" \
++    "PROJECT_CREATION=$project_creation" "IP_GENERATION=$ip_generation" \
++    "SYNTHESIS=$synthesis" "OPTIMIZATION=$optimization" \
++    "PLACEMENT=$placement" "PHYSICAL_OPTIMIZATION=$physical_optimization" \
++    "ROUTING=$routing" "FULLY_ROUTED=$fully_routed" \
++    "ERRORS_IN_ROUTES=$errors_in_routes" "UNROUTED_NETS=$unrouted_nets" \
++    "PARTIAL_NETS=$partial_nets" "WNS=$wns" "TNS=$tns" \
++    "WHS=$whs" "THS=$ths" "NO_CLOCK_COUNT=$no_clock_count" \
++    "UNCONSTRAINED_INTERNAL_ENDPOINTS=$unconstrained_internal_count" \
++    "DRC_ERRORS=$drc_errors" "DRC_CRITICAL_WARNINGS=$drc_critical_warnings" \
++    "CDC_CRITICAL=$cdc_critical" "CDC_UNKNOWN=$cdc_unknown" \
++    "BUS_SKEW_VIOLATIONS=$bus_skew_violations" \
++    "BUS_SKEW_MET_CONSTRAINTS=$bus_skew_met_constraints" \
++    "BLACK_BOX_COUNT=$black_box_count" "CLOCK_GATE=$clock_gate" \
++    "XDC_COLLECTION_GATE=$xdc_collection_gate" \
++    "RESOURCE_GATE=$resource_gate" "CONGESTION_GATE=$congestion_gate" \
++    "SYNTH_DCP_SHA256=$synth_dcp_sha" \
++    "POST_OPT_DCP_SHA256=$post_opt_dcp_sha" \
++    "ROUTED_DCP_SHA256=$routed_dcp_sha" "RESULT=PASS"]
++
++  set stage WRITE_BITSTREAM
++  record_action WRITE_BITSTREAM
++  write_bitstream $bit_path
++  if {![file isfile $bit_path] || [file size $bit_path] == 0} {
++    error "bitstream missing or empty after write_bitstream"
++  }
++  set bit_generated YES
++  set bit_sha [sha256_file $bit_path]
++
++  # A design can legitimately contain no debug probes.  The attempt is
++  # mandatory; absence is explicitly receipted but is not a design gate.
++  set stage WRITE_DEBUG_PROBES
++  record_action WRITE_DEBUG_PROBES
++  if {[catch {write_debug_probes -force $ltx_path} ltx_failure]} {
++    set ltx_error [single_line $ltx_failure]
++  }
++  if {[file isfile $ltx_path] && [file size $ltx_path] > 0} {
++    set ltx_generated YES
++    set ltx_sha [sha256_file $ltx_path]
++  }
++  write_lines [file join $evidence_root G2A_DEBUG_PROBES_RECEIPT.txt] [list \
++    "LTX_PATH=$ltx_path" "WRITE_DEBUG_PROBES_ATTEMPTED=YES" \
++    "LTX_PRODUCED=$ltx_generated" "LTX_SHA256=$ltx_sha" "LTX_ERROR=$ltx_error"]
++
++  if {[git_value rev-parse HEAD] ne $source_commit ||
++      [git_value rev-parse {HEAD^{tree}}] ne $source_tree ||
++      [git_value symbolic-ref --short HEAD] ne $expected_branch ||
++      [git_value status --porcelain --untracked-files=all] ne ""} {
++    error "source commit/tree/branch/cleanliness changed after build"
++  }
++  set source_post_build PASS
++  set stage COMPLETE
++} build_failure build_options]
++
++set terminal_lines [list \
++  "TASK=AHD_V41_G2A_R1I_GEN2_OFFLINE_INTEGRATION" \
++  "EXECUTION_MODE=$execution_mode" "STAGE=$stage" \
++  "SOURCE_COMMIT=$source_commit" "SOURCE_TREE=$source_tree" \
++  "QUALIFIED_BASE_COMMIT=$qualified_base_commit" \
++  "QUALIFIED_BASE_TREE=$qualified_base_tree" \
++  "INTEGRATION_BRANCH=$expected_branch" \
++  "VIVADO_VERSION=$vivado_version" "VIVADO_SW_BUILD=$vivado_sw_build" \
++  "PROJECT_CREATION=$project_creation" "IP_GENERATION=$ip_generation" \
++  "XDMA_CONFIG_PROPERTY_COUNT=$ip_config_property_count" \
++  "SYNTHESIS=$synthesis" "OPTIMIZATION=$optimization" \
++  "PLACEMENT=$placement" "PHYSICAL_OPTIMIZATION=$physical_optimization" \
++  "ROUTING=$routing" "FULLY_ROUTED=$fully_routed" \
++  "ERRORS_IN_ROUTES=$errors_in_routes" "UNROUTED_NETS=$unrouted_nets" \
++  "PARTIAL_NETS=$partial_nets" "TIMING_GATE=$timing_gate" \
++  "WNS=$wns" "TNS=$tns" "WHS=$whs" "THS=$ths" \
++  "FAILING_SETUP_PATHS=$failing_setup" "FAILING_HOLD_PATHS=$failing_hold" \
++  "NO_CLOCK_COUNT=$no_clock_count" \
++  "UNCONSTRAINED_INTERNAL_ENDPOINTS=$unconstrained_internal_count" \
++  "DRC_GATE=$drc_gate" "DRC_ERRORS=$drc_errors" \
++  "DRC_CRITICAL_WARNINGS=$drc_critical_warnings" "DRC_WARNINGS=$drc_warnings" \
++  "CDC_GATE=$cdc_gate" "CDC_CRITICAL=$cdc_critical" "CDC_UNKNOWN=$cdc_unknown" \
++  "CDC_CRITICAL_DISPOSITIONED=$cdc_critical_dispositioned" \
++  "CDC_DISPOSITION=$cdc_disposition" \
++  "BUS_SKEW_GATE=$bus_skew_gate" "BUS_SKEW_VIOLATIONS=$bus_skew_violations" \
++  "BUS_SKEW_MET_CONSTRAINTS=$bus_skew_met_constraints" \
++  "BLACK_BOX_GATE=$black_box_gate" "BLACK_BOX_COUNT=$black_box_count" \
++  "CLOCK_GATE=$clock_gate" "ROUTED_CLOCK_OBJECT_COUNT=$routed_clock_object_count" \
++  "NVP_AUTOINIT_CLOCK_PIN_COUNT=$nvp_clock_pin_count" \
++  "AXI_BRIDGE_CLOCK_PIN_COUNT=$axi_bridge_clock_pin_count" \
++  "EFFECTIVE_USER_CLOCK_MHZ=$effective_user_clock_mhz" \
++  "EFFECTIVE_AXI_CLOCK_MHZ=$effective_axi_clock_mhz" \
++  "XDC_COLLECTION_GATE=$xdc_collection_gate" \
++  "CFG_SRC=$cfg_src_count" "CFG_DST=$cfg_dst_count" \
++  "STATUS_SRC=$status_src_count" "STATUS_DST=$status_dst_count" \
++  "TOGGLE_FIRST_STAGES=$toggle_first_stage_count" "TOGGLE_FIRST_D=$toggle_first_d_count" \
++  "DIAG_GRAY_SOURCES=$diag_gray_source_count" "DIAG_GRAY_FIRST_D=$diag_gray_first_d_count" \
++  "NVP_INIT_ASYNC_RESET_PINS=$nvp_init_async_reset_pin_count" \
++  "PCIE_REFCLK_IBUF=$pcie_refclk_ibuf_count" \
++  "GTPE2_CHANNEL=$gt_channel_count" "GTPE2_COMMON=$gt_common_count" \
++  "PCIE_2_1=$pcie_hard_block_count" \
++  "RESOURCE_GATE=$resource_gate" "BUFG_USED=$bufg_used" \
++  "CONGESTION_GATE=$congestion_gate" \
++  "MMCM_USED=$mmcm_used" "PLL_USED=$pll_used" \
++  "SYNTH_DCP_SHA256=$synth_dcp_sha" \
++  "POST_OPT_DCP_SHA256=$post_opt_dcp_sha" \
++  "ROUTED_DCP_SHA256=$routed_dcp_sha" \
++  "BITSTREAM_PATH=$bit_path" "BITSTREAM_PRODUCED=$bit_generated" \
++  "BITSTREAM_SHA256=$bit_sha" "LTX_PATH=$ltx_path" \
++  "LTX_PRODUCED=$ltx_generated" "LTX_SHA256=$ltx_sha" \
++  "SOURCE_POST_BUILD=$source_post_build" "CHECKPOINT_REUSE=NO" \
++  "HARDWARE_ACCESSED=NO" "C2H_DATA_PLANE_IMPLEMENTED=NO" "G2B_STARTED=NO"]
++
++if {[dict size $post_opt_metrics] != 0} {
++  foreach key {LUT_USED LUT_AVAILABLE LUT_PERCENT FF_USED FF_AVAILABLE FF_PERCENT BRAM_USED BRAM_AVAILABLE BRAM_PERCENT DSP_USED DSP_AVAILABLE DSP_PERCENT} {
++    set value [dict get $post_opt_metrics $key]
++    if {[string match *_PERCENT $key]} { set value [format %.3f $value] }
++    lappend terminal_lines "POST_OPT_${key}=$value"
++  }
++}
++if {[dict size $final_metrics] != 0} {
++  foreach key {LUT_USED LUT_AVAILABLE LUT_PERCENT FF_USED FF_AVAILABLE FF_PERCENT BRAM_USED BRAM_AVAILABLE BRAM_PERCENT DSP_USED DSP_AVAILABLE DSP_PERCENT} {
++    set value [dict get $final_metrics $key]
++    if {[string match *_PERCENT $key]} { set value [format %.3f $value] }
++    lappend terminal_lines "ROUTED_${key}=$value"
++  }
++}
++dict for {key value} $action_counts { lappend terminal_lines "$key=$value" }
++
++if {$build_result != 0} {
++  # Record whether the source stayed sealed even on a failed tool/design gate.
++  set failure_source_identity FAIL
++  if {![catch {
++    expr {[git_value rev-parse HEAD] eq $source_commit &&
++          [git_value rev-parse {HEAD^{tree}}] eq $source_tree &&
++          [git_value symbolic-ref --short HEAD] eq $expected_branch &&
++          [git_value status --porcelain --untracked-files=all] eq ""}
++  } failure_source_ok] && $failure_source_ok} {
++    set failure_source_identity PASS
++  }
++  lappend terminal_lines "SOURCE_IDENTITY_AFTER_FAILURE=$failure_source_identity" \
++    "BUILD=FAIL" "ERROR=[single_line $build_failure]"
++  if {[dict exists $build_options -errorinfo]} {
++    lappend terminal_lines "ERROR_INFO=[single_line [dict get $build_options -errorinfo]]"
++  }
++  write_lines [file join $evidence_root G2A_BUILD_RESULT.txt] $terminal_lines
++  puts stderr "G2A_BUILD_FAIL: $build_failure"
++  catch {close_project}
++  exit 1
++}
++
++foreach action {SYNTH_DESIGN OPT_DESIGN PLACE_DESIGN PHYS_OPT_DESIGN ROUTE_DESIGN WRITE_BITSTREAM WRITE_DEBUG_PROBES} {
++  if {[dict get $action_counts $action] != 1} {
++    lappend terminal_lines "BUILD=FAIL" "ERROR=terminal operation-count mismatch for $action"
++    write_lines [file join $evidence_root G2A_BUILD_RESULT.txt] $terminal_lines
++    catch {close_project}
++    exit 1
++  }
++}
++lappend terminal_lines "BUILD=PASS" "SOURCE_TO_BIT_PROVENANCE=PASS"
++write_lines [file join $evidence_root G2A_BUILD_RESULT.txt] $terminal_lines
++catch {close_project}
++puts "G2A_BUILD_PASS BITSTREAM_SHA256=$bit_sha LTX_PRODUCED=$ltx_generated LTX_SHA256=$ltx_sha"
++exit 0
+diff --git a/scripts/v41/xdma_config_common.tcl b/scripts/v41/xdma_config_common.tcl
+index c79175e13ad7c94b03af3cbe80684b27de123c0b..ea9c2b5a463e6c4e15743d53abab734ba5fdf516 100644
+--- a/scripts/v41/xdma_config_common.tcl
++++ b/scripts/v41/xdma_config_common.tcl
+@@ -7,7 +7,7 @@ proc v41_xdma::minimal_c2h_stream_config {} {
+   # XDMA v4.2 on the 7-series PCIe block rejects zero read/H2C channels;
+   # one is the minimum legal value. The application leaves H2C unused.
+   return [dict create \
+-    CONFIG.pl_link_cap_max_link_speed {2.5_GT/s} \
++    CONFIG.pl_link_cap_max_link_speed {5.0_GT/s} \
+     CONFIG.pl_link_cap_max_link_width {X1} \
+     CONFIG.ref_clk_freq {100_MHz} \
+     CONFIG.sys_reset_polarity {ACTIVE_LOW} \
+@@ -28,13 +28,79 @@ proc v41_xdma::minimal_c2h_stream_config {} {
+     CONFIG.pcie_blk_locn {X0Y0}]
+ }
+ 
+-proc v41_xdma::configure_minimal_c2h_stream {ip} {
+-  set config [minimal_c2h_stream_config]
+-  set_property -dict $config $ip
+-  foreach {property expected} $config {
++# Frozen G1 properties are asserted read-only. They are deliberately kept out
++# of minimal_c2h_stream_config so this check cannot rewrite a drifting value.
++proc v41_xdma::frozen_g1_invariants {} {
++  return [dict create \
++    CONFIG.functional_mode {DMA} \
++    CONFIG.mode_selection {Basic} \
++    CONFIG.pcie_blk_locn {X0Y0} \
++    CONFIG.pl_link_cap_max_link_width {X1} \
++    CONFIG.ref_clk_freq {100_MHz} \
++    CONFIG.free_run_freq {100_MHz} \
++    CONFIG.axisten_freq {62.5} \
++    CONFIG.dedicate_perst {true} \
++    CONFIG.sys_reset_polarity {ACTIVE_LOW} \
++    CONFIG.axi_data_width {64_bit} \
++    CONFIG.xdma_axi_intf_mm {AXI_Stream} \
++    CONFIG.xdma_rnum_chnl {1} \
++    CONFIG.xdma_wnum_chnl {1} \
++    CONFIG.xdma_num_usr_irq {1} \
++    CONFIG.pf0_msi_enabled {true} \
++    CONFIG.pf0_msi_cap_multimsgcap {1_vector} \
++    CONFIG.pf0_msix_enabled {false} \
++    CONFIG.axilite_master_en {true} \
++    CONFIG.axilite_master_size {128} \
++    CONFIG.axilite_master_scale {Kilobytes} \
++    CONFIG.pf0_bar0_enabled {true} \
++    CONFIG.pf0_bar0_size {128} \
++    CONFIG.pf0_bar0_scale {Kilobytes} \
++    CONFIG.pf0_bar0_64bit {false} \
++    CONFIG.pf0_bar1_enabled {false} \
++    CONFIG.pf0_bar2_enabled {false} \
++    CONFIG.pf0_bar3_enabled {false} \
++    CONFIG.pf0_bar4_enabled {false} \
++    CONFIG.pf0_bar5_enabled {false} \
++    CONFIG.pciebar2axibar_axil_master {0x00000000} \
++    CONFIG.vendor_id {10EE} \
++    CONFIG.pf0_device_id {7011} \
++    CONFIG.pf0_subsystem_vendor_id {10EE} \
++    CONFIG.pf0_subsystem_id {0007} \
++    CONFIG.pf0_class_code {058000} \
++    CONFIG.axist_bypass_en {false} \
++    CONFIG.xdma_dsc_bypass {false} \
++    CONFIG.xdma_sts_ports {false} \
++    CONFIG.en_debug_ports {false} \
++    CONFIG.pcie_extended_tag {true}]
++}
++
++proc v41_xdma::assert_property_dict {ip properties label} {
++  foreach {property expected} $properties {
+     set actual [get_property $property $ip]
+     if {$actual ne $expected} {
+-      error "XDMA property mismatch for $property: expected '$expected', got '$actual'"
++      error "$label property mismatch for $property: expected '$expected', got '$actual'"
++    }
++  }
++}
++
++proc v41_xdma::assert_frozen_g1_invariants {ip} {
++  assert_property_dict $ip [frozen_g1_invariants] {XDMA frozen G1 invariant}
++}
++
++proc v41_xdma::dump_effective_config {ip path} {
++  set fh [open $path w]
++  fconfigure $fh -translation lf
++  foreach property [lsort [list_property $ip]] {
++    if {[string match {CONFIG.*} $property]} {
++      puts $fh "$property=[get_property $property $ip]"
+     }
+   }
++  close $fh
++}
++
++proc v41_xdma::configure_minimal_c2h_stream {ip} {
++  set config [minimal_c2h_stream_config]
++  set_property -dict $config $ip
++  assert_property_dict $ip $config {XDMA configured}
++  assert_frozen_g1_invariants $ip
+ }
+diff --git a/tests/v41/run_g2a_offline_checks.ps1 b/tests/v41/run_g2a_offline_checks.ps1
+new file mode 100644
+index 0000000000000000000000000000000000000000..52f9ffc15e8da67530a700dfa8da835236df5fc3
+--- /dev/null
++++ b/tests/v41/run_g2a_offline_checks.ps1
+@@ -0,0 +1,850 @@
++[CmdletBinding()]
++param(
++    [string]$RepoRoot = '',
++    [Parameter(Mandatory = $true)][string]$EvidenceRoot,
++    [string]$VivadoBat = 'C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat',
++    [switch]$SkipSim,
++    [switch]$PreCommit
++)
++
++$ErrorActionPreference = 'Stop'
++Set-StrictMode -Version Latest
++
++$BaseCommit = '20c3323d79d3896edc586d6db1df7deee60f9e41'
++$BaseTree = '70d801fd7a879080da399bfa9ee95fd6eb008e16'
++$IntegrationBranch = 'integration/v41-r1i-gen2-g2a'
++$QualifiedTag = 'v41-r1i-qualified-poc-20260827'
++$PrimaryDonorCommit = 'c89e88bcdf389614c884fb129e8b2d42a585bccb'
++$SecondaryDonorCommit = '8464af66611f7c22b8a36a4aab915d598eedda3f'
++$TclAppRepository = 'C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'
++$AllowedChanges = @(
++    'ip/v41/xdma_v41_m1.xci',
++    'scripts/v41/xdma_config_common.tcl',
++    'scripts/v41/g2a_build.tcl',
++    'tests/v41/run_g2a_offline_checks.ps1'
++)
++
++function Get-AbsoluteAsciiPath {
++    param(
++        [Parameter(Mandatory = $true)][string]$Path,
++        [Parameter(Mandatory = $true)][string]$Label,
++        [switch]$MustExist
++    )
++    if ([string]::IsNullOrWhiteSpace($Path)) {
++        throw "$Label is required"
++    }
++    $full = [IO.Path]::GetFullPath($Path)
++    if ($full -notmatch '^[A-Za-z]:\\' -or $full -match '[^\x20-\x7e]' -or
++        $full -match '["&|<>^%!]') {
++        throw "$Label must be an absolute, ASCII-only Windows path without cmd metacharacters: $full"
++    }
++    if ($MustExist -and -not (Test-Path -LiteralPath $full)) {
++        throw "$Label does not exist: $full"
++    }
++    return $full.TrimEnd([char]'\', [char]'/')
++}
++
++if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
++    $RepoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
++}
++
++try {
++    $EvidenceRoot = Get-AbsoluteAsciiPath -Path $EvidenceRoot -Label 'EvidenceRoot'
++    [void][IO.Directory]::CreateDirectory($EvidenceRoot)
++} catch {
++    Write-Error $_.Exception.Message
++    exit 1
++}
++
++$Utf8NoBom = New-Object Text.UTF8Encoding($false)
++$script:FailureRecorded = $false
++$script:Receipt = [ordered]@{
++    task = 'AHD_V41_G2A_OFFLINE_CONTRACT_CHECKS'
++    result = 'RUNNING'
++    mode = $(if ($PreCommit) { 'PRECOMMIT_STATIC' } else { 'CLEAN_COMMITTED' })
++    started_utc = [DateTime]::UtcNow.ToString('o')
++    ended_utc = $null
++    repo_root = $RepoRoot
++    evidence_root = $EvidenceRoot
++    run_root = $null
++    base_commit = $BaseCommit
++    base_tree = $BaseTree
++    integration_branch = $IntegrationBranch
++    integration_head = $null
++    integration_tree = $null
++    changed_files = @()
++    child_environment = [ordered]@{
++        XILINX_LOCAL_USER_DATA = 'NO'
++        XILINX_TCLAPP_REPO = $TclAppRepository
++        TEMP = $null
++        TMP = $null
++        PYTHONDONTWRITEBYTECODE = '1'
++    }
++    python_tests = 'NOT_RUN'
++    focused_simulation = 'NOT_RUN'
++    provenance_tests = 'NOT_RUN'
++    hardware_accessed = $false
++    first_failure = $null
++    checks = @()
++}
++
++function Add-Check {
++    param(
++        [Parameter(Mandatory = $true)][string]$Name,
++        [Parameter(Mandatory = $true)][ValidateSet('PASS', 'FAIL', 'NOT_RUN')][string]$Status,
++        [string]$Details = ''
++    )
++    $script:Receipt.checks += [ordered]@{
++        name = $Name
++        status = $Status
++        details = [string]$Details
++    }
++    Write-Output "CHECK=$Name STATUS=$Status DETAILS=$Details"
++}
++
++function Assert-Contract {
++    param(
++        [Parameter(Mandatory = $true)][string]$Name,
++        [Parameter(Mandatory = $true)][bool]$Condition,
++        [Parameter(Mandatory = $true)][string]$Details
++    )
++    if ($Condition) {
++        Add-Check -Name $Name -Status PASS -Details $Details
++        return
++    }
++    Add-Check -Name $Name -Status FAIL -Details $Details
++    $script:FailureRecorded = $true
++    throw "CHECK_FAILED[$Name]: $Details"
++}
++
++function Write-Receipts {
++    $script:Receipt.ended_utc = [DateTime]::UtcNow.ToString('o')
++    $jsonPath = Join-Path $EvidenceRoot 'G2A_OFFLINE_CHECK_RECEIPT.json'
++    $textPath = Join-Path $EvidenceRoot 'G2A_OFFLINE_CHECK_RECEIPT.txt'
++    [IO.File]::WriteAllText(
++        $jsonPath,
++        ($script:Receipt | ConvertTo-Json -Depth 12),
++        $Utf8NoBom)
++
++    $lines = New-Object Collections.Generic.List[string]
++    $lines.Add("TASK=$($script:Receipt.task)")
++    $lines.Add("RESULT=$($script:Receipt.result)")
++    $lines.Add("MODE=$($script:Receipt.mode)")
++    $lines.Add("BASE_COMMIT=$($script:Receipt.base_commit)")
++    $lines.Add("BASE_TREE=$($script:Receipt.base_tree)")
++    $lines.Add("INTEGRATION_BRANCH=$($script:Receipt.integration_branch)")
++    $lines.Add("INTEGRATION_HEAD=$($script:Receipt.integration_head)")
++    $lines.Add("INTEGRATION_TREE=$($script:Receipt.integration_tree)")
++    $lines.Add("PYTHON_TESTS=$($script:Receipt.python_tests)")
++    $lines.Add("FOCUSED_SIMULATION=$($script:Receipt.focused_simulation)")
++    $lines.Add("PROVENANCE_TESTS=$($script:Receipt.provenance_tests)")
++    $lines.Add('HARDWARE_ACCESSED=NO')
++    $lines.Add("FIRST_FAILURE=$($script:Receipt.first_failure)")
++    foreach ($check in @($script:Receipt.checks)) {
++        $detail = ([string]$check.details) -replace '[\r\n|]+', ' '
++        $lines.Add("CHECK|$($check.name)|$($check.status)|$detail")
++    }
++    [IO.File]::WriteAllLines($textPath, $lines, $Utf8NoBom)
++}
++
++function Invoke-GitText {
++    param(
++        [Parameter(Mandatory = $true)][string[]]$Arguments,
++        [int[]]$AllowedExitCodes = @(0)
++    )
++    $output = & git --no-optional-locks -c "safe.directory=$RepoRoot" -C $RepoRoot @Arguments 2>&1
++    $code = $LASTEXITCODE
++    $text = (@($output | ForEach-Object { [string]$_ }) -join "`n").TrimEnd()
++    if ($AllowedExitCodes -notcontains $code) {
++        throw "git $($Arguments -join ' ') failed with exit $code`: $text"
++    }
++    return [pscustomobject]@{ ExitCode = $code; Text = $text }
++}
++
++function Get-FileGitBlobSha1 {
++    param([Parameter(Mandatory = $true)][string]$LiteralPath)
++    $bytes = [IO.File]::ReadAllBytes($LiteralPath)
++    $header = [Text.Encoding]::ASCII.GetBytes("blob $($bytes.Length)`0")
++    $input = New-Object byte[] ($header.Length + $bytes.Length)
++    [Array]::Copy($header, 0, $input, 0, $header.Length)
++    [Array]::Copy($bytes, 0, $input, $header.Length, $bytes.Length)
++    $sha1 = [Security.Cryptography.SHA1]::Create()
++    try {
++        return (($sha1.ComputeHash($input) | ForEach-Object { $_.ToString('x2') }) -join '')
++    } finally {
++        $sha1.Dispose()
++    }
++}
++
++function Get-TclConfigDictionary {
++    param(
++        [Parameter(Mandatory = $true)][string]$Text,
++        [Parameter(Mandatory = $true)][string]$ProcedureName
++    )
++    $pattern = '(?ms)^\s*proc\s+' + [regex]::Escape($ProcedureName) +
++        '\s+\{\}\s+\{(?<body>.*?)^\}'
++    $procedure = [regex]::Match($Text, $pattern)
++    if (-not $procedure.Success) {
++        throw "Tcl procedure not found or malformed: $ProcedureName"
++    }
++    $values = @{}
++    foreach ($match in [regex]::Matches(
++            $procedure.Groups['body'].Value,
++            '(?m)^\s*(CONFIG\.[A-Za-z0-9_]+)\s+\{([^}\r\n]+)\}')) {
++        $key = $match.Groups[1].Value
++        if ($values.ContainsKey($key)) {
++            throw "duplicate property $key in Tcl procedure $ProcedureName"
++        }
++        $values[$key] = $match.Groups[2].Value
++    }
++    if ($values.Count -eq 0) {
++        throw "no CONFIG properties found in Tcl procedure $ProcedureName"
++    }
++    return $values
++}
++
++function Get-XciConfigValue {
++    param(
++        [Parameter(Mandatory = $true)]$ComponentParameters,
++        [Parameter(Mandatory = $true)][string]$Name
++    )
++    $property = $ComponentParameters.PSObject.Properties[$Name]
++    if ($null -eq $property -or $null -eq $property.Value -or $property.Value.Count -ne 1) {
++        throw "XCI property missing or not singular: CONFIG.$Name"
++    }
++    return [string]$property.Value[0].value
++}
++
++function Quote-CmdToken {
++    param([Parameter(Mandatory = $true)][string]$Token)
++    if ($Token -match '[\r\n"&|<>^%!]') {
++        throw "unsafe child-process argument rejected: $Token"
++    }
++    return [char]34 + $Token + [char]34
++}
++
++function Invoke-OfflineChild {
++    param(
++        [Parameter(Mandatory = $true)][string]$Executable,
++        [Parameter(Mandatory = $true)][string[]]$Arguments,
++        [Parameter(Mandatory = $true)][string]$WorkingDirectory,
++        [Parameter(Mandatory = $true)][string]$LogPath,
++        [Parameter(Mandatory = $true)][hashtable]$ChildEnvironment
++    )
++    $tokens = @($Executable) + $Arguments | ForEach-Object { Quote-CmdToken -Token ([string]$_) }
++    $psi = New-Object Diagnostics.ProcessStartInfo
++    $psi.FileName = $env:ComSpec
++    $psi.Arguments = '/d /s /c ' + [char]34 + ($tokens -join ' ') + [char]34
++    $psi.WorkingDirectory = $WorkingDirectory
++    $psi.UseShellExecute = $false
++    $psi.CreateNoWindow = $true
++    $psi.WindowStyle = [Diagnostics.ProcessWindowStyle]::Hidden
++    $psi.RedirectStandardOutput = $true
++    $psi.RedirectStandardError = $true
++    foreach ($key in $ChildEnvironment.Keys) {
++        $psi.EnvironmentVariables[[string]$key] = [string]$ChildEnvironment[$key]
++    }
++    $process = New-Object Diagnostics.Process
++    $process.StartInfo = $psi
++    try {
++        if (-not $process.Start()) {
++            throw "child process did not start: $Executable"
++        }
++        $stdoutTask = $process.StandardOutput.ReadToEndAsync()
++        $stderrTask = $process.StandardError.ReadToEndAsync()
++        $process.WaitForExit()
++        $stdout = $stdoutTask.GetAwaiter().GetResult()
++        $stderr = $stderrTask.GetAwaiter().GetResult()
++        $combined = $stdout
++        if (-not [string]::IsNullOrEmpty($stderr)) {
++            if (-not [string]::IsNullOrEmpty($combined)) { $combined += "`r`n" }
++            $combined += $stderr
++        }
++        [IO.File]::WriteAllText($LogPath, $combined, $Utf8NoBom)
++        return [pscustomobject]@{
++            ExitCode = $process.ExitCode
++            Stdout = $stdout
++            Stderr = $stderr
++            Combined = $combined
++        }
++    } finally {
++        $process.Dispose()
++    }
++}
++
++function Assert-NoProjectCreation {
++    param(
++        [Parameter(Mandatory = $true)][string]$Name,
++        [Parameter(Mandatory = $true)][string]$BuildRoot,
++        [Parameter(Mandatory = $true)][string]$CaseRoot
++    )
++    $projectArtifacts = @()
++    if (Test-Path -LiteralPath $CaseRoot) {
++        $projectArtifacts = @(Get-ChildItem -LiteralPath $CaseRoot -Recurse -Force -ErrorAction Stop |
++            Where-Object {
++                $_.Name -match '\.xpr$|\.runs$|\.srcs$|\.gen$|\.cache$' -or
++                $_.Name -eq 'project'
++            } | ForEach-Object { $_.FullName })
++    }
++    Assert-Contract -Name $Name -Condition (
++        -not (Test-Path -LiteralPath $BuildRoot) -and $projectArtifacts.Count -eq 0
++    ) -Details "build_root_absent=$(-not (Test-Path -LiteralPath $BuildRoot)); project_artifact_count=$($projectArtifacts.Count)"
++}
++
++$exitCode = 0
++try {
++    $RepoRoot = Get-AbsoluteAsciiPath -Path $RepoRoot -Label 'RepoRoot' -MustExist
++    $VivadoBat = Get-AbsoluteAsciiPath -Path $VivadoBat -Label 'VivadoBat' -MustExist
++    $script:Receipt.repo_root = $RepoRoot
++
++    $repoPrefix = $RepoRoot + [IO.Path]::DirectorySeparatorChar
++    $evidencePrefix = $EvidenceRoot + [IO.Path]::DirectorySeparatorChar
++    Assert-Contract -Name 'EVIDENCE_OUTSIDE_SOURCE_TREE' -Condition (
++        -not $evidencePrefix.StartsWith($repoPrefix, [StringComparison]::OrdinalIgnoreCase)
++    ) -Details "repo=$RepoRoot evidence=$EvidenceRoot"
++    Assert-Contract -Name 'GIT_REPOSITORY' -Condition (Test-Path -LiteralPath (Join-Path $RepoRoot '.git')) `
++        -Details "repository=$RepoRoot"
++
++    $runId = [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfffZ') + '_' + [Guid]::NewGuid().ToString('N')
++    $runRoot = Join-Path $EvidenceRoot (Join-Path 'offline_runs' $runId)
++    $tempRoot = Join-Path $runRoot 'tmp'
++    [void][IO.Directory]::CreateDirectory($tempRoot)
++    $script:Receipt.run_root = $runRoot
++    $script:Receipt.child_environment.TEMP = $tempRoot
++    $script:Receipt.child_environment.TMP = $tempRoot
++    $childEnvironment = @{
++        XILINX_LOCAL_USER_DATA = 'NO'
++        XILINX_TCLAPP_REPO = $TclAppRepository
++        TEMP = $tempRoot
++        TMP = $tempRoot
++        PYTHONDONTWRITEBYTECODE = '1'
++    }
++    Assert-Contract -Name 'CHILD_ONLY_VIVADO_ENVIRONMENT' -Condition (
++        (Test-Path -LiteralPath $tempRoot) -and
++        (Test-Path -LiteralPath $TclAppRepository)
++    ) -Details "XILINX_LOCAL_USER_DATA=NO; XILINX_TCLAPP_REPO=$TclAppRepository; TEMP=TMP=$tempRoot; PYTHONDONTWRITEBYTECODE=1"
++
++    $baseResolved = (Invoke-GitText -Arguments @('rev-parse', '--verify', $BaseCommit)).Text.Trim()
++    Assert-Contract -Name 'EXACT_BASE_COMMIT_EXISTS' -Condition ($baseResolved -eq $BaseCommit) `
++        -Details "resolved=$baseResolved"
++    $baseTreeActual = (Invoke-GitText -Arguments @('show', '-s', '--format=%T', $BaseCommit)).Text.Trim()
++    Assert-Contract -Name 'EXACT_BASE_TREE' -Condition ($baseTreeActual -eq $BaseTree) `
++        -Details "expected=$BaseTree actual=$baseTreeActual"
++    $tagCommit = (Invoke-GitText -Arguments @('rev-list', '-n', '1', $QualifiedTag)).Text.Trim()
++    Assert-Contract -Name 'QUALIFIED_TAG_PEELED_COMMIT' -Condition ($tagCommit -eq $BaseCommit) `
++        -Details "tag=$QualifiedTag peeled=$tagCommit"
++
++    $branch = (Invoke-GitText -Arguments @('branch', '--show-current')).Text.Trim()
++    Assert-Contract -Name 'INTEGRATION_BRANCH' -Condition ($branch -ceq $IntegrationBranch) `
++        -Details "expected=$IntegrationBranch actual=$branch"
++    $head = (Invoke-GitText -Arguments @('rev-parse', 'HEAD')).Text.Trim()
++    $headTree = (Invoke-GitText -Arguments @('show', '-s', '--format=%T', 'HEAD')).Text.Trim()
++    $script:Receipt.integration_head = $head
++    $script:Receipt.integration_tree = $headTree
++    $ancestry = Invoke-GitText -Arguments @('merge-base', '--is-ancestor', $BaseCommit, 'HEAD') -AllowedExitCodes @(0, 1)
++    Assert-Contract -Name 'BASE_ANCESTRY' -Condition ($ancestry.ExitCode -eq 0) `
++        -Details "base=$BaseCommit head=$head"
++
++    foreach ($donor in @($PrimaryDonorCommit, $SecondaryDonorCommit)) {
++        $donorResolved = (Invoke-GitText -Arguments @('rev-parse', '--verify', $donor)).Text.Trim()
++        Assert-Contract -Name ("DONOR_COMMIT_" + $donor.Substring(0, 8).ToUpperInvariant()) `
++            -Condition ($donorResolved -eq $donor) -Details "resolved=$donorResolved"
++        $donorAncestry = Invoke-GitText -Arguments @('merge-base', '--is-ancestor', $donor, $BaseCommit) `
++            -AllowedExitCodes @(0, 1)
++        Assert-Contract -Name ("DONOR_ANCESTRY_" + $donor.Substring(0, 8).ToUpperInvariant()) `
++            -Condition ($donorAncestry.ExitCode -eq 0) -Details "donor=$donor base=$BaseCommit"
++    }
++
++    $trackedDiff = (Invoke-GitText -Arguments @('diff', '--name-only', $BaseCommit, '--')).Text
++    $untracked = (Invoke-GitText -Arguments @('ls-files', '--others', '--exclude-standard')).Text
++    $changed = @($trackedDiff, $untracked | ForEach-Object { $_ -split "`n" } |
++        Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
++        ForEach-Object { $_.Trim().Replace('\', '/') } | Sort-Object -Unique)
++    $script:Receipt.changed_files = $changed
++    $unexpected = @($changed | Where-Object { $AllowedChanges -cnotcontains $_ })
++    Assert-Contract -Name 'FOUR_FILE_CHANGE_ALLOWLIST' -Condition ($unexpected.Count -eq 0) `
++        -Details "changed=$($changed -join ','); unexpected=$($unexpected -join ',')"
++    foreach ($requiredPath in $AllowedChanges) {
++        Assert-Contract -Name ("PLANNED_FILE_EXISTS_" + ($requiredPath -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition (Test-Path -LiteralPath (Join-Path $RepoRoot $requiredPath)) -Details $requiredPath
++    }
++    if (-not $PreCommit) {
++        $missingPlanned = @($AllowedChanges | Where-Object { $changed -cnotcontains $_ })
++        Assert-Contract -Name 'FINAL_DIFF_CONTAINS_EXACT_FOUR_FILES' -Condition ($missingPlanned.Count -eq 0 -and $changed.Count -eq 4) `
++            -Details "missing=$($missingPlanned -join ','); count=$($changed.Count)"
++        $parent = (Invoke-GitText -Arguments @('rev-parse', 'HEAD^')).Text.Trim()
++        Assert-Contract -Name 'DIRECT_PARENT_IS_QUALIFIED_R1I' -Condition ($parent -eq $BaseCommit) `
++            -Details "parent=$parent"
++    } else {
++        Add-Check -Name 'FINAL_EXACT_FOUR_FILE_COMMITTED_DIFF' -Status NOT_RUN `
++            -Details 'PreCommit permits an incomplete allowed-file subset while edits are in progress.'
++    }
++
++    $baseTreeLines = (Invoke-GitText -Arguments @('ls-tree', '-r', '--full-tree', $BaseCommit)).Text -split "`n"
++    $baseBlobs = @{}
++    foreach ($line in $baseTreeLines) {
++        if ($line -match '^\d+\s+\w+\s+([0-9a-f]{40})\t(.+)$') {
++            $baseBlobs[$Matches[2].Replace('\', '/')] = $Matches[1]
++        }
++    }
++    $protectedFiles = @(
++        [pscustomobject]@{ Path='rtl/nvp/nvp6134c_i2c_bringup.vhd'; Blob='3757acf2677d0a13b31a285095c38cc7b30e567c'; Sha256='C7AA56E8BC546DD0173FF79FA6E3376DEE607B2DDFDA3F52FD1503C05FFC6C68' },
++        [pscustomobject]@{ Path='rtl/nvp/nvp6134c_autoinit.vhd'; Blob='ec070a399d16ce3370469ee1b0079c153a39b5c1'; Sha256='FCB5F98955F0507C095E774FA9E3048ACD34D07DF5EA40B6B8EEA715B649D5E5' },
++        [pscustomobject]@{ Path='rtl/nvp/nvp6134c_diagnostics_pkg.vhd'; Blob='7ddd60fc86da49cda1adcd7af7b772b337c95df6'; Sha256='36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156' },
++        [pscustomobject]@{ Path='rtl/nvp/r1f_transaction_serial_counter.vhd'; Blob='58c6d7cfdddc23ebde8ccafa75d4c2bc40839e96'; Sha256='FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E' },
++        [pscustomobject]@{ Path='rtl/top/ahd_capture_top_xdma.sv'; Blob='d04ff833994bc83e29647c0a7cce4cc941c3410e'; Sha256='5E60D388BB9516E3AC2C86F0761901C0669DE4DC40121B2423A36E4445C66DF4' },
++        [pscustomobject]@{ Path='rtl/v41/control_status_regs.sv'; Blob='16fc122686a7c11f99c5bc9750dad586d713e05f'; Sha256='77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16' },
++        [pscustomobject]@{ Path='rtl/v41/axi_lite_host_bridge.sv'; Blob='fde2499259d98da8c28ed26548032ebffb648007'; Sha256='D94BE3FC0AE7D9DDEC87DF4289277BDE5F3AEE2597F02AC2CE19EF9C4EDB890E' },
++        [pscustomobject]@{ Path='rtl/pio/pio_slot_adapter.sv'; Blob='ccadf36ae16222977cc0571b242ff4037bbf117b'; Sha256='96B8E53B23295A9C8B597EF15E10DA819962E3F96B45FB02F6E472B108720CEE' },
++        [pscustomobject]@{ Path='rtl/pio/pio_bar_target.sv'; Blob='1ab24dace7534d4c42d860e9234024440cb69f39'; Sha256='E6BED9C57D5A79E4D2AD2C5E3CEEFCD4AEDCCC9CEA77A61C6A84F350FE6FF833' },
++        [pscustomobject]@{ Path='scripts/v41/r1i_build.tcl'; Blob='843d644d1214bb2bc56b6afe50a42231df234ebc'; Sha256='7A0CF8BA86FB9245355AD964D6127CC1412A3CF4B9D3228C478F9FC768CDA58F' },
++        [pscustomobject]@{ Path='scripts/v41/phase3_build.tcl'; Blob='b908146795f6bf0033a4e2ae211208ff20532583'; Sha256='D7531F2B12B5CCBF91484C8A28182B0C0FCF71C93277A697F2D6793338DA8440' },
++        [pscustomobject]@{ Path='tests/v41/run_r1i_focused_sim.ps1'; Blob='47fc3c65b3b73976a41b2821a4606d7ad10a2695'; Sha256='D7950823C8145B4059FD1E9DF9BA4BFDCAEA38ED97E9AF213840CDA08264704B' },
++        [pscustomobject]@{ Path='tests/v41/tb_r1i_poc_mmio.sv'; Blob='98a2ea8b63a97315a34b04357682a8390de48e33'; Sha256='50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062' },
++        [pscustomobject]@{ Path='tests/v41/tb_r1i_qualified_ack_readiness.sv'; Blob='a73020fa8631306584000f9b4351a7eed7ef78ec'; Sha256='75B7B5B330CB4CCB41234E91BE56633A0EBA1944CB28A9F13BD48AA718B2143B' },
++        [pscustomobject]@{ Path='tests/nvp/tb_power_timing.vhd'; Blob='a50a65859d537e3adeafe01b2ddaf0373a7a8979'; Sha256='367557E9A505AAC0BDA8F8C5B3D71DB2E7B5EA497A6198D4812AB26F5EF80715' },
++        [pscustomobject]@{ Path='tests/nvp/tb_nvp_autoinit.vhd'; Blob='5d6465f4fd8d8ddf81c0ea026a413c50ec4609f1'; Sha256='FD978BCF86A25B1E12CB5985FD29BA492E8A4F17306F2714896E4A6A295EF495' }
++    )
++    foreach ($file in $protectedFiles) {
++        $fullPath = Join-Path $RepoRoot $file.Path
++        Assert-Contract -Name ("BASE_BLOB_" + ($file.Path -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition ($baseBlobs.ContainsKey($file.Path) -and $baseBlobs[$file.Path] -eq $file.Blob) `
++            -Details "path=$($file.Path) expected=$($file.Blob) actual=$($baseBlobs[$file.Path])"
++        $candidateBlob = Get-FileGitBlobSha1 -LiteralPath $fullPath
++        $candidateSha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $fullPath).Hash.ToUpperInvariant()
++        Assert-Contract -Name ("PROTECTED_IDENTITY_" + ($file.Path -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition ($candidateBlob -eq $file.Blob -and $candidateSha256 -eq $file.Sha256) `
++            -Details "path=$($file.Path) blob=$candidateBlob sha256=$candidateSha256"
++    }
++    $secondaryPhase3Blob = (Invoke-GitText -Arguments @(
++        'rev-parse', "${SecondaryDonorCommit}:scripts/v41/phase3_build.tcl"
++    )).Text.Trim()
++    Assert-Contract -Name 'PHASE3_SECONDARY_DONOR_IDENTITY' -Condition ($secondaryPhase3Blob -eq 'b908146795f6bf0033a4e2ae211208ff20532583') `
++        -Details "secondary_blob=$secondaryPhase3Blob r1i_blob=$($baseBlobs['scripts/v41/phase3_build.tcl'])"
++    Add-Check -Name 'R1I_MMIO_AND_TELEMETRY_SOURCE_IDENTITY' -Status PASS `
++        -Details 'control_status_regs, top, POC MMIO test, ACK-readiness test, and host bridge match qualified R1i byte-for-byte.'
++
++    $functionalSourceChanges = @($changed | Where-Object {
++        $_ -match '^(rtl|xdc|host|host_hardening|tb)/'
++    })
++    Assert-Contract -Name 'NO_FUNCTIONAL_SOURCE_OR_XDC_CHANGE' -Condition ($functionalSourceChanges.Count -eq 0) `
++        -Details "changed_functional_paths=$($functionalSourceChanges -join ',')"
++    Assert-Contract -Name 'NO_G2B_MMIO_3800_PAGES' -Condition ($functionalSourceChanges.Count -eq 0) `
++        -Details 'No RTL/MMIO source changed; qualified map through 0x367F remains the terminal implemented range.'
++    Assert-Contract -Name 'NO_DATA_PLANE_RING_FORMATTER_SCHEDULER_FILES' -Condition ($functionalSourceChanges.Count -eq 0) `
++        -Details 'No RTL, ring, formatter, record-to-C2H adapter, or scheduler file was added or modified.'
++
++    $conflictOutput = Invoke-GitText -Arguments @(
++        'grep', '-n', '-I', '-E', '^(<<<<<<< |>>>>>>> |\|\|\|\|\|\|\| |=======$)', '--', '.'
++    ) -AllowedExitCodes @(0, 1)
++    $untrackedConflict = @()
++    foreach ($path in @($changed | Where-Object { Test-Path -LiteralPath (Join-Path $RepoRoot $_) })) {
++        $raw = [IO.File]::ReadAllText((Join-Path $RepoRoot $path))
++        if ($raw -match '(?m)^(<<<<<<< |>>>>>>> |\|\|\|\|\|\|\| |=======$)') {
++            $untrackedConflict += $path
++        }
++    }
++    Assert-Contract -Name 'NO_CONFLICT_MARKERS' -Condition (
++        $conflictOutput.ExitCode -eq 1 -and $untrackedConflict.Count -eq 0
++    ) -Details "tracked_matches=$($conflictOutput.Text); changed_file_matches=$($untrackedConflict -join ',')"
++    $rTrackLeakage = @($changed | Where-Object {
++        $_ -match '(?i)(^|/)(r-track|r_track|r1[g-z][^/]*candidate|diagnostic[-_]reduction)'
++    })
++    $rTrackTextLeakage = @()
++    foreach ($candidatePath in @(
++        'ip/v41/xdma_v41_m1.xci',
++        'scripts/v41/xdma_config_common.tcl',
++        'scripts/v41/g2a_build.tcl')) {
++        $candidateText = [IO.File]::ReadAllText((Join-Path $RepoRoot $candidatePath))
++        if ($candidateText -match '(?i)r[-_ ]?track|diagnostic[-_ ]reduction|r1[g-z][^\r\n/]*candidate') {
++            $rTrackTextLeakage += $candidatePath
++        }
++    }
++    Assert-Contract -Name 'NO_R_TRACK_LEAKAGE' -Condition (
++        $rTrackLeakage.Count -eq 0 -and $rTrackTextLeakage.Count -eq 0
++    ) -Details "leakage_paths=$($rTrackLeakage -join ','); leakage_text=$($rTrackTextLeakage -join ',')"
++
++    $xciPath = Join-Path $RepoRoot 'ip/v41/xdma_v41_m1.xci'
++    $xciText = [IO.File]::ReadAllText($xciPath)
++    $xci = $xciText | ConvertFrom-Json
++    $baseXciText = (Invoke-GitText -Arguments @('show', "${BaseCommit}:ip/v41/xdma_v41_m1.xci")).Text
++    $baseXci = $baseXciText | ConvertFrom-Json
++    $xciParameters = $xci.ip_inst.parameters.component_parameters
++    $baseXciParameters = $baseXci.ip_inst.parameters.component_parameters
++    $speed = Get-XciConfigValue -ComponentParameters $xciParameters -Name 'pl_link_cap_max_link_speed'
++    $baseSpeed = Get-XciConfigValue -ComponentParameters $baseXciParameters -Name 'pl_link_cap_max_link_speed'
++    Assert-Contract -Name 'XCI_GEN2_SPEED' -Condition ($speed -eq '5.0_GT/s' -and $baseSpeed -eq '2.5_GT/s') `
++        -Details "base=$baseSpeed candidate=$speed"
++    $newSpeedCount = [regex]::Matches($xciText, [regex]::Escape('5.0_GT/s')).Count
++    $oldSpeedCount = [regex]::Matches($xciText, [regex]::Escape('2.5_GT/s')).Count
++    Assert-Contract -Name 'XCI_SPEED_REPRESENTATION_SINGULAR' -Condition ($newSpeedCount -eq 1 -and $oldSpeedCount -eq 0) `
++        -Details "gen2_occurrences=$newSpeedCount gen1_occurrences=$oldSpeedCount"
++    $xciParameters.PSObject.Properties['pl_link_cap_max_link_speed'].Value[0].value = '2.5_GT/s'
++    $normalizedCandidateXci = $xci | ConvertTo-Json -Depth 100 -Compress
++    $normalizedBaseXci = $baseXci | ConvertTo-Json -Depth 100 -Compress
++    Assert-Contract -Name 'XCI_ONLY_SPEED_DIFFERS_FROM_BASE' -Condition ($normalizedCandidateXci -ceq $normalizedBaseXci) `
++        -Details 'Canonical complete-XCI comparison is byte-semantic-equal after reverting only the requested speed value in memory.'
++    $xciParameters.PSObject.Properties['pl_link_cap_max_link_speed'].Value[0].value = '5.0_GT/s'
++
++    $commonTclPath = Join-Path $RepoRoot 'scripts/v41/xdma_config_common.tcl'
++    $commonTcl = [IO.File]::ReadAllText($commonTclPath)
++    $baseCommonTcl = (Invoke-GitText -Arguments @('show', "${BaseCommit}:scripts/v41/xdma_config_common.tcl")).Text
++    $candidateMinimal = Get-TclConfigDictionary -Text $commonTcl -ProcedureName 'v41_xdma::minimal_c2h_stream_config'
++    $baseMinimal = Get-TclConfigDictionary -Text $baseCommonTcl -ProcedureName 'v41_xdma::minimal_c2h_stream_config'
++    $candidateMinimalKeys = @($candidateMinimal.Keys | Sort-Object)
++    $baseMinimalKeys = @($baseMinimal.Keys | Sort-Object)
++    Assert-Contract -Name 'COMMON_TCL_MINIMAL_CONFIG_KEYSET' -Condition (
++        ($candidateMinimalKeys -join "`n") -ceq ($baseMinimalKeys -join "`n")
++    ) -Details "property_count=$($candidateMinimalKeys.Count)"
++    foreach ($key in $baseMinimalKeys) {
++        if ($key -eq 'CONFIG.pl_link_cap_max_link_speed') { continue }
++        Assert-Contract -Name ("COMMON_TCL_BASE_INVARIANT_" + ($key -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition ($candidateMinimal[$key] -ceq $baseMinimal[$key]) `
++            -Details "$key=$($candidateMinimal[$key])"
++    }
++    Assert-Contract -Name 'COMMON_TCL_GEN2_SPEED' -Condition (
++        $baseMinimal['CONFIG.pl_link_cap_max_link_speed'] -eq '2.5_GT/s' -and
++        $candidateMinimal['CONFIG.pl_link_cap_max_link_speed'] -eq '5.0_GT/s'
++    ) -Details "base=$($baseMinimal['CONFIG.pl_link_cap_max_link_speed']) candidate=$($candidateMinimal['CONFIG.pl_link_cap_max_link_speed'])"
++    $tclNewSpeedCount = [regex]::Matches($commonTcl, [regex]::Escape('5.0_GT/s')).Count
++    $tclOldSpeedCount = [regex]::Matches($commonTcl, [regex]::Escape('2.5_GT/s')).Count
++    Assert-Contract -Name 'COMMON_TCL_SPEED_REPRESENTATION_SINGULAR' -Condition (
++        $tclNewSpeedCount -eq 1 -and $tclOldSpeedCount -eq 0
++    ) -Details "gen2_occurrences=$tclNewSpeedCount gen1_occurrences=$tclOldSpeedCount"
++
++    $expectedXci = [ordered]@{
++        functional_mode = 'DMA'
++        mode_selection = 'Basic'
++        pcie_blk_locn = 'X0Y0'
++        pl_link_cap_max_link_speed = '5.0_GT/s'
++        pl_link_cap_max_link_width = 'X1'
++        ref_clk_freq = '100_MHz'
++        free_run_freq = '100_MHz'
++        axisten_freq = '62.5'
++        dedicate_perst = 'true'
++        sys_reset_polarity = 'ACTIVE_LOW'
++        axi_data_width = '64_bit'
++        xdma_axi_intf_mm = 'AXI_Stream'
++        xdma_rnum_chnl = '1'
++        xdma_wnum_chnl = '1'
++        xdma_num_usr_irq = '1'
++        pf0_msi_enabled = 'true'
++        pf0_msi_cap_multimsgcap = '1_vector'
++        pf0_msix_enabled = 'false'
++        axilite_master_en = 'true'
++        axilite_master_size = '128'
++        axilite_master_scale = 'Kilobytes'
++        pf0_bar0_enabled = 'true'
++        pf0_bar0_size = '128'
++        pf0_bar0_scale = 'Kilobytes'
++        pf0_bar0_64bit = 'false'
++        pf0_bar1_enabled = 'false'
++        pf0_bar2_enabled = 'false'
++        pf0_bar3_enabled = 'false'
++        pf0_bar4_enabled = 'false'
++        pf0_bar5_enabled = 'false'
++        pciebar2axibar_axil_master = '0x00000000'
++        vendor_id = '10EE'
++        pf0_device_id = '7011'
++        pf0_subsystem_vendor_id = '10EE'
++        pf0_subsystem_id = '0007'
++        pf0_class_code = '058000'
++        axist_bypass_en = 'false'
++        xdma_dsc_bypass = 'false'
++        xdma_sts_ports = 'false'
++        en_debug_ports = 'false'
++        pcie_extended_tag = 'true'
++    }
++    foreach ($name in $expectedXci.Keys) {
++        $actual = Get-XciConfigValue -ComponentParameters $xciParameters -Name $name
++        Assert-Contract -Name ("XCI_FROZEN_CONFIG_" + $name.ToUpperInvariant()) `
++            -Condition ($actual -ceq $expectedXci[$name]) `
++            -Details "CONFIG.$name expected=$($expectedXci[$name]) actual=$actual"
++    }
++    $frozenTcl = Get-TclConfigDictionary -Text $commonTcl -ProcedureName 'v41_xdma::frozen_g1_invariants'
++    foreach ($name in $expectedXci.Keys) {
++        if ($name -eq 'pl_link_cap_max_link_speed') { continue }
++        $key = "CONFIG.$name"
++        if ($frozenTcl.ContainsKey($key)) {
++            Assert-Contract -Name ("TCL_FROZEN_CONFIG_" + $name.ToUpperInvariant()) `
++                -Condition ($frozenTcl[$key] -ceq $expectedXci[$name]) `
++                -Details "$key expected=$($expectedXci[$name]) actual=$($frozenTcl[$key])"
++        }
++    }
++    foreach ($mandatoryTclInvariant in @(
++        'CONFIG.functional_mode', 'CONFIG.mode_selection', 'CONFIG.pl_link_cap_max_link_width',
++        'CONFIG.ref_clk_freq', 'CONFIG.axisten_freq', 'CONFIG.dedicate_perst',
++        'CONFIG.sys_reset_polarity', 'CONFIG.axi_data_width', 'CONFIG.xdma_axi_intf_mm',
++        'CONFIG.xdma_rnum_chnl', 'CONFIG.xdma_wnum_chnl', 'CONFIG.xdma_num_usr_irq',
++        'CONFIG.pf0_msi_enabled', 'CONFIG.pf0_msi_cap_multimsgcap', 'CONFIG.pf0_msix_enabled',
++        'CONFIG.axilite_master_en', 'CONFIG.axilite_master_size', 'CONFIG.axilite_master_scale',
++        'CONFIG.vendor_id', 'CONFIG.pf0_device_id', 'CONFIG.pf0_subsystem_vendor_id',
++        'CONFIG.pf0_subsystem_id', 'CONFIG.pf0_class_code')) {
++        Assert-Contract -Name ("TCL_MANDATORY_INVARIANT_" + ($mandatoryTclInvariant -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition $frozenTcl.ContainsKey($mandatoryTclInvariant) -Details $mandatoryTclInvariant
++    }
++    Assert-Contract -Name 'XDMA_INVARIANT_SUMMARY' -Condition $true `
++        -Details 'Gen2 x1; 100 MHz differential refclk request; 64-bit AXIS; one C2H/one H2C; one MSI; MSI-X off; 128 KiB AXI-Lite BAR; IDs/class/PERST/62.5 MHz request preserved.'
++
++    $topPath = Join-Path $RepoRoot 'rtl/top/ahd_capture_top_xdma.sv'
++    $topText = [IO.File]::ReadAllText($topPath)
++    $inactiveBoundary = [ordered]@{
++        C2H_TDATA_ZERO = "\.s_axis_c2h_tdata_0\s*\(\s*64'b0\s*\)"
++        C2H_TKEEP_ZERO = "\.s_axis_c2h_tkeep_0\s*\(\s*8'b0\s*\)"
++        C2H_TLAST_ZERO = "\.s_axis_c2h_tlast_0\s*\(\s*1'b0\s*\)"
++        C2H_TVALID_ZERO = "\.s_axis_c2h_tvalid_0\s*\(\s*1'b0\s*\)"
++        H2C_TREADY_ZERO = "\.m_axis_h2c_tready_0\s*\(\s*1'b0\s*\)"
++    }
++    foreach ($name in $inactiveBoundary.Keys) {
++        Assert-Contract -Name $name -Condition ([regex]::IsMatch($topText, $inactiveBoundary[$name])) `
++            -Details "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
++    }
++    Add-Check -Name 'C2H_APPLICATION_BOUNDARY_INACTIVE' -Status PASS `
++        -Details "TDATA=64'b0 TKEEP=8'b0 TLAST=1'b0 TVALID=1'b0; H2C TREADY=1'b0"
++
++    $g2aBuildPath = Join-Path $RepoRoot 'scripts/v41/g2a_build.tcl'
++    $g2aBuildText = [IO.File]::ReadAllText($g2aBuildPath)
++    foreach ($marker in @(
++        'FULL_BUILD', 'PROVENANCE_ONLY', 'G2A_EXPECTED_RUNTIME_PROVENANCE.txt',
++        'PROVENANCE_ROUND_TRIP=PASS', 'PROVENANCE_PREFLIGHT=PASS',
++        'PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS',
++        'set reconstructed_commit [join $git_words ""]',
++        'enforce_gen2_xdma_pipe_cdc_disposition',
++        'PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX',
++        'BROAD_CDC_WAIVER_APPLIED=NO')) {
++        Assert-Contract -Name ("G2A_HARNESS_MARKER_" + ($marker -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++            -Condition ($g2aBuildText.Contains($marker)) -Details $marker
++    }
++    $earlyExitIndex = $g2aBuildText.IndexOf('PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS', [StringComparison]::Ordinal)
++    $createProjectIndex = $g2aBuildText.IndexOf('create_project', [StringComparison]::Ordinal)
++    Assert-Contract -Name 'PROVENANCE_EXIT_TEXT_PRECEDES_PROJECT_COMMANDS' -Condition (
++        $earlyExitIndex -ge 0 -and $createProjectIndex -gt $earlyExitIndex
++    ) -Details "early_exit_index=$earlyExitIndex create_project_index=$createProjectIndex"
++    $forbiddenHardwarePattern = '(?im)^\s*(open_hw|connect_hw_server|open_hw_target|program_hw_devices|refresh_hw_device|close_hw_target|close_hw_manager)\b'
++    Assert-Contract -Name 'NO_HARDWARE_COMMAND_IN_G2A_HARNESS' -Condition (
++        -not [regex]::IsMatch($g2aBuildText, $forbiddenHardwarePattern)
++    ) -Details 'No hardware-manager or programming Tcl command is executable from g2a_build.tcl.'
++
++    $pythonPath = $null
++    $pythonPrefix = @()
++    $vivadoRoot = Split-Path -Parent (Split-Path -Parent $VivadoBat)
++    $bundledPythonRoots = @(Get-ChildItem -LiteralPath (Join-Path $vivadoRoot 'tps/win64') `
++        -Directory -Filter 'python-*' -ErrorAction SilentlyContinue | Sort-Object Name -Descending)
++    foreach ($pythonRoot in $bundledPythonRoots) {
++        $candidate = Join-Path $pythonRoot.FullName 'python.exe'
++        if (Test-Path -LiteralPath $candidate) {
++            $pythonPath = $candidate
++            break
++        }
++    }
++    if ($null -eq $pythonPath) {
++        $pyLauncher = Get-Command py.exe -ErrorAction SilentlyContinue
++        if ($null -ne $pyLauncher -and $pyLauncher.Source -notmatch '\\WindowsApps\\') {
++            $pythonPath = $pyLauncher.Source
++            $pythonPrefix = @('-3')
++        }
++    }
++    if ($null -eq $pythonPath) {
++        $pathPython = Get-Command python.exe -ErrorAction SilentlyContinue
++        if ($null -ne $pathPython -and $pathPython.Source -notmatch '\\WindowsApps\\') {
++            $pythonPath = $pathPython.Source
++        }
++    }
++    Assert-Contract -Name 'PYTHON_INTERPRETER_AVAILABLE' -Condition ($null -ne $pythonPath) `
++        -Details $(if ($null -ne $pythonPath) { $pythonPath } else { 'No executable Python interpreter found; WindowsApps aliases are rejected.' })
++    $pythonTestFiles = @(Get-ChildItem -LiteralPath (Join-Path $RepoRoot 'tests/python') -Filter 'test_*.py' -File |
++        Sort-Object Name)
++    Assert-Contract -Name 'INHERITED_PYTHON_TESTS_DISCOVERED' -Condition ($pythonTestFiles.Count -gt 0) `
++        -Details "count=$($pythonTestFiles.Count)"
++    foreach ($testFile in $pythonTestFiles) {
++        $testLog = Join-Path $runRoot ("python_" + $testFile.BaseName + '.log')
++        $pythonResult = Invoke-OfflineChild -Executable $pythonPath `
++            -Arguments (@($pythonPrefix) + @($testFile.FullName)) -WorkingDirectory $RepoRoot `
++            -LogPath $testLog -ChildEnvironment $childEnvironment
++        Assert-Contract -Name ("PYTHON_TEST_" + $testFile.BaseName.ToUpperInvariant()) `
++            -Condition ($pythonResult.ExitCode -eq 0) `
++            -Details "exit=$($pythonResult.ExitCode) log=$testLog"
++    }
++    $script:Receipt.python_tests = 'PASS'
++
++    if ($SkipSim) {
++        $script:Receipt.focused_simulation = 'NOT_RUN'
++        Add-Check -Name 'R1I_FOCUSED_SIMULATION' -Status NOT_RUN -Details 'Explicit -SkipSim request.'
++    } else {
++        $focusedRunner = Join-Path $RepoRoot 'tests/v41/run_r1i_focused_sim.ps1'
++        # Reuse the current PowerShell host so its inherited PSModulePath stays
++        # compatible with the child.  Forcing Windows PowerShell from pwsh can
++        # hide Microsoft.PowerShell.Utility (and therefore Get-FileHash).
++        $powershellExe = [Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
++        if ([string]::IsNullOrWhiteSpace($powershellExe) -or
++            -not (Test-Path -LiteralPath $powershellExe -PathType Leaf)) {
++            throw 'Unable to resolve the current PowerShell executable for the focused simulation child.'
++        }
++        $focusedEvidence = Join-Path $runRoot 'r1i_focused_sim'
++        $focusedLog = Join-Path $runRoot 'r1i_focused_sim.console.log'
++        $focusedResult = Invoke-OfflineChild -Executable $powershellExe -Arguments @(
++            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
++            '-File', $focusedRunner,
++            '-RepoRoot', $RepoRoot,
++            '-EvidenceRoot', $focusedEvidence,
++            '-VivadoBin', (Split-Path -Parent $VivadoBat)
++        ) -WorkingDirectory $runRoot -LogPath $focusedLog -ChildEnvironment $childEnvironment
++        $focusedMarkers = $focusedResult.Combined -match 'PASS R1I_FOCUSED_WIRE_SEMANTIC_SUITE' -and
++            $focusedResult.Combined -match 'TEST_INPUT_HASHES_STABLE_DURING_COMPILE_AND_RUN=PASS'
++        Assert-Contract -Name 'R1I_FOCUSED_SIMULATION' -Condition (
++            $focusedResult.ExitCode -eq 0 -and $focusedMarkers
++        ) -Details "exit=$($focusedResult.ExitCode) markers=$focusedMarkers log=$focusedLog"
++        $script:Receipt.focused_simulation = 'PASS'
++    }
++
++    $statusBeforeProvenance = (Invoke-GitText -Arguments @(
++        'status', '--porcelain=v1', '--untracked-files=all'
++    )).Text
++    if ($PreCommit) {
++        $script:Receipt.provenance_tests = 'NOT_RUN'
++        Add-Check -Name 'PROVENANCE_HARNESS_RUNTIME_TESTS' -Status NOT_RUN `
++            -Details 'PreCommit mode: runtime provenance tests require a clean, committed four-file source tree.'
++    } else {
++        Assert-Contract -Name 'CLEAN_COMMITTED_SOURCE_FOR_PROVENANCE' -Condition (
++            [string]::IsNullOrWhiteSpace($statusBeforeProvenance)
++        ) -Details "git_status=$statusBeforeProvenance"
++        $vivadoVersionLog = Join-Path $runRoot 'vivado_version.log'
++        $vivadoVersion = Invoke-OfflineChild -Executable $VivadoBat -Arguments @('-version') `
++            -WorkingDirectory $runRoot -LogPath $vivadoVersionLog -ChildEnvironment $childEnvironment
++        Assert-Contract -Name 'EXACT_VIVADO_VERSION' -Condition (
++            $vivadoVersion.ExitCode -in @(0, 1) -and
++            $vivadoVersion.Combined -match 'Vivado\s+v2025\.2' -and
++            $vivadoVersion.Combined -match 'SW Build\s+6299465'
++        ) -Details "exit=$($vivadoVersion.ExitCode) log=$vivadoVersionLog"
++
++        $provenanceRoot = Join-Path $runRoot 'provenance_tests'
++        [void][IO.Directory]::CreateDirectory($provenanceRoot)
++        $sourceCommit = $head
++        $sourceTree = $headTree
++        $bitFilename = 'AHD_V41_G2A.bit'
++
++        $positiveRoot = Join-Path $provenanceRoot 'positive'
++        [void][IO.Directory]::CreateDirectory($positiveRoot)
++        $positiveBuild = Join-Path $positiveRoot 'build_must_not_exist'
++        $positiveEvidence = Join-Path $positiveRoot 'evidence'
++        $positiveLog = Join-Path $positiveRoot 'vivado.console.log'
++        $positiveResult = Invoke-OfflineChild -Executable $VivadoBat -Arguments @(
++            '-mode', 'batch', '-source', $g2aBuildPath,
++            '-log', (Join-Path $positiveRoot 'vivado.log'),
++            '-journal', (Join-Path $positiveRoot 'vivado.jou'),
++            '-tclargs', $RepoRoot, $positiveBuild, $positiveEvidence,
++            $sourceCommit, $sourceTree, $bitFilename, 'PROVENANCE_ONLY'
++        ) -WorkingDirectory $positiveRoot -LogPath $positiveLog -ChildEnvironment $childEnvironment
++        Assert-Contract -Name 'PROVENANCE_ONLY_POSITIVE_EXIT' -Condition ($positiveResult.ExitCode -eq 0) `
++            -Details "exit=$($positiveResult.ExitCode) log=$positiveLog"
++        $positiveReceipt = Join-Path $positiveEvidence 'G2A_EXPECTED_RUNTIME_PROVENANCE.txt'
++        Assert-Contract -Name 'PROVENANCE_ONLY_POSITIVE_RECEIPT_EXISTS' -Condition (Test-Path -LiteralPath $positiveReceipt) `
++            -Details $positiveReceipt
++        $positiveText = [IO.File]::ReadAllText($positiveReceipt)
++        foreach ($marker in @(
++            "SOURCE_COMMIT_REQUESTED=$sourceCommit",
++            "SOURCE_COMMIT_ACTUAL=$sourceCommit",
++            "SOURCE_TREE_REQUESTED=$sourceTree",
++            "SOURCE_TREE_ACTUAL=$sourceTree",
++            'PROVENANCE_ROUND_TRIP=PASS',
++            'PROVENANCE_PREFLIGHT=PASS',
++            'PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS')) {
++            Assert-Contract -Name ("PROVENANCE_RECEIPT_" + ($marker.Split('=')[0] -replace '[^A-Za-z0-9]', '_').ToUpperInvariant()) `
++                -Condition ($positiveText.Contains($marker)) -Details $marker
++        }
++        for ($word = 0; $word -lt 5; $word++) {
++            $expectedWord = $sourceCommit.Substring($word * 8, 8)
++            Assert-Contract -Name "PROVENANCE_RECEIPT_GIT_SHA_W$word" -Condition (
++                $positiveText -match ("(?im)^GIT_SHA_W" + $word + "=(?:0x)?" + $expectedWord + '$')
++            ) -Details "word=$expectedWord"
++        }
++        Assert-NoProjectCreation -Name 'PROVENANCE_ONLY_POSITIVE_NO_PROJECT' `
++            -BuildRoot $positiveBuild -CaseRoot $positiveRoot
++
++        $invalidRoot = Join-Path $provenanceRoot 'invalid_mode'
++        [void][IO.Directory]::CreateDirectory($invalidRoot)
++        $invalidBuild = Join-Path $invalidRoot 'build_must_not_exist'
++        $invalidEvidence = Join-Path $invalidRoot 'evidence_must_not_exist'
++        $invalidLog = Join-Path $invalidRoot 'vivado.console.log'
++        $invalidResult = Invoke-OfflineChild -Executable $VivadoBat -Arguments @(
++            '-mode', 'batch', '-source', $g2aBuildPath,
++            '-log', (Join-Path $invalidRoot 'vivado.log'),
++            '-journal', (Join-Path $invalidRoot 'vivado.jou'),
++            '-tclargs', $RepoRoot, $invalidBuild, $invalidEvidence,
++            $sourceCommit, $sourceTree, $bitFilename, 'INVALID_MODE'
++        ) -WorkingDirectory $invalidRoot -LogPath $invalidLog -ChildEnvironment $childEnvironment
++        Assert-Contract -Name 'INVALID_MODE_NEGATIVE_REJECTED' -Condition (
++            $invalidResult.ExitCode -ne 0 -and
++            $invalidResult.Combined -match '(?i)(execution mode|PROVENANCE_ONLY|invalid mode)'
++        ) -Details "exit=$($invalidResult.ExitCode) log=$invalidLog"
++        Assert-NoProjectCreation -Name 'INVALID_MODE_NEGATIVE_NO_PROJECT' `
++            -BuildRoot $invalidBuild -CaseRoot $invalidRoot
++
++        $mismatchRoot = Join-Path $provenanceRoot 'round_trip_mismatch'
++        [void][IO.Directory]::CreateDirectory($mismatchRoot)
++        $mutatedHarness = Join-Path $mismatchRoot 'g2a_build_one_word_mismatch.tcl'
++        $mutationTarget = 'set reconstructed_commit [join $git_words ""]'
++        $mutationReplacement = @'
++set mutated_word [lindex $git_words 2]
++if {$mutated_word eq "00000000"} { set mutated_word "00000001" } else { set mutated_word "00000000" }
++set reconstructed_commit [join [lreplace $git_words 2 2 $mutated_word] ""]
++'@.TrimEnd()
++        $targetCount = [regex]::Matches($g2aBuildText, [regex]::Escape($mutationTarget)).Count
++        Assert-Contract -Name 'ROUND_TRIP_MUTATION_TARGET_SINGULAR' -Condition ($targetCount -eq 1) `
++            -Details "target_count=$targetCount"
++        $mutatedText = $g2aBuildText.Replace($mutationTarget, $mutationReplacement)
++        [IO.File]::WriteAllText($mutatedHarness, $mutatedText, $Utf8NoBom)
++        Assert-Contract -Name 'MUTATED_HARNESS_OUTSIDE_REPOSITORY' -Condition (
++            -not ($mutatedHarness + [IO.Path]::DirectorySeparatorChar).StartsWith(
++                $repoPrefix, [StringComparison]::OrdinalIgnoreCase)
++        ) -Details $mutatedHarness
++        $mismatchBuild = Join-Path $mismatchRoot 'build_must_not_exist'
++        $mismatchEvidence = Join-Path $mismatchRoot 'evidence_must_not_exist'
++        $mismatchLog = Join-Path $mismatchRoot 'vivado.console.log'
++        $mismatchResult = Invoke-OfflineChild -Executable $VivadoBat -Arguments @(
++            '-mode', 'batch', '-source', $mutatedHarness,
++            '-log', (Join-Path $mismatchRoot 'vivado.log'),
++            '-journal', (Join-Path $mismatchRoot 'vivado.jou'),
++            '-tclargs', $RepoRoot, $mismatchBuild, $mismatchEvidence,
++            $sourceCommit, $sourceTree, $bitFilename, 'PROVENANCE_ONLY'
++        ) -WorkingDirectory $mismatchRoot -LogPath $mismatchLog -ChildEnvironment $childEnvironment
++        Assert-Contract -Name 'ROUND_TRIP_ONE_WORD_MISMATCH_REJECTED' -Condition (
++            $mismatchResult.ExitCode -ne 0 -and
++            $mismatchResult.Combined -match '(?i)provenance round-trip mismatch'
++        ) -Details "exit=$($mismatchResult.ExitCode) log=$mismatchLog"
++        Assert-NoProjectCreation -Name 'ROUND_TRIP_MISMATCH_NO_PROJECT' `
++            -BuildRoot $mismatchBuild -CaseRoot $mismatchRoot
++        $script:Receipt.provenance_tests = 'PASS'
++    }
++
++    $statusAfter = (Invoke-GitText -Arguments @(
++        'status', '--porcelain=v1', '--untracked-files=all'
++    )).Text
++    Assert-Contract -Name 'SOURCE_TREE_UNCHANGED_BY_OFFLINE_TESTS' -Condition (
++        $statusAfter -ceq $statusBeforeProvenance
++    ) -Details "status_before=$statusBeforeProvenance status_after=$statusAfter"
++    $offlineActions = @('Git', 'offline Python fixtures')
++    if (-not $SkipSim) { $offlineActions += 'inherited xsim tools' }
++    if (-not $PreCommit) { $offlineActions += 'Vivado batch provenance mode' }
++    Add-Check -Name 'HARDWARE_PROHIBITION' -Status PASS `
++        -Details "Runner invoked only $($offlineActions -join ', '); no hardware command or network/DUT action exists."
++    $script:Receipt.hardware_accessed = $false
++    $script:Receipt.result = $(if ($PreCommit) { 'PASS_PRECOMMIT_STATIC' } else { 'PASS' })
++} catch {
++    $exitCode = 1
++    if (-not $script:FailureRecorded) {
++        Add-Check -Name 'RUNNER_EXCEPTION' -Status FAIL -Details $_.Exception.Message
++    }
++    $script:Receipt.first_failure = $_.Exception.Message
++    $script:Receipt.result = 'FAIL'
++} finally {
++    Write-Receipts
++}
++
++Write-Output "G2A_OFFLINE_CHECK_RESULT=$($script:Receipt.result)"
++Write-Output "G2A_OFFLINE_JSON_RECEIPT=$(Join-Path $EvidenceRoot 'G2A_OFFLINE_CHECK_RECEIPT.json')"
++Write-Output "G2A_OFFLINE_TEXT_RECEIPT=$(Join-Path $EvidenceRoot 'G2A_OFFLINE_CHECK_RECEIPT.txt')"
++if ($exitCode -ne 0) {
++    Write-Error $script:Receipt.first_failure
++}
++exit $exitCode

@@ -1,0 +1,435 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 28 05:44:31 2026
+# Process ID         : 26752
+# Current directory  : <FPGA_WORKSPACE>/V41_G2A_EVIDENCE/sealed_offline_checks_contingency_final/offline_runs/20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d/provenance_tests/round_trip_mismatch
+# Command line       : vivado.exe -mode batch -source <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\g2a_build_one_word_mismatch.tcl -log <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\vivado.log -journal <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\vivado.jou -tclargs <SOURCE_ROOT> <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\build_must_not_exist <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\evidence_must_not_exist 224d194e5f82c85bcb29297561c5d5e76d28063b 283f98c02e6f9c61716875415cf000682f8ab856 AHD_V41_G2A.bit PROVENANCE_ONLY
+# Log file           : <FPGA_WORKSPACE>/V41_G2A_EVIDENCE/sealed_offline_checks_contingency_final/offline_runs/20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d/provenance_tests/round_trip_mismatch/vivado.log
+# Journal file       : <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\vivado.jou
+# Running On         : <BUILD_HOST>
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4525 MB
+# Total Virtual      : 21553 MB
+# Available Virtual  : 3948 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file '<USER_PROFILE>\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+INFO: [Common 17-1239] XILINX_LOCAL_USER_DATA is set to 'NO'.
+INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to 'C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
+source {<PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\round_trip_mismatch\g2a_build_one_word_mismatch.tcl}
+# if {$argc != 6 && $argc != 7} {
+#   puts stderr "usage: g2a_build.tcl REPO_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_COMMIT SOURCE_TREE BIT_FILENAME ?PROVENANCE_ONLY?"
+#   exit 2
+# }
+# lassign [lrange $argv 0 5] repo_root build_root evidence_root source_commit source_tree bit_filename
+# set execution_mode FULL_BUILD
+# if {$argc == 7} {
+#   set execution_mode [lindex $argv 6]
+#   if {$execution_mode ne "PROVENANCE_ONLY"} {
+#     error "optional execution mode must be exactly PROVENANCE_ONLY"
+#   }
+# }
+# set repo_root [file normalize $repo_root]
+# set build_root [file normalize $build_root]
+# set evidence_root [file normalize $evidence_root]
+# set qualified_base_commit 20c3323d79d3896edc586d6db1df7deee60f9e41
+# set qualified_base_tree 70d801fd7a879080da399bfa9ee95fd6eb008e16
+# set qualified_base_tag v41-r1i-qualified-poc-20260827
+# set expected_branch integration/v41-r1i-gen2-g2a
+# set expected_part xc7a35tcsg325-2
+# set expected_top ahd_capture_top_xdma
+# set expected_vivado_version 2025.2
+# set expected_vivado_sw_build 6299465
+# set expected_user_clock_mhz 62.5
+# set clock_tolerance_mhz 0.1
+# proc write_lines {path lines} {
+#   file mkdir [file dirname $path]
+#   set fh [open $path w]
+#   fconfigure $fh -encoding utf-8 -translation lf
+#   foreach line $lines { puts $fh $line }
+#   close $fh
+# }
+# proc write_text {path value} {
+#   file mkdir [file dirname $path]
+#   set fh [open $path w]
+#   fconfigure $fh -encoding utf-8 -translation lf
+#   puts -nonewline $fh $value
+#   close $fh
+# }
+# proc read_text {path} {
+#   set fh [open $path r]
+#   fconfigure $fh -encoding utf-8
+#   set value [read $fh]
+#   close $fh
+#   return $value
+# }
+# proc single_line {value} {
+#   return [string map [list "\r" {\r} "\n" {\n}] $value]
+# }
+# proc path_key {path} {
+#   return [string tolower [string trimright [file normalize $path] "/\\"]]
+# }
+# proc path_is_within {child parent} {
+#   set child_key [path_key $child]
+#   set parent_key [path_key $parent]
+#   if {$child_key eq $parent_key} { return 1 }
+#   return [expr {[string first "${parent_key}/" $child_key] == 0}]
+# }
+# proc git_value {args} {
+#   global repo_root
+#   return [string trim [exec git --no-optional-locks -C $repo_root {*}$args]]
+# }
+# proc sha256_file {path} {
+#   set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
+#   foreach line [split $output "\n"] {
+#     set candidate [string toupper [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
+#     if {[regexp {^[0-9A-F]{64}$} $candidate]} { return $candidate }
+#   }
+#   error "SHA-256 unavailable for $path"
+# }
+# proc require_files {paths} {
+#   foreach path $paths {
+#     if {![file isfile $path]} { error "required input missing: $path" }
+#   }
+# }
+# proc effective_config_dict {ip} {
+#   set result [dict create]
+#   foreach property [lsort [list_property $ip]] {
+#     if {[string match {CONFIG.*} $property]} {
+#       dict set result $property [get_property $property $ip]
+#     }
+#   }
+#   return $result
+# }
+# proc assert_config_dict_equal {expected actual label} {
+#   set expected_keys [lsort [dict keys $expected]]
+#   set actual_keys [lsort [dict keys $actual]]
+#   if {$expected_keys ne $actual_keys} {
+#     error "$label CONFIG property-name drift"
+#   }
+#   foreach property $expected_keys {
+#     set expected_value [dict get $expected $property]
+#     set actual_value [dict get $actual $property]
+#     if {$actual_value ne $expected_value} {
+#       error "$label CONFIG drift for $property: expected '$expected_value', got '$actual_value'"
+#     }
+#   }
+# }
+# proc utilization_row {text wanted} {
+#   set normalized_wanted [string trimright $wanted "*"]
+#   foreach line [split $text "\n"] {
+#     set columns [split $line "|"]
+#     if {[llength $columns] < 7} { continue }
+#     set actual [string trimright [string trim [lindex $columns 1]] "*"]
+#     if {$actual ne $normalized_wanted} { continue }
+#     set used [string map [list "," "" " " ""] [string trim [lindex $columns 2]]]
+#     set available [string map [list "," "" " " ""] [string trim [lindex $columns 5]]]
+#     if {![string is double -strict $used] || ![string is double -strict $available] || $available <= 0.0} {
+#       error "non-numeric utilization row '$wanted': used='$used' available='$available'"
+#     }
+#     return [list $used $available]
+#   }
+#   error "utilization row '$wanted' not found"
+# }
+# proc resource_metrics {stage} {
+#   global evidence_root
+#   set text [report_utilization -return_string]
+#   write_text [file join $evidence_root "${stage}_UTILIZATION_FLAT.rpt"] $text
+#   lassign [utilization_row $text "Slice LUTs"] lut_used lut_available
+#   lassign [utilization_row $text "Slice Registers"] ff_used ff_available
+#   lassign [utilization_row $text "Block RAM Tile"] bram_used bram_available
+#   lassign [utilization_row $text "DSPs"] dsp_used dsp_available
+#   return [dict create \
+#     LUT_USED $lut_used LUT_AVAILABLE $lut_available \
+#     LUT_PERCENT [expr {100.0 * $lut_used / $lut_available}] \
+#     FF_USED $ff_used FF_AVAILABLE $ff_available \
+#     FF_PERCENT [expr {100.0 * $ff_used / $ff_available}] \
+#     BRAM_USED $bram_used BRAM_AVAILABLE $bram_available \
+#     BRAM_PERCENT [expr {100.0 * $bram_used / $bram_available}] \
+#     DSP_USED $dsp_used DSP_AVAILABLE $dsp_available \
+#     DSP_PERCENT [expr {100.0 * $dsp_used / $dsp_available}]]
+# }
+# proc enforce_resource_gate {stage metrics} {
+#   global evidence_root
+#   set lut_percent [dict get $metrics LUT_PERCENT]
+#   set ff_percent [dict get $metrics FF_PERCENT]
+#   set bram_percent [dict get $metrics BRAM_PERCENT]
+#   set dsp_percent [dict get $metrics DSP_PERCENT]
+#   set gate PASS
+#   set reason NONE
+#   if {$lut_percent > 90.0} {
+#     set gate FAIL
+#     set reason LUT_GT_90_PERCENT
+#   } elseif {$ff_percent > 80.0} {
+#     set gate FAIL
+#     set reason FF_GT_80_PERCENT
+#   } elseif {$bram_percent > 80.0} {
+#     set gate FAIL
+#     set reason BRAM_GT_80_PERCENT
+#   } elseif {$dsp_percent > 85.0} {
+#     set gate FAIL
+#     set reason DSP_GT_85_PERCENT
+#   }
+#   write_lines [file join $evidence_root "${stage}_RESOURCE_GATE.txt"] [list \
+#     "STAGE=$stage" \
+#     "LUT_USED=[dict get $metrics LUT_USED]" \
+#     "LUT_AVAILABLE=[dict get $metrics LUT_AVAILABLE]" \
+#     "LUT_PERCENT=[format %.3f $lut_percent]" \
+#     "LUT_LIMIT_PERCENT=90.000" \
+#     "FF_USED=[dict get $metrics FF_USED]" \
+#     "FF_AVAILABLE=[dict get $metrics FF_AVAILABLE]" \
+#     "FF_PERCENT=[format %.3f $ff_percent]" \
+#     "FF_LIMIT_PERCENT=80.000" \
+#     "BRAM_USED=[dict get $metrics BRAM_USED]" \
+#     "BRAM_AVAILABLE=[dict get $metrics BRAM_AVAILABLE]" \
+#     "BRAM_PERCENT=[format %.3f $bram_percent]" \
+#     "BRAM_LIMIT_PERCENT=80.000" \
+#     "DSP_USED=[dict get $metrics DSP_USED]" \
+#     "DSP_AVAILABLE=[dict get $metrics DSP_AVAILABLE]" \
+#     "DSP_PERCENT=[format %.3f $dsp_percent]" \
+#     "DSP_LIMIT_PERCENT=85.000" \
+#     "RESOURCE_GATE=$gate" "RESOURCE_GATE_REASON=$reason"]
+#   if {$gate ne "PASS"} { error "$stage resource gate failed: $reason" }
+# }
+# proc record_action {action} {
+#   global action_counts evidence_root stage
+#   dict incr action_counts $action
+#   set lines [list "STAGE=$stage"]
+#   dict for {key value} $action_counts { lappend lines "$key=$value" }
+#   write_lines [file join $evidence_root G2A_OPERATION_COUNTS.txt] $lines
+# }
+# proc unique_objects_by_name {objects} {
+#   set by_name [dict create]
+#   foreach object $objects {
+#     set name [get_property NAME $object]
+#     dict set by_name $name $object
+#   }
+#   set result [list]
+#   foreach name [lsort [dict keys $by_name]] { lappend result [dict get $by_name $name] }
+#   return $result
+# }
+# proc clocks_for_pattern {pattern} {
+#   set result [list]
+#   foreach clock [get_clocks -quiet] {
+#     if {[string match $pattern [get_property NAME $clock]]} { lappend result $clock }
+#   }
+#   foreach net [get_nets -quiet -hier $pattern] {
+#     if {![catch {get_clocks -quiet -of_objects $net} clocks]} {
+#       foreach clock $clocks { lappend result $clock }
+#     }
+#     foreach pin [get_pins -quiet -of_objects $net] {
+#       if {![catch {get_clocks -quiet -of_objects $pin} clocks]} {
+#         foreach clock $clocks { lappend result $clock }
+#       }
+#     }
+#   }
+#   foreach pin [get_pins -quiet -hier $pattern] {
+#     if {![catch {get_clocks -quiet -of_objects $pin} clocks]} {
+#       foreach clock $clocks { lappend result $clock }
+#     }
+#   }
+#   return [unique_objects_by_name $result]
+# }
+# proc property_or_unknown {property object} {
+#   if {[catch {get_property $property $object} value] || $value eq ""} { return UNKNOWN }
+#   return $value
+# }
+# proc check_timing_table_count {text wanted} {
+#   foreach line [split $text "\n"] {
+#     set columns [split $line "|"]
+#     for {set index 0} {$index + 1 < [llength $columns]} {incr index} {
+#       if {[string trim [lindex $columns $index]] ne $wanted} { continue }
+#       set count [string trim [lindex $columns [expr {$index + 1}]]]
+#       if {[string is integer -strict $count]} { return $count }
+#     }
+#     if {[regexp [format {^[ \t]*%s[ \t]+([0-9]+)} $wanted] $line -> count]} {
+#       return $count
+#     }
+#     if {[regexp [format {checking[ \t]+%s[ \t]*\(([0-9]+)\)} $wanted] $line -> count]} {
+#       return $count
+#     }
+#   }
+#   return UNKNOWN
+# }
+# proc cdc_severity_counts {text} {
+#   set critical 0
+#   set unknown 0
+#   foreach line [split $text "\n"] {
+#     if {![regexp -nocase {CDC-[0-9]+} $line]} { continue }
+#     if {[regexp -nocase {Critical} $line]} { incr critical }
+#     if {[regexp -nocase {Unknown} $line]} { incr unknown }
+#   }
+#   return [list $critical $unknown]
+# }
+# proc enforce_gen2_xdma_pipe_cdc_disposition {cdc_path cdc_violations} {
+#   global build_root evidence_root
+# 
+#   set critical_names [list]
+#   foreach violation $cdc_violations {
+#     set severity [string toupper [property_or_unknown SEVERITY $violation]]
+#     if {$severity eq "CRITICAL" || $severity eq "CRITICAL WARNING"} {
+#       lappend critical_names [get_property NAME $violation]
+#     }
+#   }
+#   set critical_names [lsort $critical_names]
+#   set expected_names [list CDC-13#1 CDC-13#2]
+#   if {$critical_names ne $expected_names} {
+#     error "unexpected critical CDC object set: expected '$expected_names', got '$critical_names'"
+#   }
+# 
+#   set cdc_text [read_text $cdc_path]
+#   set source_endpoint {XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_sel_reg/C}
+#   set destination_endpoint {XDMA/inst/xdma_v41_m1_pcie2_to_pcie3_wrapper_i/pcie2_ip_i/inst/inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S1}
+#   set expected_row "1 CDC-13 Critical 1-bit CDC path on a non-FD primitive 0 False Path $source_endpoint $destination_endpoint"
+#   set exact_row_count 0
+#   set summary_count 0
+#   foreach line [split $cdc_text "\n"] {
+#     set normalized [join [regexp -all -inline {\S+} $line] " "]
+#     if {$normalized eq $expected_row} { incr exact_row_count }
+#     if {$normalized eq {CDC-13 Critical 2 1-bit CDC path on a non-FD primitive}} {
+#       incr summary_count
+#     }
+#   }
+#   if {$exact_row_count != 2 || $summary_count != 1} {
+#     error "Gen2 XDMA CDC-13 report signature mismatch: rows=$exact_row_count summary=$summary_count"
+#   }
+# 
+#   set normalized_report [join [regexp -all -inline {\S+} $cdc_text] " "]
+#   foreach context [list \
+#       {Source Clock: clk_125mhz_mux_x0y0 Destination Clock: clk_250mhz_x0y0 CDC Type: User Ignored} \
+#       {Source Clock: clk_250mhz_mux_x0y0 Destination Clock: clk_250mhz_x0y0 CDC Type: User Ignored}] {
+#     if {[string first $context $normalized_report] < 0} {
+#       error "Gen2 XDMA CDC-13 clock/type context missing: $context"
+#     }
+#   }
+# 
+#   set generated_xdc_pattern [file join $build_root vivado_project *.gen sources_1 ip \
+#     xdma_v41_m1 ip_0 source xdma_v41_m1_pcie2_ip-PCIE_X0Y0.xdc]
+#   set generated_xdc_files [glob -nocomplain -types f -- $generated_xdc_pattern]
+#   if {[llength $generated_xdc_files] != 1} {
+#     error "expected one generated XDMA PCIe XDC, found [llength $generated_xdc_files]"
+#   }
+#   set generated_xdc [lindex $generated_xdc_files 0]
+#   set generated_xdc_text [read_text $generated_xdc]
+#   foreach required_clause [list \
+#       {set_false_path -to [get_pins {inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S0}]} \
+#       {set_false_path -to [get_pins {inst/gt_top_i/pipe_wrapper_i/pipe_clock_int.pipe_clock_i/pclk_i1_bufgctrl.pclk_i1/S1}]} \
+#       {set_clock_groups -name pcieclkmux -physically_exclusive -group clk_125mhz_mux_x0y0 -group clk_250mhz_mux_x0y0}] {
+#     if {[string first $required_clause $generated_xdc_text] < 0} {
+#       error "required generated-XDC CDC clause missing: $required_clause"
+#     }
+#   }
+# 
+#   write_lines [file join $evidence_root G2A_CDC_EXACT_DISPOSITION.txt] [list \
+#     {DISPOSITION=PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX} \
+#     {CDC_CRITICAL_TOTAL=2} \
+#     {CDC_CRITICAL_DISPOSITIONED=2} \
+#     {CDC_UNKNOWN=0} \
+#     {CDC_IDS=CDC-13#1,CDC-13#2} \
+#     {CDC_TYPE=User Ignored} \
+#     {EXCEPTION=False Path} \
+#     "SOURCE_ENDPOINT=$source_endpoint" \
+#     "DESTINATION_ENDPOINT=$destination_endpoint" \
+#     {CLOCK_PAIR_0=clk_125mhz_mux_x0y0->clk_250mhz_x0y0} \
+#     {CLOCK_PAIR_1=clk_250mhz_mux_x0y0->clk_250mhz_x0y0} \
+#     "GENERATED_XDC=$generated_xdc" \
+#     {GENERATED_XDC_S0_FALSE_PATH=PASS} \
+#     {GENERATED_XDC_S1_FALSE_PATH=PASS} \
+#     {GENERATED_XDC_CLOCKS_PHYSICALLY_EXCLUSIVE=PASS} \
+#     {APPLICATION_CDC_DISPOSITIONED=0} \
+#     {BROAD_CDC_WAIVER_APPLIED=NO}]
+#   return 2
+# }
+# proc enforce_named_bus_skew_constraint {text label source_token destination_token} {
+#   set matches 0
+#   set lines [split $text "\n"]
+#   for {set index 0} {$index < [llength $lines]} {incr index} {
+#     set line [lindex $lines $index]
+#     if {![string match {set_bus_skew *} [string trimleft $line]] ||
+#         [string first $source_token $line] < 0 ||
+#         [string first $destination_token $line] < 0} {
+#       continue
+#     }
+#     incr matches
+#     set met_count 0
+#     set violated_count 0
+#     for {set scan [expr {$index + 1}]} {$scan < [llength $lines]} {incr scan} {
+#       set scan_line [lindex $lines $scan]
+#       if {[regexp {^[ \t]*Id:[ \t]*[0-9]+} $scan_line]} { break }
+#       if {[regexp -nocase {Slack[ \t]*\([ \t]*MET[ \t]*\)} $scan_line]} { incr met_count }
+#       if {[regexp -nocase {Slack[ \t]*\([ \t]*VIOLATED[ \t]*\)} $scan_line]} { incr violated_count }
+#     }
+#     if {$met_count != 1 || $violated_count != 0} {
+#       error "$label bus-skew constraint failed: met=$met_count violated=$violated_count"
+#     }
+#   }
+#   if {$matches != 1} {
+#     error "$label bus-skew constraint resolution failed: command_matches=$matches"
+#   }
+# }
+# if {![file isdirectory $repo_root]} { error "REPO_ROOT is not a directory: $repo_root" }
+# if {[path_is_within $build_root $repo_root] || [path_is_within $evidence_root $repo_root]} {
+#   error "BUILD_ROOT and EVIDENCE_ROOT must both be outside REPO_ROOT"
+# }
+# if {[path_is_within $evidence_root $build_root] || [path_is_within $build_root $evidence_root]} {
+#   error "BUILD_ROOT and EVIDENCE_ROOT must be disjoint"
+# }
+# if {$bit_filename eq "" || [file tail $bit_filename] ne $bit_filename ||
+#     ![string equal -nocase [file extension $bit_filename] ".bit"]} {
+#   error "BIT_FILENAME must be a leaf filename ending in .bit"
+# }
+# if {![regexp {^[0-9a-f]{40}$} $source_commit]} {
+#   error "SOURCE_COMMIT must be exactly 40 lowercase hex digits"
+# }
+# if {![regexp {^[0-9a-f]{40}$} $source_tree]} {
+#   error "SOURCE_TREE must be exactly 40 lowercase hex digits"
+# }
+# set actual_commit [git_value rev-parse HEAD]
+# set actual_tree [git_value rev-parse {HEAD^{tree}}]
+# set actual_branch [git_value symbolic-ref --short HEAD]
+# set actual_status [git_value status --porcelain --untracked-files=all]
+# set actual_base_tree [git_value rev-parse "${qualified_base_commit}^{tree}"]
+# set actual_tag_commit [git_value rev-list -n 1 $qualified_base_tag]
+# set actual_merge_base [git_value merge-base $qualified_base_commit $source_commit]
+# set direct_parent [git_value rev-parse "${source_commit}^"]
+# set integration_commit_count [git_value rev-list --count "${qualified_base_commit}..${source_commit}"]
+# if {$actual_commit ne $source_commit} { error "repository HEAD does not match requested SOURCE_COMMIT" }
+# if {$actual_tree ne $source_tree} { error "repository HEAD tree does not match requested SOURCE_TREE" }
+# if {$actual_branch ne $expected_branch} { error "source branch mismatch: expected $expected_branch, got $actual_branch" }
+# if {$actual_status ne ""} { error "G2A full source tree is not clean: $actual_status" }
+# if {$actual_base_tree ne $qualified_base_tree} { error "BLOCKED - G2A_BASE_TREE_MISMATCH" }
+# if {$actual_tag_commit ne $qualified_base_commit} { error "qualified immutable tag does not resolve to frozen base commit" }
+# if {$actual_merge_base ne $qualified_base_commit || $direct_parent ne $qualified_base_commit ||
+#     $integration_commit_count ne "1"} {
+#   error "integration commit is not a single direct child of frozen qualified R1i"
+# }
+# set git_words [list]
+# for {set word_index 0} {$word_index < 5} {incr word_index} {
+#   set first [expr {$word_index * 8}]
+#   set word [string range $source_commit $first [expr {$first + 7}]]
+#   if {![regexp {^[0-9a-f]{8}$} $word]} { error "invalid 8-hex provenance word $word_index" }
+#   lappend git_words $word
+# }
+# set mutated_word [lindex $git_words 2]
+# if {$mutated_word eq "00000000"} { set mutated_word "00000001" } else { set mutated_word "00000000" }
+# set reconstructed_commit [join [lreplace $git_words 2 2 $mutated_word] ""]
+# if {$reconstructed_commit ne $source_commit} {
+#   error "provenance round-trip mismatch: $reconstructed_commit != $source_commit"
+# }
+provenance round-trip mismatch: 224d194e5f82c85b0000000061c5d5e76d28063b != 224d194e5f82c85bcb29297561c5d5e76d28063b
+    while executing
+"error "provenance round-trip mismatch: $reconstructed_commit != $source_commit""
+    invoked from within
+"if {$reconstructed_commit ne $source_commit} {
+  error "provenance round-trip mismatch: $reconstructed_commit != $source_commit"
+}"
+    (file "<PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\ro..." line 452)
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 28 05:45:27 2026...

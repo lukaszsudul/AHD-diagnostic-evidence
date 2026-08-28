@@ -1,0 +1,39 @@
+COMMON_ENV
+XILINX_LOCAL_USER_DATA=NO
+XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore
+TEMP=<SOURCE_ROOT>_SUPP_CONT_FINAL_20260828_054619\tmp
+TMP=<SOURCE_ROOT>_SUPP_CONT_FINAL_20260828_054619\tmp
+
+TOOL_VERSION
+C:\AMDDesignTools\2025.2\Vivado\bin\xvlog.bat --version
+
+AUXILIARY_VERSION_BANNER_QUERY
+C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat -version
+NOTE=Informational banner query returned the expected version text and raw process exit 1; it is not one of the 18 tracked matrix commands.
+
+MMIO_COMPILE
+C:\AMDDesignTools\2025.2\Vivado\bin\xvlog.bat --sv --work work <SOURCE_ROOT>\rtl\v41\control_status_regs.sv <SOURCE_ROOT>\rtl\v41\r1h_mmio_read_service.sv <SOURCE_ROOT>\rtl\v41\r1f_measurement_regs.sv <SOURCE_ROOT>\tests\v41\r1g_measurement_regs_reference.sv <SOURCE_ROOT>\tests\v41\tb_r1i_poc_mmio.sv <SOURCE_ROOT>\tests\v41\tb_r1h_mmio_read_service.sv <SOURCE_ROOT>\tests\v41\tb_r1h_mmio_integration_exhaustive.sv
+
+MMIO_TESTS
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_r1i_poc_mmio -s g2a_tb_r1i_poc_mmio
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_tb_r1i_poc_mmio -runall
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_r1h_mmio_read_service -s g2a_tb_r1h_mmio_read_service
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_tb_r1h_mmio_read_service -runall
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_r1h_mmio_integration_exhaustive -s g2a_tb_r1h_mmio_integration_exhaustive
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_tb_r1h_mmio_integration_exhaustive -runall
+
+RECORD_COMPILE
+C:\AMDDesignTools\2025.2\Vivado\bin\xvlog.bat --sv --work work C:\AMDDesignTools\2025.2\Vivado\data\verilog\src\glbl.v <SOURCE_ROOT>\rtl\pio\pio_bar_target.sv <SOURCE_ROOT>\rtl\pio\pio_slot_adapter.sv <SOURCE_ROOT>\rtl\pio\pio_tlp_bridge.sv <SOURCE_ROOT>\rtl\record\capture_mailbox.sv <SOURCE_ROOT>\rtl\record\bt656_record_producer.sv <SOURCE_ROOT>\rtl\video\video_capture.sv <SOURCE_ROOT>\tests\record\tb_record_producer.sv <SOURCE_ROOT>\tests\record\tb_slot_count.sv
+
+RECORD_TESTS
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_g0p8c2_producer work.glbl -L xpm -L unisims_ver -s g2a_record_a
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_record_a -runall
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_g0p8c2_producer_phase_b work.glbl -L xpm -L unisims_ver -s g2a_record_b
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_record_b -runall
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_g0p8c3r1_slot_count work.glbl -L xpm -L unisims_ver -s g2a_slot_count
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_slot_count -runall
+
+BRIDGE_COMPILE_AND_TEST
+C:\AMDDesignTools\2025.2\Vivado\bin\xvlog.bat --sv --work work <SOURCE_ROOT>\rtl\v41\axi_lite_host_bridge.sv <PRIVATE_EVIDENCE_ROOT>\tb_g2a_axi_lite_host_bridge.sv
+C:\AMDDesignTools\2025.2\Vivado\bin\xelab.bat work.tb_g2a_axi_lite_host_bridge -s g2a_bridge
+C:\AMDDesignTools\2025.2\Vivado\bin\xsim.bat g2a_bridge -runall

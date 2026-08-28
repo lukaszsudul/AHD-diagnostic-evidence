@@ -1,0 +1,2089 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Aug 28 08:21:00 2026
+| Host         : <BUILD_HOST> running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type max -from [get_cells -quiet -hier -regexp {.*MAILBOX/cfg_hold_pcie_reg\[[0-9]+\]}] -to [get_cells -quiet -hier -regexp {.*MAILBOX/nvp_cfg_(abort|arm|capture_generation|clear_errors|line_count_requested|single_line|target_line|window_16_lines)_reg(\[[0-9]+\])?}] -max_paths 100 -file <BUILD_EVIDENCE_ROOT>/MAX_DELAY_CFG.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             4.806ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[6]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.147ns  (logic 0.433ns (37.746%)  route 0.714ns (62.254%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y62                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[6]/C
+    SLICE_X38Y62         FDRE (Prop_fdre_C_Q)         0.433     0.433 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[6]/Q
+                         net (fo=1, routed)           0.714     1.147    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[6]
+    SLICE_X39Y62         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y62         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[1]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -1.147    
+  -------------------------------------------------------------------
+                         slack                                  4.806    
+
+Slack (MET) :             4.849ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[40]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[30]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.004ns  (logic 0.398ns (39.656%)  route 0.606ns (60.344%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[40]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.398     0.398 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[40]/Q
+                         net (fo=1, routed)           0.606     1.004    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[40]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[30]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.147     5.853    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[30]
+  -------------------------------------------------------------------
+                         required time                          5.853    
+                         arrival time                          -1.004    
+  -------------------------------------------------------------------
+                         slack                                  4.849    
+
+Slack (MET) :             4.922ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[71]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[29]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.019ns  (logic 0.379ns (37.190%)  route 0.640ns (62.810%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y60                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[71]/C
+    SLICE_X53Y60         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[71]/Q
+                         net (fo=1, routed)           0.640     1.019    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[71]
+    SLICE_X57Y58         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[29]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y58         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[29]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -1.019    
+  -------------------------------------------------------------------
+                         slack                                  4.922    
+
+Slack (MET) :             4.927ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[65]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[23]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.026ns  (logic 0.379ns (36.935%)  route 0.647ns (63.065%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y58                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[65]/C
+    SLICE_X53Y58         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[65]/Q
+                         net (fo=1, routed)           0.647     1.026    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[65]
+    SLICE_X57Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[23]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y56         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[23]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -1.026    
+  -------------------------------------------------------------------
+                         slack                                  4.927    
+
+Slack (MET) :             4.930ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[66]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[24]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.011ns  (logic 0.379ns (37.482%)  route 0.632ns (62.518%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y59                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[66]/C
+    SLICE_X53Y59         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[66]/Q
+                         net (fo=1, routed)           0.632     1.011    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[66]
+    SLICE_X57Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[24]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y56         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[24]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -1.011    
+  -------------------------------------------------------------------
+                         slack                                  4.930    
+
+Slack (MET) :             4.932ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[14]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.890ns  (logic 0.348ns (39.085%)  route 0.542ns (60.915%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[14]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[14]/Q
+                         net (fo=1, routed)           0.542     0.890    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[14]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.178     5.822    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[4]
+  -------------------------------------------------------------------
+                         required time                          5.822    
+                         arrival time                          -0.890    
+  -------------------------------------------------------------------
+                         slack                                  4.932    
+
+Slack (MET) :             4.938ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[70]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[28]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        1.015ns  (logic 0.379ns (37.329%)  route 0.636ns (62.671%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y60                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[70]/C
+    SLICE_X53Y60         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[70]/Q
+                         net (fo=1, routed)           0.636     1.015    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[70]
+    SLICE_X57Y58         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[28]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y58         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[28]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -1.015    
+  -------------------------------------------------------------------
+                         slack                                  4.938    
+
+Slack (MET) :             4.940ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[4]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_window_16_lines_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.898ns  (logic 0.348ns (38.764%)  route 0.550ns (61.236%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[4]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[4]/Q
+                         net (fo=1, routed)           0.550     0.898    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[4]
+    SLICE_X38Y64         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_window_16_lines_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y64         FDRE (Setup_fdre_C_D)       -0.162     5.838    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_window_16_lines_reg
+  -------------------------------------------------------------------
+                         required time                          5.838    
+                         arrival time                          -0.898    
+  -------------------------------------------------------------------
+                         slack                                  4.940    
+
+Slack (MET) :             4.953ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[43]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.988ns  (logic 0.379ns (38.375%)  route 0.609ns (61.625%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y53                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[43]/C
+    SLICE_X53Y53         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[43]/Q
+                         net (fo=1, routed)           0.609     0.988    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[43]
+    SLICE_X51Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y56         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[1]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -0.988    
+  -------------------------------------------------------------------
+                         slack                                  4.953    
+
+Slack (MET) :             4.962ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[23]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[13]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.829ns  (logic 0.348ns (41.982%)  route 0.481ns (58.018%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[23]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[23]/Q
+                         net (fo=1, routed)           0.481     0.829    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[23]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.209     5.791    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[13]
+  -------------------------------------------------------------------
+                         required time                          5.791    
+                         arrival time                          -0.829    
+  -------------------------------------------------------------------
+                         slack                                  4.962    
+
+Slack (MET) :             4.967ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[35]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[25]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.859ns  (logic 0.348ns (40.511%)  route 0.511ns (59.489%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[35]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[35]/Q
+                         net (fo=1, routed)           0.511     0.859    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[35]
+    SLICE_X36Y73         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[25]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X36Y73         FDRE (Setup_fdre_C_D)       -0.174     5.826    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[25]
+  -------------------------------------------------------------------
+                         required time                          5.826    
+                         arrival time                          -0.859    
+  -------------------------------------------------------------------
+                         slack                                  4.967    
+
+Slack (MET) :             4.973ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[33]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[23]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.851ns  (logic 0.348ns (40.896%)  route 0.503ns (59.104%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[33]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[33]/Q
+                         net (fo=1, routed)           0.503     0.851    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[33]
+    SLICE_X36Y73         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[23]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X36Y73         FDRE (Setup_fdre_C_D)       -0.176     5.824    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[23]
+  -------------------------------------------------------------------
+                         required time                          5.824    
+                         arrival time                          -0.851    
+  -------------------------------------------------------------------
+                         slack                                  4.973    
+
+Slack (MET) :             4.974ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[55]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[13]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.995ns  (logic 0.379ns (38.078%)  route 0.616ns (61.922%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y56                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[55]/C
+    SLICE_X53Y56         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[55]/Q
+                         net (fo=1, routed)           0.616     0.995    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[55]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[13]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.031     5.969    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[13]
+  -------------------------------------------------------------------
+                         required time                          5.969    
+                         arrival time                          -0.995    
+  -------------------------------------------------------------------
+                         slack                                  4.974    
+
+Slack (MET) :             4.985ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[41]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[31]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.886ns  (logic 0.398ns (44.909%)  route 0.488ns (55.091%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[41]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.398     0.398 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[41]/Q
+                         net (fo=1, routed)           0.488     0.886    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[41]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[31]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.129     5.871    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[31]
+  -------------------------------------------------------------------
+                         required time                          5.871    
+                         arrival time                          -0.886    
+  -------------------------------------------------------------------
+                         slack                                  4.985    
+
+Slack (MET) :             4.995ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[17]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[7]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.856ns  (logic 0.348ns (40.634%)  route 0.508ns (59.366%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[17]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[17]/Q
+                         net (fo=1, routed)           0.508     0.856    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[17]
+    SLICE_X38Y67         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y67         FDRE (Setup_fdre_C_D)       -0.149     5.851    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[7]
+  -------------------------------------------------------------------
+                         required time                          5.851    
+                         arrival time                          -0.856    
+  -------------------------------------------------------------------
+                         slack                                  4.995    
+
+Slack (MET) :             5.009ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[13]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[3]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.964ns  (logic 0.379ns (39.316%)  route 0.585ns (60.684%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[13]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[13]/Q
+                         net (fo=1, routed)           0.585     0.964    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[13]
+    SLICE_X38Y67         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y67         FDRE (Setup_fdre_C_D)       -0.027     5.973    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[3]
+  -------------------------------------------------------------------
+                         required time                          5.973    
+                         arrival time                          -0.964    
+  -------------------------------------------------------------------
+                         slack                                  5.009    
+
+Slack (MET) :             5.039ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[69]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[27]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.942ns  (logic 0.379ns (40.252%)  route 0.563ns (59.748%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y59                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[69]/C
+    SLICE_X53Y59         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[69]/Q
+                         net (fo=1, routed)           0.563     0.942    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[69]
+    SLICE_X50Y59         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[27]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X50Y59         FDRE (Setup_fdre_C_D)       -0.019     5.981    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[27]
+  -------------------------------------------------------------------
+                         required time                          5.981    
+                         arrival time                          -0.942    
+  -------------------------------------------------------------------
+                         slack                                  5.039    
+
+Slack (MET) :             5.048ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[63]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[21]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.925ns  (logic 0.379ns (40.992%)  route 0.546ns (59.008%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y58                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[63]/C
+    SLICE_X53Y58         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[63]/Q
+                         net (fo=1, routed)           0.546     0.925    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[63]
+    SLICE_X56Y57         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[21]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X56Y57         FDRE (Setup_fdre_C_D)       -0.027     5.973    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[21]
+  -------------------------------------------------------------------
+                         required time                          5.973    
+                         arrival time                          -0.925    
+  -------------------------------------------------------------------
+                         slack                                  5.048    
+
+Slack (MET) :             5.049ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_abort_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.799ns  (logic 0.348ns (43.548%)  route 0.451ns (56.452%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y70                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[1]/C
+    SLICE_X57Y70         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[1]/Q
+                         net (fo=1, routed)           0.451     0.799    CAPTURE_SUBSYSTEM/MAILBOX/p_0_in
+    SLICE_X60Y70         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_abort_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X60Y70         FDRE (Setup_fdre_C_D)       -0.152     5.848    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_abort_reg
+  -------------------------------------------------------------------
+                         required time                          5.848    
+                         arrival time                          -0.799    
+  -------------------------------------------------------------------
+                         slack                                  5.049    
+
+Slack (MET) :             5.052ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[30]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[20]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.915ns  (logic 0.433ns (47.301%)  route 0.482ns (52.699%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[30]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.433     0.433 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[30]/Q
+                         net (fo=1, routed)           0.482     0.915    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[30]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[20]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.033     5.967    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[20]
+  -------------------------------------------------------------------
+                         required time                          5.967    
+                         arrival time                          -0.915    
+  -------------------------------------------------------------------
+                         slack                                  5.052    
+
+Slack (MET) :             5.058ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[72]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[30]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.900ns  (logic 0.379ns (42.090%)  route 0.521ns (57.910%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y60                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[72]/C
+    SLICE_X53Y60         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[72]/Q
+                         net (fo=1, routed)           0.521     0.900    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[72]
+    SLICE_X57Y58         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[30]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y58         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[30]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.900    
+  -------------------------------------------------------------------
+                         slack                                  5.058    
+
+Slack (MET) :             5.058ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[56]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[14]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.930ns  (logic 0.379ns (40.743%)  route 0.551ns (59.257%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y56                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[56]/C
+    SLICE_X53Y56         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[56]/Q
+                         net (fo=1, routed)           0.551     0.930    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[56]
+    SLICE_X50Y57         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[14]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X50Y57         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[14]
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.930    
+  -------------------------------------------------------------------
+                         slack                                  5.058    
+
+Slack (MET) :             5.064ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[7]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[2]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.889ns  (logic 0.379ns (42.656%)  route 0.510ns (57.344%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y64                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[7]/C
+    SLICE_X39Y64         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[7]/Q
+                         net (fo=1, routed)           0.510     0.889    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[7]
+    SLICE_X39Y63         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y63         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[2]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -0.889    
+  -------------------------------------------------------------------
+                         slack                                  5.064    
+
+Slack (MET) :             5.068ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[73]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[31]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.893ns  (logic 0.379ns (42.444%)  route 0.514ns (57.556%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y60                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[73]/C
+    SLICE_X53Y60         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[73]/Q
+                         net (fo=1, routed)           0.514     0.893    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[73]
+    SLICE_X57Y58         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[31]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y58         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[31]
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.893    
+  -------------------------------------------------------------------
+                         slack                                  5.068    
+
+Slack (MET) :             5.069ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[52]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[10]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.884ns  (logic 0.379ns (42.876%)  route 0.505ns (57.124%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y55                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[52]/C
+    SLICE_X53Y55         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[52]/Q
+                         net (fo=1, routed)           0.505     0.884    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[52]
+    SLICE_X51Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y56         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[10]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -0.884    
+  -------------------------------------------------------------------
+                         slack                                  5.069    
+
+Slack (MET) :             5.072ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[44]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[2]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.926ns  (logic 0.379ns (40.932%)  route 0.547ns (59.068%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y53                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[44]/C
+    SLICE_X53Y53         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[44]/Q
+                         net (fo=1, routed)           0.547     0.926    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[44]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.002     5.998    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[2]
+  -------------------------------------------------------------------
+                         required time                          5.998    
+                         arrival time                          -0.926    
+  -------------------------------------------------------------------
+                         slack                                  5.072    
+
+Slack (MET) :             5.074ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[37]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[27]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.757ns  (logic 0.348ns (45.983%)  route 0.409ns (54.017%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[37]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[37]/Q
+                         net (fo=1, routed)           0.409     0.757    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[37]
+    SLICE_X36Y73         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[27]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X36Y73         FDRE (Setup_fdre_C_D)       -0.169     5.831    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[27]
+  -------------------------------------------------------------------
+                         required time                          5.831    
+                         arrival time                          -0.757    
+  -------------------------------------------------------------------
+                         slack                                  5.074    
+
+Slack (MET) :             5.077ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[21]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[11]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.850ns  (logic 0.379ns (44.607%)  route 0.471ns (55.393%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[21]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[21]/Q
+                         net (fo=1, routed)           0.471     0.850    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[21]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.073     5.927    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[11]
+  -------------------------------------------------------------------
+                         required time                          5.927    
+                         arrival time                          -0.850    
+  -------------------------------------------------------------------
+                         slack                                  5.077    
+
+Slack (MET) :             5.082ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[67]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[25]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.906ns  (logic 0.379ns (41.833%)  route 0.527ns (58.167%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y59                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[67]/C
+    SLICE_X53Y59         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[67]/Q
+                         net (fo=1, routed)           0.527     0.906    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[67]
+    SLICE_X56Y57         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[25]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X56Y57         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[25]
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.906    
+  -------------------------------------------------------------------
+                         slack                                  5.082    
+
+Slack (MET) :             5.087ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[18]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[8]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.889ns  (logic 0.379ns (42.614%)  route 0.510ns (57.386%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[18]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[18]/Q
+                         net (fo=1, routed)           0.510     0.889    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[18]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.024     5.976    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[8]
+  -------------------------------------------------------------------
+                         required time                          5.976    
+                         arrival time                          -0.889    
+  -------------------------------------------------------------------
+                         slack                                  5.087    
+
+Slack (MET) :             5.094ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[45]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[3]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.864ns  (logic 0.379ns (43.845%)  route 0.485ns (56.155%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y53                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[45]/C
+    SLICE_X53Y53         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[45]/Q
+                         net (fo=1, routed)           0.485     0.864    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[45]
+    SLICE_X51Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y56         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[3]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.864    
+  -------------------------------------------------------------------
+                         slack                                  5.094    
+
+Slack (MET) :             5.101ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[29]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[19]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.867ns  (logic 0.379ns (43.693%)  route 0.488ns (56.307%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y68                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[29]/C
+    SLICE_X37Y68         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[29]/Q
+                         net (fo=1, routed)           0.488     0.867    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[29]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[19]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.032     5.968    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[19]
+  -------------------------------------------------------------------
+                         required time                          5.968    
+                         arrival time                          -0.867    
+  -------------------------------------------------------------------
+                         slack                                  5.101    
+
+Slack (MET) :             5.103ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[24]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[14]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.719ns  (logic 0.348ns (48.369%)  route 0.371ns (51.631%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[24]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[24]/Q
+                         net (fo=1, routed)           0.371     0.719    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[24]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[14]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.178     5.822    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[14]
+  -------------------------------------------------------------------
+                         required time                          5.822    
+                         arrival time                          -0.719    
+  -------------------------------------------------------------------
+                         slack                                  5.103    
+
+Slack (MET) :             5.113ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[68]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[26]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.845ns  (logic 0.379ns (44.833%)  route 0.466ns (55.167%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y59                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[68]/C
+    SLICE_X53Y59         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[68]/Q
+                         net (fo=1, routed)           0.466     0.845    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[68]
+    SLICE_X57Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[26]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y56         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[26]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.845    
+  -------------------------------------------------------------------
+                         slack                                  5.113    
+
+Slack (MET) :             5.119ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[12]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[2]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.866ns  (logic 0.379ns (43.741%)  route 0.487ns (56.259%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[12]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[12]/Q
+                         net (fo=1, routed)           0.487     0.866    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[12]
+    SLICE_X38Y67         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y67         FDRE (Setup_fdre_C_D)       -0.015     5.985    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[2]
+  -------------------------------------------------------------------
+                         required time                          5.985    
+                         arrival time                          -0.866    
+  -------------------------------------------------------------------
+                         slack                                  5.119    
+
+Slack (MET) :             5.120ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[42]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.847ns  (logic 0.379ns (44.770%)  route 0.468ns (55.230%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y53                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[42]/C
+    SLICE_X53Y53         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[42]/Q
+                         net (fo=1, routed)           0.468     0.847    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[42]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.033     5.967    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[0]
+  -------------------------------------------------------------------
+                         required time                          5.967    
+                         arrival time                          -0.847    
+  -------------------------------------------------------------------
+                         slack                                  5.120    
+
+Slack (MET) :             5.127ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[15]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[5]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.726ns  (logic 0.348ns (47.961%)  route 0.378ns (52.039%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[15]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[15]/Q
+                         net (fo=1, routed)           0.378     0.726    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[15]
+    SLICE_X38Y67         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y67         FDRE (Setup_fdre_C_D)       -0.147     5.853    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[5]
+  -------------------------------------------------------------------
+                         required time                          5.853    
+                         arrival time                          -0.726    
+  -------------------------------------------------------------------
+                         slack                                  5.127    
+
+Slack (MET) :             5.131ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[34]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[24]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.840ns  (logic 0.433ns (51.545%)  route 0.407ns (48.455%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[34]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.433     0.433 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[34]/Q
+                         net (fo=1, routed)           0.407     0.840    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[34]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[24]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.029     5.971    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[24]
+  -------------------------------------------------------------------
+                         required time                          5.971    
+                         arrival time                          -0.840    
+  -------------------------------------------------------------------
+                         slack                                  5.131    
+
+Slack (MET) :             5.142ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_arm_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.831ns  (logic 0.379ns (45.624%)  route 0.452ns (54.376%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y70                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[0]/C
+    SLICE_X57Y70         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[0]/Q
+                         net (fo=1, routed)           0.452     0.831    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[0]
+    SLICE_X60Y70         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_arm_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X60Y70         FDRE (Setup_fdre_C_D)       -0.027     5.973    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_arm_reg
+  -------------------------------------------------------------------
+                         required time                          5.973    
+                         arrival time                          -0.831    
+  -------------------------------------------------------------------
+                         slack                                  5.142    
+
+Slack (MET) :             5.152ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_single_line_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.809ns  (logic 0.379ns (46.872%)  route 0.430ns (53.128%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y64                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[3]/C
+    SLICE_X39Y64         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[3]/Q
+                         net (fo=1, routed)           0.430     0.809    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[3]
+    SLICE_X39Y63         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_single_line_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y63         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_single_line_reg
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.809    
+  -------------------------------------------------------------------
+                         slack                                  5.152    
+
+Slack (MET) :             5.160ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[36]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[26]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.809ns  (logic 0.433ns (53.506%)  route 0.376ns (46.494%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[36]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.433     0.433 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[36]/Q
+                         net (fo=1, routed)           0.376     0.809    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[36]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[26]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.031     5.969    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[26]
+  -------------------------------------------------------------------
+                         required time                          5.969    
+                         arrival time                          -0.809    
+  -------------------------------------------------------------------
+                         slack                                  5.160    
+
+Slack (MET) :             5.161ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_clear_errors_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.827ns  (logic 0.379ns (45.845%)  route 0.448ns (54.155%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y70                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[2]/C
+    SLICE_X57Y70         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[2]/Q
+                         net (fo=1, routed)           0.448     0.827    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[2]
+    SLICE_X60Y70         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_clear_errors_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X60Y70         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_clear_errors_reg
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.827    
+  -------------------------------------------------------------------
+                         slack                                  5.161    
+
+Slack (MET) :             5.166ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[8]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[3]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.775ns  (logic 0.379ns (48.897%)  route 0.396ns (51.103%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y64                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[8]/C
+    SLICE_X39Y64         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[8]/Q
+                         net (fo=1, routed)           0.396     0.775    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[8]
+    SLICE_X39Y63         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y63         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[3]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -0.775    
+  -------------------------------------------------------------------
+                         slack                                  5.166    
+
+Slack (MET) :             5.179ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[11]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.779ns  (logic 0.379ns (48.679%)  route 0.400ns (51.321%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[11]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[11]/Q
+                         net (fo=1, routed)           0.400     0.779    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[11]
+    SLICE_X39Y68         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y68         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[1]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.779    
+  -------------------------------------------------------------------
+                         slack                                  5.179    
+
+Slack (MET) :             5.181ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[26]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[16]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.746ns  (logic 0.379ns (50.801%)  route 0.367ns (49.199%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[26]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[26]/Q
+                         net (fo=1, routed)           0.367     0.746    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[26]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[16]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.073     5.927    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[16]
+  -------------------------------------------------------------------
+                         required time                          5.927    
+                         arrival time                          -0.746    
+  -------------------------------------------------------------------
+                         slack                                  5.181    
+
+Slack (MET) :             5.196ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[61]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[19]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.802ns  (logic 0.379ns (47.285%)  route 0.423ns (52.715%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y57                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[61]/C
+    SLICE_X53Y57         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[61]/Q
+                         net (fo=1, routed)           0.423     0.802    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[61]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[19]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.002     5.998    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[19]
+  -------------------------------------------------------------------
+                         required time                          5.998    
+                         arrival time                          -0.802    
+  -------------------------------------------------------------------
+                         slack                                  5.196    
+
+Slack (MET) :             5.198ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[10]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.743ns  (logic 0.379ns (50.990%)  route 0.364ns (49.010%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y67                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[10]/C
+    SLICE_X39Y67         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[10]/Q
+                         net (fo=1, routed)           0.364     0.743    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[10]
+    SLICE_X39Y68         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y68         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[0]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -0.743    
+  -------------------------------------------------------------------
+                         slack                                  5.198    
+
+Slack (MET) :             5.198ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[62]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[20]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.787ns  (logic 0.379ns (48.151%)  route 0.408ns (51.849%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y58                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[62]/C
+    SLICE_X53Y58         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[62]/Q
+                         net (fo=1, routed)           0.408     0.787    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[62]
+    SLICE_X56Y57         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[20]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X56Y57         FDRE (Setup_fdre_C_D)       -0.015     5.985    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[20]
+  -------------------------------------------------------------------
+                         required time                          5.985    
+                         arrival time                          -0.787    
+  -------------------------------------------------------------------
+                         slack                                  5.198    
+
+Slack (MET) :             5.201ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[32]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[22]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.603ns  (logic 0.348ns (57.748%)  route 0.255ns (42.252%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[32]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[32]/Q
+                         net (fo=1, routed)           0.255     0.603    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[32]
+    SLICE_X36Y73         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[22]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X36Y73         FDRE (Setup_fdre_C_D)       -0.196     5.804    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[22]
+  -------------------------------------------------------------------
+                         required time                          5.804    
+                         arrival time                          -0.603    
+  -------------------------------------------------------------------
+                         slack                                  5.201    
+
+Slack (MET) :             5.202ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[27]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[17]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.756ns  (logic 0.379ns (50.161%)  route 0.377ns (49.839%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y68                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[27]/C
+    SLICE_X37Y68         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[27]/Q
+                         net (fo=1, routed)           0.377     0.756    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[27]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[17]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[17]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.756    
+  -------------------------------------------------------------------
+                         slack                                  5.202    
+
+Slack (MET) :             5.203ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[5]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.782ns  (logic 0.379ns (48.460%)  route 0.403ns (51.540%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y64                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[5]/C
+    SLICE_X39Y64         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[5]/Q
+                         net (fo=1, routed)           0.403     0.782    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[5]
+    SLICE_X38Y63         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y63         FDRE (Setup_fdre_C_D)       -0.015     5.985    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[0]
+  -------------------------------------------------------------------
+                         required time                          5.985    
+                         arrival time                          -0.782    
+  -------------------------------------------------------------------
+                         slack                                  5.203    
+
+Slack (MET) :             5.204ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[64]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[22]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.784ns  (logic 0.379ns (48.335%)  route 0.405ns (51.665%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y58                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[64]/C
+    SLICE_X53Y58         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[64]/Q
+                         net (fo=1, routed)           0.405     0.784    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[64]
+    SLICE_X56Y57         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[22]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X56Y57         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[22]
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.784    
+  -------------------------------------------------------------------
+                         slack                                  5.204    
+
+Slack (MET) :             5.206ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[59]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[17]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.779ns  (logic 0.379ns (48.663%)  route 0.400ns (51.337%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y57                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[59]/C
+    SLICE_X53Y57         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[59]/Q
+                         net (fo=1, routed)           0.400     0.779    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[59]
+    SLICE_X54Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[17]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X54Y56         FDRE (Setup_fdre_C_D)       -0.015     5.985    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[17]
+  -------------------------------------------------------------------
+                         required time                          5.985    
+                         arrival time                          -0.779    
+  -------------------------------------------------------------------
+                         slack                                  5.206    
+
+Slack (MET) :             5.209ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[51]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[9]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.752ns  (logic 0.379ns (50.428%)  route 0.373ns (49.572%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y55                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[51]/C
+    SLICE_X53Y55         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[51]/Q
+                         net (fo=1, routed)           0.373     0.752    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[51]
+    SLICE_X51Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y56         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[9]
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.752    
+  -------------------------------------------------------------------
+                         slack                                  5.209    
+
+Slack (MET) :             5.214ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[19]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[9]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.747ns  (logic 0.379ns (50.717%)  route 0.368ns (49.283%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y68                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[19]/C
+    SLICE_X37Y68         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[19]/Q
+                         net (fo=1, routed)           0.368     0.747    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[19]
+    SLICE_X39Y68         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[9]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y68         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[9]
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.747    
+  -------------------------------------------------------------------
+                         slack                                  5.214    
+
+Slack (MET) :             5.215ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[49]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[7]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.743ns  (logic 0.379ns (50.990%)  route 0.364ns (49.010%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y54                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[49]/C
+    SLICE_X53Y54         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[49]/Q
+                         net (fo=1, routed)           0.364     0.743    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[49]
+    SLICE_X51Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[7]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y55         FDRE (Setup_fdre_C_D)       -0.042     5.958    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[7]
+  -------------------------------------------------------------------
+                         required time                          5.958    
+                         arrival time                          -0.743    
+  -------------------------------------------------------------------
+                         slack                                  5.215    
+
+Slack (MET) :             5.217ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[39]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[29]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.652ns  (logic 0.398ns (61.017%)  route 0.254ns (38.983%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[39]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.398     0.398 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[39]/Q
+                         net (fo=1, routed)           0.254     0.652    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[39]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[29]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.131     5.869    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[29]
+  -------------------------------------------------------------------
+                         required time                          5.869    
+                         arrival time                          -0.652    
+  -------------------------------------------------------------------
+                         slack                                  5.217    
+
+Slack (MET) :             5.217ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[54]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[12]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.754ns  (logic 0.379ns (50.248%)  route 0.375ns (49.752%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y56                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[54]/C
+    SLICE_X53Y56         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[54]/Q
+                         net (fo=1, routed)           0.375     0.754    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[54]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.029     5.971    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[12]
+  -------------------------------------------------------------------
+                         required time                          5.971    
+                         arrival time                          -0.754    
+  -------------------------------------------------------------------
+                         slack                                  5.217    
+
+Slack (MET) :             5.217ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[9]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.604ns  (logic 0.348ns (57.652%)  route 0.256ns (42.348%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X39Y64                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[9]/C
+    SLICE_X39Y64         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[9]/Q
+                         net (fo=1, routed)           0.256     0.604    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[9]
+    SLICE_X39Y63         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X39Y63         FDRE (Setup_fdre_C_D)       -0.179     5.821    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_line_count_requested_reg[4]
+  -------------------------------------------------------------------
+                         required time                          5.821    
+                         arrival time                          -0.604    
+  -------------------------------------------------------------------
+                         slack                                  5.217    
+
+Slack (MET) :             5.220ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[47]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[5]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.765ns  (logic 0.379ns (49.547%)  route 0.386ns (50.453%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y54                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[47]/C
+    SLICE_X53Y54         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[47]/Q
+                         net (fo=1, routed)           0.386     0.765    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[47]
+    SLICE_X54Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X54Y55         FDRE (Setup_fdre_C_D)       -0.015     5.985    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[5]
+  -------------------------------------------------------------------
+                         required time                          5.985    
+                         arrival time                          -0.765    
+  -------------------------------------------------------------------
+                         slack                                  5.220    
+
+Slack (MET) :             5.230ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[16]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[6]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.743ns  (logic 0.379ns (50.990%)  route 0.364ns (49.010%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X37Y68                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[16]/C
+    SLICE_X37Y68         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[16]/Q
+                         net (fo=1, routed)           0.364     0.743    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[16]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.027     5.973    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[6]
+  -------------------------------------------------------------------
+                         required time                          5.973    
+                         arrival time                          -0.743    
+  -------------------------------------------------------------------
+                         slack                                  5.230    
+
+Slack (MET) :             5.232ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[60]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[18]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.751ns  (logic 0.379ns (50.447%)  route 0.372ns (49.553%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y57                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[60]/C
+    SLICE_X53Y57         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[60]/Q
+                         net (fo=1, routed)           0.372     0.751    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[60]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[18]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.017     5.983    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[18]
+  -------------------------------------------------------------------
+                         required time                          5.983    
+                         arrival time                          -0.751    
+  -------------------------------------------------------------------
+                         slack                                  5.232    
+
+Slack (MET) :             5.233ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[53]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[11]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.755ns  (logic 0.379ns (50.225%)  route 0.376ns (49.775%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y55                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[53]/C
+    SLICE_X53Y55         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[53]/Q
+                         net (fo=1, routed)           0.376     0.755    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[53]
+    SLICE_X50Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[11]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X50Y55         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[11]
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.755    
+  -------------------------------------------------------------------
+                         slack                                  5.233    
+
+Slack (MET) :             5.283ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[25]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[15]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.642ns  (logic 0.379ns (59.077%)  route 0.263ns (40.923%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[25]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[25]/Q
+                         net (fo=1, routed)           0.263     0.642    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[25]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.075     5.925    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[15]
+  -------------------------------------------------------------------
+                         required time                          5.925    
+                         arrival time                          -0.642    
+  -------------------------------------------------------------------
+                         slack                                  5.283    
+
+Slack (MET) :             5.285ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[20]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[10]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.668ns  (logic 0.379ns (56.763%)  route 0.289ns (43.237%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[20]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[20]/Q
+                         net (fo=1, routed)           0.289     0.668    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[20]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[10]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -0.668    
+  -------------------------------------------------------------------
+                         slack                                  5.285    
+
+Slack (MET) :             5.294ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[48]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[6]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.647ns  (logic 0.379ns (58.602%)  route 0.268ns (41.398%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y54                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[48]/C
+    SLICE_X53Y54         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[48]/Q
+                         net (fo=1, routed)           0.268     0.647    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[48]
+    SLICE_X51Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y55         FDRE (Setup_fdre_C_D)       -0.059     5.941    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[6]
+  -------------------------------------------------------------------
+                         required time                          5.941    
+                         arrival time                          -0.647    
+  -------------------------------------------------------------------
+                         slack                                  5.294    
+
+Slack (MET) :             5.300ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[38]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[28]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.688ns  (logic 0.433ns (62.896%)  route 0.255ns (37.104%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X38Y73                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[38]/C
+    SLICE_X38Y73         FDRE (Prop_fdre_C_Q)         0.433     0.433 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[38]/Q
+                         net (fo=1, routed)           0.255     0.688    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[38]
+    SLICE_X38Y74         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[28]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X38Y74         FDRE (Setup_fdre_C_D)       -0.012     5.988    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[28]
+  -------------------------------------------------------------------
+                         required time                          5.988    
+                         arrival time                          -0.688    
+  -------------------------------------------------------------------
+                         slack                                  5.300    
+
+Slack (MET) :             5.309ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[46]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.644ns  (logic 0.379ns (58.875%)  route 0.265ns (41.125%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y54                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[46]/C
+    SLICE_X53Y54         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[46]/Q
+                         net (fo=1, routed)           0.265     0.644    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[46]
+    SLICE_X51Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y55         FDRE (Setup_fdre_C_D)       -0.047     5.953    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[4]
+  -------------------------------------------------------------------
+                         required time                          5.953    
+                         arrival time                          -0.644    
+  -------------------------------------------------------------------
+                         slack                                  5.309    
+
+Slack (MET) :             5.311ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[31]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[21]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.614ns  (logic 0.379ns (61.694%)  route 0.235ns (38.306%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[31]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[31]/Q
+                         net (fo=1, routed)           0.235     0.614    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[31]
+    SLICE_X36Y73         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[21]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X36Y73         FDRE (Setup_fdre_C_D)       -0.075     5.925    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[21]
+  -------------------------------------------------------------------
+                         required time                          5.925    
+                         arrival time                          -0.614    
+  -------------------------------------------------------------------
+                         slack                                  5.311    
+
+Slack (MET) :             5.317ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[57]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[15]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.652ns  (logic 0.379ns (58.121%)  route 0.273ns (41.879%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y56                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[57]/C
+    SLICE_X53Y56         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[57]/Q
+                         net (fo=1, routed)           0.273     0.652    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[57]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[15]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.031     5.969    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[15]
+  -------------------------------------------------------------------
+                         required time                          5.969    
+                         arrival time                          -0.652    
+  -------------------------------------------------------------------
+                         slack                                  5.317    
+
+Slack (MET) :             5.317ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[50]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[8]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.644ns  (logic 0.379ns (58.875%)  route 0.265ns (41.125%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y55                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[50]/C
+    SLICE_X53Y55         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[50]/Q
+                         net (fo=1, routed)           0.265     0.644    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[50]
+    SLICE_X51Y55         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[8]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X51Y55         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[8]
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.644    
+  -------------------------------------------------------------------
+                         slack                                  5.317    
+
+Slack (MET) :             5.319ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[28]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[18]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.642ns  (logic 0.379ns (59.018%)  route 0.263ns (40.982%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y72                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[28]/C
+    SLICE_X36Y72         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[28]/Q
+                         net (fo=1, routed)           0.263     0.642    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[28]
+    SLICE_X37Y71         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[18]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y71         FDRE (Setup_fdre_C_D)       -0.039     5.961    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[18]
+  -------------------------------------------------------------------
+                         required time                          5.961    
+                         arrival time                          -0.642    
+  -------------------------------------------------------------------
+                         slack                                  5.319    
+
+Slack (MET) :             5.321ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[22]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[12]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.606ns  (logic 0.379ns (62.511%)  route 0.227ns (37.489%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X36Y69                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[22]/C
+    SLICE_X36Y69         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[22]/Q
+                         net (fo=1, routed)           0.227     0.606    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[22]
+    SLICE_X37Y69         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X37Y69         FDRE (Setup_fdre_C_D)       -0.073     5.927    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_target_line_reg[12]
+  -------------------------------------------------------------------
+                         required time                          5.927    
+                         arrival time                          -0.606    
+  -------------------------------------------------------------------
+                         slack                                  5.321    
+
+Slack (MET) :             5.364ns  (required time - arrival time)
+  Source:                 CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[58]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[16]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        0.632ns  (logic 0.379ns (59.927%)  route 0.253ns (40.073%))
+  Logic Levels:           0  
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X53Y57                                      0.000     0.000 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[58]/C
+    SLICE_X53Y57         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg[58]/Q
+                         net (fo=1, routed)           0.253     0.632    CAPTURE_SUBSYSTEM/MAILBOX/cfg_hold_pcie_reg_n_0_[58]
+    SLICE_X52Y56         FDRE                                         r  CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[16]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y56         FDRE (Setup_fdre_C_D)       -0.004     5.996    CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_capture_generation_reg[16]
+  -------------------------------------------------------------------
+                         required time                          5.996    
+                         arrival time                          -0.632    
+  -------------------------------------------------------------------
+                         slack                                  5.364    
+
+
+
+

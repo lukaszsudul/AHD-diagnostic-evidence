@@ -1,0 +1,1220 @@
+{
+  "task": "AHD_V41_G2A_OFFLINE_CONTRACT_CHECKS",
+  "result": "PASS",
+  "mode": "CLEAN_COMMITTED",
+  "started_utc": "2026-08-28T03:35:03.6683105Z",
+  "ended_utc": "2026-08-28T03:45:30.3781952Z",
+  "repo_root": "<SOURCE_ROOT>",
+  "evidence_root": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final",
+  "run_root": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d",
+  "base_commit": "20c3323d79d3896edc586d6db1df7deee60f9e41",
+  "base_tree": "70d801fd7a879080da399bfa9ee95fd6eb008e16",
+  "integration_branch": "integration/v41-r1i-gen2-g2a",
+  "integration_head": "224d194e5f82c85bcb29297561c5d5e76d28063b",
+  "integration_tree": "283f98c02e6f9c61716875415cf000682f8ab856",
+  "changed_files": [
+    "ip/v41/xdma_v41_m1.xci",
+    "scripts/v41/g2a_build.tcl",
+    "scripts/v41/xdma_config_common.tcl",
+    "tests/v41/run_g2a_offline_checks.ps1"
+  ],
+  "child_environment": {
+    "XILINX_LOCAL_USER_DATA": "NO",
+    "XILINX_TCLAPP_REPO": "C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore",
+    "TEMP": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\tmp",
+    "TMP": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\tmp",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "python_tests": "PASS",
+  "focused_simulation": "PASS",
+  "provenance_tests": "PASS",
+  "hardware_accessed": false,
+  "first_failure": null,
+  "checks": [
+    {
+      "name": "EVIDENCE_OUTSIDE_SOURCE_TREE",
+      "status": "PASS",
+      "details": "repo=<SOURCE_ROOT> evidence=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final"
+    },
+    {
+      "name": "GIT_REPOSITORY",
+      "status": "PASS",
+      "details": "repository=<SOURCE_ROOT>"
+    },
+    {
+      "name": "CHILD_ONLY_VIVADO_ENVIRONMENT",
+      "status": "PASS",
+      "details": "XILINX_LOCAL_USER_DATA=NO; XILINX_TCLAPP_REPO=C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore; TEMP=TMP=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\tmp; PYTHONDONTWRITEBYTECODE=1"
+    },
+    {
+      "name": "EXACT_BASE_COMMIT_EXISTS",
+      "status": "PASS",
+      "details": "resolved=20c3323d79d3896edc586d6db1df7deee60f9e41"
+    },
+    {
+      "name": "EXACT_BASE_TREE",
+      "status": "PASS",
+      "details": "expected=70d801fd7a879080da399bfa9ee95fd6eb008e16 actual=70d801fd7a879080da399bfa9ee95fd6eb008e16"
+    },
+    {
+      "name": "QUALIFIED_TAG_PEELED_COMMIT",
+      "status": "PASS",
+      "details": "tag=v41-r1i-qualified-poc-20260827 peeled=20c3323d79d3896edc586d6db1df7deee60f9e41"
+    },
+    {
+      "name": "INTEGRATION_BRANCH",
+      "status": "PASS",
+      "details": "expected=integration/v41-r1i-gen2-g2a actual=integration/v41-r1i-gen2-g2a"
+    },
+    {
+      "name": "BASE_ANCESTRY",
+      "status": "PASS",
+      "details": "base=20c3323d79d3896edc586d6db1df7deee60f9e41 head=224d194e5f82c85bcb29297561c5d5e76d28063b"
+    },
+    {
+      "name": "DONOR_COMMIT_C89E88BC",
+      "status": "PASS",
+      "details": "resolved=c89e88bcdf389614c884fb129e8b2d42a585bccb"
+    },
+    {
+      "name": "DONOR_ANCESTRY_C89E88BC",
+      "status": "PASS",
+      "details": "donor=c89e88bcdf389614c884fb129e8b2d42a585bccb base=20c3323d79d3896edc586d6db1df7deee60f9e41"
+    },
+    {
+      "name": "DONOR_COMMIT_8464AF66",
+      "status": "PASS",
+      "details": "resolved=8464af66611f7c22b8a36a4aab915d598eedda3f"
+    },
+    {
+      "name": "DONOR_ANCESTRY_8464AF66",
+      "status": "PASS",
+      "details": "donor=8464af66611f7c22b8a36a4aab915d598eedda3f base=20c3323d79d3896edc586d6db1df7deee60f9e41"
+    },
+    {
+      "name": "FOUR_FILE_CHANGE_ALLOWLIST",
+      "status": "PASS",
+      "details": "changed=ip/v41/xdma_v41_m1.xci,scripts/v41/g2a_build.tcl,scripts/v41/xdma_config_common.tcl,tests/v41/run_g2a_offline_checks.ps1; unexpected="
+    },
+    {
+      "name": "PLANNED_FILE_EXISTS_IP_V41_XDMA_V41_M1_XCI",
+      "status": "PASS",
+      "details": "ip/v41/xdma_v41_m1.xci"
+    },
+    {
+      "name": "PLANNED_FILE_EXISTS_SCRIPTS_V41_XDMA_CONFIG_COMMON_TCL",
+      "status": "PASS",
+      "details": "scripts/v41/xdma_config_common.tcl"
+    },
+    {
+      "name": "PLANNED_FILE_EXISTS_SCRIPTS_V41_G2A_BUILD_TCL",
+      "status": "PASS",
+      "details": "scripts/v41/g2a_build.tcl"
+    },
+    {
+      "name": "PLANNED_FILE_EXISTS_TESTS_V41_RUN_G2A_OFFLINE_CHECKS_PS1",
+      "status": "PASS",
+      "details": "tests/v41/run_g2a_offline_checks.ps1"
+    },
+    {
+      "name": "FINAL_DIFF_CONTAINS_EXACT_FOUR_FILES",
+      "status": "PASS",
+      "details": "missing=; count=4"
+    },
+    {
+      "name": "DIRECT_PARENT_IS_QUALIFIED_R1I",
+      "status": "PASS",
+      "details": "parent=20c3323d79d3896edc586d6db1df7deee60f9e41"
+    },
+    {
+      "name": "BASE_BLOB_RTL_NVP_NVP6134C_I2C_BRINGUP_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_i2c_bringup.vhd expected=3757acf2677d0a13b31a285095c38cc7b30e567c actual=3757acf2677d0a13b31a285095c38cc7b30e567c"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_NVP_NVP6134C_I2C_BRINGUP_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_i2c_bringup.vhd blob=3757acf2677d0a13b31a285095c38cc7b30e567c sha256=C7AA56E8BC546DD0173FF79FA6E3376DEE607B2DDFDA3F52FD1503C05FFC6C68"
+    },
+    {
+      "name": "BASE_BLOB_RTL_NVP_NVP6134C_AUTOINIT_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_autoinit.vhd expected=ec070a399d16ce3370469ee1b0079c153a39b5c1 actual=ec070a399d16ce3370469ee1b0079c153a39b5c1"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_NVP_NVP6134C_AUTOINIT_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_autoinit.vhd blob=ec070a399d16ce3370469ee1b0079c153a39b5c1 sha256=FCB5F98955F0507C095E774FA9E3048ACD34D07DF5EA40B6B8EEA715B649D5E5"
+    },
+    {
+      "name": "BASE_BLOB_RTL_NVP_NVP6134C_DIAGNOSTICS_PKG_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_diagnostics_pkg.vhd expected=7ddd60fc86da49cda1adcd7af7b772b337c95df6 actual=7ddd60fc86da49cda1adcd7af7b772b337c95df6"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_NVP_NVP6134C_DIAGNOSTICS_PKG_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/nvp6134c_diagnostics_pkg.vhd blob=7ddd60fc86da49cda1adcd7af7b772b337c95df6 sha256=36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156"
+    },
+    {
+      "name": "BASE_BLOB_RTL_NVP_R1F_TRANSACTION_SERIAL_COUNTER_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/r1f_transaction_serial_counter.vhd expected=58c6d7cfdddc23ebde8ccafa75d4c2bc40839e96 actual=58c6d7cfdddc23ebde8ccafa75d4c2bc40839e96"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_NVP_R1F_TRANSACTION_SERIAL_COUNTER_VHD",
+      "status": "PASS",
+      "details": "path=rtl/nvp/r1f_transaction_serial_counter.vhd blob=58c6d7cfdddc23ebde8ccafa75d4c2bc40839e96 sha256=FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E"
+    },
+    {
+      "name": "BASE_BLOB_RTL_TOP_AHD_CAPTURE_TOP_XDMA_SV",
+      "status": "PASS",
+      "details": "path=rtl/top/ahd_capture_top_xdma.sv expected=d04ff833994bc83e29647c0a7cce4cc941c3410e actual=d04ff833994bc83e29647c0a7cce4cc941c3410e"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_TOP_AHD_CAPTURE_TOP_XDMA_SV",
+      "status": "PASS",
+      "details": "path=rtl/top/ahd_capture_top_xdma.sv blob=d04ff833994bc83e29647c0a7cce4cc941c3410e sha256=5E60D388BB9516E3AC2C86F0761901C0669DE4DC40121B2423A36E4445C66DF4"
+    },
+    {
+      "name": "BASE_BLOB_RTL_V41_CONTROL_STATUS_REGS_SV",
+      "status": "PASS",
+      "details": "path=rtl/v41/control_status_regs.sv expected=16fc122686a7c11f99c5bc9750dad586d713e05f actual=16fc122686a7c11f99c5bc9750dad586d713e05f"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_V41_CONTROL_STATUS_REGS_SV",
+      "status": "PASS",
+      "details": "path=rtl/v41/control_status_regs.sv blob=16fc122686a7c11f99c5bc9750dad586d713e05f sha256=77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16"
+    },
+    {
+      "name": "BASE_BLOB_RTL_V41_AXI_LITE_HOST_BRIDGE_SV",
+      "status": "PASS",
+      "details": "path=rtl/v41/axi_lite_host_bridge.sv expected=fde2499259d98da8c28ed26548032ebffb648007 actual=fde2499259d98da8c28ed26548032ebffb648007"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_V41_AXI_LITE_HOST_BRIDGE_SV",
+      "status": "PASS",
+      "details": "path=rtl/v41/axi_lite_host_bridge.sv blob=fde2499259d98da8c28ed26548032ebffb648007 sha256=D94BE3FC0AE7D9DDEC87DF4289277BDE5F3AEE2597F02AC2CE19EF9C4EDB890E"
+    },
+    {
+      "name": "BASE_BLOB_RTL_PIO_PIO_SLOT_ADAPTER_SV",
+      "status": "PASS",
+      "details": "path=rtl/pio/pio_slot_adapter.sv expected=ccadf36ae16222977cc0571b242ff4037bbf117b actual=ccadf36ae16222977cc0571b242ff4037bbf117b"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_PIO_PIO_SLOT_ADAPTER_SV",
+      "status": "PASS",
+      "details": "path=rtl/pio/pio_slot_adapter.sv blob=ccadf36ae16222977cc0571b242ff4037bbf117b sha256=96B8E53B23295A9C8B597EF15E10DA819962E3F96B45FB02F6E472B108720CEE"
+    },
+    {
+      "name": "BASE_BLOB_RTL_PIO_PIO_BAR_TARGET_SV",
+      "status": "PASS",
+      "details": "path=rtl/pio/pio_bar_target.sv expected=1ab24dace7534d4c42d860e9234024440cb69f39 actual=1ab24dace7534d4c42d860e9234024440cb69f39"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_RTL_PIO_PIO_BAR_TARGET_SV",
+      "status": "PASS",
+      "details": "path=rtl/pio/pio_bar_target.sv blob=1ab24dace7534d4c42d860e9234024440cb69f39 sha256=E6BED9C57D5A79E4D2AD2C5E3CEEFCD4AEDCCC9CEA77A61C6A84F350FE6FF833"
+    },
+    {
+      "name": "BASE_BLOB_SCRIPTS_V41_R1I_BUILD_TCL",
+      "status": "PASS",
+      "details": "path=scripts/v41/r1i_build.tcl expected=843d644d1214bb2bc56b6afe50a42231df234ebc actual=843d644d1214bb2bc56b6afe50a42231df234ebc"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_SCRIPTS_V41_R1I_BUILD_TCL",
+      "status": "PASS",
+      "details": "path=scripts/v41/r1i_build.tcl blob=843d644d1214bb2bc56b6afe50a42231df234ebc sha256=7A0CF8BA86FB9245355AD964D6127CC1412A3CF4B9D3228C478F9FC768CDA58F"
+    },
+    {
+      "name": "BASE_BLOB_SCRIPTS_V41_PHASE3_BUILD_TCL",
+      "status": "PASS",
+      "details": "path=scripts/v41/phase3_build.tcl expected=b908146795f6bf0033a4e2ae211208ff20532583 actual=b908146795f6bf0033a4e2ae211208ff20532583"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_SCRIPTS_V41_PHASE3_BUILD_TCL",
+      "status": "PASS",
+      "details": "path=scripts/v41/phase3_build.tcl blob=b908146795f6bf0033a4e2ae211208ff20532583 sha256=D7531F2B12B5CCBF91484C8A28182B0C0FCF71C93277A697F2D6793338DA8440"
+    },
+    {
+      "name": "BASE_BLOB_TESTS_V41_RUN_R1I_FOCUSED_SIM_PS1",
+      "status": "PASS",
+      "details": "path=tests/v41/run_r1i_focused_sim.ps1 expected=47fc3c65b3b73976a41b2821a4606d7ad10a2695 actual=47fc3c65b3b73976a41b2821a4606d7ad10a2695"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_TESTS_V41_RUN_R1I_FOCUSED_SIM_PS1",
+      "status": "PASS",
+      "details": "path=tests/v41/run_r1i_focused_sim.ps1 blob=47fc3c65b3b73976a41b2821a4606d7ad10a2695 sha256=D7950823C8145B4059FD1E9DF9BA4BFDCAEA38ED97E9AF213840CDA08264704B"
+    },
+    {
+      "name": "BASE_BLOB_TESTS_V41_TB_R1I_POC_MMIO_SV",
+      "status": "PASS",
+      "details": "path=tests/v41/tb_r1i_poc_mmio.sv expected=98a2ea8b63a97315a34b04357682a8390de48e33 actual=98a2ea8b63a97315a34b04357682a8390de48e33"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_TESTS_V41_TB_R1I_POC_MMIO_SV",
+      "status": "PASS",
+      "details": "path=tests/v41/tb_r1i_poc_mmio.sv blob=98a2ea8b63a97315a34b04357682a8390de48e33 sha256=50B71609A30B4A3FF5D92FA88439729CF2A0B9CBBE30AF78FDB5C8DFE94FA062"
+    },
+    {
+      "name": "BASE_BLOB_TESTS_V41_TB_R1I_QUALIFIED_ACK_READINESS_SV",
+      "status": "PASS",
+      "details": "path=tests/v41/tb_r1i_qualified_ack_readiness.sv expected=a73020fa8631306584000f9b4351a7eed7ef78ec actual=a73020fa8631306584000f9b4351a7eed7ef78ec"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_TESTS_V41_TB_R1I_QUALIFIED_ACK_READINESS_SV",
+      "status": "PASS",
+      "details": "path=tests/v41/tb_r1i_qualified_ack_readiness.sv blob=a73020fa8631306584000f9b4351a7eed7ef78ec sha256=75B7B5B330CB4CCB41234E91BE56633A0EBA1944CB28A9F13BD48AA718B2143B"
+    },
+    {
+      "name": "BASE_BLOB_TESTS_NVP_TB_POWER_TIMING_VHD",
+      "status": "PASS",
+      "details": "path=tests/nvp/tb_power_timing.vhd expected=a50a65859d537e3adeafe01b2ddaf0373a7a8979 actual=a50a65859d537e3adeafe01b2ddaf0373a7a8979"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_TESTS_NVP_TB_POWER_TIMING_VHD",
+      "status": "PASS",
+      "details": "path=tests/nvp/tb_power_timing.vhd blob=a50a65859d537e3adeafe01b2ddaf0373a7a8979 sha256=367557E9A505AAC0BDA8F8C5B3D71DB2E7B5EA497A6198D4812AB26F5EF80715"
+    },
+    {
+      "name": "BASE_BLOB_TESTS_NVP_TB_NVP_AUTOINIT_VHD",
+      "status": "PASS",
+      "details": "path=tests/nvp/tb_nvp_autoinit.vhd expected=5d6465f4fd8d8ddf81c0ea026a413c50ec4609f1 actual=5d6465f4fd8d8ddf81c0ea026a413c50ec4609f1"
+    },
+    {
+      "name": "PROTECTED_IDENTITY_TESTS_NVP_TB_NVP_AUTOINIT_VHD",
+      "status": "PASS",
+      "details": "path=tests/nvp/tb_nvp_autoinit.vhd blob=5d6465f4fd8d8ddf81c0ea026a413c50ec4609f1 sha256=FD978BCF86A25B1E12CB5985FD29BA492E8A4F17306F2714896E4A6A295EF495"
+    },
+    {
+      "name": "PHASE3_SECONDARY_DONOR_IDENTITY",
+      "status": "PASS",
+      "details": "secondary_blob=b908146795f6bf0033a4e2ae211208ff20532583 r1i_blob=b908146795f6bf0033a4e2ae211208ff20532583"
+    },
+    {
+      "name": "R1I_MMIO_AND_TELEMETRY_SOURCE_IDENTITY",
+      "status": "PASS",
+      "details": "control_status_regs, top, POC MMIO test, ACK-readiness test, and host bridge match qualified R1i byte-for-byte."
+    },
+    {
+      "name": "NO_FUNCTIONAL_SOURCE_OR_XDC_CHANGE",
+      "status": "PASS",
+      "details": "changed_functional_paths="
+    },
+    {
+      "name": "NO_G2B_MMIO_3800_PAGES",
+      "status": "PASS",
+      "details": "No RTL/MMIO source changed; qualified map through 0x367F remains the terminal implemented range."
+    },
+    {
+      "name": "NO_DATA_PLANE_RING_FORMATTER_SCHEDULER_FILES",
+      "status": "PASS",
+      "details": "No RTL, ring, formatter, record-to-C2H adapter, or scheduler file was added or modified."
+    },
+    {
+      "name": "NO_CONFLICT_MARKERS",
+      "status": "PASS",
+      "details": "tracked_matches=; changed_file_matches="
+    },
+    {
+      "name": "NO_R_TRACK_LEAKAGE",
+      "status": "PASS",
+      "details": "leakage_paths=; leakage_text="
+    },
+    {
+      "name": "XCI_GEN2_SPEED",
+      "status": "PASS",
+      "details": "base=2.5_GT/s candidate=5.0_GT/s"
+    },
+    {
+      "name": "XCI_SPEED_REPRESENTATION_SINGULAR",
+      "status": "PASS",
+      "details": "gen2_occurrences=1 gen1_occurrences=0"
+    },
+    {
+      "name": "XCI_ONLY_SPEED_DIFFERS_FROM_BASE",
+      "status": "PASS",
+      "details": "Canonical complete-XCI comparison is byte-semantic-equal after reverting only the requested speed value in memory."
+    },
+    {
+      "name": "COMMON_TCL_MINIMAL_CONFIG_KEYSET",
+      "status": "PASS",
+      "details": "property_count=19"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_AXI_DATA_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.axi_data_width=64_bit"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_AXILITE_MASTER_EN",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_en=true"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_AXILITE_MASTER_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_scale=Kilobytes"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_AXILITE_MASTER_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_size=128"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PCIE_BLK_LOCN",
+      "status": "PASS",
+      "details": "CONFIG.pcie_blk_locn=X0Y0"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_BASE_CLASS_MENU",
+      "status": "PASS",
+      "details": "CONFIG.pf0_base_class_menu=Memory_controller"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_CLASS_CODE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_class_code=058000"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_DEVICE_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_device_id=7011"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_SUB_CLASS_INTERFACE_MENU",
+      "status": "PASS",
+      "details": "CONFIG.pf0_sub_class_interface_menu=Other_memory_controller"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_SUBSYSTEM_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_id=0007"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PF0_SUBSYSTEM_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_vendor_id=10EE"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_PL_LINK_CAP_MAX_LINK_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.pl_link_cap_max_link_width=X1"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_REF_CLK_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.ref_clk_freq=100_MHz"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_SYS_RESET_POLARITY",
+      "status": "PASS",
+      "details": "CONFIG.sys_reset_polarity=ACTIVE_LOW"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_XDMA_AXI_INTF_MM",
+      "status": "PASS",
+      "details": "CONFIG.xdma_axi_intf_mm=AXI_Stream"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_XDMA_NUM_USR_IRQ",
+      "status": "PASS",
+      "details": "CONFIG.xdma_num_usr_irq=1"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_XDMA_RNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_rnum_chnl=1"
+    },
+    {
+      "name": "COMMON_TCL_BASE_INVARIANT_CONFIG_XDMA_WNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_wnum_chnl=1"
+    },
+    {
+      "name": "COMMON_TCL_GEN2_SPEED",
+      "status": "PASS",
+      "details": "base=2.5_GT/s candidate=5.0_GT/s"
+    },
+    {
+      "name": "COMMON_TCL_SPEED_REPRESENTATION_SINGULAR",
+      "status": "PASS",
+      "details": "gen2_occurrences=1 gen1_occurrences=0"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_FUNCTIONAL_MODE",
+      "status": "PASS",
+      "details": "CONFIG.functional_mode expected=DMA actual=DMA"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_MODE_SELECTION",
+      "status": "PASS",
+      "details": "CONFIG.mode_selection expected=Basic actual=Basic"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PCIE_BLK_LOCN",
+      "status": "PASS",
+      "details": "CONFIG.pcie_blk_locn expected=X0Y0 actual=X0Y0"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PL_LINK_CAP_MAX_LINK_SPEED",
+      "status": "PASS",
+      "details": "CONFIG.pl_link_cap_max_link_speed expected=5.0_GT/s actual=5.0_GT/s"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PL_LINK_CAP_MAX_LINK_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.pl_link_cap_max_link_width expected=X1 actual=X1"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_REF_CLK_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.ref_clk_freq expected=100_MHz actual=100_MHz"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_FREE_RUN_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.free_run_freq expected=100_MHz actual=100_MHz"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXISTEN_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.axisten_freq expected=62.5 actual=62.5"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_DEDICATE_PERST",
+      "status": "PASS",
+      "details": "CONFIG.dedicate_perst expected=true actual=true"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_SYS_RESET_POLARITY",
+      "status": "PASS",
+      "details": "CONFIG.sys_reset_polarity expected=ACTIVE_LOW actual=ACTIVE_LOW"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXI_DATA_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.axi_data_width expected=64_bit actual=64_bit"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_AXI_INTF_MM",
+      "status": "PASS",
+      "details": "CONFIG.xdma_axi_intf_mm expected=AXI_Stream actual=AXI_Stream"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_RNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_rnum_chnl expected=1 actual=1"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_WNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_wnum_chnl expected=1 actual=1"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_NUM_USR_IRQ",
+      "status": "PASS",
+      "details": "CONFIG.xdma_num_usr_irq expected=1 actual=1"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_MSI_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_enabled expected=true actual=true"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_MSI_CAP_MULTIMSGCAP",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_cap_multimsgcap expected=1_vector actual=1_vector"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_MSIX_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msix_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXILITE_MASTER_EN",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_en expected=true actual=true"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXILITE_MASTER_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_size expected=128 actual=128"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXILITE_MASTER_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_scale expected=Kilobytes actual=Kilobytes"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR0_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_enabled expected=true actual=true"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR0_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_size expected=128 actual=128"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR0_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_scale expected=Kilobytes actual=Kilobytes"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR0_64BIT",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_64bit expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR1_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar1_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR2_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar2_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR3_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar3_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR4_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar4_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_BAR5_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar5_enabled expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PCIEBAR2AXIBAR_AXIL_MASTER",
+      "status": "PASS",
+      "details": "CONFIG.pciebar2axibar_axil_master expected=0x00000000 actual=0x00000000"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.vendor_id expected=10EE actual=10EE"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_DEVICE_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_device_id expected=7011 actual=7011"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_SUBSYSTEM_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_vendor_id expected=10EE actual=10EE"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_SUBSYSTEM_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_id expected=0007 actual=0007"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PF0_CLASS_CODE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_class_code expected=058000 actual=058000"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_AXIST_BYPASS_EN",
+      "status": "PASS",
+      "details": "CONFIG.axist_bypass_en expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_DSC_BYPASS",
+      "status": "PASS",
+      "details": "CONFIG.xdma_dsc_bypass expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_XDMA_STS_PORTS",
+      "status": "PASS",
+      "details": "CONFIG.xdma_sts_ports expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_EN_DEBUG_PORTS",
+      "status": "PASS",
+      "details": "CONFIG.en_debug_ports expected=false actual=false"
+    },
+    {
+      "name": "XCI_FROZEN_CONFIG_PCIE_EXTENDED_TAG",
+      "status": "PASS",
+      "details": "CONFIG.pcie_extended_tag expected=true actual=true"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_FUNCTIONAL_MODE",
+      "status": "PASS",
+      "details": "CONFIG.functional_mode expected=DMA actual=DMA"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_MODE_SELECTION",
+      "status": "PASS",
+      "details": "CONFIG.mode_selection expected=Basic actual=Basic"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PCIE_BLK_LOCN",
+      "status": "PASS",
+      "details": "CONFIG.pcie_blk_locn expected=X0Y0 actual=X0Y0"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PL_LINK_CAP_MAX_LINK_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.pl_link_cap_max_link_width expected=X1 actual=X1"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_REF_CLK_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.ref_clk_freq expected=100_MHz actual=100_MHz"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_FREE_RUN_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.free_run_freq expected=100_MHz actual=100_MHz"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXISTEN_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.axisten_freq expected=62.5 actual=62.5"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_DEDICATE_PERST",
+      "status": "PASS",
+      "details": "CONFIG.dedicate_perst expected=true actual=true"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_SYS_RESET_POLARITY",
+      "status": "PASS",
+      "details": "CONFIG.sys_reset_polarity expected=ACTIVE_LOW actual=ACTIVE_LOW"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXI_DATA_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.axi_data_width expected=64_bit actual=64_bit"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_AXI_INTF_MM",
+      "status": "PASS",
+      "details": "CONFIG.xdma_axi_intf_mm expected=AXI_Stream actual=AXI_Stream"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_RNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_rnum_chnl expected=1 actual=1"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_WNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_wnum_chnl expected=1 actual=1"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_NUM_USR_IRQ",
+      "status": "PASS",
+      "details": "CONFIG.xdma_num_usr_irq expected=1 actual=1"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_MSI_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_enabled expected=true actual=true"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_MSI_CAP_MULTIMSGCAP",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_cap_multimsgcap expected=1_vector actual=1_vector"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_MSIX_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msix_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXILITE_MASTER_EN",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_en expected=true actual=true"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXILITE_MASTER_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_size expected=128 actual=128"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXILITE_MASTER_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_scale expected=Kilobytes actual=Kilobytes"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR0_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_enabled expected=true actual=true"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR0_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_size expected=128 actual=128"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR0_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_scale expected=Kilobytes actual=Kilobytes"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR0_64BIT",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar0_64bit expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR1_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar1_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR2_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar2_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR3_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar3_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR4_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar4_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_BAR5_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_bar5_enabled expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PCIEBAR2AXIBAR_AXIL_MASTER",
+      "status": "PASS",
+      "details": "CONFIG.pciebar2axibar_axil_master expected=0x00000000 actual=0x00000000"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.vendor_id expected=10EE actual=10EE"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_DEVICE_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_device_id expected=7011 actual=7011"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_SUBSYSTEM_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_vendor_id expected=10EE actual=10EE"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_SUBSYSTEM_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_id expected=0007 actual=0007"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PF0_CLASS_CODE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_class_code expected=058000 actual=058000"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_AXIST_BYPASS_EN",
+      "status": "PASS",
+      "details": "CONFIG.axist_bypass_en expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_DSC_BYPASS",
+      "status": "PASS",
+      "details": "CONFIG.xdma_dsc_bypass expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_XDMA_STS_PORTS",
+      "status": "PASS",
+      "details": "CONFIG.xdma_sts_ports expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_EN_DEBUG_PORTS",
+      "status": "PASS",
+      "details": "CONFIG.en_debug_ports expected=false actual=false"
+    },
+    {
+      "name": "TCL_FROZEN_CONFIG_PCIE_EXTENDED_TAG",
+      "status": "PASS",
+      "details": "CONFIG.pcie_extended_tag expected=true actual=true"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_FUNCTIONAL_MODE",
+      "status": "PASS",
+      "details": "CONFIG.functional_mode"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_MODE_SELECTION",
+      "status": "PASS",
+      "details": "CONFIG.mode_selection"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PL_LINK_CAP_MAX_LINK_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.pl_link_cap_max_link_width"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_REF_CLK_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.ref_clk_freq"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_AXISTEN_FREQ",
+      "status": "PASS",
+      "details": "CONFIG.axisten_freq"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_DEDICATE_PERST",
+      "status": "PASS",
+      "details": "CONFIG.dedicate_perst"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_SYS_RESET_POLARITY",
+      "status": "PASS",
+      "details": "CONFIG.sys_reset_polarity"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_AXI_DATA_WIDTH",
+      "status": "PASS",
+      "details": "CONFIG.axi_data_width"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_XDMA_AXI_INTF_MM",
+      "status": "PASS",
+      "details": "CONFIG.xdma_axi_intf_mm"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_XDMA_RNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_rnum_chnl"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_XDMA_WNUM_CHNL",
+      "status": "PASS",
+      "details": "CONFIG.xdma_wnum_chnl"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_XDMA_NUM_USR_IRQ",
+      "status": "PASS",
+      "details": "CONFIG.xdma_num_usr_irq"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_MSI_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_enabled"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_MSI_CAP_MULTIMSGCAP",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msi_cap_multimsgcap"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_MSIX_ENABLED",
+      "status": "PASS",
+      "details": "CONFIG.pf0_msix_enabled"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_AXILITE_MASTER_EN",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_en"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_AXILITE_MASTER_SIZE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_size"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_AXILITE_MASTER_SCALE",
+      "status": "PASS",
+      "details": "CONFIG.axilite_master_scale"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.vendor_id"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_DEVICE_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_device_id"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_SUBSYSTEM_VENDOR_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_vendor_id"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_SUBSYSTEM_ID",
+      "status": "PASS",
+      "details": "CONFIG.pf0_subsystem_id"
+    },
+    {
+      "name": "TCL_MANDATORY_INVARIANT_CONFIG_PF0_CLASS_CODE",
+      "status": "PASS",
+      "details": "CONFIG.pf0_class_code"
+    },
+    {
+      "name": "XDMA_INVARIANT_SUMMARY",
+      "status": "PASS",
+      "details": "Gen2 x1; 100 MHz differential refclk request; 64-bit AXIS; one C2H/one H2C; one MSI; MSI-X off; 128 KiB AXI-Lite BAR; IDs/class/PERST/62.5 MHz request preserved."
+    },
+    {
+      "name": "C2H_TDATA_ZERO",
+      "status": "PASS",
+      "details": "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
+    },
+    {
+      "name": "C2H_TKEEP_ZERO",
+      "status": "PASS",
+      "details": "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
+    },
+    {
+      "name": "C2H_TLAST_ZERO",
+      "status": "PASS",
+      "details": "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
+    },
+    {
+      "name": "C2H_TVALID_ZERO",
+      "status": "PASS",
+      "details": "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
+    },
+    {
+      "name": "H2C_TREADY_ZERO",
+      "status": "PASS",
+      "details": "exact inactive tie-off present in rtl/top/ahd_capture_top_xdma.sv"
+    },
+    {
+      "name": "C2H_APPLICATION_BOUNDARY_INACTIVE",
+      "status": "PASS",
+      "details": "TDATA=64'b0 TKEEP=8'b0 TLAST=1'b0 TVALID=1'b0; H2C TREADY=1'b0"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_FULL_BUILD",
+      "status": "PASS",
+      "details": "FULL_BUILD"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_PROVENANCE_ONLY",
+      "status": "PASS",
+      "details": "PROVENANCE_ONLY"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_G2A_EXPECTED_RUNTIME_PROVENANCE_TXT",
+      "status": "PASS",
+      "details": "G2A_EXPECTED_RUNTIME_PROVENANCE.txt"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_PROVENANCE_ROUND_TRIP_PASS",
+      "status": "PASS",
+      "details": "PROVENANCE_ROUND_TRIP=PASS"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_PROVENANCE_PREFLIGHT_PASS",
+      "status": "PASS",
+      "details": "PROVENANCE_PREFLIGHT=PASS"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_PROVENANCE_ONLY_EXIT_BEFORE_BUILD_PASS",
+      "status": "PASS",
+      "details": "PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_SET_RECONSTRUCTED_COMMIT__JOIN__GIT_WORDS____",
+      "status": "PASS",
+      "details": "set reconstructed_commit [join $git_words \"\"]"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_ENFORCE_GEN2_XDMA_PIPE_CDC_DISPOSITION",
+      "status": "PASS",
+      "details": "enforce_gen2_xdma_pipe_cdc_disposition"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX",
+      "status": "PASS",
+      "details": "PASS_EXACT_GEN2_XDMA_PIPE_CLOCK_MUX"
+    },
+    {
+      "name": "G2A_HARNESS_MARKER_BROAD_CDC_WAIVER_APPLIED_NO",
+      "status": "PASS",
+      "details": "BROAD_CDC_WAIVER_APPLIED=NO"
+    },
+    {
+      "name": "PROVENANCE_EXIT_TEXT_PRECEDES_PROJECT_COMMANDS",
+      "status": "PASS",
+      "details": "early_exit_index=20296 create_project_index=28683"
+    },
+    {
+      "name": "NO_HARDWARE_COMMAND_IN_G2A_HARNESS",
+      "status": "PASS",
+      "details": "No hardware-manager or programming Tcl command is executable from g2a_build.tcl."
+    },
+    {
+      "name": "PYTHON_INTERPRETER_AVAILABLE",
+      "status": "PASS",
+      "details": "C:\\AMDDesignTools\\2025.2\\Vivado\\tps\\win64\\python-3.13.0\\python.exe"
+    },
+    {
+      "name": "INHERITED_PYTHON_TESTS_DISCOVERED",
+      "status": "PASS",
+      "details": "count=4"
+    },
+    {
+      "name": "PYTHON_TEST_TEST_NVP_R1E_TOOLS",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\python_test_nvp_r1e_tools.log"
+    },
+    {
+      "name": "PYTHON_TEST_TEST_NVP_R1F_TOOLS",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\python_test_nvp_r1f_tools.log"
+    },
+    {
+      "name": "PYTHON_TEST_TEST_NVP_R1F_TRI_PHASE_PROBE_MODEL",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\python_test_nvp_r1f_tri_phase_probe_model.log"
+    },
+    {
+      "name": "PYTHON_TEST_TEST_NVP_R1I_TOOLS",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\python_test_nvp_r1i_tools.log"
+    },
+    {
+      "name": "R1I_FOCUSED_SIMULATION",
+      "status": "PASS",
+      "details": "exit=0 markers=True log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\r1i_focused_sim.console.log"
+    },
+    {
+      "name": "CLEAN_COMMITTED_SOURCE_FOR_PROVENANCE",
+      "status": "PASS",
+      "details": "git_status="
+    },
+    {
+      "name": "EXACT_VIVADO_VERSION",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\vivado_version.log"
+    },
+    {
+      "name": "PROVENANCE_ONLY_POSITIVE_EXIT",
+      "status": "PASS",
+      "details": "exit=0 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\provenance_tests\\positive\\vivado.console.log"
+    },
+    {
+      "name": "PROVENANCE_ONLY_POSITIVE_RECEIPT_EXISTS",
+      "status": "PASS",
+      "details": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\provenance_tests\\positive\\evidence\\G2A_EXPECTED_RUNTIME_PROVENANCE.txt"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_SOURCE_COMMIT_REQUESTED",
+      "status": "PASS",
+      "details": "SOURCE_COMMIT_REQUESTED=224d194e5f82c85bcb29297561c5d5e76d28063b"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_SOURCE_COMMIT_ACTUAL",
+      "status": "PASS",
+      "details": "SOURCE_COMMIT_ACTUAL=224d194e5f82c85bcb29297561c5d5e76d28063b"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_SOURCE_TREE_REQUESTED",
+      "status": "PASS",
+      "details": "SOURCE_TREE_REQUESTED=283f98c02e6f9c61716875415cf000682f8ab856"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_SOURCE_TREE_ACTUAL",
+      "status": "PASS",
+      "details": "SOURCE_TREE_ACTUAL=283f98c02e6f9c61716875415cf000682f8ab856"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_PROVENANCE_ROUND_TRIP",
+      "status": "PASS",
+      "details": "PROVENANCE_ROUND_TRIP=PASS"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_PROVENANCE_PREFLIGHT",
+      "status": "PASS",
+      "details": "PROVENANCE_PREFLIGHT=PASS"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_PROVENANCE_ONLY_EXIT_BEFORE_BUILD",
+      "status": "PASS",
+      "details": "PROVENANCE_ONLY_EXIT_BEFORE_BUILD=PASS"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_GIT_SHA_W0",
+      "status": "PASS",
+      "details": "word=224d194e"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_GIT_SHA_W1",
+      "status": "PASS",
+      "details": "word=5f82c85b"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_GIT_SHA_W2",
+      "status": "PASS",
+      "details": "word=cb292975"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_GIT_SHA_W3",
+      "status": "PASS",
+      "details": "word=61c5d5e7"
+    },
+    {
+      "name": "PROVENANCE_RECEIPT_GIT_SHA_W4",
+      "status": "PASS",
+      "details": "word=6d28063b"
+    },
+    {
+      "name": "PROVENANCE_ONLY_POSITIVE_NO_PROJECT",
+      "status": "PASS",
+      "details": "build_root_absent=True; project_artifact_count=0"
+    },
+    {
+      "name": "INVALID_MODE_NEGATIVE_REJECTED",
+      "status": "PASS",
+      "details": "exit=1 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\provenance_tests\\invalid_mode\\vivado.console.log"
+    },
+    {
+      "name": "INVALID_MODE_NEGATIVE_NO_PROJECT",
+      "status": "PASS",
+      "details": "build_root_absent=True; project_artifact_count=0"
+    },
+    {
+      "name": "ROUND_TRIP_MUTATION_TARGET_SINGULAR",
+      "status": "PASS",
+      "details": "target_count=1"
+    },
+    {
+      "name": "MUTATED_HARNESS_OUTSIDE_REPOSITORY",
+      "status": "PASS",
+      "details": "<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\provenance_tests\\round_trip_mismatch\\g2a_build_one_word_mismatch.tcl"
+    },
+    {
+      "name": "ROUND_TRIP_ONE_WORD_MISMATCH_REJECTED",
+      "status": "PASS",
+      "details": "exit=1 log=<PRIVATE_EVIDENCE_ROOT>\\sealed_offline_checks_contingency_final\\offline_runs\\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\\provenance_tests\\round_trip_mismatch\\vivado.console.log"
+    },
+    {
+      "name": "ROUND_TRIP_MISMATCH_NO_PROJECT",
+      "status": "PASS",
+      "details": "build_root_absent=True; project_artifact_count=0"
+    },
+    {
+      "name": "SOURCE_TREE_UNCHANGED_BY_OFFLINE_TESTS",
+      "status": "PASS",
+      "details": "status_before= status_after="
+    },
+    {
+      "name": "HARDWARE_PROHIBITION",
+      "status": "PASS",
+      "details": "Runner invoked only Git, offline Python fixtures, inherited xsim tools, Vivado batch provenance mode; no hardware command or network/DUT action exists."
+    }
+  ]
+}

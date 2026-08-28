@@ -1,0 +1,53 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Aug 28 05:43:18 2026
+# Process ID         : 23336
+# Current directory  : <FPGA_WORKSPACE>/V41_G2A_EVIDENCE/sealed_offline_checks_contingency_final/offline_runs/20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d/provenance_tests/invalid_mode
+# Command line       : vivado.exe -mode batch -source <SOURCE_ROOT>\scripts\v41\g2a_build.tcl -log <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\invalid_mode\vivado.log -journal <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\invalid_mode\vivado.jou -tclargs <SOURCE_ROOT> <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\invalid_mode\build_must_not_exist <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\invalid_mode\evidence_must_not_exist 224d194e5f82c85bcb29297561c5d5e76d28063b 283f98c02e6f9c61716875415cf000682f8ab856 AHD_V41_G2A.bit INVALID_MODE
+# Log file           : <FPGA_WORKSPACE>/V41_G2A_EVIDENCE/sealed_offline_checks_contingency_final/offline_runs/20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d/provenance_tests/invalid_mode/vivado.log
+# Journal file       : <PRIVATE_EVIDENCE_ROOT>\sealed_offline_checks_contingency_final\offline_runs\20260828T033504016Z_9dc3a634a236444785ceffe9dd32d27d\provenance_tests\invalid_mode\vivado.jou
+# Running On         : <BUILD_HOST>
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4525 MB
+# Total Virtual      : 21553 MB
+# Available Virtual  : 3902 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file '<USER_PROFILE>\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+INFO: [Common 17-1239] XILINX_LOCAL_USER_DATA is set to 'NO'.
+INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to 'C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
+source {<SOURCE_ROOT>\scripts\v41\g2a_build.tcl}
+# if {$argc != 6 && $argc != 7} {
+#   puts stderr "usage: g2a_build.tcl REPO_ROOT BUILD_ROOT EVIDENCE_ROOT SOURCE_COMMIT SOURCE_TREE BIT_FILENAME ?PROVENANCE_ONLY?"
+#   exit 2
+# }
+# lassign [lrange $argv 0 5] repo_root build_root evidence_root source_commit source_tree bit_filename
+# set execution_mode FULL_BUILD
+# if {$argc == 7} {
+#   set execution_mode [lindex $argv 6]
+#   if {$execution_mode ne "PROVENANCE_ONLY"} {
+#     error "optional execution mode must be exactly PROVENANCE_ONLY"
+#   }
+# }
+optional execution mode must be exactly PROVENANCE_ONLY
+    while executing
+"error "optional execution mode must be exactly PROVENANCE_ONLY""
+    invoked from within
+"if {$execution_mode ne "PROVENANCE_ONLY"} {
+    error "optional execution mode must be exactly PROVENANCE_ONLY"
+  }"
+    invoked from within
+"if {$argc == 7} {
+  set execution_mode [lindex $argv 6]
+  if {$execution_mode ne "PROVENANCE_ONLY"} {
+    error "optional execution mode must be exact..."
+    (file "<SOURCE_ROOT>\scripts\v41\g2a_build.tcl" line 22)
+INFO: [Common 17-206] Exiting Vivado at Fri Aug 28 05:44:16 2026...
