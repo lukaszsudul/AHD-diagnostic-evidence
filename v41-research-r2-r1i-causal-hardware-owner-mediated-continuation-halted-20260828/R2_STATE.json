@@ -1,0 +1,147 @@
+{
+  "task": "AHD v41 R2 Hardware Causal Experiment — Owner-Mediated Continuation",
+  "state_schema": "R2_OWNER_MEDIATED_HALTED_V1",
+  "engineering_gate": "BLOCKED",
+  "scientific_causal_result": "BLOCKED",
+  "overall_result": "BLOCKED",
+  "first_blocker": "C3_NON_CLEAN_SUSPEND_BLOCK",
+  "frozen_r0_evidence_commit": "aff7e32edc1cf71bde95b6c19e54e6f307764237",
+  "ssot": {
+    "read_only": true,
+    "project_state_rev_at_start": 1,
+    "project_state_rev_at_end": 1,
+    "staleness": "NONE",
+    "end_read_source_commit": "053a459e87d147c82acced7c29ea1ad6686d84be",
+    "end_read_date": "2026-08-28"
+  },
+  "hardware_authority": {
+    "status": "PASS",
+    "mechanism": "OWNER_CHAT_DECLARATION",
+    "owner_exclusivity_confirmation": "PASS",
+    "confirmation_captured_utc": "2026-08-28T10:08:52.027Z",
+    "receipt_sha256": "2DEC89DBC82EBE4361288BBC1557766C2225162BD86C63ADA56F38A5B06BE002",
+    "software_lock_required": false,
+    "software_lock_created": false,
+    "continuity_lost": false,
+    "released": false,
+    "release_status": "PENDING_EXPLICIT_CHAT_RELEASE"
+  },
+  "cold_reset": {
+    "control": "OWNER_MEDIATED_MANUAL_RESET",
+    "owner_precondition_reset_recognized": true,
+    "owner_precondition_reset_counted_as_formal_trial": false,
+    "initial_dut_state": "UNPROGRAMMED_OR_FPGA_UNKNOWN",
+    "initial_pcie_state": "PCIe_NOT_ENUMERATED",
+    "formal_manual_reset_receipts": 0
+  },
+  "artifacts": {
+    "formal_phase2_sha256": "7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2",
+    "c0_sha256": "73E973A42083D7D22CF427ED09B73F8DE2D2C05506697EA36E1FA1B5F7163C41",
+    "c1_sha256": "847B2ECE6BAD25A5802677D0125EF0C6A12C87B949E0AD96954500F30434534D",
+    "c2_sha256": "2092322C1C7A06A727691D8A666623FFE1C460CDD7B445DCD836293CAC5E5C1D",
+    "c3_sha256": "F6A6905DD4AA40FD5F68923629AC3C02929D7D5628895AB43FDADB248929D3C6",
+    "rebuilt": false
+  },
+  "safe_baseline_establishment": {
+    "status": "PASS",
+    "initial_seal_sha256": "F4A9252E2901A7B2CE943F85544B474F51D51BBBCE44EBBB639D9F3E4B8B7B67"
+  },
+  "primary_campaign": {
+    "status": "HALTED_AFTER_SAFE_RESTORE",
+    "completed_runs": 10,
+    "planned_runs": 32,
+    "protocol_deviation": false,
+    "cells": {
+      "C0": {
+        "runs": 2,
+        "clean_pass": 0,
+        "recovered_pass": 0,
+        "fail": 2,
+        "inconclusive": 0
+      },
+      "C1": {
+        "runs": 2,
+        "clean_pass": 0,
+        "recovered_pass": 0,
+        "fail": 0,
+        "inconclusive": 2
+      },
+      "C2": {
+        "runs": 3,
+        "clean_pass": 1,
+        "recovered_pass": 2,
+        "fail": 0,
+        "inconclusive": 0
+      },
+      "C3": {
+        "runs": 3,
+        "clean_pass": 2,
+        "recovered_pass": 0,
+        "fail": 0,
+        "inconclusive": 1
+      }
+    },
+    "halt": {
+      "sequence_index": 10,
+      "run_id": "R2OM-R03-P2-C3",
+      "candidate": "C3",
+      "classification": "INCONCLUSIVE",
+      "reason": "C3_NON_CLEAN_SUSPEND_BLOCK",
+      "created_utc": "2026-08-28T18:27:06.7524339Z",
+      "halt_receipt_sha256": "5939346939DBAA7B934662A4718095045BAE22CA3A341847032335E22B36062B"
+    }
+  },
+  "exact_r1i_cold_start": {
+    "completed": 0,
+    "planned": 10,
+    "result": "NOT_RUN",
+    "failures": 0
+  },
+  "init_done_timing": {
+    "status": "NOT_RUN",
+    "seconds": null,
+    "counter_delta": null,
+    "clock_consistency": "INCONCLUSIVE"
+  },
+  "r3": {
+    "trigger": "REQUIRED",
+    "executed": false
+  },
+  "final_hardware_state": {
+    "status": "PASS_SAFE_BASELINE_SEALED",
+    "role": "Formal Phase-2",
+    "bitstream_sha256": "7E4E909D78C2BE5C1E0ECA56229F2B88ECC2DBF5974B32BDF07EF1AFCD9449A2",
+    "done": 1,
+    "pcie_vendor_device": "10ee:7011",
+    "pcie_link": "GEN1_X1",
+    "bound_driver": "xdma",
+    "block_id": "0xA40A0C07",
+    "protocol": "0x0000400B",
+    "capabilities": "0x00031002",
+    "diagnostic_magic": "0x00000000",
+    "secondary_diagnostic_magic": "0x00000000",
+    "boot_id": "d12b3a07-ea25-4769-8293-88ee8fc92ef2",
+    "sealed_utc": "2026-08-28T18:26:06.1283545Z",
+    "receipt_sha256": "26E2FFCEEA193E834CB80777A1E34EA618EDF6E6FECE4E067CD3000EC8E849AF",
+    "final_live_readback_utc": "2026-08-28T18:34:18.741078119Z",
+    "final_live_readback_receipt_sha256": "57D0BA961EE73C2B89574B04FF5ED19782F4EE0FA909A47C7DA005F181EAD49A",
+    "final_live_readback_mmio_writes": 0,
+    "final_live_readback_dma_transfers": 0
+  },
+  "modifications": {
+    "product_r1i_modified": false,
+    "g_track_modified": false,
+    "g2a_bitstream_used": false,
+    "flash_operations": 0,
+    "drivers_changed": false,
+    "project_current_state_modified": false
+  },
+  "publication": {
+    "status": "OFFLINE_DRAFT_PENDING_COMMIT_AND_READBACK",
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "directory": "v41-research-r2-r1i-causal-hardware-owner-mediated-continuation-halted-20260828",
+    "commit": null,
+    "remote_readback": "NOT_RUN"
+  },
+  "final_execution_point": "HARD STOP AFTER R2 OWNER-MEDIATED CONTINUATION"
+}
