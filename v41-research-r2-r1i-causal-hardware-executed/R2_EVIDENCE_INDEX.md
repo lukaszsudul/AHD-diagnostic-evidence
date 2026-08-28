@@ -15,6 +15,7 @@
 | Runtime receipt | `R2_RUNTIME_IDENTITY_RECEIPT.md` | Artifact identities and harness gate |
 | Statistical summary | `R2_STATISTICAL_SUMMARY.md` | Frozen denominator and no inference |
 | Machine state | `R2_STATE.json` | Machine-readable blocked state |
+| Publication receipt | `R2_PUBLICATION_RECEIPT.md` | Remote main content/read-back closure |
 | Integrity manifest | `R2_SHA256_MANIFEST.txt` | SHA-256 of published package files |
 
 ## Supporting evidence
