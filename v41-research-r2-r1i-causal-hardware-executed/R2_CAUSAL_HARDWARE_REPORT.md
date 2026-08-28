@@ -111,6 +111,8 @@ R2 left the DUT in the read-only-observed cold-reset state:
 - no XDMA device node;
 - MMIO identity unreadable.
 
+Terminal read-only verification independently reconfirmed this state. The host checkpoint completed at `2026-08-28T09:30:47Z` with the original boot ID unchanged, no Xilinx/class-0580 function, XDMA absent, and no provable exact lock holder. A second qualified selected-target JTAG session ran from `2026-08-28T09:34:20Z` through `2026-08-28T09:37:42Z`; all five samples again reported xc7a35t IDCODE `0362D093`, `DONE=0`, and `PASS`, with zero programming invocations. See `R2_FINAL_STATE_RECEIPT.md`.
+
 Product R1i, R1h, R1i-a, R1i-b, G2A, XDC, XCI, drivers, kernel, MMIO ABI, NVP table, I2C frequency, and flash were not modified. G2A was not programmed. G2B was not resumed. R3 was not started.
 
 No lock was acquired, so there was no held lock to leak or release. Under the required final response enum, hardware lock release is reported `FAIL`, with the precise meaning `NOT_ACQUIRED`.

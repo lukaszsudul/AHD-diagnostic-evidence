@@ -13,6 +13,7 @@
 | Lock receipt | `R2_HARDWARE_LOCK_RECEIPT.md` | Failed acquire/ownership proof |
 | Cold-reset receipt | `R2_COLD_RESET_BASELINE_RECEIPT.md` | Live SSH/PCIe/JTAG state |
 | Runtime receipt | `R2_RUNTIME_IDENTITY_RECEIPT.md` | Artifact identities and harness gate |
+| Final-state receipt | `R2_FINAL_STATE_RECEIPT.md` | Terminal SSH/PCIe/JTAG read-only verification |
 | Statistical summary | `R2_STATISTICAL_SUMMARY.md` | Frozen denominator and no inference |
 | Machine state | `R2_STATE.json` | Machine-readable blocked state |
 | Publication receipt | `R2_PUBLICATION_RECEIPT.md` | Remote main content/read-back closure |
@@ -28,5 +29,7 @@
 - `raw/REMOTE_PCIE_DRIVER_PREFLIGHT.txt`
 - `raw/REMOTE_PCIE_TOPOLOGY.txt`
 - `raw/JTAG_DONE_SAMPLES_SANITIZED.csv`
+- `raw/REMOTE_FINAL_CHECKPOINT_SANITIZED.txt`
+- `raw/JTAG_FINAL_DONE_SAMPLES_SANITIZED.csv`
 
 The published JTAG sample matrix omits the unique cable/target serial while retaining part, IDCODE, DONE, timestamps, and zero-programming evidence. No credential or password is present.
