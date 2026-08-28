@@ -16,13 +16,14 @@
 - Published source commit: `224d194e5f82c85bcb29297561c5d5e76d28063b`
 - Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`
 - Evidence directory: `v41-development-g2a-r1i-gen2-offline-build`
-- Evidence publication: `PENDING`
-- Remote read-back: `PENDING`
+- Evidence publication: `PASS`
+- Evidence payload commit: `bb8be9993726546cad2c120e300afd5499419951`
+- Remote read-back: `PASS`
 - Hardware accessed: `NO`
 - C2H application data plane implemented: `NO`
 - G2B started: `NO`
 
-The published source tracking ref and local integration branch resolve to the same commit with ahead/behind `0/0`. This index describes the sanitized publication payload before its evidence-repository commit. Evidence publication and remote read-back must remain `PENDING` until a non-force push to `origin/main` and an independent remote read-back both complete.
+The published source tracking ref and local integration branch resolve to the same commit with ahead/behind `0/0`. The sanitized evidence payload was committed and pushed to `origin/main` without force, then verified from a fresh sparse clone at `bb8be9993726546cad2c120e300afd5499419951`. The evidence publication and remote read-back gates are `PASS`.
 
 ## Package layout and counts
 
@@ -38,7 +39,7 @@ The published source tracking ref and local integration branch resolve to the sa
 | `reproducibility` | 4 | Minimal evidence-only scripts/bench and exact unit receipt |
 | Final package total | 120 | Count after `V41_G2A_SHA256_MANIFEST.txt` is generated |
 
-At index creation, the only not-yet-created catalog entry is `V41_G2A_SHA256_MANIFEST.txt`. It must be generated last and hash all other 119 package files, including this index and sanitization receipt. A manifest cannot include its own digest, so it explicitly excludes itself.
+`V41_G2A_SHA256_MANIFEST.txt` contains 119 entries and hashes every other package file, including this index and sanitization receipt. A manifest cannot include its own digest, so it explicitly excludes itself.
 
 ## Required root contract artifacts
 
@@ -234,6 +235,8 @@ Only the final clean R2 build reports/logs/bitstream, final clean-commit offline
 6. Commit with message `Publish AHD v41 G2A R1i Gen2 offline build evidence`.
 7. Fetch again and push fast-forward to `origin/main` without force.
 8. Perform independent remote read-back: verify all required names and category counts, JSON validity, bitstream/LFS availability, source patch integrity, and every manifest digest.
-9. Record the evidence remote commit and change evidence publication/read-back from `PENDING` only after those checks pass.
+9. After those checks pass, record the evidence remote commit and final publication/read-back disposition.
+
+Completed publication receipt: `origin/main` advanced by fast-forward from `0e9a809be891db01ad11373b2cfbdf28679180c4` to payload commit `bb8be9993726546cad2c120e300afd5499419951`. A separate fresh sparse clone reported both `HEAD` and `ls-remote origin/main` at that commit, materialized both LFS objects, and was clean after checkout. The remote payload contained exactly 120 files: 19 root files, 43 build reports, 3 build logs, 1 bitstream, 50 offline-test files, and 4 reproducibility files. All 119 manifest entries matched; the bitstream was 2,192,144 bytes with SHA-256 `4F74CC4AC8619B7509D46D74ED919FA81C5C9CC69D7BBDF6F34ED46D363E341E`, the LFS timing report was 76,996,212 bytes with SHA-256 `1B016342532147122C05AF21F8D604382A4F0EE85EB8F9AE609E776DBE870E30`, the source patch hash matched `BD2796E63CDBBA0AE974691F5F0A6511CBE9B23DE9CA369C9AA24A4837E449A2`, and `V41_G2A_STATE.json` parsed successfully. Result: `REMOTE_READ_BACK=PASS`.
 
 Publication does not authorize FPGA programming, DUT access, C2H implementation, G2B, or any hardware qualification. The final execution point remains `HARD STOP AFTER G2A OFFLINE BUILD`.

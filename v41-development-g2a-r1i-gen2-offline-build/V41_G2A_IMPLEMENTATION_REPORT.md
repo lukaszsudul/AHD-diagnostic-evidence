@@ -10,7 +10,7 @@
 
 The final source candidate is commit `224d194e5f82c85bcb29297561c5d5e76d28063b`, tree `283f98c02e6f9c61716875415cf000682f8ab856`. The clean R2 build completed project creation, IP generation, synthesis, optimization, placement, physical optimization, routing, all hard gates, and bitstream generation in Vivado 2025.2 build 6299465. It is fully routed with positive setup and hold slack, zero DRC errors/critical warnings, zero black boxes, the expected 62.5 MHz application clock, and the exact bounded Gen2-generated XDMA CDC disposition.
 
-The application C2H data plane remains unimplemented and constant-inactive; H2C remains backpressured. Hardware was not accessed. Source-branch publication is `PASS`; public-evidence publication and remote read-back remain `PENDING` and are not represented as complete in this report.
+The application C2H data plane remains unimplemented and constant-inactive; H2C remains backpressured. Hardware was not accessed. Source-branch publication, public-evidence publication, LFS transfer, and independent remote read-back are all `PASS`. The remotely verified evidence payload commit is `bb8be9993726546cad2c120e300afd5499419951`.
 
 ## 2. Frozen inputs
 
@@ -46,7 +46,7 @@ The base tree, tag peel, donor identities and ancestry, G1 evidence identity, to
 
 The isolated worktree was created from the immutable R1i tag. No old-donor merge, top-level replacement, R-track merge, or checkpoint reuse occurred. The final source patch SHA-256 is `BD2796E63CDBBA0AE974691F5F0A6511CBE9B23DE9CA369C9AA24A4837E449A2`.
 
-Source branch publication: `PASS`. The integration branch was pushed without force and read back at `224d194e5f82c85bcb29297561c5d5e76d28063b`. Evidence publication: `PENDING`. Remote evidence read-back: `PENDING`. No release or protected-branch merge is claimed.
+Source branch publication: `PASS`. The integration branch was pushed without force and read back at `224d194e5f82c85bcb29297561c5d5e76d28063b`. Evidence publication: `PASS`. Independent remote evidence read-back: `PASS` at payload commit `bb8be9993726546cad2c120e300afd5499419951`. No release or protected-branch merge is claimed.
 
 ## 4. Source changes
 
@@ -304,7 +304,7 @@ No slack waiver, protected-behavior workaround, diagnostic removal, application-
 - The exact two-object XDMA PIPE-clock CDC disposition is intentionally narrow; any future count, endpoint, clock-pair, exception, or type drift is not covered.
 - No LTX was generated. This does not fail G2A, but there is no probe file for later debug from this build.
 - The design has not been programmed, enumerated, negotiated, or exercised on hardware. Gen2 negotiation, DMA operation, and the required 288 MB/s application payload remain unproven and outside G2A.
-- Public evidence publication, LFS transfer, and remote read-back remain pending. Source-branch publication and its remote read-back are complete.
+- Public evidence publication and LFS availability were verified from a fresh sparse clone at payload commit `bb8be9993726546cad2c120e300afd5499419951`; all 119 manifest entries matched. No publication blocker remains.
 
 ## 20. G2A conclusion
 
@@ -312,7 +312,7 @@ Final G2A engineering conclusion: `PASS`.
 
 Timing classification: `PASS_WITH_TIMING_RISK` because final WHS is `+0.024 ns`. All other source, configuration, protection, inactive-boundary, clock, CDC/reset, offline-test, synthesis, implementation, routing, timing-threshold, DRC, black-box, resource, congestion, bitstream, and source-to-bit provenance gates pass.
 
-Source branch publication: `PASS`. Evidence publication: `PENDING`. Remote evidence read-back: `PENDING`. The evidence fields must be updated only after the isolated non-force push and remote verification complete; this report does not predeclare their outcome.
+Source branch publication: `PASS`. Evidence publication: `PASS`. Remote evidence read-back: `PASS`. The evidence payload was pushed by fast-forward and independently verified at `bb8be9993726546cad2c120e300afd5499419951`; the subsequent evidence closure commit records that observed result.
 
 Hardware accessed: `NO`. C2H application data plane implemented: `NO`. G2B started: `NO`.
 
@@ -322,4 +322,4 @@ Hardware accessed: `NO`. C2H application data plane implemented: `NO`. G2B start
 
 The engineering prerequisites listed by the frozen G2A contract are satisfied: source contract, Gen2 x1 effective configuration, protected R1i identity, inactive C2H boundary, 62.5 MHz application clock, CDC/reset gate, offline tests, clean synthesis/implementation/routing, positive timing, critical DRC, black-box, resource/congestion, bitstream, post-build source identity, and hardware-prohibition checks all pass.
 
-Do not start G2B. Recommended next step: complete evidence publication and remote read-back, then obtain Owner/Architect acceptance of this G2A result. Final execution point: `HARD STOP AFTER G2A OFFLINE BUILD`.
+Do not start G2B. Recommended next step: obtain Owner/Architect acceptance of this G2A result. Final execution point: `HARD STOP AFTER G2A OFFLINE BUILD`.

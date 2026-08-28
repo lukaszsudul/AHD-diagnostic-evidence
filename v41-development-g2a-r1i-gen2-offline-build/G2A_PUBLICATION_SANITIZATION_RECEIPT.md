@@ -50,6 +50,6 @@ Commit/tree identities, tool version, part, configuration values, timing/resourc
 
 ## LFS policy
 
-Path-scoped Git LFS rules cover the G2A `.bit`, potential `.ltx`, and the 76,996,215-byte `TIMING_SUMMARY.rpt`. DCP publication remains prohibited.
+Path-scoped Git LFS rules cover the G2A `.bit`, potential `.ltx`, and the 76,996,212-byte sanitized public `TIMING_SUMMARY.rpt`. DCP publication remains prohibited.
 
 Result: `PUBLICATION_SANITIZATION_GATE=PASS`.

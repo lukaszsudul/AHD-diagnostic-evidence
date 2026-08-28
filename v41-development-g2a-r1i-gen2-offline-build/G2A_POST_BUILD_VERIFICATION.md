@@ -185,7 +185,7 @@ No LTX file exists, so the correct LTX identity is `NONE`; no hash is invented a
 | C2H application data plane implemented | NO |
 | G2B started | NO |
 | Source-branch publication | PASS — remote read-back matched `224d194e5f82c85bcb29297561c5d5e76d28063b` |
-| Evidence publication | PENDING |
-| Remote read-back | NOT RUN |
+| Evidence publication | PASS — fast-forward payload commit `bb8be9993726546cad2c120e300afd5499419951` |
+| Remote read-back | PASS — fresh sparse clone, LFS materialization, 120-file inventory, and 119/119 manifest verification |
 
 The G2A post-build technical verification passes, with the explicitly retained `PASS_WITH_TIMING_RISK` classification for the `+0.024 ns` hold margin. This document makes no hardware-qualification or throughput claim. G2B remains unstarted and may proceed only after Owner/Architect acceptance of the consolidated G2A evidence.

@@ -175,4 +175,4 @@ Final execution point remains the G2A offline-build hard stop. No G2B or hardwar
 
 `G2B STARTED: NO`
 
-Source-branch publication completed with `PASS` at `224d194e5f82c85bcb29297561c5d5e76d28063b`. Evidence publication and remote evidence read-back are outside this build report and remain explicitly pending. Final execution remains the G2A offline-build hard stop; G2B may begin only after Owner/Architect acceptance of the consolidated G2A result.
+Source-branch publication completed with `PASS` at `224d194e5f82c85bcb29297561c5d5e76d28063b`. Evidence publication, LFS transfer, and independent remote evidence read-back also completed with `PASS` at payload commit `bb8be9993726546cad2c120e300afd5499419951`. Final execution remains the G2A offline-build hard stop; G2B may begin only after Owner/Architect acceptance of the consolidated G2A result.
