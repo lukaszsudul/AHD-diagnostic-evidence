@@ -1,0 +1,125 @@
+{
+  "schema": "AHD_V41_R2_PASSIVE_OBSERVER_STATE_V1",
+  "observer_task": "R2-OBS-1",
+  "observer_gate": "PASS",
+  "snapshot": {
+    "utc": "2026-08-28T17:22:56.2017197Z",
+    "local": "2026-08-28T19:22:56.2017197+02:00",
+    "timezone": "Europe/Warsaw",
+    "semantics": "POINT_IN_TIME_OBSERVATION",
+    "campaign_may_continue": true,
+    "cutoff": {
+      "ledger_index": 182,
+      "ledger_last_event": "R2OM-R03-P1-C2:CANDIDATE_TELEMETRY:COMPLETE",
+      "ledger_length_bytes_at_capture": 102698,
+      "completion_records": 8,
+      "raw_result_records": 9
+    }
+  },
+  "non_interference": {
+    "active_r2_agent_contacted": false,
+    "dut_accessed": false,
+    "ssh_used": false,
+    "jtag_used": false,
+    "xdma_or_mmio_used": false,
+    "vivado_used": false,
+    "fpga_ahd_modified": false,
+    "active_r2_artifacts_modified": false,
+    "ssot_modified": false
+  },
+  "campaign": {
+    "active_campaign_identified": true,
+    "name": "AHD v41 R2 Hardware Causal Experiment — Owner-Mediated Continuation",
+    "active_root": "C:\\Users\\Łukasz Suduł\\Documents\\ChatGPT\\AHD_20260807\\R2_OWNER_MEDIATED_CONTINUATION_STAGE",
+    "campaign_root": "C:\\Users\\Łukasz Suduł\\Documents\\ChatGPT\\AHD_20260807\\R2_OWNER_MEDIATED_CONTINUATION_STAGE\\R2_PRIMARY_CAMPAIGN_ORCHESTRATED_AFTER_R02",
+    "execution_root": "C:\\AHD_R2_OWNER_EXEC_20260828",
+    "historical_blocker_directory": "v41-research-r2-r1i-causal-hardware-executed",
+    "historical_blocker_primary_runs": 0
+  },
+  "primary_progress": {
+    "frozen_denominator": 32,
+    "completed_valid_runs": 8,
+    "percentage": 25.0,
+    "countable_telemetry_rows": 9,
+    "uncommitted_countable_rows": 1,
+    "fully_completed_rounds": 2,
+    "frozen_rounds": 8,
+    "active_round": "R03",
+    "per_cell_completed": {
+      "C0": 2,
+      "C1": 2,
+      "C2": 2,
+      "C3": 2
+    },
+    "per_cell_denominator": 8
+  },
+  "additional_observations": {
+    "total_non_primary_runs": 1,
+    "pre_probe_safe_baseline": 1,
+    "supplemental_runs": 0,
+    "campaign_retries": 0,
+    "cold_start_runs": 0,
+    "timing_runs": 0,
+    "robustness_runs": 0,
+    "diagnostic_runs": 0
+  },
+  "r09_c2": {
+    "observed": true,
+    "literal_identifier_found": false,
+    "resolved_canonical_run_id": "R2OM-R03-P1-C2",
+    "sequence_index": 9,
+    "round": "R03",
+    "position": 1,
+    "cell": "C2",
+    "candidate": "R1i-b",
+    "classification": "PRIMARY_CAUSAL_RUN",
+    "interim_run_classification": "RECOVERED_PASS",
+    "part_of_frozen_denominator": true,
+    "committed_at_cutoff": false,
+    "campaign_retry": false,
+    "program_retries": 0,
+    "transaction_retry_count": 2,
+    "cold_start": false,
+    "predeclared": true,
+    "protocol_deviation": "NO"
+  },
+  "protocol": {
+    "extra_primary_runs": 0,
+    "duplicate_primary_runs": 0,
+    "frozen_denominator_changed": false,
+    "protocol_deviation": "NO"
+  },
+  "owner_control": {
+    "dut_exclusivity_confirmation_exists": true,
+    "dut_exclusivity_result": "PASS",
+    "confirmation_captured_utc": "2026-08-28T10:08:52.027Z",
+    "manual_cold_resets_requested": 0,
+    "manual_cold_reset_confirmations": 0,
+    "formal_cold_start_trials": 0,
+    "cold_trials_distinguishable_by_predeclared_separate_harness": true
+  },
+  "candidate_identities": {
+    "C0": {
+      "name": "exact R1h",
+      "sha256": "73E973A42083D7D22CF427ED09B73F8DE2D2C05506697EA36E1FA1B5F7163C41"
+    },
+    "C1": {
+      "name": "R1i-a",
+      "sha256": "847B2ECE6BAD25A5802677D0125EF0C6A12C87B949E0AD96954500F30434534D"
+    },
+    "C2": {
+      "name": "R1i-b",
+      "sha256": "2092322C1C7A06A727691D8A666623FFE1C460CDD7B445DCD836293CAC5E5C1D"
+    },
+    "C3": {
+      "name": "exact R1i",
+      "sha256": "F6A6905DD4AA40FD5F68923629AC3C02929D7D5628895AB43FDADB248929D3C6"
+    }
+  },
+  "scientific_result": "NOT_FINAL_CAMPAIGN_IN_PROGRESS",
+  "publication_target": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-research-r2-live-observer-snapshot-20260828T172256Z"
+  }
+}
