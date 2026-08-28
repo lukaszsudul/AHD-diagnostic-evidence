@@ -47,6 +47,6 @@ Final safe-baseline receipt SHA-256: `26E2FFCEEA193E834CB80777A1E34EA618EDF6E6FE
 
 ## End-of-task release
 
-Status in this offline draft: `PENDING_EXPLICIT_CHAT_RELEASE`.
+Status: `DUT_EXCLUSIVITY_RELEASED=YES`.
 
-After evidence publication is complete, the executing agent must explicitly tell the Owner, “R2 hardware operations are complete. DUT exclusivity is released.” The interaction log and final state must then record the actual timestamp and `DUT_EXCLUSIVITY_RELEASED=YES`. This report does not fabricate that future event.
+After initial evidence publication and remote read-back completed at commit `2ddb3a6d7bebcc96235b0263b337916a7d70627d`, the executing agent told the Owner, “R2 hardware operations are complete. DUT exclusivity is released.” The first system-clock capture after that declaration was `2026-08-28T18:49:33.6866517Z`. No DUT operation occurred after release.

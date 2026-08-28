@@ -155,6 +155,6 @@ A final pre-publication live read-only capture at `2026-08-28T18:34:18.741078119
 - R3 started: `NO`
 - G2B resumed: `NO`
 
-## Publication-state caveats
+## Publication and release
 
-This report is an offline publication input. Before final evidence commit, the publisher must record `PROJECT_STATE_REV_AT_END`, classify SSOT staleness, append the actual DUT-exclusivity release interaction after it occurs, create the SHA-256 manifest, commit to the new immutable evidence directory, and perform remote read-back. Until those steps occur, evidence publication remains `PENDING`.
+`PROJECT_STATE_REV_AT_START=1` and the final read-only reread returned `PROJECT_STATE_REV_AT_END=1`; SSOT staleness is `NONE`. The initial package was committed, pushed, and remotely read back at `2ddb3a6d7bebcc96235b0263b337916a7d70627d`. The agent then explicitly released DUT exclusivity in chat; the first system-clock capture after release was `2026-08-28T18:49:33.6866517Z`. The enclosing final evidence commit records that release, and its SHA/remote read-back are reported in the task handoff.

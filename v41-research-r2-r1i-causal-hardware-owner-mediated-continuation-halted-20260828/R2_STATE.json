@@ -23,8 +23,10 @@
     "software_lock_required": false,
     "software_lock_created": false,
     "continuity_lost": false,
-    "released": false,
-    "release_status": "PENDING_EXPLICIT_CHAT_RELEASE"
+    "released": true,
+    "release_status": "RELEASED_AFTER_INITIAL_PUBLICATION_REMOTE_READBACK",
+    "released_capture_utc": "2026-08-28T18:49:33.6866517Z",
+    "release_declaration": "R2 hardware operations are complete. DUT exclusivity is released."
   },
   "cold_reset": {
     "control": "OWNER_MEDIATED_MANUAL_RESET",
@@ -137,11 +139,13 @@
     "project_current_state_modified": false
   },
   "publication": {
-    "status": "OFFLINE_DRAFT_PENDING_COMMIT_AND_READBACK",
+    "status": "PASS",
     "repository": "lukaszsudul/AHD-diagnostic-evidence",
     "directory": "v41-research-r2-r1i-causal-hardware-owner-mediated-continuation-halted-20260828",
-    "commit": null,
-    "remote_readback": "NOT_RUN"
+    "commit": "SEE_ENCLOSING_FINAL_GIT_COMMIT",
+    "initial_publication_commit": "2ddb3a6d7bebcc96235b0263b337916a7d70627d",
+    "initial_remote_readback": "PASS",
+    "final_remote_readback": "RECORDED_IN_TASK_HANDOFF_AFTER_FINAL_COMMIT"
   },
   "final_execution_point": "HARD STOP AFTER R2 OWNER-MEDIATED CONTINUATION"
 }

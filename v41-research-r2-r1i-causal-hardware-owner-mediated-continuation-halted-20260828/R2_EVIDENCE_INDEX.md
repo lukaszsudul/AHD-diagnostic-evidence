@@ -15,10 +15,11 @@
 | `R2_HARDWARE_LOCK_RECEIPT.md` | Compatibility receipt documenting Owner authority in place of software lock | COMPLETE |
 | `R2_COLD_RESET_BASELINE_RECEIPT.md` | Entry-state and initial/final Formal baseline evidence | COMPLETE |
 | `R2_RUNTIME_IDENTITY_RECEIPT.md` | Exact C0/C1/C2/C3 and final Formal runtime identity | COMPLETE |
-| `R2_STATE.json` | Machine-readable halted state | COMPLETE; release/publication fields finalized after the corresponding events |
+| `R2_STATE.json` | Machine-readable halted state | COMPLETE |
 | `R2_OWNER_DUT_EXCLUSIVITY_RECEIPT.md` | Exact Owner exclusivity declaration | COMPLETE |
-| `R2_OWNER_INTERACTION_LOG.md` | Owner authority and final release interactions | COMPLETE after release event |
+| `R2_OWNER_INTERACTION_LOG.md` | Owner authority and final release interactions | COMPLETE |
 | `R2_OWNER_MEDIATED_CONTROL_REPORT.md` | Human authority and manual-reset control report | COMPLETE |
+| `R2_PUBLICATION_AND_RELEASE_RECEIPT.md` | Initial remote publication proof and subsequent exclusivity release | COMPLETE |
 | `R2_MANUAL_COLD_RESET_RECEIPTS/README.md` | Explicit zero-receipt statement | COMPLETE |
 | `audit/` | Hash-bound campaign configuration, ledger, append-only tables, halt, final Formal receipts, and ten candidate-capture receipts | COMPLETE |
 | `R2_SHA256_MANIFEST.txt` | SHA-256 for every other file in this directory | GENERATED LAST; excludes itself |

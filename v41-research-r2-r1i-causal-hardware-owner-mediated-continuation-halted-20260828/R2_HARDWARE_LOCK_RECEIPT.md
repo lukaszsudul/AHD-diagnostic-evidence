@@ -23,8 +23,12 @@ The chat platform did not expose an independent message timestamp. The receipt u
 
 The declaration remained valid unless revoked, explicitly released, or contradicted by an unexplained programming/reset/power/state event. No such continuity-loss event appears in the sealed campaign record. All recorded host reboots, FPGA programs, and restores were task-owned steps.
 
-## Release status at offline-draft creation
+## Release status
 
-`PENDING_EXPLICIT_CHAT_RELEASE`
+`DUT_EXCLUSIVITY_RELEASED=YES`
 
-This field must be replaced or supplemented with the actual release interaction and timestamp after the publisher completes final evidence publication. This draft does not claim that an event that has not yet occurred already occurred.
+After exact Formal restoration, final live read-only verification, initial evidence publication, and initial remote read-back, the agent declared in chat:
+
+> R2 hardware operations are complete. DUT exclusivity is released.
+
+First system-clock capture after that declaration: `2026-08-28T18:49:33.6866517Z`.

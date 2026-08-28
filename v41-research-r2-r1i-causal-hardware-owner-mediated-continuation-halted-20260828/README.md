@@ -14,7 +14,7 @@ This directory is the publication input package for the halted Owner-mediated R2
 - INIT_DONE timing protocol: `NOT_RUN`
 - First blocker: `C3_NON_CLEAN_SUSPEND_BLOCK`
 - Final hardware state: exact Formal Phase-2 safe baseline, independently sealed after run 10
-- Evidence publication: `PENDING` until repository commit and remote read-back
+- Evidence publication: `PASS`
 
 The run-10 C3 image had valid identity, `INIT_DONE=1`, `INIT_ERROR=0`, zero NACK/retry/recovery/timeout activity, and video present, but its one-second frame-counter estimate was `25.776567 Hz`, outside the frozen `24.803727 ± 0.10 Hz` clean band. Under the frozen R0 rule, any non-clean C3 run invalidates its block and suspends the campaign for identity/environment review. The run was therefore retained as `INCONCLUSIVE`; it was not relabeled, discarded, or repeated.
 
@@ -66,3 +66,5 @@ The live read-back at `2026-08-28T18:34:18.741078119Z` reconfirmed exact Formal 
 - project-current-state modified: `NO`
 
 See `R2_CAUSAL_HARDWARE_REPORT.md` for the engineering narrative and `R2_EVIDENCE_INDEX.md` for the immutable source receipts used to construct this package.
+
+Initial package commit `2ddb3a6d7bebcc96235b0263b337916a7d70627d` was pushed and remotely read back before DUT exclusivity was released. The release was then recorded in a final evidence-only commit; its SHA and remote read-back are reported in the task handoff.
