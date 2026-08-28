@@ -39,6 +39,7 @@
 | `G2B_TOOLCHAIN_RECEIPT.txt` | Vivado/tool/path preflight only |
 | `G2B_HARDWARE_NONACCESS_DECLARATION.md` | prohibited-operation count and non-access proof |
 | `G2B_OPERATION_LEDGER.md` | offline operation log |
+| `G2B_PUBLICATION_RECEIPT.txt` | payload push and remote read-back receipt |
 
 ## Build artifacts
 
@@ -51,8 +52,9 @@ No G2B Vivado log, journal, timing, DRC, utilization, clock report, routed check
 - G2B source branch: `integration/v41-g2b-onech-c2h`
 - G2B source commit: `NONE` (branch remains at exact base)
 - Evidence base/remote HEAD at start: `8d502a3e0a404b73c73af82846d730355288c7b1`
-- Evidence payload commit: `PENDING_PUBLICATION`
-- Evidence remote-readback commit: `PENDING_PUBLICATION`
+- Evidence payload commit: `dde76183010cab9909df590bae5db83d828b9005`
+- Payload remote read-back: `PASS` (remote HEAD and all 22 payload blobs)
+- Publication-closure commit: not self-embedded; resolve current remote `main`
 
 ## Claim boundary
 

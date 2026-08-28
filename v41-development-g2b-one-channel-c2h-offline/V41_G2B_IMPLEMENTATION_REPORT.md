@@ -132,6 +132,8 @@ The isolated G2B branch was created directly from the exact accepted base and re
 
 Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`; directory: `v41-development-g2b-one-channel-c2h-offline`.
 
+Evidence payload commit `dde76183010cab9909df590bae5db83d828b9005` was pushed normally to `main`. Remote HEAD resolved to that exact commit and all 22 directory blobs were bound by the identical remote commit/tree. Publication status is **PASS**. A small closure commit records this read-back result; its SHA is intentionally not self-embedded.
+
 ## 21. Hardware prohibition proof
 
 - DUT SSH: not used.
