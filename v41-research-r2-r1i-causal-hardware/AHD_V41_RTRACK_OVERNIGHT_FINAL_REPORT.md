@@ -66,6 +66,13 @@ R3 was not triggered because no valid R2 causal result exists.
 - R2: `PASS`
 - R2A: `PASS`
 - R3: `NOT_RUN`
+- Initial R2/R2A payload commit:
+  `25b3e12117b2f1d2fd0287be0073c00b475c8b53`
+- Initial payload tree: `eaac4944253135f073cc082196337bb7920a931f`
+- Independent fresh-clone remote read-back: `PASS`
+- Published files compared byte-for-byte: `16 / 16`
+- Manifest payloads validated: `14 / 14`
+- Final synchronization commit: recorded in the final handoff and remote HEAD
 
 ## Final hardware state
 
