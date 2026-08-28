@@ -15,7 +15,8 @@
 | `R2_REVIEW_MEASUREMENT_MODEL.md` | Offline integer-event/window model and competing hypotheses |
 | `R2_REVIEW_PROTOCOL_IMPACT.md` | Immutable-history and campaign-continuation impact |
 | `R2_REVIEW_DECISION.md` | Formal review classification |
-| `R2_REVIEW_STATE.json` | Machine-readable state at package seal |
+| `R2_REVIEW_STATE.json` | Machine-readable review state and publication closure |
+| `R2_REVIEW_PUBLICATION_RECEIPT.md` | Payload commit and independent remote read-back receipt |
 | `R2_MEASUREMENT_PROTOCOL_AMENDMENT_PROPOSAL.md` | Candidate-neutral proposal marked `PROPOSED — NOT AUTHORIZED` |
 | `R2_REVIEW_SHA256_MANIFEST.txt` | SHA-256 integrity manifest for all other package files |
 
@@ -28,6 +29,10 @@
 | `audit_artifact_tool_csv_validation.json` | Spreadsheet Artifact Tool parse/inspect validation receipt |
 
 The audit builder is analysis-only and was never executed against the DUT.
+
+## Publication closure
+
+The immutable payload was first published at commit `95af91290b582b57739deb3ff4f6fd29cb493f04` and independently read back from `origin/main`. `R2_REVIEW_PUBLICATION_RECEIPT.md` records the verified tree and manifest. The later closure commit contains only that receipt plus corresponding state/index/manifest updates.
 
 ## Frozen source package
 
