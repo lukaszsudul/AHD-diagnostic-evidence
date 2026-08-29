@@ -1,13 +1,15 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 1,
+  "project_state_revision": 2,
   "state_type": "CURRENT_ACCEPTED_STATE",
   "governance_version": 1,
-  "last_update": "2026-08-28",
+  "last_update": "2026-08-29",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-0_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-2_TASK_DIRECTIVE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+  "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
+  "expected_previous_project_state_revision": 1,
+  "current_transport_abi_status": "FROZEN_FOR_G2B",
   "lifecycle_status_enum": [
     "ACCEPTED",
     "FROZEN",
@@ -38,7 +40,18 @@
         "G-1",
         "G0",
         "G1"
-      ]
+      ],
+      "accepted_contract_freezes": [
+        "G2B-PRE"
+      ],
+      "g2b_pre": {
+        "status": "ACCEPTED",
+        "scope": "ARCHITECTURE_CONTRACT_FREEZE_ONLY",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-2_TASK_DIRECTIVE",
+        "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
+        "evidence_directory": "v41-development-g2b-pre-c2h-abi-mmio-freeze"
+      }
     },
     "research": {
       "status": "ACTIVE",
@@ -67,8 +80,9 @@
     },
     "meta": {
       "status": "ACCEPTED",
-      "current_task": "META-0",
-      "acceptance_basis": "ACCEPTED_BY_CREATION_TASK"
+      "current_task": "META-2",
+      "acceptance_basis": "OWNER_ARCHITECT_ACCEPTED_G2B_PRE_AND_EXPLICIT_META_UPDATE",
+      "decision_source": "META-2_TASK_DIRECTIVE"
     }
   },
   "qualified_fpga_baseline": {
@@ -298,15 +312,44 @@
     "private_rings": 2,
     "records_per_ring": 4,
     "record_size_bytes": 4096,
-    "planned_useful_payload_bytes": 3840,
+    "header_bytes": 64,
+    "useful_payload_bytes": 3840,
+    "padding_bytes": 192,
     "shared_formatter_engine": true,
     "scheduler": "WORK_CONSERVING_RECORD_BOUNDARY_ROUND_ROBIN",
     "channel_tagged_records": true,
     "record_family": "v41D",
-    "record_family_status": "PROVISIONAL",
-    "transport_abi_status": "PROVISIONAL",
+    "record_family_status": "FROZEN",
+    "transport_abi_status": "FROZEN_FOR_G2B",
+    "transport_abi_name": "AHD_C2H_TRANSPORT_ABI_V1",
+    "transport_abi_version": 1,
+    "record_version": "0x00004101",
+    "implementation_state": "NOT_IMPLEMENTED",
+    "hardware_qualification": "NOT_PROVEN",
     "accepted_by_role": "OWNER_ARCHITECT",
-    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+  },
+  "transport_abi": {
+    "status": "FROZEN",
+    "current_transport_abi_status": "FROZEN_FOR_G2B",
+    "name": "AHD_C2H_TRANSPORT_ABI_V1",
+    "version": 1,
+    "record_bytes": 4096,
+    "header_bytes": 64,
+    "payload_bytes": 3840,
+    "padding_bytes": 192,
+    "implementation_state": "NOT_IMPLEMENTED",
+    "hardware_qualification": "NOT_PROVEN",
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+  },
+  "g2b_mmio": {
+    "status": "FROZEN",
+    "base": "0x3800",
+    "end": "0x3BFF",
+    "legacy_protected_through": "0x37FF",
+    "implementation_state": "NOT_IMPLEMENTED",
+    "hardware_qualification": "NOT_PROVEN",
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
   },
   "application_dma": {
     "pcie_endpoint": {
@@ -327,7 +370,9 @@
     },
     "record_to_axi_stream_data_plane": {
       "status": "PLANNED",
-      "target_gate": "G2B"
+      "target_gate": "G2B",
+      "readiness": "READY",
+      "implementation_state": "NOT_IMPLEMENTED"
     },
     "one_channel_dma": {
       "status": "PLANNED",
@@ -372,9 +417,49 @@
       "access": "READ_ONLY"
     },
     "transport_abi": {
-      "status": "PROVISIONAL",
-      "current_transport_abi_status": "PROVISIONAL",
-      "record_family": "v41D"
+      "status": "FROZEN",
+      "current_transport_abi_status": "FROZEN_FOR_G2B",
+      "name": "AHD_C2H_TRANSPORT_ABI_V1",
+      "version": 1,
+      "mmio_version_word": "0x00010000",
+      "record_family": "v41D",
+      "record_version": "0x00004101",
+      "record_bytes": 4096,
+      "header_bytes": 64,
+      "payload_bytes": 3840,
+      "padding_bytes": 192,
+      "payload_format": "UYVY_4_2_2",
+      "pixels_per_record": 1920,
+      "records_per_active_line": 1,
+      "header_fields": [
+        "0x00:magic",
+        "0x04:record_version",
+        "0x08:reset_epoch",
+        "0x0C:source_frame_sequence",
+        "0x10:source_line_sequence",
+        "0x14:source_capture_sequence",
+        "0x18:payload_length",
+        "0x1C:flags",
+        "0x20:active_logical_channel_count",
+        "0x24:source_slot_generation_and_slot",
+        "0x28:source_malformed_count_snapshot",
+        "0x2C:source_dropped_count_snapshot",
+        "0x30:logical_channel_id",
+        "0x34:physical_input_id",
+        "0x38:channel_attempt_sequence",
+        "0x3C:global_stream_sequence"
+      ],
+      "axis_data_width_bits": 64,
+      "axis_beats_per_record": 512,
+      "axis_tkeep": "0xFF_ALL_BEATS",
+      "axis_tlast": "FINAL_BEAT_ONLY",
+      "build_identity_semantics": "MMIO_ONLY",
+      "padding_semantics": "FORMATTER_GENERATED_ZERO",
+      "implementation_state": "NOT_IMPLEMENTED",
+      "hardware_qualification": "NOT_PROVEN",
+      "authoritative_markdown": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_C2H_TRANSPORT_ABI_V1.md",
+      "authoritative_json": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_C2H_TRANSPORT_ABI_V1.json",
+      "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
     },
     "channel_identity": {
       "status": "ACCEPTED",
@@ -388,9 +473,71 @@
         2,
         3
       ],
-      "encoded_record_fields": "PROVISIONAL"
+      "encoded_record_fields": "FROZEN",
+      "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
     },
-    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    "g2b_mmio": {
+      "status": "FROZEN",
+      "contract_name": "AHD_V41_G2B_MMIO_V1",
+      "base": "0x3800",
+      "end": "0x3BFF",
+      "legacy_protected_through": "0x37FF",
+      "future_reserved_start": "0x3C00",
+      "future_reserved_end": "0x3FFF",
+      "implementation_state": "NOT_IMPLEMENTED",
+      "hardware_qualification": "NOT_PROVEN",
+      "authoritative_contract": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_G2B_MMIO_CONTRACT.md",
+      "authoritative_map": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_G2B_MMIO_MAP.csv",
+      "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+    },
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+  },
+  "linux_consumer_contract": {
+    "status": "FROZEN",
+    "contract_state": "FROZEN_INPUT_CONTRACT",
+    "scope": "TRANSPORT_INPUT_ONLY",
+    "abi_name": "AHD_C2H_TRANSPORT_ABI_V1",
+    "parser_must_validate": [
+      "ABI_AND_RECORD_VERSION",
+      "FIXED_RECORD_BOUNDARIES",
+      "SEQUENCE_CONTINUITY",
+      "RESET_EPOCH",
+      "CHANNEL_IDENTITY",
+      "PAYLOAD_LENGTH",
+      "FLAGS_AND_RESERVED_FIELDS",
+      "ZERO_PADDING"
+    ],
+    "v4l2_architecture_frozen": false,
+    "v4l2_implemented": false,
+    "dmabuf_implemented": false,
+    "multi_card_policy_frozen": false,
+    "authoritative_contract": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_C2H_LINUX_CONSUMER_CONTRACT.md",
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+  },
+  "g2b_implementation": {
+    "status": "PLANNED",
+    "readiness": "READY",
+    "implementation_state": "NOT_IMPLEMENTED",
+    "accepted_g2a_base": {
+      "scope": "G2B_PRE_IMPLEMENTATION_INPUT_ONLY",
+      "branch": "integration/v41-r1i-gen2-g2a",
+      "commit": "224d194e5f82c85bcb29297561c5d5e76d28063b",
+      "tree": "283f98c02e6f9c61716875415cf000682f8ab856",
+      "g2a_gate_status_unchanged": "ACTIVE"
+    },
+    "one_channel_c2h_rtl": "NOT_IMPLEMENTED",
+    "g2b_bitstream": "NOT_IMPLEMENTED",
+    "g2b_host_capture": "NOT_IMPLEMENTED",
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+  },
+  "g2b_hardware": {
+    "status": "PLANNED",
+    "progress": "NOT_STARTED",
+    "qualification_state": "NOT_PROVEN",
+    "one_channel_dma": "NOT_PROVEN",
+    "two_channel_dma": "NOT_PROVEN",
+    "gen2_negotiation": "NOT_PROVEN",
+    "payload_288_mb_s": "NOT_PROVEN"
   },
   "resources": {
     "status": "ACCEPTED",
@@ -425,6 +572,7 @@
   },
   "linux_video": {
     "status": "PLANNED",
+    "implementation_state": "NOT_IMPLEMENTED",
     "architecture_direction": "V4L2",
     "transport_abstraction_required": true,
     "common_core": "AHD_COMMON_VIDEO_CAPTURE_CORE",
@@ -471,11 +619,6 @@
     {
       "id": "OD-05",
       "topic": "ACTUAL_USER_CLK_AFTER_GEN2",
-      "status": "OPEN"
-    },
-    {
-      "id": "OD-06",
-      "topic": "FINAL_C2H_ABI",
       "status": "OPEN"
     },
     {
@@ -623,6 +766,31 @@
         "STMT-RESEARCH"
       ],
       "acceptance_boundary": "EVIDENCE_PASS_DOES_NOT_AUTO_ACCEPT_PROJECT_STATE"
+    },
+    {
+      "id": "EVID-G2B-PRE",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
+      "payload_commit": "9fdcca4e3a40b931f07db01ad404b4a3cfc24b10",
+      "directory": "v41-development-g2b-pre-c2h-abi-mmio-freeze",
+      "files": [
+        "V41_G2B_PRE_ARCHITECTURE_FREEZE_REPORT.md",
+        "V41_C2H_TRANSPORT_ABI_V1.md",
+        "V41_C2H_TRANSPORT_ABI_V1.json",
+        "V41_G2B_MMIO_CONTRACT.md",
+        "V41_G2B_MMIO_MAP.csv",
+        "V41_C2H_LINUX_CONSUMER_CONTRACT.md",
+        "G2B_PRE_ABI_CONSISTENCY_REPORT.md",
+        "G2B_PRE_DECISION_LOG.md"
+      ],
+      "supports": [
+        "STMT-G2B-PRE",
+        "STMT-ABI",
+        "STMT-G2B-MMIO",
+        "STMT-LINUX-TRANSPORT-INPUT",
+        "STMT-OD-06-CLOSURE"
+      ],
+      "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_CONTRACT_FREEZE_ONLY; NO_IMPLEMENTATION_OR_HARDWARE_QUALIFICATION"
     }
   ]
 }

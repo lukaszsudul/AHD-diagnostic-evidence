@@ -12,13 +12,14 @@ identifies the exact evidence that supports each statement.
 | Field | Value |
 |---|---|
 | Project | `AHD_v41` |
-| `PROJECT_STATE_REV` | `1` |
+| `PROJECT_STATE_REV` | `2` |
 | Governance version | `1` |
 | State type | `CURRENT_ACCEPTED_STATE` |
-| Last update | `2026-08-28` |
+| Last update | `2026-08-29` |
 | Acceptance authority | `OWNER_ARCHITECT` |
 | SSOT writer | `META_UPDATE_AGENT_ONLY` |
 | Creation authorization | `META-0_TASK_DIRECTIVE` / `SSOT WRITE AUTHORIZED` |
+| Revision-2 decision basis | Accepted G2B-PRE architecture-contract freeze |
 
 ## Mandatory read before any work
 
@@ -40,17 +41,23 @@ At the end of the task, the agent must read the revision again, record
 
 | Area | Current project truth |
 |---|---|
-| Product | G-1 `ACCEPTED`; G0 `ACCEPTED`; G1 `ACCEPTED`; G2A `ACTIVE` |
+| Product | G-1 `ACCEPTED`; G0 `ACCEPTED`; G1 `ACCEPTED`; G2A `ACTIVE`; G2B-PRE `ACCEPTED` |
 | Research | R0 `ACCEPTED`; R1 `ACTIVE` |
 | Linux Video | L0 `PLANNED` |
-| META | META-0 governance infrastructure `ACCEPTED`, solely by this creation task |
+| META | META-0 governance infrastructure retained; META-2 promotes only the accepted G2B-PRE contract |
 | Qualified FPGA baseline | R1i `ACCEPTED`; preservation identity `FROZEN` |
 | PCIe product requirement | Gen2 x1 or better; sustained payload `>= 288 MB/s` per card |
-| Transport ABI | `PROVISIONAL` |
+| Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |
+| G2B MMIO | `FROZEN`, `0x3800..0x3BFF` |
+| G2B implementation | `READY`, but `NOT_IMPLEMENTED` |
+| G2B hardware qualification | `NOT_STARTED`; `NOT_PROVEN` |
+| Linux consumer contract | Frozen transport input; V4L2 remains `NOT_IMPLEMENTED` |
 
-G2A, R1, and L0 are not accepted implementation results. No execution `PASS`,
-`THESIS_CONFIRMED`, or `BUILD_COMPLETE` result modifies this snapshot by
-itself.
+G2A and R1 remain active, and L0 remains planned. G2B-PRE acceptance freezes
+interfaces only; it does not promote RTL, DMA, Gen2 negotiation, 288 MB/s
+throughput, hardware capture, or V4L2 implementation; Gen2 negotiation and the
+288 MB/s target remain `NOT_PROVEN`. No execution `PASS`, `THESIS_CONFIRMED`,
+or `BUILD_COMPLETE` result modifies this snapshot by itself.
 
 ## Truth model
 
@@ -69,8 +76,9 @@ Only these project-state labels are valid:
 `OPEN`, `BLOCKED`, `REJECTED`.
 
 Evidence results and engineering maturity terms such as `PASS`, `STRONG_PASS`,
-`THESIS_CONFIRMED`, `PROVEN`, and `IMPLEMENTED_UNQUALIFIED` are separate
-classifications, not lifecycle labels.
+`THESIS_CONFIRMED`, `PROVEN`, `READY`, `NOT_IMPLEMENTED`, `NOT_STARTED`,
+`NOT_PROVEN`, and `IMPLEMENTED_UNQUALIFIED` are separate classifications, not
+lifecycle labels.
 
 ## Document map
 
@@ -82,7 +90,7 @@ classifications, not lifecycle labels.
 | `CURRENT_STATUS.md` | Human-readable current gate and subsystem state |
 | `ACTIVE_BASELINES.md` | Exact qualified, donor, integration, and research identities |
 | `CURRENT_REQUIREMENTS.md` | Frozen requirements versus targets and qualification state |
-| `CURRENT_INTERFACES.md` | Accepted/frozen interfaces and explicitly provisional contracts |
+| `CURRENT_INTERFACES.md` | Accepted/frozen interfaces, implementation boundaries, and later open contracts |
 | `CURRENT_RESOURCE_STATE.md` | Qualified utilization and diagnostic-overhead interpretation |
 | `CURRENT_TRACKS.md` | G, R, L, and META purposes, gates, decisions, and dependencies |
 | `OPEN_DECISIONS.md` | Unresolved decisions that may not be invented by an agent |

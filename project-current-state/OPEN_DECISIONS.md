@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -14,11 +14,36 @@ the SSOT changes, a separate authorized META update.
 | `OD-03` | Diagnostic reduction | `OPEN` | Substantial overhead exists but exact removable R1i LUT count is `UNKNOWN` | Accepted R-track closure, fanout/behavior proof, A/B resource/functional evidence, ABI review |
 | `OD-04` | Actual Gen2 training | `OPEN` | Gen2 is architecturally allowed but not hardware-qualified | Endpoint/parent capability and negotiated 5.0 GT/s x1 evidence, reset/retrain/AER results |
 | `OD-05` | Actual `user_clk` after Gen2 | `OPEN` | XCI request, metadata, and routed evidence are not fully consistent | Generated/post-route clock proof and later hardware lifecycle/frequency measurement |
-| `OD-06` | Final C2H transport ABI | `OPEN` | v41D is a concrete G1 plan but explicitly not fully implementation-frozen | Golden vectors, parser/device agreement, reset/drop/timestamp semantics, interface acceptance |
 | `OD-07` | Final V4L2 pixel format | `OPEN` | Linux frontend is planned and end-to-end format presentation is not decided | Userspace compatibility analysis and explicit V4L2 format decision |
 | `OD-08` | Timestamp architecture | `OPEN` | Source, DMA, host, monotonic, and cross-card timestamp semantics are undecided | Clock-domain/source definition, wrap/synchronization policy, V4L2 mapping, validation plan |
 | `OD-09` | Persistent card identity | `OPEN` | Enumeration order is not a stable two-card product identity | Hardware identity source and persistent card/input mapping policy |
 | `OD-10` | Future LitePCIe role | `OPEN` | It is only a potential later backend; compatibility and value are unproven | Transport abstraction contract, feature/performance/resource comparison, Owner decision |
+
+## Closed at project-state revision 2
+
+`OD-06 / Final C2H transport ABI` is removed from the open table after
+Owner/Architect acceptance of G2B-PRE and this authorized META-2 transaction.
+The closed interface facts have lifecycle status `FROZEN`; G2B implementation
+remains `NOT_IMPLEMENTED`, hardware remains `NOT_PROVEN`, and the closure does
+not decide `OD-07` through `OD-10`.
+
+| Closed technical subdecision | Frozen resolution | Status | Accepted evidence |
+|---|---|---|---|
+| Offset `0x38` semantics | Per-logical-channel `channel_attempt_sequence`; assign current value before increment at each eligible attempt; first value 0 per epoch; dropped, malformed, and aborted attempts consume a value modulo `2^32` | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Offset `0x3C` semantics | Shared `global_stream_sequence`; assign at `COMMITTED -> DMA_OWNED` before beat 0; increment only on beat-511 handshake; first value 0 and complete records contiguous per epoch | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Reset epoch | Header `0x08` and MMIO `0x3838` carry one shared per-card modulo-`2^32` transport epoch; configuration establishes 0 and each completed transport-reset episode advances exactly once | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Sequence reset/wrap/drop behavior | Transport sequences wrap modulo `2^32`, reset only on a new transport epoch, preserve defined source-sequence independence, and expose failed eligible attempts as per-channel gaps without consuming global order | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Build identity | No per-record build ID; `0x08` is reset epoch and the complete legacy read-only MMIO identity tuple is authoritative for the device session | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Flags | Bits 0, 2, 3, 4, 5, and 6 are `SOF`, `DISCONTINUITY`, `OVERFLOW_OCCURRED`, `MALFORMED_PRECEDING`, `VALID`, and `WINDOW_END`; bit 1 and bits `7..31` are zero, with no speculative EOF/reset/source/drop flag | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Channel identity | Logical IDs 0 and 1 and physical IDs 0 through 3 are frozen zero-extended namespaces; G2B emits logical 0, physical 0, active count 1 without claiming channel-1 implementation | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Payload/frame reconstruction | Each record carries one validated 1,920-pixel active UYVY line; lines `0..1079`, SOF on line 0, no EOF; a complete frame requires every ordered line under one identity | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Padding | Bytes `3904..4095` are formatter-generated zero with full `TKEEP`; stale/unwritten RAM is forbidden and Linux validates zero before ignoring padding | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Ownership/drop/backpressure/reset | Four private slots use the frozen five-state ownership cycle; committed data is immutable; whole-record drop preserves owned records; AXI stall signals remain stable; reset exposes no suffix and resumes at beat 0 | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| MMIO base/range | G2B exclusively claims `0x3800..0x3BFF`; defined words end at `0x3858`, the rest is reserved-zero, `0x3C00..0x3FFF` stays future-reserved, and all behavior through `0x37FF` remains protected | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Control/status | `CONTROL` at `0x380C` and `STATUS` at `0x3810` have exact enable, statistics reset, stream reset, live state, source, busy, snapshot, and fatal semantics | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Counters/capabilities/errors | Exact register addresses, widths, increment/clear rules, support-versus-implementation capability split, six sticky errors, fatal recovery, and last-cause priority are frozen | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Read coherency | Cross-domain counters use explicit request/acknowledge coherent snapshots, stable shadows, sequence-valid bits, and an epoch-before/after retry rule; torn live reads are forbidden | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| Forward compatibility | Major mismatch is rejected; ABI 1.0 reserved fields must be zero; compatible minor evolution preserves the complete base layout/geometry/semantics; layout or mandatory semantic change requires a new major and record version | `FROZEN` | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
 
 ## Additional qualification dependencies
 

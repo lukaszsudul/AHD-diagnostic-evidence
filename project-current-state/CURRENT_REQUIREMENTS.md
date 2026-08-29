@@ -1,6 +1,6 @@
 # AHD Current Requirements
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 This document separates a frozen requirement from its implementation target
 and from actual qualification. A requirement is not evidence that the product
@@ -48,7 +48,7 @@ long-run measurements remain mandatory.
 
 ## C2H implementation target
 
-The accepted G1 target is:
+The accepted architecture target and frozen G2B implementation input are:
 
 - one XDMA C2H channel per card;
 - two private per-logical-channel rings;
@@ -56,11 +56,42 @@ The accepted G1 target is:
 - one shared formatter/engine;
 - work-conserving round-robin at complete-record boundaries;
 - channel-tagged records; and
-- approximately 3,840 useful bytes per record.
+- exactly 3,840 useful bytes per record under
+  `AHD_C2H_TRANSPORT_ABI_V1`.
 
-The architecture decision is accepted. The v41D ABI encoding is
-`PROVISIONAL`, application C2H is not accepted, and one-channel/two-channel
-qualification has not occurred.
+The architecture decision is accepted and the named transport ABI is
+`FROZEN_FOR_G2B` with lifecycle status `FROZEN`. Application C2H remains
+`NOT_IMPLEMENTED`; one-channel and two-channel DMA qualification has not
+occurred; G2B hardware remains `NOT_PROVEN`.
+
+## Frozen transport implementation requirements
+
+The following are normative requirements derived from the accepted G2B-PRE
+contract. Their `FROZEN` status makes them implementation and parser inputs;
+it does not claim that any data plane or hardware result exists.
+
+| ID | Frozen requirement | Status | Qualification state |
+|---|---|---|---|
+| `REQ-C2H-RECORD` | Every C2H record is exactly 4,096 bytes: 64-byte header, 3,840-byte useful payload, and 192-byte padding | `FROZEN` | G2B implementation `NOT_IMPLEMENTED`; hardware `NOT_PROVEN` |
+| `REQ-C2H-PAYLOAD` | Every valid record contains one complete validated 1,920-pixel active line in packed UYVY 4:2:2 byte order `U0,Y0,V0,Y1`; no SAV/EAV, blanking, timestamp, checksum, or descriptor bytes | `FROZEN` | No host DMA or frame-delivery qualification |
+| `REQ-C2H-PADDING` | Record bytes `3904..4095` are formatter-generated zero; stale or unwritten RAM is forbidden; the consumer must validate zero | `FROZEN` | Formatter not implemented or proven |
+| `REQ-C2H-IDENTITY` | Each record carries frozen logical channel, physical input, source frame/line/capture, reset epoch, per-channel attempt, and global stream identities with all reserved container bits zero | `FROZEN` | G2B emits logical 0, physical 0, active count 1; future channel 1 remains unimplemented |
+| `REQ-C2H-SEQUENCE` | Sequence and epoch semantics must remain coherent: attempts consume per-channel numbers even when later dropped/malformed/aborted; only complete streamed records consume contiguous global order; a new transport epoch resets both transport next-values to zero | `FROZEN` | No RTL or hardware continuity proof |
+| `REQ-C2H-RESET` | A transport reset must disable admission, require host re-enable, atomically flush ownership/descriptors through acknowledged epoch coordination, expose no partial record, and resume only at beat 0; source and NVP/I2C lifecycles remain independent | `FROZEN` | Reset implementation and CDC behavior not proven |
+| `REQ-C2H-AXIS` | The 64-bit stream has exactly 512 beats, `TKEEP=0xFF` throughout, and `TLAST` only on beat 511; while `TVALID && !TREADY`, `TVALID`, `TDATA`, `TKEEP`, and `TLAST` remain stable and record state advances only on handshake | `FROZEN` | Backpressure simulation and hardware DMA not performed |
+| `REQ-C2H-OWNERSHIP` | A committed record and matching descriptor are immutable; slot release occurs only after the final-beat handshake and acknowledged return; overwrite of committed or in-flight records is forbidden | `FROZEN` | Ring/data-plane implementation not accepted |
+| `REQ-C2H-LOSS` | Ring-full and other noncommitted attempts use whole-record drop; attempted/dropped and applicable overflow/malformed accounting increments exactly once; pending discontinuity/loss context reaches the next committed record; partial drop and silent sequence repair are forbidden | `FROZEN` | Drop/overflow behavior not implemented or measured |
+| `REQ-LINUX-C2H-PARSER` | The Linux transport parser must negotiate MMIO ABI/capabilities, create a session epoch with `RESET_STREAM_STATE`, parse only fixed 4,096-byte boundaries, and validate ABI/version, identities, flags, source/attempt/global sequences, epoch, line/SOF, payload length, and zero padding | `FROZEN` | Linux consumer contract is frozen input; V4L2 remains `NOT_IMPLEMENTED` |
+| `REQ-C2H-INPUT-SCALE` | The product exposes 4 physical input identities per card and permits at most 2 active logical inputs per card | `FROZEN` | Second ingress and two-channel DMA remain unqualified |
+| `REQ-C2H-THROUGHPUT` | Sustained AHD application payload target remains `>= 288 MB/s` per card | `FROZEN` | Target is not achieved or hardware-qualified; transport overhead, link, XDMA, host, drops, and long-run behavior still require measurement |
+
+The normative evidence is
+`v41-development-g2b-pre-c2h-abi-mmio-freeze` at commit
+`e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e`, including the ABI Markdown/JSON,
+MMIO contract/map, Linux consumer contract, and 63/63 consistency receipt.
+No requirement above promotes one-channel C2H RTL, one-channel hardware DMA,
+two-channel DMA, `>= 288 MB/s` qualification, V4L2, DMABUF, multi-card Linux
+policy, runtime Gen2 negotiation, a G2B bitstream, or G2B host capture.
 
 ## Linux Video product direction
 

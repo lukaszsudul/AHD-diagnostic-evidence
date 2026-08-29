@@ -1,12 +1,13 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
-> `CURRENT_TRANSPORT_ABI_STATUS = PROVISIONAL`
+> `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
-This document separates accepted/frozen compatibility surfaces from proposed
-or incomplete interfaces. An accepted architecture choice does not make an
-unfinished wire or host ABI implementation-frozen.
+This document separates accepted/frozen compatibility surfaces and frozen
+implementation-input contracts from implementation and hardware
+qualification. Freezing an interface does not mean that its RTL, DMA path,
+host frontend, or hardware behavior has been implemented or proven.
 
 ## Authoritative accepted/frozen interfaces
 
@@ -64,9 +65,9 @@ the protected R1i/legacy response path.
 | Logical capture channels | IDs 0 and 1 | `ACCEPTED` | Two-channel hardware not qualified |
 | Physical input IDs | 0 through 3 | `ACCEPTED` | Current evidence proves only the present VDO1 path |
 | Mapping rule | two distinct physical IDs may map to logical 0/1 | `ACCEPTED` | Change only while affected channel disabled and drained |
-| Scheduling | record-boundary work-conserving round-robin | `ACCEPTED` | No beat interleave; implementation not qualified |
-| Buffer ownership | private four-record ring per logical channel | `ACCEPTED` | Exact implementation/resources remain future work |
-| Host transport order | one global streamed order plus per-channel attempt order | `ACCEPTED` | Encoded v41D fields remain provisional |
+| Scheduling | record-boundary work-conserving round-robin | `FROZEN` | No beat interleave; G2B implementation is `NOT_IMPLEMENTED` |
+| Buffer ownership | private four-record ring per logical channel | `FROZEN` | Exact ownership contract is frozen; implementation and resources are not qualified |
+| Host transport order | one global streamed order plus per-channel attempt order | `FROZEN` | Encoded fields are frozen by `AHD_C2H_TRANSPORT_ABI_V1`; hardware is `NOT_PROVEN` |
 
 Channel identity semantics are authoritative at the architecture level:
 logical channel identifies the consumer stream, physical input identifies the
@@ -74,54 +75,186 @@ selected connector/source, per-channel attempt sequence represents source
 admission/drop order, and global sequence represents successful shared-C2H
 transport order.
 
-## Provisional interfaces — not implementation-frozen
+## Frozen G2B implementation-input interfaces
 
-### v41D record plan
+### `AHD_C2H_TRANSPORT_ABI_V1`
 
-| Field | Current plan | Status |
-|---|---|---|
-| Record family | `v41D` | `PROVISIONAL` |
-| Total bytes | `4096` | `PROVISIONAL` |
-| Header bytes | `64` | `PROVISIONAL` |
-| Useful payload bytes | `3840` | `PROVISIONAL` |
-| Tail bytes | `192` zero | `PROVISIONAL` |
-| AXI width / beats | 64 bits / 512 accepted beats | `PROVISIONAL` |
-| `TKEEP` | `0xFF` on every beat | `PROVISIONAL` |
-| `TLAST` | asserted only on beat 511 | `PROVISIONAL` |
-| Magic | `0x4C444841` | `PROVISIONAL` |
-| Version word | `0x00004101` | `PROVISIONAL` |
-| Required tags | logical channel, physical input, per-channel attempt, global streamed sequence | `PROVISIONAL` |
+`INTERFACE STATUS = FROZEN_FOR_G2B`
 
-The G1 plan provides a concrete starting contract and preserves byte-exact
-legacy v40B mode. The Owner/Architect META-0 direction is newer and explicit:
-the transport ABI is not yet fully implementation-frozen. No consumer may
-treat this table as a final ABI until an explicit interface acceptance and META
-revision.
-
-### Proposed G2 MMIO extension
-
-The following ranges are `PROVISIONAL` and currently not authoritative
-implemented registers:
-
-| Range | G1 proposal |
+| Property | Project truth |
 |---|---|
-| `0x3800–0x387F` | global DMA control/status |
-| `0x3880–0x38FF` | throughput/scheduler status |
-| `0x3900–0x397F` | logical channel 0 |
-| `0x3980–0x39FF` | logical channel 1 |
-| `0x3A00–0x3A7F` | selection/command |
-| `0x3A80–0x3FFF` | reserved diagnostic, error, throughput, and future expansion |
+| Lifecycle status | `FROZEN` |
+| Interface status | `FROZEN_FOR_G2B` |
+| ABI numeric version | `1` |
+| MMIO ABI version | `0x00010000` (`major=1`, `minor=0`) |
+| Record family / version | `v41D` / `0x00004101` |
+| G2B implementation | `NOT_IMPLEMENTED` |
+| G2B hardware | `NOT_PROVEN` |
+| Normative evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
 
-Any implementation requires decode-collision proof, exhaustive no-alias
-testing across the 128 KiB aperture, protected-response equivalence, an
-accepted final register contract, and a future SSOT interface update.
+#### Record geometry and header
 
-### Linux transport and V4L2 ABI
+Every record is exactly 4,096 bytes: a 64-byte header at bytes `0..63`, one
+3,840-byte useful payload at bytes `64..3903`, and 192 padding bytes at
+`3904..4095`. Header scalars are sixteen complete little-endian unsigned
+32-bit words with no unnamed byte, gap, or overlap.
 
-The V4L2 frontend, AHD common core, transport-backend interface, stable card
-identity, pixel format, timestamps, buffer/DMABUF behavior, and LitePCIe
-backend contract are `PROVISIONAL` or `OPEN` design topics. They are not
-current implemented interfaces.
+| Offset | Field | Reset/default | Frozen semantics |
+|---:|---|---|---|
+| `0x00` | `magic` | `0x4C444841` | Constant record magic; wire bytes are `41 48 44 4C` |
+| `0x04` | `record_version` | `0x00004101` | Selects the fixed-layout `v41D` parser |
+| `0x08` | `reset_epoch` | FPGA configuration creates epoch `0` | Per-card/shared-stream transport generation; not a build ID |
+| `0x0C` | `source_frame_sequence` | internal `0`; first emitted frame `1` | Source-frame number modulo `2^32`; transport reset does not reset it |
+| `0x10` | `source_line_sequence` | first active line `0` | Zero-based active line; legal values `0..1079` |
+| `0x14` | `source_capture_sequence` | internal `0`; first emitted capture `1` | Counts completed valid source lines modulo `2^32`; failed attempts do not consume it |
+| `0x18` | `payload_length` | `3840` | Useful bytes beginning at byte 64; V1 requires exactly 3,840 |
+| `0x1C` | `flags` | per-record | Exact flag contract below |
+| `0x20` | `active_logical_channel_count` | G2B value `1` | Legal emitted values `1` and `2`; G2B emits `1` |
+| `0x24` | `source_slot_generation_and_slot` | generation `0`; first allocation `1` | Bits `31:8` generation modulo `2^24`; bits `7:4` zero; bits `3:0` slot, G2B `0..3` |
+| `0x28` | `source_malformed_count_snapshot` | `0` after source reset | Source-local lifetime count preceding this commit; not clearable MMIO statistics |
+| `0x2C` | `source_dropped_count_snapshot` | `0` after source reset | Source-local noncommitted-attempt count preceding this commit; not clearable MMIO statistics |
+| `0x30` | `logical_channel_id` | G2B value `0` | Bits `1:0`: `0,1` legal, `2` reserved, `3` invalid; bits `31:2` zero |
+| `0x34` | `physical_input_id` | G2B value `0` | Bits `2:0`: `0..3` legal, `4..6` reserved, `7` invalid; bits `31:3` zero |
+| `0x38` | `channel_attempt_sequence` | next value `0` each epoch | Per-logical-channel eligible-attempt order, including later dropped, malformed, or aborted attempts |
+| `0x3C` | `global_stream_sequence` | next value `0` each epoch | Complete-record order in the single shared C2H stream |
+
+Flag bit 0 is `SOF`; bit 1 is zero; bits 2, 3, and 4 are respectively
+`DISCONTINUITY`, `OVERFLOW_OCCURRED`, and `MALFORMED_PRECEDING`; bit 5 is
+`VALID` and must be one in every streamed G2B record; bit 6 is `WINDOW_END`
+and is zero for continuous G2B; bits `7..31` are zero. V1 defines no EOF,
+source-unlocked, source-recovered, reset-boundary, or dropped-before flag.
+
+#### Channel, payload, and source semantics
+
+The ABI supports logical IDs 0 and 1 and physical IDs 0 through 3. G2B is
+frozen to emit logical channel 0, physical input 0, and active count 1; this
+namespace compatibility does not implement logical channel 1. Card/build
+identity comes from the opened XDMA device/BDF and the authoritative MMIO
+identity tuple, including full Git SHA, not from a record field.
+
+Each payload is exactly one complete validated 1,920-pixel active line in
+packed UYVY 4:2:2 order. For pixel pair `p=0..959`, bytes `4p+0..4p+3` are
+`U0,Y0,V0,Y1`. SAV/EAV, blanking, checksum, timestamp, descriptor data, and
+line padding are excluded. Line 0 has `SOF=1`; there is no EOF flag. A frame is
+complete only after exactly one valid ordered instance of every line
+`0..1079` under one card/channel/input/epoch/frame-sequence identity.
+
+FPGA configuration, explicit source reset, source disable/re-enable, applied
+input remap, or explicit source formatter/configuration reset restarts source
+frame/capture state; the first record is frame 1, line 0, capture 1. Source
+reset preserves the transport epoch and transport sequences, aborts an
+affected uncommitted record, and makes discontinuity pending. PCIe, AXI, host
+stream, or standalone transport reset does not reset source sequences.
+
+All padding bytes `3904..4095` are formatter-generated `0x00`. They remain
+part of the record with full `TKEEP` and may never expose stale or unwritten
+RAM. A consumer validates them as zero and then ignores them.
+
+#### AXI mapping, sequences, ownership, loss, and reset
+
+- The stream is 64 bits and exactly 512 beats per record. Record byte
+  `8*n+k` maps to `TDATA[8*k +: 8]`; `TKEEP=0xFF` on every beat; `TLAST` is
+  one only on beat 511.
+- Beat 0 is not offered until a complete committed record and matching
+  descriptor are owned in the XDMA clock domain. After it is offered,
+  `TVALID` remains asserted through the final handshake with no intentional
+  intra-record bubble.
+- While `TVALID && !TREADY`, `TVALID`, `TDATA`, `TKEEP`, and `TLAST` remain
+  stable. Beat state advances only on `TVALID && TREADY`; all record identity
+  and metadata remain locked; slot release begins only after the beat-511
+  handshake.
+- Each channel assigns `channel_attempt_sequence` before incrementing at every
+  eligible enabled attempt. Ring-full, later-malformed, and later-aborted
+  attempts consume one value modulo `2^32`; disabled input observations do
+  not. Only a new transport epoch resets the next value to zero.
+- The shared scheduler assigns `global_stream_sequence` at
+  `COMMITTED -> DMA_OWNED` before beat 0 and increments it only on the
+  beat-511 handshake. Drops consume no global value. Complete records are
+  contiguous across channels within one epoch, and at most one slot is
+  `DMA_OWNED` across the shared stream.
+- Each logical channel owns four nonborrowable slots with normal states
+  `WRITABLE -> FILLING -> COMMITTED -> DMA_OWNED -> RELEASABLE -> WRITABLE`.
+  Commit occurs only after all 3,840 payload bytes and source validation.
+  Committed data and its descriptor are immutable; per-channel committed
+  order is FIFO; illegal transition or channel/slot/generation/epoch mismatch
+  is fatal. No committed record may be overwritten.
+- Video input is not backpressured. With no `WRITABLE` slot, the complete new
+  attempt is dropped before any byte is written, existing records remain
+  unchanged, attempted/dropped/overflow counts increment exactly once, and
+  discontinuity/overflow context annotates the next committed record. Partial
+  drop, overwrite-oldest, silent repair, and cross-channel borrowing are
+  forbidden.
+- `reset_epoch` is shared per card. Configuration establishes zero; each later
+  PCIe/PERST or `axi_aresetn` episode, accepted `RESET_STREAM_STATE`, or
+  standalone formatter/transport reset increments it exactly once modulo
+  `2^32`; overlapping causes coalesce. Consumers compare epochs by inequality.
+  Enable/disable, statistics reset, source loss/reset, and NVP/I2C activity do
+  not advance it.
+- Every epoch reset disables admission and requires explicit host re-enable,
+  resets both transport sequences, flushes all nonwritable ownership only
+  through the cross-domain epoch handshake, abandons incomplete/in-flight
+  transport state without exposing a suffix, and resumes only at beat 0 of a
+  newly committed complete record. It must not reset or replay NVP/I2C
+  initialization.
+
+### Frozen G2B MMIO contract
+
+`MMIO STATUS = FROZEN`
+
+`AHD_V41_G2B_MMIO_V1` is lifecycle `FROZEN` at `0x3800..0x3BFF`, but its
+implementation is `NOT_IMPLEMENTED` and hardware status is `NOT_PROVEN`.
+The router must claim exactly that range before legacy forwarding. Every
+address through `0x37FF` retains its frozen accepted-base value, side effect,
+byte-enable behavior, ordering, and response latency. `0x3C00..0x3FFF` is not
+claimed by G2B. Reserved or unaligned extension reads return zero, writes have
+no effect, and responses are `OKAY`.
+
+| Address/range | Frozen register or disposition |
+|---:|---|
+| `0x3800` | `C2H_MAGIC = 0x43324831` |
+| `0x3804` | `ABI_VERSION = 0x00010000` |
+| `0x3808` | `CAPABILITIES = 0x000B001F` in a conforming future G2B build; support and implemented-this-build bits are distinct; two-channel implemented is zero |
+| `0x380C` | `CONTROL`: bit 0 `ENABLE_C2H`, bit 1 `RESET_C2H_STATS`, bit 2 `RESET_STREAM_STATE` |
+| `0x3810` | `STATUS`: enabled, active, empty/full, loss aliases, source ready/locked, reset/snapshot busy, snapshot valid, fatal error |
+| `0x3814..0x3830` | Coherent snapshot counters for attempted, committed, streamed, dropped, overflow, discontinuity, and 64-bit beats streamed |
+| `0x3834` | `LAST_GLOBAL_STREAM_SEQUENCE` |
+| `0x3838` | live `RESET_EPOCH` |
+| `0x383C` | RW1C `ERROR_STATUS`: ring overflow, record drop, sequence discontinuity, formatter error, ownership error, transport error |
+| `0x3840` | `LAST_ERROR_CAUSE` |
+| `0x3844..0x384C` | Snapshot command, status, and generation |
+| `0x3850` | `RECORDS_ABANDONED` |
+| `0x3854` | `RESET_EVENTS` |
+| `0x3858` | `LAST_CHANNEL_ATTEMPT_SEQUENCE` |
+| `0x385C..0x3BFF` | `RESERVED_ZERO`, read-as-zero/write-ignored; scheduler/channel-1/selection pages are not implemented |
+
+Fatal errors clear enable and require stream-state-reset recovery before a
+legal W1C. Statistics reset is legal only when disabled, inactive, empty, and
+neither reset nor snapshot is busy. Counter reads use the frozen acknowledged
+coherent-snapshot protocol, with `RESET_EPOCH` read before and after; live or
+torn low/high reads are not conforming.
+
+### Frozen Linux transport input contract
+
+The Linux consumer contract is `FROZEN_INPUT_CONTRACT`. Before enable, a
+consumer binds the XDMA node/BDF to the full legacy MMIO identity, validates
+MMIO ABI major 1 and implementation capability bits, issues
+`RESET_STREAM_STATE`, waits for reset idle/inactive/empty, legally clears any
+fatal error, records the resulting epoch and a coherent snapshot, explicitly
+enables C2H, and requires the first record to carry that epoch and global
+sequence zero. Mid-epoch session attachment is not conforming.
+
+The parser consumes only fixed 4,096-byte boundaries and never scans for
+magic. It validates magic, record version, payload length, flags/reserved
+bits, slot/channel/input identity, sequence and epoch coherence, SOF/line
+agreement, `VALID`, and all zero padding before extracting bytes `64..3903`.
+It classifies records as `VALID_RECORD`, `CORRUPT_RECORD`, `NEW_EPOCH`, and
+`DISCONTINUITY`; epoch/sequence discontinuity invalidates an affected frame
+without redefining the record boundary.
+
+This frozen transport input does not freeze or implement a V4L2 frontend,
+final V4L2 pixel format, timestamp architecture, vb2/mmap/DMABUF strategy,
+stable multi-card identity policy, incomplete-frame presentation policy, or
+LitePCIe backend. All remain later L-track/open decisions.
 
 ## Interface change control
 

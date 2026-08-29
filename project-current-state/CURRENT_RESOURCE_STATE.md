@@ -1,6 +1,6 @@
 # AHD Current Resource State
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 ## Qualified routed result
 
@@ -14,6 +14,11 @@ BRAM corresponds to 10 RAMB18 plus 21 RAMB36, or 26 tile equivalents.
 
 > **87.41% LUT is the current R1i diagnostic qualified-build result, not the
 > final production resource expectation.**
+
+The accepted G2B-PRE contract freeze adds no implementation or routed-resource
+result. G2B implementation is `READY` but `NOT_IMPLEMENTED`; hardware
+qualification is `NOT_STARTED` and `NOT_PROVEN`. The resource table therefore
+remains the qualified R1i result.
 
 The qualified build contains substantial diagnostic/research overhead. The
 exact removable diagnostic LUT count is `UNKNOWN`. The R1i–R1h delta mixes

@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open
@@ -40,9 +40,11 @@ two-channel, Gen2, throughput, or Linux hardware qualification.
 | G1 one-C2H/two-ring architecture | `ACCEPTED` | `PLANNED` | Architecture decision accepted; data plane not implemented/qualified |
 | Local R1i-a/R1i-b research candidate commits | `PROVISIONAL` | `IMPLEMENTED_UNQUALIFIED` | Research-only source candidates; no product-baseline authority |
 | G2A | `ACTIVE` | `ACTIVE` | Work in progress; no accepted execution result represented |
-| Application record-to-C2H plane | `PLANNED` | `PLANNED` | Intended for G2B after accepted G2A |
-| Linux/V4L2 product layer | `PLANNED` | `PLANNED` | Direction and goals only |
-| Gen2 training, actual `user_clk`, throughput, final ABI | `OPEN` | `OPEN` | Require later decisions and qualification |
+| G2B-PRE architecture contract | `ACCEPTED` | `FROZEN_FOR_G2B` | `AHD_C2H_TRANSPORT_ABI_V1`, G2B MMIO, and Linux transport-input contract are frozen |
+| Application record-to-C2H plane | `PLANNED` | `READY / NOT_IMPLEMENTED` | Contract-ready for G2B; execution remains gated separately and no RTL is promoted |
+| G2B hardware qualification | `PLANNED` | `NOT_STARTED / NOT_PROVEN` | No G2B bitstream, DMA capture, Gen2 proof, or throughput result exists |
+| Linux/V4L2 product layer | `PLANNED` | `NOT_IMPLEMENTED` | Transport input is frozen; frontend, buffer, identity, and policy work remain later L-track scope |
+| Gen2 training, actual `user_clk`, and throughput | `OPEN` | `NOT_PROVEN` | Require later qualification |
 
 ## Per-card accepted architecture
 
@@ -75,6 +77,11 @@ All behavior through `0x35FF` and the R1i read-only page
 `0x3600–0x367F` is frozen. New DMA pages must be disjoint and must pass
 exhaustive no-alias and response-equivalence validation.
 
+G2B-PRE freezes the new G2B MMIO contract at `0x3800..0x3BFF`. This is an
+accepted interface allocation and semantic contract, not a claim that the
+registers exist in the current build. All protected behavior through
+`0x37FF` remains compatible and unchanged.
+
 ### Capture and record plane
 
 The accepted G1 target has four physical inputs and at most two active logical
@@ -88,10 +95,12 @@ never interleave record beats. Channel-local backpressure fills only that
 channel's ring; overflow drops a whole record and is explicitly counted. A
 shared formatter/link fault affects both channels.
 
-The planned v41D record is 4,096 bytes with approximately 3,840 useful payload
-bytes and explicit logical/physical channel identity. The architecture is
-accepted, but the transport ABI remains `PROVISIONAL` until a later explicit
-interface decision.
+The accepted `AHD_C2H_TRANSPORT_ABI_V1` record is exactly 4,096 bytes: a
+64-byte header, a 3,840-byte payload containing one complete 1,920-active-pixel
+UYVY 4:2:2 line, and 192 bytes of zero padding, with explicit
+logical/physical channel identity. Its interface status is `FROZEN_FOR_G2B`.
+The freeze makes implementation ready; it does not mean the formatter, rings,
+scheduler, or application C2H data plane is implemented or qualified.
 
 ### Application DMA qualification boundary
 
@@ -100,11 +109,14 @@ Current accepted state:
 - PCIe endpoint: `PROVEN`.
 - BAR/MMIO: `PROVEN`.
 - AXI-Lite: `PROVEN`.
+- G2B-PRE transport/MMIO architecture contract: `ACCEPTED` and
+  `FROZEN_FOR_G2B`.
 - Application C2H payload: not accepted.
-- Record-to-AXI-stream plane: `PLANNED` for G2B.
+- Record-to-AXI-stream plane: `READY` for G2B but `NOT_IMPLEMENTED`.
 - One-channel DMA: not yet qualified.
 - Two-channel DMA: not yet qualified.
 - Sustained 288 MB/s: not yet qualified.
+- G2B hardware qualification: `NOT_STARTED` and `NOT_PROVEN`.
 
 Enumeration, driver load, or a nonzero byte count alone is not C2H correctness
 or throughput evidence.
@@ -128,8 +140,9 @@ possible future LitePCIe backend
 Goals are stable `/dev/videoX` presentation, FFmpeg/GStreamer/OpenCV
 compatibility, four logical inputs per card, no more than two `STREAMON`
 instances per card, stable card/input identity, multi-card operation, and a
-future zero-copy/DMABUF path. Every item is `PLANNED`, not current implemented
-product state.
+future zero-copy/DMABUF path. `AHD_C2H_TRANSPORT_ABI_V1` and its Linux consumer
+contract are frozen transport inputs. Every V4L2, identity, multi-card, and
+DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
 
 ## Architectural invariants
 
@@ -141,7 +154,8 @@ product state.
   not restart or gate qualified NVP initialization.
 - Video-to-XDMA payload crosses through proper dual-clock storage and
   descriptor/release CDC; independent synchronizers are not used for payload.
-- Legacy PIO/v40B compatibility and DMA/v41D storage are separate.
+- Legacy PIO/v40B compatibility and DMA `AHD_C2H_TRANSPORT_ABI_V1` storage are
+  separate.
 - One physical PCIe lane has one shared failure/bandwidth domain even when two
   logical video channels are active.
 - Research instrumentation remains until accepted R-track closure and a

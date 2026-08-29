@@ -1,6 +1,6 @@
 # AHD Active Baselines and Working Identities
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 This page distinguishes accepted/frozen baselines from active or provisional
 working branches. Branch existence is provenance; it does not confer
@@ -100,6 +100,24 @@ The observed integration head is a direct child of R1i with subject
 `Integrate qualified R1i with Gen2 x1 for G2A offline build`. Its presence
 does not establish a build result or acceptance. META-0 did not inspect,
 modify, build, or otherwise interfere with the active G2A worktree.
+
+## Accepted G2B-PRE contract baseline
+
+| Field | Current accepted value |
+|---|---|
+| Lifecycle status | `ACCEPTED` |
+| Scope | `ARCHITECTURE_CONTRACT_FREEZE_ONLY` |
+| Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |
+| G2B MMIO contract | `FROZEN`, `0x3800..0x3BFF` |
+| Linux consumer contract | `FROZEN_INPUT_CONTRACT` for transport parsing only |
+| G2B implementation readiness | `READY`; RTL/data plane remains `NOT_IMPLEMENTED` |
+| Hardware qualification | `NOT_STARTED`; G2B hardware remains `NOT_PROVEN` |
+| Evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze` at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+
+This accepted contract baseline does not promote a source branch, bitstream,
+DMA result, Gen2 negotiation result, throughput result, or Linux/V4L2
+implementation. G2A remains `ACTIVE`; implementation execution remains a
+separate later gate.
 
 ## Active research context
 

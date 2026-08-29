@@ -1,13 +1,13 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 1,
+  "project_state_revision": 2,
   "state_type": "CURRENT_TRACK_STATUS",
   "governance_version": 1,
-  "last_update": "2026-08-28",
+  "last_update": "2026-08-29",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-0_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-2_TASK_DIRECTIVE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+  "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
   "product_track": {
     "status": "ACTIVE",
     "last_accepted_gate": "G1",
@@ -48,10 +48,25 @@
         "evidence_directory": null
       },
       {
+        "gate": "G2B-PRE",
+        "status": "ACCEPTED",
+        "scope": "ARCHITECTURE_CONTRACT_FREEZE_ONLY",
+        "engineering_gate": "PASS",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-2_TASK_DIRECTIVE",
+        "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
+        "evidence_directory": "v41-development-g2b-pre-c2h-abi-mmio-freeze"
+      },
+      {
         "gate": "G2B",
         "status": "PLANNED",
         "accepted_by_role": null,
-        "depends_on": "OWNER_ARCHITECT_ACCEPTED_G2A"
+        "depends_on": "OWNER_ARCHITECT_ACCEPTED_G2A",
+        "implementation_readiness": "READY",
+        "readiness_scope": "FROZEN_CONTRACT_INPUT_ONLY",
+        "implementation_state": "NOT_IMPLEMENTED",
+        "hardware_qualification_progress": "NOT_STARTED",
+        "hardware_qualification": "NOT_PROVEN"
       }
     ]
   },
@@ -112,12 +127,13 @@
   },
   "meta_track": {
     "status": "ACCEPTED",
-    "current_task": "META-0",
+    "current_task": "META-2",
     "active_gate": null,
     "next_gate": null,
-    "acceptance_basis": "ACCEPTED_BY_CREATION_TASK",
+    "acceptance_basis": "OWNER_ARCHITECT_ACCEPTED_G2B_PRE_AND_EXPLICIT_META_UPDATE",
     "accepted_by_role": "OWNER_ARCHITECT",
-    "decision_source": "META-0_TASK_DIRECTIVE"
+    "decision_source": "META-2_TASK_DIRECTIVE",
+    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
   },
   "reporting_requirements": {
     "record_project_state_rev_at_start": true,

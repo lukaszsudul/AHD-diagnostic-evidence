@@ -1,6 +1,6 @@
 # AHD Current Development Tracks
 
-`PROJECT_STATE_REV = 1`
+`PROJECT_STATE_REV = 2`
 
 ## Track summary
 
@@ -25,7 +25,13 @@ closure, and throughput.
 - G1: `ACCEPTED` — exact integration architecture and
   `G2_IMPLEMENTATION_ALLOWED` classification.
 - G2A: lifecycle `ACTIVE`; progress `IN_PROGRESS`; not accepted.
-- G2B: `PLANNED` and dependent on accepted G2A.
+- G2B-PRE: `ACCEPTED` — architecture-contract freeze only;
+  `AHD_C2H_TRANSPORT_ABI_V1` is `FROZEN_FOR_G2B`, G2B MMIO is `FROZEN` at
+  `0x3800..0x3BFF`, and the Linux consumer contract is a frozen transport
+  input.
+- G2B implementation: `READY` but `NOT_IMPLEMENTED`; hardware qualification
+  is `NOT_STARTED` and `NOT_PROVEN`. The G2B execution gate remains `PLANNED`
+  and dependent on accepted G2A.
 
 ### Current dependencies
 
@@ -34,7 +40,8 @@ closure, and throughput.
 - frozen Gen2 x1 or better and 288 MB/s/card requirements;
 - effective `user_clk` proof and resource/timing closure;
 - no R-track candidate promotion without a separate decision; and
-- transport ABI remains `PROVISIONAL`.
+- frozen `AHD_C2H_TRANSPORT_ABI_V1` and G2B MMIO contracts must be implemented
+  without semantic changes.
 
 ### Next decision
 
@@ -88,8 +95,9 @@ capture/video layer independent of the PCIe transport backend.
 ### Gate state
 
 - L0: `PLANNED`.
-- No accepted or active Linux gate exists at revision 1.
-- No implementation status is claimed.
+- No accepted or active Linux gate exists at revision 2.
+- The Linux transport consumer input contract is frozen; V4L2 remains
+  `NOT_IMPLEMENTED`.
 
 ### Planned architecture
 
@@ -107,7 +115,8 @@ LitePCIe backend potentially later
 
 ### Current dependencies
 
-- final C2H/record ABI;
+- consume the frozen `AHD_C2H_TRANSPORT_ABI_V1` transport input without
+  redefining it;
 - one-channel and later two-channel DMA qualification;
 - V4L2 pixel-format decision;
 - timestamp architecture;
@@ -128,8 +137,10 @@ auditability.
 
 ### Gate state
 
-META-0 is `ACCEPTED` solely as `ACCEPTED_BY_CREATION_TASK` for revision-1
-governance infrastructure. This does not accept any G2A, R1, or L0 result.
+META-0 remains `ACCEPTED` solely as `ACCEPTED_BY_CREATION_TASK` for the
+historical revision-1 governance infrastructure. META-2 promotes only the
+accepted G2B-PRE interface contract; it does not accept any G2A, R1, L0, G2B
+implementation, or hardware result.
 
 ### Current dependencies
 
@@ -145,6 +156,5 @@ governance infrastructure. This does not accept any G2A, R1, or L0 result.
 
 ### Next decision
 
-No META update is active after revision-1 publication. The next update begins
-only when a separate task satisfies every field in
-`META_UPDATE_TEMPLATE.md`.
+After revision-2 publication, the next update begins only when a separate task
+satisfies every field in `META_UPDATE_TEMPLATE.md`.
