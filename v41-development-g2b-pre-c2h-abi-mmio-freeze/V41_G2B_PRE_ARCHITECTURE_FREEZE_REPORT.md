@@ -278,7 +278,7 @@ ABI consistency: **PASS** (`63/63` automated checks).
 | G2B branch unchanged | PASS |
 | SSOT unchanged | PASS |
 | Vivado/hardware/DMA not run | PASS |
-| Evidence publication/read-back | PENDING |
+| Evidence publication/read-back | PASS |
 
 ## 14. SSOT boundary
 
@@ -296,9 +296,15 @@ Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`
 
 Evidence directory: `v41-development-g2b-pre-c2h-abi-mmio-freeze`
 
-Evidence publication: **PENDING**
+Evidence publication: **PASS**
 
-Remote read-back: **NOT RUN**
+Payload commit: `9fdcca4e3a40b931f07db01ad404b4a3cfc24b10`
+
+Remote read-back: **PASS** — remote `main` resolved to the payload commit and
+its tree matched exactly before this evidence-only closure. The exact final
+closure commit is the remote HEAD containing this report and is supplied by
+the final remote read-back and task response, avoiding impossible Git
+self-reference.
 
 Recommended next step: META update of transport ABI and MMIO, then G2B
 implementation from the unchanged accepted G2A base.

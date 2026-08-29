@@ -77,9 +77,11 @@ does not change the legacy `PROTOCOL=0x0000400B` identity.
 
 ## Publication binding
 
-The first ordinary publication commit contains the sealed payload and the
-required commit subject. A later evidence-only closure may record its remote
-read-back without changing any contract value. The final remote commit and
-read-back result are reported in `G2B_PRE_STATE.json` and the main report as
-far as Git self-reference permits; the final response supplies the exact
-remote HEAD.
+The first ordinary publication commit contains the sealed payload with the
+required commit subject at
+`9fdcca4e3a40b931f07db01ad404b4a3cfc24b10`. Remote `main` and its tree were
+read back and matched that payload exactly. This evidence-only closure records
+that **PASS** result without changing any contract value. The final closure
+commit is the remote HEAD containing `G2B_PRE_STATE.json`; its exact SHA is
+supplied by the final remote read-back and task response, avoiding impossible
+Git self-reference.
