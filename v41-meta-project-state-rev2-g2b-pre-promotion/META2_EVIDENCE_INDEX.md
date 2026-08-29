@@ -11,7 +11,7 @@
 | Prior SSOT revision | `1` |
 | Resulting SSOT revision | `2` |
 | Accepted input commit | `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
-| Publication payload commit | `PENDING_PUBLICATION` |
+| Publication payload commit | `7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b` |
 | Final receipt commit | remote HEAD containing the completed receipt |
 
 ## Files in this package
@@ -48,6 +48,7 @@ All paths below are in
 ## Publication model
 
 The revision-2 SSOT and initial META-2 evidence are published in the payload
-commit using the required commit message. After remote read-back, only the
-META-2 evidence receipt and its package manifest may be updated in an
+commit `7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b` using the required commit
+message. Remote `main` and 24 required file hashes were read back successfully.
+Only this META-2 receipt and its package manifest are updated in the final
 evidence-only closure commit. The SSOT is not rewritten by that receipt.

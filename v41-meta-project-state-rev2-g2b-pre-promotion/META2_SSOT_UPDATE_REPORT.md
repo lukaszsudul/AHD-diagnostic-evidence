@@ -10,8 +10,8 @@ implementation or hardware result.
 | Field | Result |
 |---|---|
 | Engineering gate | `PASS` |
-| Evidence publication | `PENDING_PUBLICATION` |
-| Overall result | `PENDING_PUBLICATION` |
+| Evidence publication | `PASS` |
+| Overall result | `PASS` |
 | `PROJECT_STATE_REV_AT_START` | `1` |
 | `PROJECT_STATE_REV_AT_END` | `2` |
 | SSOT staleness | `NO_IMPACT` — `AUTHORIZED_SELF_UPDATE` |
@@ -189,10 +189,10 @@ G2B implementation started: NO
 | SSOT SHA-256 manifest | `PASS`, 18/18 |
 | Revision-1 changelog prefix preserved byte-for-byte | `PASS`, 2,168 bytes, SHA-256 `72F08C4661E150F46DF252C6D57F192769820ADDCC0D2B8471680C2A01287607` |
 | Source repository final protection check | `PASS`; clean at original HEAD |
-| Publication payload commit | `PENDING_PUBLICATION` |
-| Push without force | `PENDING_PUBLICATION` |
-| Remote HEAD read-back | `PENDING_PUBLICATION` |
-| Remote affected-file byte/hash read-back | `PENDING_PUBLICATION` |
+| Publication payload commit | `7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b` |
+| Push without force | `PASS` |
+| Remote HEAD read-back | `PASS`; remote `main` resolved to the payload commit |
+| Remote affected-file byte/hash read-back | `PASS`, 24/24 paths matched by SHA-256 |
 
 The publication receipt is completed after the non-force payload push and
 remote byte/hash read-back. A final evidence-only receipt commit may record
@@ -206,14 +206,17 @@ RESULTING_PROJECT_STATE_REV: 2
 ACTUAL_AFFECTED_FILES: 16 SSOT files listed above
 CHANGELOG_APPENDED: YES
 MANIFEST_VERIFIED: YES
-PUBLICATION_COMMIT: PENDING_PUBLICATION
-PUSH_WITHOUT_FORCE: PENDING_PUBLICATION
-REMOTE_READBACK: PENDING_PUBLICATION
+PUBLICATION_COMMIT: 7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b
+PUSH_WITHOUT_FORCE: PASS
+REMOTE_READBACK: PASS
 SSOT_STALENESS: NO_IMPACT
 SSOT_STALENESS_REASON: AUTHORIZED_SELF_UPDATE
 ```
 
 Local validation replayed 75 META-2 SSOT invariants with zero failures and
 the accepted package validator with 63/63 checks passing. `git diff --check`
-also passed. The final publication fields remain pending until the ordinary
-non-force push and exact remote read-back complete.
+also passed. The ordinary non-force payload push completed, remote `main`
+resolved to `7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b`, and all 24 required
+remote paths matched their local intended bytes by SHA-256. The final
+evidence-only receipt commit is the remote HEAD containing this completed
+report; it does not modify `project-current-state/`.

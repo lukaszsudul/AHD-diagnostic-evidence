@@ -4,7 +4,7 @@
 
 `LOCAL_SSOT_CONSISTENCY = PASS`
 
-`SSOT_CONSISTENCY = PENDING_REMOTE_READBACK`
+`SSOT_CONSISTENCY = PASS`
 
 This report is finalized from the exact staged revision-2 tree before
 publication and then checked again against remote `main`.
@@ -36,7 +36,7 @@ publication and then checked again against remote `main`.
 | Evidence commit | exact `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` | `PASS` |
 | SSOT manifest | 18/18 non-manifest files, sorted, uppercase SHA-256 | `PASS` |
 | FPGA source repository | unchanged and clean at original HEAD | `PASS` |
-| Remote read-back | remote HEAD and affected hashes match | `PENDING` |
+| Remote read-back | remote HEAD and required hashes match | `PASS`, payload commit `7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b`, 24/24 paths |
 
 ## Historical/provisional-string rule
 
@@ -55,5 +55,9 @@ G2B_PRE_CONTRACT_CHECKS_FAILED: 0
 SSOT_MANIFEST_ENTRIES_VERIFIED: 18
 GIT_DIFF_CHECK: PASS
 LOCAL_RESULT: PASS
-REMOTE_RESULT: PENDING_PUBLICATION
+PUBLICATION_PAYLOAD_COMMIT: 7225dae0464a41aaed8ae007f0cc0cd6b0c2e48b
+PUSH_WITHOUT_FORCE: PASS
+REMOTE_FILES_CHECKED: 24
+REMOTE_READBACK_FAILURES: 0
+REMOTE_RESULT: PASS
 ```
