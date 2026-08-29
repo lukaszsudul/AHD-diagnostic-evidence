@@ -1,18 +1,19 @@
 # AHD Current Status
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 State type: `CURRENT_ACCEPTED_STATE`
 Accepted by role: `OWNER_ARCHITECT`
-Decision basis: historical `META-0_TASK_DIRECTIVE` plus explicit G2B-PRE
-Owner/Architect acceptance for META-2
+Decision basis: historical accepted state plus explicit Owner/Architect
+acceptance of G2B-LUT0 and dual-profile authorization for META-3
 
 ## Acceptance boundary
 
 This page records project truth. Evidence packages report engineering and
 scientific results, but those results do not confer acceptance. G-1, G0, G1,
 and R0 are `ACCEPTED` because the Owner/Architect-approved META-0 input says
-so. G2B-PRE is now `ACCEPTED` only as an architecture-contract freeze. G2A and
-R1 remain `ACTIVE` even if execution evidence later reports `PASS`. L0 remains
+so. G2B-PRE remains `ACCEPTED` as an architecture-contract freeze, and
+G2B-LUT0 is `ACCEPTED` as a resource-architecture review. G2A remains
+`ACTIVE`; the R-track execution state is `HOLD`, not closed. L0 remains
 `PLANNED` and V4L2 remains `NOT_IMPLEMENTED`.
 
 ## Track and gate status
@@ -24,11 +25,15 @@ R1 remain `ACTIVE` even if execution evidence later reports `PASS`. L0 remains
 | Product | G1 | `ACCEPTED` | Integration and C2H architecture accepted; G2 implementation allowed | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
 | Product | G2A | `ACTIVE` | In progress; no accepted result is represented | No G2A package on evidence `main` at revision-1 creation |
 | Product | G2B-PRE | `ACCEPTED` | C2H transport ABI, MMIO contract, and Linux transport-input contract frozen | Accepted evidence at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e`; architecture contract only |
-| Product | G2B implementation | `PLANNED` | `READY` from the frozen contract, but `NOT_IMPLEMENTED` | Hardware qualification `NOT_STARTED` / `NOT_PROVEN`; G2A remains active |
+| Product | G2B-IMPL | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified | No G2B bitstream or hardware result; hardware `NOT_PROVEN` |
+| Product | G2B-LUT0 | `ACCEPTED` | Plan B dual-profile resource architecture accepted | Evidence `PASS` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4`; estimate is not qualification |
+| Product | G2B-LUT1 | `PLANNED` | `READY` to implement reversible profiles | No source implementation has started in META-3 |
 | Research | R0 | `ACCEPTED` | Causal-isolation design accepted | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
-| Research | R1 | `ACTIVE` | In progress; research-only candidates do not alter product truth | No R1 package on evidence `main` at revision-1 creation |
+| Research | R1 | lifecycle `ACTIVE`; execution state `HOLD` | Valid research context; no closure or product promotion | `RESEARCH_DIAGNOSTIC` preserves the diagnostic continuation path |
+| Research | R2/R3 | lifecycle `PLANNED`; state `HOLD` | Resumable later; neither accepted nor complete | `RESEARCH_DIAGNOSTIC` must preserve R2/R3 observability |
 | Linux Video | L0 | `PLANNED` | Planned architecture direction; no implementation status invented | Owner/Architect-planned input; no L0 package on evidence `main` |
 | META | META-0 | `ACCEPTED` | Governance infrastructure accepted by the creation authorization only | `ACCEPTED_BY_CREATION_TASK`; no broader decision inferred |
+| META | META-3 | `ACCEPTED` | Build-profile architecture authorization promoted | SSOT/meta only; no source, build, Vivado, DMA, or hardware action |
 
 ## Accepted product state
 
@@ -44,10 +49,12 @@ R1 remain `ACTIVE` even if execution evidence later reports `PASS`. L0 remains
 | `AHD_C2H_TRANSPORT_ABI_V1` version 1 | `FROZEN` | `FROZEN_FOR_G2B`; 4,096-byte record contract, not an implementation claim |
 | G2B MMIO `0x3800–0x3BFF` | `FROZEN` | Contract frozen; registers are `NOT_IMPLEMENTED` in accepted hardware |
 | Linux transport consumer contract | `FROZEN` | Frozen input contract only; V4L2 architecture/implementation is not promoted |
+| PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; LUT hard gate `<=90%`, preferred `80–85%` |
+| RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; PRODUCT functionality plus resumable research observability |
 | Gen2 x1 implementation target | `FROZEN` | Required final configuration or better; hardware remains `NOT_PROVEN` |
 | Sustained application payload `>= 288 MB/s/card` | `FROZEN` | Requirement remains `NOT_PROVEN` and not yet qualified |
 | Application C2H payload | `PLANNED` | Not yet accepted |
-| Record-to-AXI-stream data plane | `PLANNED` | G2B implementation is `READY` but `NOT_IMPLEMENTED` |
+| Record-to-AXI-stream data plane | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified |
 | One-channel application DMA | `PLANNED` | Not yet qualified |
 | Two-channel application DMA | `PLANNED` | Not yet qualified |
 | Two-card host topology | `PLANNED` | Architectural requirement, not two-card hardware qualification |
@@ -77,9 +84,13 @@ mechanism remains `INCONCLUSIVE`.
   maximum 2 active per card.
 - Sustained application payload: `>= 288 MB/s` per card.
 - Final PCIe requirement: `PCIe Gen2 x1 or better`.
+- PRODUCT routed LUT hard gate: `<= 90%`.
+- Preferred PRODUCT routed LUT target: `80–85%`.
 
 The current Gen1 x1 donor is a proven control-plane donor and is not the final
-throughput configuration.
+throughput configuration. G2B-LUT0 estimates PRODUCT at 17,512 LUT / 84.192%,
+but that value is not measured qualification evidence and the target is not
+marked achieved.
 
 ## Current Linux Video direction
 

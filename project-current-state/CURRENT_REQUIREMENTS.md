@@ -1,6 +1,6 @@
 # AHD Current Requirements
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 This document separates a frozen requirement from its implementation target
 and from actual qualification. A requirement is not evidence that the product
@@ -21,6 +21,8 @@ currently meets it.
 | `REQ-TRANSPORT-ABSTRACTION` | Linux capture core must be transport-independent | `FROZEN` | XDMA first backend; future LitePCIe backend possible | `PLANNED`; final backend API is open |
 | `REQ-CARD-IDENTITY` | Stable card and input identity for multi-card use | `FROZEN` | Persistent mapping independent of enumeration order | Architecture decision remains open |
 | `REQ-STREAM-LIMIT` | Four logical inputs/card, maximum two `STREAMON`/card | `FROZEN` | V4L2 policy enforced per physical card | `PLANNED`, not implemented |
+| `REQ-PRODUCT-LUT-GATE` | Routed PRODUCT LUT utilization `<= 90%` | `FROZEN` | Preferred target band `80–85%` | Not yet measured or achieved; 84.192% is an estimate only |
+| `REQ-BUILD-PROFILES` | Reversible `PRODUCT` and `RESEARCH_DIAGNOSTIC` profiles | `FROZEN` | One functional source architecture with explicit profile selection | `AUTHORIZED_NOT_IMPLEMENTED`; G2B-LUT1 `READY` |
 
 ## Derived host topology
 
@@ -60,9 +62,10 @@ The accepted architecture target and frozen G2B implementation input are:
   `AHD_C2H_TRANSPORT_ABI_V1`.
 
 The architecture decision is accepted and the named transport ABI is
-`FROZEN_FOR_G2B` with lifecycle status `FROZEN`. Application C2H remains
-`NOT_IMPLEMENTED`; one-channel and two-channel DMA qualification has not
-occurred; G2B hardware remains `NOT_PROVEN`.
+`FROZEN_FOR_G2B` with lifecycle status `FROZEN`. No application C2H
+implementation is accepted/offline-qualified; current G2B-IMPL is
+`BLOCKED_RESOURCE_HEADROOM`; one-channel and two-channel DMA qualification has
+not occurred; G2B hardware remains `NOT_PROVEN`.
 
 ## Frozen transport implementation requirements
 
@@ -72,7 +75,7 @@ it does not claim that any data plane or hardware result exists.
 
 | ID | Frozen requirement | Status | Qualification state |
 |---|---|---|---|
-| `REQ-C2H-RECORD` | Every C2H record is exactly 4,096 bytes: 64-byte header, 3,840-byte useful payload, and 192-byte padding | `FROZEN` | G2B implementation `NOT_IMPLEMENTED`; hardware `NOT_PROVEN` |
+| `REQ-C2H-RECORD` | Every C2H record is exactly 4,096 bytes: 64-byte header, 3,840-byte useful payload, and 192-byte padding | `FROZEN` | No accepted/offline-qualified G2B implementation; G2B-IMPL `BLOCKED_RESOURCE_HEADROOM`; hardware `NOT_PROVEN` |
 | `REQ-C2H-PAYLOAD` | Every valid record contains one complete validated 1,920-pixel active line in packed UYVY 4:2:2 byte order `U0,Y0,V0,Y1`; no SAV/EAV, blanking, timestamp, checksum, or descriptor bytes | `FROZEN` | No host DMA or frame-delivery qualification |
 | `REQ-C2H-PADDING` | Record bytes `3904..4095` are formatter-generated zero; stale or unwritten RAM is forbidden; the consumer must validate zero | `FROZEN` | Formatter not implemented or proven |
 | `REQ-C2H-IDENTITY` | Each record carries frozen logical channel, physical input, source frame/line/capture, reset epoch, per-channel attempt, and global stream identities with all reserved container bits zero | `FROZEN` | G2B emits logical 0, physical 0, active count 1; future channel 1 remains unimplemented |
@@ -92,6 +95,45 @@ MMIO contract/map, Linux consumer contract, and 63/63 consistency receipt.
 No requirement above promotes one-channel C2H RTL, one-channel hardware DMA,
 two-channel DMA, `>= 288 MB/s` qualification, V4L2, DMABUF, multi-card Linux
 policy, runtime Gen2 negotiation, a G2B bitstream, or G2B host capture.
+
+## Build-profile requirements
+
+The dual-profile architecture is authorized but not implemented.
+
+### PRODUCT
+
+PRODUCT must retain:
+
+- the complete qualified R1i functional correction, including physical SCL
+  qualification, ACK sampling, required synchronizers, readiness, recovery,
+  initialization, I2C, and bank-safety behavior;
+- minimum production observability: firmware/runtime identity, `INIT_DONE`,
+  `INIT_ERROR`, basic NACK/error status and counters, video-present state,
+  transport status, DMA drop/error counters, reset epoch, and capabilities;
+- XDMA Gen2 configuration and G2B transport; and
+- frozen `AHD_C2H_TRANSPORT_ABI_V1` and MMIO `0x3800..0x3BFF` semantics.
+
+G2B-LUT0-classified research-only tri-phase probing, deep diagnostic
+histories, lifecycle observation, research-only MMIO cones/counters, and other
+heavy observation structures may be excluded from PRODUCT only when their
+removal does not alter functional correctness or any protected interface.
+
+### RESEARCH_DIAGNOSTIC
+
+RESEARCH_DIAGNOSTIC must have the same qualified R1i functional behavior,
+XDMA configuration, product interface semantics, and frozen G2B ABI/MMIO as
+PRODUCT, plus enough R-track observability to resume R2/R3 reproducibly. It is
+not required to meet PRODUCT resource-headroom targets. No current
+post-G2B build or route success is claimed for this profile.
+
+### Cross-profile invariants
+
+Research instrumentation must never be required for functional correctness.
+Profile selection must not change NVP initialization, I2C protocol behavior,
+video capture semantics, C2H transport ABI, externally visible MMIO contract,
+or XDMA configuration. Actual PRODUCT routed LUT utilization and timing must
+be requalified by G2B-LUT1/G2B-IMPL; the `<=90%` gate and preferred `80–85%`
+band are requirements, not achieved results.
 
 ## Linux Video product direction
 
@@ -131,6 +173,7 @@ Every future implementation must preserve, with status `FROZEN`:
 - existing MMIO semantics; and
 - the R1i telemetry page.
 
-Research instrumentation may be reduced only after accepted R-track closure,
-an explicit Owner/Architect reduction decision, and a separate authorized META
-update.
+META-3 authorizes reversible PRODUCT exclusion of research-only
+instrumentation classified by G2B-LUT0. The instrumentation must remain
+recoverable and reproducibly buildable through RESEARCH_DIAGNOSTIC; R-track
+state is `HOLD`, not closed, and no research evidence may be deleted.

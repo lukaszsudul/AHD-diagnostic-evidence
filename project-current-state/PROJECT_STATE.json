@@ -1,14 +1,14 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 2,
+  "project_state_revision": 3,
   "state_type": "CURRENT_ACCEPTED_STATE",
   "governance_version": 1,
   "last_update": "2026-08-29",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-2_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-3_TASK_DIRECTIVE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
-  "expected_previous_project_state_revision": 1,
+  "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
+  "expected_previous_project_state_revision": 2,
   "current_transport_abi_status": "FROZEN_FOR_G2B",
   "lifecycle_status_enum": [
     "ACCEPTED",
@@ -33,13 +33,14 @@
   "tracks": {
     "product": {
       "status": "ACTIVE",
-      "last_accepted_gate": "G1",
+      "last_accepted_gate": "G2B-LUT0",
       "active_gate": "G2A",
-      "next_gate": "G2B",
+      "next_gate": "G2B-LUT1",
       "accepted_gates": [
         "G-1",
         "G0",
-        "G1"
+        "G1",
+        "G2B-LUT0"
       ],
       "accepted_contract_freezes": [
         "G2B-PRE"
@@ -51,12 +52,31 @@
         "decision_source": "META-2_TASK_DIRECTIVE",
         "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e",
         "evidence_directory": "v41-development-g2b-pre-c2h-abi-mmio-freeze"
+      },
+      "g2b_lut0": {
+        "status": "ACCEPTED",
+        "engineering_gate": "PASS",
+        "scope": "RESOURCE_ARCHITECTURE_REVIEW",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-3_TASK_DIRECTIVE",
+        "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
+        "evidence_directory": "v41-development-g2b-lut0-resource-attribution"
+      },
+      "g2b_lut1": {
+        "status": "PLANNED",
+        "readiness": "READY",
+        "implementation_state": "NOT_STARTED",
+        "scope": "REVERSIBLE_PRODUCT_AND_RESEARCH_DIAGNOSTIC_PROFILE_IMPLEMENTATION"
       }
     },
     "research": {
       "status": "ACTIVE",
+      "state": "HOLD",
       "last_accepted_gate": "R0",
       "active_gate": "R1",
+      "r2_state": "HOLD",
+      "r3_state": "HOLD",
+      "closure_state": "NOT_CLOSED",
       "research_candidates": [
         {
           "name": "R1i-a",
@@ -80,9 +100,9 @@
     },
     "meta": {
       "status": "ACCEPTED",
-      "current_task": "META-2",
-      "acceptance_basis": "OWNER_ARCHITECT_ACCEPTED_G2B_PRE_AND_EXPLICIT_META_UPDATE",
-      "decision_source": "META-2_TASK_DIRECTIVE"
+      "current_task": "META-3",
+      "acceptance_basis": "OWNER_ARCHITECT_ACCEPTED_G2B_LUT0_AND_AUTHORIZED_DUAL_BUILD_PROFILES",
+      "decision_source": "META-3_TASK_DIRECTIVE"
     }
   },
   "qualified_fpga_baseline": {
@@ -146,7 +166,7 @@
       "EXISTING_MMIO_SEMANTICS",
       "R1I_TELEMETRY_PAGE"
     ],
-    "research_instrumentation_reduction_condition": "OWNER_ARCHITECT_ACCEPTED_R_TRACK_CLOSURE_AND_SEPARATE_META_UPDATE",
+    "research_instrumentation_reduction_condition": "META_3_AUTHORIZED_REVERSIBLE_PRODUCT_PROFILE_BOUNDARY_WITH_R_TRACK_ON_HOLD",
     "accepted_by_role": "OWNER_ARCHITECT",
     "source_evidence_commit": "b5efb25082d7d18c8e022142e2303fd8a7bc3c6d"
   },
@@ -369,10 +389,11 @@
       "qualification": "NOT_YET_ACCEPTED"
     },
     "record_to_axi_stream_data_plane": {
-      "status": "PLANNED",
-      "target_gate": "G2B",
-      "readiness": "READY",
-      "implementation_state": "NOT_IMPLEMENTED"
+      "status": "BLOCKED",
+      "target_gate": "G2B-LUT1",
+      "readiness": "G2B_LUT1_READY_TO_RESOLVE_BLOCKER",
+      "implementation_state": "BLOCKED_RESOURCE_HEADROOM",
+      "offline_qualification_state": "NOT_ACCEPTED"
     },
     "one_channel_dma": {
       "status": "PLANNED",
@@ -514,10 +535,119 @@
     "authoritative_contract": "v41-development-g2b-pre-c2h-abi-mmio-freeze/V41_C2H_LINUX_CONSUMER_CONTRACT.md",
     "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
   },
-  "g2b_implementation": {
-    "status": "PLANNED",
-    "readiness": "READY",
+  "build_profiles": {
+    "status": "ACCEPTED",
+    "authorization_state": "AUTHORIZED",
     "implementation_state": "NOT_IMPLEMENTED",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-3_TASK_DIRECTIVE",
+    "product": {
+      "status": "PLANNED",
+      "authorization_state": "AUTHORIZED_NOT_IMPLEMENTED",
+      "lut_limit_operator": "<=",
+      "lut_limit_percent": 90,
+      "preferred_lut_range_percent": [
+        80,
+        85
+      ],
+      "estimated_post_plan_b_lut": 17512,
+      "estimated_post_plan_b_lut_percent": 84.192,
+      "estimate_qualification": "ESTIMATE_NOT_QUALIFICATION_EVIDENCE",
+      "required_content": [
+        "FULL_QUALIFIED_R1I_FUNCTIONAL_CORRECTION",
+        "PHYSICAL_SCL_QUALIFICATION",
+        "ACK_SAMPLING_BEHAVIOR",
+        "REQUIRED_SYNCHRONIZERS",
+        "REQUIRED_READINESS_AND_RECOVERY_BEHAVIOR",
+        "MINIMUM_PRODUCTION_NVP_OBSERVABILITY",
+        "FIRMWARE_AND_RUNTIME_IDENTITY",
+        "INIT_DONE",
+        "INIT_ERROR",
+        "BASIC_NACK_STATUS_AND_COUNTERS",
+        "VIDEO_PRESENT_STATUS",
+        "XDMA_GEN2_CONFIGURATION",
+        "G2B_TRANSPORT",
+        "AHD_C2H_TRANSPORT_ABI_V1",
+        "MMIO_0X3800_TO_0X3BFF",
+        "TRANSPORT_STATUS",
+        "DMA_DROP_AND_ERROR_COUNTERS",
+        "RESET_EPOCH",
+        "CAPABILITIES"
+      ],
+      "research_only_content_may_be_excluded": [
+        "POST_INIT_TRI_PHASE_PROBE",
+        "DEEP_DIAGNOSTIC_HISTORIES",
+        "LIFECYCLE_OBSERVER",
+        "RESEARCH_ONLY_MMIO_CONES",
+        "RESEARCH_ONLY_COUNTERS",
+        "RESEARCH_ONLY_OBSERVATION_STRUCTURES",
+        "OTHER_G2B_LUT0_CLASSIFIED_REMOVABLE_R_TRACK_INSTRUMENTATION"
+      ]
+    },
+    "research_diagnostic": {
+      "status": "PLANNED",
+      "authorization_state": "AUTHORIZED_NOT_IMPLEMENTED",
+      "functional_behavior": "IDENTICAL_TO_PRODUCT_QUALIFIED_R1I",
+      "transport_abi_when_g2b_included": "AHD_C2H_TRANSPORT_ABI_V1",
+      "product_interface_semantics": "IDENTICAL_TO_PRODUCT",
+      "additional_research_instrumentation": "AUTHORIZED",
+      "product_resource_headroom_target_applies": false,
+      "reproducibly_buildable_required": true,
+      "current_post_g2b_build_route_qualification": "NOT_PROVEN",
+      "resume_scope": [
+        "R2",
+        "R3"
+      ]
+    },
+    "functional_invariants": [
+      "PRODUCT_AND_RESEARCH_DIAGNOSTIC_HAVE_IDENTICAL_QUALIFIED_R1I_FUNCTIONAL_BEHAVIOR",
+      "RESEARCH_INSTRUMENTATION_IS_NOT_REQUIRED_FOR_FUNCTIONAL_CORRECTNESS",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_NVP_INITIALIZATION_BEHAVIOR",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_I2C_PROTOCOL_BEHAVIOR",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_VIDEO_CAPTURE_SEMANTICS",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_AHD_C2H_TRANSPORT_ABI_V1",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_MMIO_CONTRACT_0X3800_TO_0X3BFF",
+      "PROFILE_REDUCTION_DOES_NOT_CHANGE_XDMA_CONFIGURATION"
+    ],
+    "implementation_authority": {
+      "target_gate": "G2B-LUT1",
+      "readiness": "READY",
+      "mechanism_policy": "SELECT_LEAST_INVASIVE_REVERSIBLE_METHOD_SUPPORTED_BY_REPOSITORY",
+      "permitted_mechanisms": [
+        "VHDL_GENERICS",
+        "TCL_BUILD_DEFINES",
+        "GENERATE_BLOCKS",
+        "SOURCE_SET_OR_PROFILE_SELECTION"
+      ],
+      "selected_mechanism": null,
+      "meta3_source_change_authorized": false
+    },
+    "research_reversibility": {
+      "instrumentation_recoverable_through_research_diagnostic": true,
+      "profile_based_recovery_preferred_over_git_only_reconstruction": true,
+      "research_evidence_deleted": false,
+      "r_track_branch_modified_by_meta3": false
+    },
+    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
+    "evidence_directory": "v41-development-g2b-lut0-resource-attribution"
+  },
+  "g2b_resource_recovery": {
+    "status": "ACCEPTED",
+    "plan_state": "PLAN_ACCEPTED_IMPLEMENTATION_PENDING",
+    "selected_plan": "PLAN_B_PRODUCT_AND_RESEARCH_DIAGNOSTIC",
+    "target_gate": "G2B-LUT1",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-3_TASK_DIRECTIVE",
+    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
+  },
+  "g2b_implementation": {
+    "status": "BLOCKED",
+    "readiness": "G2B_LUT1_READY_TO_RESOLVE_BLOCKER",
+    "implementation_state": "BLOCKED_RESOURCE_HEADROOM",
+    "blocking_reason": "RESOURCE_HEADROOM",
+    "offline_qualification_state": "NOT_ACCEPTED",
+    "decision_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-3_TASK_DIRECTIVE",
     "accepted_g2a_base": {
       "scope": "G2B_PRE_IMPLEMENTATION_INPUT_ONLY",
       "branch": "integration/v41-r1i-gen2-g2a",
@@ -525,10 +655,10 @@
       "tree": "283f98c02e6f9c61716875415cf000682f8ab856",
       "g2a_gate_status_unchanged": "ACTIVE"
     },
-    "one_channel_c2h_rtl": "NOT_IMPLEMENTED",
+    "one_channel_c2h_rtl": "UNPROMOTED_RESOURCE_BLOCKED_EVIDENCE_SNAPSHOT",
     "g2b_bitstream": "NOT_IMPLEMENTED",
     "g2b_host_capture": "NOT_IMPLEMENTED",
-    "source_evidence_commit": "e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e"
+    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
   },
   "g2b_hardware": {
     "status": "PLANNED",
@@ -541,6 +671,8 @@
   },
   "resources": {
     "status": "ACCEPTED",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-3_TASK_DIRECTIVE",
     "qualified_build": "R1i",
     "lut": {
       "used": 18181,
@@ -558,17 +690,42 @@
       "percent": 52
     },
     "diagnostic_research_overhead": "SUBSTANTIAL",
-    "exact_removable_diagnostic_lut_count": "UNKNOWN",
+    "g2a_routed_lut": 18178,
+    "blocked_g2b_post_opt_lut": 21412,
+    "blocked_g2b_post_opt_lut_percent": 102.942,
+    "estimated_research_diagnostic_lut": 3900,
+    "estimated_research_diagnostic_lut_range": [
+      3500,
+      4300
+    ],
+    "estimated_product_post_plan_b_lut": 17512,
+    "estimated_product_post_plan_b_lut_percent": 84.192,
+    "product_lut_hard_gate_percent": 90,
+    "product_lut_hard_gate_operator": "<=",
+    "product_preferred_lut_range_percent": [
+      80,
+      85
+    ],
+    "product_lut_target_achieved": false,
+    "estimate_is_qualification_evidence": false,
     "production_resource_expectation": false,
-    "interpretation": "CURRENT_DIAGNOSTIC_QUALIFIED_BUILD_RESULT_NOT_FINAL_PRODUCTION_REQUIREMENT",
-    "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
+    "interpretation": "G2B_LUT0_ESTIMATE_REQUIRES_G2B_LUT1_OR_G2B_IMPL_POST_ROUTE_REQUALIFICATION",
+    "qualified_r1i_source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd",
+    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
   },
   "diagnostic_reduction": {
-    "status": "PLANNED",
-    "currently_authorized": false,
-    "requires_accepted_r_track_closure": true,
-    "requires_owner_architect_decision": true,
-    "requires_separate_meta_update": true
+    "status": "ACCEPTED",
+    "authorization_state": "AUTHORIZED_FOR_REVERSIBLE_PRODUCT_PROFILE_IMPLEMENTATION",
+    "currently_authorized": true,
+    "implementation_state": "PENDING_G2B_LUT1",
+    "requires_accepted_r_track_closure": false,
+    "requires_owner_architect_decision": false,
+    "requires_separate_meta_update": false,
+    "research_profile_preservation_required": true,
+    "research_evidence_deleted": false,
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-3_TASK_DIRECTIVE",
+    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
   },
   "linux_video": {
     "status": "PLANNED",
@@ -607,11 +764,6 @@
       "status": "OPEN"
     },
     {
-      "id": "OD-03",
-      "topic": "DIAGNOSTIC_REDUCTION",
-      "status": "OPEN"
-    },
-    {
       "id": "OD-04",
       "topic": "ACTUAL_GEN2_TRAINING",
       "status": "OPEN"
@@ -640,6 +792,38 @@
       "id": "OD-10",
       "topic": "LITEPCIE_FUTURE_ROLE",
       "status": "OPEN"
+    },
+    {
+      "id": "OD-11",
+      "topic": "ACTUAL_PRODUCT_POST_ROUTE_LUT_RESULT",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-12",
+      "topic": "ACTUAL_G2B_PROFILE_TIMING_RESULT",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-13",
+      "topic": "ACTUAL_G2B_HARDWARE_RESULT",
+      "status": "OPEN"
+    },
+    {
+      "id": "OD-14",
+      "topic": "R2_R3_SCIENTIFIC_CLOSURE",
+      "status": "OPEN"
+    }
+  ],
+  "decided_decisions": [
+    {
+      "id": "OD-03",
+      "topic": "G2B_RESOURCE_ARCHITECTURE_AND_DIAGNOSTIC_REDUCTION",
+      "status": "ACCEPTED",
+      "decision_state": "DECIDED_IMPLEMENTATION_PENDING",
+      "decision": "USE_PRODUCT_AND_RESEARCH_DIAGNOSTIC_PROFILES_AND_EXCLUDE_RESEARCH_ONLY_INSTRUMENTATION_FROM_PRODUCT_WHILE_PRESERVING_R1I_FUNCTIONALITY",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-3_TASK_DIRECTIVE",
+      "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
     }
   ],
   "governance": {
@@ -791,6 +975,30 @@
         "STMT-OD-06-CLOSURE"
       ],
       "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_CONTRACT_FREEZE_ONLY; NO_IMPLEMENTATION_OR_HARDWARE_QUALIFICATION"
+    },
+    {
+      "id": "EVID-G2B-LUT0",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
+      "payload_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
+      "directory": "v41-development-g2b-lut0-resource-attribution",
+      "files": [
+        "V41_G2B_LUT0_ARCHITECTURE_REVIEW.md",
+        "G2B_LUT0_RTRACK_INSTRUMENTATION_INVENTORY.md",
+        "G2B_LUT0_RECOMMENDED_PLAN.md",
+        "G2B_LUT0_RESOURCE_TARGETS.md",
+        "G2B_LUT0_BUILD_PROFILE_PROPOSAL.md",
+        "G2B_LUT0_STATE.json",
+        "G2B_LUT0_EVIDENCE_INDEX.md"
+      ],
+      "supports": [
+        "STMT-G2B-LUT0",
+        "STMT-BUILD-PROFILES",
+        "STMT-PRODUCT-LUT-POLICY",
+        "STMT-R-TRACK-HOLD",
+        "STMT-OD-03-CLOSURE"
+      ],
+      "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_RESOURCE_ARCHITECTURE_ONLY; PROFILE_IMPLEMENTATION_AND_POST_ROUTE_QUALIFICATION_REMAIN_PENDING; NO_BITSTREAM_OR_HARDWARE_RESULT"
     }
   ]
 }

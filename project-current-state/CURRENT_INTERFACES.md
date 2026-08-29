@@ -1,6 +1,6 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 > `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
@@ -65,7 +65,7 @@ the protected R1i/legacy response path.
 | Logical capture channels | IDs 0 and 1 | `ACCEPTED` | Two-channel hardware not qualified |
 | Physical input IDs | 0 through 3 | `ACCEPTED` | Current evidence proves only the present VDO1 path |
 | Mapping rule | two distinct physical IDs may map to logical 0/1 | `ACCEPTED` | Change only while affected channel disabled and drained |
-| Scheduling | record-boundary work-conserving round-robin | `FROZEN` | No beat interleave; G2B implementation is `NOT_IMPLEMENTED` |
+| Scheduling | record-boundary work-conserving round-robin | `FROZEN` | No beat interleave; no implementation is accepted/offline-qualified and current G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM` |
 | Buffer ownership | private four-record ring per logical channel | `FROZEN` | Exact ownership contract is frozen; implementation and resources are not qualified |
 | Host transport order | one global streamed order plus per-channel attempt order | `FROZEN` | Encoded fields are frozen by `AHD_C2H_TRANSPORT_ABI_V1`; hardware is `NOT_PROVEN` |
 
@@ -88,7 +88,7 @@ transport order.
 | ABI numeric version | `1` |
 | MMIO ABI version | `0x00010000` (`major=1`, `minor=0`) |
 | Record family / version | `v41D` / `0x00004101` |
-| G2B implementation | `NOT_IMPLEMENTED` |
+| Accepted G2B implementation | none; current G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM` and not offline-qualified |
 | G2B hardware | `NOT_PROVEN` |
 | Normative evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
 
@@ -201,8 +201,9 @@ RAM. A consumer validates them as zero and then ignores them.
 
 `MMIO STATUS = FROZEN`
 
-`AHD_V41_G2B_MMIO_V1` is lifecycle `FROZEN` at `0x3800..0x3BFF`, but its
-implementation is `NOT_IMPLEMENTED` and hardware status is `NOT_PROVEN`.
+`AHD_V41_G2B_MMIO_V1` is lifecycle `FROZEN` at `0x3800..0x3BFF`, but no
+implementation is accepted/offline-qualified; current G2B-IMPL is
+`BLOCKED_RESOURCE_HEADROOM` and hardware status is `NOT_PROVEN`.
 The router must claim exactly that range before legacy forwarding. Every
 address through `0x37FF` retains its frozen accepted-base value, side effect,
 byte-enable behavior, ordering, and response latency. `0x3C00..0x3FFF` is not
@@ -255,6 +256,30 @@ This frozen transport input does not freeze or implement a V4L2 frontend,
 final V4L2 pixel format, timestamp architecture, vb2/mmap/DMABUF strategy,
 stable multi-card identity policy, incomplete-frame presentation policy, or
 LitePCIe backend. All remain later L-track/open decisions.
+
+## Build-profile interface boundary
+
+Build-profile selection must not alter any externally visible product
+transport semantic. `PRODUCT` and `RESEARCH_DIAGNOSTIC` differences are
+observability and resource-elaboration differences only.
+
+Both profiles must preserve identical qualified R1i functional behavior,
+XDMA configuration, NVP/I2C behavior, video-capture semantics, product
+identity/capability semantics, legacy response behavior, and product MMIO
+contract. Wherever G2B is included, both use the unchanged
+`AHD_C2H_TRANSPORT_ABI_V1` and unchanged frozen MMIO range
+`0x3800..0x3BFF`, including every defined status/counter/reset/error semantic
+and reserved-zero behavior.
+
+Research instrumentation may never be a prerequisite for a product interface
+value or functional transition. If research-only observation structures are
+not elaborated in PRODUCT, G2B-LUT1 must preserve the externally visible
+contract and deterministic compatibility behavior without aliasing or stale
+data. The source-level mechanism is deliberately not selected by META-3.
+
+Both profiles are `AUTHORIZED_NOT_IMPLEMENTED`. No current
+RESEARCH_DIAGNOSTIC post-G2B build/route, PRODUCT LUT qualification, G2B
+bitstream, or hardware result is claimed.
 
 ## Interface change control
 

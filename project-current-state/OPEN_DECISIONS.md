@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -11,13 +11,27 @@ the SSOT changes, a separate authorized META update.
 |---|---|---|---|---|
 | `OD-01` | Exact R1i causal mechanism | `OPEN` | R1i proves the intervention works but sole-root-cause attribution is `INCONCLUSIVE` | Accepted R1 controlled evidence discriminating physical SCL, ACK sampling, combined effect, and recovery/readiness |
 | `OD-02` | R1i timing margin | `OPEN` | Qualified point behavior is not a complete margin characterization | Triggered margin campaign with controlled timing sweep, failure boundaries, and Owner decision |
-| `OD-03` | Diagnostic reduction | `OPEN` | Substantial overhead exists but exact removable R1i LUT count is `UNKNOWN` | Accepted R-track closure, fanout/behavior proof, A/B resource/functional evidence, ABI review |
 | `OD-04` | Actual Gen2 training | `OPEN` | Gen2 is architecturally allowed but not hardware-qualified | Endpoint/parent capability and negotiated 5.0 GT/s x1 evidence, reset/retrain/AER results |
 | `OD-05` | Actual `user_clk` after Gen2 | `OPEN` | XCI request, metadata, and routed evidence are not fully consistent | Generated/post-route clock proof and later hardware lifecycle/frequency measurement |
 | `OD-07` | Final V4L2 pixel format | `OPEN` | Linux frontend is planned and end-to-end format presentation is not decided | Userspace compatibility analysis and explicit V4L2 format decision |
 | `OD-08` | Timestamp architecture | `OPEN` | Source, DMA, host, monotonic, and cross-card timestamp semantics are undecided | Clock-domain/source definition, wrap/synchronization policy, V4L2 mapping, validation plan |
 | `OD-09` | Persistent card identity | `OPEN` | Enumeration order is not a stable two-card product identity | Hardware identity source and persistent card/input mapping policy |
 | `OD-10` | Future LitePCIe role | `OPEN` | It is only a potential later backend; compatibility and value are unproven | Transport abstraction contract, feature/performance/resource comparison, Owner decision |
+| `OD-11` | Actual PRODUCT post-route LUT result | `OPEN` | 17,512 LUT / 84.192% is only a G2B-LUT0 estimate | Paired G2B-LUT1 post-route utilization proving `<=90%`, preferably `80–85%` |
+| `OD-12` | Actual PRODUCT and RESEARCH_DIAGNOSTIC timing | `OPEN` | No profile implementation or post-route timing result exists | Complete timing/DRC/CDC requalification of both profiles |
+| `OD-13` | Actual G2B hardware result | `OPEN` | No G2B bitstream, DMA capture, or hardware proof exists | Separately authorized hardware qualification after offline acceptance |
+| `OD-14` | R2/R3 scientific closure | `OPEN` | R-track is `HOLD`, not closed | Resume research through RESEARCH_DIAGNOSTIC and obtain explicit scientific closure decision |
+
+## Decided at project-state revision 3 — implementation pending
+
+| ID / question | Decision | Lifecycle status | Decision state | Accepted evidence |
+|---|---|---|---|---|
+| `OD-03` / How can G2B fit safely in XC7A35T? | Use `PRODUCT` + `RESEARCH_DIAGNOSTIC` profiles and remove G2B-LUT0-classified research-only instrumentation from PRODUCT while preserving full qualified R1i functional behavior and all external product semantics | `ACCEPTED` | `DECIDED / IMPLEMENTATION_PENDING` | `v41-development-g2b-lut0-resource-attribution`, commit `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` |
+
+This decision authorizes the architecture and G2B-LUT1 implementation scope;
+it does not select a source mechanism, prove the LUT target, qualify timing,
+produce a bitstream, prove hardware, or close R2/R3. R-track state is `HOLD`,
+not `CLOSED`, `CANCELLED`, or `SUPERSEDED`.
 
 ## Closed at project-state revision 2
 

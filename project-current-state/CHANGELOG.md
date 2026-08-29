@@ -135,3 +135,89 @@ The publication commit, non-force push result, and remote byte/SHA-256
 read-back are required completion data recorded in the META-2 evidence receipt
 under `v41-meta-project-state-rev2-g2b-pre-promotion/`; no not-yet-created
 publication SHA is invented in this changelog entry.
+
+## PROJECT_STATE_REV 3 — 2026-08-29
+
+Status: `ACCEPTED`
+Update type: `ARCHITECTURE_CHANGE`, `REQUIREMENT_CHANGE`, and
+`BLOCKER_CHANGE` with required track/revision bookkeeping
+Authorization: `META-3_TASK_DIRECTIVE`; explicit Owner/Architect build-profile
+decision and authorized META promotion/publication task
+Expected previous revision: `2`
+Actual previous revision: `2`
+Resulting revision: `3`
+Accepted by role: `OWNER_ARCHITECT`
+Applied by role: `META_UPDATE_AGENT`
+
+Reason: G2B-LUT0 accepted; dual PRODUCT / RESEARCH_DIAGNOSTIC build-profile
+architecture authorized to recover resource headroom.
+
+Authoritative accepted evidence:
+
+- Repository: `lukaszsudul/AHD-diagnostic-evidence`.
+- Directory: `v41-development-g2b-lut0-resource-attribution`.
+- Immutable evidence commit:
+  `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4`.
+- Evidence subtree: `05fd1075e0a8deb5082accccb0a88a3f18dfca54`.
+- Engineering result: `PASS`.
+
+Project truth promoted in this revision:
+
+- G2B-LUT0 resource architecture: `ACCEPTED`.
+- R-track execution state: `HOLD`, not closed, cancelled, or superseded; R2/R3
+  scientific closure remains open.
+- PRODUCT profile: `AUTHORIZED_NOT_IMPLEMENTED`.
+- RESEARCH_DIAGNOSTIC profile: `AUTHORIZED_NOT_IMPLEMENTED`, preserving
+  reproducible R-track resumability.
+- PRODUCT routed LUT hard gate: `<= 90%`; preferred target: `80–85%`.
+- G2B-IMPL: lifecycle `BLOCKED`, implementation state
+  `BLOCKED_RESOURCE_HEADROOM`; G2B-LUT1 readiness: `READY`.
+- G2B resource recovery: `PLAN_ACCEPTED_IMPLEMENTATION_PENDING`.
+- R1i functional behavior must be identical across profiles, and research
+  instrumentation may never be required for functional correctness.
+- Profile selection may change only observability/resource elaboration. It
+  must not change NVP initialization, I2C behavior, video-capture semantics,
+  XDMA configuration, `AHD_C2H_TRANSPORT_ABI_V1`, or frozen MMIO
+  `0x3800..0x3BFF` semantics.
+
+Accepted G2B-LUT0 resource evidence records blocked G2B at 21,412 / 20,800 LUT
+(102.942%), G2A at 18,178 / 20,800 LUT, estimated research/diagnostic cost of
+approximately 3,900 LUT (range 3,500–4,300), and an estimated PRODUCT Plan-B
+result of approximately 17,512 LUT (84.192%). These estimates are planning
+inputs, not qualification evidence.
+
+Explicit non-promotions and protection boundary:
+
+- no source profile implementation exists yet;
+- no LUT target has been proven or marked achieved;
+- no accepted offline-qualified G2B implementation exists;
+- no G2B bitstream was produced;
+- no G2B hardware result exists and hardware remains `NOT_PROVEN`;
+- V4L2 remains `NOT_IMPLEMENTED`;
+- no FPGA source, RTL, XCI, XDC, R-track branch, or research evidence was
+  modified or deleted; and
+- no Vivado, DUT, FPGA programming, DMA, or hardware operation was performed.
+
+Affected SSOT files in the revision-3 transaction (`16`):
+
+- `project-current-state/ACTIVE_BASELINES.md`
+- `project-current-state/CHANGELOG.md`
+- `project-current-state/COMPATIBILITY_MATRIX.csv`
+- `project-current-state/CURRENT_ARCHITECTURE.md`
+- `project-current-state/CURRENT_INTERFACES.md`
+- `project-current-state/CURRENT_REQUIREMENTS.md`
+- `project-current-state/CURRENT_RESOURCE_STATE.md`
+- `project-current-state/CURRENT_STATUS.md`
+- `project-current-state/CURRENT_TRACKS.md`
+- `project-current-state/EVIDENCE_MAP.md`
+- `project-current-state/GOVERNANCE.md`
+- `project-current-state/OPEN_DECISIONS.md`
+- `project-current-state/PROJECT_STATE.json`
+- `project-current-state/README.md`
+- `project-current-state/SHA256_MANIFEST.txt`
+- `project-current-state/TRACK_STATUS.json`
+
+The publication commit, non-force push result, and remote byte/SHA-256
+read-back are completion data recorded in the META-3 evidence receipt under
+`v41-meta-project-state-rev3-build-profile-authorization/`; no not-yet-created
+publication SHA is invented in this changelog entry.

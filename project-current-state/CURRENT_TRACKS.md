@@ -1,15 +1,15 @@
 # AHD Current Development Tracks
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 ## Track summary
 
 | Track | Purpose | Last accepted gate | Active gate | Next expected decision point | Track status |
 |---|---|---|---|---|---|
-| G-track | Product FPGA integration, data plane, qualification, and release architecture | G1 | G2A | Owner/Architect decision on G2A evidence; only then may a META update accept it | `ACTIVE` |
-| R-track | Isolate the R1i physical-SCL/ACK/recovery causal mechanism and characterize margin | R0 | R1 | Owner/Architect decision on R1 results; candidates remain research-only until promotion | `ACTIVE` |
+| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | G2B-LUT1 reversible profile implementation and complete offline requalification | `ACTIVE`; G2B-IMPL resource-blocked |
+| R-track | Isolate the R1i physical-SCL/ACK/recovery causal mechanism and characterize margin | R0 | none executing | Resume R2/R3 later through RESEARCH_DIAGNOSTIC | lifecycle `ACTIVE`; execution state `HOLD`, not closed |
 | L-track | Native Linux/V4L2 product integration through a transport abstraction | none | none | Approve/launch L0 with final input assumptions and interfaces | `PLANNED` |
-| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-0 | none after creation | Next explicitly authorized accepted-state change | `ACCEPTED` for META-0 infrastructure only |
+| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-3 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
 
 ## G-track — product development
 
@@ -29,9 +29,12 @@ closure, and throughput.
   `AHD_C2H_TRANSPORT_ABI_V1` is `FROZEN_FOR_G2B`, G2B MMIO is `FROZEN` at
   `0x3800..0x3BFF`, and the Linux consumer contract is a frozen transport
   input.
-- G2B implementation: `READY` but `NOT_IMPLEMENTED`; hardware qualification
-  is `NOT_STARTED` and `NOT_PROVEN`. The G2B execution gate remains `PLANNED`
-  and dependent on accepted G2A.
+- G2B-IMPL: lifecycle `BLOCKED`; implementation state
+  `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified and no bitstream exists.
+- G2B-LUT0: `ACCEPTED` — Plan B resource architecture only.
+- G2B-LUT1: lifecycle `PLANNED`, readiness `READY` — implement reversible
+  PRODUCT and RESEARCH_DIAGNOSTIC profiles without changing functional or
+  external interface semantics.
 
 ### Current dependencies
 
@@ -39,15 +42,17 @@ closure, and throughput.
 - primary XDMA donor identity and G1 inheritance conclusion;
 - frozen Gen2 x1 or better and 288 MB/s/card requirements;
 - effective `user_clk` proof and resource/timing closure;
-- no R-track candidate promotion without a separate decision; and
+- R-track state `HOLD`, with R2/R3 resumability preserved; and
 - frozen `AHD_C2H_TRANSPORT_ABI_V1` and G2B MMIO contracts must be implemented
   without semantic changes.
 
 ### Next decision
 
-A Gate Agent may publish G2A execution evidence. The Owner/Architect must then
-explicitly decide `ACCEPTED`, `REJECTED`, or `BLOCKED`. G2A evidence `PASS`
-alone does not change this track.
+G2B-LUT1 may implement the authorized profiles using the least invasive
+reversible repository-supported mechanism. It must then run complete G2B
+offline requalification. The PRODUCT hard gate is routed LUT `<=90%`, with a
+preferred `80–85%` target; the 84.192% planning estimate is not an achieved
+result.
 
 ## R-track — causal research
 
@@ -59,8 +64,10 @@ preserving the product baseline.
 
 - R0: `ACCEPTED` — causal-isolation design, variants, protocols, outcome
   matrix, and margin trigger.
-- R1: lifecycle `ACTIVE`; progress `IN_PROGRESS`.
+- R1: lifecycle context `ACTIVE`; execution state `HOLD`.
 - R1i-a and R1i-b: `PROVISIONAL` research candidates only.
+- R-track execution state: `HOLD`.
+- R2 and R3: `HOLD`, not accepted, complete, closed, cancelled, or superseded.
 
 ### Current research question
 
@@ -77,15 +84,14 @@ Discriminate among:
 - same-session/controlled comparison discipline;
 - cold-start and init-done timing protocols;
 - explicit outcome matrix and margin trigger;
-- continued diagnostic retention; and
+- reproducible retention through the RESEARCH_DIAGNOSTIC profile; and
 - no change to product truth without Owner/Architect promotion.
 
 ### Next decision
 
-Review R1 evidence and decide whether the mechanism remains open, a research
-result is accepted, more revalidation is required, or a specific finding is
-promoted. Even accepted research does not enter product architecture unless
-the decision explicitly says so and a META update applies it.
+Resume R2/R3 only under separate authority. Research evidence and branch
+identities remain valid; no scientific closure is inferred from the PRODUCT
+profile authorization.
 
 ## L-track — Linux Video / V4L2
 
@@ -95,7 +101,7 @@ capture/video layer independent of the PCIe transport backend.
 ### Gate state
 
 - L0: `PLANNED`.
-- No accepted or active Linux gate exists at revision 2.
+- No accepted or active Linux gate exists at revision 3.
 - The Linux transport consumer input contract is frozen; V4L2 remains
   `NOT_IMPLEMENTED`.
 
@@ -137,10 +143,10 @@ auditability.
 
 ### Gate state
 
-META-0 remains `ACCEPTED` solely as `ACCEPTED_BY_CREATION_TASK` for the
-historical revision-1 governance infrastructure. META-2 promotes only the
-accepted G2B-PRE interface contract; it does not accept any G2A, R1, L0, G2B
-implementation, or hardware result.
+META-0 remains the accepted creation basis. META-2 promoted only the accepted
+G2B-PRE interface contract. META-3 promotes G2B-LUT0 acceptance, R-track
+`HOLD`, and dual-profile architecture authority; it does not implement a
+profile or accept G2B offline qualification, a bitstream, hardware, or V4L2.
 
 ### Current dependencies
 
@@ -156,5 +162,5 @@ implementation, or hardware result.
 
 ### Next decision
 
-After revision-2 publication, the next update begins only when a separate task
+After revision-3 publication, the next update begins only when a separate task
 satisfies every field in `META_UPDATE_TEMPLATE.md`.

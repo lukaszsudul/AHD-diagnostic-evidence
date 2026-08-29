@@ -1,6 +1,6 @@
 # AHD Current Resource State
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 ## Qualified routed result
 
@@ -16,14 +16,23 @@ BRAM corresponds to 10 RAMB18 plus 21 RAMB36, or 26 tile equivalents.
 > final production resource expectation.**
 
 The accepted G2B-PRE contract freeze adds no implementation or routed-resource
-result. G2B implementation is `READY` but `NOT_IMPLEMENTED`; hardware
-qualification is `NOT_STARTED` and `NOT_PROVEN`. The resource table therefore
-remains the qualified R1i result.
+result. G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM`, is not offline-qualified, and
+hardware remains `NOT_PROVEN`. The qualified table above therefore remains the
+R1i result.
 
-The qualified build contains substantial diagnostic/research overhead. The
-exact removable diagnostic LUT count is `UNKNOWN`. The R1i–R1h delta mixes
-functional and diagnostic changes, so it is not a valid removable-resource
-estimate.
+## Accepted G2B-LUT0 resource architecture
+
+| Quantity | Value | Evidence boundary |
+|---|---:|---|
+| Accepted/reference G2A routed LUT | 18,178 / 20,800 | Reference only; mixed-stage comparison warning applies |
+| Blocked G2B post-opt LUT | 21,412 / 20,800 (102.942%) | Resource-blocked evidence snapshot; no bitstream |
+| Estimated research/diagnostic LUT | approximately 3,900 (range 3,500–4,300) | Planning attribution, not a measured removal result |
+| Estimated PRODUCT after Plan B | approximately 17,512 (84.192%) | Estimate only; not qualification evidence |
+
+The exact achieved recovery remains unknown until controlled paired profile
+builds and post-route requalification. The R1i functional fix is separable
+from research instrumentation, but mixed counters still require signal-level
+fanout proof during G2B-LUT1.
 
 ## Accepted interpretation
 
@@ -31,16 +40,27 @@ estimate.
 |---|---|---|
 | Qualified utilization values above | `ACCEPTED` | Exact current routed R1i evidence result |
 | Substantial diagnostic/research overhead exists | `ACCEPTED` | Architecture/resource interpretation accepted at G1 |
-| Exact removable diagnostic LUT count | `OPEN` | `UNKNOWN` until controlled attribution and accepted reduction |
+| Research/diagnostic LUT planning estimate | `ACCEPTED` | Approximately 3,900, range 3,500–4,300; not achieved recovery |
 | Current values as final production requirement | `REJECTED` | No such inference is permitted |
-| Current diagnostic retention | `FROZEN` | No removal is authorized while R-track remains active |
-| Later controlled reduction | `PLANNED` | Conditional on accepted R-track closure and separate decision |
+| PRODUCT profile reduction architecture | `ACCEPTED` | Reversible exclusion of G2B-LUT0-classified research-only instrumentation is authorized |
+| Profile source implementation | `PLANNED` | G2B-LUT1 `READY`; not implemented by META-3 |
+| PRODUCT hard gate achieved | `OPEN` | Must be demonstrated by actual post-route utilization |
 
 Named R1h diagnostic islands totaling 2,337 LUT, 3,086 FF, and nine RAMB18 are
 a non-additive reference only. They do not prove the exact removable amount in
 R1i.
 
-## Resource policy
+## PRODUCT resource policy
+
+Required routed-build gate: LUT utilization `<= 90%` (`<= 18,720 / 20,800`).
+
+Preferred routed PRODUCT target: `80–85%` (`16,640–17,680 LUT`).
+
+The estimated 17,512 LUT / 84.192% point lies inside the preferred band, but
+the estimate is not qualification evidence and the target is not marked
+achieved. G2B-LUT1/G2B-IMPL must measure actual post-route utilization.
+
+## Existing G1 resource policy
 
 The accepted G1 resource policy is `FROZEN`:
 
@@ -84,9 +104,9 @@ Status `FROZEN`:
 - bank verification/invalidation and safety; and
 - product-critical NVP, DMA, drop, reset, and channel-state telemetry.
 
-### Retain while R-track is active
+### Retain in RESEARCH_DIAGNOSTIC
 
-Status `FROZEN` pending accepted research closure:
+Required for reproducible R2/R3 resumability:
 
 - early/qualified/raw comparisons;
 - per-phase and retry-tier detail;
@@ -96,16 +116,17 @@ Status `FROZEN` pending accepted research closure:
 - deep histories and their MMIO read service; and
 - autonomous post-init research campaign support.
 
-### Potential later reduction
+### Authorized PRODUCT exclusion boundary
 
-Status `PLANNED`, not currently authorized:
+Lifecycle `PLANNED`, authorization state `AUTHORIZED_NOT_IMPLEMENTED`:
 
 - research-only probe campaigns and deep histories;
 - research index/failed-record BRAMs; and
 - supporting diagnostic read services that an accepted interface decision
   permits to remove.
 
-No diagnostic address may be silently reused. A reduction requires accepted
-R-track closure, fanout/behavior proof, explicit Owner/Architect approval,
-compatibility review, a controlled A/B evidence gate, and a separate META
-update.
+No diagnostic address may be silently reused. G2B-LUT1 must prove fanout and
+functional equivalence, preserve externally visible MMIO behavior, produce
+paired profile resource/functional evidence, and keep all excluded research
+instrumentation reproducibly recoverable through RESEARCH_DIAGNOSTIC. No
+research evidence is deleted, and R-track closure is not claimed.

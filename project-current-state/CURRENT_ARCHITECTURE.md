@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open
@@ -11,6 +11,7 @@ decisions. Lifecycle status and engineering maturity are independent.
 ```text
 Four physical AHD inputs per card
   → NVP6134C bring-up and selected digital video ingress
+  → explicit PRODUCT or RESEARCH_DIAGNOSTIC observability profile
   → AHD video frontend / BT.656 validation / record production
   → up to two logical capture channels per card
   → two private four-record rings
@@ -41,7 +42,11 @@ two-channel, Gen2, throughput, or Linux hardware qualification.
 | Local R1i-a/R1i-b research candidate commits | `PROVISIONAL` | `IMPLEMENTED_UNQUALIFIED` | Research-only source candidates; no product-baseline authority |
 | G2A | `ACTIVE` | `ACTIVE` | Work in progress; no accepted execution result represented |
 | G2B-PRE architecture contract | `ACCEPTED` | `FROZEN_FOR_G2B` | `AHD_C2H_TRANSPORT_ABI_V1`, G2B MMIO, and Linux transport-input contract are frozen |
-| Application record-to-C2H plane | `PLANNED` | `READY / NOT_IMPLEMENTED` | Contract-ready for G2B; execution remains gated separately and no RTL is promoted |
+| G2B-LUT0 resource architecture | `ACCEPTED` | `PASS / IMPLEMENTATION_PENDING` | Dual-profile Plan B accepted; estimate is not qualification evidence |
+| PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | Qualified R1i behavior, production observability, XDMA Gen2, G2B and frozen ABI/MMIO retained |
+| RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | PRODUCT functional behavior plus reproducible R-track observability for R2/R3 resumability |
+| Application record-to-C2H plane | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM` | Resource-blocked evidence snapshot is not an accepted offline-qualified implementation |
+| G2B-LUT1 | `PLANNED` | `READY / NOT_STARTED` | Authorized to implement the reversible profile boundary using the least invasive supported method |
 | G2B hardware qualification | `PLANNED` | `NOT_STARTED / NOT_PROVEN` | No G2B bitstream, DMA capture, Gen2 proof, or throughput result exists |
 | Linux/V4L2 product layer | `PLANNED` | `NOT_IMPLEMENTED` | Transport input is frozen; frontend, buffer, identity, and policy work remain later L-track scope |
 | Gen2 training, actual `user_clk`, and throughput | `OPEN` | `NOT_PROVEN` | Require later qualification |
@@ -99,8 +104,36 @@ The accepted `AHD_C2H_TRANSPORT_ABI_V1` record is exactly 4,096 bytes: a
 64-byte header, a 3,840-byte payload containing one complete 1,920-active-pixel
 UYVY 4:2:2 line, and 192 bytes of zero padding, with explicit
 logical/physical channel identity. Its interface status is `FROZEN_FOR_G2B`.
-The freeze makes implementation ready; it does not mean the formatter, rings,
-scheduler, or application C2H data plane is implemented or qualified.
+The freeze makes the interface contract implementation-ready; the complete
+G2B implementation remains resource-blocked and not offline-qualified. It
+does not mean the formatter, rings, scheduler, or application C2H data plane
+is accepted or hardware-qualified.
+
+### Build-profile boundary
+
+`PRODUCT` and `RESEARCH_DIAGNOSTIC` are two elaborations of one functional
+product architecture. Both must have identical qualified R1i functional
+behavior, XDMA configuration, video-capture semantics, frozen transport ABI,
+and externally visible MMIO contract. Research instrumentation is never a
+functional dependency.
+
+`PRODUCT` retains the full qualified R1i correction, physical SCL and ACK
+behavior, required synchronizers/readiness/recovery, minimum production NVP
+and video observability, runtime identity, XDMA Gen2 configuration, G2B
+transport/status/counters/reset epoch/capabilities, and the frozen
+`AHD_C2H_TRANSPORT_ABI_V1` / `0x3800..0x3BFF` interface. G2B-LUT0-classified
+research-only probes, deep histories, lifecycle observers, counters, MMIO
+cones, and observation structures may be absent only when their removal
+cannot alter any functional or externally visible product semantic.
+
+`RESEARCH_DIAGNOSTIC` is PRODUCT functional behavior plus the observability
+needed to resume R2/R3. It may exceed PRODUCT resource targets, but it must
+remain reproducibly buildable. No claim is made that the research profile
+currently builds or routes after G2B.
+
+G2B-LUT1 may select a reversible repository-supported mechanism such as
+generics, Tcl profile selection/defines, generate blocks, or source sets. The
+implementation agent, not META-3, must choose the least invasive method.
 
 ### Application DMA qualification boundary
 
@@ -112,7 +145,9 @@ Current accepted state:
 - G2B-PRE transport/MMIO architecture contract: `ACCEPTED` and
   `FROZEN_FOR_G2B`.
 - Application C2H payload: not accepted.
-- Record-to-AXI-stream plane: `READY` for G2B but `NOT_IMPLEMENTED`.
+- Record-to-AXI-stream/G2B implementation: `BLOCKED_RESOURCE_HEADROOM` and
+  not offline-qualified.
+- G2B-LUT1 profile implementation gate: `READY`, not started.
 - One-channel DMA: not yet qualified.
 - Two-channel DMA: not yet qualified.
 - Sustained 288 MB/s: not yet qualified.
@@ -146,8 +181,13 @@ DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
 
 ## Architectural invariants
 
-- R-track candidates never enter the product baseline without a separate
-  Owner/Architect decision and META update.
+- R-track state is `HOLD`, not closed; research work remains valid and
+  resumable through `RESEARCH_DIAGNOSTIC`.
+- PRODUCT and RESEARCH_DIAGNOSTIC have identical qualified R1i functional
+  behavior; research instrumentation is never required for correctness.
+- Removing research instrumentation from PRODUCT must not change NVP
+  initialization, I2C protocol behavior, video capture semantics,
+  `AHD_C2H_TRANSPORT_ABI_V1`, MMIO contracts, or XDMA configuration.
 - NVP autoinit must not become dependent on PCIe link state or application
   stream reset.
 - PCIe/reset events may reset or flush the application stream plane but must
@@ -158,5 +198,6 @@ DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
   separate.
 - One physical PCIe lane has one shared failure/bandwidth domain even when two
   logical video channels are active.
-- Research instrumentation remains until accepted R-track closure and a
-  separate diagnostic-reduction decision.
+- Research instrumentation excluded from PRODUCT remains recoverable through
+  the reproducible RESEARCH_DIAGNOSTIC profile; evidence and R-track branches
+  are not deleted or modified by META-3.

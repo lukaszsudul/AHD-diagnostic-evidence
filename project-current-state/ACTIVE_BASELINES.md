@@ -1,6 +1,6 @@
 # AHD Active Baselines and Working Identities
 
-`PROJECT_STATE_REV = 2`
+`PROJECT_STATE_REV = 3`
 
 This page distinguishes accepted/frozen baselines from active or provisional
 working branches. Branch existence is provenance; it does not confer
@@ -101,7 +101,7 @@ The observed integration head is a direct child of R1i with subject
 does not establish a build result or acceptance. META-0 did not inspect,
 modify, build, or otherwise interfere with the active G2A worktree.
 
-## Accepted G2B-PRE contract baseline
+## Accepted G2B contract and resource-architecture baselines
 
 | Field | Current accepted value |
 |---|---|
@@ -110,16 +110,28 @@ modify, build, or otherwise interfere with the active G2A worktree.
 | Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |
 | G2B MMIO contract | `FROZEN`, `0x3800..0x3BFF` |
 | Linux consumer contract | `FROZEN_INPUT_CONTRACT` for transport parsing only |
-| G2B implementation readiness | `READY`; RTL/data plane remains `NOT_IMPLEMENTED` |
+| G2B-PRE contract-input readiness | `READY`; this is historical interface readiness, not current G2B-IMPL readiness |
 | Hardware qualification | `NOT_STARTED`; G2B hardware remains `NOT_PROVEN` |
 | Evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze` at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
+| G2B-LUT0 | `ACCEPTED`; resource-architecture review only |
+| Build profiles | `PRODUCT` and `RESEARCH_DIAGNOSTIC`, both `AUTHORIZED_NOT_IMPLEMENTED` |
+| PRODUCT resource policy | LUT hard gate `<= 90%`; preferred target `80–85%`; estimated 84.192% is not qualification evidence |
+| G2B-IMPL | `BLOCKED_RESOURCE_HEADROOM`; no accepted offline-qualified implementation |
+| G2B-LUT1 | `READY` to implement a reversible profile boundary |
+| Resource evidence | `v41-development-g2b-lut0-resource-attribution` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` |
 
-This accepted contract baseline does not promote a source branch, bitstream,
-DMA result, Gen2 negotiation result, throughput result, or Linux/V4L2
-implementation. G2A remains `ACTIVE`; implementation execution remains a
-separate later gate.
+These accepted architecture baselines do not promote a source branch,
+profile implementation, bitstream, DMA result, Gen2 negotiation result,
+throughput result, or Linux/V4L2 implementation. The 17,512 LUT / 84.192%
+PRODUCT estimate remains unmeasured. G2A remains `ACTIVE`; G2B-LUT1 is the
+separate implementation gate authorized to resolve the resource blocker.
 
-## Active research context
+## Held research context
+
+The R-track execution state is `HOLD`, not closed, cancelled, or superseded.
+The branch identities below are unchanged historical working identities; this
+META task does not move or modify them. R2/R3 resumability must be preserved by
+the `RESEARCH_DIAGNOSTIC` profile.
 
 | Branch / work context | HEAD at META-0 audit | Status | Authority boundary |
 |---|---|---|---|

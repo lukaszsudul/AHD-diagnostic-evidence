@@ -12,14 +12,14 @@ identifies the exact evidence that supports each statement.
 | Field | Value |
 |---|---|
 | Project | `AHD_v41` |
-| `PROJECT_STATE_REV` | `2` |
+| `PROJECT_STATE_REV` | `3` |
 | Governance version | `1` |
 | State type | `CURRENT_ACCEPTED_STATE` |
 | Last update | `2026-08-29` |
 | Acceptance authority | `OWNER_ARCHITECT` |
 | SSOT writer | `META_UPDATE_AGENT_ONLY` |
 | Creation authorization | `META-0_TASK_DIRECTIVE` / `SSOT WRITE AUTHORIZED` |
-| Revision-2 decision basis | Accepted G2B-PRE architecture-contract freeze |
+| Revision-3 decision basis | Accepted G2B-LUT0 resource architecture; dual build profiles authorized |
 
 ## Mandatory read before any work
 
@@ -41,23 +41,26 @@ At the end of the task, the agent must read the revision again, record
 
 | Area | Current project truth |
 |---|---|
-| Product | G-1 `ACCEPTED`; G0 `ACCEPTED`; G1 `ACCEPTED`; G2A `ACTIVE`; G2B-PRE `ACCEPTED` |
-| Research | R0 `ACCEPTED`; R1 `ACTIVE` |
+| Product | G2B-PRE and G2B-LUT0 `ACCEPTED`; G2B-IMPL `BLOCKED` by resource headroom; G2B-LUT1 `READY` |
+| Research | R-track state `HOLD`, not closed; R2/R3 remain resumable |
 | Linux Video | L0 `PLANNED` |
-| META | META-0 governance infrastructure retained; META-2 promotes only the accepted G2B-PRE contract |
+| META | META-3 authorizes reversible `PRODUCT` and `RESEARCH_DIAGNOSTIC` profiles; no source implementation |
 | Qualified FPGA baseline | R1i `ACCEPTED`; preservation identity `FROZEN` |
 | PCIe product requirement | Gen2 x1 or better; sustained payload `>= 288 MB/s` per card |
 | Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |
 | G2B MMIO | `FROZEN`, `0x3800..0x3BFF` |
-| G2B implementation | `READY`, but `NOT_IMPLEMENTED` |
+| Build profiles | `PRODUCT` and `RESEARCH_DIAGNOSTIC`: `AUTHORIZED_NOT_IMPLEMENTED` |
+| PRODUCT LUT policy | hard gate `<= 90%`; preferred target `80–85%`; target not yet measured or achieved |
+| G2B implementation | `BLOCKED_RESOURCE_HEADROOM`; G2B-LUT1 is `READY` to implement the authorized profiles |
 | G2B hardware qualification | `NOT_STARTED`; `NOT_PROVEN` |
 | Linux consumer contract | Frozen transport input; V4L2 remains `NOT_IMPLEMENTED` |
 
-G2A and R1 remain active, and L0 remains planned. G2B-PRE acceptance freezes
-interfaces only; it does not promote RTL, DMA, Gen2 negotiation, 288 MB/s
-throughput, hardware capture, or V4L2 implementation; Gen2 negotiation and the
-288 MB/s target remain `NOT_PROVEN`. No execution `PASS`, `THESIS_CONFIRMED`,
-or `BUILD_COMPLETE` result modifies this snapshot by itself.
+G2B-LUT0 acceptance promotes the resource-architecture decision only. The
+estimated `PRODUCT` result of 17,512 LUT (84.192%) is not qualification
+evidence and does not satisfy the hard gate until G2B-LUT1/G2B-IMPL produces a
+post-route result. No profile source implementation, G2B bitstream, hardware
+capture, V4L2 implementation, Gen2 qualification, or 288 MB/s result is
+claimed. The R-track is on `HOLD`, not closed, cancelled, or superseded.
 
 ## Truth model
 
