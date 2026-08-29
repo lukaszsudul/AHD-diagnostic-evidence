@@ -1,0 +1,139 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sat Aug 29 16:07:45 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -hierarchical_depth 20 -file C:/FPGA/G2B_BUILD_EVIDENCE_20260829_PRECOMMIT_02/POST_OPT_UTILIZATION_HIER.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : Optimized
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++--------------------------------------------------------------------------------------+------------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|                                       Instance                                       |                     Module                     | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++--------------------------------------------------------------------------------------+------------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| ahd_capture_top_xdma                                                                 |                                          (top) |      21412 |      20140 |    1226 |   46 | 23643 |     24 |     12 |          0 |
+|   (ahd_capture_top_xdma)                                                             |                                          (top) |         26 |         26 |       0 |    0 |   671 |      0 |      0 |          0 |
+|   (G2B_ONECH_C2H)                                                                    |                              v41_g2b_onech_c2h |       1990 |       1946 |      44 |    0 |  2908 |      0 |      0 |          0 |
+|   (R1F_FAILED_TXN_LOGGER)                                                            |                      v41_r1f_failed_txn_logger |        106 |        106 |       0 |    0 |    81 |      0 |      0 |          0 |
+|   AXI_LITE_HOST_BRIDGE                                                               |                       v41_axi_lite_host_bridge |       2164 |       2164 |       0 |    0 |   110 |      0 |      0 |          0 |
+|   CAPTURE_SUBSYSTEM                                                                  |                       g0p8c2_capture_subsystem |       1157 |       1157 |       0 |    0 |  2561 |      2 |      0 |          0 |
+|     (CAPTURE_SUBSYSTEM)                                                              |                       g0p8c2_capture_subsystem |         94 |         94 |       0 |    0 |   322 |      0 |      0 |          0 |
+|     (BAR_TARGET)                                                                     |                              g0p8c2_bar_target |        148 |        148 |       0 |    0 |   259 |      0 |      0 |          0 |
+|     MAILBOX                                                                          |                         g0p8c2_capture_mailbox |        226 |        226 |       0 |    0 |   809 |      0 |      0 |          0 |
+|     PRODUCER                                                                         |                     g0p8c2_bt656_slot_producer |        687 |        687 |       0 |    0 |  1159 |      0 |      0 |          0 |
+|   CONTROL_STATUS_REGS                                                                |                        v41_control_status_regs |          1 |          1 |       0 |    0 |    65 |      0 |      0 |          0 |
+|   LIFECYCLE_MONITOR                                                                  |                v41_axi_clock_lifecycle_monitor |         89 |         89 |       0 |    0 |   311 |      0 |      0 |          0 |
+|   NVP_AUTOINIT                                                                       |                              v40a_nvp_autoinit |       3135 |       3135 |       0 |    0 |  2247 |      0 |      0 |          0 |
+|     u_sequence                                                                       |                      nvp_i2c_bringup_seq_v38ek |       3101 |       3101 |       0 |    0 |  2216 |      0 |      0 |          0 |
+|       (u_sequence)                                                                   |                      nvp_i2c_bringup_seq_v38ek |       3046 |       3046 |       0 |    0 |  2183 |      0 |      0 |          0 |
+|       R1F_TRANSACTION_SERIAL                                                         |                 r1f_transaction_serial_counter |         55 |         55 |       0 |    0 |    33 |      0 |      0 |          0 |
+|   POST_INIT_TRI_PHASE_PROBE                                                          |                        nvp_i2c_tri_phase_probe |       2092 |       2092 |       0 |    0 |  2934 |      0 |      3 |          0 |
+|     (POST_INIT_TRI_PHASE_PROBE)                                                      |                        nvp_i2c_tri_phase_probe |       2067 |       2067 |       0 |    0 |  2931 |      0 |      0 |          0 |
+|   R1H_MMIO_READ_SERVICE                                                              |                      v41_r1h_mmio_read_service |        103 |        103 |       0 |    0 |    71 |      0 |      0 |          0 |
+|   XDMA                                                                               |                                    xdma_v41_m1 |      10526 |       9298 |    1182 |   46 | 11664 |     18 |      3 |          0 |
+|     inst                                                                             |                           xdma_v41_m1_core_top |      10526 |       9298 |    1182 |   46 | 11664 |     18 |      3 |          0 |
+|       xdma_v41_m1_pcie2_to_pcie3_wrapper_i                                           |             xdma_v41_m1_pcie2_to_pcie3_wrapper |       1401 |       1335 |      52 |   14 |  1820 |      9 |      1 |          0 |
+|         xdma_v41_m1_axi_stream_intf_i                                                |                    xdma_v41_m1_axi_stream_intf |        951 |        898 |      52 |    1 |  1036 |      1 |      1 |          0 |
+|           xdma_v41_m1_dma_cpl_i                                                      |                            xdma_v41_m1_dma_cpl |        155 |        155 |       0 |    0 |   138 |      0 |      0 |          0 |
+|           xdma_v41_m1_dma_req_i                                                      |                            xdma_v41_m1_dma_req |        277 |        277 |       0 |    0 |   176 |      0 |      0 |          0 |
+|           xdma_v41_m1_rx_demux_i                                                     |                           xdma_v41_m1_rx_demux |        183 |        130 |      52 |    1 |   455 |      1 |      1 |          0 |
+|             (xdma_v41_m1_rx_demux_i)                                                 |                           xdma_v41_m1_rx_demux |         51 |         51 |       0 |    0 |   160 |      0 |      0 |          0 |
+|             dma_cpl_fifo_inst                                                        |                   pcie2_fifo_generator_dma_cpl |         45 |         44 |       0 |    1 |   118 |      1 |      1 |          0 |
+|               U0                                                                     |                        fifo_generator_v13_2_14 |         45 |         44 |       0 |    1 |   118 |      1 |      1 |          0 |
+|                 inst_fifo_gen                                                        |                  fifo_generator_v13_2_14_synth |         45 |         44 |       0 |    1 |   118 |      1 |      1 |          0 |
+|                   gaxis_fifo.gaxisf.axisf                                            |                             fifo_generator_top |         45 |         44 |       0 |    1 |   118 |      1 |      1 |          0 |
+|                     grf.rf                                                           |                         fifo_generator_ramfifo |         45 |         44 |       0 |    1 |   118 |      1 |      1 |          0 |
+|                       (gntv_or_sync_fifo.mem)                                        |                                         memory |          0 |          0 |       0 |    0 |    65 |      0 |      0 |          0 |
+|             tgt_brdg_fifo_inst                                                       |                  pcie2_fifo_generator_tgt_brdg |         87 |         35 |      52 |    0 |   177 |      0 |      0 |          0 |
+|               U0                                                                     |        fifo_generator_v13_2_14__parameterized1 |         87 |         35 |      52 |    0 |   177 |      0 |      0 |          0 |
+|                 inst_fifo_gen                                                        |  fifo_generator_v13_2_14_synth__parameterized0 |         87 |         35 |      52 |    0 |   177 |      0 |      0 |          0 |
+|                   gaxis_fifo.gaxisf.axisf                                            |             fifo_generator_top__parameterized0 |         87 |         35 |      52 |    0 |   177 |      0 |      0 |          0 |
+|                     grf.rf                                                           |         fifo_generator_ramfifo__parameterized0 |         87 |         35 |      52 |    0 |   177 |      0 |      0 |          0 |
+|                       gntv_or_sync_fifo.mem                                          |                         memory__parameterized0 |         52 |          0 |      52 |    0 |   140 |      0 |      0 |          0 |
+|                         (gntv_or_sync_fifo.mem)                                      |                         memory__parameterized0 |          0 |          0 |       0 |    0 |    70 |      0 |      0 |          0 |
+|                         gdm.dm_gen.dm                                                |                                           dmem |         52 |          0 |      52 |    0 |    70 |      0 |      0 |          0 |
+|           xdma_v41_m1_tgt_cpl_i                                                      |                            xdma_v41_m1_tgt_cpl |        124 |        124 |       0 |    0 |    94 |      0 |      0 |          0 |
+|           xdma_v41_m1_tgt_req_i                                                      |                            xdma_v41_m1_tgt_req |        208 |        208 |       0 |    0 |   104 |      0 |      0 |          0 |
+|           xdma_v41_m1_tx_mux_i                                                       |                             xdma_v41_m1_tx_mux |          4 |          4 |       0 |    0 |    69 |      0 |      0 |          0 |
+|         pcie2_ip_i                                                                   |                           xdma_v41_m1_pcie2_ip |        406 |        393 |       0 |   13 |   775 |      8 |      0 |          0 |
+|           inst                                                                       |                 xdma_v41_m1_pcie2_ip_pcie2_top |        406 |        393 |       0 |   13 |   775 |      8 |      0 |          0 |
+|             inst                                                                     |                  xdma_v41_m1_pcie2_ip_core_top |        406 |        393 |       0 |   13 |   775 |      8 |      0 |          0 |
+|               pcie_top_i                                                             |                  xdma_v41_m1_pcie2_ip_pcie_top |        125 |        125 |       0 |    0 |   342 |      8 |      0 |          0 |
+|                 pcie_pipe_pipeline_i                                                 |        xdma_v41_m1_pcie2_ip_pcie_pipe_pipeline |          0 |          0 |       0 |    0 |    54 |      0 |      0 |          0 |
+|                 axi_basic_top                                                        |             xdma_v41_m1_pcie2_ip_axi_basic_top |        111 |        111 |       0 |    0 |   272 |      0 |      0 |          0 |
+|                   rx_inst                                                            |              xdma_v41_m1_pcie2_ip_axi_basic_rx |         91 |         91 |       0 |    0 |   177 |      0 |      0 |          0 |
+|                     rx_pipeline_inst                                                 |     xdma_v41_m1_pcie2_ip_axi_basic_rx_pipeline |         62 |         62 |       0 |    0 |   164 |      0 |      0 |          0 |
+|                   tx_inst                                                            |              xdma_v41_m1_pcie2_ip_axi_basic_tx |         20 |         20 |       0 |    0 |    95 |      0 |      0 |          0 |
+|                     tx_pipeline_inst                                                 |     xdma_v41_m1_pcie2_ip_axi_basic_tx_pipeline |          3 |          3 |       0 |    0 |    71 |      0 |      0 |          0 |
+|               gt_top_i                                                               |                    xdma_v41_m1_pcie2_ip_gt_top |        271 |        264 |       0 |    7 |   418 |      0 |      0 |          0 |
+|                 pipe_wrapper_i                                                       |              xdma_v41_m1_pcie2_ip_pipe_wrapper |        254 |        247 |       0 |    7 |   380 |      0 |      0 |          0 |
+|                   pipe_lane[0].pipe_user_i                                           |                 xdma_v41_m1_pcie2_ip_pipe_user |         36 |         36 |       0 |    0 |    51 |      0 |      0 |          0 |
+|                   pipe_lane[0].gtp_pipe_drp.gtp_pipe_drp_i                           |              xdma_v41_m1_pcie2_ip_gtp_pipe_drp |         24 |         24 |       0 |    0 |    63 |      0 |      0 |          0 |
+|                   pipe_lane[0].pipe_eq.pipe_eq_i                                     |                   xdma_v41_m1_pcie2_ip_pipe_eq |         81 |         81 |       0 |    0 |    66 |      0 |      0 |          0 |
+|                   pipe_lane[0].pipe_quad.gt_common_enabled.gt_common_int.gt_common_i |                 xdma_v41_m1_pcie2_ip_gt_common |         48 |         41 |       0 |    7 |    80 |      0 |      0 |          0 |
+|                     qpll_drp_i                                                       |                  xdma_v41_m1_pcie2_ip_qpll_drp |         41 |         41 |       0 |    0 |    78 |      0 |      0 |          0 |
+|       udma_wrapper                                                                   |                       xdma_v4_2_2_udma_wrapper |       9121 |       7959 |    1130 |   32 |  9840 |      5 |      0 |          0 |
+|         dma_top                                                                      |                           xdma_v4_2_2_udma_top |       9121 |       7959 |    1130 |   32 |  9807 |      5 |      0 |          0 |
+|           (dma_top)                                                                  |                           xdma_v4_2_2_udma_top |        198 |          4 |     194 |    0 |    14 |      0 |      0 |          0 |
+|           axi4mm_bridge_top_inst                                                     |                  xdma_v4_2_2_axi4mm_bridge_top |        806 |        730 |      76 |    0 |   833 |      0 |      0 |          0 |
+|             axi4mm_axi_mm_master_top_inst                                            |      xdma_v4_2_2_axi4mm_axi_mm_master_top_br_v |        744 |        668 |      76 |    0 |   777 |      0 |      0 |          0 |
+|               axi4mm_axi_str_masterbridge_wrrd_inst                                  |         xdma_v4_2_2_axi_str_masterbr_wrrd_br_v |         80 |         80 |       0 |    0 |   143 |      0 |      0 |          0 |
+|               axi4mm_axi_mm_master_rd                                                |              xdma_v4_2_2_axi_mm_master_rd_br_v |        217 |        191 |      26 |    0 |   209 |      0 |      0 |          0 |
+|               axi4mm_axi_mm_master_wr_inst                                           |              xdma_v4_2_2_axi_mm_master_wr_br_v |        160 |        118 |      42 |    0 |   111 |      0 |      0 |          0 |
+|               axi4mm_axi_str_masterbr_rdtlp_inst                                     |        xdma_v4_2_2_axi_str_masterbr_rdtlp_br_v |        275 |        267 |       8 |    0 |   300 |      0 |      0 |          0 |
+|             axi4mm_axi_mm_master_top_soft_dma_inst                                   |      xdma_v4_2_2_axi4mm_axi_mm_master_top_soft |         62 |         62 |       0 |    0 |    56 |      0 |      0 |          0 |
+|           base                                                                       |                           xdma_v4_2_2_dma_base |        651 |        579 |      72 |    0 |  1147 |      1 |      0 |          0 |
+|             CFG_INST                                                                 |                            xdma_v4_2_2_vul_cfg |         90 |         90 |       0 |    0 |   365 |      0 |      0 |          0 |
+|             IRQ_INST                                                                 |                            xdma_v4_2_2_vul_irq |        399 |        399 |       0 |    0 |   565 |      1 |      0 |          0 |
+|               (IRQ_INST)                                                             |                            xdma_v4_2_2_vul_irq |        166 |        166 |       0 |    0 |   286 |      0 |      0 |          0 |
+|               msix_internal_xdma.pf0_msix_table                                      |                          xdma_v4_2_2_udma_msix |        221 |        221 |       0 |    0 |   269 |      1 |      0 |          0 |
+|             TAR_BRDG                                                                 |                            xdma_v4_2_2_vul_tar |         32 |         32 |       0 |    0 |   135 |      0 |      0 |          0 |
+|             cq_axilt_slv                                                             |                      xdma_v4_2_2_dma_axilt_slv |         83 |         47 |      36 |    0 |    63 |      0 |      0 |          0 |
+|           dma_enable.axist.dma_axist                                                 |                          xdma_v4_2_2_dma_axist |        282 |        282 |       0 |    0 |   239 |      0 |      0 |          0 |
+|             axist_c2h[0].dma_axist_slv                                               |                      xdma_v4_2_2_dma_axist_slv |        171 |        171 |       0 |    0 |   161 |      0 |      0 |          0 |
+|             axist_h2c[0].dma_axist_mst                                               |                      xdma_v4_2_2_dma_axist_mst |        111 |        111 |       0 |    0 |    78 |      0 |      0 |          0 |
+|               (axist_h2c[0].dma_axist_mst)                                           |                      xdma_v4_2_2_dma_axist_mst |         79 |         79 |       0 |    0 |    62 |      0 |      0 |          0 |
+|           dma_enable.vul_dma                                                         |                            xdma_v4_2_2_vul_top |       5000 |       4426 |     542 |   32 |  4942 |      2 |      0 |          0 |
+|             dsc_eng.DSC                                                              |                        xdma_v4_2_2_vul_dsc_eng |       1242 |       1182 |      60 |    0 |  1375 |      0 |      0 |          0 |
+|               (dsc_eng.DSC)                                                          |                        xdma_v4_2_2_vul_dsc_eng |       1128 |       1128 |       0 |    0 |  1281 |      0 |      0 |          0 |
+|               RRQ_FIFO                                                               |    xdma_v4_2_2_GenericFIFOHead__parameterized0 |        114 |         54 |      60 |    0 |    94 |      0 |      0 |          0 |
+|             RD                                                                       |           xdma_v4_2_2_vul_rdwr__parameterized0 |       1683 |       1491 |     192 |    0 |  1551 |      1 |      0 |          0 |
+|               gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST                                |       xdma_v4_2_2_vul_rdwr_eng__parameterized0 |       1673 |       1481 |     192 |    0 |  1549 |      1 |      0 |          0 |
+|                 (gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST)                            |       xdma_v4_2_2_vul_rdwr_eng__parameterized0 |       1077 |       1037 |      40 |    0 |  1293 |      1 |      0 |          0 |
+|                 DSC_FIFO                                                             | xdma_v4_2_2_GenericFIFOHead__parameterized1_19 |        159 |         91 |      68 |    0 |   114 |      0 |      0 |          0 |
+|                 RRQ_FIFO                                                             | xdma_v4_2_2_GenericFIFOHead__parameterized0_20 |        331 |        267 |      64 |    0 |   106 |      0 |      0 |          0 |
+|                 WRQ_FIFO                                                             | xdma_v4_2_2_GenericFIFOHead__parameterized2_21 |        106 |         86 |      20 |    0 |    36 |      0 |      0 |          0 |
+|             WR                                                                       |                           xdma_v4_2_2_vul_rdwr |       2075 |       1753 |     290 |   32 |  1995 |      1 |      0 |          0 |
+|               gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST                                |                       xdma_v4_2_2_vul_rdwr_eng |       2065 |       1743 |     290 |   32 |  1995 |      1 |      0 |          0 |
+|                 (gen_rdwr_loop[0].gen_rdwr_eng.RDWR_INST)                            |                       xdma_v4_2_2_vul_rdwr_eng |       1464 |       1338 |      94 |   32 |  1673 |      1 |      0 |          0 |
+|                 DSC_FIFO                                                             |    xdma_v4_2_2_GenericFIFOHead__parameterized1 |        231 |        123 |     108 |    0 |   174 |      0 |      0 |          0 |
+|                 RRQ_FIFO                                                             | xdma_v4_2_2_GenericFIFOHead__parameterized0_18 |         62 |         38 |      24 |    0 |    44 |      0 |      0 |          0 |
+|                 WRQ_FIFO                                                             |    xdma_v4_2_2_GenericFIFOHead__parameterized2 |        308 |        244 |      64 |    0 |   104 |      0 |      0 |          0 |
+|           dma_enable.wb_eng.dma_pcie_wb_eng                                          |                         xdma_v4_2_2_dma_wb_eng |        193 |        151 |      42 |    0 |    94 |      0 |      0 |          0 |
+|             axidma_wb_arb                                                            |                     xdma_v4_2_2_axidma_dcarb_v |         97 |         77 |      20 |    0 |    41 |      0 |      0 |          0 |
+|               Fifowhead.fifoInfo                                                     |                   xdma_v4_2_2_GenericFIFOAsync |         92 |         72 |      20 |    0 |    39 |      0 |      0 |          0 |
+|           dma_pcie_req                                                               |                       xdma_v4_2_2_dma_pcie_req |       1994 |       1790 |     204 |    0 |  2534 |      2 |      0 |          0 |
+|             dma_pcie_rq                                                              |                        xdma_v4_2_2_dma_pcie_rq |       1315 |       1195 |     120 |    0 |  1356 |      0 |      0 |          0 |
+|               (dma_pcie_rq)                                                          |                        xdma_v4_2_2_dma_pcie_rq |        800 |        792 |       8 |    0 |  1179 |      0 |      0 |          0 |
+|               RQ_FIFO                                                                |                   xdma_v4_2_2_GenericFIFOHead2 |        346 |        346 |       0 |    0 |   160 |      0 |      0 |          0 |
+|               WTLP_DAT_FIFO                                                          |        xdma_v4_2_2_GenericFIFO__parameterized3 |         80 |         36 |      44 |    0 |     6 |      0 |      0 |          0 |
+|               WTLP_HDR_FIFO                                                          |        xdma_v4_2_2_GenericFIFO__parameterized4 |         89 |         21 |      68 |    0 |    11 |      0 |      0 |          0 |
+|             axidma_rrq_arb                                                           |     xdma_v4_2_2_axidma_dcarb_v__parameterized0 |         42 |         42 |       0 |    0 |   107 |      0 |      0 |          0 |
+|               Fifowhead.fifoInfo                                                     |   xdma_v4_2_2_GenericFIFOAsync__parameterized0 |         38 |         38 |       0 |    0 |   105 |      0 |      0 |          0 |
+|             axidma_wrq_arb                                                           |     xdma_v4_2_2_axidma_dcarb_v__parameterized1 |         58 |         58 |       0 |    0 |   101 |      0 |      0 |          0 |
+|               Fifowhead.fifoInfo                                                     |   xdma_v4_2_2_GenericFIFOAsync__parameterized1 |         58 |         58 |       0 |    0 |   101 |      0 |      0 |          0 |
+|             dma_pcie_rc                                                              |                        xdma_v4_2_2_dma_pcie_rc |        538 |        454 |      84 |    0 |   923 |      2 |      0 |          0 |
+|               (dma_pcie_rc)                                                          |                        xdma_v4_2_2_dma_pcie_rc |        458 |        426 |      32 |    0 |   834 |      0 |      0 |          0 |
+|               u_dma_rc_mem_pfch                                                      |                    xdma_v4_2_2_dma_rc_mem_pfch |         78 |         26 |      52 |    0 |    89 |      0 |      0 |          0 |
++--------------------------------------------------------------------------------------+------------------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
