@@ -4,9 +4,9 @@
 
 `LOCAL_SSOT_CONSISTENCY = PASS`
 
-`SSOT_CONSISTENCY = PENDING_REMOTE_READBACK`
+`SSOT_CONSISTENCY = PASS`
 
-This report is generated from the staged revision-3 transaction and is
+This report was generated from the staged revision-3 transaction and
 finalized after non-force publication and exact remote read-back.
 
 ## Required invariant matrix
@@ -38,7 +38,7 @@ finalized after non-force publication and exact remote read-back.
 | SSOT manifest | 18 non-manifest files, sorted, uppercase SHA-256 | `PASS` |
 | Revision-2 changelog prefix | byte-identical | `PASS` |
 | FPGA source repository | unchanged and clean at original HEAD/tree/content | `PASS` |
-| Remote read-back | remote HEAD and affected hashes match | `PENDING` |
+| Remote read-back | remote HEAD and affected hashes match | `PASS`; payload `fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac`, 24/24 paths |
 
 ## Interface identity receipt
 
@@ -80,9 +80,9 @@ EVIDENCE_PATHS_AND_COMMIT: PASS
 SSOT_MANIFEST_ENTRIES_VERIFIED: 18
 GIT_DIFF_CHECK: PASS
 LOCAL_RESULT: PASS
-PUBLICATION_PAYLOAD_COMMIT: PENDING
-PUSH_WITHOUT_FORCE: PENDING
-REMOTE_FILES_CHECKED: 0
+PUBLICATION_PAYLOAD_COMMIT: fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac
+PUSH_WITHOUT_FORCE: PASS
+REMOTE_FILES_CHECKED: 24
 REMOTE_READBACK_FAILURES: 0
-REMOTE_RESULT: PENDING
+REMOTE_RESULT: PASS
 ```

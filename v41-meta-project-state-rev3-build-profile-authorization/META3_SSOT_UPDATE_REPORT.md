@@ -11,8 +11,8 @@ offline-qualified G2B, bitstream, hardware, or V4L2 result.
 | Field | Result |
 |---|---|
 | Engineering gate | `PASS` |
-| Evidence publication | `PENDING` |
-| Overall result | `PENDING_PUBLICATION` |
+| Evidence publication | `PASS` |
+| Overall result | `PASS` |
 | `PROJECT_STATE_REV_AT_START` | `2` |
 | `PROJECT_STATE_REV_AT_END` | `3` |
 | SSOT staleness | `NO_IMPACT` — `AUTHORIZED_SELF_UPDATE` |
@@ -193,9 +193,9 @@ G2B-LUT1 started: NO
 | SSOT SHA-256 manifest | `PASS`, 18/18 |
 | Revision-2 changelog prefix | `PASS`, 5,845 bytes, SHA-256 `2243DC023A7B75858C75B9AEEA98096ABE8CA1639BE65D52FDDBEB3B5AE0F16D` |
 | Source repository final protection check | `PASS`; clean at original HEAD/tree/content aggregate |
-| Publication payload commit | `PENDING` |
-| Push without force | `PENDING` |
-| Remote HEAD and affected-file read-back | `PENDING` |
+| Publication payload commit | `fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac` |
+| Push without force | `PASS` |
+| Remote HEAD and affected-file read-back | `PASS`; 24/24 paths matched by SHA-256 |
 
 ## Completion record
 
@@ -205,9 +205,17 @@ RESULTING_PROJECT_STATE_REV: 3
 ACTUAL_AFFECTED_FILES: 16 SSOT files listed above
 CHANGELOG_APPENDED: YES
 MANIFEST_VERIFIED: YES
-PUBLICATION_COMMIT: PENDING
-PUSH_WITHOUT_FORCE: PENDING
-REMOTE_READBACK: PENDING
+PUBLICATION_COMMIT: fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac
+PUSH_WITHOUT_FORCE: PASS
+REMOTE_READBACK: PASS
 SSOT_STALENESS: NO_IMPACT
 SSOT_STALENESS_REASON: AUTHORIZED_SELF_UPDATE
 ```
+
+The ordinary non-force payload push advanced remote `main` from
+`a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` to
+`fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac`. A fresh remote clone resolved to
+that exact commit. A commit archive containing all 19 SSOT files and all five
+META-3 package files was read back, and all 24 remote files matched their
+local intended bytes by SHA-256. The final evidence-only receipt commit
+contains this completed report and does not modify `project-current-state/`.

@@ -11,8 +11,8 @@
 | Prior SSOT revision | `2` |
 | Resulting SSOT revision | `3` |
 | Accepted input commit | `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` |
-| Publication payload commit | `PENDING` |
-| Final receipt commit | `PENDING` |
+| Publication payload commit | `fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac` |
+| Final receipt commit | remote `main` commit containing this completed receipt |
 
 ## Files in this package
 
@@ -50,8 +50,8 @@ All paths below are in
 
 ## Publication model
 
-The revision-3 SSOT and initial META-3 evidence are published in one ordinary
-payload commit with the required message. Remote `main` and all affected files
-are then read back by exact SHA-256. A final evidence-only receipt commit may
-record the payload SHA and remote PASS result without rewriting the
-revision-3 SSOT.
+The revision-3 SSOT and initial META-3 evidence were published in ordinary
+payload commit `fc03d01c3ac37ca4ff40694a9e21d5ffdcc589ac` with the required
+message. Remote `main` and all 24 SSOT/package files were read back by exact
+SHA-256 with zero mismatches. The final evidence-only receipt commit records
+that payload SHA and PASS result without rewriting the revision-3 SSOT.
