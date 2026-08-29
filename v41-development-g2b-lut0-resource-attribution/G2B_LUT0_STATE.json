@@ -1,0 +1,79 @@
+{
+  "schema": "AHD_V41_G2B_LUT0_STATE_V1",
+  "task": "G2B-LUT0_RESOURCE_ATTRIBUTION_AND_DIAGNOSTIC_DEINSTRUMENTATION_PLAN",
+  "captured_at": "2026-08-29T17:57:03.2296348+02:00",
+  "engineering_gate": "PASS",
+  "evidence_publication": "PASS",
+  "overall_result": "PASS",
+  "project_state_rev_at_start": 2,
+  "project_state_rev_at_end": 2,
+  "accepted_g2a": {
+    "branch": "integration/v41-r1i-gen2-g2a",
+    "commit": "224d194e5f82c85bcb29297561c5d5e76d28063b",
+    "stage": "ROUTED",
+    "lut": 18178,
+    "ff": 20137,
+    "bram_tiles": 26
+  },
+  "comparable_g2a_post_opt": {
+    "lut": 18569,
+    "ff": 20137,
+    "bram_tiles": 26
+  },
+  "blocked_g2b": {
+    "evidence_commit": "3ea9acdcbe955c688c2861e749c114414efa241b",
+    "g2b_primary_rtl_sha256": "8D9BECA7C4990B526D0D1C102739417D72A84F6CA290198BB8AA8CE5AFB11471",
+    "stage": "POST_OPT",
+    "lut": 21412,
+    "ff": 23643,
+    "bram_tiles": 30,
+    "integration_commit": null,
+    "qualification": "NOT_OFFLINE_QUALIFIED"
+  },
+  "deltas": {
+    "requested_mixed_stage_lut": 3234,
+    "comparable_post_opt_lut": 2843,
+    "comparable_post_opt_ff": 3506,
+    "comparable_post_opt_bram_tiles": 4,
+    "g2b_core_lut_hierarchy": 1990,
+    "g2b_core_lut_direct_cell_scope": 1994,
+    "g2b_core_ff": 2908,
+    "g2b_core_ramb36": 4,
+    "xdma_c2h_lut": 619,
+    "xdma_c2h_ff": 598,
+    "integration_repartition_lut": 234
+  },
+  "attribution_estimates": {
+    "g2b_functional_incremental_net_lut": 2843,
+    "g2b_visible_positive_hierarchy_movements_lut": 2980,
+    "research_diagnostic_current_product_profile_candidate_lut": 3900,
+    "removable_product_build_lut_point": 3900,
+    "removable_product_build_lut_range": [3500, 4300],
+    "mandatory_product_profile_lut_point": 17512,
+    "minimum_production_observability_lut": 850,
+    "minimum_production_observability_uncertainty": 250
+  },
+  "recommended_plan": {
+    "name": "PLAN_B_PRODUCT_PROFILE",
+    "profiles": ["PRODUCT", "RESEARCH_DIAGNOSTIC"],
+    "expected_lut": 17512,
+    "expected_utilization_percent": 84.192,
+    "target_90_percent_achievable": true,
+    "preferred_80_to_85_percent_achievable_at_point_estimate": true,
+    "frozen_g2b_abi_change_required": false,
+    "frozen_g2b_mmio_change_required": false,
+    "r1i_behavior_change_required": false,
+    "g2b_architecture_change_required": false
+  },
+  "governance_blocker_before_implementation": "OWNER_ARCHITECT_ACCEPTED_R_TRACK_CLOSURE_AND_SEPARATE_META_UPDATE",
+  "vivado": {
+    "read_only_analysis_executed": true,
+    "bitstream_produced": false,
+    "hardware_accessed": false
+  },
+  "mutations": {
+    "source_repository_modified": false,
+    "integration_branch_modified": false,
+    "ssot_modified": false
+  }
+}
