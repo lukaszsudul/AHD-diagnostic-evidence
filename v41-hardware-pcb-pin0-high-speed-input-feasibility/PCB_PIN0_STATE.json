@@ -1,0 +1,99 @@
+{
+  "audit": "AHD PCB-PIN-0 XC7A35T-CSG325 High-Speed Input Feasibility Audit",
+  "date": "2026-08-31",
+  "mode": "offline_read_only_hardware_planning",
+  "engineering_gate": "PASS",
+  "pin_feasibility": "PASS",
+  "pcb_routing_overall": "APPROVE_WITH_CHANGES",
+  "timing_risk": "MEDIUM",
+  "device": {
+    "requested": "xc7a35t-csg325-2",
+    "vivado_canonical": "xc7a35tcsg325-2",
+    "vivado_version": "2025.2",
+    "speed_grade": "-2"
+  },
+  "channel_1": {
+    "clock_pin": "E16",
+    "clock_type": "SRCC",
+    "bank": 15,
+    "clock_region": "X0Y1",
+    "package_name_group": "T2",
+    "bank_locality": "PASS",
+    "bufio_reachability": "PASS",
+    "iddr": "SUPPORTED",
+    "iserdes": "SUPPORTED",
+    "idelay": "SUPPORTED",
+    "sdr_148m5": "STRONGLY_RECOMMENDED",
+    "ddr_148m5": "SUPPORTED_WITH_CONSTRAINTS",
+    "routing_recommendation": "APPROVE_FOR_PCB_ROUTING"
+  },
+  "channel_2": {
+    "clock_pin": "R16",
+    "clock_type": "SRCC",
+    "bank": 14,
+    "clock_region": "X0Y0",
+    "package_name_group": "T2",
+    "bank_locality": "PASS",
+    "bufio_reachability": "PASS",
+    "iddr": "SUPPORTED",
+    "iserdes": "SUPPORTED",
+    "idelay": "SUPPORTED",
+    "sdr_148m5": "STRONGLY_RECOMMENDED",
+    "ddr_148m5": "SUPPORTED_WITH_CONSTRAINTS",
+    "routing_recommendation": "APPROVE_WITH_CHANGES",
+    "recommended_data_change": "T15_TO_U15"
+  },
+  "reference_clock": {
+    "proposed_pin": "C13",
+    "proposed_result": "NOT_RECOMMENDED",
+    "failure": "Vivado PLIO-9: N-side CCIO cannot drive a clock buffer single-ended",
+    "required_pin": "D13",
+    "required_pin_function": "IO_L11P_T1_SRCC_15",
+    "shared_oscillator_review": "REQUIRED"
+  },
+  "controls": "PASS_WITH_CONSTRAINTS",
+  "mpp1_mpp4_current_use": "UNUSED",
+  "mpp1_mpp4_removal": "SAFE_WITH_CONSTRAINTS",
+  "j18_pulldown": "NEEDS_SCHEMATIC_CONTEXT",
+  "two_channel_ddr_mux_ready": "YES_WITH_CONSTRAINTS",
+  "idelayctrl": {
+    "channel_1_site": "IDELAYCTRL_X0Y1",
+    "channel_2_site": "IDELAYCTRL_X0Y0",
+    "separate_groups_required": true,
+    "direct_27mhz_reference_legal": false,
+    "legal_reference_windows_mhz": [
+      "190-210",
+      "290-310",
+      "390-410"
+    ]
+  },
+  "vivado_evidence": {
+    "device_database": "PASS",
+    "current_t15_primitive_placement": "PASS",
+    "u15_primitive_placement": "PASS",
+    "original_c13_full_sandbox": "FAIL_EXPECTED_PLIO_9",
+    "d13_correction_sandbox": "PASS",
+    "product_bitstream_created": false
+  },
+  "source_repository": {
+    "path": "C:\\FPGA\\FPGA_AHD",
+    "commit": "be94f88ee8d179f12928ab791bdae27c22cd1762",
+    "modified": false,
+    "xdc_modified": false,
+    "hardware_accessed": false,
+    "ssot_modified": false,
+    "g_track_modified": false,
+    "r_track_modified": false
+  },
+  "evidence_publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-hardware-pcb-pin0-high-speed-input-feasibility",
+    "commit_message": "Audit AHD high-speed video input pin feasibility for new PCB routing",
+    "status": "PASS",
+    "commit": "CONTAINING_GIT_COMMIT",
+    "commit_sha": "CONTAINING_GIT_COMMIT",
+    "commit_resolution": "Use git rev-parse on the commit containing this state file; the exact SHA is reported by the execution response",
+    "remote_read_back": "PASS"
+  }
+}

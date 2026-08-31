@@ -1,0 +1,76 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 31 13:21:00 2026
+# Process ID         : 4684
+# Current directory  : C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement
+# Command line       : vivado.exe -mode batch -notrace -source .\run_placement.tcl -log .\SANDBOX_VIVADO.log -journal .\SANDBOX_VIVADO.jou
+# Log file           : C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/./SANDBOX_VIVADO.log
+# Journal file       : C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement\.\SANDBOX_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6979 MB
+# Total Virtual      : 24007 MB
+# Available Virtual  : 9442 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {.\run_placement.tcl} -notrace
+create_project: Time (s): cpu = 00:00:51 ; elapsed = 00:03:35 . Memory (MB): peak = 538.293 ; gain = 222.289
+update_compile_order: Time (s): cpu = 00:00:00 ; elapsed = 00:00:06 . Memory (MB): peak = 538.293 ; gain = 0.000
+Command: synth_design -top pin_feasibility_top -part xc7a35t-csg325-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 6184
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:39 ; elapsed = 00:01:10 . Memory (MB): peak = 1266.984 ; gain = 541.688
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'pin_feasibility_top' [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:1]
+INFO: [Synth 8-6157] synthesizing module 'IBUF' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6155] done synthesizing module 'IBUF' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6157] synthesizing module 'IDDR' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974]
+	Parameter DDR_CLK_EDGE bound to: SAME_EDGE_PIPELINED - type: string 
+	Parameter INIT_Q1 bound to: 1'b0 
+	Parameter INIT_Q2 bound to: 1'b0 
+	Parameter SRTYPE bound to: SYNC - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'IDDR' (0#1) [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+ERROR: [Synth 8-11365] for the instance 'u_vdo1_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:43]
+ERROR: [Synth 8-11365] for the instance 'u_vdo2_iddr' of module 'IDDR' declared at 'C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:84974', named port connection 'CB' does not exist [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:53]
+INFO: [Synth 8-6157] synthesizing module 'BUFIO' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2951]
+ERROR: [Synth 8-6156] failed synthesizing module 'BUFIO' [C:/AMDDesignTools/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2951]
+ERROR: [Synth 8-6156] failed synthesizing module 'pin_feasibility_top' [C:/FPGA/PCB_PIN0_VIVADO_SANDBOX_20260831/placement/pin_feasibility_top.v:1]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:54 ; elapsed = 00:01:39 . Memory (MB): peak = 1385.121 ; gain = 659.824
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+12 Infos, 0 Warnings, 0 Critical Warnings and 19 Errors encountered.
+synth_design failed
+synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:04:14 . Memory (MB): peak = 1385.121 ; gain = 846.828
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 31 13:31:46 2026...

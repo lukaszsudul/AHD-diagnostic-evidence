@@ -1,0 +1,192 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 31 12:58:27 2026
+# Process ID         : 3324
+# Current directory  : C:/FPGA/PCB_PIN0_VIVADO_DB_TEMP_20260831
+# Command line       : vivado.exe -mode batch -source C:\FPGA\PCB_PIN0_VIVADO_DB_TEMP_20260831\discover_pin_props.tcl -log C:\FPGA\PCB_PIN0_VIVADO_DB_TEMP_20260831\discover_pin_props.log -journal C:\FPGA\PCB_PIN0_VIVADO_DB_TEMP_20260831\discover_pin_props.jou
+# Log file           : C:/FPGA/PCB_PIN0_VIVADO_DB_TEMP_20260831/discover_pin_props.log
+# Journal file       : C:\FPGA\PCB_PIN0_VIVADO_DB_TEMP_20260831\discover_pin_props.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6979 MB
+# Total Virtual      : 24007 MB
+# Available Virtual  : 9850 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\PCB_PIN0_VIVADO_DB_TEMP_20260831\discover_pin_props.tcl}
+# set requested_part "xc7a35t-csg325-2"
+# set part_matches [get_parts -quiet -filter {DEVICE == xc7a35t && PACKAGE == csg325 && SPEED == -2}]
+# puts "REQUESTED_PART=$requested_part"
+REQUESTED_PART=xc7a35t-csg325-2
+# puts "MATCHES=$part_matches"
+MATCHES=xc7a35tcsg325-2
+# puts "MATCH_COUNT=[llength $part_matches]"
+MATCH_COUNT=1
+# foreach part $part_matches {
+#     puts "PART_OBJECT=$part"
+#     puts [report_property -return_string $part]
+# }
+PART_OBJECT=xc7a35tcsg325-2
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+report_property: Time (s): cpu = 00:00:27 ; elapsed = 00:02:35 . Memory (MB): peak = 545.727 ; gain = 227.074
+Property                   Type     Read-only  Value
+ARCHITECTURE               string   true       artix7
+ARCHITECTURE_FULL_NAME     string   true       Artix-7
+AVAILABLE_CONFIG_MODES     string*  true       
+AVAILABLE_IOBS             int      true       150
+BLOCK_RAMS                 int      true       50
+CLASS                      string   true       part
+COLS                       int      true       115
+COMPATIBLE_PARTS           string*  true       xc7a12tcsg325 xc7a15tcsg325 xc7a25tcsg325 xc7a50tcsg325
+C_FAMILY                   string   true       artix7
+DEVICE                     string   true       xc7a35t
+DSP                        int      true       90
+FAMILY                     string   true       artix7
+FE                         int      true       0
+FLIPFLOPS                  int      true       41600
+GB_TRANSCEIVERS            int      true       4
+GTPE2_TRANSCEIVERS         int      true       4
+GTP_TRANSCEIVERS           int      true       4
+IDCODE                     string   true       0x0362d093
+IO_PIN_COUNT               int      true       325
+IO_STANDARDS               string   true       LVTTL LVCMOS33 LVCMOS25 LVCMOS18 LVCMOS15 LVCMOS12 HSUL_12 HSTL_I HSTL_II HSTL_I_18 HSTL_II_18 SSTL18_I SSTL18_II SSTL15 SSTL15_R SSTL135 SSTL135_R DIFF_HSTL_I DIFF_HSTL_II DIFF_HSTL_I_18 DIFF_HSTL_II_18 DIFF_SSTL18_I DIFF_SSTL18_II DIFF_SSTL15 DIFF_SSTL15_R DIFF_SSTL135 DIFF_SSTL135_R DIFF_HSUL_12 PCI33_3 MOBILE_DDR DIFF_MOBILE_DDR BLVDS_25 LVDS_25 RSDS_25 TMDS_33 MINI_LVDS_25 PPDS_25
+LUT_ELEMENTS               int      true       20800
+MAX_OPERATING_TEMPERATURE  int      true       0
+MAX_OPERATING_VOLTAGE      double   true       1.050
+MCBS                       int      true       0
+MIN_OPERATING_TEMPERATURE  int      true       0
+MIN_OPERATING_VOLTAGE      double   true       0.950
+MMCM                       int      true       5
+NAME                       string   true       xc7a35tcsg325-2
+PACKAGE                    string   true       csg325
+PACKAGE_PINOUT_VERSION     string   true       FINAL 2014-03-07
+PACKAGE_PIN_DELAY_VERSION  string   true       VERS. 2.0 2014-03-07
+PCI_BUSES                  int      true       1
+REF_OPERATING_TEMPERATURE  int      true       0
+REF_OPERATING_VOLTAGE      double   true       0.950
+ROWS                       int      true       157
+SLICES                     int      true       8150
+SLRS                       int      true       1
+SPEED                      string   true       -2
+SPEED_LABEL                string   true       PRODUCTION
+SPEED_LEVEL_ID             string   true       1.23
+SPEED_LEVEL_ID_DATE        string   true       2018-06-13
+SSN_REPORT                 bool     true       1
+SUPPORTS_NEXTGEN_VERSAL    bool     true       0
+TEMAC_NETWORK_CONTROLLERS  int      true       0
+TEMPERATURE_GRADE_LETTER   string   true       
+# if {[llength $part_matches] != 1} {
+#     error "Expected exactly one xc7a35t/csg325/-2 part"
+# }
+# set exact_part [lindex $part_matches 0]
+# create_project -in_memory -part $exact_part
+create_project: Time (s): cpu = 00:00:48 ; elapsed = 00:01:41 . Memory (MB): peak = 712.316 ; gain = 166.590
+# puts "CURRENT_PART=[get_property PART [current_project]]"
+CURRENT_PART=xc7a35tcsg325-2
+# set proposed_pins {E16 B16 C16 A17 B17 C17 C18 E17 D18 R16 R18 T15 T18 T17 U17 V17 U16 V16 K17 L18 M17 N17 C13 J18}
+# foreach pin_name $proposed_pins {
+#     puts "===== PACKAGE_PIN $pin_name ====="
+#     set pp [get_package_pins -quiet $pin_name]
+#     puts "PACKAGE_PIN_OBJECT=$pp"
+#     puts "PACKAGE_PIN_COUNT=[llength $pp]"
+#     if {[llength $pp] == 1} {
+#         puts [report_property -return_string $pp]
+#         set sites [get_sites -quiet -of_objects $pp]
+#         puts "SITES=$sites"
+#         foreach site $sites {
+#             puts "--- SITE $site ---"
+#             puts [report_property -return_string $site]
+#             set bank [get_iobanks -quiet -of_objects $site]
+#             puts "IOBANK_FROM_SITE=$bank"
+#             set cr [get_clock_regions -quiet -of_objects $site]
+#             puts "CLOCK_REGION_FROM_SITE=$cr"
+#             puts "BELS=[get_bels -quiet -of_objects $site]"
+#         }
+#         puts "IOBANK_FROM_PIN=[get_iobanks -quiet -of_objects $pp]"
+#         puts "CLOCK_REGION_FROM_PIN=[get_clock_regions -quiet -of_objects $pp]"
+#     }
+# }
+===== PACKAGE_PIN E16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN B16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN C16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN A17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN B17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN C17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN C18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN E17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN D18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN R16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN R18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN T15 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN T18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN T17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN U17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN V17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN U16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN V16 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN K17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN L18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN M17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN N17 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN C13 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+===== PACKAGE_PIN J18 =====
+PACKAGE_PIN_OBJECT=
+PACKAGE_PIN_COUNT=0
+# close_project
+# exit
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 31 13:04:02 2026...
