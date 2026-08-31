@@ -1,0 +1,200 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  1 00:07:42 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\G2B_BS1_SINGLE_SINK_20260831T235727\G2B_BS1_WORKER.tcl}
+# proc utc_now {} {
+#   set milliseconds [clock milliseconds]
+#   set seconds [expr {$milliseconds / 1000}]
+#   set fraction [format %03d [expr {$milliseconds % 1000}]]
+#   return "[clock format $seconds -gmt true -format {%Y-%m-%dT%H:%M:%S}].${fraction}Z"
+# }
+# proc write_text {path text} {
+#   set handle [open $path w]
+#   fconfigure $handle -translation lf -encoding utf-8
+#   puts -nonewline $handle $text
+#   close $handle
+# }
+# proc append_text {path text} {
+#   set handle [open $path a]
+#   fconfigure $handle -translation lf -encoding utf-8
+#   puts -nonewline $handle $text
+#   close $handle
+# }
+# proc read_exact_name_list {path} {
+#   set handle [open $path r]
+#   fconfigure $handle -translation auto -encoding utf-8
+#   set text [read $handle]
+#   close $handle
+#   set normalized [string map [list "\r" ""] [string trim $text]]
+#   if {$normalized eq ""} {
+#     return [list]
+#   }
+#   return [split $normalized "\n"]
+# }
+# proc mark_phase {output_dir label} {
+#   set timestamp [utc_now]
+#   write_text [file join $output_dir "${label}.marker"] "MARKER=${label}\nTIMESTAMP=${timestamp}\n"
+#   append_text [file join $output_dir G2B_BS1_MARKERS.log] "${label}|${timestamp}\n"
+#   puts "BS1_MARKER ${label} ${timestamp}"
+#   flush stdout
+#   return $timestamp
+# }
+# proc property_or_na {property object} {
+#   if {[catch {get_property $property $object} value]} {
+#     return "N/A"
+#   }
+#   if {$value eq ""} {
+#     return "N/A"
+#   }
+#   return $value
+# }
+# proc run_bs1 {} {
+#   global argv argc
+#   if {$argc != 5} {
+#     error "usage: G2B_BS1_WORKER.tcl DCP BASE_XDC SOURCE_LIST SINK_LIST OUTPUT_DIR"
+#   }
+# 
+#   lassign $argv checkpoint base_xdc source_list sink_list output_dir
+#   file mkdir $output_dir
+#   set worker_started_timestamp [mark_phase $output_dir WORKER_STARTED]
+#   set worker_started_ms [clock milliseconds]
+#   set vivado_version [version -short]
+# 
+#   open_checkpoint $checkpoint
+#   set dcp_opened_timestamp [mark_phase $output_dir DCP_OPENED]
+#   set dcp_opened_ms [clock milliseconds]
+# 
+#   set part [get_property PART [current_design]]
+#   if {$part ne "xc7a35tcsg325-2"} {
+#     error "sealed routed DCP part mismatch: $part"
+#   }
+# 
+#   set route_status [report_route_status -return_string]
+#   write_text [file join $output_dir G2B_BS1_ROUTE_STATUS.rpt] "${route_status}\n"
+#   if {![regexp {# of routable nets\.+\s*:\s*([0-9]+)\s*:} $route_status route_match routable_nets]} {
+#     error "unable to parse routable-net count from route status"
+#   }
+#   if {![regexp {# of fully routed nets\.+\s*:\s*([0-9]+)\s*:} $route_status fully_match fully_routed_nets]} {
+#     error "unable to parse fully-routed-net count from route status"
+#   }
+#   if {![regexp {# of nets with routing errors\.+\s*:\s*([0-9]+)\s*:} $route_status error_match routing_error_nets]} {
+#     error "unable to parse routing-error count from route status"
+#   }
+#   if {$routable_nets != $fully_routed_nets || $routing_error_nets != 0} {
+#     error "sealed checkpoint is not fully routed: routable=$routable_nets fully_routed=$fully_routed_nets routing_errors=$routing_error_nets"
+#   }
+# 
+#   reset_timing -invalid
+#   read_xdc $base_xdc
+# 
+#   set source_names [read_exact_name_list $source_list]
+#   set sink_names [read_exact_name_list $sink_list]
+#   set sources [get_cells -quiet $source_names]
+#   set sinks [get_cells -quiet $sink_names]
+#   set resolved_source_names [get_property NAME $sources]
+#   set resolved_sink_names [get_property NAME $sinks]
+# 
+#   if {[llength $source_names] != 58} {
+#     error "authoritative source-list count mismatch: [llength $source_names]"
+#   }
+#   if {[llength $sink_names] != 1} {
+#     error "authoritative sink-list is not singleton: [llength $sink_names]"
+#   }
+#   if {[llength $sources] != 58} {
+#     error "resolved source count mismatch: [llength $sources]"
+#   }
+#   if {[llength $sinks] != 1} {
+#     error "resolved sink count is not singleton: [llength $sinks]"
+#   }
+#   if {[lsort -dictionary $source_names] ne [lsort -dictionary $resolved_source_names]} {
+#     error "resolved source identity differs from authoritative S_FULL list"
+#   }
+#   if {[lsort -dictionary $sink_names] ne [lsort -dictionary $resolved_sink_names]} {
+#     error "resolved sink identity differs from authoritative K_OWNERSHIP_RESULT list"
+#   }
+# 
+#   write_text [file join $output_dir G2B_BS1_SOURCE_SET_RESOLVED.txt] "[join $resolved_source_names \n]\n"
+#   write_text [file join $output_dir G2B_BS1_SINK_SET_RESOLVED.txt] "[join $resolved_sink_names \n]\n"
+# 
+#   set_bus_skew -from $sources -to $sinks 3.000
+#   write_xdc -exclude_physical -force [file join $output_dir G2B_BS1_APPLIED_CONSTRAINT.xdc]
+# 
+#   set objects_resolved_timestamp [mark_phase $output_dir OBJECTS_RESOLVED]
+#   set objects_resolved_ms [clock milliseconds]
+#   set sink_name [lindex $resolved_sink_names 0]
+#   set sink_ref_name [property_or_na REF_NAME $sinks]
+#   set sink_primitive_type [property_or_na PRIMITIVE_TYPE $sinks]
+#   set initialization_elapsed_ms [expr {$objects_resolved_ms - $worker_started_ms}]
+# 
+#   write_text [file join $output_dir G2B_BS1_WORKER_STATE.txt] [join [list \
+#     "EXPERIMENT_ID=BS1_EXP001" \
+#     "STATE=READY_FOR_COMMAND" \
+#     "VIVADO_VERSION=$vivado_version" \
+#     "PART=$part" \
+#     "ROUTE_STATUS=FULLY_ROUTED" \
+#     "ROUTABLE_NETS=$routable_nets" \
+#     "FULLY_ROUTED_NETS=$fully_routed_nets" \
+#     "ROUTING_ERROR_NETS=$routing_error_nets" \
+#     "WORKER_STARTED_TIMESTAMP=$worker_started_timestamp" \
+#     "DCP_OPENED_TIMESTAMP=$dcp_opened_timestamp" \
+#     "OBJECTS_RESOLVED_TIMESTAMP=$objects_resolved_timestamp" \
+#     "WORKER_INITIALIZATION_ELAPSED_MS=$initialization_elapsed_ms" \
+#     "DCP_OPEN_ELAPSED_MS=[expr {$dcp_opened_ms - $worker_started_ms}]" \
+#     "SOURCE_COUNT=[llength $sources]" \
+#     "SINK_COUNT=[llength $sinks]" \
+#     "SINK_NAME=$sink_name" \
+#     "SINK_OBJECT_TYPE=CELL" \
+#     "SINK_REF_NAME=$sink_ref_name" \
+#     "SINK_PRIMITIVE_TYPE=$sink_primitive_type" \
+#     "REQUIRED_SKEW_NS=3.000" \
+#     "NON_BUS_SKEW_CONTEXT=AUTHORITATIVE_SKEW_FREE_BASE_XDC" \
+#     "REPORT_TIMING_CONTROL=NOT_RUN" \
+#   ] "\n"]
+#   append_text [file join $output_dir G2B_BS1_WORKER_STATE.txt] "\n"
+# 
+#   set command_started_ms [clock milliseconds]
+#   set command_started_timestamp [mark_phase $output_dir COMMAND_STARTED]
+#   report_bus_skew -no_detailed_paths -max_paths 1 -nworst 1 -warn_on_violation -file [file join $output_dir G2B_BS1_REPORT_BUS_SKEW.rpt]
+#   set command_completed_ms [clock milliseconds]
+#   set command_completed_timestamp [mark_phase $output_dir COMMAND_COMPLETED]
+#   set command_elapsed_ms [expr {$command_completed_ms - $command_started_ms}]
+# 
+#   append_text [file join $output_dir G2B_BS1_WORKER_STATE.txt] [join [list \
+#     "STATE=COMPLETE" \
+#     "COMMAND_STARTED_TIMESTAMP=$command_started_timestamp" \
+#     "COMMAND_COMPLETED_TIMESTAMP=$command_completed_timestamp" \
+#     "COMMAND_ELAPSED_MS=$command_elapsed_ms" \
+#   ] "\n"]
+#   append_text [file join $output_dir G2B_BS1_WORKER_STATE.txt] "\n"
+# 
+#   close_design
+# }
+# if {$argc == 5} {
+#   set bs1_output_dir [lindex $argv 4]
+# } else {
+#   set bs1_output_dir [pwd]
+# }
+# if {[catch {run_bs1} bs1_error bs1_options]} {
+#   set error_timestamp [utc_now]
+#   write_text [file join $bs1_output_dir VIVADO_ERROR.marker] "MARKER=VIVADO_ERROR\nTIMESTAMP=${error_timestamp}\nERROR=${bs1_error}\n"
+#   append_text [file join $bs1_output_dir G2B_BS1_MARKERS.log] "VIVADO_ERROR|${error_timestamp}\n"
+#   set error_info [dict get $bs1_options -errorinfo]
+#   write_text [file join $bs1_output_dir G2B_BS1_VIVADO_ERROR.txt] "ERROR=${bs1_error}\n\n${error_info}\n"
+#   puts stderr "BS1_VIVADO_ERROR: $bs1_error"
+#   catch {close_design}
+#   exit 1
+# }
+BS1_MARKER WORKER_STARTED 2026-08-31T22:09:30.594Z
+Command: open_checkpoint {C:\FPGA\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\sealed_inputs\G2B_ROUTED.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.877 . Memory (MB): peak = 331.008 ; gain = 3.703
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2

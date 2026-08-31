@@ -1,0 +1,80 @@
+{
+  "schema": "G2B_BS1_STATE_V1",
+  "experiment_id": "BS1_EXP001",
+  "project_state_rev_at_start": 3,
+  "project_state_rev_at_end": 3,
+  "recovery_evidence_commit": "6707d6f2ca39c76295ce565b0e04878dff16110a",
+  "engineering_gate": "PASS",
+  "execution_result": "INITIALIZATION_TIMEOUT",
+  "interpretation": "D. VIVADO_INITIALIZATION_TIMES_OUT",
+  "inputs": {
+    "dcp_path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "dcp_sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "dcp_hash_verified": true,
+    "group9_combined_inventory_sha256": "CE4E8A35CB82CCD0A85AEBF340B997D74FEF9250C86BA76C61769E332079F4DB",
+    "source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "constraint_base_sha256": "A05AF5431E521BBC8812DAAE5574CC31D4E7E3BE89DCA0E41974462383BE3071",
+    "worker_tcl_sha256": "FFC42D3F285AC2267F1E48780D7D43298D4FE89BA6090B7C4B899B103B2D54B1"
+  },
+  "scope": {
+    "source_scope": "S_FULL",
+    "source_count": 58,
+    "sink_scope": "K_OWNERSHIP_RESULT",
+    "sink_count": 1,
+    "sink_object": "G2B_ONECH_C2H/own_ok_hold_source_reg",
+    "sink_object_type": "CELL",
+    "sink_primitive_type": "FDRE",
+    "required_skew_ns": 3.000,
+    "dynamic_object_resolution": "NOT_REACHED_DUE_TO_INITIALIZATION_TIMEOUT"
+  },
+  "serialization": {
+    "preexisting_vivado_count": 0,
+    "vivado_workers_launched": 1,
+    "worker_overlap": false,
+    "automatic_retry": false,
+    "second_experiment": false
+  },
+  "timeout": {
+    "external_timeout_armed": true,
+    "limit_seconds": 300,
+    "timed_out": true,
+    "phase": "INITIALIZATION",
+    "total_elapsed_seconds": 300.949
+  },
+  "markers": {
+    "worker_started": "2026-08-31T22:09:30.594Z",
+    "dcp_opened": null,
+    "objects_resolved": null,
+    "command_started": null,
+    "command_completed": null
+  },
+  "vivado": {
+    "version": "2025.2",
+    "sw_build": "6299465",
+    "initialization": "TIMEOUT",
+    "command_started": false,
+    "command_elapsed_seconds": null,
+    "report_bus_skew_report_present": false,
+    "report_timing_control": "NOT_RUN"
+  },
+  "conclusion": {
+    "bus_skew_result": "INITIALIZATION_TIMEOUT",
+    "single_sink_pathology_reproduced": "INCONCLUSIVE",
+    "constraint_implication": "No conclusion about report_bus_skew; initialization timed out before command start."
+  },
+  "protections": {
+    "source_repository_modified": false,
+    "active_xdc_modified": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "ssot_modified": false
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-bs1-single-sink-bus-skew-probe",
+    "commit": "RESOLVED_BY_CONTAINING_GIT_COMMIT",
+    "remote_readback": "PERFORMED_AFTER_CONTAINING_COMMIT"
+  }
+}
