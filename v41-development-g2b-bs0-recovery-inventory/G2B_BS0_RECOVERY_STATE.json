@@ -1,0 +1,123 @@
+{
+  "schema": "AHD_V41_G2B_BS0_RECOVERY_STATE_V1",
+  "task": "G2B-BS0-RECOVERY-INVENTORY",
+  "generated_at": "2026-08-31T22:29:26.3899922+02:00",
+  "project_state_rev_at_start": 3,
+  "project_state_rev_at_end": 3,
+  "project_state_subtree": "90fabcb1a77a90a8d0a2ee1e237e4d8c56beb473",
+  "project_state_json_sha256": "9ED040C2146C6938F7C4B90694396182D4E1B0C9BD2450675508415386001A14",
+  "interrupted_attempt": {
+    "found": "YES",
+    "root": "C:\\FPGA\\G2B_BS0_GROUP9_ANALYSIS_20260831",
+    "files_in_attempt_root": 190,
+    "directories_in_attempt_root": 34,
+    "bytes_in_attempt_root": 360647,
+    "relevant_directories_found": 12,
+    "relevant_artifacts_found": 217,
+    "last_artifact_timestamp": "2026-08-31T20:59:04.7157077+02:00",
+    "last_artifact": "C:\\FPGA\\G2B_BS0_GROUP9_ANALYSIS_20260831\\experiments\\EXP005_FULL_BUS_SKEW\\experiment_result.txt",
+    "last_artifact_sha256": "EFF524FE16B471ED7F6BE87B3FAFF7BBA0E922C7EFD80C04A2BEB286A2AEF2F1",
+    "last_completed_action": "EXP005 finalized an immutable pre-command initialization-timeout receipt.",
+    "last_started_but_incomplete_action": "Ledger and final evidence-package assembly; the builder was saved and syntax-validated but never executed."
+  },
+  "expected_artifacts": {
+    "total": 11,
+    "complete": 0,
+    "partial": 7,
+    "missing": 4,
+    "status_policy": "Strict file status: any artifact self-identified as draft or pending is PARTIAL."
+  },
+  "source_git": {
+    "repository": "C:\\FPGA\\FPGA_AHD",
+    "branch": "main",
+    "head": "be94f88ee8d179f12928ab791bdae27c22cd1762",
+    "tree": "e128ff47a5e21e8131971f5e5caa7657e2eccc7f",
+    "upstream": "be94f88ee8d179f12928ab791bdae27c22cd1762",
+    "tracked_modifications": 0,
+    "staged_modifications": 0,
+    "preexisting_untracked_files": 46,
+    "stash_entries": 0,
+    "interrupted_task_commit_found": false,
+    "source_state": "CHANGED_BUT_UNCOMMITTED",
+    "modified_by_recovery": false
+  },
+  "existing_remote_bs0_evidence": {
+    "status": "NONE",
+    "commit": null,
+    "audited_main_head": "a7db236b56340095f3521ec195d2a3b49d10f956",
+    "audited_main_tree": "a3787fb50b411e578cc440804c142133ae7c6fcc",
+    "prior_directory_found": false,
+    "recovery_directory_preexisted": false
+  },
+  "stage_progress": {
+    "sealed_dcp_identity_verification": "COMPLETE",
+    "group_9_object_identity_verification": "COMPLETE",
+    "semantic_decomposition": "COMPLETE",
+    "bounded_worker_framework_creation": "COMPLETE",
+    "full_group_9_bounded_reproduction": "STARTED",
+    "semantic_subset_tests": "STARTED",
+    "binary_bisect": "NOT_STARTED",
+    "report_timing_control": "PARTIAL",
+    "report_methodology_review": "PARTIAL",
+    "logic_depth_reconvergence_analysis": "PARTIAL",
+    "constraint_validity_classification": "PARTIAL",
+    "cdc_correlation": "COMPLETE",
+    "minimal_reproducer": "PARTIAL",
+    "evidence_packaging": "PARTIAL",
+    "github_publication_before_recovery": "NOT_STARTED"
+  },
+  "recovered_outputs": {
+    "semantic_decomposition": "COMPLETE",
+    "binary_bisect": "NONE",
+    "report_timing_control": "PARTIAL",
+    "report_methodology": "PARTIAL",
+    "constraint_validity_decision": "PARTIAL",
+    "cdc_correlation": "COMPLETE",
+    "minimal_reproducer": "PARTIAL"
+  },
+  "salvageability": "PARTIALLY_RECOVERABLE_RESUME_FROM_CHECKPOINT",
+  "known_provenance_limitations": [
+    "EXP000 and EXP001 record worker SHA256 E0737EC308508E1DC8E8340C68C15A451D8C10487964ADA853ECE3CB1D84EFF8; that historical worker body is not preserved.",
+    "EXP002 records worker SHA256 A3BA0772543C92588C394DBE0F7106672302D0BB7E142B21526EE75E8B98088D; that historical worker body is not preserved.",
+    "The worker path now contains B17B15A3FC99F53EEA39F6BAA3BCA754C1BA54B9F08D353C109998500F2A4749.",
+    "EXP000 through EXP002 have a 26-field receipt schema; EXP003 through EXP006 have 30 fields and explicit command/timeout-phase fields.",
+    "Early command receipts contain locale-rendered numeric arguments."
+  ],
+  "resume_boundary": {
+    "completed_dynamic_subset_checkpoint": false,
+    "completed_static_checkpoint": true,
+    "fresh_isolated_directory_recommended": true,
+    "reuse_old_experiment_ids": false,
+    "first_new_scope": "S_FULL (58 sources) to K_OWNERSHIP_RESULT (1 destination), serialized bounded BUS_SKEW worker",
+    "missing_results_classification": "MISSING_REQUIRES_FUTURE_G2B_BS0_CONTINUATION"
+  },
+  "protections": {
+    "vivado_executed_during_recovery": false,
+    "report_bus_skew_executed_during_recovery": false,
+    "synthesis_executed_during_recovery": false,
+    "implementation_executed_during_recovery": false,
+    "hardware_accessed": false,
+    "dut_accessed": false,
+    "pcie_dma_accessed": false,
+    "source_modified": false,
+    "active_xdc_modified": false,
+    "ssot_modified": false,
+    "files_deleted": false
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-bs0-recovery-inventory",
+    "commit_message": "Recover interrupted AHD v41 G2B-BS0 diagnostic state",
+    "evidence_commit": "CONTAINING_GIT_COMMIT",
+    "evidence_commit_note": "The exact immutable SHA is recorded by push and remote read-back in the task completion response; a commit cannot self-contain its own SHA.",
+    "force_push": false
+  },
+  "gate_disposition": {
+    "engineering_gate": "PASS",
+    "g2b_lut1": "HOLD",
+    "g2b_hw": "BLOCKED",
+    "g2b_bs0": "INCOMPLETE",
+    "promotion_authorized": false
+  }
+}
