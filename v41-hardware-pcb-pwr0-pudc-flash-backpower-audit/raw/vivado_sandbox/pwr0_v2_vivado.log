@@ -1,0 +1,518 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Tue Sep  1 17:52:17 2026
+# Process ID         : 10576
+# Current directory  : C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901
+# Command line       : vivado.exe -mode batch -source query_pudc_high_legality.tcl -log pwr0_v2_vivado.log -journal pwr0_v2_vivado.jou
+# Log file           : C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pwr0_v2_vivado.log
+# Journal file       : C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901\pwr0_v2_vivado.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6979 MB
+# Total Virtual      : 24007 MB
+# Available Virtual  : 10314 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source query_pudc_high_legality.tcl
+# set requested_part xc7a35tcsg325-2
+# proc safe_property {property object} {
+#   set value "<ABSENT>"
+#   if {[lsearch -exact [list_property $object] $property] >= 0} {
+#     set value [get_property $property $object]
+#   }
+#   return $value
+# }
+# puts "PWR0_SANDBOX_BEGIN"
+PWR0_SANDBOX_BEGIN
+# puts "VIVADO_VERSION=[version -short]"
+VIVADO_VERSION=2025.2
+# set part_object [get_parts -quiet $requested_part]
+# puts "REQUESTED_PART=$requested_part"
+REQUESTED_PART=xc7a35tcsg325-2
+# puts "PART_COUNT=[llength $part_object]"
+PART_COUNT=1
+# if {[llength $part_object] != 1} {
+#   puts "PWR0_FATAL_EXACT_PART_NOT_FOUND"
+#   exit 2
+# }
+# foreach property {NAME DEVICE PACKAGE SPEED FAMILY ARCHITECTURE} {
+#   puts "PART_${property}=[safe_property $property $part_object]"
+# }
+PART_NAME=xc7a35tcsg325-2
+PART_DEVICE=xc7a35t
+PART_PACKAGE=csg325
+PART_SPEED=-2
+PART_FAMILY=artix7
+PART_ARCHITECTURE=artix7
+# create_project -in_memory -part $requested_part pwr0_pudc_high_query
+create_project: Time (s): cpu = 00:00:57 ; elapsed = 00:04:40 . Memory (MB): peak = 520.984 ; gain = 197.031
+# read_verilog [file normalize "pudc_high_legality.v"]
+# read_xdc [file normalize "pudc_high_legality.xdc"]
+# synth_design -top pudc_high_legality -part $requested_part
+Command: synth_design -top pudc_high_legality -part xc7a35tcsg325-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 4072
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:49 ; elapsed = 00:01:50 . Memory (MB): peak = 1269.145 ; gain = 541.086
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'pudc_high_legality' [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'pudc_high_legality' (0#1) [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.v:1]
+WARNING: [Synth 8-3330] design pudc_high_legality has an empty top module
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:01:10 ; elapsed = 00:02:35 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:11 ; elapsed = 00:02:37 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:01:11 ; elapsed = 00:02:37 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1386.215 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.xdc]
+Finished Parsing XDC File [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/pudc_high_legality_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/pudc_high_legality_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1386.215 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.040 . Memory (MB): peak = 1386.215 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:02:20 ; elapsed = 00:05:16 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcsg325-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:02:20 ; elapsed = 00:05:16 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:02:21 ; elapsed = 00:05:17 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:02:21 ; elapsed = 00:05:18 . Memory (MB): peak = 1386.215 ; gain = 658.156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3330] design pudc_high_legality has an empty top module
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:43 ; elapsed = 00:05:57 . Memory (MB): peak = 1400.445 ; gain = 672.387
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:35 ; elapsed = 00:07:29 . Memory (MB): peak = 1569.387 ; gain = 841.328
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:03:35 ; elapsed = 00:07:29 . Memory (MB): peak = 1569.387 ; gain = 841.328
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:03:35 ; elapsed = 00:07:30 . Memory (MB): peak = 1578.922 ; gain = 850.863
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |IBUF |     1|
+|2     |OBUF |     1|
++------+-----+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:04:15 ; elapsed = 00:08:41 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:50 ; elapsed = 00:08:03 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+Synthesis Optimization Complete : Time (s): cpu = 00:04:16 ; elapsed = 00:08:43 . Memory (MB): peak = 1828.410 ; gain = 1100.352
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1837.602 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.xdc]
+Finished Parsing XDC File [C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pudc_high_legality.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1841.250 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: a44ff968
+INFO: [Common 17-83] Releasing license: Synthesis
+15 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:04:47 ; elapsed = 00:13:30 . Memory (MB): peak = 1841.250 ; gain = 1320.266
+# puts "CONFIG_VOLTAGE=[get_property CONFIG_VOLTAGE [current_design]]"
+CONFIG_VOLTAGE=3.3
+# puts "CFGBVS=[get_property CFGBVS [current_design]]"
+CFGBVS=VCCO
+# puts "CURRENT_A35T_PRODUCT_SPI_WIDTH=UNRESOLVED"
+CURRENT_A35T_PRODUCT_SPI_WIDTH=UNRESOLVED
+# set pudc_design_properties [lsearch -all -inline -glob [list_property [current_design]] "*PUDC*"]
+# puts "PUDC_DESIGN_PROPERTIES=[join $pudc_design_properties ,]"
+PUDC_DESIGN_PROPERTIES=
+# foreach pin_name {E8 F12 F13 J15 J16 J18 K16 L15 L17 P10 R11 R12 T10 T18} {
+#   set pin_object [get_package_pins -quiet $pin_name]
+#   puts "PIN=$pin_name COUNT=[llength $pin_object] PIN_FUNC=[safe_property PIN_FUNC $pin_object] BANK=[safe_property BANK $pin_object]"
+# }
+PIN=E8 COUNT=1 PIN_FUNC=CCLK_0 BANK=0
+PIN=F12 COUNT=1 PIN_FUNC=DONE_0 BANK=0
+PIN=F13 COUNT=1 PIN_FUNC=M2_0 BANK=0
+PIN=J15 COUNT=1 PIN_FUNC=IO_L2P_T0_D02_14 BANK=14
+PIN=J16 COUNT=1 PIN_FUNC=IO_L2N_T0_D03_14 BANK=14
+PIN=J18 COUNT=1 PIN_FUNC=IO_L3P_T0_DQS_PUDC_B_14 BANK=14
+PIN=K16 COUNT=1 PIN_FUNC=IO_L1P_T0_D00_MOSI_14 BANK=14
+PIN=L15 COUNT=1 PIN_FUNC=IO_L6P_T0_FCS_B_14 BANK=14
+PIN=L17 COUNT=1 PIN_FUNC=IO_L1N_T0_D01_DIN_14 BANK=14
+PIN=P10 COUNT=1 PIN_FUNC=PROGRAM_B_0 BANK=0
+PIN=R11 COUNT=1 PIN_FUNC=M1_0 BANK=0
+PIN=R12 COUNT=1 PIN_FUNC=M0_0 BANK=0
+PIN=T10 COUNT=1 PIN_FUNC=INIT_B_0 BANK=0
+PIN=T18 COUNT=1 PIN_FUNC=IO_L15N_T2_DQS_DOUT_CSO_B_14 BANK=14
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:05 ; elapsed = 00:00:12 . Memory (MB): peak = 1841.250 ; gain = 0.000
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:54 ; elapsed = 00:01:32 . Memory (MB): peak = 1841.250 ; gain = 0.000
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1911.301 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1911.301 ; gain = 0.000
+Phase 1 Initialization | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 1911.301 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Detect if minReqCache needed
+Phase 2.1 Detect if minReqCache needed | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.325 . Memory (MB): peak = 1911.316 ; gain = 0.016
+
+Phase 2.2 Timer Update
+Phase 2.2 Timer Update | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.334 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Phase 2 Timer Update And Timing Data Collection | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.337 . Memory (MB): peak = 1911.316 ; gain = 0.016
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.409 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Retarget | Checksum: 21d5d6b92
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 4 Constant propagation | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.419 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Constant propagation | Checksum: 21d5d6b92
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Phase 5 Sweep | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.479 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Sweep | Checksum: 21d5d6b92
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+
+Phase 6 BUFG optimization
+Phase 6 BUFG optimization | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.733 . Memory (MB): peak = 1911.316 ; gain = 0.016
+BUFG optimization | Checksum: 21d5d6b92
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.745 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Shift Register Optimization | Checksum: 21d5d6b92
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.756 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Post Processing Netlist | Checksum: 21d5d6b92
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.783 . Memory (MB): peak = 1911.316 ; gain = 0.016
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.892 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Phase 9 Finalization | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.016
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                              0  |
+|  Constant propagation         |               0  |               0  |                                              0  |
+|  Sweep                        |               0  |               0  |                                              0  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              0  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.016
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.262 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 21d5d6b92
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1911.316 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+20 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:01:25 ; elapsed = 00:02:33 . Memory (MB): peak = 1911.316 ; gain = 70.066
+# place_design
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 1790d722a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 1790d722a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:01 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+WARNING: [Place 30-2953] Timing driven mode will be turned off because no critical terminals were found.
+Phase 1.3 Build Placer Netlist Model | Checksum: 21828c0db
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 21828c0db
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 21828c0db
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Phase 2 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1911.316 ; gain = 0.000
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.000
+INFO: [Place 30-281] No place-able instance is found; design doesn't contain any instance or all instances are placed
+Ending Placer Task | Checksum: 1790d722a
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:02 . Memory (MB): peak = 1911.316 ; gain = 0.000
+11 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:00:08 ; elapsed = 00:00:24 . Memory (MB): peak = 1911.316 ; gain = 0.000
+# report_io -file "pwr0_v2_report_io.rpt"
+report_io: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 1911.316 ; gain = 0.000
+# report_drc -file "pwr0_v2_report_drc.rpt"
+Command: report_drc -file pwr0_v2_report_drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/FPGA/PCB_PWR0_VIVADO_SANDBOX_20260901/pwr0_v2_report_drc.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:17 ; elapsed = 00:00:33 . Memory (MB): peak = 1911.316 ; gain = 0.000
+# set drc_errors [get_drc_violations -quiet -filter {SEVERITY == Error}]
+# set drc_critical [get_drc_violations -quiet -filter {SEVERITY == Critical_Warning}]
+# set drc_warnings [get_drc_violations -quiet -filter {SEVERITY == Warning}]
+# puts "DRC_ERROR_COUNT=[llength $drc_errors]"
+DRC_ERROR_COUNT=0
+# puts "DRC_CRITICAL_WARNING_COUNT=[llength $drc_critical]"
+DRC_CRITICAL_WARNING_COUNT=0
+# puts "DRC_WARNING_COUNT=[llength $drc_warnings]"
+DRC_WARNING_COUNT=0
+# foreach violation [concat $drc_errors $drc_critical $drc_warnings] {
+#   puts "DRC=[get_property NAME $violation]|[get_property SEVERITY $violation]|[get_property DESCRIPTION $violation]"
+# }
+# puts "NO_WRITE_BITSTREAM_COMMAND=TRUE"
+NO_WRITE_BITSTREAM_COMMAND=TRUE
+# puts "PUDC_STRAP_IS_EXTERNAL_AND_NOT_MODELED_BY_VIVADO=TRUE"
+PUDC_STRAP_IS_EXTERNAL_AND_NOT_MODELED_BY_VIVADO=TRUE
+# puts "PWR0_SANDBOX_END"
+PWR0_SANDBOX_END
+# close_project
+close_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:09 . Memory (MB): peak = 1911.316 ; gain = 0.000
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Tue Sep  1 18:20:39 2026...

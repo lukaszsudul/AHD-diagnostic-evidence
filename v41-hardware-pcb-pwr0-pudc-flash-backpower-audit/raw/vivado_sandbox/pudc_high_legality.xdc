@@ -1,0 +1,7 @@
+set_property PACKAGE_PIN D13 [get_ports osc27_d13]
+set_property IOSTANDARD LVCMOS33 [get_ports osc27_d13]
+set_property PACKAGE_PIN A14 [get_ports nvp_clk_a14]
+set_property IOSTANDARD LVCMOS33 [get_ports nvp_clk_a14]
+create_clock -name osc27 -period 37.037 [get_ports osc27_d13]
+set_property CONFIG_VOLTAGE 3.3 [current_design]
+set_property CFGBVS VCCO [current_design]

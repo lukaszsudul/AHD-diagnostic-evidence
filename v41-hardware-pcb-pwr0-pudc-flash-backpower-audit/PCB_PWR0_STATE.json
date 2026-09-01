@@ -1,0 +1,79 @@
+{
+  "audit": "PCB-PWR-0",
+  "title": "PUDC_B / Flash / Peripheral Back-Power and Configuration Safety Audit",
+  "engineering_gate": "PASS",
+  "overall_result_at_package_generation": "PENDING_EVIDENCE_PUBLICATION_AND_REMOTE_READBACK",
+  "current_topology_electrical_signoff": "BLOCKED_PENDING_DESIGNER_ACTIONS",
+  "routing_release": "BLOCKED_PENDING_DESIGNER_ACTIONS",
+  "evidence_publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-hardware-pcb-pwr0-pudc-flash-backpower-audit",
+    "commit_message": "Audit AHD PUDC_B Flash and peripheral back-power safety",
+    "force_push": false,
+    "remote_readback": "EXTERNAL_POST_COMMIT_CHECK_REQUIRED"
+  },
+  "device": {
+    "part": "xc7a35tcsg325-2",
+    "device": "xc7a35t",
+    "package": "csg325",
+    "speed_grade": "-2",
+    "exact_part_verified_in_vivado": true
+  },
+  "configuration": {
+    "mode": "MASTER_SPI",
+    "mode_pins_historical_reported": "001",
+    "current_a35t_mode_straps_require_final_schematic_confirmation": true,
+    "historical_a15t_spi_width": 4,
+    "current_a35t_spi_width": "UNRESOLVED",
+    "historical_flash": "S25FL064L",
+    "current_flash_requires_final_bom_confirmation": true
+  },
+  "pudc": {
+    "low": "ordinary/inactive SelectIO high-Z with weak internal pull-up after relevant power is valid and during configuration",
+    "high": "ordinary/inactive SelectIO high-Z with global configuration pull-ups disabled",
+    "recommendation": "CONFIGURABLE_0R_OPTION",
+    "proposed_default_population": "HIGH_TO_VCCO_14",
+    "configurable_option": "RECOMMENDED",
+    "related_board_observation_class": "EXPERIMENTAL_EVIDENCE_FROM_RELATED_BOARD",
+    "low_aggregate_injection_risk": "HIGH"
+  },
+  "flash": {
+    "pudc_high_boot": "SUPPORTED_WITH_EXTERNAL_PULL_REQUIREMENTS",
+    "current_flash_power_sequence": "POTENTIAL_VIOLATION",
+    "archived_direct_passive_injection_paths": 3,
+    "fpga_powered_off_ioff": "NOT_PROVEN",
+    "ds181_exact_condition": "REQUIRES_AUTHORITATIVE_DS181_CONFIRMATION"
+  },
+  "nvp": {
+    "irq_power_off_behavior": "REQUIRES_NVP_DATASHEET_CONFIRMATION",
+    "reset_active_level": "LOW",
+    "sys_clk_hz": 27000000,
+    "powered_off_fail_safe_io": "NOT_SPECIFIED",
+    "i2c_pullup_domain": "SWITCHED_NVP_VDD3X_WITH_ADDITIONAL_CONSTRAINTS"
+  },
+  "vivado": {
+    "sandbox_version": "2025.2",
+    "drc_no_objection": "PASS",
+    "pudc_high_vivado_legality": "NOT_PROVEN",
+    "reason": "PUDC_B strap and powered-off paths are external and have no Vivado design property",
+    "product_bitstream_generated": false
+  },
+  "prior_decisions": {
+    "j18_pudc_1k_to_gnd": "SUPERSEDED",
+    "clock_27mhz_d13_fpga_a14_nvp": "CONFIRMED_WITH_ADDITIONAL_CONSTRAINTS",
+    "i2c_pullups_to_switched_nvp_vdd3x": "CONFIRMED_WITH_ADDITIONAL_CONSTRAINTS"
+  },
+  "mutations": {
+    "fpga_ahd_source_modified": false,
+    "active_xdc_modified": false,
+    "pcb_or_schematic_modified": false,
+    "ssot_modified": false,
+    "dut_accessed": false,
+    "fpga_programmed": false,
+    "product_bitstream_generated": false,
+    "g_track_changed": false,
+    "r_track_changed": false,
+    "git_cleanup_reset_stash_or_branch_movement": false
+  }
+}
