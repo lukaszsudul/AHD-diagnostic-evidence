@@ -1,0 +1,148 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Wed Sep  2 01:24:36 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_methodology -checks {TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39} -file C:/FPGA/G2B_BS3_OWNERSHIP_20260902/run_validate_all_r3/G2B_BS3_FULL_CONTEXT_TIMING_METHODOLOGY.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : ignored
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_G2B_ROUTED
+      Design limits: <entire design considered>
+
+            Checks: TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39
+             Max checks: <unlimited>
+             Checks found: 22
++-----------+----------+-------------------------------------------------------------------------+--------+
+| Rule      | Severity | Description                                                             | Checks |
++-----------+----------+-------------------------------------------------------------------------+--------+
+| TIMING-34 | Warning  | Bus skew constraint with unrealistic value                              | 16     |
+| TIMING-39 | Warning  | Invalid bus skew constraint on paths that have too many levels of logic | 6      |
++-----------+----------+-------------------------------------------------------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-34#1 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 31 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/MAILBOX/nvp_cfg_abort_reg/D
+Related violations: <none>
+
+TIMING-34#2 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 33 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/MAILBOX/status_bus_pcie_reg[0]/D
+Related violations: <none>
+
+TIMING-34#3 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 36 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: CAPTURE_SUBSYSTEM/active_sav_gray_sync1_pcie_reg[0]/D
+Related violations: <none>
+
+TIMING-34#4 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 40 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/snapshot_attempted_sync1_axi_reg[0]/D
+Related violations: <none>
+
+TIMING-34#5 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 42 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/snapshot_epoch_sync1_axi_reg[0]/D
+Related violations: <none>
+
+TIMING-34#6 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 44 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/snapshot_epoch_echo_source_reg[0]/D
+Related violations: <none>
+
+TIMING-34#7 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 46 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/hard_event_baseline_hold_source_reg[0]/D
+Related violations: <none>
+
+TIMING-34#8 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 47 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-34#9 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 48 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-34#10 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 49 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-34#11 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 50 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-34#12 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 52 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/axis_attempt_reg[0]/D
+Related violations: <none>
+
+TIMING-34#13 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 53 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/axis_generation_reg[0]/D
+Related violations: <none>
+
+TIMING-34#14 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 54 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/axis_epoch_reg[0]/D
+Related violations: <none>
+
+TIMING-34#15 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 55 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/axi_hard_episode_reg/D
+Related violations: <none>
+
+TIMING-34#16 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 57 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/hard_event_baseline_sync1_axi_reg[0]/D
+Related violations: <none>
+
+TIMING-39#1 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 46 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/overflow_count_source_reg[0]/R
+Related violations: <none>
+
+TIMING-39#2 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 47 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-39#3 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 48 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-39#4 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 49 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-39#5 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 50 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/enable_applied_source_reg/D
+Related violations: <none>
+
+TIMING-39#6 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 55 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/axi_hard_episode_reg/D
+Related violations: <none>
+
+

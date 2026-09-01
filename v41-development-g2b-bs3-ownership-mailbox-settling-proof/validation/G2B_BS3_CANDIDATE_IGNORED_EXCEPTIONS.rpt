@@ -1,0 +1,47 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Wed Sep  2 01:29:06 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_exceptions -ignored -file C:/FPGA/G2B_BS3_OWNERSHIP_20260902/run_validate_all_r3/G2B_BS3_CANDIDATE_IGNORED_EXCEPTIONS.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Exceptions Report
+
+Position  From                   Through                                                                           To                                  Setup           Hold            Status                          
+--------  ---------------------  --------------------------------------------------------------------------------  ----------------------------------  --------------  --------------  --------------------------------
+2         [get_ports sys_rst_n]  *                                                                                 *                                   false           false           Totally overridden path by FP 29
+11        *                      [get_pins -filter REF_PIN_NAME=~PLPHYLNKUPN -of_objects [get_cells -hierarchical  *                                   false           false           Totally overridden path by FP 48
+                                  -filter { PRIMITIVE_TYPE =~ * }]]                                                                                                                    
+12        *                      [get_pins -filter REF_PIN_NAME=~PLRECEIVEDHOTRST -of_objects [get_cells -hierarc  *                                   false           false           Totally overridden path by FP 47
+                                 hical -filter { PRIMITIVE_TYPE =~ * }]]                                                                                                               
+13        *                      [get_pins -filter REF_PIN_NAME=~RXELECIDLE -of_objects [get_cells -hierarchical   *                                   false           false           Non-existent path               
+                                 -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                               
+14        *                      [get_pins -filter REF_PIN_NAME=~TXPHINITDONE -of_objects [get_cells -hierarchica  *                                   false           false           Non-existent path               
+                                 l -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                             
+15        *                      [get_pins -filter REF_PIN_NAME=~TXPHALIGNDONE -of_objects [get_cells -hierarchic  *                                   false           false           Non-existent path               
+                                 al -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                            
+16        *                      [get_pins -filter REF_PIN_NAME=~TXDLYSRESETDONE -of_objects [get_cells -hierarch  *                                   false           false           Non-existent path               
+                                 ical -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                          
+17        *                      [get_pins -filter REF_PIN_NAME=~RXDLYSRESETDONE -of_objects [get_cells -hierarch  *                                   false           false           Non-existent path               
+                                 ical -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                          
+18        *                      [get_pins -filter REF_PIN_NAME=~RXPHALIGNDONE -of_objects [get_cells -hierarchic  *                                   false           false           Non-existent path               
+                                 al -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                            
+19        *                      [get_pins -filter REF_PIN_NAME=~RXCDRLOCK -of_objects [get_cells -hierarchical -  *                                   false           false           Non-existent path               
+                                 filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                                
+20        *                      [get_pins -filter REF_PIN_NAME=~CFGMSGRECEIVEDPMETO -of_objects [get_cells -hier  *                                   false           false           Non-existent path               
+                                 archical -filter { PRIMITIVE_TYPE =~ * }]]                                                                                                            
+21        *                      [get_pins -filter REF_PIN_NAME=~PLL0LOCK -of_objects [get_cells -hierarchical -f  *                                   false           false           Non-existent path               
+                                 ilter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                                 
+22        *                      [get_pins -filter REF_PIN_NAME=~RXPMARESETDONE -of_objects [get_cells -hierarchi  *                                   false           false           Non-existent path               
+                                 cal -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                           
+23        *                      [get_pins -filter REF_PIN_NAME=~RXSYNCDONE -of_objects [get_cells -hierarchical   *                                   false           false           Non-existent path               
+                                 -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                               
+24        *                      [get_pins -filter REF_PIN_NAME=~TXSYNCDONE -of_objects [get_cells -hierarchical   *                                   false           false           Non-existent path               
+                                 -filter { PRIMITIVE_TYPE =~ IO.gt.* }]]                                                                                                               
+46        *                      *                                                                                 [get_cells {syncstages_ff_reg[0]}]  false           false           Non-existent path               
+

@@ -1,0 +1,4 @@
+Family,Constraint_Type,Source_Count,Destination_Count,Required_ns,Worst_Actual_ns,Slack_ns,Result,Notes
+Ownership_Slot_Selector,SET_MAX_DELAY_DATAPATH_ONLY,2,17,6.000,5.939,0.093,PASS,"Datapath delay of worst-slack constrained path; axis_slot_reg[1] to source_ownership_fatal_deferred; userclk1 to nvp_vclk1; 8 logic levels; external command bound 300 s"
+Ownership_Generation_Qualifier,SET_MAX_DELAY_DATAPATH_ONLY,24,17,6.000,5.308,0.724,PASS,"Datapath delay of worst-slack constrained path; axis_generation_reg[10] to source_ownership_fatal_deferred; userclk1 to nvp_vclk1; 7 logic levels; external command bound 300 s"
+Ownership_Epoch_Qualifier,SET_MAX_DELAY_DATAPATH_ONLY,32,17,6.000,5.423,0.609,PASS,"Datapath delay of worst-slack constrained path; axis_epoch_reg[5] to source_ownership_fatal_deferred; userclk1 to nvp_vclk1; 8 logic levels; external command bound 300 s"

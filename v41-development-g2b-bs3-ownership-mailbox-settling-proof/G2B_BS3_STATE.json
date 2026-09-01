@@ -1,0 +1,82 @@
+{
+  "gate": "G2B-BS3",
+  "title": "Ownership Mailbox Settling Bounds and Structural CDC Proof",
+  "engineering_gate": "PASS",
+  "project_state_rev_at_start": 3,
+  "project_state_rev_at_end": 3,
+  "sealed_dcp": {
+    "status": "VERIFIED",
+    "path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "size_bytes": 57900063,
+    "part": "xc7a35tcsg325-2"
+  },
+  "predecessor": {
+    "gate": "G2B-BS2",
+    "evidence_commit": "4699632c591238fee46ada3b0de37532fddd0b6f"
+  },
+  "ownership_model": {
+    "classification": "ACKNOWLEDGED_BUNDLED_STABLE_DATA_MAILBOX",
+    "request_synchronizer": "PASS",
+    "ack_synchronizer": "PASS",
+    "stable_data_hold": "PASS",
+    "source_clock": "userclk1",
+    "source_period_ns": 16.000,
+    "destination_clock": "nvp_vclk1",
+    "destination_period_ns": 6.734,
+    "payload_width": 58,
+    "payload_family_count": 3,
+    "destination_count": 17,
+    "structure": "PASS_WITH_DISPOSITION"
+  },
+  "margin": {
+    "theoretical_minimum_window_ns": 13.468,
+    "recommended_max_delay_per_family_ns": 6.000,
+    "gross_remaining_margin_ns": 7.468,
+    "setup_adjusted_remaining_margin_ns": 7.436,
+    "earliest_aligned_normal_ack_consumption_ns": 48.000
+  },
+  "candidate": {
+    "created": true,
+    "sha256": "AE4BD91C1A8C3B1AF2FB9B0EA9A9382E9F618FD8E223BACF98E4468C10EAD087",
+    "ownership_set_bus_skew_present": false,
+    "constraint_type": "PER_FAMILY_SET_MAX_DELAY_DATAPATH_ONLY",
+    "bound_ns": 6.000,
+    "ready_for_meta": "YES_WITH_OWNER_ARCHITECT_REVIEW"
+  },
+  "family_timing": {
+    "status": "PASS",
+    "slot": { "source_count": 2, "destination_count": 17, "datapath_delay_ns": 5.939, "slack_ns": 0.093 },
+    "generation": { "source_count": 24, "destination_count": 17, "datapath_delay_ns": 5.308, "slack_ns": 0.724 },
+    "epoch": { "source_count": 32, "destination_count": 17, "datapath_delay_ns": 5.423, "slack_ns": 0.609 },
+    "worst_actual_interpretation": "DATAPATH_DELAY_OF_WORST_SLACK_CONSTRAINED_PATH"
+  },
+  "methodology": {
+    "old_group9_timing_34": "PRESENT",
+    "old_group9_timing_39": "PRESENT",
+    "candidate_timing_32": "ABSENT",
+    "candidate_timing_34": "ABSENT",
+    "candidate_timing_37": "ABSENT",
+    "candidate_timing_38": "ABSENT",
+    "candidate_timing_39": "ABSENT"
+  },
+  "signoff_runtime": "MARGINAL",
+  "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+  "rtl_change_required": "NO",
+  "group9_final_disposition": "REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS",
+  "protection": {
+    "source_repository_modified": false,
+    "active_xdc_modified": false,
+    "source_index_changed": false,
+    "branch_movement": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "ssot_modified": false,
+    "report_bus_skew_attempt_count": 0
+  },
+  "execution_holds": {
+    "g2b_lut1": "HOLD_FOR_BS3_NO_PROMOTION",
+    "g2b_hw": "BLOCKED",
+    "r_track": "HOLD"
+  }
+}
