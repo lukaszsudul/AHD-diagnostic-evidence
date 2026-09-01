@@ -1,0 +1,48 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Tue Sep  1 23:21:47 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_methodology -checks {TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39} -file C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_TIMING_METHODOLOGY.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : xc7a35tcsg325-2
+| Speed File   : -2
+| Design State : ignored
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: checkpoint_G2B_ROUTED
+      Design limits: <entire design considered>
+
+            Checks: TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39
+             Max checks: <unlimited>
+             Checks found: 2
++-----------+----------+-------------------------------------------------------------------------+--------+
+| Rule      | Severity | Description                                                             | Checks |
++-----------+----------+-------------------------------------------------------------------------+--------+
+| TIMING-34 | Warning  | Bus skew constraint with unrealistic value                              | 1      |
+| TIMING-39 | Warning  | Invalid bus skew constraint on paths that have too many levels of logic | 1      |
++-----------+----------+-------------------------------------------------------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-34#1 Warning
+Bus skew constraint with unrealistic value  
+Bus Skew constraint with unrealistic value (< min of half source and destination clock period) or < 1 ns requirement (see constraint position 50 in the Timing Constraint window in Vivado IDE). Setting a very aggressive value results in increased runtime. First endpoint covered by the constraint: G2B_ONECH_C2H/own_ok_hold_source_reg/D
+Related violations: <none>
+
+TIMING-39#1 Warning
+Invalid bus skew constraint on paths that have too many levels of logic  
+Bus skew constraint has been applied to paths with more than 1 logic level (see constraint position 50 in the Timing Constraint window in Vivado IDE). First endpoint covered by the constraint: G2B_ONECH_C2H/own_ok_hold_source_reg/D
+Related violations: <none>
+
+

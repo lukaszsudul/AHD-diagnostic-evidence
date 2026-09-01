@@ -1,0 +1,159 @@
+{
+  "schema": "AHD_V41_G2B_BS2_STATE_V1",
+  "task": "G2B-BS2",
+  "experiment_id": "BS2_EXP001",
+  "authoritative_state": {
+    "project_state_rev_at_start": 3,
+    "project_state_rev_at_end": 3,
+    "project_state_json_sha256": "9ED040C2146C6938F7C4B90694396182D4E1B0C9BD2450675508415386001A14",
+    "ssot_modified": false,
+    "g2b_lut1_task_disposition": "HOLD",
+    "g2b_hw_gate_disposition": "BLOCKED"
+  },
+  "predecessor": {
+    "task": "G2B-BS1R",
+    "evidence_commit": "f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62",
+    "result": "SINGLE_SINK_QUERY_PATHOLOGY_REPRODUCED",
+    "official_report_bus_skew": "NOT_COMPLETED"
+  },
+  "sealed_dcp": {
+    "path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "size_bytes": 57900063,
+    "sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "verified_before": true,
+    "verified_after": true,
+    "part": "xc7a35tcsg325-2",
+    "fully_routed": true,
+    "routable_nets": 33985,
+    "fully_routed_nets": 33985,
+    "routing_error_nets": 0
+  },
+  "object_scope": {
+    "source_scope": "S_FULL",
+    "source_count": 58,
+    "source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "resolved_source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "source_families": {
+      "axis_epoch": 32,
+      "axis_generation": 24,
+      "axis_slot": 2
+    },
+    "sink_scope": "K_OWNERSHIP_RESULT",
+    "sink_count": 1,
+    "sink_object": "G2B_ONECH_C2H/own_ok_hold_source_reg",
+    "sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "resolved_sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "identity": "PASS"
+  },
+  "tool": {
+    "vivado_version": "2025.2",
+    "sw_build": 6299465,
+    "ip_build": 6300035,
+    "worker_tcl_sha256": "0CA112FBD092B14A72BA0B559FCB82ED607EFACF019C8C17F6E1DB46C8E24854",
+    "runner_ps1_sha256": "E9819B09587CD0CFC466FFE9682547B28AE87EB97F0FA3E6A6CCBD9F954BECE0"
+  },
+  "serialization": {
+    "preexisting_vivado_count": 0,
+    "vivado_workers_launched": 1,
+    "worker_overlap": false,
+    "worker_terminated": false,
+    "postexisting_vivado_count": 0,
+    "unrelated_processes_terminated": false
+  },
+  "initialization": {
+    "watchdog_seconds": 900,
+    "status": "PASS",
+    "command_ready": true,
+    "elapsed_seconds": 706.648
+  },
+  "report_timing": {
+    "watchdog_seconds": 300,
+    "status": "PASS",
+    "external_elapsed_seconds": 64.183,
+    "command_elapsed_seconds": 64.164,
+    "returned_path_count": 1,
+    "context": "SETUP_MAX_SLOW",
+    "source": "G2B_ONECH_C2H/axis_slot_reg[1]/C",
+    "destination": "G2B_ONECH_C2H/own_ok_hold_source_reg/D",
+    "source_clock": "userclk1",
+    "destination_clock": "nvp_vclk1",
+    "datapath_delay_ns": 4.868,
+    "requirement_ns": 6.000,
+    "slack_ns": 1.162,
+    "logic_levels": 6,
+    "report_sha256": "C72F4E0932ADD86264EB62EFF078D744F1934AB080BDADFE03A08B6B4B8989E1"
+  },
+  "get_timing_paths": {
+    "watchdog_seconds": 300,
+    "status": "PASS",
+    "external_elapsed_seconds": 4.346,
+    "query_export_elapsed_seconds": 2.957,
+    "path_count": 58,
+    "path_count_at_cap": true,
+    "unique_source_cell_count": 1,
+    "unique_destination_cell_count": 1,
+    "source_coverage_sufficient": false,
+    "actual_arrival_property": "ARRIVAL_TIME",
+    "actual_datapath_property": "DATAPATH_DELAY",
+    "csv_sha256": "0B56A68BC0C0B416DC3AFCDF5111F3D6ADFE4DD1B5BCA198BEA4DA798E049B5F"
+  },
+  "comparability": {
+    "classification": "INVALID_FOR_SKEW_COMPARISON",
+    "reason": "one-of-58 source coverage plus selector/equality reconvergence into one Boolean sink"
+  },
+  "alternative_skew": {
+    "required_skew_ns": 3.000,
+    "computed_skew_available": false,
+    "computed_skew_ns": null,
+    "alternative_slack_ns": null,
+    "result": "NOT_AVAILABLE",
+    "official_report_bus_skew": "NOT_COMPLETED",
+    "report_bus_skew_attempt_count": 0
+  },
+  "cdc": {
+    "classification": "TOGGLE_ACK_STABLE_DATA_MAILBOX_WITH_COMBINATIONAL_AGGREGATION_AFTER_SYNCHRONIZED_CONTROL",
+    "request_synchronizer_stages": 2,
+    "acknowledgement_synchronizer_stages": 2,
+    "primary_invariant": "PAYLOAD_STABLE_THROUGH_ACK_AND_ABSOLUTELY_SETTLED_BEFORE_SYNCHRONIZED_REQUEST_CONSUMPTION"
+  },
+  "methodology": {
+    "status": "PASS",
+    "elapsed_seconds": 23.461,
+    "timing_32": "ABSENT",
+    "timing_34": "PRESENT",
+    "timing_37": "ABSENT",
+    "timing_38": "ABSENT",
+    "timing_39": "PRESENT",
+    "report_sha256": "A75E987EC342A000DC6FC9A8DCE4411C6ED8AD5D49082AC6106F63A8B7923E13"
+  },
+  "decision": {
+    "alternative_signoff": "FEASIBLE_WITH_CONSTRAINT_CHANGES",
+    "group9_constraint_decision": "REPLACE_WITH_EQUIVALENT_TIMING_CHECKS",
+    "numerical_bus_skew_equivalence": false,
+    "recommended_property": "STRUCTURAL_MAILBOX_PROOF_PLUS_JUSTIFIED_PER_FAMILY_ABSOLUTE_SETTLING_BOUNDS"
+  },
+  "protections": {
+    "source_repository_modified": false,
+    "active_xdc_modified": false,
+    "source_index_changed": false,
+    "source_branch_moved": false,
+    "source_commit_created": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "dut_accessed": false,
+    "ssot_modified": false
+  },
+  "result": {
+    "engineering_gate": "PASS",
+    "first_blocker": "NONE",
+    "final_execution_point": "HARD STOP AFTER G2B-BS2 ALTERNATIVE TIMING AUDIT"
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-bs2-alternative-timing-equivalence",
+    "evidence_commit": "CONTAINING_GIT_COMMIT",
+    "remote_readback_required": true
+  }
+}
+

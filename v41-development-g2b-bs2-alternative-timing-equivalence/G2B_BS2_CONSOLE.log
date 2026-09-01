@@ -1,0 +1,575 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  1 23:09:02 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\G2B_BS2_ALT_TIMING_20260901T205518Z\G2B_BS2_WORKER.tcl}
+# proc utc_from_milliseconds {milliseconds} {
+#   set seconds [expr {$milliseconds / 1000}]
+#   set fraction [format %03d [expr {$milliseconds % 1000}]]
+#   return "[clock format $seconds -gmt true -format {%Y-%m-%dT%H:%M:%S}].${fraction}Z"
+# }
+# proc utc_now {} {
+#   return [utc_from_milliseconds [clock milliseconds]]
+# }
+# proc seconds_from_ms {milliseconds} {
+#   return [format %.3f [expr {double($milliseconds) / 1000.0}]]
+# }
+# proc write_text {path text} {
+#   set temporary_path "${path}.tmp.[pid].[clock clicks]"
+#   set handle [open $temporary_path w]
+#   fconfigure $handle -translation lf -encoding utf-8
+#   puts -nonewline $handle $text
+#   close $handle
+#   file rename -force $temporary_path $path
+# }
+# proc append_text {path text} {
+#   set handle [open $path a]
+#   fconfigure $handle -translation lf -encoding utf-8
+#   puts -nonewline $handle $text
+#   close $handle
+# }
+# proc read_exact_name_list {path} {
+#   set handle [open $path r]
+#   fconfigure $handle -translation auto -encoding utf-8
+#   set text [read $handle]
+#   close $handle
+#   set normalized [string map [list "\r" ""] [string trim $text]]
+#   if {$normalized eq ""} { return [list] }
+#   return [split $normalized "\n"]
+# }
+# proc resolve_cells_exact {names label} {
+#   set resolved [list]
+#   foreach name $names {
+#     set object [get_cells -quiet [list $name]]
+#     if {[llength $object] != 1} {
+#       error "$label object did not resolve exactly once: $name count=[llength $object]"
+#     }
+#     lappend resolved $object
+#   }
+#   return $resolved
+# }
+# proc mark_phase {output_dir label t0_ms detail} {
+#   set now_ms [clock milliseconds]
+#   set timestamp [utc_from_milliseconds $now_ms]
+#   set elapsed [seconds_from_ms [expr {$now_ms - $t0_ms}]]
+#   write_text [file join $output_dir "${label}.marker"] "MARKER=${label}\nTIMESTAMP=${timestamp}\nEPOCH_MILLISECONDS=${now_ms}\nELAPSED_FROM_LAUNCH_SECONDS=${elapsed}\nDETAIL=${detail}\n"
+#   append_text [file join $output_dir G2B_BS2_TIMELINE.log] "${label}|${timestamp}|${now_ms}|${elapsed}|${detail}\n"
+#   puts "BS2_MARKER ${label} ${timestamp} elapsed=${elapsed}s"
+#   flush stdout
+#   return [list $now_ms $timestamp $elapsed]
+# }
+# proc property_or_na {property object} {
+#   if {[catch {get_property $property $object} value]} { return "N/A" }
+#   if {$value eq ""} { return "N/A" }
+#   return $value
+# }
+# proc csv_quote {value} {
+#   set flattened [string map [list "\r" " " "\n" " "] $value]
+#   set escaped [string map [list "\"" "\"\""] $flattened]
+#   return "\"${escaped}\""
+# }
+# proc csv_row {fields} {
+#   set quoted [list]
+#   foreach field $fields { lappend quoted [csv_quote $field] }
+#   return [join $quoted ,]
+# }
+# proc object_clock_names {cell} {
+#   set clock_pins [get_pins -quiet -of_objects $cell -filter {IS_CLOCK == 1 || REF_PIN_NAME == C || REF_PIN_NAME == CLK}]
+#   set clocks [get_clocks -quiet -of_objects $clock_pins]
+#   if {[llength $clocks] == 0} { return "NONE" }
+#   return [join [lsort -dictionary -unique [get_property NAME $clocks]] ";"]
+# }
+# proc cell_from_endpoint_pin {pin_name} {
+#   if {$pin_name eq "" || $pin_name eq "N/A"} { return "N/A" }
+#   set pin_object [get_pins -quiet [list $pin_name]]
+#   if {[llength $pin_object] != 1} { return "N/A" }
+#   set cell_object [get_cells -quiet -of_objects $pin_object]
+#   if {[llength $cell_object] != 1} { return "N/A" }
+#   return [get_property NAME $cell_object]
+# }
+# proc write_endpoint_inventory {output_dir sources sinks} {
+#   set rows [list [csv_row {ROLE NAME REF_NAME PRIMITIVE_TYPE CLOCK_NAMES LOC IS_SEQUENTIAL}]]
+#   foreach source $sources {
+#     lappend rows [csv_row [list SOURCE [get_property NAME $source] [property_or_na REF_NAME $source] [property_or_na PRIMITIVE_TYPE $source] [object_clock_names $source] [property_or_na LOC $source] [property_or_na IS_SEQUENTIAL $source]]]
+#   }
+#   foreach sink $sinks {
+#     lappend rows [csv_row [list SINK [get_property NAME $sink] [property_or_na REF_NAME $sink] [property_or_na PRIMITIVE_TYPE $sink] [object_clock_names $sink] [property_or_na LOC $sink] [property_or_na IS_SEQUENTIAL $sink]]]
+#   }
+#   write_text [file join $output_dir G2B_BS2_ENDPOINT_INVENTORY.csv] "[join $rows \n]\n"
+# }
+# proc run_bs2 {} {
+#   global argv argc
+#   if {$argc != 9} {
+#     error "usage: G2B_BS2_WORKER.tcl DCP BASE_XDC SOURCE_LIST SINK_LIST OUTPUT_DIR T0_EPOCH_MS DCP_SHA256 SOURCE_SHA256 SINK_SHA256"
+#   }
+# 
+#   lassign $argv checkpoint base_xdc source_list sink_list output_dir t0_ms dcp_sha256 source_sha256 sink_sha256
+#   file mkdir $output_dir
+#   mark_phase $output_dir WORKER_STARTED $t0_ms "Tcl worker entered"
+#   write_text [file join $output_dir G2B_BS2_VIVADO_VERSION.txt] "SHORT=[version -short]\nFULL=[version]\n"
+# 
+#   open_checkpoint $checkpoint
+#   mark_phase $output_dir DCP_OPENED $t0_ms "sealed routed checkpoint opened"
+# 
+#   set part [get_property PART [current_design]]
+#   if {$part ne "xc7a35tcsg325-2"} { error "sealed routed DCP part mismatch: $part" }
+# 
+#   set route_report [file join $output_dir G2B_BS2_ROUTE_STATUS.rpt]
+#   report_route_status -file $route_report
+#   set route_handle [open $route_report r]
+#   fconfigure $route_handle -translation auto -encoding utf-8
+#   set route_text [read $route_handle]
+#   close $route_handle
+#   if {![regexp -line {# of routable nets[^:\n]*:\s*([0-9]+)} $route_text route_match routable_nets]} {
+#     error "unable to parse routable-net count from route status"
+#   }
+#   if {![regexp -line {# of fully routed nets[^:\n]*:\s*([0-9]+)} $route_text fully_match fully_routed_nets]} {
+#     error "unable to parse fully-routed-net count from route status"
+#   }
+#   if {![regexp -line {# of nets with routing errors[^:\n]*:\s*([0-9]+)} $route_text error_match routing_error_nets]} {
+#     error "unable to parse routing-error count from route status"
+#   }
+#   if {$routable_nets != $fully_routed_nets || $routing_error_nets != 0} {
+#     error "sealed checkpoint is not fully routed: routable=$routable_nets fully_routed=$fully_routed_nets routing_errors=$routing_error_nets"
+#   }
+# 
+#   reset_timing -invalid
+#   read_xdc $base_xdc
+# 
+#   set source_names [read_exact_name_list $source_list]
+#   set sink_names [read_exact_name_list $sink_list]
+#   if {[llength $source_names] != 58} { error "authoritative source-list count mismatch: [llength $source_names]" }
+#   if {[llength $sink_names] != 1} { error "authoritative sink-list count mismatch: [llength $sink_names]" }
+# 
+#   set sources [resolve_cells_exact $source_names SOURCE]
+#   set sinks [resolve_cells_exact $sink_names SINK]
+#   set resolved_source_names [get_property NAME $sources]
+#   set resolved_sink_names [get_property NAME $sinks]
+#   if {[lsort -dictionary $source_names] ne [lsort -dictionary $resolved_source_names]} {
+#     error "resolved source identity differs from authoritative S_FULL list"
+#   }
+#   if {[lsort -dictionary $sink_names] ne [lsort -dictionary $resolved_sink_names]} {
+#     error "resolved sink identity differs from authoritative K_OWNERSHIP_RESULT list"
+#   }
+#   set sink_name [lindex $resolved_sink_names 0]
+#   if {$sink_name ne "G2B_ONECH_C2H/own_ok_hold_source_reg"} {
+#     error "resolved singleton sink differs from required object: $sink_name"
+#   }
+# 
+#   write_text [file join $output_dir G2B_BS2_SOURCE_SET_RESOLVED.txt] "[join $resolved_source_names \n]\n"
+#   write_text [file join $output_dir G2B_BS2_SINK_SET_RESOLVED.txt] "[join $resolved_sink_names \n]\n"
+#   write_endpoint_inventory $output_dir $sources $sinks
+#   mark_phase $output_dir OBJECTS_RESOLVED $t0_ms "58 sources and singleton sink identity verified"
+# 
+#   set ready_ms [clock milliseconds]
+#   set ready_timestamp [utc_from_milliseconds $ready_ms]
+#   set initialization_elapsed [seconds_from_ms [expr {$ready_ms - $t0_ms}]]
+#   write_text [file join $output_dir COMMAND_READY.marker] "MARKER=COMMAND_READY\nTIMESTAMP=${ready_timestamp}\nEPOCH_MILLISECONDS=${ready_ms}\nDCP_SHA256=${dcp_sha256}\nSOURCE_COUNT=58\nSOURCE_SET_SHA256=${source_sha256}\nSINK_COUNT=1\nSINK_OBJECT=${sink_name}\nSINK_SET_SHA256=${sink_sha256}\nVIVADO_VERSION=[version -short]\nPART=${part}\nROUTABLE_NETS=${routable_nets}\nFULLY_ROUTED_NETS=${fully_routed_nets}\nROUTING_ERROR_NETS=${routing_error_nets}\nINITIALIZATION_ELAPSED_SECONDS=${initialization_elapsed}\nINITIALIZATION_WATCHDOG_SECONDS=900\nREPORT_TIMING_WATCHDOG_SECONDS=300\nGET_TIMING_PATHS_WATCHDOG_SECONDS=300\nREPORT_BUS_SKEW_ATTEMPT_COUNT=0\n"
+#   append_text [file join $output_dir G2B_BS2_TIMELINE.log] "COMMAND_READY|${ready_timestamp}|${ready_ms}|${initialization_elapsed}|exact scope ready; prohibited query not invoked\n"
+#   puts "BS2_COMMAND_READY ${ready_timestamp} initialization=${initialization_elapsed}s"
+#   flush stdout
+# 
+#   set report_start_ms [clock milliseconds]
+#   mark_phase $output_dir REPORT_TIMING_STARTED $t0_ms "delay_type=max max_paths=1 nworst=1 exact 58-to-1 scope"
+#   set report_path [file join $output_dir G2B_BS2_EXACT_SCOPE_TIMING.rpt]
+#   report_timing -delay_type max -max_paths 1 -nworst 1 -from $sources -to $sinks -file $report_path
+#   set report_end_ms [clock milliseconds]
+#   set report_elapsed [seconds_from_ms [expr {$report_end_ms - $report_start_ms}]]
+#   set report_handle [open $report_path r]
+#   fconfigure $report_handle -translation auto -encoding utf-8
+#   set report_text [read $report_handle]
+#   close $report_handle
+#   set report_path_count [regexp -all -line {^\s*Path Group:} $report_text]
+#   write_text [file join $output_dir G2B_BS2_REPORT_TIMING_SUMMARY.txt] "STATUS=PASS\nDELAY_TYPE=max\nANALYSIS_CONTEXT=SETUP_MAX\nMAX_PATHS=1\nNWORST=1\nRETURNED_PATH_COUNT=${report_path_count}\nELAPSED_SECONDS=${report_elapsed}\n"
+#   set report_completed_ms [clock milliseconds]
+#   set report_completed_timestamp [utc_from_milliseconds $report_completed_ms]
+#   write_text [file join $output_dir REPORT_TIMING_COMPLETED.marker] "MARKER=REPORT_TIMING_COMPLETED\nTIMESTAMP=${report_completed_timestamp}\nEPOCH_MILLISECONDS=${report_completed_ms}\nREPORT_TIMING_ELAPSED_SECONDS=${report_elapsed}\nRETURNED_PATH_COUNT=${report_path_count}\nSTATUS=PASS\n"
+#   append_text [file join $output_dir G2B_BS2_TIMELINE.log] "REPORT_TIMING_COMPLETED|${report_completed_timestamp}|${report_completed_ms}|[seconds_from_ms [expr {$report_completed_ms - $t0_ms}]]|command_elapsed=${report_elapsed}s paths=${report_path_count}\n"
+#   puts "BS2_REPORT_TIMING_COMPLETED elapsed=${report_elapsed}s paths=${report_path_count}"
+#   flush stdout
+# 
+#   set paths_start_ms [clock milliseconds]
+#   mark_phase $output_dir GET_TIMING_PATHS_STARTED $t0_ms "delay_type=max max_paths=58 nworst=58 exact 58-to-1 scope"
+#   set paths [get_timing_paths -delay_type max -max_paths 58 -nworst 58 -from $sources -to $sinks]
+#   set path_count [llength $paths]
+#   set all_properties [list]
+#   foreach path $paths {
+#     foreach property [list_property $path] {
+#       if {[lsearch -exact $all_properties $property] < 0} { lappend all_properties $property }
+#     }
+#   }
+#   set all_properties [lsort -dictionary $all_properties]
+#   write_text [file join $output_dir G2B_BS2_TIMING_PATH_PROPERTY_NAMES.txt] "[join $all_properties \n]\n"
+# 
+#   set relevant_properties [list]
+#   set preferred_properties {SOURCE DESTINATION STARTPOINT_PIN ENDPOINT_PIN DATA_PATH_DELAY DATAPATH_DELAY ARRIVAL DATA_ARRIVAL_TIME SLACK REQUIREMENT STARTPOINT_CLOCK ENDPOINT_CLOCK LOGIC_LEVELS DELAY_TYPE PATH_GROUP SKEW UNCERTAINTY SOURCE_CLOCK_DELAY DESTINATION_CLOCK_DELAY}
+#   foreach candidate $preferred_properties {
+#     if {[lsearch -exact $all_properties $candidate] >= 0} { lappend relevant_properties $candidate }
+#   }
+#   foreach property $all_properties {
+#     if {[regexp -nocase {(arrival|delay|slack|requirement|clock|logic.level|source|destination|startpoint|endpoint|path.group|skew|uncertainty)} $property] && [lsearch -exact $relevant_properties $property] < 0} {
+#       lappend relevant_properties $property
+#     }
+#   }
+# 
+#   set path_rows [list [csv_row [concat {PATH_INDEX SOURCE_CELL_DERIVED DESTINATION_CELL_DERIVED} $relevant_properties]]]
+#   set inventory_rows [list [csv_row {PROPERTY PRESENT_ON_PATH_COUNT SAMPLE_VALUE}]]
+#   set unique_source_cells [list]
+#   set unique_destination_cells [list]
+#   set path_index 0
+#   foreach path $paths {
+#     incr path_index
+#     set startpoint_pin [property_or_na STARTPOINT_PIN $path]
+#     set endpoint_pin [property_or_na ENDPOINT_PIN $path]
+#     set source_cell [cell_from_endpoint_pin $startpoint_pin]
+#     set destination_cell [cell_from_endpoint_pin $endpoint_pin]
+#     if {$source_cell ne "N/A" && [lsearch -exact $unique_source_cells $source_cell] < 0} { lappend unique_source_cells $source_cell }
+#     if {$destination_cell ne "N/A" && [lsearch -exact $unique_destination_cells $destination_cell] < 0} { lappend unique_destination_cells $destination_cell }
+#     set fields [list $path_index $source_cell $destination_cell]
+#     foreach property $relevant_properties { lappend fields [property_or_na $property $path] }
+#     lappend path_rows [csv_row $fields]
+#   }
+#   foreach property $all_properties {
+#     set present_count 0
+#     set sample "N/A"
+#     foreach path $paths {
+#       set value [property_or_na $property $path]
+#       if {$value ne "N/A"} {
+#         incr present_count
+#         if {$sample eq "N/A"} { set sample $value }
+#       }
+#     }
+#     lappend inventory_rows [csv_row [list $property $present_count $sample]]
+#   }
+#   write_text [file join $output_dir G2B_BS2_TIMING_PATHS.csv] "[join $path_rows \n]\n"
+#   write_text [file join $output_dir G2B_BS2_TIMING_PATH_PROPERTY_VALUES.csv] "[join $inventory_rows \n]\n"
+#   set paths_end_ms [clock milliseconds]
+#   set paths_elapsed [seconds_from_ms [expr {$paths_end_ms - $paths_start_ms}]]
+#   set path_count_at_cap [expr {$path_count == 58 ? "YES" : "NO"}]
+#   write_text [file join $output_dir G2B_BS2_GET_TIMING_PATHS_SUMMARY.txt] "STATUS=PASS\nDELAY_TYPE=max\nANALYSIS_CONTEXT=SETUP_MAX\nMAX_PATHS=58\nNWORST=58\nPATH_COUNT=${path_count}\nPATH_COUNT_AT_CAP=${path_count_at_cap}\nUNIQUE_SOURCE_CELL_COUNT=[llength $unique_source_cells]\nUNIQUE_DESTINATION_CELL_COUNT=[llength $unique_destination_cells]\nUNIQUE_SOURCE_CELLS=[join [lsort -dictionary $unique_source_cells] {;}]\nUNIQUE_DESTINATION_CELLS=[join [lsort -dictionary $unique_destination_cells] {;}]\nELAPSED_SECONDS=${paths_elapsed}\n"
+#   set paths_completed_ms [clock milliseconds]
+#   set paths_completed_timestamp [utc_from_milliseconds $paths_completed_ms]
+#   write_text [file join $output_dir GET_TIMING_PATHS_COMPLETED.marker] "MARKER=GET_TIMING_PATHS_COMPLETED\nTIMESTAMP=${paths_completed_timestamp}\nEPOCH_MILLISECONDS=${paths_completed_ms}\nGET_TIMING_PATHS_ELAPSED_SECONDS=${paths_elapsed}\nPATH_COUNT=${path_count}\nUNIQUE_SOURCE_CELL_COUNT=[llength $unique_source_cells]\nSTATUS=PASS\n"
+#   append_text [file join $output_dir G2B_BS2_TIMELINE.log] "GET_TIMING_PATHS_COMPLETED|${paths_completed_timestamp}|${paths_completed_ms}|[seconds_from_ms [expr {$paths_completed_ms - $t0_ms}]]|command_elapsed=${paths_elapsed}s paths=${path_count}\n"
+#   puts "BS2_GET_TIMING_PATHS_COMPLETED elapsed=${paths_elapsed}s paths=${path_count}"
+#   flush stdout
+# 
+#   set methodology_start_ms [clock milliseconds]
+#   mark_phase $output_dir METHODOLOGY_STARTED $t0_ms "focused TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39 after exact in-memory bus-skew constraint application"
+#   set_bus_skew -from $sources -to $sinks 3.000
+#   set methodology_report [file join $output_dir G2B_BS2_TIMING_METHODOLOGY.rpt]
+#   set methodology_checks {TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39}
+#   report_methodology -checks $methodology_checks -file $methodology_report
+#   set methodology_end_ms [clock milliseconds]
+#   set methodology_elapsed [seconds_from_ms [expr {$methodology_end_ms - $methodology_start_ms}]]
+#   set methodology_completed_timestamp [utc_from_milliseconds $methodology_end_ms]
+#   write_text [file join $output_dir METHODOLOGY_COMPLETED.marker] "MARKER=METHODOLOGY_COMPLETED\nTIMESTAMP=${methodology_completed_timestamp}\nEPOCH_MILLISECONDS=${methodology_end_ms}\nMETHODOLOGY_ELAPSED_SECONDS=${methodology_elapsed}\nCHECKS=TIMING-32,TIMING-34,TIMING-37,TIMING-38,TIMING-39\nSTATUS=PASS\n"
+#   append_text [file join $output_dir G2B_BS2_TIMELINE.log] "METHODOLOGY_COMPLETED|${methodology_completed_timestamp}|${methodology_end_ms}|[seconds_from_ms [expr {$methodology_end_ms - $t0_ms}]]|command_elapsed=${methodology_elapsed}s\n"
+#   puts "BS2_METHODOLOGY_COMPLETED elapsed=${methodology_elapsed}s"
+#   flush stdout
+# 
+#   write_text [file join $output_dir G2B_BS2_WORKER_STATE.txt] "EXPERIMENT_ID=BS2_EXP001\nSTATE=COMPLETE\nVIVADO_VERSION=[version -short]\nPART=${part}\nROUTE_STATUS=FULLY_ROUTED\nSOURCE_COUNT=58\nSINK_COUNT=1\nSINK_NAME=${sink_name}\nREPORT_TIMING_STATUS=PASS\nREPORT_TIMING_ELAPSED_SECONDS=${report_elapsed}\nREPORT_TIMING_PATH_COUNT=${report_path_count}\nGET_TIMING_PATHS_STATUS=PASS\nGET_TIMING_PATHS_ELAPSED_SECONDS=${paths_elapsed}\nGET_TIMING_PATH_COUNT=${path_count}\nMETHODOLOGY_STATUS=PASS\nMETHODOLOGY_ELAPSED_SECONDS=${methodology_elapsed}\nREPORT_BUS_SKEW_ATTEMPT_COUNT=0\n"
+#   mark_phase $output_dir WORKER_COMPLETED $t0_ms "all bounded alternative timing stages completed"
+#   close_design
+# }
+# if {$argc >= 5} {
+#   set bs2_output_dir [lindex $argv 4]
+# } else {
+#   set bs2_output_dir [pwd]
+# }
+# if {$argc >= 6} {
+#   set bs2_t0_ms [lindex $argv 5]
+# } else {
+#   set bs2_t0_ms [clock milliseconds]
+# }
+# if {[catch {run_bs2} bs2_error bs2_options]} {
+#   set error_ms [clock milliseconds]
+#   set error_timestamp [utc_from_milliseconds $error_ms]
+#   set error_elapsed [seconds_from_ms [expr {$error_ms - $bs2_t0_ms}]]
+#   write_text [file join $bs2_output_dir VIVADO_ERROR.marker] "MARKER=VIVADO_ERROR\nTIMESTAMP=${error_timestamp}\nEPOCH_MILLISECONDS=${error_ms}\nELAPSED_FROM_LAUNCH_SECONDS=${error_elapsed}\nERROR=${bs2_error}\n"
+#   append_text [file join $bs2_output_dir G2B_BS2_TIMELINE.log] "VIVADO_ERROR|${error_timestamp}|${error_ms}|${error_elapsed}|${bs2_error}\n"
+#   set error_info [dict get $bs2_options -errorinfo]
+#   write_text [file join $bs2_output_dir G2B_BS2_VIVADO_ERROR.txt] "ERROR=${bs2_error}\n\n${error_info}\n"
+#   puts stderr "BS2_VIVADO_ERROR: $bs2_error"
+#   catch {close_design}
+#   exit 1
+# }
+BS2_MARKER WORKER_STARTED 2026-09-01T21:10:46.010Z elapsed=137.305s
+Command: open_checkpoint {C:\FPGA\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\sealed_inputs\G2B_ROUTED.dcp}
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.612 . Memory (MB): peak = 331.555 ; gain = 4.473
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 805.266 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2171 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 5 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 949.816 ; gain = 10.914
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.402 . Memory (MB): peak = 1581.496 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.094 . Memory (MB): peak = 1581.496 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1581.496 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:08 ; elapsed = 00:00:11 . Memory (MB): peak = 1588.051 ; gain = 6.555
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1588.051 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1609.660 ; gain = 21.609
+Read Physdb Files: Time (s): cpu = 00:00:11 ; elapsed = 00:00:15 . Memory (MB): peak = 1609.660 ; gain = 28.164
+Restored from archive | CPU: 12.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:12 ; elapsed = 00:00:16 . Memory (MB): peak = 1609.660 ; gain = 28.164
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.134 . Memory (MB): peak = 1642.691 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 333 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 37 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 264 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:03:09 ; elapsed = 00:06:00 . Memory (MB): peak = 1648.559 ; gain = 1331.090
+BS2_MARKER DCP_OPENED 2026-09-01T21:16:55.482Z elapsed=506.777s
+report_route_status: Time (s): cpu = 00:00:19 ; elapsed = 00:00:15 . Memory (MB): peak = 1722.508 ; gain = 73.949
+Parsing XDC File [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc]
+INFO: [Timing 38-35] Done setting XDC timing constraints. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:19]
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:19]
+create_generated_clock: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1735.328 ; gain = 12.820
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][24]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][25]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][26]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][27]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][28]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][29]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][30]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][31]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[0][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][24]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][25]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][26]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][27]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][28]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][29]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][30]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][31]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[1][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][24]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][25]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][26]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][27]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][28]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][29]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][30]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][31]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[2][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[3][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[3][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[3][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/desc_epoch_source_reg[3][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Common 17-14] Message 'Vivado 12-2286' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc:64]
+Finished Parsing XDC File [C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_CONSTRAINT_BASE.xdc]
+read_xdc: Time (s): cpu = 00:02:26 ; elapsed = 00:03:04 . Memory (MB): peak = 1735.328 ; gain = 12.820
+BS2_MARKER OBJECTS_RESOLVED 2026-09-01T21:20:15.330Z elapsed=706.625s
+BS2_COMMAND_READY 2026-09-01T21:20:15.353Z initialization=706.648s
+BS2_MARKER REPORT_TIMING_STARTED 2026-09-01T21:20:15.378Z elapsed=706.673s
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -from_pins  -to_pins  -max_paths 1 -nworst 1 -delay_type max -sort_by slack.
+report_timing: Time (s): cpu = 00:01:41 ; elapsed = 00:01:04 . Memory (MB): peak = 1741.676 ; gain = 6.348
+BS2_REPORT_TIMING_COMPLETED elapsed=64.164s paths=1
+BS2_MARKER GET_TIMING_PATHS_STARTED 2026-09-01T21:21:19.591Z elapsed=770.886s
+BS2_GET_TIMING_PATHS_COMPLETED elapsed=2.957s paths=58
+BS2_MARKER METHODOLOGY_STARTED 2026-09-01T21:21:23.963Z elapsed=775.258s
+Command: report_methodology -checks {TIMING-32 TIMING-34 TIMING-37 TIMING-38 TIMING-39} -file C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_TIMING_METHODOLOGY.rpt
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 2 threads
+INFO: [Vivado_Tcl 2-1520] The results of Report Methodology are in file C:/FPGA/G2B_BS2_ALT_TIMING_20260901T205518Z/G2B_BS2_TIMING_METHODOLOGY.rpt.
+report_methodology completed successfully
+report_methodology: Time (s): cpu = 00:00:36 ; elapsed = 00:00:23 . Memory (MB): peak = 1766.527 ; gain = 24.852
+BS2_METHODOLOGY_COMPLETED elapsed=23.461s
+BS2_MARKER WORKER_COMPLETED 2026-09-01T21:21:47.480Z elapsed=798.775s
+close_design: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1766.527 ; gain = 0.000
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Tue Sep  1 23:21:52 2026...
