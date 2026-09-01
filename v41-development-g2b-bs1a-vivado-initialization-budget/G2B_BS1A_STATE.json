@@ -1,0 +1,128 @@
+{
+  "schema": "AHD_V41_G2B_BS1A_STATE_V1",
+  "task": "G2B-BS1A",
+  "experiment_id": "BS1A_INIT001",
+  "generated_at": "2026-09-01T17:26:56.214Z",
+  "authoritative_state": {
+    "project_state_rev_at_start": 3,
+    "project_state_rev_at_end": 3,
+    "ssot_modified": false,
+    "g2b_lut1_gate_disposition": "HOLD",
+    "g2b_lut1_ssot_status": "PLANNED",
+    "g2b_lut1_readiness": "READY",
+    "g2b_lut1_implementation_state": "NOT_STARTED",
+    "r_track_status": "HOLD",
+    "g2b_implementation_status": "BLOCKED",
+    "g2b_hw_qualification": "NOT_PROVEN"
+  },
+  "predecessors": {
+    "bs1_evidence_commit": "de7dc18e3fa5e7f5e80dc542983a2f9025a22992",
+    "bs1_experiment": "BS1_EXP001",
+    "bs1_result": "INITIALIZATION_TIMEOUT",
+    "bs1_bus_skew_status": "UNTESTED",
+    "recovery_evidence_commit": "6707d6f2ca39c76295ce565b0e04878dff16110a"
+  },
+  "sealed_dcp": {
+    "path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "execution_copy": "G2B_ROUTED.dcp",
+    "size_bytes": 57900063,
+    "sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "verified": true,
+    "part": "xc7a35tcsg325-2"
+  },
+  "host": {
+    "hostname": "NBLSUDUL",
+    "os": "Microsoft Windows 10 Pro",
+    "os_version": "10.0.19045",
+    "logical_cpu_count": 4,
+    "total_memory_kib": 16629296,
+    "available_memory_kib_at_start": 5646392,
+    "vivado_version": "2025.2",
+    "vivado_sw_build": 6299465,
+    "vivado_ip_build": 6300035
+  },
+  "serialization": {
+    "preexisting_vivado_count": 0,
+    "vivado_workers_launched": 1,
+    "max_observed_vivado_process_count": 1,
+    "worker_overlap": false,
+    "postexisting_vivado_count": 0
+  },
+  "execution": {
+    "workspace": "C:\\FPGA\\G2B_BS1A_INIT_BUDGET_20260901T171409Z",
+    "timeout_limit_seconds": 1200,
+    "start_timestamp": "2026-09-01T17:21:38.981Z",
+    "command_ready_timestamp": "2026-09-01T17:26:51.214Z",
+    "process_end_timestamp": "2026-09-01T17:26:56.214Z",
+    "process_exit_code": 0,
+    "timed_out": false,
+    "command_ready": true,
+    "time_to_command_ready_seconds": 312.233,
+    "total_process_elapsed_seconds": 317.163
+  },
+  "phases_seconds": {
+    "process_startup": 42.532,
+    "tcl_entry": 4.047,
+    "checkpoint_open": 159.754,
+    "route_status": 8.037,
+    "context_preparation": 95.066,
+    "source_resolution": 0.101,
+    "sink_resolution": 0.008,
+    "identity_verification": 0.023,
+    "command_ready_finalization": 2.519,
+    "dominant_phase": "CHECKPOINT_OPEN"
+  },
+  "route_status": {
+    "result": "PASS",
+    "routable_nets": 33985,
+    "fully_routed_nets": 33985,
+    "routing_error_nets": 0
+  },
+  "timing_database_preparation": {
+    "classification": "AUTOMATIC",
+    "archive_restore_observed_during_checkpoint_open": true,
+    "elapsed_seconds": null,
+    "elapsed_note": "Not separately measurable; included in checkpoint_open.",
+    "explicit_update": false,
+    "precommand_update_timing_messages": false
+  },
+  "object_scope": {
+    "source_scope": "S_FULL",
+    "source_count": 58,
+    "source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "sink_scope": "K_OWNERSHIP_RESULT",
+    "sink_count": 1,
+    "sink_name": "G2B_ONECH_C2H/own_ok_hold_source_reg",
+    "sink_ref_name": "FDRE",
+    "sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "identity": "PASS"
+  },
+  "result": {
+    "engineering_gate": "PASS",
+    "initialization_result": "INITIALIZATION_BUDGET_TOO_SMALL_CONFIRMED",
+    "bus_skew_command_executed": false,
+    "bus_skew_status_after_bs1a": "UNTESTED",
+    "bs1_retry_readiness": "READY_WITH_NEW_INIT_BUDGET",
+    "recommended_initialization_budget_seconds": 900,
+    "recommended_future_bus_skew_command_budget_seconds": 300
+  },
+  "protections": {
+    "source_repository_modified": false,
+    "source_tracked_files_changed": 0,
+    "source_index_files_changed": 0,
+    "source_branch_movement": false,
+    "source_commit_created": false,
+    "active_xdc_modified": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "dut_accessed": false,
+    "ssot_modified": false
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-bs1a-vivado-initialization-budget",
+    "evidence_commit": "CONTAINING_GIT_COMMIT",
+    "remote_readback_required": true
+  }
+}
