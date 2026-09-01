@@ -1,0 +1,120 @@
+{
+  "schema": "AHD_V41_G2B_BS1R_STATE_V1",
+  "task": "G2B-BS1R",
+  "experiment_id": "BS1R_EXP001",
+  "authoritative_state": {
+    "project_state_rev_at_start": 3,
+    "project_state_rev_at_end": 3,
+    "ssot_modified": false,
+    "g2b_lut1_task_disposition": "HOLD",
+    "g2b_hw_gate_disposition": "BLOCKED"
+  },
+  "predecessor": {
+    "evidence_commit": "99bf5177b645260ace59c5e48d079f64a77b7383",
+    "measured_initialization_seconds": 312.233,
+    "readiness": "READY_WITH_NEW_INIT_BUDGET",
+    "required_initialization_budget_seconds": 900,
+    "required_bus_skew_budget_seconds": 300
+  },
+  "sealed_dcp": {
+    "path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "size_bytes": 57900063,
+    "sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "verified_before": true,
+    "verified_after": true,
+    "part": "xc7a35tcsg325-2",
+    "fully_routed": true,
+    "routable_nets": 33985,
+    "fully_routed_nets": 33985,
+    "routing_error_nets": 0
+  },
+  "object_scope": {
+    "source_scope": "S_FULL",
+    "source_count": 58,
+    "source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "resolved_source_set_sha256": "F69E9199EBB6212346DA11AC7EB66D832D2E50CCF8F43C5401806780E15247EE",
+    "sink_scope": "K_OWNERSHIP_RESULT",
+    "sink_count": 1,
+    "sink_object": "G2B_ONECH_C2H/own_ok_hold_source_reg",
+    "sink_ref_name": "FDRE",
+    "sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "resolved_sink_set_sha256": "D0E81393EF7750003EE14C3BE0A789CD35FDF132AF3D2B23CE0C3272EB8065BE",
+    "identity": "PASS"
+  },
+  "constraint": {
+    "required_skew_ns": 3.000,
+    "base_xdc_sha256": "A05AF5431E521BBC8812DAAE5574CC31D4E7E3BE89DCA0E41974462383BE3071",
+    "applied_xdc_sha256": "27138FF444279D12ACC51BBAC7642DAC5426FED71530245838E4157295D0E077",
+    "applied_bus_skew_command_count": 1
+  },
+  "tool": {
+    "vivado_version": "2025.2",
+    "sw_build": 6299465,
+    "ip_build": 6300035,
+    "worker_tcl_sha256": "31E6E4FE08712166BACA133515B00D1A78BCD1A691683FCF4F40A837C6B2CF51",
+    "runner_ps1_sha256": "3BFAD85946347FFF6FFC92EF3453766E62A355B2E8C870CF9D62B21127D49FF3"
+  },
+  "serialization": {
+    "preexisting_vivado_count": 0,
+    "vivado_workers_launched": 1,
+    "max_observed_vivado_process_count": 1,
+    "worker_overlap": false,
+    "unrelated_processes_terminated": false,
+    "immediate_post_taskkill_vivado_count": 1,
+    "quiescent_postrun_vivado_count": 0
+  },
+  "watchdogs": {
+    "structure": "SEPARATED",
+    "initialization_seconds": 900,
+    "initialization_result": "PASS",
+    "command_ready": true,
+    "bus_skew_seconds": 300,
+    "bus_skew_armed_after_command_ready": true,
+    "timeout_phase": "REPORT_BUS_SKEW"
+  },
+  "timeline": {
+    "launch": "2026-09-01T19:39:38.164Z",
+    "worker_entry": "2026-09-01T19:40:32.305Z",
+    "checkpoint_open": "2026-09-01T19:43:16.584Z",
+    "objects_resolved": "2026-09-01T19:44:46.078Z",
+    "command_ready": "2026-09-01T19:44:48.556Z",
+    "bus_skew_start": "2026-09-01T19:44:48.620Z",
+    "bus_skew_deadline": "2026-09-01T19:49:48.620Z",
+    "worker_termination": "2026-09-01T19:49:49.332Z",
+    "runner_end": "2026-09-01T19:49:49.355Z",
+    "initialization_elapsed_seconds": 310.390,
+    "bus_skew_elapsed_seconds_including_termination_overhead": 300.735,
+    "total_elapsed_seconds": 611.189
+  },
+  "result": {
+    "engineering_gate": "PASS",
+    "primary_outcome": "SINGLE_SINK_BUS_SKEW_TIMEOUT",
+    "bus_skew_result": "REPORT_BUS_SKEW_TIMEOUT",
+    "actual_skew_ns": null,
+    "slack_ns": null,
+    "report_file_produced": false,
+    "report_timing_control": "NOT_RUN",
+    "single_sink_pathology_reproduced": true,
+    "constraint_implication": "SINGLE_SINK_QUERY_PATHOLOGY_REPRODUCED",
+    "scope_limit": "NO_EXTRAPOLATION_TO_ALL_19_SINKS"
+  },
+  "protections": {
+    "source_repository_modified": false,
+    "active_xdc_modified": false,
+    "source_index_changed": false,
+    "source_branch_moved": false,
+    "source_commit_created": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "dut_accessed": false,
+    "ssot_modified": false
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-bs1r-single-sink-bus-skew-retry",
+    "evidence_commit": "CONTAINING_GIT_COMMIT",
+    "remote_readback_required": true
+  }
+}
+
