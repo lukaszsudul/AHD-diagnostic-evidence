@@ -1,0 +1,62 @@
+PCB-PIN-1 isolated Vivado legality sandbox result
+=================================================
+
+Sandbox directory:
+C:\FPGA\PCB_PIN1_VIVADO_SANDBOX_VIVADO_PINS_20260901_001
+
+Vivado command:
+& 'C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat' -mode batch -notrace -source 'query_device.tcl' -log 'query_device_retry.log' -journal 'query_device_retry.jou'
+
+Command exit code: 0
+Vivado: v2025.2 (64-bit), SW build 6299465
+Exact part: xc7a35tcsg325-2
+Family/architecture: artix7
+Device/package/speed: xc7a35t / csg325 / -2
+
+Implemented sandbox chain:
+D13 -> IBUF -> BUFGCE(CE_TYPE=SYNC) -> ODDR(D1=1,D2=0,CE=1,INIT=0) -> OBUF -> A14
+
+Placed resources:
+u_ibuf   REF=IBUF     LOC=IOB_X0Y78      BEL=IOB33.INBUF_EN
+u_bufgce REF=BUFGCTRL LOC=BUFGCTRL_X0Y16 BEL=BUFGCTRL.BUFGCTRL
+u_oddr   REF=ODDR     LOC=OLOGIC_X0Y83   BEL=OLOGICE2.OUTFF
+u_obuf   REF=OBUF     LOC=IOB_X0Y83      BEL=IOB33.OUTBUF
+
+Post-route I/O evidence:
+D13 osc27_d13   High Range IO_L11P_T1_SRCC_15  INPUT  LVCMOS33 Bank 15
+A14 nvp_clk_a14 High Range IO_L8N_T1_AD10N_15 OUTPUT LVCMOS33 Bank 15
+T12 gate_enable_t12 High Range IO_L22P_T3_A05_D21_14 INPUT LVCMOS33 Bank 14
+
+Clock evidence:
+27.000 MHz / 37.037 ns input at D13/IOB_X0Y78, clock region X0Y1.
+One BUFGCTRL used, at BUFGCTRL_X0Y16, driving the ODDR clock load.
+
+Implementation result:
+Synthesis: SUCCESS, 0 errors, 0 critical warnings. The overall command reported two
+warnings, including automatic normalization of BUFGCE SIM_DEVICE from its default
+ULTRASCALE to the target architecture 7SERIES.
+Placement: SUCCESS, 0 errors, 0 critical warnings.
+Routing: SUCCESS; 6/6 routable nets fully routed; 0 routing errors.
+Post-route DRC: 0 errors, 0 critical warnings, 1 warning.
+Only DRC warning: CFGBVS-1 because the isolated harness intentionally does not set
+board-level Bank-0 CFGBVS/CONFIG_VOLTAGE properties. This warning is not an A14/D13
+SelectIO or routing violation.
+Timing report: user-specified constraints met. The only analyzed timing requirement
+is clock pulse width: actual period 37.037 ns, required 1.592 ns, slack 35.445 ns.
+WNS/TNS are N/A because the harness contains no timed data endpoints. The report also
+flags the A14 output as having no external output delay; NVP/PCB timing was outside
+this resource-legality test and remains a future constraint obligation.
+
+Important scope qualifications:
+- The initial pre-synthesis get_package_pins section returned PIN_COUNT=0 because the
+  in-memory design was not yet elaborated. It is non-probative. Exact pin identity in
+  this run comes from post-route report_io, placed port/cell properties, and the prior
+  PCB-PIN-0 Vivado database export.
+- T12 is only a sandbox enable input and is not a proposed product assignment.
+- DRIVE=8 and SLEW=SLOW are arbitrary legal test settings, not a PCB/SI recommendation.
+- This run validates the legal BUFGCE + fixed-data ODDR resource/placement/routing
+  alternative. It does not implement or validate a separate continuous-BUFG,
+  dynamic-D1 enable architecture.
+- Any future primitive instantiation should set SIM_DEVICE="7SERIES" explicitly.
+- No checkpoint, bitstream, configuration image, hardware access, or programming was
+  performed. Search found no .dcp/.bit/.bin/.mcs product outputs.
