@@ -1,0 +1,193 @@
+{
+  "gate": "G2B-G13-A",
+  "title": "RESET_RETURN_SOURCE_TO_AXI Timing Semantics and Replacement Sign-Off Audit",
+  "engineering_gate": "PASS",
+  "evidence_publication": "PASS",
+  "overall_result": "PASS",
+  "project_state_rev_at_start": 4,
+  "project_state_rev_at_end": 4,
+  "authority": {
+    "ssot": "VERIFIED",
+    "ssot_manifest_entry_count": 18,
+    "ssot_manifest_pass_count": 18,
+    "ssot_manifest_fail_count": 0,
+    "ssot_manifest_sha256": "BDA7C92947F212BB18AF60738F7AA5974C097AAFD93E90D8E8FBA9BA6F5C39A3",
+    "predecessor_evidence_commit": "765f5a5d4760f7a685447651dc68179b2fd96846",
+    "source_branch": "integration/v41-g2b-onech-c2h",
+    "source_commit": "66cc8e3497579c2f7cb41d0b3639b3c2f00d6c49",
+    "source_tree": "1e67e3f1fe06669839fe9ff8573e4d1e0114a889",
+    "source_status": "VERIFIED",
+    "active_xdc_sha256": "6A5F54F9D319115417C747BCA67367919C7CBB0E990A9641D78D429D87E81227",
+    "routed_dcp_status": "VERIFIED",
+    "routed_dcp_sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "routed_dcp_size_bytes": 57900063,
+    "routed_part": "xc7a35tcsg325-2"
+  },
+  "group13": {
+    "number": 13,
+    "name": "RESET_RETURN_SOURCE_TO_AXI",
+    "original_constraint": "set_bus_skew 3.000 -from $g2b_reset_return_src -to $g2b_reset_return_dst",
+    "source_count": 7,
+    "destination_count": 207,
+    "source_clock": "nvp_vclk1",
+    "source_clock_period_ns": 6.734,
+    "destination_clock": "userclk1",
+    "destination_clock_period_ns": 16.000,
+    "previous_report_bus_skew_timeout": "VERIFIED",
+    "previous_timeout_elapsed_seconds": 301.094,
+    "full_report_bus_skew_retried": false,
+    "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+    "semantic_classification": "STABLE_DATA + HANDSHAKE + COMMIT_PHASE_COMPLETION_BARRIER + COMBINATIONAL_AGGREGATION",
+    "semantic_family_count": 2
+  },
+  "alternative_timing": {
+    "report_timing": {
+      "status": "PASS",
+      "elapsed_seconds": 56.827,
+      "returned_path_count": 1,
+      "worst_datapath_ns": 3.756,
+      "external_timeout_seconds": 300
+    },
+    "get_timing_paths": {
+      "status": "PASS",
+      "elapsed_seconds": 0.185,
+      "returned_path_count": 64,
+      "source_diversity": 1,
+      "destination_diversity": 16,
+      "worst_datapath_ns": 3.934,
+      "max_paths_cap": 64,
+      "external_timeout_seconds": 300
+    }
+  },
+  "execution_attempts": {
+    "attempt_1": {
+      "disposition": "HARNESS_OBJECT_TYPING_ERROR_BEFORE_CANDIDATE_QUERY",
+      "elapsed_seconds": 1135.069,
+      "process_exit_code": 1,
+      "timed_out": false,
+      "report_timing_completed": true,
+      "get_timing_paths_completed": true,
+      "candidate_query_started": false,
+      "report_bus_skew_invocations": 0
+    },
+    "candidate_continuation": {
+      "disposition": "PASS",
+      "elapsed_seconds": 998.405,
+      "process_exit_code": 0,
+      "timed_out": false,
+      "report_timing_invocations": 0,
+      "report_bus_skew_invocations": 0,
+      "fix_scope": "RESOLVE_LITERAL_AGGREGATE_SOURCE_AND_DESTINATION_NAMES_WITH_GET_CELLS"
+    },
+    "combined_process_runtime_seconds": 2133.474,
+    "audit_wall_clock_span_seconds": 2563.711,
+    "audit_wall_clock_source_field": "RAW_CORRECTED_END_TO_END_SECONDS_MISNAMED_NOT_USED_FOR_SIGNOFF_RUNTIME"
+  },
+  "candidate": {
+    "created": true,
+    "constraint_sha256": "E941A6F4A8D435B7496892C189CAA4A67DC5A8B17FE3CC9EACB2B9F18091D312",
+    "applied_context_sha256": "5BE4471486CC09C04E22FAD5A9A26030EB521D1235628ACEAE6664C87A2D72ED",
+    "applied_set_bus_skew_count": 15,
+    "applied_set_max_delay_count": 14,
+    "applied_group13_set_bus_skew_count": 0,
+    "group13_set_bus_skew_present": false,
+    "semantic_family_count": 2,
+    "bound_ns": 6.000,
+    "target_scope": "DESTINATION_CELLS_ALL_TIMING_ENDPOINT_PINS",
+    "aggregate_constraint_retained": true,
+    "aggregate_membership_validated": "PASS",
+    "aggregate_source_literal_count": 212,
+    "aggregate_source_resolved_count": 212,
+    "aggregate_destination_literal_count": 457,
+    "aggregate_destination_resolved_count": 457,
+    "group13_source_member_count": 7,
+    "group13_destination_member_count": 207,
+    "supplemental_fanout_validated": "PASS",
+    "families": [
+      {
+        "name": "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+        "validation_id": "RESET_ABANDONED_HOLD",
+        "source_count": 3,
+        "destination_cell_count": 32,
+        "required_ns": 6.000,
+        "worst_actual_ns": 2.634,
+        "slack_ns": 3.467,
+        "result": "PASS",
+        "runtime_seconds": 76.881
+      },
+      {
+        "name": "RESET_COMMIT_PHASE_COMPLETION_BARRIER",
+        "validation_id": "RESET_COMMIT_PHASE_HOLD",
+        "source_count": 4,
+        "destination_cell_count": 207,
+        "required_ns": 6.000,
+        "worst_actual_ns": 3.756,
+        "slack_ns": 1.723,
+        "result": "PASS",
+        "runtime_seconds": 4.809
+      }
+    ],
+    "supplemental": {
+      "semantic_family": "RESET_COMMIT_PHASE_COMPLETION_BARRIER",
+      "is_third_family": false,
+      "source_count": 4,
+      "destination_cell_count": 79,
+      "followup_transport_count": 7,
+      "commit_fifo_count": 7,
+      "shadow_last_state_count": 65,
+      "required_ns": 6.000,
+      "worst_actual_ns": 4.681,
+      "slack_ns": 0.967,
+      "result": "PASS",
+      "runtime_seconds": 0.137
+    },
+    "timing_validation": "PASS",
+    "signoff_runtime": "PRACTICAL",
+    "replacement_active_query_seconds": 105.521,
+    "cold_continuation_seconds": 998.405,
+    "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+    "ready_for_meta": "YES_WITH_OWNER_ARCHITECT_REVIEW"
+  },
+  "methodology": {
+    "TIMING-32": "ABSENT",
+    "TIMING-34": "PRESENT",
+    "TIMING-37": "ABSENT",
+    "TIMING-38": "ABSENT",
+    "TIMING-39": "PRESENT",
+    "candidate_context_runtime_seconds": 23.694,
+    "candidate_context_total_findings": 20,
+    "candidate_context_group13_object_mentions": 0
+  },
+  "decisions": {
+    "rtl_change_required": "NO",
+    "group13_final_disposition": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+    "groups_10_to_12": "PRESERVE_PREVIOUS_RESULTS",
+    "groups_14_to_17": "PENDING",
+    "continuation": "GROUP_13_REPLACEMENT_THEN_GROUPS_14_TO_17_THEN_REMAINING_ROUTED_HARD_GATES"
+  },
+  "protection": {
+    "source_repository_modified": false,
+    "active_xdc_modified": false,
+    "source_index_changed": false,
+    "source_branch_movement": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "jtag_accessed": false,
+    "fpga_programmed": false,
+    "pcie_accessed": false,
+    "dma_accessed": false,
+    "driver_changed": false,
+    "rebooted": false,
+    "power_cycled": false,
+    "ssot_modified": false
+  },
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
+    "commit_message": "Audit AHD G2B Group 13 reset-return timing sign-off",
+    "evidence_commit": "CONTAINING_GIT_COMMIT",
+    "remote_readback_required": true,
+    "remote_readback_record": "POST_COMMIT_EXECUTION_RESPONSE"
+  }
+}
