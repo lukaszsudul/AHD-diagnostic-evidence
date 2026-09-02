@@ -1,6 +1,6 @@
 # AHD Current Resource State
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 ## Qualified routed result
 
@@ -16,9 +16,9 @@ BRAM corresponds to 10 RAMB18 plus 21 RAMB36, or 26 tile equivalents.
 > final production resource expectation.**
 
 The accepted G2B-PRE contract freeze adds no implementation or routed-resource
-result. G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM`, is not offline-qualified, and
-hardware remains `NOT_PROVEN`. The qualified table above therefore remains the
-R1i result.
+result. G2B-IMPL is not offline-qualified, and G2B-HW is lifecycle `BLOCKED`
+and remains `NOT_PROVEN`. The qualified table above therefore remains the R1i
+result.
 
 ## Accepted G2B-LUT0 resource architecture
 
@@ -43,7 +43,7 @@ fanout proof during G2B-LUT1.
 | Research/diagnostic LUT planning estimate | `ACCEPTED` | Approximately 3,900, range 3,500–4,300; not achieved recovery |
 | Current values as final production requirement | `REJECTED` | No such inference is permitted |
 | PRODUCT profile reduction architecture | `ACCEPTED` | Reversible exclusion of G2B-LUT0-classified research-only instrumentation is authorized |
-| Profile source implementation | `PLANNED` | G2B-LUT1 `READY`; not implemented by META-3 |
+| Profile source/sign-off recovery | `PLANNED` | G2B-LUT1 `READY_FOR_SIGNOFF_RECOVERY`; no source or active-XDC change implemented by META-4R2 |
 | PRODUCT hard gate achieved | `OPEN` | Must be demonstrated by actual post-route utilization |
 
 Named R1h diagnostic islands totaling 2,337 LUT, 3,086 FF, and nine RAMB18 are
@@ -58,7 +58,11 @@ Preferred routed PRODUCT target: `80–85%` (`16,640–17,680 LUT`).
 
 The estimated 17,512 LUT / 84.192% point lies inside the preferred band, but
 the estimate is not qualification evidence and the target is not marked
-achieved. G2B-LUT1/G2B-IMPL must measure actual post-route utilization.
+achieved. `G2B-LUT1-SIGNOFF-RECOVERY`/G2B-IMPL must measure actual post-route
+utilization.
+
+The META-4R2 Group-9 sign-off-method promotion changes no measured or
+estimated resource value in this document.
 
 ## Existing G1 resource policy
 

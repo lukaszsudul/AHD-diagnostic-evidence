@@ -1,0 +1,92 @@
+{
+  "project": "AHD_v41",
+  "task": "META-4R2",
+  "update_type": "ARCHITECTURE_CHANGE",
+  "authorization": "SSOT WRITE AUTHORIZED",
+  "accepted_by_role": "OWNER_ARCHITECT",
+  "frozen_reissue_header": {
+    "verification": "VERIFIED",
+    "sha256": "D7456D989F0D879B2E1FD8777876F5AE786947D789CE1D480CA720316AC7342B",
+    "source_commit": "24be8a8c6eb227c548db130009ca495bfb472802",
+    "used_verbatim": true,
+    "all_required_fields_present": true
+  },
+  "project_state_rev_at_start": 3,
+  "expected_project_state_rev": 3,
+  "project_state_rev_at_end": 4,
+  "revision_match": true,
+  "ssot_staleness": "NO_IMPACT",
+  "ssot_staleness_reason": "AUTHORIZED_SELF_UPDATE",
+  "evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
+  "evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+  "evidence_directory": "v41-development-g2b-bs3-ownership-mailbox-settling-proof",
+  "supporting_evidence": {
+    "bs1r": "f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62",
+    "bs2": "4699632c591238fee46ada3b0de37532fddd0b6f",
+    "bs3": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+  },
+  "expected_affected_file_count": 16,
+  "actual_ssot_file_count": 16,
+  "group9_decision": {
+    "record_form": "UNNUMBERED_GOVERNED_DECISION",
+    "decision_state": "RESOLVED",
+    "decision": "REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS",
+    "old_signoff": "GLOBAL_SET_BUS_SKEW_3NS",
+    "old_signoff_state": "RETIRED",
+    "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+    "new_signoff": "PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC",
+    "new_signoff_state": "PROMOTED",
+    "payload_families": [
+      "slot",
+      "generation",
+      "epoch"
+    ],
+    "payload_family_count": 3,
+    "held_payload_bits": 58,
+    "settling_cap": "6.000 ns",
+    "minimum_launch_to_use_margin": "13.468 ns",
+    "gross_reserve": "7.468 ns",
+    "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+    "safety_disposition": "THIS_IS_NOT_A_RELAXATION_OF_SAFETY",
+    "rtl_change_required": "NO",
+    "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+    "candidate_xdc": "G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc",
+    "groups_10_to_17": "UNCHANGED"
+  },
+  "g2b_lut1": {
+    "lifecycle_status": "PLANNED",
+    "readiness": "READY_FOR_SIGNOFF_RECOVERY",
+    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY"
+  },
+  "g2b_hw": {
+    "lifecycle_status": "BLOCKED",
+    "qualification": "NOT_PROVEN",
+    "bitstream_candidate": "NOT_AVAILABLE"
+  },
+  "validation": {
+    "ssot_consistency": "PASS",
+    "json": "PASS",
+    "csv": "PASS",
+    "lifecycle_enum": "PASS",
+    "open_decisions_unchanged": true,
+    "r_track_unchanged": true,
+    "sha256_manifest": "PASS",
+    "authorized_path_scope": "PASS"
+  },
+  "source_protection": {
+    "fpga_ahd_modified": false,
+    "active_xdc_modified": false,
+    "vivado_executed": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "r_track_modified": false
+  },
+  "publication": {
+    "mode": "ONE_ORDINARY_NON_FORCE_COMMIT",
+    "remote_read_back_required": true,
+    "completion_record": "META4R2_EXECUTOR_FINAL_RESPONSE",
+    "precommit_state": "READY_TO_PUBLISH"
+  },
+  "recommended_next_step": "G2B-LUT1-SIGNOFF-RECOVERY",
+  "final_execution_point": "HARD STOP AFTER META-4R2 SSOT PROMOTION"
+}

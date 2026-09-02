@@ -1,6 +1,6 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 > `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
@@ -65,7 +65,7 @@ the protected R1i/legacy response path.
 | Logical capture channels | IDs 0 and 1 | `ACCEPTED` | Two-channel hardware not qualified |
 | Physical input IDs | 0 through 3 | `ACCEPTED` | Current evidence proves only the present VDO1 path |
 | Mapping rule | two distinct physical IDs may map to logical 0/1 | `ACCEPTED` | Change only while affected channel disabled and drained |
-| Scheduling | record-boundary work-conserving round-robin | `FROZEN` | No beat interleave; no implementation is accepted/offline-qualified and current G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM` |
+| Scheduling | record-boundary work-conserving round-robin | `FROZEN` | No beat interleave; no implementation is accepted/offline-qualified and current G2B-IMPL is in sign-off recovery |
 | Buffer ownership | private four-record ring per logical channel | `FROZEN` | Exact ownership contract is frozen; implementation and resources are not qualified |
 | Host transport order | one global streamed order plus per-channel attempt order | `FROZEN` | Encoded fields are frozen by `AHD_C2H_TRANSPORT_ABI_V1`; hardware is `NOT_PROVEN` |
 
@@ -88,8 +88,8 @@ transport order.
 | ABI numeric version | `1` |
 | MMIO ABI version | `0x00010000` (`major=1`, `minor=0`) |
 | Record family / version | `v41D` / `0x00004101` |
-| Accepted G2B implementation | none; current G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM` and not offline-qualified |
-| G2B hardware | `NOT_PROVEN` |
+| Accepted G2B implementation | none; current G2B-IMPL is `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` and not offline-qualified |
+| G2B-HW | lifecycle `BLOCKED`; `NOT_PROVEN` pending final offline sign-off and a bitstream candidate |
 | Normative evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze`, commit `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
 
 #### Record geometry and header
@@ -197,13 +197,39 @@ RAM. A consumer validates them as zero and then ignores them.
   newly committed complete record. It must not reset or replay NVP/I2C
   initialization.
 
+#### Group-9 ownership CDC sign-off
+
+For `OWNERSHIP_AXI_TO_SOURCE`, the current required method is
+`PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`. Structural validation covers the
+two-stage request synchronizer, two-stage acknowledgement synchronizer, held
+58-bit stable-data payload, source hold until acknowledgement, and
+reset/epoch coherency. The coherent payload is partitioned into exactly three
+semantic families: 2-bit `slot`, 24-bit `generation`, and 32-bit `epoch`.
+
+Each family requires an absolute settling check with a `6.000 ns` maximum.
+The basis is the `13.468 ns` minimum launch-to-use margin and `7.468 ns` gross
+reserve. The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not
+a relaxation of safety; it directly verifies the stable-data mailbox
+protocol.
+
+The former `GLOBAL_SET_BUS_SKEW_3NS` and its global Group-9
+`report_bus_skew` invocation are `RETIRED_FROM_REQUIRED_SIGNOFF` because the
+58-source set is structurally heterogeneous and invalid for a global skew
+comparison. Historical diagnostic references remain provenance only and do
+not mandate another run.
+
+`RTL_CHANGE_REQUIRED = NO`. `ACTIVE_XDC_CHANGE =
+AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; active production XDC is unchanged
+by META-4R2. The authoritative future candidate is
+`G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`. `GROUPS_10_TO_17 = UNCHANGED`.
+
 ### Frozen G2B MMIO contract
 
 `MMIO STATUS = FROZEN`
 
 `AHD_V41_G2B_MMIO_V1` is lifecycle `FROZEN` at `0x3800..0x3BFF`, but no
-implementation is accepted/offline-qualified; current G2B-IMPL is
-`BLOCKED_RESOURCE_HEADROOM` and hardware status is `NOT_PROVEN`.
+implementation is accepted/offline-qualified; current G2B-IMPL is in sign-off
+recovery and G2B-HW is lifecycle `BLOCKED` and `NOT_PROVEN`.
 The router must claim exactly that range before legacy forwarding. Every
 address through `0x37FF` retains its frozen accepted-base value, side effect,
 byte-enable behavior, ordering, and response latency. `0x3C00..0x3FFF` is not

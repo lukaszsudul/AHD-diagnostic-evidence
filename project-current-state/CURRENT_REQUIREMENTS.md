@@ -1,6 +1,6 @@
 # AHD Current Requirements
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 This document separates a frozen requirement from its implementation target
 and from actual qualification. A requirement is not evidence that the product
@@ -22,7 +22,7 @@ currently meets it.
 | `REQ-CARD-IDENTITY` | Stable card and input identity for multi-card use | `FROZEN` | Persistent mapping independent of enumeration order | Architecture decision remains open |
 | `REQ-STREAM-LIMIT` | Four logical inputs/card, maximum two `STREAMON`/card | `FROZEN` | V4L2 policy enforced per physical card | `PLANNED`, not implemented |
 | `REQ-PRODUCT-LUT-GATE` | Routed PRODUCT LUT utilization `<= 90%` | `FROZEN` | Preferred target band `80–85%` | Not yet measured or achieved; 84.192% is an estimate only |
-| `REQ-BUILD-PROFILES` | Reversible `PRODUCT` and `RESEARCH_DIAGNOSTIC` profiles | `FROZEN` | One functional source architecture with explicit profile selection | `AUTHORIZED_NOT_IMPLEMENTED`; G2B-LUT1 `READY` |
+| `REQ-BUILD-PROFILES` | Reversible `PRODUCT` and `RESEARCH_DIAGNOSTIC` profiles | `FROZEN` | One functional source architecture with explicit profile selection | `AUTHORIZED_NOT_IMPLEMENTED`; G2B-LUT1 `READY_FOR_SIGNOFF_RECOVERY` |
 
 ## Derived host topology
 
@@ -64,8 +64,9 @@ The accepted architecture target and frozen G2B implementation input are:
 The architecture decision is accepted and the named transport ABI is
 `FROZEN_FOR_G2B` with lifecycle status `FROZEN`. No application C2H
 implementation is accepted/offline-qualified; current G2B-IMPL is
-`BLOCKED_RESOURCE_HEADROOM`; one-channel and two-channel DMA qualification has
-not occurred; G2B hardware remains `NOT_PROVEN`.
+`ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; one-channel and two-channel
+DMA qualification has not occurred; G2B-HW remains lifecycle `BLOCKED` and
+`NOT_PROVEN`.
 
 ## Frozen transport implementation requirements
 
@@ -75,7 +76,7 @@ it does not claim that any data plane or hardware result exists.
 
 | ID | Frozen requirement | Status | Qualification state |
 |---|---|---|---|
-| `REQ-C2H-RECORD` | Every C2H record is exactly 4,096 bytes: 64-byte header, 3,840-byte useful payload, and 192-byte padding | `FROZEN` | No accepted/offline-qualified G2B implementation; G2B-IMPL `BLOCKED_RESOURCE_HEADROOM`; hardware `NOT_PROVEN` |
+| `REQ-C2H-RECORD` | Every C2H record is exactly 4,096 bytes: 64-byte header, 3,840-byte useful payload, and 192-byte padding | `FROZEN` | No accepted/offline-qualified G2B implementation; sign-off recovery pending; G2B-HW `BLOCKED` and `NOT_PROVEN` |
 | `REQ-C2H-PAYLOAD` | Every valid record contains one complete validated 1,920-pixel active line in packed UYVY 4:2:2 byte order `U0,Y0,V0,Y1`; no SAV/EAV, blanking, timestamp, checksum, or descriptor bytes | `FROZEN` | No host DMA or frame-delivery qualification |
 | `REQ-C2H-PADDING` | Record bytes `3904..4095` are formatter-generated zero; stale or unwritten RAM is forbidden; the consumer must validate zero | `FROZEN` | Formatter not implemented or proven |
 | `REQ-C2H-IDENTITY` | Each record carries frozen logical channel, physical input, source frame/line/capture, reset epoch, per-channel attempt, and global stream identities with all reserved container bits zero | `FROZEN` | G2B emits logical 0, physical 0, active count 1; future channel 1 remains unimplemented |
@@ -83,6 +84,7 @@ it does not claim that any data plane or hardware result exists.
 | `REQ-C2H-RESET` | A transport reset must disable admission, require host re-enable, atomically flush ownership/descriptors through acknowledged epoch coordination, expose no partial record, and resume only at beat 0; source and NVP/I2C lifecycles remain independent | `FROZEN` | Reset implementation and CDC behavior not proven |
 | `REQ-C2H-AXIS` | The 64-bit stream has exactly 512 beats, `TKEEP=0xFF` throughout, and `TLAST` only on beat 511; while `TVALID && !TREADY`, `TVALID`, `TDATA`, `TKEEP`, and `TLAST` remain stable and record state advances only on handshake | `FROZEN` | Backpressure simulation and hardware DMA not performed |
 | `REQ-C2H-OWNERSHIP` | A committed record and matching descriptor are immutable; slot release occurs only after the final-beat handshake and acknowledged return; overwrite of committed or in-flight records is forbidden | `FROZEN` | Ring/data-plane implementation not accepted |
+| `REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF` | Group-9 `OWNERSHIP_AXI_TO_SOURCE` requires `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`: two-stage request and acknowledgement synchronizers, held 58-bit payload, source hold until acknowledgement, reset/epoch coherency, and `6.000 ns` absolute settling checks for `slot`, `generation`, and `epoch` | `FROZEN` | Method promoted from BS3; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for the next step but not yet implemented |
 | `REQ-C2H-LOSS` | Ring-full and other noncommitted attempts use whole-record drop; attempted/dropped and applicable overflow/malformed accounting increments exactly once; pending discontinuity/loss context reaches the next committed record; partial drop and silent sequence repair are forbidden | `FROZEN` | Drop/overflow behavior not implemented or measured |
 | `REQ-LINUX-C2H-PARSER` | The Linux transport parser must negotiate MMIO ABI/capabilities, create a session epoch with `RESET_STREAM_STATE`, parse only fixed 4,096-byte boundaries, and validate ABI/version, identities, flags, source/attempt/global sequences, epoch, line/SOF, payload length, and zero padding | `FROZEN` | Linux consumer contract is frozen input; V4L2 remains `NOT_IMPLEMENTED` |
 | `REQ-C2H-INPUT-SCALE` | The product exposes 4 physical input identities per card and permits at most 2 active logical inputs per card | `FROZEN` | Second ingress and two-channel DMA remain unqualified |
@@ -95,6 +97,32 @@ MMIO contract/map, Linux consumer contract, and 63/63 consistency receipt.
 No requirement above promotes one-channel C2H RTL, one-channel hardware DMA,
 two-channel DMA, `>= 288 MB/s` qualification, V4L2, DMABUF, multi-card Linux
 policy, runtime Gen2 negotiation, a G2B bitstream, or G2B host capture.
+
+### Governed Group-9 sign-off recipe
+
+The Group-9 replacement method is based on a `13.468 ns` minimum
+launch-to-use margin, a `6.000 ns` maximum settling bound, and `7.468 ns`
+gross reserve. It is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` than the retired
+global check and is not a relaxation of safety.
+
+Future `G2B-LUT1-SIGNOFF-RECOVERY` shall complete:
+
+1. ownership structural CDC proof;
+2. request synchronizer validation;
+3. acknowledgement synchronizer validation;
+4. stable-data hold proof;
+5. per-family settling checks;
+6. reset/epoch coherency proof;
+7. normal routed timing;
+8. CDC disposition;
+9. DRC;
+10. clocks/resources; and
+11. the pre-bitstream hard gate.
+
+`GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` execution
+are `RETIRED_FROM_REQUIRED_SIGNOFF` and are excluded from this current recipe.
+`GROUPS_10_TO_17 = UNCHANGED`; each remains part of future sign-off unless
+separately reviewed.
 
 ## Build-profile requirements
 

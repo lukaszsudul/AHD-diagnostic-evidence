@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -21,6 +21,19 @@ the SSOT changes, a separate authorized META update.
 | `OD-12` | Actual PRODUCT and RESEARCH_DIAGNOSTIC timing | `OPEN` | No profile implementation or post-route timing result exists | Complete timing/DRC/CDC requalification of both profiles |
 | `OD-13` | Actual G2B hardware result | `OPEN` | No G2B bitstream, DMA capture, or hardware proof exists | Separately authorized hardware qualification after offline acceptance |
 | `OD-14` | R2/R3 scientific closure | `OPEN` | R-track is `HOLD`, not closed | Resume research through RESEARCH_DIAGNOSTIC and obtain explicit scientific closure decision |
+
+## Decided at project-state revision 4 — sign-off recovery pending
+
+| ID / question | Decision | Lifecycle status | Decision state | Accepted evidence |
+|---|---|---|---|---|
+| Unnumbered governed decision / Group-9 `OWNERSHIP_AXI_TO_SOURCE` sign-off methodology | `REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS` | `ACCEPTED` | `RESOLVED` | BS1R `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62`; BS2 `4699632c591238fee46ada3b0de37532fddd0b6f`; BS3 `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae` |
+
+This is a named, unnumbered governed decision; no `OD-*` identifier is
+invented. It retires `GLOBAL_SET_BUS_SKEW_3NS` from required Group-9 sign-off
+and promotes `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`. Implementation of the
+accepted candidate XDC and final routed sign-off remain pending, and G2B-HW
+remains `BLOCKED`. All 12 registered `OD-*` open-decision entries above and
+the existing `OD-03` decided record below are unchanged.
 
 ## Decided at project-state revision 3 — implementation pending
 

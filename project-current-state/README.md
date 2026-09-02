@@ -12,14 +12,14 @@ identifies the exact evidence that supports each statement.
 | Field | Value |
 |---|---|
 | Project | `AHD_v41` |
-| `PROJECT_STATE_REV` | `3` |
+| `PROJECT_STATE_REV` | `4` |
 | Governance version | `1` |
 | State type | `CURRENT_ACCEPTED_STATE` |
-| Last update | `2026-08-29` |
+| Last update | `2026-09-02` |
 | Acceptance authority | `OWNER_ARCHITECT` |
 | SSOT writer | `META_UPDATE_AGENT_ONLY` |
 | Creation authorization | `META-0_TASK_DIRECTIVE` / `SSOT WRITE AUTHORIZED` |
-| Revision-3 decision basis | Accepted G2B-LUT0 resource architecture; dual build profiles authorized |
+| Revision-4 decision basis | Accepted BS3 ownership CDC architecture and promoted Group-9 sign-off method |
 
 ## Mandatory read before any work
 
@@ -41,26 +41,32 @@ At the end of the task, the agent must read the revision again, record
 
 | Area | Current project truth |
 |---|---|
-| Product | G2B-PRE and G2B-LUT0 `ACCEPTED`; G2B-IMPL `BLOCKED` by resource headroom; G2B-LUT1 `READY` |
+| Product | G2B-PRE and G2B-LUT0 `ACCEPTED`; G2B-IMPL remains `BLOCKED`; G2B-LUT1 `READY_FOR_SIGNOFF_RECOVERY`; G2B-HW `BLOCKED` |
 | Research | R-track state `HOLD`, not closed; R2/R3 remain resumable |
 | Linux Video | L0 `PLANNED` |
-| META | META-3 authorizes reversible `PRODUCT` and `RESEARCH_DIAGNOSTIC` profiles; no source implementation |
+| META | META-4R2 promotes the ownership CDC Group-9 sign-off architecture; no RTL or active-XDC implementation |
 | Qualified FPGA baseline | R1i `ACCEPTED`; preservation identity `FROZEN` |
 | PCIe product requirement | Gen2 x1 or better; sustained payload `>= 288 MB/s` per card |
 | Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |
 | G2B MMIO | `FROZEN`, `0x3800..0x3BFF` |
 | Build profiles | `PRODUCT` and `RESEARCH_DIAGNOSTIC`: `AUTHORIZED_NOT_IMPLEMENTED` |
 | PRODUCT LUT policy | hard gate `<= 90%`; preferred target `80–85%`; target not yet measured or achieved |
-| G2B implementation | `BLOCKED_RESOURCE_HEADROOM`; G2B-LUT1 is `READY` to implement the authorized profiles |
-| G2B hardware qualification | `NOT_STARTED`; `NOT_PROVEN` |
+| Group-9 ownership sign-off | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC` promoted; `GLOBAL_SET_BUS_SKEW_3NS` retired from required sign-off |
+| Group-9 timing basis | 3 families (`slot`, `generation`, `epoch`); `6.000 ns` settling cap; `13.468 ns` minimum launch-to-use; `7.468 ns` gross reserve |
+| G2B implementation | G2B-LUT1 readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY` |
+| Active XDC change | `AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc` |
+| G2B hardware qualification | lifecycle `BLOCKED`; `NOT_STARTED`; `NOT_PROVEN` |
 | Linux consumer contract | Frozen transport input; V4L2 remains `NOT_IMPLEMENTED` |
 
-G2B-LUT0 acceptance promotes the resource-architecture decision only. The
-estimated `PRODUCT` result of 17,512 LUT (84.192%) is not qualification
-evidence and does not satisfy the hard gate until G2B-LUT1/G2B-IMPL produces a
-post-route result. No profile source implementation, G2B bitstream, hardware
-capture, V4L2 implementation, Gen2 qualification, or 288 MB/s result is
-claimed. The R-track is on `HOLD`, not closed, cancelled, or superseded.
+META-4R2 promotes the BS3 Group-9 method as
+`SAFER_AND_MORE_SEMANTICALLY_CORRECT`; this is not a relaxation of safety.
+`RTL_CHANGE_REQUIRED = NO`, `GROUPS_10_TO_17 = UNCHANGED`, and the retired
+global Group-9 `report_bus_skew` is not required again. The estimated
+`PRODUCT` result of 17,512 LUT (84.192%) is still not qualification evidence.
+No profile source implementation, active XDC change, final routed sign-off,
+G2B bitstream, hardware capture, V4L2 implementation, Gen2 qualification, or
+288 MB/s result is claimed. The R-track is on `HOLD`, not closed, cancelled,
+or superseded.
 
 ## Truth model
 

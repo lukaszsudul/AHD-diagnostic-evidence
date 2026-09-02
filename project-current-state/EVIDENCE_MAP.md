@@ -1,9 +1,9 @@
 # AHD Current-State Evidence Map
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`
-Evidence `main` snapshot used for revision 3:
-`a70c55eca5f0c0ad349143ad93ab87eb80d11ac4`
+Evidence `main` accepted-evidence anchor used for revision 4:
+`10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae`
 
 ## Acceptance rule
 
@@ -30,6 +30,12 @@ engineering `PASS` supports the decision but does not prove a profile
 implementation, the PRODUCT LUT target, timing, a bitstream, hardware, or
 V4L2.
 
+Revision 4 uses the exact frozen-contract `META-4R2_TASK_DIRECTIVE` and
+standalone `SSOT WRITE AUTHORIZED` literal to promote the accepted BS3
+ownership CDC architecture and Group-9 sign-off method. BS1R, BS2, and BS3
+support that decision; they do not implement active XDC, complete routed
+sign-off, produce a bitstream, or prove hardware.
+
 ## Authoritative evidence packages
 
 | Evidence ID | Directory | Latest path commit | Original payload/add commit | Current subtree |
@@ -40,6 +46,9 @@ V4L2.
 | `EVID-G1` | [v41-development-g1-integration-architecture](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd/v41-development-g1-integration-architecture) | `f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd` | `221f65aef9664a6d6ad35c3ec7644badd69ba381` | `5c81b36b96841ca76d135c3d737c8abc91372e88` |
 | `EVID-G2B-PRE` | [v41-development-g2b-pre-c2h-abi-mmio-freeze](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e/v41-development-g2b-pre-c2h-abi-mmio-freeze) | `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` | `9fdcca4e3a40b931f07db01ad404b4a3cfc24b10` | `762b8aba83653969d52ec991cd71ed8173268286` |
 | `EVID-G2B-LUT0` | [v41-development-g2b-lut0-resource-attribution](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/a70c55eca5f0c0ad349143ad93ab87eb80d11ac4/v41-development-g2b-lut0-resource-attribution) | `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` | `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` | `05fd1075e0a8deb5082accccb0a88a3f18dfca54` |
+| `EVID-G2B-BS1R` | [v41-development-g2b-bs1r-single-sink-bus-skew-retry](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62/v41-development-g2b-bs1r-single-sink-bus-skew-retry) | `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62` | `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62` | `e780025abc87cc899531732f459a62e55989ff3e` |
+| `EVID-G2B-BS2` | [v41-development-g2b-bs2-alternative-timing-equivalence](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/4699632c591238fee46ada3b0de37532fddd0b6f/v41-development-g2b-bs2-alternative-timing-equivalence) | `4699632c591238fee46ada3b0de37532fddd0b6f` | `4699632c591238fee46ada3b0de37532fddd0b6f` | `7ded35779e08e835c2bd5df1a0ca28e4f5254e40` |
+| `EVID-G2B-BS3` | [v41-development-g2b-bs3-ownership-mailbox-settling-proof](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae/v41-development-g2b-bs3-ownership-mailbox-settling-proof) | `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae` | `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae` | `74746341395caa6c5bb4bbf2ce12766b0ab40795c` |
 | `EVID-R0` | [v41-research-r0-r1i-causal-isolation-design](https://github.com/lukaszsudul/AHD-diagnostic-evidence/tree/aff7e32edc1cf71bde95b6c19e54e6f307764237/v41-research-r0-r1i-causal-isolation-design) | `aff7e32edc1cf71bde95b6c19e54e6f307764237` | `aff7e32edc1cf71bde95b6c19e54e6f307764237` | `5a9c08d9c48ac2e3ef7e0d79e189c8bdd2dbeaa9` |
 
 Later receipt commits are used as `source_evidence_commit` because they contain
@@ -75,6 +84,42 @@ authorization. No source profile implementation, accepted offline G2B
 implementation, achieved LUT/timing target, bitstream, hardware result,
 Linux driver, V4L2 implementation, or R2/R3 closure is inferred.
 
+### `EVID-G2B-BS1R` authoritative artifacts
+
+- `V41_G2B_BS1R_MAIN_REPORT.md`
+- `G2B_BS1R_STATE.json`
+- `G2B_BS1R_EVIDENCE_INDEX.md`
+
+BS1R reproduced the bounded single-sink 58-to-1 `report_bus_skew` pathology.
+
+### `EVID-G2B-BS2` authoritative artifacts
+
+- `V41_G2B_BS2_MAIN_REPORT.md`
+- `G2B_BS2_CONSTRAINT_EQUIVALENCE_ANALYSIS.md`
+- `G2B_BS2_CONSTRAINT_DECISION.md`
+- `G2B_BS2_STATE.json`
+- `G2B_BS2_EVIDENCE_INDEX.md`
+
+BS2 established `INVALID_FOR_SKEW_COMPARISON` and
+`FEASIBLE_WITH_CONSTRAINT_CHANGES`.
+
+### `EVID-G2B-BS3` authoritative artifacts
+
+- `V41_G2B_BS3_MAIN_REPORT.md`
+- `G2B_BS3_OWNERSHIP_PROTOCOL_MODEL.md`
+- `G2B_BS3_STRUCTURAL_CDC_PROOF.md`
+- `G2B_BS3_PROTOCOL_TIMING_MARGIN.md`
+- `G2B_BS3_RECOMMENDED_SIGNOFF_RECIPE.md`
+- `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`
+- `G2B_BS3_STATE.json`
+- `G2B_BS3_EVIDENCE_INDEX.md`
+
+BS3 proves the request/acknowledgement stable-data protocol, the three
+payload-family timing checks, and the `6.000 ns` bound with `13.468 ns`
+minimum launch-to-use and `7.468 ns` gross reserve. Revision 4 promotes the
+method only; active XDC, final sign-off, bitstream, and hardware remain
+pending.
+
 ## Statement-level provenance
 
 | Statement ID | Current-state statement | Status | Owner/Architect decision basis | Evidence and immutable commit | What evidence supports | Boundary |
@@ -82,11 +127,15 @@ Linux driver, V4L2 implementation, or R2/R3 closure is inferred.
 | `STMT-GM1` | G-1 is current accepted product history/inventory | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-GM1`; `STATE.json` and inventory report at `654b9ad...` | Engineering inventory `PASS`, source/donor context | Evidence `PASS` alone did not accept G-1 |
 | `STMT-G0` | G0 baseline freeze is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-G0`; `V41_G0_STATE.json` and freeze report at `b5efb25...` | Exact R1i/donor identities and requirements | Acceptance supplied separately |
 | `STMT-G1` | G1 architecture is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-G1`; `V41_G1_STATE.json` and architecture report at `f1258ba...` | `G2_IMPLEMENTATION_ALLOWED` and integration/C2H design | Does not accept G2 execution or throughput |
-| `STMT-G2B-PRE` | G2B-PRE architecture freeze is accepted and its contract input was ready for implementation from the accepted G2A input base | `ACCEPTED` | `META-2_TASK_DIRECTIVE` | `EVID-G2B-PRE`; architecture-freeze report, state, consistency report, and decision log at `e8ab101...` | Engineering `PASS`, exact G2A input identity, complete ABI/MMIO decisions, and Linux consumer input contract | Historical contract-input readiness is not current G2B-IMPL readiness; G2B-IMPL is now `BLOCKED_RESOURCE_HEADROOM` and only G2B-LUT1 is `READY` |
+| `STMT-G2B-PRE` | G2B-PRE architecture freeze is accepted and its contract input was ready for implementation from the accepted G2A input base | `ACCEPTED` | `META-2_TASK_DIRECTIVE` | `EVID-G2B-PRE`; architecture-freeze report, state, consistency report, and decision log at `e8ab101...` | Engineering `PASS`, exact G2A input identity, complete ABI/MMIO decisions, and Linux consumer input contract | Historical contract-input readiness is not current G2B-IMPL readiness; current G2B-LUT1 readiness is `READY_FOR_SIGNOFF_RECOVERY` |
 | `STMT-G2B-LUT0` | G2B-LUT0 resource-architecture review is accepted | `ACCEPTED` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; architecture review, inventory, plan, targets, and proposal at `a70c55e...` | Engineering `PASS`; blocked G2B 21,412/20,800 LUT; separable R1i fix; reversible Plan B | Acceptance authorizes architecture only; no source profile, achieved target, timing, bitstream, or hardware result |
 | `STMT-BUILD-PROFILES` | PRODUCT and RESEARCH_DIAGNOSTIC are authorized but not implemented; functional and external product semantics must be identical | `ACCEPTED` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; build-profile proposal and recommended plan | Reversible separation of qualified function from research observability | RESEARCH_DIAGNOSTIC post-G2B build/route is not proven; implementation mechanism remains for G2B-LUT1 |
 | `STMT-PRODUCT-LUT-POLICY` | PRODUCT routed LUT hard gate is `<=90%`, preferred target is `80–85%` | `FROZEN` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; resource targets | Point estimate 17,512 LUT / 84.192%, planning range and required recovery | Estimate is not qualification evidence; target is not achieved until actual post-route measurement |
-| `STMT-G2B-IMPL` | G2B-IMPL is `BLOCKED_RESOURCE_HEADROOM`; G2B-LUT1 is `READY` to resolve the blocker | `BLOCKED` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; main review and recommended plan | Current blocked resource result and implementation-ready recovery architecture | G2B remains not offline-qualified; no bitstream or hardware proof |
+| `STMT-G2B-IMPL` | G2B-IMPL remains not offline-qualified; G2B-LUT1 is `READY_FOR_SIGNOFF_RECOVERY` and the next gate is `G2B-LUT1-SIGNOFF-RECOVERY` | `BLOCKED` | `META-4R2_TASK_DIRECTIVE` | `EVID-G2B-LUT0` plus `EVID-G2B-BS3` | Accepted resource architecture and promoted sign-off-recovery method | Active XDC is not yet updated; no final sign-off, bitstream, or hardware proof |
+| `STMT-GROUP9-SIGNOFF` | Current Group-9 `OWNERSHIP_AXI_TO_SOURCE` method is `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-4R2_TASK_DIRECTIVE` | `EVID-G2B-BS1R`, `EVID-G2B-BS2`, `EVID-G2B-BS3` at their exact commits | Pathology reproduction, invalid global comparison, stable-data CDC proof, 3 families, `6.000 ns` cap, `13.468 ns` margin, `7.468 ns` reserve | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; not a relaxation of safety; `RTL_CHANGE_REQUIRED = NO`; active XDC pending |
+| `STMT-GROUP9-DECISION` | Named unnumbered Group-9 sign-off-methodology decision is `RESOLVED` as `REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS` | `ACCEPTED` | `META-4R2_TASK_DIRECTIVE` | BS1R `f3a0df6...`; BS2 `4699632...`; BS3 `10f1b66...` | Exact decision provenance and Owner/Architect approval | No `OD-*` ID invented; every registered open OD entry remains unchanged |
+| `STMT-G2B-HW` | G2B-HW is `BLOCKED` | `BLOCKED` | `META-4R2_TASK_DIRECTIVE` | `EVID-G2B-BS3` plus current SSOT | Final offline sign-off and bitstream candidate are absent | No hardware, qualification, release, or bitstream claim |
+| `STMT-GROUPS-10-17` | `GROUPS_10_TO_17 = UNCHANGED` | `FROZEN` | `META-4R2_TASK_DIRECTIVE` | Current sign-off requirements; `EVID-G2B-BS3` Group-9-only scope | No retirement or reinterpretation beyond Group 9 | Groups 10–17 remain required unless separately reviewed |
 | `STMT-G2A` | G2A is active/in progress | `ACTIVE` | `META-0_TASK_DIRECTIVE` | No G2A package at evidence snapshot; local-only `integration/v41-r1i-gen2-g2a@22f15a6befe911172073e46a95d50b53afe1fc33` | Execution-time working context only; no published evidence commit | No result, build, or architecture promotion inferred |
 | `STMT-R0` | R0 is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-R0`; `R0_STATE.json` and experiment plan at `aff7e32...` | Research design/protocol `PASS` | R0 evidence states R1 was not started at publication |
 | `STMT-R1` | R-track lifecycle context remains active but execution state is `HOLD`; R2/R3 remain resumable and not closed | `ACTIVE` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0` instrumentation inventory/proposal plus preserved `EVID-R0` | Research instrumentation is separable and recoverable through RESEARCH_DIAGNOSTIC | No scientific closure, cancellation, supersession, branch modification, or research evidence deletion |

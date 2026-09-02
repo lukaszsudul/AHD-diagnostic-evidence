@@ -1,10 +1,11 @@
 # AHD Current Status
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 State type: `CURRENT_ACCEPTED_STATE`
 Accepted by role: `OWNER_ARCHITECT`
 Decision basis: historical accepted state plus explicit Owner/Architect
-acceptance of G2B-LUT0 and dual-profile authorization for META-3
+promotion of the accepted BS3 ownership CDC architecture and Group-9 sign-off
+method through META-4R2
 
 ## Acceptance boundary
 
@@ -14,7 +15,9 @@ and R0 are `ACCEPTED` because the Owner/Architect-approved META-0 input says
 so. G2B-PRE remains `ACCEPTED` as an architecture-contract freeze, and
 G2B-LUT0 is `ACCEPTED` as a resource-architecture review. G2A remains
 `ACTIVE`; the R-track execution state is `HOLD`, not closed. L0 remains
-`PLANNED` and V4L2 remains `NOT_IMPLEMENTED`.
+`PLANNED` and V4L2 remains `NOT_IMPLEMENTED`. META-4R2 promotes only the
+Group-9 ownership sign-off architecture; it does not change RTL, active XDC,
+offline qualification, bitstream, or hardware state.
 
 ## Track and gate status
 
@@ -25,15 +28,17 @@ G2B-LUT0 is `ACCEPTED` as a resource-architecture review. G2A remains
 | Product | G1 | `ACCEPTED` | Integration and C2H architecture accepted; G2 implementation allowed | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
 | Product | G2A | `ACTIVE` | In progress; no accepted result is represented | No G2A package on evidence `main` at revision-1 creation |
 | Product | G2B-PRE | `ACCEPTED` | C2H transport ABI, MMIO contract, and Linux transport-input contract frozen | Accepted evidence at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e`; architecture contract only |
-| Product | G2B-IMPL | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified | No G2B bitstream or hardware result; hardware `NOT_PROVEN` |
+| Product | G2B-IMPL | `BLOCKED` | Sign-off recovery pending; not offline-qualified | No G2B bitstream or hardware result; Group-9 candidate XDC is authorized but not implemented |
 | Product | G2B-LUT0 | `ACCEPTED` | Plan B dual-profile resource architecture accepted | Evidence `PASS` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4`; estimate is not qualification |
-| Product | G2B-LUT1 | `PLANNED` | `READY` to implement reversible profiles | No source implementation has started in META-3 |
+| Product | G2B-LUT1 | `PLANNED` | readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY` | Apply the promoted Group-9 constraint intent in a later governed source task, then complete routed sign-off |
+| Product | G2B-HW | `BLOCKED` | `NOT_STARTED / NOT_PROVEN` | Final offline sign-off, pre-bitstream hard gate, and a bitstream candidate do not exist |
 | Research | R0 | `ACCEPTED` | Causal-isolation design accepted | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
 | Research | R1 | lifecycle `ACTIVE`; execution state `HOLD` | Valid research context; no closure or product promotion | `RESEARCH_DIAGNOSTIC` preserves the diagnostic continuation path |
 | Research | R2/R3 | lifecycle `PLANNED`; state `HOLD` | Resumable later; neither accepted nor complete | `RESEARCH_DIAGNOSTIC` must preserve R2/R3 observability |
 | Linux Video | L0 | `PLANNED` | Planned architecture direction; no implementation status invented | Owner/Architect-planned input; no L0 package on evidence `main` |
 | META | META-0 | `ACCEPTED` | Governance infrastructure accepted by the creation authorization only | `ACCEPTED_BY_CREATION_TASK`; no broader decision inferred |
 | META | META-3 | `ACCEPTED` | Build-profile architecture authorization promoted | SSOT/meta only; no source, build, Vivado, DMA, or hardware action |
+| META | META-4R2 | `ACCEPTED` | Ownership CDC Group-9 sign-off method promoted | SSOT/meta only; no RTL, active XDC, Vivado, bitstream, or hardware action |
 
 ## Accepted product state
 
@@ -49,12 +54,14 @@ G2B-LUT0 is `ACCEPTED` as a resource-architecture review. G2A remains
 | `AHD_C2H_TRANSPORT_ABI_V1` version 1 | `FROZEN` | `FROZEN_FOR_G2B`; 4,096-byte record contract, not an implementation claim |
 | G2B MMIO `0x3800–0x3BFF` | `FROZEN` | Contract frozen; registers are `NOT_IMPLEMENTED` in accepted hardware |
 | Linux transport consumer contract | `FROZEN` | Frozen input contract only; V4L2 architecture/implementation is not promoted |
+| Group-9 `OWNERSHIP_AXI_TO_SOURCE` sign-off | `ACCEPTED` | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; old `GLOBAL_SET_BUS_SKEW_3NS` retired from required sign-off |
 | PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; LUT hard gate `<=90%`, preferred `80–85%` |
 | RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; PRODUCT functionality plus resumable research observability |
 | Gen2 x1 implementation target | `FROZEN` | Required final configuration or better; hardware remains `NOT_PROVEN` |
 | Sustained application payload `>= 288 MB/s/card` | `FROZEN` | Requirement remains `NOT_PROVEN` and not yet qualified |
 | Application C2H payload | `PLANNED` | Not yet accepted |
-| Record-to-AXI-stream data plane | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified |
+| Record-to-AXI-stream data plane | `BLOCKED` | `READY_FOR_SIGNOFF_RECOVERY`; not offline-qualified |
+| G2B-HW | `BLOCKED` | No final offline sign-off, pre-bitstream PASS, bitstream candidate, or hardware proof |
 | One-channel application DMA | `PLANNED` | Not yet qualified |
 | Two-channel application DMA | `PLANNED` | Not yet qualified |
 | Two-card host topology | `PLANNED` | Architectural requirement, not two-card hardware qualification |
@@ -86,6 +93,10 @@ mechanism remains `INCONCLUSIVE`.
 - Final PCIe requirement: `PCIe Gen2 x1 or better`.
 - PRODUCT routed LUT hard gate: `<= 90%`.
 - Preferred PRODUCT routed LUT target: `80–85%`.
+- Group-9 ownership settling cap: `6.000 ns` across the three semantic
+  families `slot`, `generation`, and `epoch`.
+- Group-9 minimum launch-to-use margin: `13.468 ns`; gross reserve:
+  `7.468 ns`.
 
 The current Gen1 x1 donor is a proven control-plane donor and is not the final
 throughput configuration. G2B-LUT0 estimates PRODUCT at 17,512 LUT / 84.192%,

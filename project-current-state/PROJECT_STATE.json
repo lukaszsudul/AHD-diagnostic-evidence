@@ -1,14 +1,18 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 3,
+  "project_state_revision": 4,
   "state_type": "CURRENT_ACCEPTED_STATE",
   "governance_version": 1,
-  "last_update": "2026-08-29",
+  "last_update": "2026-09-02",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-3_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-4R2_TASK_DIRECTIVE",
+  "ssot_write_authorization": "SSOT WRITE AUTHORIZED",
+  "update_type": "ARCHITECTURE_CHANGE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4",
-  "expected_previous_project_state_revision": 2,
+  "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+  "source_evidence_directory": "v41-development-g2b-bs3-ownership-mailbox-settling-proof",
+  "expected_previous_project_state_revision": 3,
+  "frozen_contract_header_sha256": "D7456D989F0D879B2E1FD8777876F5AE786947D789CE1D480CA720316AC7342B",
   "current_transport_abi_status": "FROZEN_FOR_G2B",
   "lifecycle_status_enum": [
     "ACCEPTED",
@@ -35,7 +39,7 @@
       "status": "ACTIVE",
       "last_accepted_gate": "G2B-LUT0",
       "active_gate": "G2A",
-      "next_gate": "G2B-LUT1",
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
       "accepted_gates": [
         "G-1",
         "G0",
@@ -64,9 +68,13 @@
       },
       "g2b_lut1": {
         "status": "PLANNED",
-        "readiness": "READY",
-        "implementation_state": "NOT_STARTED",
-        "scope": "REVERSIBLE_PRODUCT_AND_RESEARCH_DIAGNOSTIC_PROFILE_IMPLEMENTATION"
+        "readiness": "READY_FOR_SIGNOFF_RECOVERY",
+        "implementation_state": "SIGNOFF_RECOVERY_PENDING",
+        "scope": "APPLY_PROMOTED_GROUP9_CONSTRAINT_INTENT_AND_COMPLETE_ROUTED_SIGNOFF",
+        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
+        "accepted_by_role": "OWNER_ARCHITECT",
+        "decision_source": "META-4R2_TASK_DIRECTIVE",
+        "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
       }
     },
     "research": {
@@ -100,9 +108,10 @@
     },
     "meta": {
       "status": "ACCEPTED",
-      "current_task": "META-3",
-      "acceptance_basis": "OWNER_ARCHITECT_ACCEPTED_G2B_LUT0_AND_AUTHORIZED_DUAL_BUILD_PROFILES",
-      "decision_source": "META-3_TASK_DIRECTIVE"
+      "current_task": "META-4R2",
+      "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_OWNERSHIP_CDC_GROUP9_SIGNOFF_METHOD",
+      "decision_source": "META-4R2_TASK_DIRECTIVE",
+      "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
     }
   },
   "qualified_fpga_baseline": {
@@ -323,6 +332,26 @@
       "accepted_by_role": "OWNER_ARCHITECT",
       "decision_source": "META-0_TASK_DIRECTIVE",
       "source_evidence_commit": null
+    },
+    {
+      "id": "REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF",
+      "status": "FROZEN",
+      "requirement": "PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC",
+      "scope": "GROUP9_OWNERSHIP_AXI_TO_SOURCE",
+      "payload_families": [
+        "slot",
+        "generation",
+        "epoch"
+      ],
+      "settling_cap_ns": "6.000",
+      "minimum_launch_to_use_margin_ns": "13.468",
+      "gross_reserve_ns": "7.468",
+      "groups_10_to_17": "UNCHANGED",
+      "implementation_state": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "qualification": "NOT_YET_QUALIFIED",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-4R2_TASK_DIRECTIVE",
+      "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
     }
   ],
   "c2h_architecture": {
@@ -390,9 +419,10 @@
     },
     "record_to_axi_stream_data_plane": {
       "status": "BLOCKED",
-      "target_gate": "G2B-LUT1",
-      "readiness": "G2B_LUT1_READY_TO_RESOLVE_BLOCKER",
-      "implementation_state": "BLOCKED_RESOURCE_HEADROOM",
+      "target_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
+      "readiness": "READY_FOR_SIGNOFF_RECOVERY",
+      "implementation_state": "ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING",
+      "blocking_reason": "ACTIVE_XDC_UPDATE_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
       "offline_qualification_state": "NOT_ACCEPTED"
     },
     "one_channel_dma": {
@@ -610,8 +640,8 @@
       "PROFILE_REDUCTION_DOES_NOT_CHANGE_XDMA_CONFIGURATION"
     ],
     "implementation_authority": {
-      "target_gate": "G2B-LUT1",
-      "readiness": "READY",
+      "target_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
+      "readiness": "READY_FOR_SIGNOFF_RECOVERY",
       "mechanism_policy": "SELECT_LEAST_INVASIVE_REVERSIBLE_METHOD_SUPPORTED_BY_REPOSITORY",
       "permitted_mechanisms": [
         "VHDL_GENERICS",
@@ -635,19 +665,19 @@
     "status": "ACCEPTED",
     "plan_state": "PLAN_ACCEPTED_IMPLEMENTATION_PENDING",
     "selected_plan": "PLAN_B_PRODUCT_AND_RESEARCH_DIAGNOSTIC",
-    "target_gate": "G2B-LUT1",
+    "target_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
     "accepted_by_role": "OWNER_ARCHITECT",
     "decision_source": "META-3_TASK_DIRECTIVE",
     "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
   },
   "g2b_implementation": {
     "status": "BLOCKED",
-    "readiness": "G2B_LUT1_READY_TO_RESOLVE_BLOCKER",
-    "implementation_state": "BLOCKED_RESOURCE_HEADROOM",
-    "blocking_reason": "RESOURCE_HEADROOM",
+    "readiness": "READY_FOR_SIGNOFF_RECOVERY",
+    "implementation_state": "ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING",
+    "blocking_reason": "ACTIVE_XDC_UPDATE_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
     "offline_qualification_state": "NOT_ACCEPTED",
     "decision_by_role": "OWNER_ARCHITECT",
-    "decision_source": "META-3_TASK_DIRECTIVE",
+    "decision_source": "META-4R2_TASK_DIRECTIVE",
     "accepted_g2a_base": {
       "scope": "G2B_PRE_IMPLEMENTATION_INPUT_ONLY",
       "branch": "integration/v41-r1i-gen2-g2a",
@@ -658,12 +688,76 @@
     "one_channel_c2h_rtl": "UNPROMOTED_RESOURCE_BLOCKED_EVIDENCE_SNAPSHOT",
     "g2b_bitstream": "NOT_IMPLEMENTED",
     "g2b_host_capture": "NOT_IMPLEMENTED",
-    "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
+    "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+  },
+  "ownership_cdc_signoff": {
+    "status": "ACCEPTED",
+    "scope": "GROUP9_OWNERSHIP_AXI_TO_SOURCE",
+    "accepted_by_role": "OWNER_ARCHITECT",
+    "decision_source": "META-4R2_TASK_DIRECTIVE",
+    "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+    "old_required_signoff": {
+      "method": "GLOBAL_SET_BUS_SKEW_3NS",
+      "disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+      "reason": "OWNERSHIP_SOURCE_SET_IS_STRUCTURALLY_HETEROGENEOUS_AND_INVALID_FOR_GLOBAL_SKEW_COMPARISON"
+    },
+    "new_required_signoff": {
+      "method": "PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC",
+      "promotion_state": "PROMOTED",
+      "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+      "safety_classification": "THIS_IS_NOT_A_RELAXATION_OF_SAFETY",
+      "request_synchronizer_stages": 2,
+      "acknowledgement_synchronizer_stages": 2,
+      "held_stable_data_payload_bits": 58,
+      "source_hold_until_acknowledgement": true,
+      "reset_epoch_coherency_required": true,
+      "payload_families": [
+        {
+          "name": "slot",
+          "width_bits": 2
+        },
+        {
+          "name": "generation",
+          "width_bits": 24
+        },
+        {
+          "name": "epoch",
+          "width_bits": 32
+        }
+      ],
+      "payload_family_count": 3,
+      "settling_cap_ns": "6.000",
+      "minimum_launch_to_use_margin_ns": "13.468",
+      "gross_reserve_ns": "7.468",
+      "per_family_absolute_settling_checks_required": true
+    },
+    "rtl_change_required": "NO",
+    "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+    "candidate_xdc": "G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc",
+    "global_group9_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+    "groups_10_to_17": "UNCHANGED",
+    "future_signoff_recipe": [
+      "OWNERSHIP_STRUCTURAL_CDC_PROOF",
+      "REQUEST_SYNCHRONIZER_VALIDATION",
+      "ACKNOWLEDGEMENT_SYNCHRONIZER_VALIDATION",
+      "STABLE_DATA_HOLD_PROOF",
+      "PER_FAMILY_SETTLING_CHECKS",
+      "RESET_EPOCH_COHERENCY_PROOF",
+      "NORMAL_ROUTED_TIMING",
+      "CDC_DISPOSITION",
+      "DRC",
+      "CLOCKS_AND_RESOURCES",
+      "PRE_BITSTREAM_HARD_GATE"
+    ],
+    "retired_check_excluded_from_future_recipe": "GLOBAL_GROUP9_REPORT_BUS_SKEW",
+    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY"
   },
   "g2b_hardware": {
-    "status": "PLANNED",
+    "status": "BLOCKED",
     "progress": "NOT_STARTED",
     "qualification_state": "NOT_PROVEN",
+    "blocking_reason": "FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
+    "bitstream_candidate": "NOT_AVAILABLE",
     "one_channel_dma": "NOT_PROVEN",
     "two_channel_dma": "NOT_PROVEN",
     "gen2_negotiation": "NOT_PROVEN",
@@ -824,6 +918,20 @@
       "accepted_by_role": "OWNER_ARCHITECT",
       "decision_source": "META-3_TASK_DIRECTIVE",
       "source_evidence_commit": "a70c55eca5f0c0ad349143ad93ab87eb80d11ac4"
+    },
+    {
+      "topic": "GROUP9_OWNERSHIP_AXI_TO_SOURCE_SIGNOFF_METHODOLOGY",
+      "record_form": "UNNUMBERED_GOVERNED_DECISION",
+      "status": "ACCEPTED",
+      "decision_state": "RESOLVED",
+      "decision": "REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-4R2_TASK_DIRECTIVE",
+      "source_evidence_commits": [
+        "f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62",
+        "4699632c591238fee46ada3b0de37532fddd0b6f",
+        "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+      ]
     }
   ],
   "governance": {
@@ -999,6 +1107,64 @@
         "STMT-OD-03-CLOSURE"
       ],
       "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_RESOURCE_ARCHITECTURE_ONLY; PROFILE_IMPLEMENTATION_AND_POST_ROUTE_QUALIFICATION_REMAIN_PENDING; NO_BITSTREAM_OR_HARDWARE_RESULT"
+    },
+    {
+      "id": "EVID-G2B-BS1R",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62",
+      "payload_commit": "f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62",
+      "directory": "v41-development-g2b-bs1r-single-sink-bus-skew-retry",
+      "files": [
+        "V41_G2B_BS1R_MAIN_REPORT.md",
+        "G2B_BS1R_STATE.json",
+        "G2B_BS1R_EVIDENCE_INDEX.md"
+      ],
+      "supports": [
+        "STMT-GROUP9-SIGNOFF",
+        "STMT-GROUP9-DECISION"
+      ],
+      "acceptance_boundary": "REPORT_BUS_SKEW_PATHOLOGY_REPRODUCED_ON_EXACT_58_TO_1_SCOPE; NO_CURRENT_SIGNOFF_REQUIREMENT"
+    },
+    {
+      "id": "EVID-G2B-BS2",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "4699632c591238fee46ada3b0de37532fddd0b6f",
+      "payload_commit": "4699632c591238fee46ada3b0de37532fddd0b6f",
+      "directory": "v41-development-g2b-bs2-alternative-timing-equivalence",
+      "files": [
+        "V41_G2B_BS2_MAIN_REPORT.md",
+        "G2B_BS2_CONSTRAINT_EQUIVALENCE_ANALYSIS.md",
+        "G2B_BS2_CONSTRAINT_DECISION.md",
+        "G2B_BS2_STATE.json"
+      ],
+      "supports": [
+        "STMT-GROUP9-SIGNOFF",
+        "STMT-GROUP9-DECISION"
+      ],
+      "acceptance_boundary": "PATH_SET_INVALID_FOR_SKEW_COMPARISON; ALTERNATIVE_SIGNOFF_FEASIBLE_WITH_CONSTRAINT_CHANGES"
+    },
+    {
+      "id": "EVID-G2B-BS3",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+      "payload_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+      "directory": "v41-development-g2b-bs3-ownership-mailbox-settling-proof",
+      "files": [
+        "V41_G2B_BS3_MAIN_REPORT.md",
+        "G2B_BS3_OWNERSHIP_PROTOCOL_MODEL.md",
+        "G2B_BS3_STRUCTURAL_CDC_PROOF.md",
+        "G2B_BS3_PROTOCOL_TIMING_MARGIN.md",
+        "G2B_BS3_RECOMMENDED_SIGNOFF_RECIPE.md",
+        "G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc",
+        "G2B_BS3_STATE.json"
+      ],
+      "supports": [
+        "STMT-GROUP9-SIGNOFF",
+        "STMT-GROUP9-DECISION",
+        "STMT-G2B-IMPL",
+        "STMT-G2B-HW"
+      ],
+      "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_SIGNOFF_ARCHITECTURE_ONLY; ACTIVE_XDC_NOT_MODIFIED; FINAL_ROUTED_SIGNOFF_BITSTREAM_AND_HARDWARE_REMAIN_PENDING"
     }
   ]
 }

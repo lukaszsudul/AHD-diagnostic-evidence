@@ -1,6 +1,6 @@
 # AHD Active Baselines and Working Identities
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 This page distinguishes accepted/frozen baselines from active or provisional
 working branches. Branch existence is provenance; it does not confer
@@ -111,20 +111,30 @@ modify, build, or otherwise interfere with the active G2A worktree.
 | G2B MMIO contract | `FROZEN`, `0x3800..0x3BFF` |
 | Linux consumer contract | `FROZEN_INPUT_CONTRACT` for transport parsing only |
 | G2B-PRE contract-input readiness | `READY`; this is historical interface readiness, not current G2B-IMPL readiness |
-| Hardware qualification | `NOT_STARTED`; G2B hardware remains `NOT_PROVEN` |
+| G2B-HW | lifecycle `BLOCKED`; final offline sign-off, pre-bitstream gate, and a bitstream candidate do not exist; hardware remains `NOT_PROVEN` |
 | Evidence | `v41-development-g2b-pre-c2h-abi-mmio-freeze` at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e` |
 | G2B-LUT0 | `ACCEPTED`; resource-architecture review only |
 | Build profiles | `PRODUCT` and `RESEARCH_DIAGNOSTIC`, both `AUTHORIZED_NOT_IMPLEMENTED` |
 | PRODUCT resource policy | LUT hard gate `<= 90%`; preferred target `80–85%`; estimated 84.192% is not qualification evidence |
-| G2B-IMPL | `BLOCKED_RESOURCE_HEADROOM`; no accepted offline-qualified implementation |
-| G2B-LUT1 | `READY` to implement a reversible profile boundary |
+| G2B-IMPL | lifecycle `BLOCKED`; `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; no accepted offline-qualified implementation |
+| G2B-LUT1 | lifecycle `PLANNED`; readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY` |
+| Retired Group-9 method | `GLOBAL_SET_BUS_SKEW_3NS`; `RETIRED_FROM_REQUIRED_SIGNOFF` for `OWNERSHIP_AXI_TO_SOURCE` |
+| Current Group-9 method | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; `PROMOTED` |
+| Ownership CDC basis | Two-stage request and acknowledgement synchronizers; held 58-bit stable-data payload; source hold until acknowledgement; reset/epoch coherency |
+| Payload families and timing | 3 families: `slot`, `generation`, `epoch`; settling cap `6.000 ns`; minimum launch-to-use margin `13.468 ns`; gross reserve `7.468 ns` |
+| Safety equivalence | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; this is not a relaxation of safety |
+| RTL/XDC disposition | `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc` |
+| Remaining sign-off | `GROUPS_10_TO_17 = UNCHANGED`; G2B-HW remains blocked |
+| Ownership evidence | BS1R `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62`; BS2 `4699632c591238fee46ada3b0de37532fddd0b6f`; BS3 `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae` |
 | Resource evidence | `v41-development-g2b-lut0-resource-attribution` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` |
 
 These accepted architecture baselines do not promote a source branch,
 profile implementation, bitstream, DMA result, Gen2 negotiation result,
 throughput result, or Linux/V4L2 implementation. The 17,512 LUT / 84.192%
 PRODUCT estimate remains unmeasured. G2A remains `ACTIVE`; G2B-LUT1 is the
-separate implementation gate authorized to resolve the resource blocker.
+separate `READY_FOR_SIGNOFF_RECOVERY` gate. Its exact next step is
+`G2B-LUT1-SIGNOFF-RECOVERY`; no source or active-XDC change occurs in this
+META transaction.
 
 ## Held research context
 

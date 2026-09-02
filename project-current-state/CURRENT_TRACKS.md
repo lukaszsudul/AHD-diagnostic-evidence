@@ -1,15 +1,15 @@
 # AHD Current Development Tracks
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 ## Track summary
 
 | Track | Purpose | Last accepted gate | Active gate | Next expected decision point | Track status |
 |---|---|---|---|---|---|
-| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | G2B-LUT1 reversible profile implementation and complete offline requalification | `ACTIVE`; G2B-IMPL resource-blocked |
+| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | `G2B-LUT1-SIGNOFF-RECOVERY` and complete offline requalification | `ACTIVE`; G2B-IMPL sign-off recovery pending |
 | R-track | Isolate the R1i physical-SCL/ACK/recovery causal mechanism and characterize margin | R0 | none executing | Resume R2/R3 later through RESEARCH_DIAGNOSTIC | lifecycle `ACTIVE`; execution state `HOLD`, not closed |
 | L-track | Native Linux/V4L2 product integration through a transport abstraction | none | none | Approve/launch L0 with final input assumptions and interfaces | `PLANNED` |
-| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-3 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
+| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-4R2 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
 
 ## G-track — product development
 
@@ -30,11 +30,14 @@ closure, and throughput.
   `0x3800..0x3BFF`, and the Linux consumer contract is a frozen transport
   input.
 - G2B-IMPL: lifecycle `BLOCKED`; implementation state
-  `BLOCKED_RESOURCE_HEADROOM`; not offline-qualified and no bitstream exists.
+  `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; not offline-qualified and
+  no bitstream exists.
 - G2B-LUT0: `ACCEPTED` — Plan B resource architecture only.
-- G2B-LUT1: lifecycle `PLANNED`, readiness `READY` — implement reversible
-  PRODUCT and RESEARCH_DIAGNOSTIC profiles without changing functional or
-  external interface semantics.
+- G2B-LUT1: lifecycle `PLANNED`, readiness
+  `READY_FOR_SIGNOFF_RECOVERY`; exact next gate
+  `G2B-LUT1-SIGNOFF-RECOVERY`.
+- G2B-HW: lifecycle `BLOCKED`; final offline sign-off, pre-bitstream hard gate,
+  and a bitstream candidate do not exist.
 
 ### Current dependencies
 
@@ -44,15 +47,22 @@ closure, and throughput.
 - effective `user_clk` proof and resource/timing closure;
 - R-track state `HOLD`, with R2/R3 resumability preserved; and
 - frozen `AHD_C2H_TRANSPORT_ABI_V1` and G2B MMIO contracts must be implemented
-  without semantic changes.
+  without semantic changes;
+- promoted Group-9 method `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`, with
+  `6.000 ns` per-family settling for `slot`, `generation`, and `epoch`, based
+  on `13.468 ns` minimum launch-to-use and `7.468 ns` gross reserve; and
+- `GROUPS_10_TO_17 = UNCHANGED`.
 
 ### Next decision
 
-G2B-LUT1 may implement the authorized profiles using the least invasive
-reversible repository-supported mechanism. It must then run complete G2B
-offline requalification. The PRODUCT hard gate is routed LUT `<=90%`, with a
-preferred `80–85%` target; the 84.192% planning estimate is not an achieved
-result.
+`G2B-LUT1-SIGNOFF-RECOVERY` may apply the accepted
+`G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc` under the governed source-change
+procedure. It must complete the new Group-9 per-family/structural checks,
+Groups 10–17, routed timing, DRC, CDC disposition, clocks/resources, and the
+pre-bitstream hard gate before any bitstream or hardware step. The retired
+global Group-9 `report_bus_skew` is not required. The PRODUCT hard gate remains
+routed LUT `<=90%`, with a preferred `80–85%` target; the 84.192% planning
+estimate is not an achieved result.
 
 ## R-track — causal research
 
@@ -101,7 +111,7 @@ capture/video layer independent of the PCIe transport backend.
 ### Gate state
 
 - L0: `PLANNED`.
-- No accepted or active Linux gate exists at revision 3.
+- No accepted or active Linux gate exists at revision 4.
 - The Linux transport consumer input contract is frozen; V4L2 remains
   `NOT_IMPLEMENTED`.
 
@@ -144,9 +154,11 @@ auditability.
 ### Gate state
 
 META-0 remains the accepted creation basis. META-2 promoted only the accepted
-G2B-PRE interface contract. META-3 promotes G2B-LUT0 acceptance, R-track
-`HOLD`, and dual-profile architecture authority; it does not implement a
-profile or accept G2B offline qualification, a bitstream, hardware, or V4L2.
+G2B-PRE interface contract. META-3 promoted G2B-LUT0 acceptance, R-track
+`HOLD`, and dual-profile architecture authority. META-4R2 promotes the
+ownership CDC Group-9 sign-off architecture and named unnumbered decision; it
+does not modify RTL or active XDC and does not accept G2B offline
+qualification, a bitstream, hardware, or V4L2.
 
 ### Current dependencies
 
@@ -162,5 +174,5 @@ profile or accept G2B offline qualification, a bitstream, hardware, or V4L2.
 
 ### Next decision
 
-After revision-3 publication, the next update begins only when a separate task
+After revision-4 publication, the next update begins only when a separate task
 satisfies every field in `META_UPDATE_TEMPLATE.md`.

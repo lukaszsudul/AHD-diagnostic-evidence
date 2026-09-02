@@ -221,3 +221,89 @@ The publication commit, non-force push result, and remote byte/SHA-256
 read-back are completion data recorded in the META-3 evidence receipt under
 `v41-meta-project-state-rev3-build-profile-authorization/`; no not-yet-created
 publication SHA is invented in this changelog entry.
+
+## PROJECT_STATE_REV 4 — 2026-09-02
+
+Status: `ACCEPTED`
+Update type: `ARCHITECTURE_CHANGE`
+Authorization literal: `SSOT WRITE AUTHORIZED`
+Expected previous revision: `3`
+Actual previous revision: `3`
+Resulting revision: `4`
+Accepted by role: `OWNER_ARCHITECT`
+Applied by role: `META_UPDATE_AGENT`
+Frozen header SHA-256:
+`D7456D989F0D879B2E1FD8777876F5AE786947D789CE1D480CA720316AC7342B`
+
+Reason: promote the accepted ownership CDC architecture and make
+`PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC` the required Group-9
+`OWNERSHIP_AXI_TO_SOURCE` sign-off method.
+
+Authoritative accepted evidence:
+
+- BS1R: `v41-development-g2b-bs1r-single-sink-bus-skew-retry`, commit
+  `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62`.
+- BS2: `v41-development-g2b-bs2-alternative-timing-equivalence`, commit
+  `4699632c591238fee46ada3b0de37532fddd0b6f`.
+- BS3: `v41-development-g2b-bs3-ownership-mailbox-settling-proof`, commit
+  `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae`.
+
+Project truth promoted in this revision:
+
+- `GLOBAL_SET_BUS_SKEW_3NS` is `RETIRED_FROM_REQUIRED_SIGNOFF` for Group 9.
+- Global Group-9 `report_bus_skew` is retired from required sign-off; no
+  repeat invocation is required.
+- The required method is `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`.
+- Structural proof covers two-stage request and acknowledgement
+  synchronizers, a held 58-bit stable-data payload, source hold until
+  acknowledgement, and reset/epoch coherency.
+- The three semantic payload families are `slot`, `generation`, and `epoch`.
+- Maximum settling is `6.000 ns`, based on a `13.468 ns` minimum
+  launch-to-use margin and `7.468 ns` gross reserve.
+- The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not a
+  relaxation of safety.
+- `RTL_CHANGE_REQUIRED = NO`.
+- `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; the accepted
+  candidate is `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`.
+- G2B-LUT1 readiness is `READY_FOR_SIGNOFF_RECOVERY`; next gate is
+  `G2B-LUT1-SIGNOFF-RECOVERY`.
+- G2B-HW is lifecycle `BLOCKED` until final offline sign-off, the
+  pre-bitstream hard gate, and a bitstream candidate exist.
+- `GROUPS_10_TO_17 = UNCHANGED`.
+- The named Group-9 sign-off-methodology decision is recorded as an
+  `UNNUMBERED_GOVERNED_DECISION`, state `RESOLVED`, decision
+  `REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS`. No `OD-*`
+  identifier is invented and every registered `OD-*` entry remains unchanged.
+
+Explicit non-promotions and protection boundary:
+
+- no RTL or FPGA source was modified;
+- no active production XDC was modified;
+- no Vivado, bitstream, DUT, DMA, or hardware operation was performed;
+- no R-track source, branch, evidence, or execution state was modified;
+- no final routed sign-off, implementation acceptance, qualification,
+  release, hardware readiness, bitstream, or hardware proof is claimed; and
+- Groups 10–17 retain their existing requirements.
+
+Affected SSOT files in the revision-4 transaction (`16`):
+
+- `project-current-state/ACTIVE_BASELINES.md`
+- `project-current-state/CHANGELOG.md`
+- `project-current-state/COMPATIBILITY_MATRIX.csv`
+- `project-current-state/CURRENT_ARCHITECTURE.md`
+- `project-current-state/CURRENT_INTERFACES.md`
+- `project-current-state/CURRENT_REQUIREMENTS.md`
+- `project-current-state/CURRENT_RESOURCE_STATE.md`
+- `project-current-state/CURRENT_STATUS.md`
+- `project-current-state/CURRENT_TRACKS.md`
+- `project-current-state/EVIDENCE_MAP.md`
+- `project-current-state/GOVERNANCE.md`
+- `project-current-state/OPEN_DECISIONS.md`
+- `project-current-state/PROJECT_STATE.json`
+- `project-current-state/README.md`
+- `project-current-state/SHA256_MANIFEST.txt`
+- `project-current-state/TRACK_STATUS.json`
+
+The ordinary publication commit and fresh remote byte/SHA-256 read-back are
+post-commit executor completion data. No not-yet-created publication SHA or
+precompleted remote read-back is invented in this changelog entry.

@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 3`
+`PROJECT_STATE_REV = 4`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open
@@ -45,9 +45,9 @@ two-channel, Gen2, throughput, or Linux hardware qualification.
 | G2B-LUT0 resource architecture | `ACCEPTED` | `PASS / IMPLEMENTATION_PENDING` | Dual-profile Plan B accepted; estimate is not qualification evidence |
 | PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | Qualified R1i behavior, production observability, XDMA Gen2, G2B and frozen ABI/MMIO retained |
 | RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | PRODUCT functional behavior plus reproducible R-track observability for R2/R3 resumability |
-| Application record-to-C2H plane | `BLOCKED` | `BLOCKED_RESOURCE_HEADROOM` | Resource-blocked evidence snapshot is not an accepted offline-qualified implementation |
-| G2B-LUT1 | `PLANNED` | `READY / NOT_STARTED` | Authorized to implement the reversible profile boundary using the least invasive supported method |
-| G2B hardware qualification | `PLANNED` | `NOT_STARTED / NOT_PROVEN` | No G2B bitstream, DMA capture, Gen2 proof, or throughput result exists |
+| Application record-to-C2H plane | `BLOCKED` | `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` | Active-XDC update and complete final routed sign-off remain pending; no offline-qualified implementation |
+| G2B-LUT1 | `PLANNED` | `READY_FOR_SIGNOFF_RECOVERY / SIGNOFF_RECOVERY_PENDING` | Authorized next gate is `G2B-LUT1-SIGNOFF-RECOVERY`; active XDC is not changed by META-4R2 |
+| G2B-HW | `BLOCKED` | `NOT_STARTED / NOT_PROVEN` | Final offline sign-off, pre-bitstream hard gate, and a bitstream candidate do not exist |
 | Linux/V4L2 product layer | `PLANNED` | `NOT_IMPLEMENTED` | Transport input is frozen; frontend, buffer, identity, and policy work remain later L-track scope |
 | Gen2 training, actual `user_clk`, and throughput | `OPEN` | `NOT_PROVEN` | Require later qualification |
 
@@ -105,9 +105,60 @@ The accepted `AHD_C2H_TRANSPORT_ABI_V1` record is exactly 4,096 bytes: a
 UYVY 4:2:2 line, and 192 bytes of zero padding, with explicit
 logical/physical channel identity. Its interface status is `FROZEN_FOR_G2B`.
 The freeze makes the interface contract implementation-ready; the complete
-G2B implementation remains resource-blocked and not offline-qualified. It
+G2B implementation remains in sign-off recovery and not offline-qualified. It
 does not mean the formatter, rings, scheduler, or application C2H data plane
 is accepted or hardware-qualified.
+
+### Ownership mailbox CDC and Group-9 sign-off
+
+The current required sign-off method for Group 9
+`OWNERSHIP_AXI_TO_SOURCE` is
+`PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`. It replaces the historical
+`GLOBAL_SET_BUS_SKEW_3NS`, which is
+`RETIRED_FROM_REQUIRED_SIGNOFF`. The 58-source ownership set is not a
+homogeneous skew-comparison bundle: slot, generation, and epoch signals feed
+selector/equality logic and reconverge on ownership-result logic. BS1R
+reproduced pathological `report_bus_skew` behavior even on the exact 58-to-1
+scope, and BS2 established that the path set is invalid for global skew
+comparison.
+
+The accepted ownership CDC model is a request/acknowledgement toggle mailbox
+with a held 58-bit `{slot,generation,epoch}` bundled payload. Required
+structural proof covers a two-stage request synchronizer, a two-stage
+acknowledgement synchronizer, stable-data hold, source hold until
+acknowledgement, and reset/epoch coherency. Required timing proof applies
+absolute settling checks independently to the three semantic payload
+families: `slot`, `generation`, and `epoch`.
+
+The governed maximum settling bound is `6.000 ns`, based on the `13.468 ns`
+minimum launch-to-use margin and `7.468 ns` gross reserve established by BS3.
+The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT`. **This is not a
+relaxation of safety:** the retired global metric compared structurally
+heterogeneous paths, while the replacement checks match the actual
+stable-data request/acknowledgement protocol.
+
+`RTL_CHANGE_REQUIRED = NO`. The active production XDC is unchanged and
+`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`. The accepted
+candidate authority is `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`, to be
+applied only by the later governed source-change task. `GROUPS_10_TO_17 =
+UNCHANGED`.
+
+The governed Group-9 recovery recipe is:
+
+1. ownership structural CDC proof;
+2. request synchronizer validation;
+3. acknowledgement synchronizer validation;
+4. stable-data hold proof;
+5. per-family settling checks;
+6. reset/epoch coherency proof;
+7. normal routed timing;
+8. CDC disposition;
+9. DRC;
+10. clocks/resources; and
+11. pre-bitstream hard gate.
+
+The retired global Group-9 `report_bus_skew` execution is not part of this
+recipe and is not required again.
 
 ### Build-profile boundary
 
@@ -145,13 +196,19 @@ Current accepted state:
 - G2B-PRE transport/MMIO architecture contract: `ACCEPTED` and
   `FROZEN_FOR_G2B`.
 - Application C2H payload: not accepted.
-- Record-to-AXI-stream/G2B implementation: `BLOCKED_RESOURCE_HEADROOM` and
-  not offline-qualified.
-- G2B-LUT1 profile implementation gate: `READY`, not started.
+- Record-to-AXI-stream/G2B implementation:
+  `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` and not offline-qualified.
+- Group-9 ownership sign-off method:
+  `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; candidate XDC implementation and
+  final routed sign-off remain pending.
+- G2B-LUT1 readiness: `READY_FOR_SIGNOFF_RECOVERY`; next gate
+  `G2B-LUT1-SIGNOFF-RECOVERY`.
 - One-channel DMA: not yet qualified.
 - Two-channel DMA: not yet qualified.
 - Sustained 288 MB/s: not yet qualified.
-- G2B hardware qualification: `NOT_STARTED` and `NOT_PROVEN`.
+- G2B-HW: lifecycle `BLOCKED`, `NOT_STARTED`, and `NOT_PROVEN` until final
+  offline sign-off, the pre-bitstream hard gate, and a bitstream candidate
+  exist.
 
 Enumeration, driver load, or a nonzero byte count alone is not C2H correctness
 or throughput evidence.
@@ -194,6 +251,9 @@ DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
   not restart or gate qualified NVP initialization.
 - Video-to-XDMA payload crosses through proper dual-clock storage and
   descriptor/release CDC; independent synchronizers are not used for payload.
+- Group-9 ownership correctness is signed off by structural CDC proof plus
+  per-family absolute settling checks for slot, generation, and epoch; the
+  heterogeneous global bus-skew metric is historical and retired.
 - Legacy PIO/v40B compatibility and DMA `AHD_C2H_TRANSPORT_ABI_V1` storage are
   separate.
 - One physical PCIe lane has one shared failure/bandwidth domain even when two
