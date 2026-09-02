@@ -1,6 +1,6 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 4`
+`PROJECT_STATE_REV = 5`
 
 > `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
@@ -222,6 +222,52 @@ not mandate another run.
 AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; active production XDC is unchanged
 by META-4R2. The authoritative future candidate is
 `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`. `GROUPS_10_TO_17 = UNCHANGED`.
+
+#### Group-13 reset-return CDC sign-off
+
+For `RESET_RETURN_SOURCE_TO_AXI`, the current required method is
+`SETTLING_PLUS_STRUCTURAL_CDC`. The former global relation
+
+```tcl
+set_bus_skew 3.000 \
+  -from $g2b_reset_return_src \
+  -to $g2b_reset_return_dst
+```
+
+is `RETIRED_FROM_REQUIRED_SIGNOFF`. Its seven source registers and 207
+destination registers form a stable-data, handshake-qualified, reconvergent
+completion interface and are `INVALID_FOR_SKEW_COMPARISON`. The historical
+full Group-13 `report_bus_skew` timeout remains provenance only and is not a
+current required-signoff query.
+
+The returned interface contains exactly two semantic families:
+
+| Family | Source payload | Governed physical requirement | Structural/use requirement |
+|---|---|---|---|
+| `RESET_ABANDONED_COUNT_STABLE_PAYLOAD` | Three-bit abandoned-record snapshot | `6.000 ns` absolute datapath-only settling to the 32-cell accounting cone | Single-edge capture, stable until acknowledgement, and no AXI consumption before synchronized request/acknowledgement qualification |
+| `RESET_COMMIT_PHASE_COMPLETION_BARRIER` | Four-bit per-slot commit-toggle phase snapshot | `6.000 ns` absolute datapath-only settling to the original 207-cell completion cone | Stable until acknowledgement; two-stage live commit-phase synchronization; equality with the held phase before qualified completion |
+
+The family constraints target destination cells so all timing endpoint roles,
+including `D`, `CE`, `S`, and `R`, remain covered. The unchanged broad
+source-mailbox `6.000 ns` max-delay relation must also remain in force. It
+contains every Group-13 member and supplies the separately validated 79-cell
+supplemental fanout coverage for
+`RESET_COMMIT_PHASE_COMPLETION_BARRIER`; this is not a third family.
+
+The interface proof additionally requires two-stage request and acknowledgement
+synchronizers, hard-episode qualification, reset-return coherency,
+destination-use sequencing, and atomic reset epoch/state publication only on
+the qualified completion edge. Commit-phase parity alias is excluded by
+exclusive reset handling with admission disabled and commit enqueue/scheduler
+progress suppressed while reset is busy. Reset observations are synchronous
+process conditions, not an async-reset-release interface.
+
+The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT`.
+`RTL_CHANGE_REQUIRED = NO`. `ACTIVE_XDC_CHANGE =
+AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; active production XDC is unchanged
+by META-5. The candidate authority is
+`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`. Group 9 and Groups 10–12 retain their
+authoritative results; Groups 14–17 remain pending unchanged.
 
 ### Frozen G2B MMIO contract
 

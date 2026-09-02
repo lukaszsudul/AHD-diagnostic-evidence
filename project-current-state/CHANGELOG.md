@@ -307,3 +307,103 @@ Affected SSOT files in the revision-4 transaction (`16`):
 The ordinary publication commit and fresh remote byte/SHA-256 read-back are
 post-commit executor completion data. No not-yet-created publication SHA or
 precompleted remote read-back is invented in this changelog entry.
+
+## PROJECT_STATE_REV 5 — 2026-09-02
+
+Status: `ACCEPTED`
+Update type: `ARCHITECTURE_CHANGE`
+Authorization literal: `SSOT WRITE AUTHORIZED`
+Expected previous revision: `4`
+Actual previous revision: `4`
+Resulting revision: `5`
+Accepted by role: `OWNER_ARCHITECT`
+Applied by role: `META_UPDATE_AGENT`
+Write-contract receipt:
+`v41-meta-project-state-rev5-group13-reset-return-signoff/META5_WRITE_CONTRACT_RECEIPT.md`
+
+Reason: promote the accepted G13-A reset-return CDC architecture and make
+`SETTLING_PLUS_STRUCTURAL_CDC` the required Group-13
+`RESET_RETURN_SOURCE_TO_AXI` sign-off method.
+
+Authoritative accepted evidence:
+
+- G13-A: `v41-development-g2b-g13a-reset-return-signoff-audit`, commit
+  `10c7c2898d162af8e2262b3f99861c7d560c4557`.
+
+Project truth promoted in this revision:
+
+- The historical Group-13 `set_bus_skew 3.000 -from
+  $g2b_reset_return_src -to $g2b_reset_return_dst` covered seven sources and
+  207 destinations and is `RETIRED_FROM_REQUIRED_SIGNOFF`.
+- Global Group-13 `report_bus_skew` is retired from required sign-off; its
+  verified timeout remains historical evidence and no repeat is required.
+- `PATH_SET_COMPARABILITY = INVALID_FOR_SKEW_COMPARISON`.
+- The required method is `SETTLING_PLUS_STRUCTURAL_CDC` and the decision is
+  `REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC`.
+- The exact two semantic families are
+  `RESET_ABANDONED_COUNT_STABLE_PAYLOAD` and
+  `RESET_COMMIT_PHASE_COMPLETION_BARRIER`.
+- Each family requires a `6.000 ns` absolute datapath-only settling check to
+  all timing endpoint roles on its selected destination cells.
+- The unchanged broad source-mailbox `6.000 ns` max-delay relation remains
+  mandatory and retains the validated 79-cell supplemental fanout coverage of
+  the commit-phase family; that coverage is not a third family.
+- Structural proof requires single-edge capture, stable hold while
+  acknowledgement is outstanding, two-stage request/acknowledgement and live
+  commit-phase synchronization, matching acknowledgement/request phase,
+  live/held commit-phase equality, hard-episode qualification, reset-return
+  coherency, destination-use sequencing, and atomic epoch/state publication on
+  qualified completion; commit-phase parity alias is excluded by exclusive
+  reset handling with admission disabled and commit enqueue/scheduler progress
+  suppressed while reset is busy.
+- Reset assertion/deassertion are synchronously observed; Group 13 is not an
+  async-assert/sync-release reset crossing.
+- The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not a
+  relaxation of safety.
+- `RTL_CHANGE_REQUIRED = NO`.
+- `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; the accepted
+  candidate is `G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`.
+- The named Group-13 sign-off-methodology decision is recorded as an
+  `UNNUMBERED_GOVERNED_DECISION`, state `RESOLVED`, without inventing an
+  `OD-*` identifier or changing any existing open/decided record.
+- Group-9 `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC` remains promoted and its
+  global `report_bus_skew` remains retired; `GROUP9_GOVERNANCE_REGRESSION = NO`.
+- `GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS` and
+  `GROUPS_14_TO_17 = PENDING_UNCHANGED`.
+- G2B-LUT1 remains `READY_FOR_SIGNOFF_RECOVERY`; next gate is
+  `G2B-LUT1-SIGNOFF-RECOVERY-2`.
+- G2B-HW remains lifecycle `BLOCKED`, `NOT_STARTED`, and `NOT_PROVEN`.
+
+Explicit non-promotions and protection boundary:
+
+- no RTL or FPGA source was modified;
+- no active production XDC was modified;
+- no Vivado, bitstream, DUT, JTAG, PCIe, DMA, reboot, or power-cycle operation
+  was performed;
+- no R-track source, branch, evidence, or execution state was modified;
+- no final routed sign-off, implementation acceptance, qualification,
+  release, hardware readiness, bitstream, or hardware proof is claimed; and
+- Groups 14–17 retain their existing requirements and pending state.
+
+Affected SSOT files in the revision-5 transaction (`16`):
+
+- `project-current-state/ACTIVE_BASELINES.md`
+- `project-current-state/CHANGELOG.md`
+- `project-current-state/COMPATIBILITY_MATRIX.csv`
+- `project-current-state/CURRENT_ARCHITECTURE.md`
+- `project-current-state/CURRENT_INTERFACES.md`
+- `project-current-state/CURRENT_REQUIREMENTS.md`
+- `project-current-state/CURRENT_RESOURCE_STATE.md`
+- `project-current-state/CURRENT_STATUS.md`
+- `project-current-state/CURRENT_TRACKS.md`
+- `project-current-state/EVIDENCE_MAP.md`
+- `project-current-state/GOVERNANCE.md`
+- `project-current-state/OPEN_DECISIONS.md`
+- `project-current-state/PROJECT_STATE.json`
+- `project-current-state/README.md`
+- `project-current-state/SHA256_MANIFEST.txt`
+- `project-current-state/TRACK_STATUS.json`
+
+The ordinary publication commit and fresh remote byte/SHA-256 read-back are
+post-commit executor completion data. No not-yet-created publication SHA or
+precompleted remote read-back is invented in this changelog entry.

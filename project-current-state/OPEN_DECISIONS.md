@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 4`
+`PROJECT_STATE_REV = 5`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -21,6 +21,28 @@ the SSOT changes, a separate authorized META update.
 | `OD-12` | Actual PRODUCT and RESEARCH_DIAGNOSTIC timing | `OPEN` | No profile implementation or post-route timing result exists | Complete timing/DRC/CDC requalification of both profiles |
 | `OD-13` | Actual G2B hardware result | `OPEN` | No G2B bitstream, DMA capture, or hardware proof exists | Separately authorized hardware qualification after offline acceptance |
 | `OD-14` | R2/R3 scientific closure | `OPEN` | R-track is `HOLD`, not closed | Resume research through RESEARCH_DIAGNOSTIC and obtain explicit scientific closure decision |
+
+## Decided at project-state revision 5 — Group-13 implementation pending
+
+| ID / question | Decision | Lifecycle status | Decision state | Accepted evidence |
+|---|---|---|---|---|
+| Unnumbered governed decision / Group-13 `RESET_RETURN_SOURCE_TO_AXI` sign-off methodology | `REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `RESOLVED` | G13-A `10c7c2898d162af8e2262b3f99861c7d560c4557`, directory `v41-development-g2b-g13a-reset-return-signoff-audit` |
+
+This is a named, unnumbered governed decision; no `OD-*` identifier is
+invented. It retires the global `GLOBAL_SET_BUS_SKEW_3NS` and Group-13
+`report_bus_skew` from required `RESET_RETURN_SOURCE_TO_AXI` sign-off and
+promotes `SETTLING_PLUS_STRUCTURAL_CDC`. The accepted method requires exactly
+the `RESET_ABANDONED_COUNT_STABLE_PAYLOAD` and
+`RESET_COMMIT_PHASE_COMPLETION_BARRIER` families, `6.000 ns` absolute
+datapath-only settling, retained broad aggregate `6.000 ns` coverage, and the
+accepted structural request/acknowledgement, stable-hold, live commit-phase
+equality, hard-episode, coherency, sequencing, and atomic epoch/state proof.
+
+Implementation of `G2B_G13A_CANDIDATE_CONSTRAINTS.xdc` and the remaining
+routed hard gates remain pending at `G2B-LUT1-SIGNOFF-RECOVERY-2`; G2B-HW
+remains `BLOCKED`. All 12 registered `OD-*` open-decision entries above, the
+existing OD-03 decided record, and the revision-4 Group-9 unnumbered decision
+below are unchanged.
 
 ## Decided at project-state revision 4 — sign-off recovery pending
 

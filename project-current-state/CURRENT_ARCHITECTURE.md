@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 4`
+`PROJECT_STATE_REV = 5`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open
@@ -45,8 +45,8 @@ two-channel, Gen2, throughput, or Linux hardware qualification.
 | G2B-LUT0 resource architecture | `ACCEPTED` | `PASS / IMPLEMENTATION_PENDING` | Dual-profile Plan B accepted; estimate is not qualification evidence |
 | PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | Qualified R1i behavior, production observability, XDMA Gen2, G2B and frozen ABI/MMIO retained |
 | RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | PRODUCT functional behavior plus reproducible R-track observability for R2/R3 resumability |
-| Application record-to-C2H plane | `BLOCKED` | `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` | Active-XDC update and complete final routed sign-off remain pending; no offline-qualified implementation |
-| G2B-LUT1 | `PLANNED` | `READY_FOR_SIGNOFF_RECOVERY / SIGNOFF_RECOVERY_PENDING` | Authorized next gate is `G2B-LUT1-SIGNOFF-RECOVERY`; active XDC is not changed by META-4R2 |
+| Application record-to-C2H plane | `BLOCKED` | `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` | Group-13 candidate-XDC implementation and complete final routed sign-off remain pending; no offline-qualified implementation |
+| G2B-LUT1 | `PLANNED` | `READY_FOR_SIGNOFF_RECOVERY / SIGNOFF_RECOVERY_PENDING` | Authorized next gate is `G2B-LUT1-SIGNOFF-RECOVERY-2`; active XDC is not changed by META-5 |
 | G2B-HW | `BLOCKED` | `NOT_STARTED / NOT_PROVEN` | Final offline sign-off, pre-bitstream hard gate, and a bitstream candidate do not exist |
 | Linux/V4L2 product layer | `PLANNED` | `NOT_IMPLEMENTED` | Transport input is frozen; frontend, buffer, identity, and policy work remain later L-track scope |
 | Gen2 training, actual `user_clk`, and throughput | `OPEN` | `NOT_PROVEN` | Require later qualification |
@@ -143,7 +143,7 @@ candidate authority is `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`, to be
 applied only by the later governed source-change task. `GROUPS_10_TO_17 =
 UNCHANGED`.
 
-The governed Group-9 recovery recipe is:
+The promoted Group-9 method was accepted with these components:
 
 1. ownership structural CDC proof;
 2. request synchronizer validation;
@@ -157,8 +157,67 @@ The governed Group-9 recovery recipe is:
 10. clocks/resources; and
 11. pre-bitstream hard gate.
 
-The retired global Group-9 `report_bus_skew` execution is not part of this
-recipe and is not required again.
+The authoritative Group-9 PASS is preserved, so these accepted components are
+not required to be repeated by `G2B-LUT1-SIGNOFF-RECOVERY-2`. The retired
+global Group-9 `report_bus_skew` execution is not part of the method and is not
+required again.
+
+### Reset-return mailbox CDC and Group-13 sign-off
+
+The current required sign-off method for Group 13
+`RESET_RETURN_SOURCE_TO_AXI` is `SETTLING_PLUS_STRUCTURAL_CDC`. It replaces
+the historical `GLOBAL_SET_BUS_SKEW_3NS`, which is
+`RETIRED_FROM_REQUIRED_SIGNOFF`. The retired relation covered seven
+`nvp_vclk1` source registers and 207 heterogeneous `userclk1` destination
+registers. Its path set is `INVALID_FOR_SKEW_COMPARISON`, and the historical
+full Group-13 `report_bus_skew` query timed out; it is not required again.
+
+Group 13 is a stable-data return mailbox qualified by the transport
+request/acknowledgement protocol, not an asynchronous-reset-release crossing,
+Gray bus, or seven independent synchronized controls. Its exact CDC
+classification is `STABLE_DATA + HANDSHAKE +
+COMMIT_PHASE_COMPLETION_BARRIER + COMBINATIONAL_AGGREGATION`.
+
+The two semantic families are:
+
+1. `RESET_ABANDONED_COUNT_STABLE_PAYLOAD`: the three-bit abandoned-record
+   snapshot, consumed through the 32-cell `records_abandoned_axi` accounting
+   cone after qualified completion; and
+2. `RESET_COMMIT_PHASE_COMPLETION_BARRIER`: the four-bit per-slot commit-toggle
+   phase snapshot, covering the original 207-cell Group-13 completion cone.
+
+Each family requires a `6.000 ns` absolute datapath-only settling check to all
+timing endpoint roles on the selected destination cells. The unchanged broad
+source-mailbox `6.000 ns` max-delay relation is also mandatory: it contains all
+7/207 Group-13 members and provides the validated 79-cell supplemental fanout
+coverage for the second family. That supplemental coverage is not a third
+semantic family. Removing or changing the broad aggregate relation invalidates
+the accepted equivalence and requires Group-13 revalidation.
+
+The timing constraints are necessary but not sufficient. Required structural
+proof covers single-edge payload capture; stable hold while acknowledgement is
+outstanding; two-stage request and acknowledgement synchronizers; the
+two-stage live commit-phase synchronizer; completion only when acknowledgement
+matches request and the synchronized live phase equals the held commit phase;
+hard-episode qualification; reset-return coherency; destination-use
+sequencing; and atomic reset epoch/state publication on the qualified
+completion edge. Commit-phase parity alias is excluded by protocol sequencing:
+reset handling is exclusive of ordinary source processing, admission is
+disabled, and commit enqueue/scheduler progress is suppressed while reset is
+busy. Reset assertion and deassertion are synchronously observed by the two
+processes; they are not treated as an async-assert/sync-release Group-13
+mechanism.
+
+The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not a
+relaxation of safety. `RTL_CHANGE_REQUIRED = NO`. The active production XDC is
+unchanged and `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`.
+The accepted candidate authority is `G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`, to be
+implemented only by `G2B-LUT1-SIGNOFF-RECOVERY-2` under governed source-change
+authority.
+
+The authoritative Group-9 PASS and Groups 10–12 PASS results are preserved
+without rerun. `GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS` and
+`GROUPS_14_TO_17 = PENDING_UNCHANGED`.
 
 ### Build-profile boundary
 
@@ -201,8 +260,12 @@ Current accepted state:
 - Group-9 ownership sign-off method:
   `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; candidate XDC implementation and
   final routed sign-off remain pending.
+- Group-13 reset-return sign-off method: `SETTLING_PLUS_STRUCTURAL_CDC`; the
+  old global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from
+  required sign-off; candidate-XDC implementation and validation in the
+  governed continuation remain pending.
 - G2B-LUT1 readiness: `READY_FOR_SIGNOFF_RECOVERY`; next gate
-  `G2B-LUT1-SIGNOFF-RECOVERY`.
+  `G2B-LUT1-SIGNOFF-RECOVERY-2`.
 - One-channel DMA: not yet qualified.
 - Two-channel DMA: not yet qualified.
 - Sustained 288 MB/s: not yet qualified.
@@ -254,6 +317,12 @@ DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
 - Group-9 ownership correctness is signed off by structural CDC proof plus
   per-family absolute settling checks for slot, generation, and epoch; the
   heterogeneous global bus-skew metric is historical and retired.
+- Group-13 reset-return correctness is signed off by the conjunction of two
+  family-specific `6.000 ns` absolute settling checks, the unchanged broad
+  aggregate `6.000 ns` relation, stable-until-acknowledgement proof,
+  synchronized request/acknowledgement and live commit phase, the commit-phase
+  completion barrier, and atomic coherent epoch/state publication; the old
+  global Group-13 skew metric is historical and retired.
 - Legacy PIO/v40B compatibility and DMA `AHD_C2H_TRANSPORT_ABI_V1` storage are
   separate.
 - One physical PCIe lane has one shared failure/bandwidth domain even when two

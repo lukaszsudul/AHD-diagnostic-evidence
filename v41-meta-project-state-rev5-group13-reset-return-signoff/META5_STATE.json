@@ -1,0 +1,141 @@
+{
+  "task": "META-5",
+  "title": "AHD v41 Group 13 Reset-Return Sign-Off Method Promotion",
+  "state_type": "META_EXECUTION_EVIDENCE",
+  "date": "2026-09-02",
+  "engineering_gate": "PASS",
+  "precommit_state": "READY_TO_PUBLISH",
+  "update_type": "ARCHITECTURE_CHANGE",
+  "authorization_literal": "SSOT WRITE AUTHORIZED",
+  "owner_architect_approval": "GRANTED",
+  "project_state_revision_at_start": 4,
+  "project_state_revision_at_end": 5,
+  "frozen_write_contract": {
+    "result": "VERIFIED",
+    "standalone_authorization_literal": true,
+    "separate_authorization_field_supported": false,
+    "required_fields": [
+      "UPDATE_TYPE",
+      "EXPECTED_PROJECT_STATE_REV",
+      "OWNER_ARCHITECT_DECISION",
+      "EVIDENCE_REPOSITORY",
+      "EVIDENCE_COMMIT",
+      "EVIDENCE_DIRECTORY",
+      "EXPECTED_AFFECTED_FILES"
+    ],
+    "governance_sha256": "8AA0960BF846F497502EF1482BF0E63DB4C1CF4CA4D6CA3CAA2768A93A11E930",
+    "update_policy_sha256": "F5927BDDABC47C68597FA745E10429DBB2972F0483F5D335291D09DD45B51497",
+    "meta_update_template_sha256": "F7119369043E5C348AAA4B14BC4A3BBB80FB6AC6E0343BAA904909A2C22D0B27",
+    "state_schema_sha256": "6AE9C691748CE9FEF5186083DE50BF9F93EAF5E9AFEBDCB0156A7CDE650B60E3"
+  },
+  "meta4r2_precedent": {
+    "result": "VERIFIED",
+    "commit": "27dcf152e862c6db88a365328b92c0fd250f04c2",
+    "affected_ssot_files": 16,
+    "unnumbered_decision_pattern": "VERIFIED",
+    "publication_pattern": "ONE_ORDINARY_FAST_FORWARD_COMMIT_WITH_REMOTE_READBACK"
+  },
+  "g13a_evidence": {
+    "result": "VERIFIED",
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
+    "directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
+    "directory_tree": "d4694977a5bfecfec8005d9cc0dd1c1c44f36f7f",
+    "manifest_entries_passed": 74,
+    "manifest_entries_failed": 0,
+    "engineering_gate": "PASS"
+  },
+  "group13": {
+    "group": 13,
+    "group_name": "RESET_RETURN_SOURCE_TO_AXI",
+    "old_signoff": "GLOBAL_SET_BUS_SKEW_3NS",
+    "old_signoff_state": "RETIRED_FROM_REQUIRED_SIGNOFF",
+    "original_constraint": "set_bus_skew 3.000 -from $g2b_reset_return_src -to $g2b_reset_return_dst",
+    "original_source_count": 7,
+    "original_destination_count": 207,
+    "previous_report_bus_skew_timeout": "VERIFIED",
+    "full_report_bus_skew_retried": "NO",
+    "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+    "new_signoff": "SETTLING_PLUS_STRUCTURAL_CDC",
+    "new_signoff_state": "PROMOTED",
+    "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+    "decision_record": "UNNUMBERED_GOVERNED_DECISION",
+    "decision_state": "RESOLVED",
+    "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+    "semantic_classification": "STABLE_DATA + HANDSHAKE + COMMIT_PHASE_COMPLETION_BARRIER + COMBINATIONAL_AGGREGATION",
+    "semantic_family_count": 2,
+    "semantic_families": [
+      {
+        "name": "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+        "source_count": 3,
+        "destination_cell_count": 32,
+        "required_ns": "6.000",
+        "worst_actual_ns": "2.634",
+        "slack_ns": "3.467",
+        "result": "PASS"
+      },
+      {
+        "name": "RESET_COMMIT_PHASE_COMPLETION_BARRIER",
+        "source_count": 4,
+        "destination_cell_count": 207,
+        "required_ns": "6.000",
+        "worst_actual_ns": "3.756",
+        "slack_ns": "1.723",
+        "result": "PASS"
+      }
+    ],
+    "broad_aggregate_required_ns": "6.000",
+    "broad_aggregate_must_remain_unchanged": true,
+    "supplemental_commit_family_destination_count": 79,
+    "supplemental_is_third_family": false,
+    "rtl_change_required": "NO",
+    "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+    "candidate_xdc": "G2B_G13A_CANDIDATE_CONSTRAINTS.xdc",
+    "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF"
+  },
+  "preserved_state": {
+    "group9_governance_regression": "NO",
+    "group9_result": "PASS_PRESERVED_DO_NOT_REPEAT",
+    "groups_10_to_12": "PRESERVE_PREVIOUS_RESULTS",
+    "groups_14_to_17": "PENDING_UNCHANGED",
+    "g2b_lut1_readiness": "READY_FOR_SIGNOFF_RECOVERY",
+    "g2b_hardware": "BLOCKED",
+    "r_track_modified": "NO"
+  },
+  "ssot_transaction": {
+    "expected_affected_files": 16,
+    "actual_affected_files": 16,
+    "unauthorized_affected_files": 0,
+    "revision_consistency": "PASS",
+    "json_validation": "PASS",
+    "csv_validation": "PASS",
+    "sha256_manifest_entries": 18,
+    "sha256_manifest_result": "PASS",
+    "current_stale_group13_required_signoff_references": "NONE",
+    "ssot_consistency": "PASS"
+  },
+  "protection_audit": {
+    "fpga_ahd_modified": "NO",
+    "v41_g2b_source_modified": "NO",
+    "rtl_modified": "NO",
+    "active_xdc_modified": "NO",
+    "vivado_executed": "NO",
+    "bitstream_produced": "NO",
+    "hardware_accessed": "NO",
+    "jtag_accessed": "NO",
+    "pcie_accessed": "NO",
+    "dma_accessed": "NO",
+    "reboot_performed": "NO",
+    "power_cycle_performed": "NO"
+  },
+  "next_allowed_engineering_step": "G2B-LUT1-SIGNOFF-RECOVERY-2",
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "commit_subject": "Promote AHD v41 Group 13 reset-return sign-off method to project state rev5",
+    "push_mode": "ORDINARY_FAST_FORWARD_NO_FORCE",
+    "containing_commit": null,
+    "remote_readback": "PENDING_POST_COMMIT_EXECUTOR_COMPLETION",
+    "completion_record": "META5_EXECUTOR_FINAL_RESPONSE"
+  }
+}

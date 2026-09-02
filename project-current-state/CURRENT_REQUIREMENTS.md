@@ -1,6 +1,6 @@
 # AHD Current Requirements
 
-`PROJECT_STATE_REV = 4`
+`PROJECT_STATE_REV = 5`
 
 This document separates a frozen requirement from its implementation target
 and from actual qualification. A requirement is not evidence that the product
@@ -85,6 +85,7 @@ it does not claim that any data plane or hardware result exists.
 | `REQ-C2H-AXIS` | The 64-bit stream has exactly 512 beats, `TKEEP=0xFF` throughout, and `TLAST` only on beat 511; while `TVALID && !TREADY`, `TVALID`, `TDATA`, `TKEEP`, and `TLAST` remain stable and record state advances only on handshake | `FROZEN` | Backpressure simulation and hardware DMA not performed |
 | `REQ-C2H-OWNERSHIP` | A committed record and matching descriptor are immutable; slot release occurs only after the final-beat handshake and acknowledged return; overwrite of committed or in-flight records is forbidden | `FROZEN` | Ring/data-plane implementation not accepted |
 | `REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF` | Group-9 `OWNERSHIP_AXI_TO_SOURCE` requires `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`: two-stage request and acknowledgement synchronizers, held 58-bit payload, source hold until acknowledgement, reset/epoch coherency, and `6.000 ns` absolute settling checks for `slot`, `generation`, and `epoch` | `FROZEN` | Method promoted from BS3; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for the next step but not yet implemented |
+| `REQ-G2B-GROUP13-RESET-RETURN-SIGNOFF` | Group-13 `RESET_RETURN_SOURCE_TO_AXI` requires `SETTLING_PLUS_STRUCTURAL_CDC`: two exact semantic families, `6.000 ns` absolute datapath-only settling, retained broad aggregate `6.000 ns` coverage, stable-until-acknowledgement behavior, two-stage request/acknowledgement and live commit-phase synchronization, commit-phase equality, hard-episode qualification, reset-return coherency, destination-use sequencing, and atomic epoch/state publication | `FROZEN` | Method promoted from G13-A; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for `G2B-LUT1-SIGNOFF-RECOVERY-2` but not yet implemented |
 | `REQ-C2H-LOSS` | Ring-full and other noncommitted attempts use whole-record drop; attempted/dropped and applicable overflow/malformed accounting increments exactly once; pending discontinuity/loss context reaches the next committed record; partial drop and silent sequence repair are forbidden | `FROZEN` | Drop/overflow behavior not implemented or measured |
 | `REQ-LINUX-C2H-PARSER` | The Linux transport parser must negotiate MMIO ABI/capabilities, create a session epoch with `RESET_STREAM_STATE`, parse only fixed 4,096-byte boundaries, and validate ABI/version, identities, flags, source/attempt/global sequences, epoch, line/SOF, payload length, and zero padding | `FROZEN` | Linux consumer contract is frozen input; V4L2 remains `NOT_IMPLEMENTED` |
 | `REQ-C2H-INPUT-SCALE` | The product exposes 4 physical input identities per card and permits at most 2 active logical inputs per card | `FROZEN` | Second ingress and two-channel DMA remain unqualified |
@@ -105,7 +106,7 @@ launch-to-use margin, a `6.000 ns` maximum settling bound, and `7.468 ns`
 gross reserve. It is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` than the retired
 global check and is not a relaxation of safety.
 
-Future `G2B-LUT1-SIGNOFF-RECOVERY` shall complete:
+The governed Group-9 method consists of:
 
 1. ownership structural CDC proof;
 2. request synchronizer validation;
@@ -121,8 +122,56 @@ Future `G2B-LUT1-SIGNOFF-RECOVERY` shall complete:
 
 `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` execution
 are `RETIRED_FROM_REQUIRED_SIGNOFF` and are excluded from this current recipe.
-`GROUPS_10_TO_17 = UNCHANGED`; each remains part of future sign-off unless
-separately reviewed.
+The authoritative Group-9 PASS is preserved and shall not be repeated by
+`G2B-LUT1-SIGNOFF-RECOVERY-2` unless later evidence invalidates it.
+
+### Governed Group-13 sign-off recipe
+
+The Group-13 replacement retires the global `set_bus_skew 3.000` relation over
+seven sources and 207 destinations. The old path set is
+`INVALID_FOR_SKEW_COMPARISON`; the global Group-13 `report_bus_skew` is
+`RETIRED_FROM_REQUIRED_SIGNOFF` and must not be rerun as a current hard gate.
+
+The exact two semantic families are:
+
+1. `RESET_ABANDONED_COUNT_STABLE_PAYLOAD`: three sources, the 32-cell
+   abandoned-accounting cone, `SETTLING_BEFORE_VALID`, and
+   `STABLE_UNTIL_ACK`; and
+2. `RESET_COMMIT_PHASE_COMPLETION_BARRIER`: four sources, the original
+   207-cell completion cone, `SETTLING_BEFORE_VALID`, `STABLE_UNTIL_ACK`, and
+   synchronized live-phase equality before completion.
+
+Both families require `6.000 ns` absolute datapath-only settling to all timing
+endpoint roles on the selected destination cells. The unchanged broad
+source-mailbox `6.000 ns` max-delay relation is also required and must retain
+the validated 79-cell supplemental coverage of the second family. That
+supplemental fanout is not a third family; changing or removing the aggregate
+relation invalidates the accepted equivalence and requires Group-13
+revalidation.
+
+The structural half of the requirement is inseparable from the timing half:
+
+1. capture both held payloads on one accepted source request edge;
+2. hold them stable while acknowledgement is outstanding;
+3. validate two-stage request and acknowledgement synchronization;
+4. validate the two-stage live commit-phase synchronizer;
+5. require matching acknowledgement/request phase, live/held commit-phase
+   equality, and hard-episode qualification before semantic use;
+6. preserve reset-return coherency and destination-use sequencing;
+7. exclude commit-phase parity alias through exclusive reset handling,
+   disabled admission, and suppressed commit enqueue/scheduler progress while
+   reset is busy;
+8. publish the reset epoch/state atomically only on the qualified completion
+   edge; and
+9. retain fresh global CDC disposition as a later routed hard gate.
+
+`G2B-LUT1-SIGNOFF-RECOVERY-2` may implement
+`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc` under governed source-change authority,
+validate the promoted Group-13 conjunction, then continue Groups 14–17,
+routed setup/hold timing, DRC, CDC disposition, clocks, resources, and the
+pre-bitstream hard gate. It must preserve Group 9 PASS and
+`GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS`.
+`GROUPS_14_TO_17 = PENDING_UNCHANGED`.
 
 ## Build-profile requirements
 

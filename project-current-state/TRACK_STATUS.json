@@ -1,21 +1,21 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 4,
+  "project_state_revision": 5,
   "state_type": "CURRENT_TRACK_STATUS",
   "governance_version": 1,
   "last_update": "2026-09-02",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-4R2_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-5_TASK_DIRECTIVE",
   "ssot_write_authorization": "SSOT WRITE AUTHORIZED",
   "update_type": "ARCHITECTURE_CHANGE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
-  "source_evidence_directory": "v41-development-g2b-bs3-ownership-mailbox-settling-proof",
+  "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
+  "source_evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
   "product_track": {
     "status": "ACTIVE",
     "last_accepted_gate": "G2B-LUT0",
     "active_gate": "G2A",
-    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY",
+    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2",
     "resource_recovery_state": "PLAN_ACCEPTED_IMPLEMENTATION_PENDING",
     "gates": [
       {
@@ -67,12 +67,12 @@
         "accepted_by_role": null,
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
         "implementation_state": "ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING",
-        "blocking_reason": "ACTIVE_XDC_UPDATE_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
+        "blocking_reason": "GROUP13_CANDIDATE_XDC_IMPLEMENTATION_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
         "offline_qualification": "NOT_ACCEPTED",
         "hardware_qualification_progress": "NOT_STARTED",
         "hardware_qualification": "NOT_PROVEN",
-        "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
-        "evidence_directory": "v41-development-g2b-bs3-ownership-mailbox-settling-proof"
+        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
+        "evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit"
       },
       {
         "gate": "G2B-LUT0",
@@ -88,24 +88,30 @@
         "gate": "G2B-LUT1",
         "status": "PLANNED",
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
-        "scope": "APPLY_PROMOTED_GROUP9_CONSTRAINT_INTENT_AND_COMPLETE_ROUTED_SIGNOFF",
+        "scope": "PRESERVE_PROMOTED_GROUP9_AND_GROUPS10_TO_12_APPLY_PROMOTED_GROUP13_AND_COMPLETE_ROUTED_SIGNOFF",
         "implementation_state": "SIGNOFF_RECOVERY_PENDING",
+        "preserved_authoritative_results": [
+          "GROUP9",
+          "GROUP10",
+          "GROUP11",
+          "GROUP12"
+        ],
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-4R2_TASK_DIRECTIVE",
-        "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
-        "depends_on": "META4R2_PROMOTED_OWNERSHIP_CDC_GROUP9_SIGNOFF_METHOD",
-        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY"
+        "decision_source": "META-5_TASK_DIRECTIVE",
+        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
+        "depends_on": "META5_PROMOTED_GROUP13_RESET_RETURN_SIGNOFF_METHOD",
+        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2"
       },
       {
         "gate": "G2B-HW",
         "status": "BLOCKED",
         "progress": "NOT_STARTED",
         "qualification_state": "NOT_PROVEN",
-        "blocking_reason": "FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
+        "blocking_reason": "GROUP13_CANDIDATE_IMPLEMENTATION_FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
         "bitstream_candidate": "NOT_AVAILABLE",
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-4R2_TASK_DIRECTIVE",
-        "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+        "decision_source": "META-5_TASK_DIRECTIVE",
+        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557"
       }
     ],
     "group9_ownership_signoff": {
@@ -129,6 +135,44 @@
       "accepted_by_role": "OWNER_ARCHITECT",
       "decision_source": "META-4R2_TASK_DIRECTIVE",
       "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+    },
+    "group13_reset_return_signoff": {
+      "status": "ACCEPTED",
+      "group": 13,
+      "group_name": "RESET_RETURN_SOURCE_TO_AXI",
+      "scope": "RESET_RETURN_SOURCE_TO_AXI",
+      "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+      "old_constraint": "set_bus_skew 3.000 -from $g2b_reset_return_src -to $g2b_reset_return_dst",
+      "old_source_count": 7,
+      "old_destination_count": 207,
+      "old_method_disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+      "previous_report_bus_skew_timeout": "VERIFIED",
+      "full_report_bus_skew_retried": "NO",
+      "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+      "required_method": "SETTLING_PLUS_STRUCTURAL_CDC",
+      "promotion_state": "PROMOTED",
+      "semantic_families": 2,
+      "family_names": [
+        "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+        "RESET_COMMIT_PHASE_COMPLETION_BARRIER"
+      ],
+      "settling_cap_ns": "6.000",
+      "broad_aggregate_max_delay_must_remain_unchanged": true,
+      "rtl_change_required": "NO",
+      "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "candidate_xdc": "G2B_G13A_CANDIDATE_CONSTRAINTS.xdc",
+      "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+      "groups_10_to_12": "PRESERVE_PREVIOUS_RESULTS",
+      "groups_14_to_17": "PENDING_UNCHANGED",
+      "decision_record": "UNNUMBERED_GOVERNED_DECISION",
+      "decision_state": "RESOLVED",
+      "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+      "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-5_TASK_DIRECTIVE",
+      "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
+      "evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2"
     }
   },
   "research_track": {
@@ -208,13 +252,13 @@
   },
   "meta_track": {
     "status": "ACCEPTED",
-    "current_task": "META-4R2",
+    "current_task": "META-5",
     "active_gate": null,
     "next_gate": null,
-    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_OWNERSHIP_CDC_GROUP9_SIGNOFF_METHOD",
+    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_RESET_RETURN_GROUP13_SIGNOFF_METHOD",
     "accepted_by_role": "OWNER_ARCHITECT",
-    "decision_source": "META-4R2_TASK_DIRECTIVE",
-    "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+    "decision_source": "META-5_TASK_DIRECTIVE",
+    "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557"
   },
   "reporting_requirements": {
     "record_project_state_rev_at_start": true,
