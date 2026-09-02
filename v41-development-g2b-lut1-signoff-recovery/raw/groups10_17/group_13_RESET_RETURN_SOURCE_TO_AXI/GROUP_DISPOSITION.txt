@@ -1,0 +1,17 @@
+GROUP_ID=13
+GROUP_NAME=RESET_RETURN_SOURCE_TO_AXI
+RESULT=REQUIRED_BUS_SKEW_TIMEOUT
+RESULT_REASON=QUERY_EXCEEDED_300_SECONDS_FROM_QUERY_STARTED_MARKER
+COMMAND=report_bus_skew -no_detailed_paths -max_paths 1 -nworst 1 -warn_on_violation -file <GROUP_RAW_REPORT>
+RUNTIME_SECONDS=301.094
+ACTUAL_NS=
+REQUIRED_NS=3.000
+SLACK_NS=
+WARNING_COUNT=2
+WARNINGS=WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\�ukasz Sudu�\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg' | WARNING: [filemgmt 56-128] File 'C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc' is already in the project and will not be added again
+SOURCE_COUNT=
+DESTINATION_COUNT=
+ATTEMPT=1
+MAX_ATTEMPTS=1
+GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO
+HARDWARE_ACCESSED=NO

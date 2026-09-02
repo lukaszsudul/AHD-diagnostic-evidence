@@ -1,0 +1,736 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Sep  2 16:36:59 2026
+# Process ID         : 4896
+# Current directory  : C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI
+# Command line       : vivado.exe -mode batch -log C:\FPGA\V41_G2B_EVIDENCE\v41-development-g2b-lut1-signoff-recovery\raw\groups10_17\group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI\vivado.log -nojournal -source C:\FPGA\V41_G2B_EVIDENCE\v41-development-g2b-lut1-signoff-recovery\tools\G2B_LUT1_GROUPS10_17_WORKER.tcl -tclargs C:\FPGA\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\sealed_inputs\G2B_ROUTED.dcp C:\FPGA\G2B_BS3_OWNERSHIP_20260902\G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc C:\FPGA\V41_G2B_EVIDENCE\v41-development-g2b-bs3-ownership-mailbox-settling-proof\G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc C:\FPGA\V41_G2B_EVIDENCE\v41-development-g2b-lut1-signoff-recovery\raw\groups10_17\group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI 12 C5981DC0FA27892C1CCD150ADEBFE032443EBC33B0B7039911CF226D2415FCCA
+# Log file           : C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/vivado.log
+# Journal file       : 
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6979 MB
+# Total Virtual      : 24007 MB
+# Available Virtual  : 8780 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+INFO: [Common 17-1239] XILINX_LOCAL_USER_DATA is set to 'NO'.
+INFO: [Common 17-748] XILINX_TCLAPP_REPO is set to 'C:/AMDDesignTools/2025.2/Vivado/data/XilinxTclStore'. Refresh XilinxTclStore catalog is disabled when XILINX_TCLAPP_REPO is set.
+source {C:\FPGA\V41_G2B_EVIDENCE\v41-development-g2b-lut1-signoff-recovery\tools\G2B_LUT1_GROUPS10_17_WORKER.tcl}
+# set EXPECTED_DCP_SHA256 EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83
+# set EXPECTED_BASE_XDC_SHA256 3680EE8998503D10713D930D7D9D44AD0D71B273A9252D364A3BEE2D0D6AD507
+# set EXPECTED_CANDIDATE_XDC_SHA256 AE4BD91C1A8C3B1AF2FB9B0EA9A9382E9F618FD8E223BACF98E4468C10EAD087
+# proc write_lines_atomic {path lines} {
+#   file mkdir [file dirname $path]
+#   set temporary [format {%s.%s.tmp} $path [pid]]
+#   set handle [open $temporary w]
+#   fconfigure $handle -encoding utf-8 -translation lf
+#   foreach line $lines { puts $handle $line }
+#   close $handle
+#   file rename -force $temporary $path
+# }
+# proc write_text_atomic {path value} {
+#   file mkdir [file dirname $path]
+#   set temporary [format {%s.%s.tmp} $path [pid]]
+#   set handle [open $temporary w]
+#   fconfigure $handle -encoding utf-8 -translation lf
+#   puts -nonewline $handle $value
+#   close $handle
+#   file rename -force $temporary $path
+# }
+# proc read_text {path} {
+#   set handle [open $path r]
+#   fconfigure $handle -encoding utf-8 -translation auto
+#   set value [read $handle]
+#   close $handle
+#   return $value
+# }
+# proc safe_value {value} {
+#   return [string map [list "\r" {\r} "\n" {\n} "=" {:}] $value]
+# }
+# proc sha256_file {path} {
+#   if {![file isfile $path]} { error "file is absent for SHA-256: $path" }
+#   set output [exec certutil.exe -hashfile [file nativename $path] SHA256]
+#   foreach line [split $output "\n"] {
+#     set candidate [string toupper \
+#         [string map [list " " "" "\t" "" "\r" ""] [string trim $line]]]
+#     if {[regexp {^[0-9A-F]{64}$} $candidate]} { return $candidate }
+#   }
+#   error "SHA-256 unavailable for $path"
+# }
+# proc count_xdc_command_lines {text command_name} {
+#   set expression [format {^[ \t]*%s(?:[ \t]|$)} $command_name]
+#   return [regexp -all -line $expression $text]
+# }
+# proc derive_bus_skew_free_base {base_text output_path} {
+#   set kept [list]
+#   set removed 0
+#   foreach line [split $base_text "\n"] {
+#     if {[regexp {^[ \t]*set_bus_skew(?:[ \t]|$)} $line]} {
+#       if {[regexp {\\[ \t]*$} $line]} {
+#         error "base XDC contains a continued set_bus_skew command"
+#       }
+#       incr removed
+#       continue
+#     }
+#     lappend kept $line
+#   }
+#   if {$removed != 16} {
+#     error "full base did not remove exactly 16 unrelated bus-skew commands: $removed"
+#   }
+#   set derived_text [join $kept "\n"]
+#   if {[count_xdc_command_lines $derived_text set_bus_skew] != 0} {
+#     error "derived worker-local base still contains set_bus_skew"
+#   }
+#   write_text_atomic $output_path $derived_text
+#   return $removed
+# }
+# proc clock_signature {} {
+#   set rows [list]
+#   foreach clock [lsort -dictionary [get_clocks -quiet]] {
+#     lappend rows "[get_property NAME $clock]|[get_property PERIOD $clock]|[get_property WAVEFORM $clock]"
+#   }
+#   if {[llength $rows] == 0} { error "routed clock signature is empty" }
+#   return [join $rows "\n"]
+# }
+# proc route_signature {} {
+#   return [list \
+#     [report_route_status -boolean_check ROUTED_FULLY] \
+#     [report_route_status -boolean_check ERRORS_IN_ROUTES] \
+#     [llength [report_route_status -return_nets -route_type UNROUTED]] \
+#     [llength [report_route_status -return_nets -route_type PARTIAL]]]
+# }
+# proc sequential_cells {pattern} {
+#   return [filter [get_cells -quiet -hier -regexp $pattern] {IS_SEQUENTIAL == 1}]
+# }
+# proc resolve_bus_skew_group {group_id} {
+#   set name UNKNOWN
+#   set sources [list]
+#   set destinations [list]
+#   set expected_sources 0
+#   set expected_destinations 0
+#   switch -- $group_id {
+#     10 {
+#       set name DESCRIPTOR_ATTEMPT_SOURCE_TO_AXI
+#       set sources [sequential_cells {.*G2B_ONECH_C2H/desc_attempt_source_reg.*}]
+#       set destinations [sequential_cells {.*G2B_ONECH_C2H/axis_attempt_reg.*}]
+#       set expected_sources 44
+#       set expected_destinations 32
+#     }
+#     11 {
+#       set name DESCRIPTOR_GENERATION_SOURCE_TO_AXI
+#       set sources [sequential_cells {.*G2B_ONECH_C2H/desc_generation_source_reg.*}]
+#       set destinations [sequential_cells {.*G2B_ONECH_C2H/(axis_generation|own_generation_hold_axi)_reg.*}]
+#       set expected_sources 32
+#       set expected_destinations 24
+#     }
+#     12 {
+#       set name DESCRIPTOR_EPOCH_SOURCE_TO_AXI
+#       set sources [sequential_cells {.*G2B_ONECH_C2H/desc_epoch_source_reg.*}]
+#       set destinations [sequential_cells {.*G2B_ONECH_C2H/(axis_epoch|own_epoch_hold_axi)_reg.*}]
+#       set expected_sources 128
+#       set expected_destinations 32
+#     }
+#     13 {
+#       set name RESET_RETURN_SOURCE_TO_AXI
+#       set sources [sequential_cells {.*G2B_ONECH_C2H/(reset_abandoned_hold_source|reset_commit_phase_hold_source)_reg.*}]
+#       set destinations [sequential_cells {.*G2B_ONECH_C2H/(records_abandoned_axi|commit_seen_axi|stream_reset_busy_axi|stream_reset_is_hard_axi|transport_followup_hard_axi|reset_epoch_axi|global_stream_next_axi|last_global_axi|last_channel_axi|last_global_valid_axi|last_channel_valid_axi|reset_events_axi|axis_state|snapshot_busy_axi|snapshot_valid_axi|fatal_clear_qualified_axi|axi_hard_episode)_reg.*}]
+#       set expected_sources 7
+#       set expected_destinations 207
+#     }
+#     14 -
+#     15 -
+#     16 -
+#     17 {
+#       set slot [expr {$group_id - 14}]
+#       set name "RELEASE_SLOT_[set slot]_AXI_TO_SOURCE"
+#       set sources [sequential_cells ".*G2B_ONECH_C2H/(release_generation_axi|release_epoch_axi)_reg\\\[$slot\\\].*"]
+#       set destinations [sequential_cells {.*G2B_ONECH_C2H/(slot_state_source|release_seen_source|source_ownership_fatal|source_ownership_fatal_event|source_ownership_fatal_deferred|enable_applied_source)_reg.*}]
+#       set expected_sources 56
+#       set expected_destinations 20
+#     }
+#     default {
+#       error "governed worker accepts only Groups 10..17; requested group=$group_id"
+#     }
+#   }
+#   return [list $name $sources $destinations $expected_sources $expected_destinations]
+# }
+# proc sorted_object_names {objects} {
+#   set names [list]
+#   foreach object $objects { lappend names [get_property NAME $object] }
+#   set unique_names [lsort -dictionary -unique $names]
+#   if {[llength $unique_names] != [llength $names]} {
+#     error "duplicate objects resolved in collection"
+#   }
+#   return $unique_names
+# }
+# proc parse_compact_metric {report_path label} {
+#   set rows [list]
+#   set report_text [read_text $report_path]
+#   foreach line [split $report_text "\n"] {
+#     if {[regexp {(?:^|[ \t])(Slow|Fast)[ \t]+(-?[0-9]+(?:\.[0-9]+)?)[ \t]+(-?[0-9]+(?:\.[0-9]+)?)[ \t]+(-?[0-9]+(?:\.[0-9]+)?)[ \t]*$} \
+#         $line -> corner requirement actual slack]} {
+#       lappend rows [list $corner $requirement $actual $slack]
+#     }
+#   }
+#   if {[llength $rows] != 1} {
+#     error "$label metric-row count failed: [llength $rows]"
+#   }
+#   lassign [lindex $rows 0] corner requirement actual slack
+#   if {![string is double -strict $requirement] ||
+#       ![string is double -strict $actual] ||
+#       ![string is double -strict $slack] ||
+#       abs($requirement - 3.000) > 0.0005} {
+#     error "$label metric is invalid: requirement=$requirement actual=$actual slack=$slack"
+#   }
+#   set negative_display [string match {-*} $slack]
+#   set violation_marker \
+#       [regexp -nocase {Slack[ \t]*\([ \t]*VIOLATED[ \t]*\)} $report_text]
+#   return [list $corner $requirement $actual $slack \
+#       $negative_display $violation_marker]
+# }
+# proc require_bs3_candidate_collections {} {
+#   foreach variable_name {
+#     g2b_bs3_ownership_slot_src
+#     g2b_bs3_ownership_generation_src
+#     g2b_bs3_ownership_epoch_src
+#     g2b_bs3_ownership_payload_dst_cells
+#     g2b_bs3_ownership_payload_dst_d
+#   } {
+#     if {![uplevel 1 [list info exists $variable_name]]} {
+#       error "BS3 candidate collection is absent: $variable_name"
+#     }
+#   }
+#   set slot_src [uplevel 1 {set g2b_bs3_ownership_slot_src}]
+#   set generation_src [uplevel 1 {set g2b_bs3_ownership_generation_src}]
+#   set epoch_src [uplevel 1 {set g2b_bs3_ownership_epoch_src}]
+#   set destination_cells [uplevel 1 {set g2b_bs3_ownership_payload_dst_cells}]
+#   set destination_pins [uplevel 1 {set g2b_bs3_ownership_payload_dst_d}]
+#   set counts [list [llength $slot_src] [llength $generation_src] \
+#       [llength $epoch_src] [llength $destination_cells] \
+#       [llength $destination_pins]]
+#   if {$counts ne [list 2 24 32 17 17]} {
+#     error "BS3 candidate collection count drift: $counts"
+#   }
+#   return $counts
+# }
+# proc main {checkpoint base_xdc candidate_xdc output_dir group_id expected_worker_sha} {
+#   global EXPECTED_DCP_SHA256 EXPECTED_BASE_XDC_SHA256
+#   global EXPECTED_CANDIDATE_XDC_SHA256
+#   global result_path selected_name selected_state
+# 
+#   if {![string is integer -strict $group_id] ||
+#       $group_id < 10 || $group_id > 17} {
+#     error "governed worker group_id must be 10..17"
+#   }
+#   foreach required [list $checkpoint $base_xdc $candidate_xdc [info script]] {
+#     if {![file isfile $required]} { error "required file is absent: $required" }
+#   }
+#   if {[sha256_file [info script]] ne $expected_worker_sha} {
+#     error "worker Tcl changed after orchestration seal"
+#   }
+#   if {[sha256_file $checkpoint] ne $EXPECTED_DCP_SHA256} {
+#     error "sealed routed DCP hash mismatch"
+#   }
+#   if {[sha256_file $base_xdc] ne $EXPECTED_BASE_XDC_SHA256} {
+#     error "full base XDC hash mismatch"
+#   }
+#   if {[sha256_file $candidate_xdc] ne $EXPECTED_CANDIDATE_XDC_SHA256} {
+#     error "BS3 candidate XDC hash mismatch"
+#   }
+#   if {![info exists ::env(XILINX_LOCAL_USER_DATA)] ||
+#       $::env(XILINX_LOCAL_USER_DATA) ne "NO"} {
+#     error "XILINX_LOCAL_USER_DATA must be NO"
+#   }
+#   if {![info exists ::env(TEMP)] || ![info exists ::env(TMP)] ||
+#       ![string equal -nocase [file normalize $::env(TEMP)] \
+#           [file normalize $::env(TMP)]]} {
+#     error "TEMP and TMP must identify the same worker-only directory"
+#   }
+# 
+#   write_lines_atomic $result_path [list \
+#     {STATE=RUNNING} "GROUP_ID=$group_id" {GROUP_NAME=UNKNOWN} \
+#     "CHECKPOINT=$checkpoint" "SEALED_DCP_SHA256=$EXPECTED_DCP_SHA256" \
+#     "BASE_XDC=$base_xdc" "BASE_XDC_SHA256=$EXPECTED_BASE_XDC_SHA256" \
+#     "BS3_CANDIDATE_XDC=$candidate_xdc" \
+#     "BS3_CANDIDATE_XDC_SHA256=$EXPECTED_CANDIDATE_XDC_SHA256" \
+#     "WORKER_TCL_SHA256=$expected_worker_sha" \
+#     {GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO} \
+#     {HARDWARE_ACCESSED=NO}]
+# 
+#   set vivado_version [string trim [version -short]]
+#   regexp {SW Build[ \t]+([0-9]+)} [version] -> vivado_sw_build
+#   if {$vivado_version ne "2025.2" || $vivado_sw_build ne "6299465"} {
+#     error "Vivado identity drift: $vivado_version/$vivado_sw_build"
+#   }
+# 
+#   open_checkpoint $checkpoint
+#   set part [get_property PART [current_design]]
+#   if {$part ne "xc7a35tcsg325-2"} {
+#     error "sealed routed DCP part mismatch: $part"
+#   }
+#   set pre_clock_signature [clock_signature]
+#   set pre_route_signature [route_signature]
+#   if {$pre_route_signature ne [list 1 0 0 0]} {
+#     error "sealed routed DCP route signature failed: $pre_route_signature"
+#   }
+# 
+#   set base_text [read_text $base_xdc]
+#   set candidate_text [read_text $candidate_xdc]
+#   if {[count_xdc_command_lines $base_text set_bus_skew] != 16 ||
+#       [count_xdc_command_lines $base_text set_max_delay] != 9 ||
+#       [count_xdc_command_lines $candidate_text set_bus_skew] != 0 ||
+#       [count_xdc_command_lines $candidate_text set_max_delay] != 3} {
+#     error "promoted full constraint-context command-count drift"
+#   }
+# 
+#   reset_timing -invalid
+#   read_xdc $base_xdc
+#   read_xdc $candidate_xdc
+#   set full_candidate_counts [require_bs3_candidate_collections]
+#   if {[clock_signature] ne $pre_clock_signature ||
+#       [route_signature] ne $pre_route_signature} {
+#     error "clock or route signature changed in promoted full context"
+#   }
+# 
+#   set local_base [file join $output_dir QUERY_BASE_WITHOUT_BUS_SKEW.xdc]
+#   set removed_count [derive_bus_skew_free_base $base_text $local_base]
+# 
+#   reset_timing -invalid
+#   read_xdc $local_base
+#   read_xdc $candidate_xdc
+#   set query_candidate_counts [require_bs3_candidate_collections]
+#   if {$query_candidate_counts ne $full_candidate_counts} {
+#     error "BS3 candidate collection identity changed in isolated query context"
+#   }
+#   if {[clock_signature] ne $pre_clock_signature ||
+#       [route_signature] ne $pre_route_signature} {
+#     error "clock or route signature changed in isolated query context"
+#   }
+# 
+#   lassign [resolve_bus_skew_group $group_id] \
+#       selected_name sources destinations expected_sources expected_destinations
+#   set source_names [sorted_object_names $sources]
+#   set destination_names [sorted_object_names $destinations]
+#   set source_count [llength $source_names]
+#   set destination_count [llength $destination_names]
+#   if {$source_count != $expected_sources ||
+#       $destination_count != $expected_destinations} {
+#     error "$selected_name collection drift: sources=$source_count/$expected_sources destinations=$destination_count/$expected_destinations"
+#   }
+#   foreach source_name $source_names {
+#     if {[lsearch -exact $destination_names $source_name] >= 0} {
+#       error "$selected_name has source/destination identity overlap: $source_name"
+#     }
+#   }
+# 
+#   set tag [format {%02d_%s} $group_id $selected_name]
+#   set objects_path [file join $output_dir [format {%s_OBJECTS.txt} $tag]]
+#   set isolated_path [file join $output_dir [format {%s_ISOLATED_CONTEXT.xdc} $tag]]
+#   set report_path [file join $output_dir [format {%s_BUS_SKEW.rpt} $tag]]
+#   set object_lines [list]
+#   foreach name $source_names { lappend object_lines "SOURCE=$name" }
+#   foreach name $destination_names { lappend object_lines "DESTINATION=$name" }
+#   write_lines_atomic $objects_path $object_lines
+# 
+#   set_bus_skew 3.000 -from $sources -to $destinations
+#   write_xdc -exclude_physical -force $isolated_path
+#   set isolated_text [read_text $isolated_path]
+#   if {[count_xdc_command_lines $isolated_text set_bus_skew] != 1} {
+#     error "$selected_name query context did not export exactly one bus-skew constraint"
+#   }
+# 
+#   set command {report_bus_skew -no_detailed_paths -max_paths 1 -nworst 1 -warn_on_violation -file <GROUP_RAW_REPORT>}
+#   set query_start [clock milliseconds]
+#   write_lines_atomic [file join $output_dir QUERY_STARTED.marker] [list \
+#     "GROUP_ID=$group_id" "GROUP_NAME=$selected_name" \
+#     "EPOCH_MILLISECONDS=$query_start" {TIMEOUT_SECONDS=300} \
+#     "COMMAND=$command" \
+#     {GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO}]
+# 
+#   report_bus_skew -no_detailed_paths -max_paths 1 -nworst 1 \
+#       -warn_on_violation -file $report_path
+#   set query_end [clock milliseconds]
+#   set elapsed_ms [expr {$query_end - $query_start}]
+#   set elapsed_seconds [format %.3f [expr {double($elapsed_ms) / 1000.0}]]
+#   lassign [parse_compact_metric $report_path $selected_name] \
+#       corner requirement actual slack negative_display violation_marker
+#   set selected_state \
+#       [expr {$slack < 0.0 || $negative_display || $violation_marker \
+#           ? {VIOLATION} : {PASS}}]
+# 
+#   if {[sha256_file $checkpoint] ne $EXPECTED_DCP_SHA256 ||
+#       [sha256_file $base_xdc] ne $EXPECTED_BASE_XDC_SHA256 ||
+#       [sha256_file $candidate_xdc] ne $EXPECTED_CANDIDATE_XDC_SHA256 ||
+#       [route_signature] ne $pre_route_signature} {
+#     error "sealed input or route signature changed during query"
+#   }
+# 
+#   write_lines_atomic [file join $output_dir QUERY_COMPLETED.marker] [list \
+#     "GROUP_ID=$group_id" "GROUP_NAME=$selected_name" \
+#     "QUERY_RUNTIME_SECONDS=$elapsed_seconds" \
+#     "STATUS=$selected_state"]
+# 
+#   write_lines_atomic $result_path [list \
+#     "STATE=$selected_state" "GROUP_ID=$group_id" \
+#     "GROUP_NAME=$selected_name" "COMMAND=$command" \
+#     "CHECKPOINT=$checkpoint" "SEALED_DCP_SHA256=$EXPECTED_DCP_SHA256" \
+#     "BASE_XDC=$base_xdc" "BASE_XDC_SHA256=$EXPECTED_BASE_XDC_SHA256" \
+#     "BS3_CANDIDATE_XDC=$candidate_xdc" \
+#     "BS3_CANDIDATE_XDC_SHA256=$EXPECTED_CANDIDATE_XDC_SHA256" \
+#     "WORKER_TCL_SHA256=$expected_worker_sha" \
+#     "VIVADO_VERSION=$vivado_version" "VIVADO_SW_BUILD=$vivado_sw_build" \
+#     "PART=$part" \
+#     "FULLY_ROUTED=[lindex $pre_route_signature 0]" \
+#     "ERRORS_IN_ROUTES=[lindex $pre_route_signature 1]" \
+#     "UNROUTED_NETS=[lindex $pre_route_signature 2]" \
+#     "PARTIAL_NETS=[lindex $pre_route_signature 3]" \
+#     {CLOCK_SIGNATURE_MATCH=YES} {ROUTE_SIGNATURE_UNCHANGED=YES} \
+#     {FULL_CONTEXT_BASE_BUS_SKEW_COMMAND_COUNT=16} \
+#     {FULL_CONTEXT_CANDIDATE_BUS_SKEW_COMMAND_COUNT=0} \
+#     {FULL_CONTEXT_CANDIDATE_MAX_DELAY_COMMAND_COUNT=3} \
+#     "WORKER_LOCAL_REMOVED_BUS_SKEW_COMMAND_COUNT=$removed_count" \
+#     {QUERY_CONTEXT_BUS_SKEW_COMMAND_COUNT=1} \
+#     "BS3_SLOT_SOURCE_COUNT=[lindex $full_candidate_counts 0]" \
+#     "BS3_GENERATION_SOURCE_COUNT=[lindex $full_candidate_counts 1]" \
+#     "BS3_EPOCH_SOURCE_COUNT=[lindex $full_candidate_counts 2]" \
+#     "BS3_DESTINATION_CELL_COUNT=[lindex $full_candidate_counts 3]" \
+#     "BS3_DESTINATION_PIN_COUNT=[lindex $full_candidate_counts 4]" \
+#     "SOURCE_COUNT=$source_count" "DESTINATION_COUNT=$destination_count" \
+#     "OBJECTS_SHA256=[sha256_file $objects_path]" \
+#     "QUERY_BASE_SHA256=[sha256_file $local_base]" \
+#     "ISOLATED_CONTEXT_XDC_SHA256=[sha256_file $isolated_path]" \
+#     "RAW_REPORT_SHA256=[sha256_file $report_path]" \
+#     "CORNER=$corner" "REQUIREMENT_NS=$requirement" \
+#     "ACTUAL_NS=$actual" "SLACK_NS=$slack" \
+#     "NEGATIVE_DISPLAY=$negative_display" \
+#     "VIOLATION_MARKER=$violation_marker" \
+#     "QUERY_RUNTIME_MILLISECONDS=$elapsed_ms" \
+#     "QUERY_RUNTIME_SECONDS=$elapsed_seconds" \
+#     {GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO} \
+#     {HARDWARE_ACCESSED=NO}]
+# }
+# if {[llength $argv] != 6} {
+#   puts stderr "usage: worker.tcl CHECKPOINT BASE_XDC CANDIDATE_XDC OUTPUT_DIR GROUP_ID EXPECTED_WORKER_SHA"
+#   exit 2
+# }
+# lassign $argv checkpoint base_xdc candidate_xdc output_dir group_id expected_worker_sha
+# set checkpoint [file normalize $checkpoint]
+# set base_xdc [file normalize $base_xdc]
+# set candidate_xdc [file normalize $candidate_xdc]
+# set output_dir [file normalize $output_dir]
+# file mkdir $output_dir
+# set result_path [file join $output_dir worker_result.txt]
+# set selected_name UNKNOWN
+# set selected_state ERROR
+# write_lines_atomic [file join $output_dir WORKER_STARTED.marker] [list \
+#   "GROUP_ID=$group_id" "EPOCH_MILLISECONDS=[clock milliseconds]" \
+#   {INITIALIZATION_TIMEOUT_SECONDS=1800} \
+#   {QUERY_TIMEOUT_SECONDS=300} \
+#   {GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO} \
+#   {HARDWARE_ACCESSED=NO}]
+Command: open_checkpoint C:/FPGA/G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1/sealed_inputs/G2B_ROUTED.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.810 . Memory (MB): peak = 332.609 ; gain = 5.934
+INFO: [Device 21-403] Loading part xc7a35tcsg325-2
+Netlist sorting complete. Time (s): cpu = 00:00:06 ; elapsed = 00:00:10 . Memory (MB): peak = 805.395 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2171 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 6 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 949.824 ; gain = 11.188
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.544 . Memory (MB): peak = 1581.188 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.110 . Memory (MB): peak = 1581.188 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1581.188 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:09 ; elapsed = 00:00:13 . Memory (MB): peak = 1587.723 ; gain = 6.535
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1587.723 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 1609.164 ; gain = 21.441
+Read Physdb Files: Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1609.164 ; gain = 27.977
+Restored from archive | CPU: 14.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:14 ; elapsed = 00:00:18 . Memory (MB): peak = 1609.164 ; gain = 27.977
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.179 . Memory (MB): peak = 1641.777 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 333 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  RAM16X1D => RAM32X1D (RAMD32(x2)): 37 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 264 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 22 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 8 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:03:26 ; elapsed = 00:07:10 . Memory (MB): peak = 1647.742 ; gain = 1328.637
+report_route_status: Time (s): cpu = 00:00:20 ; elapsed = 00:00:16 . Memory (MB): peak = 1724.805 ; gain = 77.062
+Parsing XDC File [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc]
+INFO: [Timing 38-35] Done setting XDC timing constraints. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:19]
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:19]
+create_generated_clock: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1733.668 ; gain = 8.863
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[0][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][24]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][25]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][26]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][27]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][28]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][29]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][30]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][31]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[0][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:71]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][2]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][3]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][4]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][5]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][6]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][7]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][8]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_generation_axi_reg[1][9]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][0]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][10]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][11]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][12]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][13]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][14]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][15]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][16]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][17]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][18]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][19]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][1]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][20]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][21]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][22]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][23]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][24]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][25]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][26]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Vivado 12-2286] Implicit search of objects for pattern 'G2B_ONECH_C2H/release_epoch_axi_reg[1][27]' matched to 'cell' objects. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Resolution: To avoid ambiguous patterns, provide proper objects using get commands e.g. [get_nets xyz].
+INFO: [Common 17-14] Message 'Vivado 12-2286' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc:72]
+Finished Parsing XDC File [C:/FPGA/G2B_BS3_OWNERSHIP_20260902/G2B_BS3_FULL_BASE_WITHOUT_GROUP9.xdc]
+read_xdc: Time (s): cpu = 00:05:26 ; elapsed = 00:07:28 . Memory (MB): peak = 1733.668 ; gain = 8.863
+Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc]
+Finished Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc]
+read_xdc: Time (s): cpu = 00:00:23 ; elapsed = 00:00:30 . Memory (MB): peak = 1733.668 ; gain = 0.000
+Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/QUERY_BASE_WITHOUT_BUS_SKEW.xdc]
+INFO: [Timing 38-35] Done setting XDC timing constraints. [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/QUERY_BASE_WITHOUT_BUS_SKEW.xdc:19]
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/QUERY_BASE_WITHOUT_BUS_SKEW.xdc:19]
+create_generated_clock: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1733.668 ; gain = 0.000
+INFO: [Timing 38-2] Deriving generated clocks [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/QUERY_BASE_WITHOUT_BUS_SKEW.xdc:66]
+Finished Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/groups10_17/group_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI/QUERY_BASE_WITHOUT_BUS_SKEW.xdc]
+read_xdc: Time (s): cpu = 00:03:10 ; elapsed = 00:03:42 . Memory (MB): peak = 1733.668 ; gain = 0.000
+WARNING: [filemgmt 56-128] File 'C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc' is already in the project and will not be added again
+Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc]
+Finished Parsing XDC File [C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc]
+read_xdc: Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 1733.668 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+report_bus_skew: Time (s): cpu = 00:02:04 ; elapsed = 00:01:23 . Memory (MB): peak = 1749.137 ; gain = 15.469
+# set code [catch {
+#   main $checkpoint $base_xdc $candidate_xdc $output_dir \
+#       $group_id $expected_worker_sha
+# } message options]
+# if {$code != 0} {
+#   set error_info $message
+#   if {[dict exists $options -errorinfo]} {
+#     set error_info [dict get $options -errorinfo]
+#   }
+#   write_lines_atomic $result_path [list \
+#     {STATE=ERROR} "GROUP_ID=$group_id" "GROUP_NAME=$selected_name" \
+#     "CHECKPOINT=$checkpoint" "SEALED_DCP_SHA256=$EXPECTED_DCP_SHA256" \
+#     "BASE_XDC=$base_xdc" "BASE_XDC_SHA256=$EXPECTED_BASE_XDC_SHA256" \
+#     "BS3_CANDIDATE_XDC=$candidate_xdc" \
+#     "BS3_CANDIDATE_XDC_SHA256=$EXPECTED_CANDIDATE_XDC_SHA256" \
+#     "WORKER_TCL_SHA256=$expected_worker_sha" \
+#     "ERROR=[safe_value $message]" \
+#     "ERROR_INFO=[safe_value $error_info]" \
+#     {GLOBAL_GROUP9_REPORT_BUS_SKEW_EXECUTED=NO} \
+#     {HARDWARE_ACCESSED=NO}]
+#   puts stderr "G2B_GROUPS10_17_WORKER=ERROR GROUP_ID=$group_id ERROR=[safe_value $message]"
+#   exit 1
+# }
+# if {$selected_state ne "PASS"} {
+#   puts stderr "G2B_GROUPS10_17_WORKER=VIOLATION GROUP_ID=$group_id GROUP_NAME=$selected_name"
+#   exit 1
+# }
+# puts "G2B_GROUPS10_17_WORKER=PASS GROUP_ID=$group_id GROUP_NAME=$selected_name"
+G2B_GROUPS10_17_WORKER=PASS GROUP_ID=12 GROUP_NAME=DESCRIPTOR_EPOCH_SOURCE_TO_AXI
+# exit 0
+INFO: [Common 17-206] Exiting Vivado at Wed Sep  2 17:00:11 2026...

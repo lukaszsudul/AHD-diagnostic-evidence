@@ -1,0 +1,68 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Wed Sep  2 15:23:07 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects {{G2B_ONECH_C2H/axis_generation_reg[10]/C --> G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D}} -file C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-lut1-signoff-recovery/raw/group9_fresh/G2B_BS3_GENERATION_WORST_PATH.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.724ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/axis_generation_reg[10]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        5.308ns  (logic 1.334ns (25.130%)  route 3.974ns (74.870%))
+  Logic Levels:           7  (CARRY4=2 LUT4=2 LUT5=1 LUT6=2)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y58                                      0.000     0.000 r  G2B_ONECH_C2H/axis_generation_reg[10]/C
+    SLICE_X57Y58         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  G2B_ONECH_C2H/axis_generation_reg[10]/Q
+                         net (fo=5, routed)           1.458     1.837    G2B_ONECH_C2H/own_generation_hold_axi[10]
+    SLICE_X62Y63                                                      r  G2B_ONECH_C2H/own_ok_hold_source_i_39/I1
+    SLICE_X62Y63         LUT6 (Prop_lut6_I1_O)        0.105     1.942 r  G2B_ONECH_C2H/own_ok_hold_source_i_39/O
+                         net (fo=1, routed)           0.000     1.942    G2B_ONECH_C2H/own_ok_hold_source_i_39_n_0
+    SLICE_X62Y63                                                      r  G2B_ONECH_C2H/own_ok_hold_source_reg_i_16/S[3]
+    SLICE_X62Y63         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.332     2.274 r  G2B_ONECH_C2H/own_ok_hold_source_reg_i_16/CO[3]
+                         net (fo=1, routed)           0.000     2.274    G2B_ONECH_C2H/own_ok_hold_source_reg_i_16_n_0
+    SLICE_X62Y64                                                      r  G2B_ONECH_C2H/own_ok_hold_source_reg_i_7/CI
+    SLICE_X62Y64         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     2.372 f  G2B_ONECH_C2H/own_ok_hold_source_reg_i_7/CO[3]
+                         net (fo=1, routed)           0.709     3.081    G2B_ONECH_C2H/source_ownership_fatal43_out
+    SLICE_X57Y66                                                      f  G2B_ONECH_C2H/own_ok_hold_source_i_2/I4
+    SLICE_X57Y66         LUT5 (Prop_lut5_I4_O)        0.105     3.186 f  G2B_ONECH_C2H/own_ok_hold_source_i_2/O
+                         net (fo=3, routed)           0.868     4.055    G2B_ONECH_C2H/source_ownership_fatal1305_out
+    SLICE_X45Y61                                                      f  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/I2
+    SLICE_X45Y61         LUT6 (Prop_lut6_I2_O)        0.105     4.160 r  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/O
+                         net (fo=2, routed)           0.457     4.617    G2B_ONECH_C2H/source_ownership_fatal_event_i_5_n_0
+    SLICE_X44Y58                                                      r  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/I3
+    SLICE_X44Y58         LUT4 (Prop_lut4_I3_O)        0.105     4.722 f  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/O
+                         net (fo=4, routed)           0.481     5.203    G2B_ONECH_C2H/source_ownership_fatal_event_i_2_n_0
+    SLICE_X43Y55                                                      f  G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1/I0
+    SLICE_X43Y55         LUT4 (Prop_lut4_I0_O)        0.105     5.308 r  G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1/O
+                         net (fo=1, routed)           0.000     5.308    G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1_n_0
+    SLICE_X43Y55         FDRE                                         r  G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X43Y55         FDRE (Setup_fdre_C_D)        0.032     6.032    G2B_ONECH_C2H/source_ownership_fatal_deferred_reg
+  -------------------------------------------------------------------
+                         required time                          6.032    
+                         arrival time                          -5.308    
+  -------------------------------------------------------------------
+                         slack                                  0.724    
+
+
+
+

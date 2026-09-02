@@ -1,0 +1,64 @@
+{
+  "schema": "AHD_V41_G2B_LUT1_SIGNOFF_RECOVERY_STATE_V1",
+  "task": "G2B-LUT1-SIGNOFF-RECOVERY",
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PENDING",
+  "overall_result": "BLOCKED",
+  "project_state_rev_at_start": 4,
+  "project_state_rev_at_end": 4,
+  "meta_4r2": "VERIFIED",
+  "bs3_candidate": "VERIFIED",
+  "source": {
+    "branch": "integration/v41-g2b-onech-c2h",
+    "parent": "224d194e5f82c85bcb29297561c5d5e76d28063b",
+    "commit": "66cc8e3497579c2f7cb41d0b3639b3c2f00d6c49",
+    "tree": "1e67e3f1fe06669839fe9ff8573e4d1e0114a889",
+    "active_xdc_group9_update": "PASS",
+    "unrelated_xdc_changed": false
+  },
+  "recovery": {
+    "mode": "ROUTED_DCP_REUSE",
+    "dcp_reuse_valid": true,
+    "full_rebuild_executed": false,
+    "full_rebuild_trigger": null,
+    "sealed_dcp_sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83"
+  },
+  "group9": {
+    "result": "PASS",
+    "global_report_bus_skew_executed": false,
+    "settling_cap_ns": 6.0,
+    "slot": {"result": "PASS", "actual_ns": 5.939, "slack_ns": 0.093},
+    "generation": {"result": "PASS", "actual_ns": 5.308, "slack_ns": 0.724},
+    "epoch": {"result": "PASS", "actual_ns": 5.423, "slack_ns": 0.609},
+    "ownership_cdc": "PASS"
+  },
+  "groups10_17": {
+    "result": "FAIL",
+    "groups_pass": [10, 11, 12],
+    "group_timeout": 13,
+    "groups_not_run_after_blocker": [14, 15, 16, 17],
+    "first_blocker": "REQUIRED_BUS_SKEW_TIMEOUT:GROUP_13:RESET_RETURN_SOURCE_TO_AXI:QUERY_EXCEEDED_300_SECONDS_FROM_QUERY_STARTED_MARKER"
+  },
+  "final_gates": {
+    "routed_timing": "NOT_RUN_AFTER_BLOCKER",
+    "drc": "NOT_RUN_AFTER_BLOCKER",
+    "cdc_disposition": "NOT_RUN_AFTER_BLOCKER",
+    "clocks": "NOT_RUN_AFTER_BLOCKER",
+    "resources": "NOT_RUN_AFTER_BLOCKER",
+    "pre_bitstream_hard_gate": "FAIL"
+  },
+  "functional_protection": {
+    "abi_mmio_unchanged": true,
+    "r1i_protected_behavior": "PASS",
+    "offline_throughput": "PASS",
+    "required_payload_mbps": 288,
+    "hardware_throughput_proven": false
+  },
+  "bitstream_produced": false,
+  "debug_probes_produced": false,
+  "hardware_accessed": false,
+  "g2b_hw": "NOT_PROVEN",
+  "ssot_update_required": false,
+  "evidence_commit": null,
+  "remote_read_back": "NOT_RUN"
+}
