@@ -1,15 +1,15 @@
 # AHD Current Development Tracks
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 ## Track summary
 
 | Track | Purpose | Last accepted gate | Active gate | Next expected decision point | Track status |
 |---|---|---|---|---|---|
-| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | `G2B-LUT1-SIGNOFF-RECOVERY-2` and complete offline requalification | `ACTIVE`; G2B-IMPL sign-off recovery pending |
+| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | `G2B-LUT1-SIGNOFF-RECOVERY-3` and complete offline requalification | `ACTIVE`; G2B-IMPL sign-off recovery pending |
 | R-track | Isolate the R1i physical-SCL/ACK/recovery causal mechanism and characterize margin | R0 | none executing | Resume R2/R3 later through RESEARCH_DIAGNOSTIC | lifecycle `ACTIVE`; execution state `HOLD`, not closed |
 | L-track | Native Linux/V4L2 product integration through a transport abstraction | none | none | Approve/launch L0 with final input assumptions and interfaces | `PLANNED` |
-| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-5 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
+| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-6 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
 
 ## G-track — product development
 
@@ -31,11 +31,12 @@ closure, and throughput.
   input.
 - G2B-IMPL: lifecycle `BLOCKED`; implementation state
   `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; not offline-qualified and
-  no bitstream exists.
+  no bitstream exists; Group-14 candidate implementation and validation remain
+  pending.
 - G2B-LUT0: `ACCEPTED` — Plan B resource architecture only.
 - G2B-LUT1: lifecycle `PLANNED`, readiness
   `READY_FOR_SIGNOFF_RECOVERY`; exact next gate
-  `G2B-LUT1-SIGNOFF-RECOVERY-2`.
+  `G2B-LUT1-SIGNOFF-RECOVERY-3`.
 - G2B-HW: lifecycle `BLOCKED`; final offline sign-off, pre-bitstream hard gate,
   and a bitstream candidate do not exist.
 
@@ -55,22 +56,35 @@ closure, and throughput.
 - promoted Group-13 method `SETTLING_PLUS_STRUCTURAL_CDC`, with exactly two
   `6.000 ns` settling families, retained broad aggregate coverage, stable hold,
   synchronized request/acknowledgement and live commit phase, the commit-phase
-  equality barrier, and coherent qualified epoch/state publication;
-- `GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS`; and
-- `GROUPS_14_TO_17 = PENDING_UNCHANGED`.
+  equality barrier, and coherent qualified epoch/state publication; Group 13
+  PASS is authoritative and must not be repeated;
+- promoted Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` method
+  `SETTLING_PLUS_STRUCTURAL_CDC`, with exactly three
+  `6.000 ns` absolute datapath-only settling families:
+  `RELEASE_SLOT0_NORMAL_STATE_TRANSITION`,
+  `RELEASE_SLOT0_MISMATCH_CONTAINMENT`, and
+  `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING`; the held 56-bit generation/epoch
+  token, two-stage release-toggle and transport-request synchronization,
+  stable-data lifetime, captured release-phase retirement, destination-use
+  ordering, and reset/release coherency remain mandatory; the old
+  `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from required
+  sign-off, `RTL_CHANGE_REQUIRED = NO`, and active XDC implementation remains
+  an authorized next step;
+- `GROUPS_10_TO_12 = PRESERVE_PASS`; and
+- `GROUPS_15_TO_17 = PENDING_UNCHANGED`.
 
 ### Next decision
 
-`G2B-LUT1-SIGNOFF-RECOVERY-2` may implement the accepted
-`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc` under the governed source-change
-procedure. It must preserve Group 9 PASS and Groups 10–12 PASS, resume at
-Group 13 with the promoted settling-plus-structural-CDC method, then continue
-Groups 14, 15, 16, and 17, routed setup/hold timing, DRC, CDC disposition,
-clocks, resources, and the pre-bitstream hard gate before any bitstream or
-hardware step. The retired global Group-9 and Group-13 `report_bus_skew`
-queries are not required. The PRODUCT hard gate remains routed LUT `<=90%`,
-with a preferred `80–85%` target; the 84.192% planning estimate is not an
-achieved result.
+`G2B-LUT1-SIGNOFF-RECOVERY-3` may implement the accepted
+`G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` under the governed source-change
+procedure. It must preserve Group 9 PASS, Groups 10–12 PASS, and Group 13 PASS,
+validate Group 14 with the promoted settling-plus-structural-CDC method, then
+continue Groups 15, 16, and 17, routed setup/hold timing, DRC, CDC disposition,
+clocks, PRODUCT resources, and the pre-bitstream hard gate before any bitstream
+or hardware step. The retired global Group-9, Group-13, and Group-14
+`report_bus_skew` queries are not required. The PRODUCT hard gate remains
+routed LUT `<=90%`, with a preferred `80–85%` target; the 84.192% planning
+estimate is not an achieved result.
 
 ## R-track — causal research
 
@@ -119,7 +133,7 @@ capture/video layer independent of the PCIe transport backend.
 ### Gate state
 
 - L0: `PLANNED`.
-- No accepted or active Linux gate exists at revision 5.
+- No accepted or active Linux gate exists at revision 6.
 - The Linux transport consumer input contract is frozen; V4L2 remains
   `NOT_IMPLEMENTED`.
 
@@ -167,8 +181,10 @@ G2B-PRE interface contract. META-3 promoted G2B-LUT0 acceptance, R-track
 ownership CDC Group-9 sign-off architecture and named unnumbered decision; it
 does not modify RTL or active XDC. META-5 promotes the reset-return CDC
 Group-13 sign-off architecture and named unnumbered decision; it also does not
-modify RTL or active XDC and does not accept G2B offline qualification, a
-bitstream, hardware, or V4L2.
+modify RTL or active XDC. META-6 promotes the release-slot CDC Group-14
+sign-off architecture and named unnumbered decision; it also does not modify
+RTL or active XDC and does not accept G2B offline qualification, a bitstream,
+hardware, or V4L2.
 
 ### Current dependencies
 
@@ -184,5 +200,5 @@ bitstream, hardware, or V4L2.
 
 ### Next decision
 
-After revision-5 publication, the next update begins only when a separate task
+After revision-6 publication, the next update begins only when a separate task
 satisfies every field in `META_UPDATE_TEMPLATE.md`.

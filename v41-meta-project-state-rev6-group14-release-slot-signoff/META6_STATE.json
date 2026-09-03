@@ -1,0 +1,202 @@
+{
+  "task": "META-6",
+  "title": "AHD v41 Group 14 Release-Slot Sign-Off Method Promotion",
+  "state_type": "META_EXECUTION_EVIDENCE",
+  "date": "2026-09-03",
+  "engineering_gate": "PASS",
+  "precommit_state": "READY_TO_PUBLISH",
+  "update_type": "ARCHITECTURE_CHANGE",
+  "authorization_literal": "SSOT WRITE AUTHORIZED",
+  "owner_architect_approval": "GRANTED",
+  "project_state_revision_at_start": 5,
+  "project_state_revision_at_end": 6,
+  "frozen_write_contract": {
+    "result": "VERIFIED",
+    "standalone_authorization_literal": true,
+    "separate_authorization_field_supported": false,
+    "required_fields": [
+      "UPDATE_TYPE",
+      "EXPECTED_PROJECT_STATE_REV",
+      "OWNER_ARCHITECT_DECISION",
+      "EVIDENCE_REPOSITORY",
+      "EVIDENCE_COMMIT",
+      "EVIDENCE_DIRECTORY",
+      "EXPECTED_AFFECTED_FILES"
+    ],
+    "governance_sha256_at_start": "4C46A89982F0B2F1C2096AC9E4ACD0585C18AAE9DAD65F19E36518F349794A3E",
+    "update_policy_sha256": "F5927BDDABC47C68597FA745E10429DBB2972F0483F5D335291D09DD45B51497",
+    "meta_update_template_sha256": "F7119369043E5C348AAA4B14BC4A3BBB80FB6AC6E0343BAA904909A2C22D0B27",
+    "state_schema_sha256": "6AE9C691748CE9FEF5186083DE50BF9F93EAF5E9AFEBDCB0156A7CDE650B60E3"
+  },
+  "precedents": {
+    "meta5": {
+      "result": "VERIFIED",
+      "commit": "bbdeb474ce9d7e5f0db3e8ca8afb5448eef8f314",
+      "affected_ssot_files": 16,
+      "publication_pattern": "ONE_ORDINARY_FAST_FORWARD_COMMIT_WITH_REMOTE_READBACK"
+    },
+    "meta4r2": {
+      "result": "VERIFIED",
+      "commit": "27dcf152e862c6db88a365328b92c0fd250f04c2",
+      "unnumbered_decision_pattern": "VERIFIED"
+    }
+  },
+  "g14a_evidence": {
+    "result": "VERIFIED",
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "commit": "9e91315968453e859006077191cd5fc711fc6b96",
+    "commit_tree": "95961d96ca164d4b7838454df4075f1287e7a19f",
+    "directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
+    "directory_tree": "ae0c1472b90bf4cecc2df8feebe192b35b8355be",
+    "manifest_entries_passed": 65,
+    "manifest_entries_failed": 0,
+    "engineering_gate": "PASS",
+    "candidate_xdc_ready_for_meta": "YES_WITH_OWNER_ARCHITECT_REVIEW"
+  },
+  "group14": {
+    "group": 14,
+    "group_name": "RELEASE_SLOT_0_AXI_TO_SOURCE",
+    "old_signoff": "GLOBAL_SET_BUS_SKEW_3NS",
+    "old_signoff_state": "RETIRED_FROM_REQUIRED_SIGNOFF",
+    "original_constraint": "set_bus_skew 3.000 -from $g2b_release0_payload_src -to $g2b_release_payload_dst",
+    "original_source_count": 56,
+    "original_destination_count": 20,
+    "previous_report_bus_skew_timeout": "VERIFIED",
+    "previous_report_bus_skew_runtime_s": "301.299",
+    "full_report_bus_skew_retried": "NO",
+    "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+    "semantic_classification": "56-bit generation/epoch stable-data release token; normal use follows a two-stage release-toggle synchronizer; reset accounting follows a two-stage transport-request synchronizer and captured release-phase retirement",
+    "new_signoff": "SETTLING_PLUS_STRUCTURAL_CDC",
+    "new_signoff_state": "PROMOTED",
+    "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+    "decision_record": "UNNUMBERED_GOVERNED_DECISION",
+    "decision_state": "RESOLVED",
+    "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+    "group14_cdc_structure": "PASS_WITH_DISPOSITION",
+    "signoff_runtime": "PRACTICAL",
+    "semantic_family_count": 3,
+    "semantic_families": [
+      {
+        "name": "RELEASE_SLOT0_NORMAL_STATE_TRANSITION",
+        "source_count": 56,
+        "destination_count": 3,
+        "required_ns": "6.000",
+        "worst_actual_ns": "5.467",
+        "slack_ns": "0.563",
+        "runtime_s": "63.236",
+        "result": "PASS"
+      },
+      {
+        "name": "RELEASE_SLOT0_MISMATCH_CONTAINMENT",
+        "source_count": 56,
+        "destination_count": 4,
+        "required_ns": "6.000",
+        "worst_actual_ns": "5.554",
+        "slack_ns": "0.478",
+        "runtime_s": "0.117",
+        "result": "PASS"
+      },
+      {
+        "name": "RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING",
+        "source_count": 56,
+        "destination_count": 3,
+        "required_ns": "6.000",
+        "worst_actual_ns": "4.191",
+        "slack_ns": "1.839",
+        "runtime_s": "0.111",
+        "result": "PASS"
+      }
+    ],
+    "structural_requirements": [
+      "ABSOLUTE_SETTLING",
+      "STABLE_DATA_UNTIL_EVENT_CONSUMPTION",
+      "EVENT_ORDERING",
+      "SYNCHRONIZER_STRUCTURE",
+      "COMPLETION_BARRIER",
+      "TOKEN_IDENTITY"
+    ],
+    "protocol_proof": {
+      "held_token_bits": 56,
+      "held_generation_bits": 24,
+      "held_epoch_bits": 32,
+      "token_and_release_toggle_same_edge": true,
+      "normal_release_toggle_synchronizer_stages": 2,
+      "reset_transport_request_synchronizer_stages": 2,
+      "stable_data_until_event_consumption": true,
+      "captured_release_phase_retirement_required": true,
+      "destination_use_ordering_required": true,
+      "reset_release_coherency_required": true,
+      "identity_fields": [
+        "SLOT_GENERATION",
+        "DESCRIPTOR_EPOCH",
+        "CURRENT_RESET_EPOCH",
+        "DMA_OWNED_STATE"
+      ],
+      "identity_mismatch_disposition": "FAIL_CLOSED_LATCH_OWNERSHIP_FATAL_AND_DISABLE_ADMISSION"
+    },
+    "rtl_change_required": "NO",
+    "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+    "candidate_xdc": "G2B_G14A_CANDIDATE_CONSTRAINTS.xdc",
+    "candidate_xdc_sha256": "094F7182116FC2A2C68479B8BDB6A6C2327F14DA6ABFEB244EC7F26D7BE2809A",
+    "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF"
+  },
+  "preserved_state": {
+    "group9_governance_regression": "NO",
+    "group9_method_state": "PROMOTED",
+    "group9_result": "PRESERVE_PASS",
+    "groups_10_to_12": "PRESERVE_PASS",
+    "group13_governance_regression": "NO",
+    "group13_method_state": "PROMOTED",
+    "group13_result": "PRESERVE_PASS",
+    "groups_15_to_17": "PENDING_UNCHANGED",
+    "g2b_lut1_lifecycle": "PLANNED",
+    "g2b_lut1_readiness": "READY_FOR_SIGNOFF_RECOVERY",
+    "g2b_hardware": "BLOCKED",
+    "r_track_modified": "NO"
+  },
+  "ssot_transaction": {
+    "expected_affected_files": 16,
+    "actual_affected_files": 16,
+    "unauthorized_affected_files": 0,
+    "revision_consistency": "PASS",
+    "json_validation": "PASS",
+    "csv_validation": "PASS",
+    "sha256_manifest_entries": 18,
+    "sha256_manifest_result": "PASS",
+    "current_stale_group14_required_signoff_references": "NONE",
+    "existing_open_numbered_od_records": 12,
+    "existing_open_numbered_od_records_changed": "NO",
+    "existing_decided_numbered_od_records": 1,
+    "existing_decided_numbered_od_records_changed": "NO",
+    "ssot_consistency": "PASS"
+  },
+  "protection_audit": {
+    "fpga_ahd_commit": "be94f88ee8d179f12928ab791bdae27c22cd1762",
+    "fpga_ahd_tree": "e128ff47a5e21e8131971f5e5caa7657e2eccc7f",
+    "fpga_ahd_modified": "NO",
+    "v41_g2b_commit": "64feb60de5d07f400e6b92527bfe54838b3372ee",
+    "v41_g2b_tree": "26399ed456941e26d5ee4b1b2ca50392338fa24a",
+    "v41_g2b_source_modified": "NO",
+    "rtl_modified": "NO",
+    "active_xdc_sha256": "C12A371F7F21D350A28C6B310046D543C788D40E805160F12C49FB24C467674C",
+    "active_xdc_modified": "NO",
+    "vivado_executed": "NO",
+    "bitstream_produced": "NO",
+    "hardware_accessed": "NO",
+    "jtag_accessed": "NO",
+    "pcie_accessed": "NO",
+    "dma_accessed": "NO",
+    "reboot_performed": "NO",
+    "power_cycle_performed": "NO"
+  },
+  "next_allowed_engineering_step": "G2B-LUT1-SIGNOFF-RECOVERY-3",
+  "publication": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "commit_subject": "Promote AHD v41 Group 14 release-slot sign-off method to project state rev6",
+    "push_mode": "ORDINARY_FAST_FORWARD_NO_FORCE",
+    "containing_commit": null,
+    "remote_readback": "PENDING_POST_COMMIT_EXECUTOR_COMPLETION",
+    "completion_record": "META6_EXECUTOR_FINAL_RESPONSE"
+  }
+}

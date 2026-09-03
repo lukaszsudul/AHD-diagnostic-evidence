@@ -1,21 +1,23 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 5,
+  "project_state_revision": 6,
   "state_type": "CURRENT_TRACK_STATUS",
   "governance_version": 1,
-  "last_update": "2026-09-02",
+  "last_update": "2026-09-03",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-5_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-6_TASK_DIRECTIVE",
   "ssot_write_authorization": "SSOT WRITE AUTHORIZED",
   "update_type": "ARCHITECTURE_CHANGE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
-  "source_evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
+  "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
+  "source_evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
+  "expected_previous_project_state_revision": 5,
+  "write_contract_receipt": "v41-meta-project-state-rev6-group14-release-slot-signoff/META6_WRITE_CONTRACT_RECEIPT.md",
   "product_track": {
     "status": "ACTIVE",
     "last_accepted_gate": "G2B-LUT0",
     "active_gate": "G2A",
-    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2",
+    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3",
     "resource_recovery_state": "PLAN_ACCEPTED_IMPLEMENTATION_PENDING",
     "gates": [
       {
@@ -67,12 +69,12 @@
         "accepted_by_role": null,
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
         "implementation_state": "ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING",
-        "blocking_reason": "GROUP13_CANDIDATE_XDC_IMPLEMENTATION_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
+        "blocking_reason": "GROUP14_CANDIDATE_XDC_IMPLEMENTATION_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
         "offline_qualification": "NOT_ACCEPTED",
         "hardware_qualification_progress": "NOT_STARTED",
         "hardware_qualification": "NOT_PROVEN",
-        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
-        "evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit"
+        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
+        "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit"
       },
       {
         "gate": "G2B-LUT0",
@@ -88,30 +90,32 @@
         "gate": "G2B-LUT1",
         "status": "PLANNED",
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
-        "scope": "PRESERVE_PROMOTED_GROUP9_AND_GROUPS10_TO_12_APPLY_PROMOTED_GROUP13_AND_COMPLETE_ROUTED_SIGNOFF",
+        "scope": "PRESERVE_PROMOTED_GROUP9_AND_GROUPS10_TO_12_AND_PROMOTED_GROUP13_APPLY_PROMOTED_GROUP14_AND_COMPLETE_ROUTED_SIGNOFF",
         "implementation_state": "SIGNOFF_RECOVERY_PENDING",
         "preserved_authoritative_results": [
           "GROUP9",
           "GROUP10",
           "GROUP11",
-          "GROUP12"
+          "GROUP12",
+          "GROUP13"
         ],
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-5_TASK_DIRECTIVE",
-        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
-        "depends_on": "META5_PROMOTED_GROUP13_RESET_RETURN_SIGNOFF_METHOD",
-        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2"
+        "decision_source": "META-6_TASK_DIRECTIVE",
+        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
+        "depends_on": "META6_PROMOTED_GROUP14_RELEASE_SLOT_SIGNOFF_METHOD",
+        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
       },
       {
         "gate": "G2B-HW",
         "status": "BLOCKED",
         "progress": "NOT_STARTED",
         "qualification_state": "NOT_PROVEN",
-        "blocking_reason": "GROUP13_CANDIDATE_IMPLEMENTATION_FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
+        "blocking_reason": "GROUP14_CANDIDATE_IMPLEMENTATION_FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
         "bitstream_candidate": "NOT_AVAILABLE",
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-5_TASK_DIRECTIVE",
-        "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557"
+        "decision_source": "META-6_TASK_DIRECTIVE",
+        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
+        "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit"
       }
     ],
     "group9_ownership_signoff": {
@@ -126,7 +130,7 @@
       "minimum_launch_to_use_margin_ns": "13.468",
       "gross_reserve_ns": "7.468",
       "rtl_change_required": "NO",
-      "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "active_xdc_change_at_promotion": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
       "candidate_xdc": "G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc",
       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
       "groups_10_to_17": "UNCHANGED",
@@ -134,7 +138,9 @@
       "decision_state": "RESOLVED",
       "accepted_by_role": "OWNER_ARCHITECT",
       "decision_source": "META-4R2_TASK_DIRECTIVE",
-      "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae"
+      "source_evidence_commit": "10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae",
+      "authoritative_result": "PASS_PRESERVED_DO_NOT_REPEAT",
+      "reexecution": "DO_NOT_REPEAT"
     },
     "group13_reset_return_signoff": {
       "status": "ACCEPTED",
@@ -159,11 +165,12 @@
       "settling_cap_ns": "6.000",
       "broad_aggregate_max_delay_must_remain_unchanged": true,
       "rtl_change_required": "NO",
-      "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "active_xdc_change_at_promotion": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
       "candidate_xdc": "G2B_G13A_CANDIDATE_CONSTRAINTS.xdc",
       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
       "groups_10_to_12": "PRESERVE_PREVIOUS_RESULTS",
-      "groups_14_to_17": "PENDING_UNCHANGED",
+      "group_14": "PROMOTED",
+      "groups_15_to_17": "PENDING_UNCHANGED",
       "decision_record": "UNNUMBERED_GOVERNED_DECISION",
       "decision_state": "RESOLVED",
       "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
@@ -172,7 +179,93 @@
       "decision_source": "META-5_TASK_DIRECTIVE",
       "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557",
       "evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
-      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-2"
+      "authoritative_result": "PASS_PRESERVED_DO_NOT_REPEAT",
+      "reexecution": "DO_NOT_REPEAT",
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
+    },
+    "group14_release_slot_signoff": {
+      "status": "ACCEPTED",
+      "group": 14,
+      "group_name": "RELEASE_SLOT_0_AXI_TO_SOURCE",
+      "scope": "RELEASE_SLOT_0_AXI_TO_SOURCE",
+      "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+      "old_constraint": "set_bus_skew 3.000 -from $g2b_release0_payload_src -to $g2b_release_payload_dst",
+      "old_source_count": 56,
+      "old_destination_count": 20,
+      "old_method_disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+      "previous_report_bus_skew_timeout": "VERIFIED",
+      "full_report_bus_skew_retried": "NO",
+      "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+      "required_full_report_bus_skew_runtime": "PATHOLOGICAL",
+      "required_method": "SETTLING_PLUS_STRUCTURAL_CDC",
+      "promotion_state": "PROMOTED",
+      "semantic_families": 3,
+      "family_names": [
+        "RELEASE_SLOT0_NORMAL_STATE_TRANSITION",
+        "RELEASE_SLOT0_MISMATCH_CONTAINMENT",
+        "RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING"
+      ],
+      "family_results": [
+        {
+          "name": "RELEASE_SLOT0_NORMAL_STATE_TRANSITION",
+          "source_count": 56,
+          "destination_count": 3,
+          "required_ns": "6.000",
+          "worst_actual_ns": "5.467",
+          "slack_ns": "0.563",
+          "runtime_s": "63.236",
+          "result": "PASS"
+        },
+        {
+          "name": "RELEASE_SLOT0_MISMATCH_CONTAINMENT",
+          "source_count": 56,
+          "destination_count": 4,
+          "required_ns": "6.000",
+          "worst_actual_ns": "5.554",
+          "slack_ns": "0.478",
+          "runtime_s": "0.117",
+          "result": "PASS"
+        },
+        {
+          "name": "RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING",
+          "source_count": 56,
+          "destination_count": 3,
+          "required_ns": "6.000",
+          "worst_actual_ns": "4.191",
+          "slack_ns": "1.839",
+          "runtime_s": "0.111",
+          "result": "PASS"
+        }
+      ],
+      "settling_cap_ns": "6.000",
+      "structural_requirements": [
+        "ABSOLUTE_SETTLING",
+        "STABLE_DATA_UNTIL_EVENT_CONSUMPTION",
+        "EVENT_ORDERING",
+        "SYNCHRONIZER_STRUCTURE",
+        "COMPLETION_BARRIER",
+        "TOKEN_IDENTITY"
+      ],
+      "group14_cdc_structure": "PASS_WITH_DISPOSITION",
+      "signoff_runtime": "PRACTICAL",
+      "rtl_change_required": "NO",
+      "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "candidate_xdc": "G2B_G14A_CANDIDATE_CONSTRAINTS.xdc",
+      "candidate_xdc_sha256": "094F7182116FC2A2C68479B8BDB6A6C2327F14DA6ABFEB244EC7F26D7BE2809A",
+      "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+      "group_9": "PRESERVE_PASS",
+      "groups_10_to_12": "PRESERVE_PASS",
+      "group_13": "PRESERVE_PASS",
+      "groups_15_to_17": "PENDING_UNCHANGED",
+      "decision_record": "UNNUMBERED_GOVERNED_DECISION",
+      "decision_state": "RESOLVED",
+      "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+      "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-6_TASK_DIRECTIVE",
+      "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
+      "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
     }
   },
   "research_track": {
@@ -252,13 +345,13 @@
   },
   "meta_track": {
     "status": "ACCEPTED",
-    "current_task": "META-5",
+    "current_task": "META-6",
     "active_gate": null,
     "next_gate": null,
-    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_RESET_RETURN_GROUP13_SIGNOFF_METHOD",
+    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_RELEASE_SLOT_GROUP14_SIGNOFF_METHOD",
     "accepted_by_role": "OWNER_ARCHITECT",
-    "decision_source": "META-5_TASK_DIRECTIVE",
-    "source_evidence_commit": "10c7c2898d162af8e2262b3f99861c7d560c4557"
+    "decision_source": "META-6_TASK_DIRECTIVE",
+    "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96"
   },
   "reporting_requirements": {
     "record_project_state_rev_at_start": true,

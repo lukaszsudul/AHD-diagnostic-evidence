@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -21,6 +21,37 @@ the SSOT changes, a separate authorized META update.
 | `OD-12` | Actual PRODUCT and RESEARCH_DIAGNOSTIC timing | `OPEN` | No profile implementation or post-route timing result exists | Complete timing/DRC/CDC requalification of both profiles |
 | `OD-13` | Actual G2B hardware result | `OPEN` | No G2B bitstream, DMA capture, or hardware proof exists | Separately authorized hardware qualification after offline acceptance |
 | `OD-14` | R2/R3 scientific closure | `OPEN` | R-track is `HOLD`, not closed | Resume research through RESEARCH_DIAGNOSTIC and obtain explicit scientific closure decision |
+
+## Decided at project-state revision 6 — Group-14 implementation pending
+
+| ID / question | Decision | Lifecycle status | Decision state | Accepted evidence |
+|---|---|---|---|---|
+| Unnumbered governed decision / Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off methodology | `REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `RESOLVED` | G14-A `9e91315968453e859006077191cd5fc711fc6b96`, directory `v41-development-g2b-g14a-release-slot0-signoff-audit` |
+
+This is a named, unnumbered governed decision; no `OD-*` identifier is
+invented. It retires the global `GLOBAL_SET_BUS_SKEW_3NS` and Group-14
+`report_bus_skew` from required `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off for
+the historical 56-source/20-destination scope and promotes
+`SETTLING_PLUS_STRUCTURAL_CDC`. The accepted method requires exactly the
+`RELEASE_SLOT0_NORMAL_STATE_TRANSITION`,
+`RELEASE_SLOT0_MISMATCH_CONTAINMENT`, and
+`RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` families, each with a `6.000 ns`
+absolute datapath-only settling bound, plus the accepted held-token lifetime,
+two-stage release-toggle and transport-request synchronization, event ordering,
+captured release-phase retirement, completion barrier, token identity,
+destination-use ordering, and reset/release coherency proof.
+
+`RTL_CHANGE_REQUIRED = NO`. `ACTIVE_XDC_CHANGE =
+AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; the candidate authority is
+`G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from the accepted G14-A evidence commit.
+
+Implementation of `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` and the remaining
+routed hard gates remain pending at `G2B-LUT1-SIGNOFF-RECOVERY-3`; G2B-HW
+remains `BLOCKED`. Group 9 PASS, Groups 10–12 PASS, and Group 13 PASS are
+preserved, while Groups 15–17 remain pending. All 12 registered `OD-*`
+open-decision entries above, the existing OD-03 decided record, and the
+revision-4 Group-9 and revision-5 Group-13 unnumbered decisions below are
+unchanged.
 
 ## Decided at project-state revision 5 — Group-13 implementation pending
 

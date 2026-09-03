@@ -1,6 +1,6 @@
 # AHD Current Resource State
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 ## Qualified routed result
 
@@ -43,7 +43,7 @@ fanout proof during G2B-LUT1.
 | Research/diagnostic LUT planning estimate | `ACCEPTED` | Approximately 3,900, range 3,500–4,300; not achieved recovery |
 | Current values as final production requirement | `REJECTED` | No such inference is permitted |
 | PRODUCT profile reduction architecture | `ACCEPTED` | Reversible exclusion of G2B-LUT0-classified research-only instrumentation is authorized |
-| Profile source/sign-off recovery | `PLANNED` | G2B-LUT1 `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-2`; no source or active-XDC change implemented by META-5 |
+| Profile source/sign-off recovery | `PLANNED` | G2B-LUT1 `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-3`; no source or active-XDC change implemented by META-6 |
 | PRODUCT hard gate achieved | `OPEN` | Must be demonstrated by actual post-route utilization |
 
 Named R1h diagnostic islands totaling 2,337 LUT, 3,086 FF, and nine RAMB18 are
@@ -58,13 +58,14 @@ Preferred routed PRODUCT target: `80–85%` (`16,640–17,680 LUT`).
 
 The estimated 17,512 LUT / 84.192% point lies inside the preferred band, but
 the estimate is not qualification evidence and the target is not marked
-achieved. `G2B-LUT1-SIGNOFF-RECOVERY-2`/G2B-IMPL must measure actual post-route
+achieved. `G2B-LUT1-SIGNOFF-RECOVERY-3`/G2B-IMPL must measure actual post-route
 utilization.
 
-The META-4R2 Group-9 and META-5 Group-13 sign-off-method promotions change no
-measured or estimated resource value in this document. Group 9 PASS and Groups
-10–12 PASS are preserved; the Group-13 candidate implementation, Groups 14–17,
-and remaining routed resource hard gate are still pending.
+The META-4R2 Group-9, META-5 Group-13, and META-6 Group-14 sign-off-method
+promotions change no measured or estimated resource value in this document.
+Group 9 PASS, Groups 10–12 PASS, and Group 13 PASS are preserved; the Group-14
+candidate implementation and validation, Groups 15–17, and remaining routed
+resource hard gate are still pending.
 
 ## Existing G1 resource policy
 

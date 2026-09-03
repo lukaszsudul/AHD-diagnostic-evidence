@@ -1,0 +1,32 @@
+# META-6 Exact SSOT File-Change Ledger
+
+## Transaction result
+
+- Expected SSOT files: `16`.
+- Actual SSOT files: `16`.
+- Unauthorized SSOT files: `0`.
+- Missing expected SSOT files: `0`.
+- Frozen policy/template/schema files changed: `0`.
+
+| Path | Pre-write SHA-256 | Post-write SHA-256 | Post bytes | Exact governed change |
+|---|---|---|---:|---|
+| `project-current-state/ACTIVE_BASELINES.md` | `E9A61272556F4DC9AB607484D9817AD23448F2F3DAE314E211F7AB7ED810E9C2` | `5C5D063640795F30667A0FD27E9CAF95B516857401689522785DE1E278EB0032` | 12325 | Revision pointer; accepted Group-14 baseline; preserved Group-9/13 results; recovery-3 boundary. |
+| `project-current-state/CHANGELOG.md` | `6E29FB857EEE01879B825C0DA4204F7CD81620F07F9B9764E65332A6BFDA2FAC` | `67CFCA246BADF3FE0AFE12EF5FA7FC2EA77AE33A0FD2A863BBAF44E008CAC5DD` | 23502 | Appended only the revision-6 transaction entry. |
+| `project-current-state/COMPATIBILITY_MATRIX.csv` | `42869091AA09E375C7F91BFD4AAE596CAE6F0FC5693194F4D8EAEB19F40CF13B` | `DFED00916CF81323417EFBEE0890B43314B836ED3476BEB1716EBDB542ED7076` | 11821 | Updated only Future G2B implementation and Future G2B hardware rows. |
+| `project-current-state/CURRENT_ARCHITECTURE.md` | `BE75772E617A9AA3B4CD4ED4950144E365F4EA31631868B61486338AD3A195ED` | `81275FB9ACBCFE7667B80E6A1CBC6E77B796D94025781DDBE0A34B7DB6968374` | 22075 | Revision; Group-14 release-slot architecture; exact families, invariants, preservation, and next boundary. |
+| `project-current-state/CURRENT_INTERFACES.md` | `4A4C6BC526E2CD4220A5BA90CD1DD65DB62E4850BF1DC5A11249162FED1C919F` | `F035622664B2577287B0F0343B1EE3EDC35BF38085C411E785309C9A3CA80FD2` | 25589 | Revision and exact Group-14 held-token, synchronized-event, reset-accounting, and destination-use contract. |
+| `project-current-state/CURRENT_REQUIREMENTS.md` | `E90F12A8B8BF33FADAF907A57EC4D431821E6F418026F9EAB83DD81537FACCA8` | `FB4E3D59E9614F7778C6821F7546FE4F012842AF47890956A65D4D666377F1EA` | 20261 | Revision; frozen Group-14 requirement; exact sign-off recipe and continuation. |
+| `project-current-state/CURRENT_RESOURCE_STATE.md` | `7C1B671CE1B23CE8E08CB70076C7A890DD6362C28CA9B5188FF72EE6E586F6CE` | `DA22429E4A4CF2BCDF34540CF6DCA7DFCF3CA36650EDE5AC31A13A5A3A154B42` | 5843 | Revision/recovery-3 synchronization; explicit no-resource-change boundary. |
+| `project-current-state/CURRENT_STATUS.md` | `FF5F6801EB841B67CCD9BC19CCC877D42BD29EC2242C60AF19095E6554C1742C` | `FA2812D29E759149BDF553AA5059403392C77DC1AF2F798522AD0838CC4E5394` | 10280 | Revision; META-6, Group-14, G2B-LUT1, and G2B-HW status mirrors. |
+| `project-current-state/CURRENT_TRACKS.md` | `D98FF6D7CB0C234A331315944510B7074E4E7B4BC6CD3C793E9B4803A14297D7` | `A26B08EC36202B794E70A403489C4E60C0285CAC87BD6D47FFFAB8F03610421F` | 8624 | Revision; Product/META continuation; preservation and recovery-3 recipe; other tracks preserved. |
+| `project-current-state/EVIDENCE_MAP.md` | `FB0BBA27C74AED968923807A1F6663E8D9BBD28ED9CC062DA6657281C87E12BD` | `22FE49C2249153315D0D516CA49A211717B7FC3B583ECC8BD6CD7E9420FC7CD9` | 29969 | Revision-6 authority; G14-A package; Group-14/decision/continuation statement mappings. |
+| `project-current-state/GOVERNANCE.md` | `4C46A89982F0B2F1C2096AC9E4ACD0585C18AAE9DAD65F19E36518F349794A3E` | `E26B6208F2707B637995305EB8D2521609E97F5F6DC9CE4AD517AC1FF9BE2B02` | 8206 | Factual governed revision pointer only, 5 to 6. |
+| `project-current-state/OPEN_DECISIONS.md` | `158886B22748888664114A350CDAAED5EFB6DE7AE709CFC98C774C90459C6609` | `B1F8824CF980DEC523AF12BE4CA83873EECC60CB7E44C4EF651E3046129FDD75` | 13892 | Revision; named unnumbered resolved Group-14 decision; all existing numbered and unnumbered records preserved. |
+| `project-current-state/PROJECT_STATE.json` | `720E0B7DB54D7899B33F9829F2BA6CFDC19D8A1F9E0ED7F9694624CE2E37F2B8` | `85B0643096DF6D135E0039342F947F206410B351B2A5F4F623E65930A3FED725` | 65441 | Atomic machine-state revision, requirement/sign-off object, preserved results, continuation, decision, and evidence mapping. |
+| `project-current-state/README.md` | `B6965D2DCB5A1FDA4619C7B457B8C680E1B98A508B3A2EE90A0B8935BC7BF1D7` | `172D059B800B5EF3D63D865A87CE1B9635F59416C4300ECABEA857203481DE01` | 7677 | Revision-6 index, snapshot, decision basis, and next boundary. |
+| `project-current-state/SHA256_MANIFEST.txt` | `6515CDC8553103D08CCFE7EE57301154198CBD4A8A24D62C10D6EA36F328CC6B` | `114F6F696ED0D908159B3D4BF8340628F4AED36A0AF09C6D27120AF3206B63A2` | 1530 | Regenerated sorted identities for all 18 non-self SSOT files. |
+| `project-current-state/TRACK_STATUS.json` | `D3D85AE591A92B3F2D760B12B4AA1785BD6BF2AB8FBD9B94ADF099B7554E3211` | `0FB18EB54C13535607FB0EB1922179F5ABF24CE4DB451D5AE3C06E963E8E974E` | 14168 | Atomic machine track revision; Product/META continuation; Group-14 state; preserved Group-9/13 results; G2B-HW boundary. |
+
+The actual `git diff --name-only -- project-current-state` set matches the
+validated `EXPECTED_AFFECTED_FILES` set exactly. The 18-entry SSOT manifest
+verifies every non-self project-current-state artifact.

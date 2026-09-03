@@ -1,6 +1,6 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 > `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
@@ -218,10 +218,9 @@ The former `GLOBAL_SET_BUS_SKEW_3NS` and its global Group-9
 comparison. Historical diagnostic references remain provenance only and do
 not mandate another run.
 
-`RTL_CHANGE_REQUIRED = NO`. `ACTIVE_XDC_CHANGE =
-AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; active production XDC is unchanged
-by META-4R2. The authoritative future candidate is
-`G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`. `GROUPS_10_TO_17 = UNCHANGED`.
+`RTL_CHANGE_REQUIRED = NO`. The candidate authority is
+`G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`; the authoritative Group-9
+result is `PRESERVE_PASS`, and META-6 does not reopen or alter this method.
 
 #### Group-13 reset-return CDC sign-off
 
@@ -263,11 +262,74 @@ progress suppressed while reset is busy. Reset observations are synchronous
 process conditions, not an async-reset-release interface.
 
 The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT`.
+`RTL_CHANGE_REQUIRED = NO`. The Group-13 candidate authority is
+`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`; the recovery-2 result is
+`PRESERVE_PASS`, and META-6 does not reopen or alter this method.
+
+#### Group-14 release-slot CDC sign-off
+
+For `RELEASE_SLOT_0_AXI_TO_SOURCE`, the current required method is
+`SETTLING_PLUS_STRUCTURAL_CDC`. The former global relation
+
+```tcl
+set_bus_skew 3.000 \
+  -from $g2b_release0_payload_src \
+  -to $g2b_release_payload_dst
+```
+
+is `RETIRED_FROM_REQUIRED_SIGNOFF`. Its 56 source registers—24 slot-0
+generation bits and 32 slot-0 epoch bits—and 20 heterogeneous destination
+registers are `INVALID_FOR_SKEW_COMPARISON`. The verified historical full
+Group-14 `report_bus_skew` timeout remains provenance only and is not a current
+required-signoff query.
+
+The interface contains exactly three semantic families:
+
+| Family | Semantic use | Governed physical requirement | Validated routed result |
+|---|---|---|---|
+| `RELEASE_SLOT0_NORMAL_STATE_TRANSITION` | Matching slot-0 token authorizes `DMA_OWNED -> RELEASABLE`; 56 sources to 3 state bits | `6.000 ns` absolute datapath-only settling | worst actual `5.467 ns`; slack `0.563 ns`; `PASS` |
+| `RELEASE_SLOT0_MISMATCH_CONTAINMENT` | Generation, epoch, reset-epoch, or ownership mismatch fails closed; 56 sources to 4 fault/admission registers | `6.000 ns` absolute datapath-only settling | worst actual `5.554 ns`; slack `0.478 ns`; `PASS` |
+| `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` | Synchronized transport request uses the same-episode token before captured-phase retirement; 56 sources to 3 reset-abandoned counter bits | `6.000 ns` absolute datapath-only settling | worst actual `4.191 ns`; slack `1.839 ns`; `PASS` |
+
+Generation, epoch, and `release_toggle_axi[0]` launch together on the final
+accepted AXI-stream beat. Ordinary use follows the two-stage `ASYNC_REG`
+release-toggle chain and occurs only after the synchronized phase differs from
+`release_seen_source[0]`. This is a one-way event plus stable data, not an
+ordinary request/acknowledgement mailbox. The slot lifecycle holds the 56-bit
+token through event consumption and prevents overwrite until the slot is
+refilled, committed, returned to AXI ownership, and streams another complete
+512-beat record.
+
+Normal consumption requires generation equality with the slot, epoch equality
+with both the descriptor and current reset epoch, and `DMA_OWNED` ownership.
+Any mismatch latches ownership-fatal containment and disables admission. This
+fail-closed identity check prevents a stale token from releasing a newer owner.
+
+For a same-edge reset/release overlap, the AXI reset request captures the
+updated release phase and launches the transport request. Reset accounting is
+authorized by the separate two-stage `ASYNC_REG` transport-request chain, not
+by a release-toggle mismatch. It uses generation and epoch for
+`release_matches`, computes `reset_abandoned_hold_source`, and forces slots
+writable. Transport acknowledgement remains blocked until the independently
+synchronized release vector equals the captured phase; the consumed or
+reset-retired phase is recorded in `release_seen_source[0]`.
+
+The interface contract therefore requires `ABSOLUTE_SETTLING`,
+`STABLE_DATA_UNTIL_EVENT_CONSUMPTION`, `EVENT_ORDERING`,
+`SYNCHRONIZER_STRUCTURE`, `COMPLETION_BARRIER`, and `TOKEN_IDENTITY`, including
+destination-use ordering and reset/release coherency. The timing constraints
+and these structural requirements form one inseparable sign-off method.
+
+The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT`.
 `RTL_CHANGE_REQUIRED = NO`. `ACTIVE_XDC_CHANGE =
 AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; active production XDC is unchanged
-by META-5. The candidate authority is
-`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`. Group 9 and Groups 10–12 retain their
-authoritative results; Groups 14–17 remain pending unchanged.
+by META-6. Candidate authority is `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from
+evidence commit `9e91315968453e859006077191cd5fc711fc6b96`.
+
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`; and
+`GROUP13 = PRESERVE_PASS`. `GROUPS_15_TO_17 = PENDING_UNCHANGED`. The next
+governed source task is `G2B-LUT1-SIGNOFF-RECOVERY-3`; G2B-HW remains lifecycle
+`BLOCKED` and `NOT_PROVEN`.
 
 ### Frozen G2B MMIO contract
 

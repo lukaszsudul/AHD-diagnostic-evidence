@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open
@@ -45,8 +45,8 @@ two-channel, Gen2, throughput, or Linux hardware qualification.
 | G2B-LUT0 resource architecture | `ACCEPTED` | `PASS / IMPLEMENTATION_PENDING` | Dual-profile Plan B accepted; estimate is not qualification evidence |
 | PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | Qualified R1i behavior, production observability, XDMA Gen2, G2B and frozen ABI/MMIO retained |
 | RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED` | PRODUCT functional behavior plus reproducible R-track observability for R2/R3 resumability |
-| Application record-to-C2H plane | `BLOCKED` | `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` | Group-13 candidate-XDC implementation and complete final routed sign-off remain pending; no offline-qualified implementation |
-| G2B-LUT1 | `PLANNED` | `READY_FOR_SIGNOFF_RECOVERY / SIGNOFF_RECOVERY_PENDING` | Authorized next gate is `G2B-LUT1-SIGNOFF-RECOVERY-2`; active XDC is not changed by META-5 |
+| Application record-to-C2H plane | `BLOCKED` | `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` | Group-14 candidate-XDC implementation and complete final routed sign-off remain pending; no offline-qualified implementation |
+| G2B-LUT1 | `PLANNED` | `READY_FOR_SIGNOFF_RECOVERY / SIGNOFF_RECOVERY_PENDING` | Authorized next gate is `G2B-LUT1-SIGNOFF-RECOVERY-3`; active XDC is not changed by META-6 |
 | G2B-HW | `BLOCKED` | `NOT_STARTED / NOT_PROVEN` | Final offline sign-off, pre-bitstream hard gate, and a bitstream candidate do not exist |
 | Linux/V4L2 product layer | `PLANNED` | `NOT_IMPLEMENTED` | Transport input is frozen; frontend, buffer, identity, and policy work remain later L-track scope |
 | Gen2 training, actual `user_clk`, and throughput | `OPEN` | `NOT_PROVEN` | Require later qualification |
@@ -137,11 +137,9 @@ relaxation of safety:** the retired global metric compared structurally
 heterogeneous paths, while the replacement checks match the actual
 stable-data request/acknowledgement protocol.
 
-`RTL_CHANGE_REQUIRED = NO`. The active production XDC is unchanged and
-`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`. The accepted
-candidate authority is `G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`, to be
-applied only by the later governed source-change task. `GROUPS_10_TO_17 =
-UNCHANGED`.
+`RTL_CHANGE_REQUIRED = NO`. The accepted candidate authority is
+`G2B_BS3_CANDIDATE_OWNERSHIP_CONSTRAINTS.xdc`; the authoritative Group-9
+result is `PRESERVE_PASS`, and META-6 does not reopen or alter this method.
 
 The promoted Group-9 method was accepted with these components:
 
@@ -158,7 +156,7 @@ The promoted Group-9 method was accepted with these components:
 11. pre-bitstream hard gate.
 
 The authoritative Group-9 PASS is preserved, so these accepted components are
-not required to be repeated by `G2B-LUT1-SIGNOFF-RECOVERY-2`. The retired
+not required to be repeated by `G2B-LUT1-SIGNOFF-RECOVERY-3`. The retired
 global Group-9 `report_bus_skew` execution is not part of the method and is not
 required again.
 
@@ -209,15 +207,83 @@ processes; they are not treated as an async-assert/sync-release Group-13
 mechanism.
 
 The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not a
-relaxation of safety. `RTL_CHANGE_REQUIRED = NO`. The active production XDC is
-unchanged and `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`.
-The accepted candidate authority is `G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`, to be
-implemented only by `G2B-LUT1-SIGNOFF-RECOVERY-2` under governed source-change
-authority.
+relaxation of safety. `RTL_CHANGE_REQUIRED = NO`. The Group-13 candidate
+authority is `G2B_G13A_CANDIDATE_CONSTRAINTS.xdc`; its recovery-2 result is
+`PRESERVE_PASS` and META-6 does not reopen or change this method.
 
-The authoritative Group-9 PASS and Groups 10–12 PASS results are preserved
-without rerun. `GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS` and
-`GROUPS_14_TO_17 = PENDING_UNCHANGED`.
+The authoritative Group-9 PASS, Groups 10–12 PASS, and Group-13 PASS results
+are preserved without rerun.
+
+### Release-slot CDC and Group-14 sign-off
+
+The current required sign-off method for Group 14
+`RELEASE_SLOT_0_AXI_TO_SOURCE` is `SETTLING_PLUS_STRUCTURAL_CDC`. It replaces
+the historical `GLOBAL_SET_BUS_SKEW_3NS` relation:
+
+```tcl
+set_bus_skew 3.000 \
+  -from $g2b_release0_payload_src \
+  -to $g2b_release_payload_dst
+```
+
+The old relation covered 56 `userclk1` sources—24 generation bits and 32 epoch
+bits—and 20 heterogeneous `nvp_vclk1` destinations. The path set is
+`INVALID_FOR_SKEW_COMPARISON`; the bounded historical Group-14
+`report_bus_skew` timeout remains provenance only. The global query is
+`RETIRED_FROM_REQUIRED_SIGNOFF` and is not a current hard gate.
+
+Group 14 carries a held 56-bit generation/epoch stable-data release token. On
+an ordinary release, generation, epoch, and `release_toggle_axi[0]` launch on
+the same final accepted AXI-stream beat. The release toggle crosses
+`release_sync1_source[0]` and `release_sync2_source[0]`, both `ASYNC_REG`, and
+normal destination use occurs only when the synchronized phase differs from
+`release_seen_source[0]`. On reset overlap, the AXI reset request captures the
+same-episode release phase—including a same-edge final-beat release—and
+launches `transport_req_toggle_axi`; accounting is authorized only after the
+two-stage `transport_req_sync1_source` / `transport_req_sync2_source` chain.
+
+The three exact semantic families are:
+
+| Family | Semantic endpoint set | Governed physical requirement | Validated routed result |
+|---|---|---|---|
+| `RELEASE_SLOT0_NORMAL_STATE_TRANSITION` | 56 token sources to 3 slot-0 state bits | `6.000 ns` absolute datapath-only settling | worst actual `5.467 ns`; slack `0.563 ns`; `PASS` |
+| `RELEASE_SLOT0_MISMATCH_CONTAINMENT` | 56 token sources to 4 fault/admission registers | `6.000 ns` absolute datapath-only settling | worst actual `5.554 ns`; slack `0.478 ns`; `PASS` |
+| `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` | 56 token sources to 3 reset-abandoned counter bits | `6.000 ns` absolute datapath-only settling | worst actual `4.191 ns`; slack `1.839 ns`; `PASS` |
+
+The `6.000 ns` cap is inherited from the existing governed aggregate
+AXI-to-source mailbox relation. Two complete `6.734 ns` destination periods
+provide a `13.468 ns` gross earliest-use window and retain `7.468 ns` gross
+protocol margin at that cap. `GROUP14_CDC_STRUCTURE = PASS_WITH_DISPOSITION`
+and the bounded replacement workload is `PRACTICAL`.
+
+The timing half is inseparable from the accepted structural proof. The token
+must remain stable until its relevant synchronized event is consumed; the slot
+lifecycle prevents another token launch until refill, commit, AXI ownership,
+and another complete 512-beat record. Normal use requires matching slot
+generation, descriptor epoch, current reset epoch, and `DMA_OWNED` state. A
+mismatch fails closed through the ownership-fatal path and disables admission,
+so a stale token cannot silently release a newer owner.
+
+Reset accounting follows the synchronized transport request rather than a
+release-toggle mismatch. It uses the same-episode token to compute abandoned
+ownership and force slots writable, while transport acknowledgement waits
+until the independently synchronized release vector equals the captured phase.
+`release_seen_source[0]` records the consumed or reset-retired phase. Required
+proof therefore preserves `ABSOLUTE_SETTLING`,
+`STABLE_DATA_UNTIL_EVENT_CONSUMPTION`, `EVENT_ORDERING`,
+`SYNCHRONIZER_STRUCTURE`, `COMPLETION_BARRIER`, and `TOKEN_IDENTITY`, including
+destination-use ordering, captured release-phase retirement, and coherent
+generation/epoch separation across reset lifetimes.
+
+The replacement is `SAFER_AND_MORE_SEMANTICALLY_CORRECT` and is not a safety
+relaxation. `RTL_CHANGE_REQUIRED = NO`. Active production XDC is unchanged by
+META-6 and `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`.
+The accepted future candidate is `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from
+evidence commit `9e91315968453e859006077191cd5fc711fc6b96`, to be implemented
+only by `G2B-LUT1-SIGNOFF-RECOVERY-3` under governed source-change authority.
+
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`; and
+`GROUP13 = PRESERVE_PASS`. `GROUPS_15_TO_17 = PENDING_UNCHANGED`.
 
 ### Build-profile boundary
 
@@ -258,14 +324,17 @@ Current accepted state:
 - Record-to-AXI-stream/G2B implementation:
   `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING` and not offline-qualified.
 - Group-9 ownership sign-off method:
-  `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; candidate XDC implementation and
-  final routed sign-off remain pending.
+  `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; the promoted method and
+  authoritative PASS are preserved.
 - Group-13 reset-return sign-off method: `SETTLING_PLUS_STRUCTURAL_CDC`; the
   old global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from
-  required sign-off; candidate-XDC implementation and validation in the
-  governed continuation remain pending.
+  required sign-off; its promoted method and recovery-2 PASS are preserved.
+- Group-14 release-slot sign-off method: `SETTLING_PLUS_STRUCTURAL_CDC`; the
+  old global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from
+  required sign-off; candidate-XDC implementation and validation remain the
+  next governed work.
 - G2B-LUT1 readiness: `READY_FOR_SIGNOFF_RECOVERY`; next gate
-  `G2B-LUT1-SIGNOFF-RECOVERY-2`.
+  `G2B-LUT1-SIGNOFF-RECOVERY-3`.
 - One-channel DMA: not yet qualified.
 - Two-channel DMA: not yet qualified.
 - Sustained 288 MB/s: not yet qualified.
@@ -323,6 +392,12 @@ DMABUF item remains `PLANNED` and `NOT_IMPLEMENTED`.
   synchronized request/acknowledgement and live commit phase, the commit-phase
   completion barrier, and atomic coherent epoch/state publication; the old
   global Group-13 skew metric is historical and retired.
+- Group-14 release-slot correctness is signed off by three family-specific
+  `6.000 ns` absolute datapath-only settling checks plus stable token lifetime,
+  same-edge release event ordering, two-stage release-toggle and transport-
+  request synchronization, fail-closed generation/epoch identity, captured
+  release-phase retirement, destination-use ordering, and reset/release
+  coherency; the old global Group-14 skew metric is historical and retired.
 - Legacy PIO/v40B compatibility and DMA `AHD_C2H_TRANSPORT_ABI_V1` storage are
   separate.
 - One physical PCIe lane has one shared failure/bandwidth domain even when two

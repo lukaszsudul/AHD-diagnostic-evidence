@@ -1,6 +1,6 @@
 # AHD Current Requirements
 
-`PROJECT_STATE_REV = 5`
+`PROJECT_STATE_REV = 6`
 
 This document separates a frozen requirement from its implementation target
 and from actual qualification. A requirement is not evidence that the product
@@ -84,8 +84,9 @@ it does not claim that any data plane or hardware result exists.
 | `REQ-C2H-RESET` | A transport reset must disable admission, require host re-enable, atomically flush ownership/descriptors through acknowledged epoch coordination, expose no partial record, and resume only at beat 0; source and NVP/I2C lifecycles remain independent | `FROZEN` | Reset implementation and CDC behavior not proven |
 | `REQ-C2H-AXIS` | The 64-bit stream has exactly 512 beats, `TKEEP=0xFF` throughout, and `TLAST` only on beat 511; while `TVALID && !TREADY`, `TVALID`, `TDATA`, `TKEEP`, and `TLAST` remain stable and record state advances only on handshake | `FROZEN` | Backpressure simulation and hardware DMA not performed |
 | `REQ-C2H-OWNERSHIP` | A committed record and matching descriptor are immutable; slot release occurs only after the final-beat handshake and acknowledged return; overwrite of committed or in-flight records is forbidden | `FROZEN` | Ring/data-plane implementation not accepted |
-| `REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF` | Group-9 `OWNERSHIP_AXI_TO_SOURCE` requires `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`: two-stage request and acknowledgement synchronizers, held 58-bit payload, source hold until acknowledgement, reset/epoch coherency, and `6.000 ns` absolute settling checks for `slot`, `generation`, and `epoch` | `FROZEN` | Method promoted from BS3; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for the next step but not yet implemented |
-| `REQ-G2B-GROUP13-RESET-RETURN-SIGNOFF` | Group-13 `RESET_RETURN_SOURCE_TO_AXI` requires `SETTLING_PLUS_STRUCTURAL_CDC`: two exact semantic families, `6.000 ns` absolute datapath-only settling, retained broad aggregate `6.000 ns` coverage, stable-until-acknowledgement behavior, two-stage request/acknowledgement and live commit-phase synchronization, commit-phase equality, hard-episode qualification, reset-return coherency, destination-use sequencing, and atomic epoch/state publication | `FROZEN` | Method promoted from G13-A; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for `G2B-LUT1-SIGNOFF-RECOVERY-2` but not yet implemented |
+| `REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF` | Group-9 `OWNERSHIP_AXI_TO_SOURCE` requires `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`: two-stage request and acknowledgement synchronizers, held 58-bit payload, source hold until acknowledgement, reset/epoch coherency, and `6.000 ns` absolute settling checks for `slot`, `generation`, and `epoch` | `FROZEN` | Method promoted from BS3; authoritative result `PRESERVE_PASS`; `RTL_CHANGE_REQUIRED = NO` |
+| `REQ-G2B-GROUP13-RESET-RETURN-SIGNOFF` | Group-13 `RESET_RETURN_SOURCE_TO_AXI` requires `SETTLING_PLUS_STRUCTURAL_CDC`: two exact semantic families, `6.000 ns` absolute datapath-only settling, retained broad aggregate `6.000 ns` coverage, stable-until-acknowledgement behavior, two-stage request/acknowledgement and live commit-phase synchronization, commit-phase equality, hard-episode qualification, reset-return coherency, destination-use sequencing, and atomic epoch/state publication | `FROZEN` | Method promoted from G13-A; recovery-2 result `PRESERVE_PASS`; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO` |
+| `REQ-G2B-GROUP14-RELEASE-SLOT0-SIGNOFF` | Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` requires `SETTLING_PLUS_STRUCTURAL_CDC`: exactly three semantic families with `6.000 ns` absolute datapath-only settling, held 56-bit generation/epoch token lifetime, same-edge token/toggle ordering, two-stage release-toggle synchronization for normal use, two-stage transport-request synchronization for reset accounting, fail-closed generation/epoch/ownership identity, captured release-phase retirement/completion barrier, destination-use ordering, and reset/release coherency | `FROZEN` | Method promoted from G14-A; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO`; active XDC update is authorized for `G2B-LUT1-SIGNOFF-RECOVERY-3` but not yet implemented |
 | `REQ-C2H-LOSS` | Ring-full and other noncommitted attempts use whole-record drop; attempted/dropped and applicable overflow/malformed accounting increments exactly once; pending discontinuity/loss context reaches the next committed record; partial drop and silent sequence repair are forbidden | `FROZEN` | Drop/overflow behavior not implemented or measured |
 | `REQ-LINUX-C2H-PARSER` | The Linux transport parser must negotiate MMIO ABI/capabilities, create a session epoch with `RESET_STREAM_STATE`, parse only fixed 4,096-byte boundaries, and validate ABI/version, identities, flags, source/attempt/global sequences, epoch, line/SOF, payload length, and zero padding | `FROZEN` | Linux consumer contract is frozen input; V4L2 remains `NOT_IMPLEMENTED` |
 | `REQ-C2H-INPUT-SCALE` | The product exposes 4 physical input identities per card and permits at most 2 active logical inputs per card | `FROZEN` | Second ingress and two-channel DMA remain unqualified |
@@ -123,7 +124,7 @@ The governed Group-9 method consists of:
 `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` execution
 are `RETIRED_FROM_REQUIRED_SIGNOFF` and are excluded from this current recipe.
 The authoritative Group-9 PASS is preserved and shall not be repeated by
-`G2B-LUT1-SIGNOFF-RECOVERY-2` unless later evidence invalidates it.
+`G2B-LUT1-SIGNOFF-RECOVERY-3` unless later evidence invalidates it.
 
 ### Governed Group-13 sign-off recipe
 
@@ -165,13 +166,79 @@ The structural half of the requirement is inseparable from the timing half:
    edge; and
 9. retain fresh global CDC disposition as a later routed hard gate.
 
-`G2B-LUT1-SIGNOFF-RECOVERY-2` may implement
-`G2B_G13A_CANDIDATE_CONSTRAINTS.xdc` under governed source-change authority,
-validate the promoted Group-13 conjunction, then continue Groups 14–17,
-routed setup/hold timing, DRC, CDC disposition, clocks, resources, and the
-pre-bitstream hard gate. It must preserve Group 9 PASS and
-`GROUPS_10_TO_12 = PRESERVE_PREVIOUS_RESULTS`.
-`GROUPS_14_TO_17 = PENDING_UNCHANGED`.
+The promoted Group-13 conjunction and its recovery-2 PASS are preserved.
+`G2B-LUT1-SIGNOFF-RECOVERY-3` must not repeat or alter Group 13 unless later
+evidence invalidates it.
+
+### Governed Group-14 sign-off recipe
+
+The Group-14 replacement retires this exact global relation:
+
+```tcl
+set_bus_skew 3.000 \
+  -from $g2b_release0_payload_src \
+  -to $g2b_release_payload_dst
+```
+
+The historical scope contains 56 sources—24 generation bits plus 32 epoch
+bits—and 20 destinations. It is `INVALID_FOR_SKEW_COMPARISON`; the verified
+full Group-14 `report_bus_skew` timeout remains historical evidence. The old
+`GLOBAL_SET_BUS_SKEW_3NS` method is `RETIRED_FROM_REQUIRED_SIGNOFF` and must
+not be rerun as a current hard gate.
+
+The exact three semantic families are:
+
+1. `RELEASE_SLOT0_NORMAL_STATE_TRANSITION`: 56 token sources to three slot-0
+   state bits, `6.000 ns` absolute datapath-only settling, worst actual
+   `5.467 ns`, slack `0.563 ns`, `PASS`;
+2. `RELEASE_SLOT0_MISMATCH_CONTAINMENT`: 56 token sources to four
+   fault/admission registers, `6.000 ns` absolute datapath-only settling,
+   worst actual `5.554 ns`, slack `0.478 ns`, `PASS`; and
+3. `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING`: 56 token sources to three
+   reset-abandoned counter bits, `6.000 ns` absolute datapath-only settling,
+   worst actual `4.191 ns`, slack `1.839 ns`, `PASS`.
+
+The structural half of the requirement is inseparable from these timing
+checks:
+
+1. launch generation, epoch, and the slot-0 release toggle together on the
+   final accepted AXI-stream beat;
+2. hold the 56-bit token stable until the relevant synchronized event is
+   consumed, using the slot lifecycle to prevent premature overwrite;
+3. for ordinary release, validate the two-stage `ASYNC_REG` release-toggle
+   synchronizer and permit destination use only on a new synchronized phase;
+4. require generation equality, descriptor/current-reset epoch equality, and
+   `DMA_OWNED` state before normal release, with any mismatch failing closed
+   through ownership-fatal containment and disabled admission;
+5. for reset overlap, capture the same-edge release phase and use the separate
+   two-stage `ASYNC_REG` transport-request synchronizer to authorize abandoned-
+   record accounting;
+6. compute reset accounting from the same-episode generation/epoch token and
+   preserve reset-lifetime identity so an old token cannot qualify a newer
+   owner;
+7. block transport acknowledgement until the independently synchronized
+   release vector equals the captured phase, then record the consumed or
+   reset-retired phase;
+8. preserve destination-use ordering, captured release-phase retirement, and
+   reset/release coherency; and
+9. retain fresh global CDC disposition as a later routed hard gate.
+
+These requirements implement the exact invariant conjunction
+`ABSOLUTE_SETTLING`, `STABLE_DATA_UNTIL_EVENT_CONSUMPTION`, `EVENT_ORDERING`,
+`SYNCHRONIZER_STRUCTURE`, `COMPLETION_BARRIER`, and `TOKEN_IDENTITY`.
+
+`RTL_CHANGE_REQUIRED = NO`. Active production XDC is unchanged by META-6.
+`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate
+authority is `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from evidence commit
+`9e91315968453e859006077191cd5fc711fc6b96`.
+
+`G2B-LUT1-SIGNOFF-RECOVERY-3` may implement that candidate under governed
+source-change authority, validate the promoted Group-14 conjunction, then
+continue Groups 15–17, routed setup/hold timing, DRC, CDC disposition, clocks,
+PRODUCT resources, and the pre-bitstream hard gate. It must preserve
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`; and
+`GROUP13 = PRESERVE_PASS`. `GROUPS_15_TO_17 = PENDING_UNCHANGED`. Bitstream
+generation is allowed only after every preceding hard gate passes.
 
 ## Build-profile requirements
 
