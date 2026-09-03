@@ -1,0 +1,19 @@
+STATUS=PASS
+CORRECTION_SCOPE=POST_PROCESS_EXIT_CODE_METADATA_ONLY
+EXECUTED_SUPERVISOR_RECEIPT=G2B_G14A_EXTERNAL_WATCHDOG.txt
+EXECUTED_RECEIPT_TIMED_OUT=NO
+RAW_QUERY_TIMEOUT_SCOPE_TEXT=ACTIVE_QUERY_MARKER_TO_VALIDATED_COMPLETION_MARKER
+ACTUAL_WATCHDOG_SCOPE=ACTIVE_QUERY_MARKER_ENFORCED_EXTERNALLY
+COMPLETION_MARKER_VALIDATION=POSTRUN_IDENTITY_AND_STATUS_VALIDATED
+QUERY_MARKERS_STARTED=6
+QUERY_MARKERS_COMPLETED=6
+WORKER_COMPLETED_MARKER=PASS
+VIVADO_STDOUT_EXIT_COMMAND=# exit 0
+WORKER_RUNTIME_S=852.108
+RAW_ELAPSED_SECONDS_LOCALE_TEXT=917,602
+NORMALIZED_ELAPSED_SECONDS_S=917.602
+PROCESS_EXIT_INTERPRETATION=0
+WRAPPER_EXIT_CODE_FIELD=NULL
+POSTEXISTING_VIVADO_PROCESS_COUNT=0
+TIMING_QUERIES_RERUN=NO
+NOTE=The PowerShell supervisor externally enforced each ACTIVE_QUERY marker's 300-second deadline and post-run validated the identity and PASS status of all six completion markers. It wrote its watchdog receipt after Vivado had exited, but Start-Process through the .bat wrapper exposed a null ExitCode and the subsequent post-receipt exit-code validation failed. The receipt's Polish-locale decimal comma in 917,602 normalizes to 917.602 seconds. The worker completion marker, six paired query markers, explicit Vivado exit 0 transcript, TIMED_OUT=NO, and zero postexisting processes establish successful completion. This correction does not alter or rerun any timing result.

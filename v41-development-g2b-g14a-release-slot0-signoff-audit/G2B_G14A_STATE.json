@@ -1,0 +1,148 @@
+{
+  "schema": "AHD_G2B_G14A_STATE_V1",
+  "task": "G2B-G14-A",
+  "group": 14,
+  "group_name": "RELEASE_SLOT_0_AXI_TO_SOURCE",
+  "status": {
+    "engineering_gate": "PASS",
+    "evidence_publication": "PASS",
+    "overall_result": "PASS",
+    "first_blocker": null
+  },
+  "governance": {
+    "project_state_rev_at_start": 5,
+    "project_state_rev_at_end": 5,
+    "ssot_manifest": "PASS_18_OF_18",
+    "ssot_modified": false,
+    "group_9": "PRESERVE_PASS",
+    "groups_10_12": "PRESERVE_PASS",
+    "group_13": "PRESERVE_PASS",
+    "groups_15_17": "PENDING"
+  },
+  "source_authority": {
+    "status": "VERIFIED",
+    "checkout": "C:\\FPGA\\V41_G2B",
+    "branch": "integration/v41-g2b-onech-c2h",
+    "commit": "64feb60de5d07f400e6b92527bfe54838b3372ee",
+    "tree": "26399ed456941e26d5ee4b1b2ca50392338fa24a",
+    "active_xdc_sha256": "C12A371F7F21D350A28C6B310046D543C788D40E805160F12C49FB24C467674C",
+    "rtl_sha256": "8D9BECA7C4990B526D0D1C102739417D72A84F6CA290198BB8AA8CE5AFB11471",
+    "repository_modified": false,
+    "active_xdc_modified": false,
+    "git_index_modified": false,
+    "branch_moved": false
+  },
+  "routed_dcp": {
+    "status": "VERIFIED",
+    "path": "C:\\FPGA\\G2B_LUT1_PRODUCT_PRECOMMIT_RECOVERY_20260831_12R1\\sealed_inputs\\G2B_ROUTED.dcp",
+    "size_bytes": 57900063,
+    "sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+    "part": "xc7a35tcsg325-2",
+    "routed_fully": true
+  },
+  "original_constraint": {
+    "expression": "set_bus_skew 3.000 -from $g2b_release0_payload_src -to $g2b_release_payload_dst",
+    "required_ns": 3.000,
+    "source_count": 56,
+    "destination_count": 20,
+    "source_clocks": ["userclk1"],
+    "destination_clocks": ["nvp_vclk1"]
+  },
+  "previous_report_bus_skew_timeout": "VERIFIED",
+  "full_group14_report_bus_skew_retried": false,
+  "semantic_classification": "56-bit generation/epoch stable-data release token; normal use follows a two-stage release-toggle synchronizer, while reset accounting follows a two-stage transport-request synchronizer and captured release-phase retirement",
+  "semantic_family_count": 3,
+  "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON",
+  "required_invariants": [
+    "ABSOLUTE_SETTLING",
+    "STABLE_DATA_UNTIL_EVENT_CONSUMPTION",
+    "EVENT_ORDERING",
+    "SYNCHRONIZER_STRUCTURE",
+    "COMPLETION_BARRIER",
+    "TOKEN_IDENTITY"
+  ],
+  "queries": {
+    "get_timing_paths": {
+      "status": "PASS",
+      "runtime_s": 77.190,
+      "returned_paths": 49,
+      "max_paths": 64,
+      "source_diversity": 1,
+      "destination_diversity": 7
+    },
+    "report_timing": {
+      "status": "PASS",
+      "runtime_s": 0.184,
+      "returned_paths": 1,
+      "worst_datapath_ns": 5.554,
+      "slack_ns": 0.478
+    }
+  },
+  "focused_methodology": {
+    "runtime_s": 25.501,
+    "TIMING-32": "ABSENT",
+    "TIMING-34": "ABSENT",
+    "TIMING-37": "ABSENT",
+    "TIMING-38": "ABSENT",
+    "TIMING-39": "ABSENT"
+  },
+  "candidate": {
+    "created": true,
+    "timing_validation": "PASS",
+    "required_ns": 6.000,
+    "bound_authority": "existing governed aggregate AXI-to-source mailbox max-delay constraint",
+    "semantic_families": [
+      {
+        "family": "RELEASE_SLOT0_NORMAL_STATE_TRANSITION",
+        "destination_count": 3,
+        "worst_actual_ns": 5.467,
+        "slack_ns": 0.563,
+        "runtime_s": 63.236,
+        "result": "PASS"
+      },
+      {
+        "family": "RELEASE_SLOT0_MISMATCH_CONTAINMENT",
+        "destination_count": 4,
+        "worst_actual_ns": 5.554,
+        "slack_ns": 0.478,
+        "runtime_s": 0.117,
+        "result": "PASS"
+      },
+      {
+        "family": "RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING",
+        "destination_count": 3,
+        "worst_actual_ns": 4.191,
+        "slack_ns": 1.839,
+        "runtime_s": 0.111,
+        "result": "PASS"
+      }
+    ]
+  },
+  "group14_cdc_structure": "PASS_WITH_DISPOSITION",
+  "signoff_runtime": "PRACTICAL",
+  "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+  "rtl_change_required": "NO",
+  "group14_final_disposition": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
+  "candidate_xdc_ready_for_meta": "YES_WITH_OWNER_ARCHITECT_REVIEW",
+  "protection": {
+    "synthesis_place_route_run": false,
+    "bitstream_produced": false,
+    "hardware_accessed": false,
+    "jtag": false,
+    "programming": false,
+    "pcie": false,
+    "dma": false,
+    "driver_changes": false,
+    "reboot": false,
+    "power_cycle": false
+  },
+  "evidence": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
+    "commit_ref": "SELF",
+    "remote_read_back": "PASS"
+  },
+  "recommended_next_step": "Run one governed owner/architect META review to promote G2B_G14A_CANDIDATE_CONSTRAINTS.xdc for Group 14 only.",
+  "final_execution_point": "HARD STOP AFTER G2B-G14-A RELEASE-SLOT SIGN-OFF AUDIT"
+}
