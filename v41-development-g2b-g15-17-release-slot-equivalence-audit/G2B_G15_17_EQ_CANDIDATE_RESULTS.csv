@@ -1,0 +1,10 @@
+Group,Slot,Family,Constraint_Type,Source_Count,Destination_Count,Required_ns,Worst_Actual_ns,Slack_ns,Runtime_s,Result,Notes
+"15","1","RELEASE_SLOT1_NORMAL_STATE_TRANSITION","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","5.548","0.528","27.946","PASS","userclk1 to nvp_vclk1; 9 logic levels; release_epoch[1][2] to state[1][1]."
+"15","1","RELEASE_SLOT1_MISMATCH_CONTAINMENT","MAX_DELAY_DATAPATH_ONLY","56","4","6.000","5.576","0.456","0.064","PASS","userclk1 to nvp_vclk1; 9 logic levels; release_epoch[1][2] to fatal_deferred."
+"15","1","RELEASE_SLOT1_RESET_OVERLAP_ACCOUNTING","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","4.338","1.692","0.066","PASS","userclk1 to nvp_vclk1; 6 logic levels; release_generation[1][0] to reset_abandoned[0]."
+"16","2","RELEASE_SLOT2_NORMAL_STATE_TRANSITION","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","5.473","0.559","0.073","PASS","userclk1 to nvp_vclk1; 9 logic levels; release_epoch[2][2] to state[2][1]."
+"16","2","RELEASE_SLOT2_MISMATCH_CONTAINMENT","MAX_DELAY_DATAPATH_ONLY","56","4","6.000","5.772","0.260","0.063","PASS","userclk1 to nvp_vclk1; 9 logic levels; release_epoch[2][2] to fatal_deferred; combined worst slack."
+"16","2","RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","4.480","1.550","0.060","PASS","userclk1 to nvp_vclk1; 5 logic levels; release_generation[2][15] to reset_abandoned[0]."
+"17","3","RELEASE_SLOT3_NORMAL_STATE_TRANSITION","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","5.515","0.557","0.062","PASS","userclk1 to nvp_vclk1; 8 logic levels; release_epoch[3][5] to state[3][1]."
+"17","3","RELEASE_SLOT3_MISMATCH_CONTAINMENT","MAX_DELAY_DATAPATH_ONLY","56","4","6.000","5.729","0.303","0.065","PASS","userclk1 to nvp_vclk1; 9 logic levels; release_epoch[3][5] to fatal_deferred."
+"17","3","RELEASE_SLOT3_RESET_OVERLAP_ACCOUNTING","MAX_DELAY_DATAPATH_ONLY","56","3","6.000","4.585","1.445","0.063","PASS","userclk1 to nvp_vclk1; 7 logic levels; release_epoch[3][7] to reset_abandoned[0]."

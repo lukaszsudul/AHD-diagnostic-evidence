@@ -1,0 +1,33 @@
+{
+  "task": "G2B-G15-17-EQ-R1",
+  "engineering_gate": "PASS",
+  "evidence_publication": "PASS",
+  "overall_result": "PASS",
+  "project_state_rev_at_start": 6,
+  "project_state_rev_at_end": 6,
+  "authoritative_source_worktree": "C:/FPGA/V41_G2B",
+  "worktree_authority_recovery": "PASS",
+  "primary_worktree": {"path": "C:/FPGA/FPGA_AHD", "branch": "main", "head": "be94f88ee8d179f12928ab791bdae27c22cd1762", "modified": false},
+  "source": {"branch": "integration/v41-g2b-onech-c2h", "commit": "bdae16e06fb5b8564763941f530e4ce9e28896c7", "tree": "e18833d46f7672f851c3cb8239f2f29091378294", "parent": "64feb60de5d07f400e6b92527bfe54838b3372ee", "modified": false, "index_modified": false},
+  "routed_dcp_sha256": "EAE2DEF4B05A04241A36B79BEF154FB455A53DB91F8C6078FCFC75A30E2ACF83",
+  "meta6": "VERIFIED",
+  "recovery3": "VERIFIED",
+  "group15_previous_timeout": "VERIFIED",
+  "global_report_bus_skew_executed": {"group15": false, "group16": false, "group17": false},
+  "groups": {
+    "15": {"slot": 1, "source_count": 56, "destination_count": 20, "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON", "families": 3, "cdc": "PASS_WITH_DISPOSITION", "rtl_change_required": "NO", "candidate_decision": "REQUIRE_SLOT_SPECIFIC_SETTLING_PLUS_STRUCTURAL_CDC", "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT"},
+    "16": {"slot": 2, "source_count": 56, "destination_count": 20, "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON", "families": 3, "cdc": "PASS_WITH_DISPOSITION", "rtl_change_required": "NO", "candidate_decision": "REQUIRE_SLOT_SPECIFIC_SETTLING_PLUS_STRUCTURAL_CDC", "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT"},
+    "17": {"slot": 3, "source_count": 56, "destination_count": 20, "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON", "families": 3, "cdc": "PASS_WITH_DISPOSITION", "rtl_change_required": "NO", "candidate_decision": "REQUIRE_SLOT_SPECIFIC_SETTLING_PLUS_STRUCTURAL_CDC", "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT"}
+  },
+  "pairwise_structural_results": {"0_1": "PARTIALLY_EQUIVALENT", "0_2": "PARTIALLY_EQUIVALENT", "0_3": "PARTIALLY_EQUIVALENT", "1_2": "PARTIALLY_EQUIVALENT", "1_3": "PARTIALLY_EQUIVALENT", "2_3": "PARTIALLY_EQUIVALENT"},
+  "logical_protocol_equivalence": {"slot1_to_slot0": "PROVEN", "slot2_to_slot0": "PROVEN", "slot3_to_slot0": "PROVEN"},
+  "candidate": {"scope": "COMBINED_ALL_THREE", "created": true, "sha256": "BFB8482C1A84961E43FF24A69008C91EBA4E5B37E494CB5C65D262FAFE00AE6F", "checks_expected": 9, "checks_passed": 9, "timing_validation": "PASS", "methodology": "PASS_WITH_DISPOSITION"},
+  "runtime": {"initialization_structural_s": 234.406, "initialization_candidate_s": 212.223, "successful_candidate_session_s": 280.584, "accepted_evidence_sessions_s": 575.267, "all_serialized_worker_attempts_s": 1217.126, "classification": "PRACTICAL"},
+  "final_disposition": "PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC",
+  "combined_candidate_ready_for_meta": "YES_WITH_OWNER_ARCHITECT_REVIEW",
+  "preserve": {"group9": "PASS", "groups10_12": "PASS", "group13": "PASS", "group14": "PASS"},
+  "protection": {"active_xdc_modified": false, "ssot_modified": false, "bitstream_produced": false, "hardware_accessed": false, "g2b_hw": "BLOCKED"},
+  "publication": {"repository": "lukaszsudul/AHD-diagnostic-evidence", "branch": "main", "directory": "v41-development-g2b-g15-17-release-slot-equivalence-audit", "directory_selection_reason": "original directory absent at fresh pre-publication remote tip", "commit_binding": "Git commit containing this state file", "remote_readback": "PASS"},
+  "first_blocker": "NONE",
+  "final_execution_point": "HARD STOP AFTER G2B-G15-17-EQ-R1 COMBINED SIGN-OFF AUDIT"
+}

@@ -1,0 +1,84 @@
+{
+  "schema": "AHD_G2B_RELEASE_SLOT_STRUCTURAL_SIGNATURE_V1",
+  "slot": 0,
+  "authority": "accepted G14-A evidence plus direct inspection of the identical sealed routed DCP",
+  "payload": {
+    "width_bits": 56,
+    "fields": [
+      {"role": "generation", "width_bits": 24, "object_pattern": "release_generation_axi_reg[0]"},
+      {"role": "epoch", "width_bits": 32, "object_pattern": "release_epoch_axi_reg[0]"}
+    ],
+    "source_count": 56,
+    "source_clock": "userclk1",
+    "source_clock_period_ns": 16.000,
+    "source_registers": "all 56 objects have IS_SEQUENTIAL=1; collection REF_NAME exported as N/A; observed worst launch primitive is FDRE",
+    "launch": "generation, epoch, and release_toggle[0] update on the accepted final AXI beat",
+    "hold_lifetime": "from final-beat launch through synchronized destination use and retirement; no same-slot overwrite before lifecycle reuse"
+  },
+  "destination": {
+    "clock": "nvp_vclk1",
+    "clock_period_ns": 6.734,
+    "semantic_count": 10,
+    "roles": {
+      "normal_state_transition": {"count": 3, "objects": "slot_state_source_reg[0][0..2]", "types": "FDRE"},
+      "mismatch_containment": {"count": 4, "objects": ["source_ownership_fatal_reg", "source_ownership_fatal_event_reg", "source_ownership_fatal_deferred_reg", "enable_applied_source_reg"], "types": "FDRE"},
+      "reset_overlap_accounting": {"count": 3, "objects": "reset_abandoned_hold_source_reg[0..2]", "types": "FDRE"}
+    },
+    "old_global_count": 20,
+    "old_global_scope_partition": "7 actual ordinary consumers, 13 irrelevant endpoints, and the 3 actual reset-accounting endpoints omitted"
+  },
+  "release_synchronizer": {
+    "path": "release_toggle_axi[0] -> release_sync1_source[0] -> release_sync2_source[0]",
+    "stage_count": 2,
+    "cell_types": ["FDRE", "FDRE"],
+    "async_reg": [true, true],
+    "direct_edges": [true, true],
+    "clock": "nvp_vclk1",
+    "control_nets": "NONE",
+    "history": "release_seen_source[0]",
+    "placement": {"toggle": "SLICE_X44Y61/BFF", "sync1": "SLICE_X45Y61/AFF", "sync2": "SLICE_X45Y61/A5FF", "seen": "SLICE_X46Y63/DFF"}
+  },
+  "transport_request_synchronizer": {
+    "path": "transport_req_toggle_axi -> transport_req_sync1_source -> transport_req_sync2_source",
+    "stage_count": 2,
+    "async_reg": [true, true],
+    "direct_edges": [true, true]
+  },
+  "acknowledgement_retirement": {
+    "path": "transport_ack_toggle_source -> transport_ack_sync1_axi -> transport_ack_sync2_axi",
+    "stage_count": 2,
+    "async_reg": [true, true],
+    "release_retirement": "release_seen captures transport_release_phase_hold_axi only after the full synchronized release vector and ownership phase match the captured phase"
+  },
+  "semantic_cones": {
+    "normal": "synchronized release edge qualifies generation, descriptor epoch, reset epoch, and DMA_OWNED state before RELEASABLE",
+    "mismatch": "any failed generation/epoch/state comparison asserts ownership fatal/event and disables admission",
+    "reset_overlap": "captured release phase and token comparisons contribute to abandoned_count before reset acknowledgement",
+    "combinational_use_before_sync2": false
+  },
+  "reset_semantics": {
+    "payload_configuration_initialized": true,
+    "payload_survives_axi_aresetn": true,
+    "payload_survives_source_reset": true,
+    "synchronizer_control_nets": "NONE",
+    "same_edge_final_release_in_captured_phase": true,
+    "old_epoch_release_fails_closed": true
+  },
+  "fanout_profile": {
+    "generation": {"bits": 24, "direct_leaf_sinks_per_bit": 1, "sink_primitive": "LUT6", "input_pin_histogram": {"I0": 8, "I3": 8, "I5": 8}},
+    "epoch": {"bits": 32, "direct_leaf_sinks_per_bit": 2, "total_direct_leaf_sinks": 64, "sink_primitives": "LUT6 for bits 0..29; LUT4 for bits 30..31"},
+    "combined_average_direct_leaf_sinks": 1.571
+  },
+  "bounded_timing_topology": {
+    "old_scope_returned_paths": 49,
+    "old_scope_unique_endpoint_roles": ["NORMAL_STATE_TRANSITION", "MISMATCH_CONTAINMENT"],
+    "old_scope_logic_level_distribution": {"8": 49},
+    "family_worst_logic_levels": {"normal": 8, "mismatch": 8, "reset": 6},
+    "family_worst_datapath_ns": {"normal": 5.467, "mismatch": 5.554, "reset": 4.191}
+  },
+  "protocol_order": ["hold token", "launch token and release toggle", "two-stage synchronize qualifier", "qualified semantic use", "contain mismatch or account reset overlap", "retire captured phase", "permit later slot reuse"],
+  "normalized_signature": {
+    "safety_relevant_protocol_class": "RELEASE_SLOT_STABLE_TOKEN_TWO_STAGE_QUALIFIER_CAPTURED_PHASE_RETIREMENT",
+    "mapped_cone_reference": true
+  }
+}
