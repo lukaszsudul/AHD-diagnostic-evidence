@@ -1,0 +1,53 @@
+{
+  "task": "G2B-HW0-PRODUCT",
+  "title": "Exact Offline-Qualified Candidate Live-Path Bring-Up",
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PENDING",
+  "overall_result": "BLOCKED",
+  "first_blocker": "BLOCKED — ADDITIONAL_HARDWARE_AUTHORIZATION_REQUIRED",
+  "project_state_rev_at_start": 8,
+  "project_state_rev_at_end": 8,
+  "ssot_staleness": "NONE",
+  "meta_8a": "VERIFIED",
+  "recovery_4": "VERIFIED",
+  "owner_hardware_authorization": "GRANTED",
+  "dut_exclusivity": "BLOCKED",
+  "candidate": {
+    "bitstream": "VERIFIED",
+    "bitstream_bytes": 2192144,
+    "bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+    "signed_off_dcp": "VERIFIED",
+    "signed_off_dcp_bytes": 15726324,
+    "signed_off_dcp_sha256": "95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175",
+    "source_branch": "integration/v41-g2b-onech-c2h",
+    "source_commit": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "source_tree": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+    "fpga_part": "xc7a35tcsg325-2",
+    "profile": "PRODUCT"
+  },
+  "expected_runtime_identity": {
+    "git_sha": "224d194e5f82c85bcb29297561c5d5e76d28063b",
+    "build_flags": "0x00000103",
+    "sealed_input_manifest_sha256": "0248858AF074D4F3065B8A666366DEB532122C9F121F67625A2F68BBC0413EFD"
+  },
+  "authorization_gap": {
+    "authorized_mmio": "0x3800..0x3BFF",
+    "required_read_only_identity_mmio": "0x0000..0x0030",
+    "required_read_only_nvp_video_mmio": "0x0080..0x00B4"
+  },
+  "hardware_accessed": false,
+  "sram_programming": "NOT_RUN",
+  "flash_programming": false,
+  "reboot": false,
+  "power_cycle": false,
+  "t0": "BLOCKED",
+  "t1": "NOT_REACHED",
+  "t2": "NOT_REACHED",
+  "t3": "NOT_REACHED",
+  "t4": "NOT_REACHED",
+  "frame_reconstruction": "NOT_REACHED",
+  "t5": "NOT_REACHED",
+  "hardware_throughput_288_mb_s": "NOT_PROVEN",
+  "ssot_update_required": "NO",
+  "final_execution_point": "HARD STOP BEFORE JTAG ACCESS AND SRAM PROGRAMMING"
+}
