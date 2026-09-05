@@ -1,0 +1,75 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sat Sep  5 11:35:06 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -delay_type max -sort_by slack -max_paths 1 -nworst 1 -from {G2B_ONECH_C2H/release_generation_axi_reg[1][0] G2B_ONECH_C2H/release_generation_axi_reg[1][10] G2B_ONECH_C2H/release_generation_axi_reg[1][11] G2B_ONECH_C2H/release_generation_axi_reg[1][12] G2B_ONECH_C2H/release_generation_axi_reg[1][13] G2B_ONECH_C2H/release_generation_axi_reg[1][14] G2B_ONECH_C2H/release_generation_axi_reg[1][15] G2B_ONECH_C2H/release_generation_axi_reg[1][16] G2B_ONECH_C2H/release_generation_axi_reg[1][17] G2B_ONECH_C2H/release_generation_axi_reg[1][18] G2B_ONECH_C2H/release_generation_axi_reg[1][19] G2B_ONECH_C2H/release_generation_axi_reg[1][1] G2B_ONECH_C2H/release_generation_axi_reg[1][20] G2B_ONECH_C2H/release_generation_axi_reg[1][21] G2B_ONECH_C2H/release_generation_axi_reg[1][22] G2B_ONECH_C2H/release_generation_axi_reg[1][23] G2B_ONECH_C2H/release_generation_axi_reg[1][2] G2B_ONECH_C2H/release_generation_axi_reg[1][3] G2B_ONECH_C2H/release_generation_axi_reg[1][4] G2B_ONECH_C2H/release_generation_axi_reg[1][5] G2B_ONECH_C2H/release_generation_axi_reg[1][6] G2B_ONECH_C2H/release_generation_axi_reg[1][7] G2B_ONECH_C2H/release_generation_axi_reg[1][8] G2B_ONECH_C2H/release_generation_axi_reg[1][9] G2B_ONECH_C2H/release_epoch_axi_reg[1][0] G2B_ONECH_C2H/release_epoch_axi_reg[1][10] G2B_ONECH_C2H/release_epoch_axi_reg[1][11] G2B_ONECH_C2H/release_epoch_axi_reg[1][12] G2B_ONECH_C2H/release_epoch_axi_reg[1][13] G2B_ONECH_C2H/release_epoch_axi_reg[1][14] G2B_ONECH_C2H/release_epoch_axi_reg[1][15] G2B_ONECH_C2H/release_epoch_axi_reg[1][16] G2B_ONECH_C2H/release_epoch_axi_reg[1][17] G2B_ONECH_C2H/release_epoch_axi_reg[1][18] G2B_ONECH_C2H/release_epoch_axi_reg[1][19] G2B_ONECH_C2H/release_epoch_axi_reg[1][1] G2B_ONECH_C2H/release_epoch_axi_reg[1][20] G2B_ONECH_C2H/release_epoch_axi_reg[1][21] G2B_ONECH_C2H/release_epoch_axi_reg[1][22] G2B_ONECH_C2H/release_epoch_axi_reg[1][23] G2B_ONECH_C2H/release_epoch_axi_reg[1][24] G2B_ONECH_C2H/release_epoch_axi_reg[1][25] G2B_ONECH_C2H/release_epoch_axi_reg[1][26] G2B_ONECH_C2H/release_epoch_axi_reg[1][27] G2B_ONECH_C2H/release_epoch_axi_reg[1][28] G2B_ONECH_C2H/release_epoch_axi_reg[1][29] G2B_ONECH_C2H/release_epoch_axi_reg[1][2] G2B_ONECH_C2H/release_epoch_axi_reg[1][30] G2B_ONECH_C2H/release_epoch_axi_reg[1][31] G2B_ONECH_C2H/release_epoch_axi_reg[1][3] G2B_ONECH_C2H/release_epoch_axi_reg[1][4] G2B_ONECH_C2H/release_epoch_axi_reg[1][5] G2B_ONECH_C2H/release_epoch_axi_reg[1][6] G2B_ONECH_C2H/release_epoch_axi_reg[1][7] G2B_ONECH_C2H/release_epoch_axi_reg[1][8] G2B_ONECH_C2H/release_epoch_axi_reg[1][9]} -to [filter [get_cells -quiet -hier -regexp .*G2B_ONECH_C2H/(source_ownership_fatal|source_ownership_fatal_event|source_ownership_fatal_deferred|enable_applied_source)_reg.*] {IS_SEQUENTIAL == 1}]] -file C:/FPGA/G2B_LUT1_SIGNOFF_RECOVERY4_20260905_112316/RELEASE_SLOT1_MISMATCH_CONTAINMENT.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.456ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/release_epoch_axi_reg[1][2]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        5.576ns  (logic 1.893ns (33.947%)  route 3.683ns (66.053%))
+  Logic Levels:           9  (CARRY4=3 LUT4=2 LUT6=4)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X63Y69                                      0.000     0.000 r  G2B_ONECH_C2H/release_epoch_axi_reg[1][2]/C
+    SLICE_X63Y69         FDRE (Prop_fdre_C_Q)         0.379     0.379 r  G2B_ONECH_C2H/release_epoch_axi_reg[1][2]/Q
+                         net (fo=2, routed)           0.801     1.180    G2B_ONECH_C2H/release_epoch_axi_reg[1]_9[2]
+    SLICE_X61Y69                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_145/I0
+    SLICE_X61Y69         LUT6 (Prop_lut6_I0_O)        0.105     1.285 r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_145/O
+                         net (fo=1, routed)           0.000     1.285    G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_145_n_0
+    SLICE_X61Y69                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_97/S[0]
+    SLICE_X61Y69         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.440     1.725 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_97/CO[3]
+                         net (fo=1, routed)           0.000     1.725    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_97_n_0
+    SLICE_X61Y70                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_44/CI
+    SLICE_X61Y70         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     1.823 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_44/CO[3]
+                         net (fo=1, routed)           0.000     1.823    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_44_n_0
+    SLICE_X61Y71                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_13/CI
+    SLICE_X61Y71         CARRY4 (Prop_carry4_CI_CO[2])
+                                                      0.190     2.013 f  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_13/CO[2]
+                         net (fo=2, routed)           0.995     3.008    G2B_ONECH_C2H/source_ownership_fatal32_out
+    SLICE_X51Y66                                                      f  G2B_ONECH_C2H/slot_state_source[1][2]_i_7/I3
+    SLICE_X51Y66         LUT6 (Prop_lut6_I3_O)        0.261     3.269 r  G2B_ONECH_C2H/slot_state_source[1][2]_i_7/O
+                         net (fo=2, routed)           0.491     3.760    G2B_ONECH_C2H/slot_state_source[1][2]_i_7_n_0
+    SLICE_X44Y62                                                      r  G2B_ONECH_C2H/source_ownership_fatal_event_i_6/I5
+    SLICE_X44Y62         LUT6 (Prop_lut6_I5_O)        0.105     3.865 f  G2B_ONECH_C2H/source_ownership_fatal_event_i_6/O
+                         net (fo=1, routed)           0.458     4.323    G2B_ONECH_C2H/source_ownership_fatal_event_i_6_n_0
+    SLICE_X45Y61                                                      f  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/I0
+    SLICE_X45Y61         LUT6 (Prop_lut6_I0_O)        0.105     4.428 r  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/O
+                         net (fo=2, routed)           0.457     4.885    G2B_ONECH_C2H/source_ownership_fatal_event_i_5_n_0
+    SLICE_X44Y58                                                      r  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/I3
+    SLICE_X44Y58         LUT4 (Prop_lut4_I3_O)        0.105     4.990 f  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/O
+                         net (fo=4, routed)           0.481     5.471    G2B_ONECH_C2H/source_ownership_fatal_event_i_2_n_0
+    SLICE_X43Y55                                                      f  G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1/I0
+    SLICE_X43Y55         LUT4 (Prop_lut4_I0_O)        0.105     5.576 r  G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1/O
+                         net (fo=1, routed)           0.000     5.576    G2B_ONECH_C2H/source_ownership_fatal_deferred_i_1_n_0
+    SLICE_X43Y55         FDRE                                         r  G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X43Y55         FDRE (Setup_fdre_C_D)        0.032     6.032    G2B_ONECH_C2H/source_ownership_fatal_deferred_reg
+  -------------------------------------------------------------------
+                         required time                          6.032    
+                         arrival time                          -5.576    
+  -------------------------------------------------------------------
+                         slack                                  0.456    
+
+
+
+

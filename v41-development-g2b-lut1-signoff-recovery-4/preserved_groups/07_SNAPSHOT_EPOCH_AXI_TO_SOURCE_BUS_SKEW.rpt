@@ -1,0 +1,26 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Mon Aug 31 06:29:15 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_bus_skew -no_detailed_paths -max_paths 1 -nworst 1 -warn_on_violation -file C:/FPGA/G2B_LUT1_PRODUCT_PRECOMMIT_EVIDENCE_20260831_12/BUS_SKEW_GROUPS/07_SNAPSHOT_EPOCH_AXI_TO_SOURCE_BUS_SKEW.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+Table of Contents
+-----------------
+1. Bus Skew Report Summary
+
+1. Bus Skew Report Summary
+--------------------------
+
+Id  Position  From                            To                              Corner  Requirement(ns)  Actual(ns)  Slack(ns)
+--  --------  ------------------------------  ------------------------------  ------  ---------------  ----------  ---------
+1   50        [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/snapshot_epoch_hold_axi_reg\[[0-9]+\]}] {IS_SEQUENTIAL == 1}]
+                                              [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/snapshot_epoch_echo_source_reg\[[0-9]+\]}] {IS_SEQUENTIAL == 1}]
+                                                                              Slow              3.000       1.078      1.922

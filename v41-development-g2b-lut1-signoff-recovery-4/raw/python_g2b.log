@@ -1,0 +1,17 @@
+setUpClass (test_g2b_host_tools.G2BHostToolTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_g2b_host_tools.G2BHostToolTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\FPGA\V41_G2B\tests\python\test_g2b_host_tools.py", line 65, in setUpClass
+    cls.contract_path = authoritative_contract_path()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\FPGA\V41_G2B\tests\python\test_g2b_host_tools.py", line 57, in authoritative_contract_path
+    raise RuntimeError(
+RuntimeError: authoritative ABI JSON not found; set AHD_G2B_ABI_JSON
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.003s
+
+FAILED (errors=1)

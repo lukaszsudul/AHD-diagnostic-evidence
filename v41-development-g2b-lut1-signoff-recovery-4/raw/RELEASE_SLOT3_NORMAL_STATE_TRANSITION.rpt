@@ -1,0 +1,72 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Sat Sep  5 11:35:06 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -delay_type max -sort_by slack -max_paths 1 -nworst 1 -from {G2B_ONECH_C2H/release_generation_axi_reg[3][0] G2B_ONECH_C2H/release_generation_axi_reg[3][10] G2B_ONECH_C2H/release_generation_axi_reg[3][11] G2B_ONECH_C2H/release_generation_axi_reg[3][12] G2B_ONECH_C2H/release_generation_axi_reg[3][13] G2B_ONECH_C2H/release_generation_axi_reg[3][14] G2B_ONECH_C2H/release_generation_axi_reg[3][15] G2B_ONECH_C2H/release_generation_axi_reg[3][16] G2B_ONECH_C2H/release_generation_axi_reg[3][17] G2B_ONECH_C2H/release_generation_axi_reg[3][18] G2B_ONECH_C2H/release_generation_axi_reg[3][19] G2B_ONECH_C2H/release_generation_axi_reg[3][1] G2B_ONECH_C2H/release_generation_axi_reg[3][20] G2B_ONECH_C2H/release_generation_axi_reg[3][21] G2B_ONECH_C2H/release_generation_axi_reg[3][22] G2B_ONECH_C2H/release_generation_axi_reg[3][23] G2B_ONECH_C2H/release_generation_axi_reg[3][2] G2B_ONECH_C2H/release_generation_axi_reg[3][3] G2B_ONECH_C2H/release_generation_axi_reg[3][4] G2B_ONECH_C2H/release_generation_axi_reg[3][5] G2B_ONECH_C2H/release_generation_axi_reg[3][6] G2B_ONECH_C2H/release_generation_axi_reg[3][7] G2B_ONECH_C2H/release_generation_axi_reg[3][8] G2B_ONECH_C2H/release_generation_axi_reg[3][9] G2B_ONECH_C2H/release_epoch_axi_reg[3][0] G2B_ONECH_C2H/release_epoch_axi_reg[3][10] G2B_ONECH_C2H/release_epoch_axi_reg[3][11] G2B_ONECH_C2H/release_epoch_axi_reg[3][12] G2B_ONECH_C2H/release_epoch_axi_reg[3][13] G2B_ONECH_C2H/release_epoch_axi_reg[3][14] G2B_ONECH_C2H/release_epoch_axi_reg[3][15] G2B_ONECH_C2H/release_epoch_axi_reg[3][16] G2B_ONECH_C2H/release_epoch_axi_reg[3][17] G2B_ONECH_C2H/release_epoch_axi_reg[3][18] G2B_ONECH_C2H/release_epoch_axi_reg[3][19] G2B_ONECH_C2H/release_epoch_axi_reg[3][1] G2B_ONECH_C2H/release_epoch_axi_reg[3][20] G2B_ONECH_C2H/release_epoch_axi_reg[3][21] G2B_ONECH_C2H/release_epoch_axi_reg[3][22] G2B_ONECH_C2H/release_epoch_axi_reg[3][23] G2B_ONECH_C2H/release_epoch_axi_reg[3][24] G2B_ONECH_C2H/release_epoch_axi_reg[3][25] G2B_ONECH_C2H/release_epoch_axi_reg[3][26] G2B_ONECH_C2H/release_epoch_axi_reg[3][27] G2B_ONECH_C2H/release_epoch_axi_reg[3][28] G2B_ONECH_C2H/release_epoch_axi_reg[3][29] G2B_ONECH_C2H/release_epoch_axi_reg[3][2] G2B_ONECH_C2H/release_epoch_axi_reg[3][30] G2B_ONECH_C2H/release_epoch_axi_reg[3][31] G2B_ONECH_C2H/release_epoch_axi_reg[3][3] G2B_ONECH_C2H/release_epoch_axi_reg[3][4] G2B_ONECH_C2H/release_epoch_axi_reg[3][5] G2B_ONECH_C2H/release_epoch_axi_reg[3][6] G2B_ONECH_C2H/release_epoch_axi_reg[3][7] G2B_ONECH_C2H/release_epoch_axi_reg[3][8] G2B_ONECH_C2H/release_epoch_axi_reg[3][9]} -to [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/slot_state_source_reg\[3\].*}] {IS_SEQUENTIAL == 1}]] -file C:/FPGA/G2B_LUT1_SIGNOFF_RECOVERY4_20260905_112316/RELEASE_SLOT3_NORMAL_STATE_TRANSITION.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.557ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/release_epoch_axi_reg[3][5]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/slot_state_source_reg[3][1]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        5.515ns  (logic 2.107ns (38.208%)  route 3.408ns (61.792%))
+  Logic Levels:           8  (CARRY4=3 LUT4=1 LUT5=1 LUT6=3)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X63Y72                                      0.000     0.000 r  G2B_ONECH_C2H/release_epoch_axi_reg[3][5]/C
+    SLICE_X63Y72         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  G2B_ONECH_C2H/release_epoch_axi_reg[3][5]/Q
+                         net (fo=2, routed)           0.685     1.033    G2B_ONECH_C2H/release_epoch_axi_reg[3]_11[5]
+    SLICE_X61Y72                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_160/I0
+    SLICE_X61Y72         LUT6 (Prop_lut6_I0_O)        0.239     1.272 r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_160/O
+                         net (fo=1, routed)           0.000     1.272    G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_160_n_0
+    SLICE_X61Y72                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_125/S[1]
+    SLICE_X61Y72         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     1.729 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_125/CO[3]
+                         net (fo=1, routed)           0.000     1.729    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_125_n_0
+    SLICE_X61Y73                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_70/CI
+    SLICE_X61Y73         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     1.827 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_70/CO[3]
+                         net (fo=1, routed)           0.000     1.827    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_70_n_0
+    SLICE_X61Y74                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_21/CI
+    SLICE_X61Y74         CARRY4 (Prop_carry4_CI_CO[2])
+                                                      0.190     2.017 f  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_21/CO[2]
+                         net (fo=2, routed)           1.205     3.223    G2B_ONECH_C2H/source_ownership_fatal3
+    SLICE_X47Y67                                                      f  G2B_ONECH_C2H/slot_state_source[3][2]_i_8/I3
+    SLICE_X47Y67         LUT6 (Prop_lut6_I3_O)        0.261     3.484 r  G2B_ONECH_C2H/slot_state_source[3][2]_i_8/O
+                         net (fo=3, routed)           0.275     3.758    G2B_ONECH_C2H/slot_state_source[3][2]_i_8_n_0
+    SLICE_X47Y66                                                      r  G2B_ONECH_C2H/slot_state_source[3][2]_i_10/I2
+    SLICE_X47Y66         LUT6 (Prop_lut6_I2_O)        0.105     3.863 r  G2B_ONECH_C2H/slot_state_source[3][2]_i_10/O
+                         net (fo=5, routed)           0.698     4.562    G2B_ONECH_C2H/slot_state_source[3][2]_i_10_n_0
+    SLICE_X52Y66                                                      r  G2B_ONECH_C2H/slot_state_source[3][1]_i_3/I3
+    SLICE_X52Y66         LUT4 (Prop_lut4_I3_O)        0.126     4.688 r  G2B_ONECH_C2H/slot_state_source[3][1]_i_3/O
+                         net (fo=2, routed)           0.544     5.232    G2B_ONECH_C2H/slot_state_source[3][1]_i_3_n_0
+    SLICE_X52Y66                                                      r  G2B_ONECH_C2H/slot_state_source[3][1]_i_1/I2
+    SLICE_X52Y66         LUT5 (Prop_lut5_I2_O)        0.283     5.515 r  G2B_ONECH_C2H/slot_state_source[3][1]_i_1/O
+                         net (fo=1, routed)           0.000     5.515    G2B_ONECH_C2H/slot_state_source[3][1]_i_1_n_0
+    SLICE_X52Y66         FDRE                                         r  G2B_ONECH_C2H/slot_state_source_reg[3][1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X52Y66         FDRE (Setup_fdre_C_D)        0.072     6.072    G2B_ONECH_C2H/slot_state_source_reg[3][1]
+  -------------------------------------------------------------------
+                         required time                          6.072    
+                         arrival time                          -5.515    
+  -------------------------------------------------------------------
+                         slack                                  0.557    
+
+
+
+

@@ -1,0 +1,32 @@
+CDC-1 critical CDC canonical manifest drift: CFE8FCE8366E21948489094F1B94516B26ADEAD4DCBD720DBCB65F104F5C2734
+CDC-1 critical CDC canonical manifest drift: CFE8FCE8366E21948489094F1B94516B26ADEAD4DCBD720DBCB65F104F5C2734
+    while executing
+"error "$id critical CDC canonical manifest drift: $actual_hash""
+    invoked from within
+"if {$actual_hash ne [dict get $expected_hashes $id]} {
+      error "$id critical CDC canonical manifest drift: $actual_hash"
+    }"
+    ("foreach" body line 15)
+    invoked from within
+"foreach id {CDC-1 CDC-10 CDC-13} {
+    if {![dict exists $summary_counts $id]} { error "missing critical CDC summary for $id" }
+    set expected_count..."
+    (procedure "enforce_exact_cdc_disposition" line 66)
+    invoked from within
+"enforce_exact_cdc_disposition "$::R/CDC.rpt" [get_cdc_violations -quiet]"
+    invoked from within
+"set count [enforce_exact_cdc_disposition "$::R/CDC.rpt" [get_cdc_violations -quiet]]"
+    (file "C:/FPGA/G2B_LUT1_SIGNOFF_RECOVERY4_20260905_112316/stage5.tcl" line 6)
+    invoked from within
+"source $cmd"
+    ("for" body line 5)
+    invoked from within
+"for {set i 1} {$i<=20} {incr i} {
+  phase WAIT_NEXT_STAGE 900
+  set cmd "$::R/stage${i}.tcl"
+  while {![file exists $cmd]} {after 1000}
+  source $cmd
+..."
+    (procedure "run" line 27)
+    invoked from within
+"run"

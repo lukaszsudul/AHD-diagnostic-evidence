@@ -1,0 +1,85 @@
+--- 
+
++++ 
+
+@@ -4,7 +4,7 @@
+
+     "xci_name": "xdma_v41_m1",
+     "component_reference": "xilinx.com:ip:xdma:4.2",
+     "ip_revision": "2",
+-    "gen_directory": "../../../../v41_m1_xdma_resource_spike.gen/sources_1/ip/xdma_v41_m1",
++    "gen_directory": "../../../../v41_g2b_onech_c2h_offline.gen/sources_1/ip/xdma_v41_m1",
+     "parameters": {
+       "component_parameters": {
+         "Component_Name": [ { "value": "xdma_v41_m1", "resolve_type": "user", "usage": "all" } ],
+@@ -64,7 +64,7 @@
+
+         "timeout1_sel": [ { "value": "15", "resolve_type": "user", "usage": "all" } ],
+         "timeout_mult": [ { "value": "3", "resolve_type": "user", "usage": "all" } ],
+         "old_bridge_timeout": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+-        "Shared_Logic": [ { "value": "1", "resolve_type": "user", "enabled": false, "usage": "all" } ],
++        "Shared_Logic": [ { "value": "1", "resolve_type": "user", "usage": "all" } ],
+         "Shared_Logic_Clk": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "Shared_Logic_Both": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "Shared_Logic_Gtc": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+@@ -90,7 +90,7 @@
+
+         "INS_LOSS_NYQ": [ { "value": "15", "resolve_type": "user", "format": "float", "usage": "all" } ],
+         "PHY_LP_TXPRESET": [ { "value": "4", "resolve_type": "user", "enabled": false, "usage": "all" } ],
+         "coreclk_freq": [ { "value": "500", "resolve_type": "user", "usage": "all" } ],
+-        "plltype": [ { "value": "CPLL", "resolve_type": "user", "enabled": false, "usage": "all" } ],
++        "plltype": [ { "value": "QPLL1", "resolve_type": "user", "usage": "all" } ],
+         "xdma_axi_intf_mm": [ { "value": "AXI_Stream", "value_src": "user", "resolve_type": "user", "usage": "all" } ],
+         "xdma_pcie_64bit_en": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "silicon_rev": [ { "value": "Pre-Production", "resolve_type": "user", "usage": "all" } ],
+@@ -412,7 +412,7 @@
+
+         "axi_vip_in_exdes": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "xdma_non_incremental_exdes": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "xdma_st_infinite_desc_exdes": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+-        "gtcom_in_core_usp": [ { "value": "2", "resolve_type": "user", "enabled": false, "usage": "all" } ],
++        "gtcom_in_core_usp": [ { "value": "2", "resolve_type": "user", "usage": "all" } ],
+         "en_mqdma": [ { "value": "false", "resolve_type": "user", "format": "bool", "usage": "all" } ],
+         "SRIOV_CAP_ENABLE": [ { "value": "false", "resolve_type": "user", "format": "bool", "enabled": false, "usage": "all" } ],
+         "ext_xvc_vsec_enable": [ { "value": "false", "resolve_type": "user", "enabled": false, "usage": "all" } ],
+@@ -972,14 +972,14 @@
+
+         "TL_LEGACY_MODE_ENABLE": [ { "value": "false", "resolve_type": "generated", "usage": "all" } ],
+         "PCIE_BLK_LOCN": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "PL_LINK_CAP_MAX_LINK_WIDTH": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+-        "PL_LINK_CAP_MAX_LINK_SPEED": [ { "value": "1", "resolve_type": "generated", "format": "long", "usage": "all" } ],
++        "PL_LINK_CAP_MAX_LINK_SPEED": [ { "value": "2", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "REF_CLK_FREQ": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "DRP_CLK_SEL": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "FREE_RUN_FREQ": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "AXI_ADDR_WIDTH": [ { "value": "64", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "AXI_DATA_WIDTH": [ { "value": "64", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "CORE_CLK_FREQ": [ { "value": "2", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+-        "PLL_TYPE": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
++        "PLL_TYPE": [ { "value": "2", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "USER_CLK_FREQ": [ { "value": "0", "resolve_type": "generated", "format": "long", "usage": "all" } ],
+         "SILICON_REV": [ { "value": "Pre-Production", "resolve_type": "generated", "usage": "all" } ],
+         "PIPE_SIM": [ { "value": "FALSE", "resolve_type": "generated", "usage": "all" } ],
+@@ -1304,11 +1304,11 @@
+
+         "IPCONTEXT": [ { "value": "IP_Flow" } ],
+         "IPREVISION": [ { "value": "2" } ],
+         "MANAGED": [ { "value": "TRUE" } ],
+-        "OUTPUTDIR": [ { "value": "../../../../v41_m1_xdma_resource_spike.gen/sources_1/ip/xdma_v41_m1" } ],
++        "OUTPUTDIR": [ { "value": "../../../../v41_g2b_onech_c2h_offline.gen/sources_1/ip/xdma_v41_m1" } ],
+         "SELECTEDSIMMODEL": [ { "value": "" } ],
+         "SHAREDDIR": [ { "value": "." } ],
+         "SWVERSION": [ { "value": "2025.2" } ],
+-        "SYNTHESISFLOW": [ { "value": "OUT_OF_CONTEXT" } ]
++        "SYNTHESISFLOW": [ { "value": "GLOBAL" } ]
+       }
+     },
+     "boundary": {
+@@ -1630,5 +1630,5 @@
+
+       }
+     }
+   },
+-  "checksum": "0f8673e4"
++  "checksum": "ac2fdd41"
+ }
