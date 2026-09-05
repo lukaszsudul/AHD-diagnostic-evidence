@@ -5,7 +5,7 @@
 | Field | Result |
 |---|---|
 | Engineering gate | `BLOCKED` |
-| Evidence publication | `PENDING` at package assembly |
+| Evidence publication | `PASS` |
 | Overall result | `BLOCKED` |
 | First blocker | `BLOCKED — ADDITIONAL_HARDWARE_AUTHORIZATION_REQUIRED` |
 | Final execution point | Hard stop before JTAG access and SRAM programming |
@@ -99,6 +99,11 @@ operation, or PCIe recovery was attempted.
 T0 is `BLOCKED`. T1 through T5, link qualification, runtime identity, first
 record, finite capture, reconstruction, and continuous capture are
 `NOT_REACHED_DUE_TO_EARLIER_GATE`.
+
+The initial evidence commit
+`29beeb1ee91a2d9fdd4689cf8b801f9cfefb6aab` was pushed without force.
+Remote `main` resolved to that commit, and commit-pinned HTTPS read-back
+returned HTTP 200 with exact byte-for-byte SHA-256 agreement for all 11 files.
 
 `HARDWARE_THROUGHPUT_288_MB_S = NOT_PROVEN`. Four-input selection,
 two-channel capture, V4L2, release creation, and persistent programming were
