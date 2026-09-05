@@ -1,9 +1,9 @@
 # AHD Current-State Evidence Map
 
-`PROJECT_STATE_REV = 6`
+`PROJECT_STATE_REV = 7`
 Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`
-Evidence `main` accepted-evidence anchor used for revision 6:
-`9e91315968453e859006077191cd5fc711fc6b96`
+Evidence `main` accepted-evidence anchor used for revision 7:
+`fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`
 
 ## Acceptance rule
 
@@ -47,6 +47,11 @@ standalone `SSOT WRITE AUTHORIZED` literal to promote the accepted G14-A
 release-slot CDC architecture and Group-14 sign-off method. G14-A supports
 that decision; it does not modify RTL or active XDC, complete the remaining
 routed hard gates, produce a bitstream, or prove hardware.
+
+Revision 7 uses `META-7R_TASK_DIRECTIVE` and the corrected standalone authorization
+to promote Groups 15–17 from `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`. Earlier revision paragraphs above
+are HISTORICAL acceptance boundaries; no final engineering/hardware result is
+promoted.
 
 ## Authoritative evidence packages
 
@@ -191,20 +196,20 @@ bitstream, and hardware remain pending.
 | `STMT-GM1` | G-1 is current accepted product history/inventory | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-GM1`; `STATE.json` and inventory report at `654b9ad...` | Engineering inventory `PASS`, source/donor context | Evidence `PASS` alone did not accept G-1 |
 | `STMT-G0` | G0 baseline freeze is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-G0`; `V41_G0_STATE.json` and freeze report at `b5efb25...` | Exact R1i/donor identities and requirements | Acceptance supplied separately |
 | `STMT-G1` | G1 architecture is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-G1`; `V41_G1_STATE.json` and architecture report at `f1258ba...` | `G2_IMPLEMENTATION_ALLOWED` and integration/C2H design | Does not accept G2 execution or throughput |
-| `STMT-G2B-PRE` | G2B-PRE architecture freeze is accepted and its contract input was ready for implementation from the accepted G2A input base | `ACCEPTED` | `META-2_TASK_DIRECTIVE` | `EVID-G2B-PRE`; architecture-freeze report, state, consistency report, and decision log at `e8ab101...` | Engineering `PASS`, exact G2A input identity, complete ABI/MMIO decisions, and Linux consumer input contract | Historical contract-input readiness is not current G2B-IMPL readiness; current G2B-LUT1 readiness is `READY_FOR_SIGNOFF_RECOVERY` at `G2B-LUT1-SIGNOFF-RECOVERY-3` |
+| `STMT-G2B-PRE` | G2B-PRE architecture freeze is accepted and its contract input was ready for implementation from the accepted G2A input base | `ACCEPTED` | `META-2_TASK_DIRECTIVE` | `EVID-G2B-PRE`; architecture-freeze report, state, consistency report, and decision log at `e8ab101...` | Engineering `PASS`, exact G2A input identity, complete ABI/MMIO decisions, and Linux consumer input contract | Historical contract-input readiness is not current G2B-IMPL readiness; current G2B-LUT1 readiness is `READY_FOR_SIGNOFF_RECOVERY` at `G2B-LUT1-SIGNOFF-RECOVERY-4` |
 | `STMT-G2B-LUT0` | G2B-LUT0 resource-architecture review is accepted | `ACCEPTED` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; architecture review, inventory, plan, targets, and proposal at `a70c55e...` | Engineering `PASS`; blocked G2B 21,412/20,800 LUT; separable R1i fix; reversible Plan B | Acceptance authorizes architecture only; no source profile, achieved target, timing, bitstream, or hardware result |
 | `STMT-BUILD-PROFILES` | PRODUCT and RESEARCH_DIAGNOSTIC are authorized but not implemented; functional and external product semantics must be identical | `ACCEPTED` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; build-profile proposal and recommended plan | Reversible separation of qualified function from research observability | RESEARCH_DIAGNOSTIC post-G2B build/route is not proven; implementation mechanism remains for G2B-LUT1 |
 | `STMT-PRODUCT-LUT-POLICY` | PRODUCT routed LUT hard gate is `<=90%`, preferred target is `80–85%` | `FROZEN` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0`; resource targets | Point estimate 17,512 LUT / 84.192%, planning range and required recovery | Estimate is not qualification evidence; target is not achieved until actual post-route measurement |
-| `STMT-G2B-IMPL` | G2B-IMPL remains not offline-qualified; G2B-LUT1 is `READY_FOR_SIGNOFF_RECOVERY` and the next gate is `G2B-LUT1-SIGNOFF-RECOVERY-3` | `BLOCKED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-LUT0`, `EVID-G2B-BS3`, `EVID-G2B-G13A`, and `EVID-G2B-G14A` | Accepted resource architecture; promoted Group-9, Group-13, and Group-14 sign-off methods; exact continuation boundary | Group-14 active XDC is not yet updated; no final sign-off, bitstream, or hardware proof |
+| `STMT-G2B-IMPL` | G2B-IMPL remains not offline-qualified; G2B-LUT1 is `READY_FOR_SIGNOFF_RECOVERY` and the next gate is `G2B-LUT1-SIGNOFF-RECOVERY-4` | `BLOCKED` | `META-7R_TASK_DIRECTIVE` | `EVID-G2B-LUT0`, `EVID-G2B-BS3`, `EVID-G2B-G13A`, and `EVID-G2B-G14A`, `EVID-G2B-G15-17-EQ` | Accepted resource architecture; promoted Group-9, Group-13, and Group-14 sign-off methods; exact continuation boundary | Groups 15–17 active XDC is not yet updated; no final sign-off, bitstream, or hardware proof |
 | `STMT-GROUP9-SIGNOFF` | Current Group-9 `OWNERSHIP_AXI_TO_SOURCE` method is `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-4R2_TASK_DIRECTIVE` | `EVID-G2B-BS1R`, `EVID-G2B-BS2`, `EVID-G2B-BS3` at their exact commits | Pathology reproduction, invalid global comparison, stable-data CDC proof, 3 families, `6.000 ns` cap, `13.468 ns` margin, `7.468 ns` reserve | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; not a relaxation of safety; `RTL_CHANGE_REQUIRED = NO`; promotion-time active-XDC boundary was pending; current result is `PRESERVE_PASS`, do not repeat |
 | `STMT-GROUP9-DECISION` | Named unnumbered Group-9 sign-off-methodology decision is `RESOLVED` as `REPLACE_GLOBAL_BUS_SKEW_WITH_PER_FAMILY_SETTLING_CHECKS` | `ACCEPTED` | `META-4R2_TASK_DIRECTIVE` | BS1R `f3a0df6...`; BS2 `4699632...`; BS3 `10f1b66...` | Exact decision provenance and Owner/Architect approval | No `OD-*` ID invented; every registered open OD entry remains unchanged |
 | `STMT-GROUP13-SIGNOFF` | Current Group-13 `RESET_RETURN_SOURCE_TO_AXI` method is `SETTLING_PLUS_STRUCTURAL_CDC`; its global `GLOBAL_SET_BUS_SKEW_3NS` and `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-5_TASK_DIRECTIVE` | `EVID-G2B-G13A` at `10c7c2898d162af8e2262b3f99861c7d560c4557` | 7/207 scope, verified timeout, invalid skew comparison, two exact families, `6.000 ns` family and retained aggregate settling, complete structural reset-return proof | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; no safety relaxation; `RTL_CHANGE_REQUIRED = NO`; promotion-time active-XDC boundary was pending; current result is `PRESERVE_PASS`, do not repeat |
 | `STMT-GROUP13-DECISION` | Named unnumbered Group-13 sign-off-methodology decision is `RESOLVED` as `REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `META-5_TASK_DIRECTIVE` | `EVID-G2B-G13A` at `10c7c289...` | Exact decision provenance and Owner/Architect approval | No `OD-*` ID invented; all existing open and decided records remain unchanged |
-| `STMT-GROUP14-SIGNOFF` | Current Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` method is `SETTLING_PLUS_STRUCTURAL_CDC`; its global `GLOBAL_SET_BUS_SKEW_3NS` and `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` at `9e91315968453e859006077191cd5fc711fc6b96` | 56/20 scope, verified timeout, invalid skew comparison, three exact `6.000 ns` families, and complete release/reset structural CDC proof | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; no safety relaxation; `RTL_CHANGE_REQUIRED = NO`; active XDC pending |
+| `STMT-GROUP14-SIGNOFF` | Current Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` method is `SETTLING_PLUS_STRUCTURAL_CDC`; its global `GLOBAL_SET_BUS_SKEW_3NS` and `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` at `9e91315968453e859006077191cd5fc711fc6b96` | 56/20 scope, verified timeout, invalid skew comparison, three exact `6.000 ns` families, and complete release/reset structural CDC proof | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; no safety relaxation; `RTL_CHANGE_REQUIRED = NO`; HISTORICAL META-6 active XDC pending at promotion; current result `PRESERVE_PASS` |
 | `STMT-GROUP14-DECISION` | Named unnumbered Group-14 sign-off-methodology decision is `RESOLVED` as `REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` at `9e913159...` | Exact decision provenance and Owner/Architect approval | No `OD-*` ID invented; all existing open and decided records remain unchanged |
-| `STMT-G2B-HW` | G2B-HW is `BLOCKED` | `BLOCKED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-BS3`, `EVID-G2B-G13A`, `EVID-G2B-G14A`, and current SSOT | Group-14 candidate implementation, remaining final offline sign-off, and bitstream candidate are absent | No hardware, qualification, release, or bitstream claim |
+| `STMT-G2B-HW` | G2B-HW is `BLOCKED` | `BLOCKED` | `META-7R_TASK_DIRECTIVE` | `EVID-G2B-BS3`, `EVID-G2B-G13A`, `EVID-G2B-G14A`, `EVID-G2B-G15-17-EQ`, and current SSOT | Groups 15–17 candidate implementation, remaining final offline sign-off, and bitstream candidate are absent | No hardware, qualification, release, or bitstream claim |
 | `STMT-GROUPS-10-12` | `GROUPS_10_TO_12 = PRESERVE_PASS` | `FROZEN` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` state and continuation plan plus predecessor authority | G14-A preserves the authoritative Group-10/11/12 PASS results | Do not repeat them in the recovery-3 continuation |
-| `STMT-GROUPS-15-17` | `GROUPS_15_TO_17 = PENDING_UNCHANGED` | `FROZEN` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` state and continuation plan | Groups 15–17 were not executed or reinterpreted by G14-A | No relaxation; continue them after Group-14 replacement validation |
+| `STMT-GROUPS-15-17` | Groups 15–17 `SETTLING_PLUS_STRUCTURAL_CDC` promoted; old global methods retired; nine `6.000 ns` checks | `ACCEPTED` | `META-7R_TASK_DIRECTIVE` | `EVID-G2B-G15-17-EQ` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c` | Partial routed equivalence; proven safety protocol; independent slot checks; 13.468 ns window and 7.468 ns reserve | Active XDC authorized but not implemented; no final sign-off or hardware proof |
 | `STMT-G2A` | G2A is active/in progress | `ACTIVE` | `META-0_TASK_DIRECTIVE` | No G2A package at evidence snapshot; local-only `integration/v41-r1i-gen2-g2a@22f15a6befe911172073e46a95d50b53afe1fc33` | Execution-time working context only; no published evidence commit | No result, build, or architecture promotion inferred |
 | `STMT-R0` | R0 is accepted | `ACCEPTED` | `META-0_TASK_DIRECTIVE` | `EVID-R0`; `R0_STATE.json` and experiment plan at `aff7e32...` | Research design/protocol `PASS` | R0 evidence states R1 was not started at publication |
 | `STMT-R1` | R-track lifecycle context remains active but execution state is `HOLD`; R2/R3 remain resumable and not closed | `ACTIVE` | `META-3_TASK_DIRECTIVE` | `EVID-G2B-LUT0` instrumentation inventory/proposal plus preserved `EVID-R0` | Research instrumentation is separable and recoverable through RESEARCH_DIAGNOSTIC | No scientific closure, cancellation, supersession, branch modification, or research evidence deletion |
@@ -239,3 +244,25 @@ not merely current branch HEAD. If later evidence contradicts or supersedes a
 statement, the old project truth remains current until the Owner/Architect
 issues an explicit decision and a separate authorized META update increments
 the revision.
+
+## Revision-7 authoritative combined evidence
+
+| Evidence ID | Immutable commit | Directory tree | Directory |
+|---|---|---|---|
+| `EVID-G2B-G15-17-EQ` | `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c` | `d3f336f5067e7e4814c65838da00aa50d4ab0425` | `v41-development-g2b-g15-17-release-slot-equivalence-audit` |
+
+Required sources: `G2B_G15_17_EQ_STATE.json`, `G2B_G15_17_EQ_CANDIDATE_RESULTS.csv`,
+`G2B_G15_17_EQ_PROTOCOL_TIMING_MARGINS.csv`, `G2B_G15_17_EQ_FAMILIES.csv`,
+`G2B_G15_17_EQ_CDC_COMPARISON.md`, `G2B_G15_17_EQ_SAFETY_INVARIANT_COMPARISON.md`,
+`G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc`, and
+`G2B_G15_17_EQ_STRUCTURAL_EQUIVALENCE_MATRIX.csv`.
+
+Supports `STMT-GROUPS-15-17`, `STMT-GROUPS15-17-DECISION`, `STMT-G2B-IMPL`,
+`STMT-G2B-HW` and preservation of Groups 9–14 PASS. Candidate SHA-256:
+`BFB8482C1A84961E43FF24A69008C91EBA4E5B37E494CB5C65D262FAFE00AE6F`.
+Decision subject `GROUPS15_17_RELEASE_SLOT_SIGNOFF_METHODOLOGY` is `RESOLVED`
+as `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC`; record form is
+`UNNUMBERED_GOVERNED_DECISION`. Route-specific actual/slack values remain
+evidence only. See `CURRENT_ARCHITECTURE.md` for the complete accepted basis.
+META-6 precedent: `0061a20ab735b4ff5dabdfe1f81ed9f1ba718dde` /
+`v41-meta-project-state-rev6-group14-release-slot-signoff` (HISTORICAL).

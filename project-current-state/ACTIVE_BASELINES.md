@@ -1,6 +1,6 @@
 # AHD Active Baselines and Working Identities
 
-`PROJECT_STATE_REV = 6`
+`PROJECT_STATE_REV = 7`
 
 This page distinguishes accepted/frozen baselines from active or provisional
 working branches. Branch existence is provenance; it does not confer
@@ -116,8 +116,8 @@ modify, build, or otherwise interfere with the active G2A worktree.
 | G2B-LUT0 | `ACCEPTED`; resource-architecture review only |
 | Build profiles | `PRODUCT` and `RESEARCH_DIAGNOSTIC`, both `AUTHORIZED_NOT_IMPLEMENTED` |
 | PRODUCT resource policy | LUT hard gate `<= 90%`; preferred target `80–85%`; estimated 84.192% is not qualification evidence |
-| G2B-IMPL | lifecycle `BLOCKED`; `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; Group-14 candidate-XDC implementation and remaining routed hard gates are pending; no accepted offline-qualified implementation |
-| G2B-LUT1 | lifecycle `PLANNED`; readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-3` |
+| G2B-IMPL | lifecycle `BLOCKED`; `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; Groups 15–17 candidate-XDC implementation and remaining routed hard gates are pending; no accepted offline-qualified implementation |
+| G2B-LUT1 | lifecycle `PLANNED`; readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-4` |
 | Retired Group-9 method | `GLOBAL_SET_BUS_SKEW_3NS`; `RETIRED_FROM_REQUIRED_SIGNOFF` for `OWNERSHIP_AXI_TO_SOURCE` |
 | Current Group-9 method | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; `PROMOTED` |
 | Ownership CDC basis | Two-stage request and acknowledgement synchronizers; held 58-bit stable-data payload; source hold until acknowledgement; reset/epoch coherency |
@@ -136,23 +136,59 @@ modify, build, or otherwise interfere with the active G2A worktree.
 | Group-14 timing requirement | `6.000 ns` absolute datapath-only settling for each family; validated worst actual/slack: `5.467/0.563 ns`, `5.554/0.478 ns`, and `4.191/1.839 ns`, respectively |
 | Group-14 structural basis | Held 56-bit generation/epoch release token; same-edge token/toggle launch; two-stage release-toggle synchronization for normal use; two-stage transport-request synchronization for reset accounting; stable-data lifetime; fail-closed generation/epoch/ownership identity; captured release-phase retirement/completion barrier; destination-use ordering; reset/release coherency |
 | Group-14 evidence disposition | `GROUP14_CDC_STRUCTURE = PASS_WITH_DISPOSITION`; `SIGNOFF_RUNTIME = PRACTICAL`; replacement `SAFER_AND_MORE_SEMANTICALLY_CORRECT` |
-| Group-14 RTL/XDC disposition | `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from evidence commit `9e91315968453e859006077191cd5fc711fc6b96` |
-| Remaining sign-off | `GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`; `GROUP13 = PRESERVE_PASS`; `GROUPS_15_TO_17 = PENDING_UNCHANGED`; G2B-HW remains blocked |
+| HISTORICAL Group-14 promotion-time RTL/XDC disposition | `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate `G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` from evidence commit `9e91315968453e859006077191cd5fc711fc6b96` |
+| Remaining sign-off | `GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`; `GROUP13 = PRESERVE_PASS`; `GROUPS_15_TO_17 = PROMOTED`; G2B-HW remains blocked |
 | Ownership evidence | BS1R `f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62`; BS2 `4699632c591238fee46ada3b0de37532fddd0b6f`; BS3 `10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae` |
 | Reset-return evidence | `v41-development-g2b-g13a-reset-return-signoff-audit` at `10c7c2898d162af8e2262b3f99861c7d560c4557` |
 | Release-slot evidence | `v41-development-g2b-g14a-release-slot0-signoff-audit` at `9e91315968453e859006077191cd5fc711fc6b96` |
 | Resource evidence | `v41-development-g2b-lut0-resource-attribution` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4` |
 
-These accepted architecture baselines do not promote a source branch,
-profile implementation, bitstream, DMA result, Gen2 negotiation result,
-throughput result, or Linux/V4L2 implementation. The 17,512 LUT / 84.192%
-PRODUCT estimate remains unmeasured. G2A remains `ACTIVE`; G2B-LUT1 is the
-separate `READY_FOR_SIGNOFF_RECOVERY` gate. Its exact next step is
-`G2B-LUT1-SIGNOFF-RECOVERY-3`; no source or active-XDC change occurs in this
-META-6 transaction. That next engineering task may implement the promoted
-Group-14 candidate XDC, must preserve the authoritative Group-9, Groups
-10–12, and Group-13 PASS results, validate the Group-14 replacement, and then
-continue through Groups 15–17 and the remaining routed hard gates.
+These accepted architecture baselines do not promote source, bitstream, DMA,
+Gen2, throughput or Linux/V4L2 results. Resource estimates remain unmeasured.
+
+## META-7R combined release-slot promotion
+
+Groups 15–17 each promote `SETTLING_PLUS_STRUCTURAL_CDC` with three
+slot-specific semantic families, nine checks total, and a `6.000 ns` absolute
+settling cap. The `13.468 ns` minimum launch-to-use window provides `7.468 ns`
+gross reserve. `SLOT_STRUCTURAL_RELATION = PARTIALLY_EQUIVALENT`,
+`SAFETY_PROTOCOL_EQUIVALENCE = PROVEN`, and
+`SLOT_SPECIFIC_ROUTED_CHECKS_REQUIRED = YES`. Each former global
+`GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is
+`RETIRED_FROM_REQUIRED_SIGNOFF`. See the complete family and structural
+requirements in `CURRENT_ARCHITECTURE.md` and `CURRENT_REQUIREMENTS.md`.
+
+`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` for Groups
+15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+`v41-development-g2b-g15-17-release-slot-equivalence-audit` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+`RTL_CHANGE_REQUIRED = NO`; `SLOT1_RTL_CHANGE_REQUIRED = NO`,
+`SLOT2_RTL_CHANGE_REQUIRED = NO`, and `SLOT3_RTL_CHANGE_REQUIRED = NO`.
+
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`;
+`GROUP13 = PRESERVE_PASS`; `GROUP14 = PRESERVE_PASS`. Their methods, bounds,
+promotion evidence and promotion-time active-XDC dispositions are preserved.
+The Group-14 pending-XDC statements at META-6 are historical promotion-time
+boundaries; the authoritative audit now preserves its PASS. They do not
+instruct recovery-4 to reimplement Group 14.
+
+`G2B-LUT1 = READY_FOR_SIGNOFF_RECOVERY`;
+`NEXT_ALLOWED_ENGINEERING_STEP = G2B-LUT1-SIGNOFF-RECOVERY-4`. That separate governed task uses
+`C:\FPGA\V41_G2B`, branch `integration/v41-g2b-onech-c2h`, current source
+commit `bdae16e06fb5b8564763941f530e4ce9e28896c7`, tree
+`e18833d46f7672f851c3cb8239f2f29091378294`. It may replace only the three retired
+global Groups 15–17 bus-skew constraints with the nine candidate checks,
+preserving every unrelated active constraint and Groups 9–14 PASS. It must
+validate all nine checks, then continue final routed timing, DRC, CDC
+disposition, clocks, PRODUCT resources and the pre-bitstream hard gate.
+Bitstream generation is a later engineering action allowed only after those
+gates pass; it is not performed or claimed by META-7R.
+
+`G2B-HW = BLOCKED`: Groups 15–17 active-XDC replacement is not implemented;
+final timing, DRC, CDC, clocks/resources and the pre-bitstream gate are not
+complete; no G2B bitstream exists and hardware has not been tested. No final
+timing sign-off, qualification, release, hardware readiness, DMA operation,
+or hardware proof is promoted.
+
 
 ## Held research context
 

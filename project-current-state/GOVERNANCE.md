@@ -1,7 +1,7 @@
 # AHD Project Current-State Governance
 
 Governance version: `1`
-Project-state revision governed: `6`
+Project-state revision governed: `7`
 Lifecycle status: `FROZEN`
 
 ## 1. Purpose and scope

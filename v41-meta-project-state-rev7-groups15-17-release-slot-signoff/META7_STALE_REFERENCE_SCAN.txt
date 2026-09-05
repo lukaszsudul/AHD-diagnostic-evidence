@@ -1,0 +1,255 @@
+ACTIVE_BASELINES.md:121: | Retired Group-9 method | `GLOBAL_SET_BUS_SKEW_3NS`; `RETIRED_FROM_REQUIRED_SIGNOFF` for `OWNERSHIP_AXI_TO_SOURCE` |
+ACTIVE_BASELINES.md:124: | Payload families and timing | 3 families: `slot`, `generation`, `epoch`; settling cap `6.000 ns`; minimum launch-to-use margin `13.468 ns`; gross reserve `7.468 ns` |
+ACTIVE_BASELINES.md:127: | Retired Group-13 method | `GLOBAL_SET_BUS_SKEW_3NS`; `RETIRED_FROM_REQUIRED_SIGNOFF` for `RESET_RETURN_SOURCE_TO_AXI`; historical scope 7 sources / 207 destinations |
+ACTIVE_BASELINES.md:130: | Group-13 timing requirement | `6.000 ns` absolute datapath-only settling for each family; retain the unchanged broad aggregate `6.000 ns` source-mailbox relation and its 79-cell supplemental commit-family coverage |
+ACTIVE_BASELINES.md:133: | Retired Group-14 method | `GLOBAL_SET_BUS_SKEW_3NS`; exact relation `set_bus_skew 3.000 -from $g2b_release0_payload_src -to $g2b_release_payload_dst`; `RETIRED_FROM_REQUIRED_SIGNOFF` for `RELEASE_SLOT_0_AXI_TO_SOURCE`; historical scope 56 sources / 20 destinations |
+ACTIVE_BASELINES.md:136: | Group-14 timing requirement | `6.000 ns` absolute datapath-only settling for each family; validated worst actual/slack: `5.467/0.563 ns`, `5.554/0.478 ns`, and `4.191/1.839 ns`, respectively |
+ACTIVE_BASELINES.md:152: slot-specific semantic families, nine checks total, and a `6.000 ns` absolute
+ACTIVE_BASELINES.md:153: settling cap. The `13.468 ns` minimum launch-to-use window provides `7.468 ns`
+ACTIVE_BASELINES.md:157: `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is
+ACTIVE_BASELINES.md:162: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+CHANGELOG.md:253: - `GLOBAL_SET_BUS_SKEW_3NS` is `RETIRED_FROM_REQUIRED_SIGNOFF` for Group 9.
+CHANGELOG.md:254: - Global Group-9 `report_bus_skew` is retired from required sign-off; no
+CHANGELOG.md:261: - Maximum settling is `6.000 ns`, based on a `13.468 ns` minimum
+CHANGELOG.md:262:   launch-to-use margin and `7.468 ns` gross reserve.
+CHANGELOG.md:338: - Global Group-13 `report_bus_skew` is retired from required sign-off; its
+CHANGELOG.md:346: - Each family requires a `6.000 ns` absolute datapath-only settling check to
+CHANGELOG.md:348: - The unchanged broad source-mailbox `6.000 ns` max-delay relation remains
+CHANGELOG.md:370:   global `report_bus_skew` remains retired; `GROUP9_GOVERNANCE_REGRESSION = NO`.
+CHANGELOG.md:438: - Global Group-14 `report_bus_skew` is retired from required sign-off; its
+CHANGELOG.md:448: - Each family requires `6.000 ns` absolute datapath-only settling. Routed
+CHANGELOG.md:525: Groups 15, 16 and 17 retire their global `GLOBAL_SET_BUS_SKEW_3NS` /
+CHANGELOG.md:526: `report_bus_skew` from required sign-off and promote independent three-family
+CHANGELOG.md:527: `SETTLING_PLUS_STRUCTURAL_CDC` methods, nine checks total, `6.000 ns` cap,
+CHANGELOG.md:528: `13.468 ns` launch-to-use basis and `7.468 ns` gross reserve.
+CHANGELOG.md:532: `RESOLVED`, as `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC`.
+COMPATIBILITY_MATRIX.csv:7: "Future G2B implementation","Frozen G2B transport ABI and MMIO contract","Not offline-qualified; G2B-LUT1 is READY_FOR_SIGNOFF_RECOVERY at G2B-LUT1-SIGNOFF-RECOVERY-4; Group-9 PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC and its PASS remain authoritative; Group-13 SETTLING_PLUS_STRUCTURAL_CDC and its PASS remain authoritative; Group-14 RELEASE_SLOT_0_AXI_TO_SOURCE requires SETTLING_PLUS_STRUCTURAL_CDC and its old global GLOBAL_SET_BUS_SKEW_3NS/report_bus_skew is RETIRED_FROM_REQUIRED_SIGNOFF; no bitstream or hardware result; Groups 9-14 PASS preserved; Groups 15-17 SETTLING_PLUS_STRUCTURAL_CDC promoted; old global GLOBAL_SET_BUS_SKEW_3NS/report_bus_skew RETIRED_FROM_REQUIRED_SIGNOFF for each; partial routed equivalence, proven safety protocol, independent slot checks","BLOCKED","7","An implementation could violate frozen bytes, ownership, reset-return or release-slot coherency, protected legacy timing, resource policy, or Linux expectations","In C:/FPGA/V41_G2B at G2B-LUT1-SIGNOFF-RECOVERY-4 implement G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc; validate nine independent 6.000 ns families with structural CDC, 13.468 ns launch-to-use basis and 7.468 ns gross reserve; preserve Groups 9-14 PASS and unrelated constraints; complete routed timing, DRC, CDC, clocks/PRODUCT resources and pre-bitstream gate; no META RTL/XDC/bitstream/hardware action","a70c55eca5f0c0ad349143ad93ab87eb80d11ac4:v41-development-g2b-lut0-resource-attribution; f3a0df6f8c3369e229e5f5d57fef10afd6dfbf62:v41-development-g2b-bs1r-single-sink-bus-skew-retry; 4699632c591238fee46ada3b0de37532fddd0b6f:v41-development-g2b-bs2-alternative-timing-equivalence; 10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae:v41-development-g2b-bs3-ownership-mailbox-settling-proof; 10c7c2898d162af8e2262b3f99861c7d560c4557:v41-development-g2b-g13a-reset-return-signoff-audit; 9e91315968453e859006077191cd5fc711fc6b96:v41-development-g2b-g14a-release-slot0-signoff-audit; fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c:v41-development-g2b-g15-17-release-slot-equivalence-audit"
+COMPATIBILITY_MATRIX.csv:13: "Future G2B hardware","PRODUCT and RESEARCH_DIAGNOSTIC profiles","FUNCTIONAL_INTERFACE_COMPATIBILITY=REQUIRED; resource equivalence NOT_REQUIRED; research observability equivalence NOT_REQUIRED; G2B-HW is BLOCKED and NOT_PROVEN until Groups 15-17 candidate implementation and validation, remaining final offline sign-off, the pre-bitstream hard gate, and a bitstream candidate exist; Groups 9-14 PASS preserved; Groups 15-17 SETTLING_PLUS_STRUCTURAL_CDC promoted; old global GLOBAL_SET_BUS_SKEW_3NS/report_bus_skew RETIRED_FROM_REQUIRED_SIGNOFF for each; partial routed equivalence, proven safety protocol, independent slot checks","BLOCKED","7","A promoted Group-9, Group-13, or Group-14 sign-off method or estimated-fit PRODUCT profile could be mistaken for routed, bitstream, or hardware proof","After complete offline acceptance and a valid bitstream candidate, qualify authorized hardware separately and report the exact selected profile, routed resources, timing, ABI/MMIO behavior and DMA result","a70c55eca5f0c0ad349143ad93ab87eb80d11ac4:v41-development-g2b-lut0-resource-attribution; 10f1b66ed7c5fbbf02c7a62f3b2e6d053a88e8ae:v41-development-g2b-bs3-ownership-mailbox-settling-proof; 10c7c2898d162af8e2262b3f99861c7d560c4557:v41-development-g2b-g13a-reset-return-signoff-audit; 9e91315968453e859006077191cd5fc711fc6b96:v41-development-g2b-g14a-release-slot0-signoff-audit; fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c:v41-development-g2b-g15-17-release-slot-equivalence-audit"
+CURRENT_ARCHITECTURE.md:117: `GLOBAL_SET_BUS_SKEW_3NS`, which is
+CURRENT_ARCHITECTURE.md:121: reproduced pathological `report_bus_skew` behavior even on the exact 58-to-1
+CURRENT_ARCHITECTURE.md:133: The governed maximum settling bound is `6.000 ns`, based on the `13.468 ns`
+CURRENT_ARCHITECTURE.md:134: minimum launch-to-use margin and `7.468 ns` gross reserve established by BS3.
+CURRENT_ARCHITECTURE.md:160: global Group-9 `report_bus_skew` execution is not part of the method and is not
+CURRENT_ARCHITECTURE.md:167: the historical `GLOBAL_SET_BUS_SKEW_3NS`, which is
+CURRENT_ARCHITECTURE.md:171: full Group-13 `report_bus_skew` query timed out; it is not required again.
+CURRENT_ARCHITECTURE.md:187: Each family requires a `6.000 ns` absolute datapath-only settling check to all
+CURRENT_ARCHITECTURE.md:189: source-mailbox `6.000 ns` max-delay relation is also mandatory: it contains all
+CURRENT_ARCHITECTURE.md:221: the historical `GLOBAL_SET_BUS_SKEW_3NS` relation:
+CURRENT_ARCHITECTURE.md:232: `report_bus_skew` timeout remains provenance only. The global query is
+CURRENT_ARCHITECTURE.md:249: | `RELEASE_SLOT0_NORMAL_STATE_TRANSITION` | 56 token sources to 3 slot-0 state bits | `6.000 ns` absolute datapath-only settling | worst actual `5.467 ns`; slack `0.563 ns`; `PASS` |
+CURRENT_ARCHITECTURE.md:250: | `RELEASE_SLOT0_MISMATCH_CONTAINMENT` | 56 token sources to 4 fault/admission registers | `6.000 ns` absolute datapath-only settling | worst actual `5.554 ns`; slack `0.478 ns`; `PASS` |
+CURRENT_ARCHITECTURE.md:251: | `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` | 56 token sources to 3 reset-abandoned counter bits | `6.000 ns` absolute datapath-only settling | worst actual `4.191 ns`; slack `1.839 ns`; `PASS` |
+CURRENT_ARCHITECTURE.md:253: The `6.000 ns` cap is inherited from the existing governed aggregate
+CURRENT_ARCHITECTURE.md:255: provide a `13.468 ns` gross earliest-use window and retain `7.468 ns` gross
+CURRENT_ARCHITECTURE.md:294: `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC` from `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+CURRENT_ARCHITECTURE.md:297: Group 15 `RELEASE_SLOT_1_AXI_TO_SOURCE`, Group 16
+CURRENT_ARCHITECTURE.md:298: `RELEASE_SLOT_2_AXI_TO_SOURCE`, and Group 17 `RELEASE_SLOT_3_AXI_TO_SOURCE`
+CURRENT_ARCHITECTURE.md:299: each retire `GLOBAL_SET_BUS_SKEW_3NS` as `RETIRED_FROM_REQUIRED_SIGNOFF`.
+CURRENT_ARCHITECTURE.md:300: The historical scope of each was 56 sources / 20 destinations. Group 15 mixed
+CURRENT_ARCHITECTURE.md:302: accounting endpoints. Group 16 mixed semantically different destination
+CURRENT_ARCHITECTURE.md:303: roles. Group 17 likewise did not describe one coherent relative-skew bus.
+CURRENT_ARCHITECTURE.md:305: `report_bus_skew` queries are retired from every current required recipe.
+CURRENT_ARCHITECTURE.md:311: | 15 | 1 | `RELEASE_SLOT1_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:312: | 15 | 1 | `RELEASE_SLOT1_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_ARCHITECTURE.md:313: | 15 | 1 | `RELEASE_SLOT1_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:314: | 16 | 2 | `RELEASE_SLOT2_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:315: | 16 | 2 | `RELEASE_SLOT2_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_ARCHITECTURE.md:316: | 16 | 2 | `RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:317: | 17 | 3 | `RELEASE_SLOT3_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:318: | 17 | 3 | `RELEASE_SLOT3_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_ARCHITECTURE.md:319: | 17 | 3 | `RELEASE_SLOT3_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_ARCHITECTURE.md:335: The permanent requirement is `SETTLING_CAP = 6.000 ns` absolute datapath-only
+CURRENT_ARCHITECTURE.md:337: two qualifying destination periods (`13.468 ns` launch-to-use window), and
+CURRENT_ARCHITECTURE.md:338: `7.468 ns` gross protocol reserve. This common cap is retained only after
+CURRENT_ARCHITECTURE.md:365: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+CURRENT_ARCHITECTURE.md:437:   old global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from
+CURRENT_ARCHITECTURE.md:440:   old global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from
+CURRENT_ARCHITECTURE.md:497:   family-specific `6.000 ns` absolute settling checks, the unchanged broad
+CURRENT_ARCHITECTURE.md:498:   aggregate `6.000 ns` relation, stable-until-acknowledgement proof,
+CURRENT_ARCHITECTURE.md:503:   `6.000 ns` absolute datapath-only settling checks plus stable token lifetime,
+CURRENT_INTERFACES.md:209: Each family requires an absolute settling check with a `6.000 ns` maximum.
+CURRENT_INTERFACES.md:210: The basis is the `13.468 ns` minimum launch-to-use margin and `7.468 ns` gross
+CURRENT_INTERFACES.md:215: The former `GLOBAL_SET_BUS_SKEW_3NS` and its global Group-9
+CURRENT_INTERFACES.md:216: `report_bus_skew` invocation are `RETIRED_FROM_REQUIRED_SIGNOFF` because the
+CURRENT_INTERFACES.md:239: full Group-13 `report_bus_skew` timeout remains provenance only and is not a
+CURRENT_INTERFACES.md:246: | `RESET_ABANDONED_COUNT_STABLE_PAYLOAD` | Three-bit abandoned-record snapshot | `6.000 ns` absolute datapath-only settling to the 32-cell accounting cone | Single-edge capture, stable until acknowledgement, and no AXI consumption before synchronized request/acknowledgement qualification |
+CURRENT_INTERFACES.md:247: | `RESET_COMMIT_PHASE_COMPLETION_BARRIER` | Four-bit per-slot commit-toggle phase snapshot | `6.000 ns` absolute datapath-only settling to the original 207-cell completion cone | Stable until acknowledgement; two-stage live commit-phase synchronization; equality with the held phase before qualified completion |
+CURRENT_INTERFACES.md:251: source-mailbox `6.000 ns` max-delay relation must also remain in force. It
+CURRENT_INTERFACES.md:283: Group-14 `report_bus_skew` timeout remains provenance only and is not a current
+CURRENT_INTERFACES.md:290: | `RELEASE_SLOT0_NORMAL_STATE_TRANSITION` | Matching slot-0 token authorizes `DMA_OWNED -> RELEASABLE`; 56 sources to 3 state bits | `6.000 ns` absolute datapath-only settling | worst actual `5.467 ns`; slack `0.563 ns`; `PASS` |
+CURRENT_INTERFACES.md:291: | `RELEASE_SLOT0_MISMATCH_CONTAINMENT` | Generation, epoch, reset-epoch, or ownership mismatch fails closed; 56 sources to 4 fault/admission registers | `6.000 ns` absolute datapath-only settling | worst actual `5.554 ns`; slack `0.478 ns`; `PASS` |
+CURRENT_INTERFACES.md:292: | `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` | Synchronized transport request uses the same-episode token before captured-phase retirement; 56 sources to 3 reset-abandoned counter bits | `6.000 ns` absolute datapath-only settling | worst actual `4.191 ns`; slack `1.839 ns`; `PASS` |
+CURRENT_INTERFACES.md:340: `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC` from `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+CURRENT_INTERFACES.md:343: Group 15 `RELEASE_SLOT_1_AXI_TO_SOURCE`, Group 16
+CURRENT_INTERFACES.md:344: `RELEASE_SLOT_2_AXI_TO_SOURCE`, and Group 17 `RELEASE_SLOT_3_AXI_TO_SOURCE`
+CURRENT_INTERFACES.md:345: each retire `GLOBAL_SET_BUS_SKEW_3NS` as `RETIRED_FROM_REQUIRED_SIGNOFF`.
+CURRENT_INTERFACES.md:346: The historical scope of each was 56 sources / 20 destinations. Group 15 mixed
+CURRENT_INTERFACES.md:348: accounting endpoints. Group 16 mixed semantically different destination
+CURRENT_INTERFACES.md:349: roles. Group 17 likewise did not describe one coherent relative-skew bus.
+CURRENT_INTERFACES.md:351: `report_bus_skew` queries are retired from every current required recipe.
+CURRENT_INTERFACES.md:357: | 15 | 1 | `RELEASE_SLOT1_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:358: | 15 | 1 | `RELEASE_SLOT1_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_INTERFACES.md:359: | 15 | 1 | `RELEASE_SLOT1_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:360: | 16 | 2 | `RELEASE_SLOT2_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:361: | 16 | 2 | `RELEASE_SLOT2_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_INTERFACES.md:362: | 16 | 2 | `RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:363: | 17 | 3 | `RELEASE_SLOT3_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:364: | 17 | 3 | `RELEASE_SLOT3_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_INTERFACES.md:365: | 17 | 3 | `RELEASE_SLOT3_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_INTERFACES.md:381: The permanent requirement is `SETTLING_CAP = 6.000 ns` absolute datapath-only
+CURRENT_INTERFACES.md:383: two qualifying destination periods (`13.468 ns` launch-to-use window), and
+CURRENT_INTERFACES.md:384: `7.468 ns` gross protocol reserve. This common cap is retained only after
+CURRENT_INTERFACES.md:411: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+CURRENT_REQUIREMENTS.md:87: | `REQ-G2B-GROUP9-OWNERSHIP-SIGNOFF` | Group-9 `OWNERSHIP_AXI_TO_SOURCE` requires `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`: two-stage request and acknowledgement synchronizers, held 58-bit payload, source hold until acknowledgement, reset/epoch coherency, and `6.000 ns` absolute settling checks for `slot`, `generation`, and `epoch` | `FROZEN` | Method promoted from BS3; authoritative result `PRESERVE_PASS`; `RTL_CHANGE_REQUIRED = NO` |
+CURRENT_REQUIREMENTS.md:88: | `REQ-G2B-GROUP13-RESET-RETURN-SIGNOFF` | Group-13 `RESET_RETURN_SOURCE_TO_AXI` requires `SETTLING_PLUS_STRUCTURAL_CDC`: two exact semantic families, `6.000 ns` absolute datapath-only settling, retained broad aggregate `6.000 ns` coverage, stable-until-acknowledgement behavior, two-stage request/acknowledgement and live commit-phase synchronization, commit-phase equality, hard-episode qualification, reset-return coherency, destination-use sequencing, and atomic epoch/state publication | `FROZEN` | Method promoted from G13-A; recovery-2 result `PRESERVE_PASS`; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO` |
+CURRENT_REQUIREMENTS.md:89: | `REQ-G2B-GROUP14-RELEASE-SLOT0-SIGNOFF` | Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` requires `SETTLING_PLUS_STRUCTURAL_CDC`: exactly three semantic families with `6.000 ns` absolute datapath-only settling, held 56-bit generation/epoch token lifetime, same-edge token/toggle ordering, two-stage release-toggle synchronization for normal use, two-stage transport-request synchronization for reset accounting, fail-closed generation/epoch/ownership identity, captured release-phase retirement/completion barrier, destination-use ordering, and reset/release coherency | `FROZEN` | Method promoted from G14-A; `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; `RTL_CHANGE_REQUIRED = NO`; HISTORICAL META-6 active-XDC boundary: authorized for recovery-3, not yet implemented at promotion; current Group-14 result `PRESERVE_PASS` |
+CURRENT_REQUIREMENTS.md:105: The Group-9 replacement method is based on a `13.468 ns` minimum
+CURRENT_REQUIREMENTS.md:106: launch-to-use margin, a `6.000 ns` maximum settling bound, and `7.468 ns`
+CURRENT_REQUIREMENTS.md:124: `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` execution
+CURRENT_REQUIREMENTS.md:133: `INVALID_FOR_SKEW_COMPARISON`; the global Group-13 `report_bus_skew` is
+CURRENT_REQUIREMENTS.md:145: Both families require `6.000 ns` absolute datapath-only settling to all timing
+CURRENT_REQUIREMENTS.md:147: source-mailbox `6.000 ns` max-delay relation is also required and must retain
+CURRENT_REQUIREMENTS.md:185: full Group-14 `report_bus_skew` timeout remains historical evidence. The old
+CURRENT_REQUIREMENTS.md:186: `GLOBAL_SET_BUS_SKEW_3NS` method is `RETIRED_FROM_REQUIRED_SIGNOFF` and must
+CURRENT_REQUIREMENTS.md:192:    state bits, `6.000 ns` absolute datapath-only settling, worst actual
+CURRENT_REQUIREMENTS.md:195:    fault/admission registers, `6.000 ns` absolute datapath-only settling,
+CURRENT_REQUIREMENTS.md:198:    reset-abandoned counter bits, `6.000 ns` absolute datapath-only settling,
+CURRENT_REQUIREMENTS.md:249: `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC` from `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+CURRENT_REQUIREMENTS.md:252: Group 15 `RELEASE_SLOT_1_AXI_TO_SOURCE`, Group 16
+CURRENT_REQUIREMENTS.md:253: `RELEASE_SLOT_2_AXI_TO_SOURCE`, and Group 17 `RELEASE_SLOT_3_AXI_TO_SOURCE`
+CURRENT_REQUIREMENTS.md:254: each retire `GLOBAL_SET_BUS_SKEW_3NS` as `RETIRED_FROM_REQUIRED_SIGNOFF`.
+CURRENT_REQUIREMENTS.md:255: The historical scope of each was 56 sources / 20 destinations. Group 15 mixed
+CURRENT_REQUIREMENTS.md:257: accounting endpoints. Group 16 mixed semantically different destination
+CURRENT_REQUIREMENTS.md:258: roles. Group 17 likewise did not describe one coherent relative-skew bus.
+CURRENT_REQUIREMENTS.md:260: `report_bus_skew` queries are retired from every current required recipe.
+CURRENT_REQUIREMENTS.md:266: | 15 | 1 | `RELEASE_SLOT1_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:267: | 15 | 1 | `RELEASE_SLOT1_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_REQUIREMENTS.md:268: | 15 | 1 | `RELEASE_SLOT1_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:269: | 16 | 2 | `RELEASE_SLOT2_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:270: | 16 | 2 | `RELEASE_SLOT2_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_REQUIREMENTS.md:271: | 16 | 2 | `RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:272: | 17 | 3 | `RELEASE_SLOT3_NORMAL_STATE_TRANSITION` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:273: | 17 | 3 | `RELEASE_SLOT3_MISMATCH_CONTAINMENT` | `6.000 ns` datapath-only | 56 sources / 4 destinations |
+CURRENT_REQUIREMENTS.md:274: | 17 | 3 | `RELEASE_SLOT3_RESET_OVERLAP_ACCOUNTING` | `6.000 ns` datapath-only | 56 sources / 3 destinations |
+CURRENT_REQUIREMENTS.md:290: The permanent requirement is `SETTLING_CAP = 6.000 ns` absolute datapath-only
+CURRENT_REQUIREMENTS.md:292: two qualifying destination periods (`13.468 ns` launch-to-use window), and
+CURRENT_REQUIREMENTS.md:293: `7.468 ns` gross protocol reserve. This common cap is retained only after
+CURRENT_REQUIREMENTS.md:320: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+CURRENT_RESOURCE_STATE.md:69: uses nine independent `6.000 ns` checks; the next task is recovery-4.
+CURRENT_STATUS.md:52: slot-specific semantic families, nine checks total, and a `6.000 ns` absolute
+CURRENT_STATUS.md:53: settling cap. The `13.468 ns` minimum launch-to-use window provides `7.468 ns`
+CURRENT_STATUS.md:57: `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is
+CURRENT_STATUS.md:62: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+CURRENT_STATUS.md:106: | Group-9 `OWNERSHIP_AXI_TO_SOURCE` sign-off | `ACCEPTED` | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; old `GLOBAL_SET_BUS_SKEW_3NS` retired from required sign-off |
+CURRENT_STATUS.md:107: | Group-13 `RESET_RETURN_SOURCE_TO_AXI` sign-off | `ACCEPTED` | `SETTLING_PLUS_STRUCTURAL_CDC`; old global `GLOBAL_SET_BUS_SKEW_3NS` and Group-13 `report_bus_skew` retired from required sign-off |
+CURRENT_STATUS.md:108: | Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off (active-XDC literal is HISTORICAL at META-6 promotion; current result `PRESERVE_PASS`) | `ACCEPTED` | `SETTLING_PLUS_STRUCTURAL_CDC` promoted; old global `GLOBAL_SET_BUS_SKEW_3NS` and Group-14 `report_bus_skew` retired from required sign-off; `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` |
+CURRENT_STATUS.md:147: - Group-9 ownership settling cap: `6.000 ns` across the three semantic
+CURRENT_STATUS.md:149: - Group-9 minimum launch-to-use margin: `13.468 ns`; gross reserve:
+CURRENT_STATUS.md:150:   `7.468 ns`.
+CURRENT_STATUS.md:151: - Group-13 reset-return settling cap: `6.000 ns` for exactly two families,
+CURRENT_STATUS.md:154:   `6.000 ns` relation retained.
+CURRENT_STATUS.md:159: - Group-14 release-slot settling cap: `6.000 ns` for exactly three families,
+CURRENT_TRACKS.md:53:   `6.000 ns` per-family settling for `slot`, `generation`, and `epoch`, based
+CURRENT_TRACKS.md:54:   on `13.468 ns` minimum launch-to-use and `7.468 ns` gross reserve; Group 9
+CURRENT_TRACKS.md:57:   `6.000 ns` settling families, retained broad aggregate coverage, stable hold,
+CURRENT_TRACKS.md:63:   `6.000 ns` absolute datapath-only settling families:
+CURRENT_TRACKS.md:70:   `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from required
+CURRENT_TRACKS.md:79: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+EVIDENCE_MAP.md:112: BS1R reproduced the bounded single-sink 58-to-1 `report_bus_skew` pathology.
+EVIDENCE_MAP.md:137: payload-family timing checks, and the `6.000 ns` bound with `13.468 ns`
+EVIDENCE_MAP.md:138: minimum launch-to-use and `7.468 ns` gross reserve. Revision 4 promotes the
+EVIDENCE_MAP.md:161: validates `6.000 ns` absolute settling plus the required structural
+EVIDENCE_MAP.md:185: validates `6.000 ns` absolute settling plus the required structural
+EVIDENCE_MAP.md:204: | `STMT-GROUP9-SIGNOFF` | Current Group-9 `OWNERSHIP_AXI_TO_SOURCE` method is `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; `GLOBAL_SET_BUS_SKEW_3NS` and the global Group-9 `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-4R2_TASK_DIRECTIVE` | `EVID-G2B-BS1R`, `EVID-G2B-BS2`, `EVID-G2B-BS3` at their exact commits | Pathology reproduction, invalid global comparison, stable-data CDC proof, 3 families, `6.000 ns` cap, `13.468 ns` margin, `7.468 ns` reserve | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; not a relaxation of safety; `RTL_CHANGE_REQUIRED = NO`; promotion-time active-XDC boundary was pending; current result is `PRESERVE_PASS`, do not repeat |
+EVIDENCE_MAP.md:206: | `STMT-GROUP13-SIGNOFF` | Current Group-13 `RESET_RETURN_SOURCE_TO_AXI` method is `SETTLING_PLUS_STRUCTURAL_CDC`; its global `GLOBAL_SET_BUS_SKEW_3NS` and `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-5_TASK_DIRECTIVE` | `EVID-G2B-G13A` at `10c7c2898d162af8e2262b3f99861c7d560c4557` | 7/207 scope, verified timeout, invalid skew comparison, two exact families, `6.000 ns` family and retained aggregate settling, complete structural reset-return proof | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; no safety relaxation; `RTL_CHANGE_REQUIRED = NO`; promotion-time active-XDC boundary was pending; current result is `PRESERVE_PASS`, do not repeat |
+EVIDENCE_MAP.md:208: | `STMT-GROUP14-SIGNOFF` | Current Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` method is `SETTLING_PLUS_STRUCTURAL_CDC`; its global `GLOBAL_SET_BUS_SKEW_3NS` and `report_bus_skew` are retired from required sign-off | `ACCEPTED` | `META-6_TASK_DIRECTIVE` | `EVID-G2B-G14A` at `9e91315968453e859006077191cd5fc711fc6b96` | 56/20 scope, verified timeout, invalid skew comparison, three exact `6.000 ns` families, and complete release/reset structural CDC proof | `SAFER_AND_MORE_SEMANTICALLY_CORRECT`; no safety relaxation; `RTL_CHANGE_REQUIRED = NO`; HISTORICAL META-6 active XDC pending at promotion; current result `PRESERVE_PASS` |
+EVIDENCE_MAP.md:212: | `STMT-GROUPS-15-17` | Groups 15–17 `SETTLING_PLUS_STRUCTURAL_CDC` promoted; old global methods retired; nine `6.000 ns` checks | `ACCEPTED` | `META-7R_TASK_DIRECTIVE` | `EVID-G2B-G15-17-EQ` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c` | Partial routed equivalence; proven safety protocol; independent slot checks; 13.468 ns window and 7.468 ns reserve | Active XDC authorized but not implemented; no final sign-off or hardware proof |
+EVIDENCE_MAP.md:254: Required sources: `G2B_G15_17_EQ_STATE.json`, `G2B_G15_17_EQ_CANDIDATE_RESULTS.csv`,
+EVIDENCE_MAP.md:255: `G2B_G15_17_EQ_PROTOCOL_TIMING_MARGINS.csv`, `G2B_G15_17_EQ_FAMILIES.csv`,
+EVIDENCE_MAP.md:256: `G2B_G15_17_EQ_CDC_COMPARISON.md`, `G2B_G15_17_EQ_SAFETY_INVARIANT_COMPARISON.md`,
+EVIDENCE_MAP.md:257: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc`, and
+EVIDENCE_MAP.md:258: `G2B_G15_17_EQ_STRUCTURAL_EQUIVALENCE_MATRIX.csv`.
+EVIDENCE_MAP.md:264: as `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC`; record form is
+OPEN_DECISIONS.md:29: | `GROUPS15_17_RELEASE_SLOT_SIGNOFF_METHODOLOGY` | `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `RESOLVED` | 15, 16, 17 |
+OPEN_DECISIONS.md:36: is promoted with a `6.000 ns` cap. RTL change required is `NO`.
+OPEN_DECISIONS.md:53: invented. It retires the global `GLOBAL_SET_BUS_SKEW_3NS` and Group-14
+OPEN_DECISIONS.md:54: `report_bus_skew` from required `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off for
+OPEN_DECISIONS.md:59: `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING` families, each with a `6.000 ns`
+OPEN_DECISIONS.md:84: invented. It retires the global `GLOBAL_SET_BUS_SKEW_3NS` and Group-13
+OPEN_DECISIONS.md:85: `report_bus_skew` from required `RESET_RETURN_SOURCE_TO_AXI` sign-off and
+OPEN_DECISIONS.md:88: `RESET_COMMIT_PHASE_COMPLETION_BARRIER` families, `6.000 ns` absolute
+OPEN_DECISIONS.md:89: datapath-only settling, retained broad aggregate `6.000 ns` coverage, and the
+OPEN_DECISIONS.md:106: invented. It retires `GLOBAL_SET_BUS_SKEW_3NS` from required Group-9 sign-off
+PROJECT_STATE.json:408:       "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:413:       "previous_report_bus_skew_timeout": "VERIFIED",
+PROJECT_STATE.json:437:       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:455:       "scope": "RELEASE_SLOT_1_AXI_TO_SOURCE",
+PROJECT_STATE.json:486:       "scope": "RELEASE_SLOT_2_AXI_TO_SOURCE",
+PROJECT_STATE.json:517:       "scope": "RELEASE_SLOT_3_AXI_TO_SOURCE",
+PROJECT_STATE.json:897:       "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:934:     "global_group9_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:964:       "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:969:       "previous_report_bus_skew_timeout": "VERIFIED",
+PROJECT_STATE.json:970:       "full_report_bus_skew_retried": false,
+PROJECT_STATE.json:1056:     "global_group13_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:1093:       "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:1098:       "previous_report_bus_skew_timeout": "VERIFIED",
+PROJECT_STATE.json:1099:       "full_report_bus_skew_retried": false,
+PROJECT_STATE.json:1101:       "required_full_report_bus_skew_runtime": "PATHOLOGICAL",
+PROJECT_STATE.json:1276:     "global_group14_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:1518:       "decision": "PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC",
+PROJECT_STATE.json:1827:         "G2B_G15_17_EQ_STATE.json",
+PROJECT_STATE.json:1828:         "G2B_G15_17_EQ_CANDIDATE_RESULTS.csv",
+PROJECT_STATE.json:1829:         "G2B_G15_17_EQ_PROTOCOL_TIMING_MARGINS.csv",
+PROJECT_STATE.json:1830:         "G2B_G15_17_EQ_FAMILIES.csv",
+PROJECT_STATE.json:1831:         "G2B_G15_17_EQ_CDC_COMPARISON.md",
+PROJECT_STATE.json:1832:         "G2B_G15_17_EQ_SAFETY_INVARIANT_COMPARISON.md",
+PROJECT_STATE.json:1833:         "G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc",
+PROJECT_STATE.json:1834:         "G2B_G15_17_EQ_STRUCTURAL_EQUIVALENCE_MATRIX.csv"
+PROJECT_STATE.json:1848:     "decision": "PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC",
+PROJECT_STATE.json:1857:         "group_name": "RELEASE_SLOT_1_AXI_TO_SOURCE",
+PROJECT_STATE.json:1859:           "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:1912:         "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:1921:         "group_name": "RELEASE_SLOT_2_AXI_TO_SOURCE",
+PROJECT_STATE.json:1923:           "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:1976:         "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:1985:         "group_name": "RELEASE_SLOT_3_AXI_TO_SOURCE",
+PROJECT_STATE.json:1987:           "method": "GLOBAL_SET_BUS_SKEW_3NS",
+PROJECT_STATE.json:2040:         "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+PROJECT_STATE.json:2068:     "candidate_xdc": "G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc",
+PROJECT_STATE.json:2084:       "IMPLEMENT_G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS_XDC",
+README.md:54: | Group-9 ownership sign-off | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC` promoted; `GLOBAL_SET_BUS_SKEW_3NS` retired from required sign-off |
+README.md:55: | Group-9 timing basis | 3 families (`slot`, `generation`, `epoch`); `6.000 ns` settling cap; `13.468 ns` minimum launch-to-use; `7.468 ns` gross reserve |
+README.md:56: | Group-13 reset-return sign-off | `SETTLING_PLUS_STRUCTURAL_CDC` promoted; global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` retired from required sign-off |
+README.md:57: | Group-13 timing basis | 2 families (`RESET_ABANDONED_COUNT_STABLE_PAYLOAD`, `RESET_COMMIT_PHASE_COMPLETION_BARRIER`); `6.000 ns` absolute settling cap; unchanged broad aggregate `6.000 ns` relation retained |
+README.md:58: | Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off | `SETTLING_PLUS_STRUCTURAL_CDC` promoted; global `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` retired from required sign-off for the historical 56-source/20-destination scope |
+README.md:59: | Group-14 timing basis | 3 families (`RELEASE_SLOT0_NORMAL_STATE_TRANSITION`, `RELEASE_SLOT0_MISMATCH_CONTAINMENT`, `RELEASE_SLOT0_RESET_OVERLAP_ACCOUNTING`); `6.000 ns` absolute settling cap for each family |
+README.md:61: | Active XDC change | Groups 15–17 `AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`; candidate `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` |
+README.md:75: and Group-14 `report_bus_skew` queries are not required again. The estimated
+README.md:85: slot-specific semantic families, nine checks total, and a `6.000 ns` absolute
+README.md:86: settling cap. The `13.468 ns` minimum launch-to-use window provides `7.468 ns`
+README.md:90: `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is
+README.md:95: 15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+TRACK_STATUS.json:126:       "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:137:       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:152:       "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:157:       "previous_report_bus_skew_timeout": "VERIFIED",
+TRACK_STATUS.json:158:       "full_report_bus_skew_retried": "NO",
+TRACK_STATUS.json:172:       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:193:       "old_method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:198:       "previous_report_bus_skew_timeout": "VERIFIED",
+TRACK_STATUS.json:199:       "full_report_bus_skew_retried": "NO",
+TRACK_STATUS.json:201:       "required_full_report_bus_skew_runtime": "PATHOLOGICAL",
+TRACK_STATUS.json:257:       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:278:       "decision": "PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC",
+TRACK_STATUS.json:287:           "group_name": "RELEASE_SLOT_1_AXI_TO_SOURCE",
+TRACK_STATUS.json:289:             "method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:342:           "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:351:           "group_name": "RELEASE_SLOT_2_AXI_TO_SOURCE",
+TRACK_STATUS.json:353:             "method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:406:           "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:415:           "group_name": "RELEASE_SLOT_3_AXI_TO_SOURCE",
+TRACK_STATUS.json:417:             "method": "GLOBAL_SET_BUS_SKEW_3NS",
+TRACK_STATUS.json:470:           "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+TRACK_STATUS.json:498:       "candidate_xdc": "G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc",
+TRACK_STATUS.json:514:         "IMPLEMENT_G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS_XDC",

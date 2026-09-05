@@ -1,15 +1,15 @@
 # AHD Current Development Tracks
 
-`PROJECT_STATE_REV = 6`
+`PROJECT_STATE_REV = 7`
 
 ## Track summary
 
 | Track | Purpose | Last accepted gate | Active gate | Next expected decision point | Track status |
 |---|---|---|---|---|---|
-| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | `G2B-LUT1-SIGNOFF-RECOVERY-3` and complete offline requalification | `ACTIVE`; G2B-IMPL sign-off recovery pending |
+| G-track | Product FPGA integration, data plane, qualification, and release architecture | G2B-LUT0 resource architecture | G2A remains separately active | `G2B-LUT1-SIGNOFF-RECOVERY-4` and complete offline requalification | `ACTIVE`; G2B-IMPL sign-off recovery pending |
 | R-track | Isolate the R1i physical-SCL/ACK/recovery causal mechanism and characterize margin | R0 | none executing | Resume R2/R3 later through RESEARCH_DIAGNOSTIC | lifecycle `ACTIVE`; execution state `HOLD`, not closed |
 | L-track | Native Linux/V4L2 product integration through a transport abstraction | none | none | Approve/launch L0 with final input assumptions and interfaces | `PLANNED` |
-| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-6 | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
+| META track | Maintain current project truth, governance, provenance, revisions, and compatibility | META-7R | none | Next explicitly authorized accepted-state change | `ACCEPTED` |
 
 ## G-track — product development
 
@@ -31,12 +31,12 @@ closure, and throughput.
   input.
 - G2B-IMPL: lifecycle `BLOCKED`; implementation state
   `ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING`; not offline-qualified and
-  no bitstream exists; Group-14 candidate implementation and validation remain
+  no bitstream exists; Groups 15–17 candidate implementation and validation remain
   pending.
 - G2B-LUT0: `ACCEPTED` — Plan B resource architecture only.
 - G2B-LUT1: lifecycle `PLANNED`, readiness
   `READY_FOR_SIGNOFF_RECOVERY`; exact next gate
-  `G2B-LUT1-SIGNOFF-RECOVERY-3`.
+  `G2B-LUT1-SIGNOFF-RECOVERY-4`.
 - G2B-HW: lifecycle `BLOCKED`; final offline sign-off, pre-bitstream hard gate,
   and a bitstream candidate do not exist.
 
@@ -68,23 +68,46 @@ closure, and throughput.
   stable-data lifetime, captured release-phase retirement, destination-use
   ordering, and reset/release coherency remain mandatory; the old
   `GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is retired from required
-  sign-off, `RTL_CHANGE_REQUIRED = NO`, and active XDC implementation remains
-  an authorized next step;
+  sign-off and `RTL_CHANGE_REQUIRED = NO`; its HISTORICAL META-6 active-XDC
+  authorization remains recorded; current Group-14 PASS is preserved;
 - `GROUPS_10_TO_12 = PRESERVE_PASS`; and
-- `GROUPS_15_TO_17 = PENDING_UNCHANGED`.
+- `GROUPS_15_TO_17 = PROMOTED`.
 
 ### Next decision
 
-`G2B-LUT1-SIGNOFF-RECOVERY-3` may implement the accepted
-`G2B_G14A_CANDIDATE_CONSTRAINTS.xdc` under the governed source-change
-procedure. It must preserve Group 9 PASS, Groups 10–12 PASS, and Group 13 PASS,
-validate Group 14 with the promoted settling-plus-structural-CDC method, then
-continue Groups 15, 16, and 17, routed setup/hold timing, DRC, CDC disposition,
-clocks, PRODUCT resources, and the pre-bitstream hard gate before any bitstream
-or hardware step. The retired global Group-9, Group-13, and Group-14
-`report_bus_skew` queries are not required. The PRODUCT hard gate remains
-routed LUT `<=90%`, with a preferred `80–85%` target; the 84.192% planning
-estimate is not an achieved result.
+`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` for Groups
+15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+`v41-development-g2b-g15-17-release-slot-equivalence-audit` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+`RTL_CHANGE_REQUIRED = NO`; `SLOT1_RTL_CHANGE_REQUIRED = NO`,
+`SLOT2_RTL_CHANGE_REQUIRED = NO`, and `SLOT3_RTL_CHANGE_REQUIRED = NO`.
+
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`;
+`GROUP13 = PRESERVE_PASS`; `GROUP14 = PRESERVE_PASS`. Their methods, bounds,
+promotion evidence and promotion-time active-XDC dispositions are preserved.
+The Group-14 pending-XDC statements at META-6 are historical promotion-time
+boundaries; the authoritative audit now preserves its PASS. They do not
+instruct recovery-4 to reimplement Group 14.
+
+`G2B-LUT1 = READY_FOR_SIGNOFF_RECOVERY`;
+`NEXT_ALLOWED_ENGINEERING_STEP = G2B-LUT1-SIGNOFF-RECOVERY-4`. That separate governed task uses
+`C:\FPGA\V41_G2B`, branch `integration/v41-g2b-onech-c2h`, current source
+commit `bdae16e06fb5b8564763941f530e4ce9e28896c7`, tree
+`e18833d46f7672f851c3cb8239f2f29091378294`. It may replace only the three retired
+global Groups 15–17 bus-skew constraints with the nine candidate checks,
+preserving every unrelated active constraint and Groups 9–14 PASS. It must
+validate all nine checks, then continue final routed timing, DRC, CDC
+disposition, clocks, PRODUCT resources and the pre-bitstream hard gate.
+Bitstream generation is a later engineering action allowed only after those
+gates pass; it is not performed or claimed by META-7R.
+
+`G2B-HW = BLOCKED`: Groups 15–17 active-XDC replacement is not implemented;
+final timing, DRC, CDC, clocks/resources and the pre-bitstream gate are not
+complete; no G2B bitstream exists and hardware has not been tested. No final
+timing sign-off, qualification, release, hardware readiness, DMA operation,
+or hardware proof is promoted.
+
+The PRODUCT hard gate remains routed LUT `<=90%`, with a preferred
+`80–85%` target; the 84.192% planning estimate is not an achieved result.
 
 ## R-track — causal research
 
@@ -133,7 +156,7 @@ capture/video layer independent of the PCIe transport backend.
 ### Gate state
 
 - L0: `PLANNED`.
-- No accepted or active Linux gate exists at revision 6.
+- No accepted or active Linux gate exists at revision 7.
 - The Linux transport consumer input contract is frozen; V4L2 remains
   `NOT_IMPLEMENTED`.
 
@@ -186,6 +209,9 @@ sign-off architecture and named unnumbered decision; it also does not modify
 RTL or active XDC and does not accept G2B offline qualification, a bitstream,
 hardware, or V4L2.
 
+META-7R promotes the combined Groups 15–17 architecture through one
+unnumbered governed decision while preserving Groups 9–14 PASS.
+
 ### Current dependencies
 
 - explicit Owner/Architect decision;
@@ -200,5 +226,5 @@ hardware, or V4L2.
 
 ### Next decision
 
-After revision-6 publication, the next update begins only when a separate task
+After revision-7 publication, the next update begins only when a separate task
 satisfies every field in `META_UPDATE_TEMPLATE.md`.

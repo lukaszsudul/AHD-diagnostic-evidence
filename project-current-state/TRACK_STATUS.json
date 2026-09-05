@@ -1,23 +1,23 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 6,
+  "project_state_revision": 7,
   "state_type": "CURRENT_TRACK_STATUS",
   "governance_version": 1,
-  "last_update": "2026-09-03",
+  "last_update": "2026-09-05",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-6_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-7R_TASK_DIRECTIVE",
   "ssot_write_authorization": "SSOT WRITE AUTHORIZED",
   "update_type": "ARCHITECTURE_CHANGE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
-  "source_evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
-  "expected_previous_project_state_revision": 5,
-  "write_contract_receipt": "v41-meta-project-state-rev6-group14-release-slot-signoff/META6_WRITE_CONTRACT_RECEIPT.md",
+  "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c",
+  "source_evidence_directory": "v41-development-g2b-g15-17-release-slot-equivalence-audit",
+  "expected_previous_project_state_revision": 6,
+  "write_contract_receipt": "v41-meta-project-state-rev7-groups15-17-release-slot-signoff/META7_FROZEN_WRITE_CONTRACT_RECEIPT.md",
   "product_track": {
     "status": "ACTIVE",
     "last_accepted_gate": "G2B-LUT0",
     "active_gate": "G2A",
-    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3",
+    "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-4",
     "resource_recovery_state": "PLAN_ACCEPTED_IMPLEMENTATION_PENDING",
     "gates": [
       {
@@ -69,12 +69,13 @@
         "accepted_by_role": null,
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
         "implementation_state": "ROUTED_IMPLEMENTATION_SIGNOFF_RECOVERY_PENDING",
-        "blocking_reason": "GROUP14_CANDIDATE_XDC_IMPLEMENTATION_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
+        "blocking_reason": "GROUPS15_TO_17_CANDIDATE_XDC_IMPLEMENTATION_AND_FINAL_OFFLINE_SIGNOFF_PENDING",
         "offline_qualification": "NOT_ACCEPTED",
         "hardware_qualification_progress": "NOT_STARTED",
         "hardware_qualification": "NOT_PROVEN",
-        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
-        "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit"
+        "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c",
+        "evidence_directory": "v41-development-g2b-g15-17-release-slot-equivalence-audit",
+        "decision_source": "META-7R_TASK_DIRECTIVE"
       },
       {
         "gate": "G2B-LUT0",
@@ -90,32 +91,33 @@
         "gate": "G2B-LUT1",
         "status": "PLANNED",
         "readiness": "READY_FOR_SIGNOFF_RECOVERY",
-        "scope": "PRESERVE_PROMOTED_GROUP9_AND_GROUPS10_TO_12_AND_PROMOTED_GROUP13_APPLY_PROMOTED_GROUP14_AND_COMPLETE_ROUTED_SIGNOFF",
+        "scope": "PRESERVE_GROUPS9_TO_14_PASS_APPLY_PROMOTED_GROUPS15_TO_17_AND_COMPLETE_ROUTED_SIGNOFF",
         "implementation_state": "SIGNOFF_RECOVERY_PENDING",
         "preserved_authoritative_results": [
           "GROUP9",
           "GROUP10",
           "GROUP11",
           "GROUP12",
-          "GROUP13"
+          "GROUP13",
+          "GROUP14"
         ],
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-6_TASK_DIRECTIVE",
-        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
-        "depends_on": "META6_PROMOTED_GROUP14_RELEASE_SLOT_SIGNOFF_METHOD",
-        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
+        "decision_source": "META-7R_TASK_DIRECTIVE",
+        "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c",
+        "depends_on": "META7_PROMOTED_COMBINED_GROUPS15_TO_17_RELEASE_SLOT_SIGNOFF_METHODS",
+        "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-4"
       },
       {
         "gate": "G2B-HW",
         "status": "BLOCKED",
         "progress": "NOT_STARTED",
         "qualification_state": "NOT_PROVEN",
-        "blocking_reason": "GROUP14_CANDIDATE_IMPLEMENTATION_FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
+        "blocking_reason": "GROUPS15_TO_17_CANDIDATE_IMPLEMENTATION_FINAL_OFFLINE_SIGNOFF_PRE_BITSTREAM_GATE_AND_BITSTREAM_CANDIDATE_NOT_AVAILABLE",
         "bitstream_candidate": "NOT_AVAILABLE",
         "accepted_by_role": "OWNER_ARCHITECT",
-        "decision_source": "META-6_TASK_DIRECTIVE",
-        "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
-        "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit"
+        "decision_source": "META-7R_TASK_DIRECTIVE",
+        "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c",
+        "evidence_directory": "v41-development-g2b-g15-17-release-slot-equivalence-audit"
       }
     ],
     "group9_ownership_signoff": {
@@ -170,7 +172,7 @@
       "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
       "groups_10_to_12": "PRESERVE_PREVIOUS_RESULTS",
       "group_14": "PROMOTED",
-      "groups_15_to_17": "PENDING_UNCHANGED",
+      "groups_15_to_17": "PROMOTED",
       "decision_record": "UNNUMBERED_GOVERNED_DECISION",
       "decision_state": "RESOLVED",
       "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
@@ -181,7 +183,7 @@
       "evidence_directory": "v41-development-g2b-g13a-reset-return-signoff-audit",
       "authoritative_result": "PASS_PRESERVED_DO_NOT_REPEAT",
       "reexecution": "DO_NOT_REPEAT",
-      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-4"
     },
     "group14_release_slot_signoff": {
       "status": "ACCEPTED",
@@ -256,7 +258,7 @@
       "group_9": "PRESERVE_PASS",
       "groups_10_to_12": "PRESERVE_PASS",
       "group_13": "PRESERVE_PASS",
-      "groups_15_to_17": "PENDING_UNCHANGED",
+      "groups_15_to_17": "PROMOTED",
       "decision_record": "UNNUMBERED_GOVERNED_DECISION",
       "decision_state": "RESOLVED",
       "decision": "REPLACE_WITH_SETTLING_PLUS_STRUCTURAL_CDC",
@@ -265,7 +267,270 @@
       "decision_source": "META-6_TASK_DIRECTIVE",
       "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96",
       "evidence_directory": "v41-development-g2b-g14a-release-slot0-signoff-audit",
-      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-3"
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-4",
+      "active_xdc_change_context": "HISTORICAL_META6_PROMOTION_TIME_BOUNDARY_CURRENT_GROUP14_PASS_PRESERVED",
+      "authoritative_result": "PASS_PRESERVED_DO_NOT_REPEAT",
+      "reexecution": "DO_NOT_REPEAT"
+    },
+    "groups15_17_release_slot_signoff": {
+      "status": "ACCEPTED",
+      "combined_promotion_scope": "GROUPS_15_16_17",
+      "decision": "PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC",
+      "slot_structural_relation": "PARTIALLY_EQUIVALENT",
+      "safety_protocol_equivalence": "PROVEN",
+      "slot_specific_routed_checks_required": "YES",
+      "groups": [
+        {
+          "status": "ACCEPTED",
+          "group": 15,
+          "slot": 1,
+          "group_name": "RELEASE_SLOT_1_AXI_TO_SOURCE",
+          "old_required_signoff": {
+            "method": "GLOBAL_SET_BUS_SKEW_3NS",
+            "source_count": 56,
+            "destination_count": 20,
+            "disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+            "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON"
+          },
+          "new_required_signoff": {
+            "method": "SETTLING_PLUS_STRUCTURAL_CDC",
+            "promotion_state": "PROMOTED",
+            "semantic_families": [
+              {
+                "name": "RELEASE_SLOT1_NORMAL_STATE_TRANSITION",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch token settles before qualified DMA_OWNED to RELEASABLE state use",
+                "collection_prefix": "g2b_g15eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT1_MISMATCH_CONTAINMENT",
+                "source_count": 56,
+                "destination_count": 4,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch/state mismatch asserts fatal/event/deferred containment and disables admission",
+                "collection_prefix": "g2b_g15eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT1_RESET_OVERLAP_ACCOUNTING",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Captured release phase participates in reset-abandoned accounting before retirement",
+                "collection_prefix": "g2b_g15eq",
+                "independent_routed_validation_required": true
+              }
+            ],
+            "semantic_family_count": 3,
+            "settling_cap_ns": "6.000"
+          },
+          "cdc_structure": "PASS_WITH_DISPOSITION",
+          "rtl_change_required": "NO",
+          "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+          "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+          "accepted_by_role": "OWNER_ARCHITECT",
+          "decision_source": "META-7R_TASK_DIRECTIVE",
+          "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c"
+        },
+        {
+          "status": "ACCEPTED",
+          "group": 16,
+          "slot": 2,
+          "group_name": "RELEASE_SLOT_2_AXI_TO_SOURCE",
+          "old_required_signoff": {
+            "method": "GLOBAL_SET_BUS_SKEW_3NS",
+            "source_count": 56,
+            "destination_count": 20,
+            "disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+            "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON"
+          },
+          "new_required_signoff": {
+            "method": "SETTLING_PLUS_STRUCTURAL_CDC",
+            "promotion_state": "PROMOTED",
+            "semantic_families": [
+              {
+                "name": "RELEASE_SLOT2_NORMAL_STATE_TRANSITION",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch token settles before qualified DMA_OWNED to RELEASABLE state use",
+                "collection_prefix": "g2b_g16eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT2_MISMATCH_CONTAINMENT",
+                "source_count": 56,
+                "destination_count": 4,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch/state mismatch asserts fatal/event/deferred containment and disables admission",
+                "collection_prefix": "g2b_g16eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Captured release phase participates in reset-abandoned accounting before retirement",
+                "collection_prefix": "g2b_g16eq",
+                "independent_routed_validation_required": true
+              }
+            ],
+            "semantic_family_count": 3,
+            "settling_cap_ns": "6.000"
+          },
+          "cdc_structure": "PASS_WITH_DISPOSITION",
+          "rtl_change_required": "NO",
+          "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+          "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+          "accepted_by_role": "OWNER_ARCHITECT",
+          "decision_source": "META-7R_TASK_DIRECTIVE",
+          "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c"
+        },
+        {
+          "status": "ACCEPTED",
+          "group": 17,
+          "slot": 3,
+          "group_name": "RELEASE_SLOT_3_AXI_TO_SOURCE",
+          "old_required_signoff": {
+            "method": "GLOBAL_SET_BUS_SKEW_3NS",
+            "source_count": 56,
+            "destination_count": 20,
+            "disposition": "RETIRED_FROM_REQUIRED_SIGNOFF",
+            "path_set_comparability": "INVALID_FOR_SKEW_COMPARISON"
+          },
+          "new_required_signoff": {
+            "method": "SETTLING_PLUS_STRUCTURAL_CDC",
+            "promotion_state": "PROMOTED",
+            "semantic_families": [
+              {
+                "name": "RELEASE_SLOT3_NORMAL_STATE_TRANSITION",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch token settles before qualified DMA_OWNED to RELEASABLE state use",
+                "collection_prefix": "g2b_g17eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT3_MISMATCH_CONTAINMENT",
+                "source_count": 56,
+                "destination_count": 4,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Generation/epoch/state mismatch asserts fatal/event/deferred containment and disables admission",
+                "collection_prefix": "g2b_g17eq",
+                "independent_routed_validation_required": true
+              },
+              {
+                "name": "RELEASE_SLOT3_RESET_OVERLAP_ACCOUNTING",
+                "source_count": 56,
+                "destination_count": 3,
+                "constraint_type": "MAX_DELAY_DATAPATH_ONLY",
+                "required_ns": "6.000",
+                "source_clock": "userclk1",
+                "destination_clock": "nvp_vclk1",
+                "semantic_role": "Captured release phase participates in reset-abandoned accounting before retirement",
+                "collection_prefix": "g2b_g17eq",
+                "independent_routed_validation_required": true
+              }
+            ],
+            "semantic_family_count": 3,
+            "settling_cap_ns": "6.000"
+          },
+          "cdc_structure": "PASS_WITH_DISPOSITION",
+          "rtl_change_required": "NO",
+          "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+          "global_report_bus_skew": "RETIRED_FROM_REQUIRED_SIGNOFF",
+          "accepted_by_role": "OWNER_ARCHITECT",
+          "decision_source": "META-7R_TASK_DIRECTIVE",
+          "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c"
+        }
+      ],
+      "semantic_families_per_slot": 3,
+      "total_timing_checks": 9,
+      "candidate_timing_validation": "PASS",
+      "settling_cap_ns": "6.000",
+      "destination_clock_period_ns": "6.734",
+      "minimum_launch_to_use_margin_ns": "13.468",
+      "gross_reserve_ns": "7.468",
+      "structural_requirements": [
+        "HELD_56_BIT_GENERATION_EPOCH_TOKEN",
+        "TWO_STAGE_RELEASE_TOGGLE_SYNCHRONIZER",
+        "DESTINATION_USE_AFTER_SYNCHRONIZED_EVENT",
+        "STABLE_PAYLOAD_THROUGH_CONSUMPTION",
+        "FAIL_CLOSED_MISMATCH_CONTAINMENT",
+        "RESET_OVERLAP_STALE_RELEASE_PROTECTION",
+        "COHERENT_CAPTURED_PHASE_RETIREMENT",
+        "NO_PREMATURE_OVERWRITE_OR_SLOT_REUSE"
+      ],
+      "reset_transport_request_synchronizer_stages": 2,
+      "signoff_runtime": "PRACTICAL",
+      "replacement_equivalence": "SAFER_AND_MORE_SEMANTICALLY_CORRECT",
+      "rtl_change_required": "NO",
+      "active_xdc_change": "AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED",
+      "candidate_xdc": "G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc",
+      "candidate_xdc_sha256": "BFB8482C1A84961E43FF24A69008C91EBA4E5B37E494CB5C65D262FAFE00AE6F",
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-7R_TASK_DIRECTIVE",
+      "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c",
+      "evidence_directory": "v41-development-g2b-g15-17-release-slot-equivalence-audit",
+      "preserved_results": {
+        "group9": "PRESERVE_PASS",
+        "group10": "PRESERVE_PASS",
+        "group11": "PRESERVE_PASS",
+        "group12": "PRESERVE_PASS",
+        "group13": "PRESERVE_PASS",
+        "group14": "PRESERVE_PASS"
+      },
+      "future_signoff_recipe": [
+        "PRESERVE_GROUPS9_TO_14_PASS",
+        "IMPLEMENT_G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS_XDC",
+        "VALIDATE_NINE_SLOT_SPECIFIC_SETTLING_AND_STRUCTURAL_CDC_CHECKS",
+        "ROUTED_SETUP_HOLD_TIMING",
+        "DRC",
+        "CDC_DISPOSITION",
+        "CLOCKS",
+        "PRODUCT_RESOURCES",
+        "PRE_BITSTREAM_HARD_GATE",
+        "BITSTREAM_ONLY_AFTER_PASS"
+      ],
+      "next_gate": "G2B-LUT1-SIGNOFF-RECOVERY-4",
+      "remaining_methodology_warnings": "OTHER_PRESERVED_RELATIONS_REQUIRE_FINAL_DISPOSITION_OUTSIDE_THIS_DECISION",
+      "route_measurements_are_permanent_requirements": false
+    },
+    "next_engineering_source": {
+      "worktree": "C:\\FPGA\\V41_G2B",
+      "branch": "integration/v41-g2b-onech-c2h",
+      "commit": "bdae16e06fb5b8564763941f530e4ce9e28896c7",
+      "tree": "e18833d46f7672f851c3cb8239f2f29091378294",
+      "scope": "AUTHORITATIVE_RECOVERY4_INPUT_NOT_QUALIFIED_BASELINE"
     }
   },
   "research_track": {
@@ -345,13 +610,13 @@
   },
   "meta_track": {
     "status": "ACCEPTED",
-    "current_task": "META-6",
+    "current_task": "META-7R",
     "active_gate": null,
     "next_gate": null,
-    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_RELEASE_SLOT_GROUP14_SIGNOFF_METHOD",
+    "acceptance_basis": "OWNER_ARCHITECT_PROMOTED_COMBINED_GROUPS15_TO_17_RELEASE_SLOT_SIGNOFF_METHODS",
     "accepted_by_role": "OWNER_ARCHITECT",
-    "decision_source": "META-6_TASK_DIRECTIVE",
-    "source_evidence_commit": "9e91315968453e859006077191cd5fc711fc6b96"
+    "decision_source": "META-7R_TASK_DIRECTIVE",
+    "source_evidence_commit": "fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c"
   },
   "reporting_requirements": {
     "record_project_state_rev_at_start": true,

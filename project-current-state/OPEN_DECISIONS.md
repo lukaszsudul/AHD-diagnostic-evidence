@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 6`
+`PROJECT_STATE_REV = 7`
 
 Every item below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update
@@ -21,6 +21,27 @@ the SSOT changes, a separate authorized META update.
 | `OD-12` | Actual PRODUCT and RESEARCH_DIAGNOSTIC timing | `OPEN` | No profile implementation or post-route timing result exists | Complete timing/DRC/CDC requalification of both profiles |
 | `OD-13` | Actual G2B hardware result | `OPEN` | No G2B bitstream, DMA capture, or hardware proof exists | Separately authorized hardware qualification after offline acceptance |
 | `OD-14` | R2/R3 scientific closure | `OPEN` | R-track is `HOLD`, not closed | Resume research through RESEARCH_DIAGNOSTIC and obtain explicit scientific closure decision |
+
+## Decided at project-state revision 7 — Groups 15–17
+
+| Decision subject | Decision | Lifecycle status | Decision state | Covered groups |
+|---|---|---|---|---|
+| `GROUPS15_17_RELEASE_SLOT_SIGNOFF_METHODOLOGY` | `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC` | `ACCEPTED` | `RESOLVED` | 15, 16, 17 |
+
+Record form: `UNNUMBERED_GOVERNED_DECISION`. Owner/Architect approval is
+granted by `META-7R_TASK_DIRECTIVE`; accepted evidence is `v41-development-g2b-g15-17-release-slot-equivalence-audit` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+Routed cones are `PARTIALLY_EQUIVALENT`; safety-protocol equivalence is
+`PROVEN`; every slot retains independent timing collections and routed
+checks. The global methods are retired; each slot's three-family replacement
+is promoted with a `6.000 ns` cap. RTL change required is `NO`.
+Active XDC is `AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` for Groups 15–17.
+Next task is `G2B-LUT1-SIGNOFF-RECOVERY-4`; Groups 9–14 PASS are preserved and G2B-HW is `BLOCKED`.
+
+`EXISTING_UNRELATED_OD_ENTRIES_CHANGED = NO`. All earlier decision records
+below remain verbatim. Their implementation-pending and Groups 15–17 pending
+statements describe HISTORICAL promotion-time context and are SUPERSEDED as
+current continuation instructions by this revision-7 decision. Their accepted
+methods, numerical bounds and evidence identities remain authoritative.
 
 ## Decided at project-state revision 6 — Group-14 implementation pending
 

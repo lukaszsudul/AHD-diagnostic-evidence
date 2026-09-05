@@ -1,11 +1,11 @@
 # AHD Current Status
 
-`PROJECT_STATE_REV = 6`
+`PROJECT_STATE_REV = 7`
 State type: `CURRENT_ACCEPTED_STATE`
 Accepted by role: `OWNER_ARCHITECT`
 Decision basis: historical accepted state plus explicit Owner/Architect
-promotion of the accepted G14-A release-slot CDC architecture and Group-14
-sign-off method through META-6
+promotion of the accepted combined Groups 15–17 release-slot CDC architecture
+and sign-off methods through META-7R
 
 ## Acceptance boundary
 
@@ -30,9 +30,9 @@ XDC, offline qualification, bitstream, or hardware state.
 | Product | G1 | `ACCEPTED` | Integration and C2H architecture accepted; G2 implementation allowed | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
 | Product | G2A | `ACTIVE` | In progress; no accepted result is represented | No G2A package on evidence `main` at revision-1 creation |
 | Product | G2B-PRE | `ACCEPTED` | C2H transport ABI, MMIO contract, and Linux transport-input contract frozen | Accepted evidence at `e8ab1012d855cfbe68f61a6d0bccd92dc6d6547e`; architecture contract only |
-| Product | G2B-IMPL | `BLOCKED` | Sign-off recovery pending; not offline-qualified | No G2B bitstream or hardware result; Group-14 candidate XDC is authorized but not implemented; remaining routed hard gates are pending |
+| Product | G2B-IMPL | `BLOCKED` | Sign-off recovery pending; not offline-qualified | No G2B bitstream or hardware result; Groups 15–17 candidate XDC is authorized but not implemented; remaining routed hard gates are pending |
 | Product | G2B-LUT0 | `ACCEPTED` | Plan B dual-profile resource architecture accepted | Evidence `PASS` at `a70c55eca5f0c0ad349143ad93ab87eb80d11ac4`; estimate is not qualification |
-| Product | G2B-LUT1 | `PLANNED` | readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-3` | Preserve Group 9, Groups 10–12, and Group 13 authoritative results; implement and validate the promoted Group-14 candidate, then continue Groups 15–17 and remaining routed hard gates |
+| Product | G2B-LUT1 | `PLANNED` | readiness `READY_FOR_SIGNOFF_RECOVERY`; next gate `G2B-LUT1-SIGNOFF-RECOVERY-4` | Preserve Groups 9–14 authoritative PASS; implement and validate all nine Groups 15–17 candidate checks, then continue remaining routed hard gates |
 | Product | G2B-HW | `BLOCKED` | `NOT_STARTED / NOT_PROVEN` | Final offline sign-off, pre-bitstream hard gate, and a bitstream candidate do not exist |
 | Research | R0 | `ACCEPTED` | Causal-isolation design accepted | Evidence package engineering `PASS`; acceptance supplied by Owner/Architect |
 | Research | R1 | lifecycle `ACTIVE`; execution state `HOLD` | Valid research context; no closure or product promotion | `RESEARCH_DIAGNOSTIC` preserves the diagnostic continuation path |
@@ -43,6 +43,51 @@ XDC, offline qualification, bitstream, or hardware state.
 | META | META-4R2 | `ACCEPTED` | Ownership CDC Group-9 sign-off method promoted | SSOT/meta only; no RTL, active XDC, Vivado, bitstream, or hardware action |
 | META | META-5 | `ACCEPTED` | Reset-return CDC Group-13 sign-off method promoted | SSOT/meta only; no RTL, active XDC, Vivado, bitstream, or hardware action |
 | META | META-6 | `ACCEPTED` | Release-slot CDC Group-14 sign-off method promoted | SSOT/meta only; no RTL, active XDC, Vivado, bitstream, or hardware action |
+
+| META | META-7R | `ACCEPTED` | Combined Groups 15–17 release-slot methods promoted | SSOT only; no RTL, active XDC, bitstream or hardware action |
+
+## META-7R combined release-slot promotion
+
+Groups 15–17 each promote `SETTLING_PLUS_STRUCTURAL_CDC` with three
+slot-specific semantic families, nine checks total, and a `6.000 ns` absolute
+settling cap. The `13.468 ns` minimum launch-to-use window provides `7.468 ns`
+gross reserve. `SLOT_STRUCTURAL_RELATION = PARTIALLY_EQUIVALENT`,
+`SAFETY_PROTOCOL_EQUIVALENCE = PROVEN`, and
+`SLOT_SPECIFIC_ROUTED_CHECKS_REQUIRED = YES`. Each former global
+`GLOBAL_SET_BUS_SKEW_3NS` / `report_bus_skew` is
+`RETIRED_FROM_REQUIRED_SIGNOFF`. See the complete family and structural
+requirements in `CURRENT_ARCHITECTURE.md` and `CURRENT_REQUIREMENTS.md`.
+
+`ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` for Groups
+15–17. Candidate authority: `G2B_G15_17_EQ_CANDIDATE_CONSTRAINTS.xdc` in
+`v41-development-g2b-g15-17-release-slot-equivalence-audit` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+`RTL_CHANGE_REQUIRED = NO`; `SLOT1_RTL_CHANGE_REQUIRED = NO`,
+`SLOT2_RTL_CHANGE_REQUIRED = NO`, and `SLOT3_RTL_CHANGE_REQUIRED = NO`.
+
+`GROUP9 = PRESERVE_PASS`; `GROUPS_10_TO_12 = PRESERVE_PASS`;
+`GROUP13 = PRESERVE_PASS`; `GROUP14 = PRESERVE_PASS`. Their methods, bounds,
+promotion evidence and promotion-time active-XDC dispositions are preserved.
+The Group-14 pending-XDC statements at META-6 are historical promotion-time
+boundaries; the authoritative audit now preserves its PASS. They do not
+instruct recovery-4 to reimplement Group 14.
+
+`G2B-LUT1 = READY_FOR_SIGNOFF_RECOVERY`;
+`NEXT_ALLOWED_ENGINEERING_STEP = G2B-LUT1-SIGNOFF-RECOVERY-4`. That separate governed task uses
+`C:\FPGA\V41_G2B`, branch `integration/v41-g2b-onech-c2h`, current source
+commit `bdae16e06fb5b8564763941f530e4ce9e28896c7`, tree
+`e18833d46f7672f851c3cb8239f2f29091378294`. It may replace only the three retired
+global Groups 15–17 bus-skew constraints with the nine candidate checks,
+preserving every unrelated active constraint and Groups 9–14 PASS. It must
+validate all nine checks, then continue final routed timing, DRC, CDC
+disposition, clocks, PRODUCT resources and the pre-bitstream hard gate.
+Bitstream generation is a later engineering action allowed only after those
+gates pass; it is not performed or claimed by META-7R.
+
+`G2B-HW = BLOCKED`: Groups 15–17 active-XDC replacement is not implemented;
+final timing, DRC, CDC, clocks/resources and the pre-bitstream gate are not
+complete; no G2B bitstream exists and hardware has not been tested. No final
+timing sign-off, qualification, release, hardware readiness, DMA operation,
+or hardware proof is promoted.
 
 ## Accepted product state
 
@@ -60,7 +105,7 @@ XDC, offline qualification, bitstream, or hardware state.
 | Linux transport consumer contract | `FROZEN` | Frozen input contract only; V4L2 architecture/implementation is not promoted |
 | Group-9 `OWNERSHIP_AXI_TO_SOURCE` sign-off | `ACCEPTED` | `PER_FAMILY_SETTLING_PLUS_STRUCTURAL_CDC`; old `GLOBAL_SET_BUS_SKEW_3NS` retired from required sign-off |
 | Group-13 `RESET_RETURN_SOURCE_TO_AXI` sign-off | `ACCEPTED` | `SETTLING_PLUS_STRUCTURAL_CDC`; old global `GLOBAL_SET_BUS_SKEW_3NS` and Group-13 `report_bus_skew` retired from required sign-off |
-| Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off | `ACCEPTED` | `SETTLING_PLUS_STRUCTURAL_CDC` promoted; old global `GLOBAL_SET_BUS_SKEW_3NS` and Group-14 `report_bus_skew` retired from required sign-off; `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` |
+| Group-14 `RELEASE_SLOT_0_AXI_TO_SOURCE` sign-off (active-XDC literal is HISTORICAL at META-6 promotion; current result `PRESERVE_PASS`) | `ACCEPTED` | `SETTLING_PLUS_STRUCTURAL_CDC` promoted; old global `GLOBAL_SET_BUS_SKEW_3NS` and Group-14 `report_bus_skew` retired from required sign-off; `RTL_CHANGE_REQUIRED = NO`; `ACTIVE_XDC_CHANGE = AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED` |
 | PRODUCT profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; LUT hard gate `<=90%`, preferred `80–85%` |
 | RESEARCH_DIAGNOSTIC profile | `PLANNED` | `AUTHORIZED_NOT_IMPLEMENTED`; PRODUCT functionality plus resumable research observability |
 | Gen2 x1 implementation target | `FROZEN` | Required final configuration or better; hardware remains `NOT_PROVEN` |

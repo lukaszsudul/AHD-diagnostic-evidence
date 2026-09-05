@@ -511,3 +511,50 @@ Affected SSOT files in the revision-6 transaction (`16`):
 The ordinary publication commit and fresh remote byte/SHA-256 read-back are
 post-commit executor completion data. No not-yet-created publication SHA or
 precompleted remote read-back is invented in this changelog entry.
+
+
+## PROJECT_STATE_REV 7 — 2026-09-05 — META-7R
+
+Update type: `ARCHITECTURE_CHANGE`. Standalone `SSOT WRITE AUTHORIZED`.
+Expected prior revision: `6`; resulting revision: `7`.
+Owner/Architect approval: `META-7R_TASK_DIRECTIVE`. Corrected contract supersedes the
+rejected META-7 attempt, which changed no files and left revision 6.
+
+Accepted evidence: `v41-development-g2b-g15-17-release-slot-equivalence-audit` at `fe6dd4aa4d9083ff5b830d71b9b7f2e51505218c`.
+META-6 procedural precedent: `0061a20ab735b4ff5dabdfe1f81ed9f1ba718dde`.
+Groups 15, 16 and 17 retire their global `GLOBAL_SET_BUS_SKEW_3NS` /
+`report_bus_skew` from required sign-off and promote independent three-family
+`SETTLING_PLUS_STRUCTURAL_CDC` methods, nine checks total, `6.000 ns` cap,
+`13.468 ns` launch-to-use basis and `7.468 ns` gross reserve.
+Routed relation is `PARTIALLY_EQUIVALENT`; safety protocol equivalence is
+`PROVEN`; independent slot-specific routed checks remain mandatory.
+Decision `GROUPS15_17_RELEASE_SLOT_SIGNOFF_METHODOLOGY` is unnumbered,
+`RESOLVED`, as `PROMOTE_COMBINED_SETTLING_PLUS_STRUCTURAL_CDC`.
+Groups 9–14 PASS and unrelated decisions/content remain preserved.
+RTL change required: `NO`; active XDC: `AUTHORIZED_NEXT_STEP_NOT_YET_IMPLEMENTED`.
+G2B-LUT1 remains `READY_FOR_SIGNOFF_RECOVERY`; next task `G2B-LUT1-SIGNOFF-RECOVERY-4`;
+G2B-HW remains `BLOCKED`. No final sign-off, qualification, release, bitstream,
+hardware readiness, DMA operation or hardware proof is claimed.
+
+Exactly 16 affected files:
+
+- `project-current-state/ACTIVE_BASELINES.md`
+- `project-current-state/CHANGELOG.md`
+- `project-current-state/COMPATIBILITY_MATRIX.csv`
+- `project-current-state/CURRENT_ARCHITECTURE.md`
+- `project-current-state/CURRENT_INTERFACES.md`
+- `project-current-state/CURRENT_REQUIREMENTS.md`
+- `project-current-state/CURRENT_RESOURCE_STATE.md`
+- `project-current-state/CURRENT_STATUS.md`
+- `project-current-state/CURRENT_TRACKS.md`
+- `project-current-state/EVIDENCE_MAP.md`
+- `project-current-state/GOVERNANCE.md`
+- `project-current-state/OPEN_DECISIONS.md`
+- `project-current-state/PROJECT_STATE.json`
+- `project-current-state/README.md`
+- `project-current-state/SHA256_MANIFEST.txt`
+- `project-current-state/TRACK_STATUS.json`
+
+Audit package: `v41-meta-project-state-rev7-groups15-17-release-slot-signoff`. One ordinary non-force promotion commit;
+remote byte/hash read-back is an executor completion action recorded after
+publication. Earlier changelog bytes are preserved unchanged.
