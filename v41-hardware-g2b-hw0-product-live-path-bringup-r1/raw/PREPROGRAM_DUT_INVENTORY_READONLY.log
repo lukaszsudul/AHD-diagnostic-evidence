@@ -1,0 +1,284 @@
+UTC_START=2026-09-05T21:55:38.0202484Z
+UTC_END=2026-09-05T21:55:39.2106213Z
+EVIDENCE_KIND=G2B_HW0_PRODUCT_R1_PREPROGRAM_DUT_INVENTORY_READONLY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK_ID=G2B-HW0-PRODUCT-R1
+INVENTORY_MODE=READ_ONLY_PREPROGRAM
+REMOTE_UTC=2026-09-05T21:55:37.996834171Z
+HOSTNAME=VCDE-DUT-1
+REMOTE_USER=vcdeagent1
+EFFECTIVE_USER=root
+EFFECTIVE_UID=0
+MACHINE_ID=0e90f50d9465492b80258da5658446f8
+BOOT_ID=37131b8d-0e38-4b4e-b77a-b3bda55b4e97
+KERNEL=7.0.0-29-generic
+UPTIME_SECONDS=7811.23
+
+===== NETWORK_IDENTITY =====
+2: eno1    inet 10.132.1.111/24 brd 10.132.1.255 scope global dynamic noprefixroute eno1\       valid_lft 78600sec preferred_lft 78600sec
+default via 10.132.1.1 dev eno1 proto dhcp src 10.132.1.111 metric 100 
+10.132.1.0/24 dev eno1 proto kernel scope link src 10.132.1.111 metric 100 
+
+===== RELEVANT_PROCESSES =====
+
+===== RELEVANT_LOCKS =====
+
+===== PCI_TOPOLOGY =====
+-[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex
+           +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU
+           +-01.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-02.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-02.1-[01-09]----00.0-[02-09]--+-00.0-[03]--
+           |                               +-08.0-[04]--
+           |                               +-09.0-[05]--
+           |                               +-0a.0-[06]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller
+           |                               +-0b.0-[07]--
+           |                               +-0c.0-[08]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller
+           |                               \-0d.0-[09]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller
+           +-03.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-04.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.1-[0a]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1
+           |            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller
+           |            +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15b9
+           |            +-00.4  Advanced Micro Devices, Inc. [AMD] Device 15ba
+           |            \-00.6  Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller
+           +-08.2-[0b]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            \-00.1  Advanced Micro Devices, Inc. [AMD] AMD IPU Device
+           +-08.3-[0c]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15c0
+           |            \-00.4  Advanced Micro Devices, Inc. [AMD] Device 15c1
+           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller
+           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge
+           +-18.0  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0
+           +-18.1  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1
+           +-18.2  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2
+           +-18.3  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3
+           +-18.4  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4
+           +-18.5  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5
+           +-18.6  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6
+           \-18.7  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7
+
+===== PCI_IDENTITIES =====
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+0000:01:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01)
+0000:02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:06:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+0000:08:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01)
+0000:09:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01)
+0000:0a:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev 05)
+0000:0a:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640]
+0000:0a:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15b9]
+0000:0a:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15ba]
+0000:0a:00.6 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3]
+0000:0b:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0b:00.1 Signal processing controller [1180]: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+0000:0c:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0c:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+0000:0c:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+
+===== RELEVANT_PCI_SYSFS =====
+
+===== EXPECTED_AHD_ENDPOINT_VERBOSE =====
+0000:01:00.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device 3328
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 24
+	IOMMU group: 11
+	Bus: primary=01, secondary=02, subordinate=09, sec-latency=0
+	I/O behind bridge: f000-ffff [size=4K] [16-bit]
+	Memory behind bridge: f6a00000-f6cfffff [size=3M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: [50] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [70] Power Management version 3
+		Flags: PMEClk- DSI+ D1- D2- AuxCurrent=0mA PME(D0+,D1-,D2-,D3hot+,D3cold+)
+		Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [80] Express (v2) Upstream Port, IntMsgNum 0
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0
+			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ SlotPowerLimit 75W TEE-IO-
+		DevCtl:	CorrErr+ NonFatalErr+ FatalErr+ UnsupReq+
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 128 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x4, ASPM L1, Exit Latency L1 <32us
+			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp+
+		LnkCtl:	ASPM Disabled; LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt- FltModeDis-
+		LnkSta:	Speed 16GT/s, Width x4
+			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Not Supported, TimeoutDis- NROPrPrP- LTR+
+			 10BitTagComp+ 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS-
+			 AtomicOpsCap: Routing-
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+			 AtomicOpsCtl: EgressBlck-
+			 IDOReq- IDOCompl- LTR+ EmergencyPowerReductionReq-
+			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+		LnkCap2: Supported Link Speeds: 2.5-16GT/s, Crosslink- Retimer+ 2Retimers+ DRS-
+		LnkCtl2: Target Link Speed: 16GT/s, EnterCompliance- SpeedDis-
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+		LnkSta2: Current De-emphasis Level: -3.5dB, EqualizationComplete+ EqualizationPhase1+
+			 EqualizationPhase2+ EqualizationPhase3+ LinkEqualizationRequest-
+			 Retimer- 2Retimers- CrosslinkRes: unsupported, FltMode-
+	Capabilities: [c0] Subsystem: ASMedia Technology Inc. Device 3328
+	Capabilities: [100 v1] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+
+			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr+ HeaderOF+
+		AERCap:	First Error Pointer: 00, ECRCGenCap- ECRCGenEn- ECRCChkCap- ECRCChkEn-
+			MultHdrRecCap- MultHdrRecEn- TLPPfxPres- HdrLogCap-
+		HeaderLog: 00000000 00000000 00000000 00000000
+	Capabilities: [160 v1] Latency Tolerance Reporting
+		Max snoop latency: 1048576ns
+		Max no snoop latency: 1048576ns
+	Capabilities: [1c0 v1] Secondary PCI Express
+		LnkCtl3: LnkEquIntrruptEn- PerformEqu-
+		LaneErrStat: 0
+	Capabilities: [200 v1] L1 PM Substates
+		L1SubCap: PCI-PM_L1.2+ PCI-PM_L1.1+ ASPM_L1.2+ ASPM_L1.1+ L1_PM_Substates+
+			  PortCommonModeRestoreTime=128us PortTPowerOnTime=10us
+		L1SubCtl1: PCI-PM_L1.2- PCI-PM_L1.1- ASPM_L1.2- ASPM_L1.1-
+			   T_CommonMode=0us LTR1.2_Threshold=32768ns
+		L1SubCtl2: T_PwrOn=10us
+	Capabilities: [220 v1] Data Link Feature <?>
+	Capabilities: [240 v1] Physical Layer 16.0 GT/s
+		Phy16Sta: EquComplete+ EquPhase1+ EquPhase2+ EquPhase3+ LinkEquRequest-
+	Capabilities: [280 v1] Lane Margining at the Receiver
+		PortCap: Uses Driver-
+		PortSta: MargReady+ MargSoftReady+
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+
+===== EXPECTED_AHD_ROOT_VERBOSE =====
+EXPECTED_AHD_ROOT_0000_00_01_1=ABSENT
+
+===== XDMA_MODULE =====
+Module                  Size  Used by
+filename:       /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+license:        GPL
+author:         XRT Team <runtimeca39d@amd.com>
+description:    AMD XDMA driver
+srcversion:     8F61105E6B60B5A7A441D9A
+alias:          platform:xdma
+depends:        
+intree:         Y
+name:           xdma
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+sig_id:         PKCS#7
+signer:         Build time autogenerated kernel key
+sig_key:        25:84:45:71:EF:28:15:5F:FB:E8:A3:AE:5F:FD:86:B9:DC:66:18:CD
+sig_hashalgo:   sha512
+signature:      06:11:86:11:60:07:ED:6D:70:E2:D8:61:56:E1:87:77:5A:09:29:01:
+		88:55:DD:C0:46:01:27:36:6A:2A:A2:43:32:52:D2:A5:0D:58:F4:E6:
+		DC:1B:EF:B3:A9:40:D1:4B:E4:4F:AB:BD:08:81:41:8A:FF:C6:9F:1D:
+		12:8D:49:67:4B:97:2F:54:9D:28:1B:8A:BE:43:10:BE:7E:01:8A:A0:
+		5B:F9:46:7A:8A:E2:33:09:2A:F6:30:98:DA:72:A9:73:60:BB:43:74:
+		9B:D7:98:A7:72:5D:ED:FE:B2:A2:B8:0B:EE:86:11:BD:41:46:B2:8B:
+		11:73:6F:9E:48:18:38:0F:BA:39:CB:2F:B6:ED:D4:44:B4:59:71:72:
+		14:EC:E8:A5:0F:65:80:6E:1A:B7:4E:90:21:9F:06:93:36:AF:36:BD:
+		D4:E8:B6:B8:C9:00:DA:34:10:7E:F5:5E:97:A0:56:88:1D:7F:4A:46:
+		63:06:A2:D3:FF:BE:12:38:45:A5:4D:9D:3C:BB:EB:38:CE:08:98:AC:
+		34:5C:AF:92:DF:14:5F:6B:7F:2F:9C:35:D0:21:B2:90:C4:71:DB:DE:
+		4A:CB:3F:FC:9D:EB:E0:C0:01:01:7E:1D:9F:D8:AA:61:4D:37:2B:F5:
+		46:84:8F:D5:7E:86:92:11:ED:9B:C1:86:7A:85:98:82:E8:4F:FC:CE:
+		D3:DC:2B:7D:7A:B0:41:4E:75:E0:BB:FC:0B:AD:0D:CE:C4:2D:42:2F:
+		EE:1F:87:55:4B:1C:60:F9:D2:7A:AE:83:E0:31:3D:DD:84:DF:62:EB:
+		F5:C6:CE:5C:6A:74:97:28:A5:94:4F:A7:6B:78:7F:02:8A:0C:A4:99:
+		1D:D9:5A:D9:51:97:63:8A:79:4D:2A:18:F4:2F:0D:CB:07:E2:4A:D6:
+		E6:2A:CE:89:47:97:9D:F9:49:51:64:56:16:B4:5A:E1:0A:69:E6:A7:
+		58:6F:D6:FD:DE:A9:71:92:B1:2E:D2:67:C2:CF:97:3B:DB:CE:35:3D:
+		32:BC:28:4D:0D:7F:C1:BC:23:E9:6A:36:15:BF:BE:2E:51:9F:35:1A:
+		A3:69:8C:E9:CE:37:55:49:EB:CC:11:10:47:46:34:C3:97:2C:AD:01:
+		51:73:98:0D:71:3B:0C:DB:5B:73:74:8F:9C:7E:47:53:5E:5C:F3:ED:
+		BD:5C:DA:DA:27:9A:AF:B4:71:42:A7:F6:6C:47:27:6F:80:E2:0E:72:
+		46:59:46:0E:44:F6:DC:78:ED:90:89:C0:F6:32:7A:44:CC:B1:AC:12:
+		DF:FB:2C:A3:99:C5:2A:32:2E:65:69:08:9F:B7:71:48:5B:20:70:C2:
+		78:D2:0D:B6:AA:8E:9B:D9:A4:35:D7:8F
+523ed1f77a4700773ef1df846a54592d7396774826acabbcb222e104cc5a9490  /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+
+===== XDMA_NODES =====
+XDMA_NODE_COUNT=0
+
+===== XDMA_NODE_USERS =====
+NO_XDMA_NODES
+
+===== RELEVANT_KERNEL_LOG =====
+Sep 05 21:45:27 VCDE-DUT-1 kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: Adding to iommu group 11
+MMIO_READS=0
+MMIO_WRITES=0
+DMA_OPERATIONS=0
+DRIVER_CHANGES=0
+PCI_RECOVERY_OPERATIONS=0
+INVENTORY_COMPLETE=YES
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

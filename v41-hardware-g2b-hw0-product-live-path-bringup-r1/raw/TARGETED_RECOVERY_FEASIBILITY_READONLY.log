@@ -1,0 +1,162 @@
+UTC_START=2026-09-05T22:11:40.2715748Z
+UTC_END=2026-09-05T22:11:41.3093649Z
+EVIDENCE_KIND=TARGETED_RECOVERY_FEASIBILITY_READ_ONLY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK_ID=G2B-HW0-PRODUCT-R1
+MODE=READ_ONLY_TARGETED_RECOVERY_FEASIBILITY
+UTC=2026-09-05T22:11:40.479060579Z
+===== HISTORICAL_ROOT_FUNCTION_CONFIG_READ =====
+SPEC=0000:00:01.0
+setpci: Unknown register "CLASS_REV".
+Try `setpci --help' for more information.
+SYSFS_PRESENT=YES
+/sys/devices/pci0000:00/0000:00:01.0
+DEVICE_RESCAN_ATTRIBUTE=YES
+0000:00:01.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 0
+
+SPEC=0000:00:01.1
+setpci: Unknown register "CLASS_REV".
+Try `setpci --help' for more information.
+SYSFS_PRESENT=NO
+===== CURRENT_EXTERNAL_BRIDGE_CHAIN =====
+SPEC=0000:00:02.1
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:00:02.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge (prog-if 00 [Normal decode])
+	Bus: primary=00, secondary=01, subordinate=09, sec-latency=0
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x4, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 16GT/s, Width x4
+	Kernel driver in use: pcieport
+SPEC=0000:01:00.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:01:00.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=01, secondary=02, subordinate=09, sec-latency=0
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x4, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 16GT/s, Width x4
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:00.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:00.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:00.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=03, subordinate=03, sec-latency=0
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x4, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:08.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:08.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:08.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=04, subordinate=04, sec-latency=0
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x1, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:09.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:09.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:09.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=05, subordinate=05, sec-latency=0
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #1, Speed 16GT/s, Width x1, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:0a.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:0a.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:0a.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=06, subordinate=06, sec-latency=0
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #2, Speed 16GT/s, Width x1, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:0b.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:0b.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:0b.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=07, subordinate=07, sec-latency=0
+		DevSta:	CorrErr+ NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+		LnkCap:	Port #3, Speed 16GT/s, Width x1, ASPM L1, Exit Latency L1 <32us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:0c.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:0c.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:0c.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=08, subordinate=08, sec-latency=0
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #12, Speed 2.5GT/s, Width x1, ASPM L0s L1, Exit Latency L0s <64ns, L1 <1us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+SPEC=0000:02:0d.0
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:02.1/0000:01:00.0/0000:02:0d.0
+RESCAN_ATTRIBUTE=YES
+REMOVE_ATTRIBUTE=YES
+0000:02:0d.0 PCI bridge: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port (rev 01) (prog-if 00 [Normal decode])
+	Bus: primary=02, secondary=09, subordinate=09, sec-latency=0
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #13, Speed 2.5GT/s, Width x1, ASPM L0s L1, Exit Latency L0s <64ns, L1 <1us
+		LnkSta:	Speed 2.5GT/s, Width x1
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
+	Kernel driver in use: pcieport
+===== BUS_DEVICE_COUNTS =====
+BUS_01_DEVICE_COUNT=1
+BUS_02_DEVICE_COUNT=7
+BUS_03_DEVICE_COUNT=0
+BUS_04_DEVICE_COUNT=0
+BUS_05_DEVICE_COUNT=0
+BUS_06_DEVICE_COUNT=1
+BUS_07_DEVICE_COUNT=0
+BUS_08_DEVICE_COUNT=1
+BUS_09_DEVICE_COUNT=1
+===== XILINX_AND_MULTIMEDIA =====
+MMIO_READS=0
+MMIO_WRITES=0
+PCI_CONFIG_WRITES=0
+PCI_RESCANS=0
+PCI_RESETS=0
+FEASIBILITY_INVENTORY_COMPLETE=YES
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

@@ -1,0 +1,22 @@
+gate,prerequisite,result,evidence,blocker_or_note
+META-8A,rev8 and 32/32 manifest,PASS,raw/LOCAL_AUTHORITY_VERIFICATION.log,VERIFIED
+AUTHORIZATION,hardware + exact MMIO contract,PASS,G2B_HW0_PRODUCT_R1_AUTHORIZATION_RECEIPT.md,legacy writes DENIED
+DUT_AUTH,exact authenticated host,PASS,raw/DUT_IDENTITY_READONLY.log,VCDE-DUT-1
+DUT_EXCLUSIVITY,fresh ownership and locks,PASS,G2B_HW0_PRODUCT_R1_DUT_AUTHORITY_AND_LOCK_RECEIPT.md,both locks held before programming
+CANDIDATE,source/bit/DCP exact,PASS,raw/LOCAL_AUTHORITY_VERIFICATION.log,exact Recovery-4 candidate
+JTAG,one target/device exact,PASS,raw/JTAG_SESSION_1.csv,five DONE=0 samples
+PCIE_PREPROGRAM,fresh read-only inventory,PASS,raw/PREPROGRAM_DUT_INVENTORY_READONLY.log,AHD endpoint absent and recorded
+JTAG_PCIE_CORRELATION,accepted physical binding,PASS,raw/HISTORICAL_JTAG_PCIE_BINDING_VERIFICATION.log,T0 binding only
+T0,candidate/environment,PASS,V41_G2B_HW0_PRODUCT_R1_MAIN_REPORT.md,programming authorized to proceed
+SRAM_PROGRAM,one exact invocation,PASS,raw/PROGRAM_G2B_PRODUCT_R1_ONCE_VIVADO.log,DONE=1; no retry
+AUTO_PCIE_RECOVERY,bounded wait and inventory,COMPLETE_NO_ENDPOINT,raw/POSTPROGRAM_AUTO_RECOVERY_WAIT.log,AUTO_RECOVERY_FOUND=0
+TARGETED_PCIE_RECOVERY,exact AHD-only subtree required,BLOCKED,raw/TARGETED_RECOVERY_IDENTITY_READONLY.log,BLOCKED — SAFE_TARGETED_PCIE_RECOVERY_UNAVAILABLE
+AHD_ENDPOINT,fresh endpoint after program,FAIL,raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log,endpoint absent
+T1,SRAM + endpoint + Gen2x1 + XDMA,BLOCKED,G2B_HW0_PRODUCT_R1_PCIE_XDMA_INVENTORY.md,BLOCKED — SAFE_TARGETED_PCIE_RECOVERY_UNAVAILABLE
+T2,runtime/MMIO,NOT_REACHED,G2B_HW0_PRODUCT_R1_RUNTIME_IDENTITY.md,blocked by T1
+T3,one 4096-byte record,NOT_REACHED,G2B_HW0_PRODUCT_R1_FIRST_RECORD_ANALYSIS.md,blocked by T1
+T4,2500 records + frame,NOT_REACHED,G2B_HW0_PRODUCT_R1_FINITE_CAPTURE_SUMMARY.md,blocked by T1
+T5,60-second capture,NOT_REACHED,G2B_HW0_PRODUCT_R1_CONTINUOUS_CAPTURE_SUMMARY.md,blocked by T1
+PERSISTENT_SOURCE_PROTECTION,source/XDC/SSOT/Flash/driver/package unchanged,PASS,G2B_HW0_PRODUCT_R1_FINAL_HARDWARE_STATE.md,no persistent mutation
+EVIDENCE_PUBLICATION,new directory + non-force push,AWAITING_POST_COMMIT_REMOTE_READBACK,G2B_HW0_PRODUCT_R1_EVIDENCE_INDEX.md,separate from engineering gate
+REMOTE_READBACK,commit-pinned byte verification,NOT_RUN,PENDING,pending

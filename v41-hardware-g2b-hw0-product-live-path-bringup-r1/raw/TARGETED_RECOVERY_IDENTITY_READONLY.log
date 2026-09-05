@@ -1,0 +1,119 @@
+UTC_START=2026-09-05T22:12:50.2880672Z
+UTC_END=2026-09-05T22:12:51.0496666Z
+EVIDENCE_KIND=TARGETED_RECOVERY_IDENTITY_READ_ONLY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK_ID=G2B-HW0-PRODUCT-R1
+MODE=READ_ONLY_TARGETED_RECOVERY_IDENTITY
+UTC=2026-09-05T22:12:50.315739621Z
+===== EXACT_FUNCTION_CONFIG_READS =====
+SPEC=0000:00:01.0
+REG_0_w=1022
+REG_2_w=14ea
+REG_8_l=06000000
+REG_e_b=80
+SYSFS_PRESENT=YES
+VENDOR=0x1022
+DEVICE=0x14ea
+CLASS=0x060000
+SUBSYSTEM_VENDOR=0x0000
+SUBSYSTEM_DEVICE=0x0000
+SYSFS_PATH=/sys/devices/pci0000:00/0000:00:01.0
+SPEC=0000:00:01.1
+REG_0_w=setpci: Warning: No devices selected for operation group 1.
+REG_2_w=setpci: Warning: No devices selected for operation group 1.
+REG_8_l=setpci: Warning: No devices selected for operation group 1.
+REG_e_b=setpci: Warning: No devices selected for operation group 1.
+SYSFS_PRESENT=NO
+===== ROOT_BUS_TOPOLOGY =====
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+===== TOPOLOGY_TREE =====
+-[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex
+           +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU
+           +-01.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-02.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-02.1-[01-09]----00.0-[02-09]--+-00.0-[03]--
+           |                               +-08.0-[04]--
+           |                               +-09.0-[05]--
+           |                               +-0a.0-[06]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller
+           |                               +-0b.0-[07]--
+           |                               +-0c.0-[08]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller
+           |                               \-0d.0-[09]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller
+           +-03.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-04.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.1-[0a]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1
+           |            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller
+           |            +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15b9
+           |            +-00.4  Advanced Micro Devices, Inc. [AMD] Device 15ba
+           |            \-00.6  Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller
+           +-08.2-[0b]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            \-00.1  Advanced Micro Devices, Inc. [AMD] AMD IPU Device
+           +-08.3-[0c]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15c0
+           |            \-00.4  Advanced Micro Devices, Inc. [AMD] Device 15c1
+           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller
+           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge
+           +-18.0  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0
+           +-18.1  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1
+           +-18.2  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2
+           +-18.3  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3
+           +-18.4  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4
+           +-18.5  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5
+           +-18.6  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6
+           \-18.7  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7
+===== FIRMWARE_SLOT_MAP =====
+FIRMWARE_SLOT_COUNT=0
+===== HISTORICAL_BDF_KERNEL_MESSAGES =====
+[    0.291666] pci 0000:01:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+[    0.291691] pci 0000:01:00.0: PCI bridge to [bus 02-09]
+[    0.291697] pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+[    0.291701] pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+[    0.291722] pci 0000:01:00.0: enabling Extended Tags
+[    0.291791] pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+[    0.294459] pci 0000:01:00.0: PCI bridge to [bus 02-09]
+[    0.336966] pci 0000:01:00.0: PCI bridge to [bus 02-09]
+[    0.336969] pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+[    0.336973] pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+[    0.338383] pci 0000:01:00.0: Adding to iommu group 11
+MMIO_READS=0
+MMIO_WRITES=0
+PCI_CONFIG_WRITES=0
+PCI_RESCANS=0
+PCI_RESETS=0
+IDENTITY_INVENTORY_COMPLETE=YES
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
