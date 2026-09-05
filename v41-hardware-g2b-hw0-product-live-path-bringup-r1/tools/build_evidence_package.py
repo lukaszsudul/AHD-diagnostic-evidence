@@ -83,7 +83,7 @@ def main_report(publication: str, remote: str, initial_commit: str | None) -> st
         else "Publication is sealed locally and awaits the containing commit, non-force push, and commit-pinned byte read-back."
     )
     initial_line = initial_commit or "PENDING_CONTAINING_GIT_COMMIT"
-    evidence_commit = "CONTAINING_COMPLETION_COMMIT" if publication == "PASS" else "PENDING"
+    evidence_commit = initial_commit if publication == "PASS" else "PENDING"
     return rf"""
 # AHD v41 G2B-HW0-PRODUCT-R1 Exact Candidate Live-Path Bring-Up
 
@@ -1058,7 +1058,7 @@ def state(publication: str, remote: str, initial_commit: str | None, readback_fi
             "ssot_update_required": "NO",
             "evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
             "evidence_directory": DIR_NAME,
-            "evidence_commit": "CONTAINING_COMPLETION_COMMIT" if publication == "PASS" else "PENDING",
+            "evidence_commit": initial_commit if publication == "PASS" else "PENDING",
             "remote_readback": remote,
             "main_report": rf"C:\FPGA\V41_G2B_EVIDENCE\{DIR_NAME}\V41_G2B_HW0_PRODUCT_R1_MAIN_REPORT.md",
             "first_blocker": BLOCKER,

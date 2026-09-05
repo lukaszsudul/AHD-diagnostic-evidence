@@ -5,7 +5,7 @@
 | Field | Result |
 |---|---|
 | Engineering gate | `BLOCKED` |
-| Evidence publication | `AWAITING_POST_COMMIT_REMOTE_READBACK` |
+| Evidence publication | `PASS` |
 | Overall result | `BLOCKED` |
 | T0 candidate/environment gate | `PASS` |
 | T1 SRAM/endpoint gate | `BLOCKED` |
@@ -13,7 +13,7 @@
 | T3 one-record gate | `NOT_REACHED` |
 | T4 finite-capture gate | `NOT_REACHED` |
 | T5 continuous-capture gate | `NOT_REACHED` |
-| Remote read-back | `NOT_RUN` |
+| Remote read-back | `PASS` |
 | First blocker | `BLOCKED — SAFE_TARGETED_PCIE_RECOVERY_UNAVAILABLE` |
 | Final execution point | `HARD STOP AFTER G2B-HW0-PRODUCT-R1 LIVE-PATH BRING-UP` |
 
@@ -164,17 +164,17 @@ the PRODUCT synthetic generator remains `NO`; V4L2 was not tested; and
 - Branch: `main`.
 - Directory: `v41-hardware-g2b-hw0-product-live-path-bringup-r1`.
 - Required initial commit message: `Run authorized AHD v41 G2B-HW0 PRODUCT live-path bring-up R1`.
-- Initial evidence commit: `PENDING_CONTAINING_GIT_COMMIT`.
+- Initial evidence commit: `77d3d30f5ebd4df3fa7be69e18b671a1ef8bcc0d`.
 - Push mode: ordinary non-force.
 
-Publication is sealed locally and awaits the containing commit, non-force push, and commit-pinned byte read-back.
+The initial evidence commit and commit-pinned byte read-back are recorded in `G2B_HW0_PRODUCT_R1_PUBLICATION_RECEIPT.md`.
 
 ## Final-response field ledger
 
 | Field | Exact value |
 |---|---|
 | Engineering gate | `BLOCKED` |
-| Evidence publication | `AWAITING_POST_COMMIT_REMOTE_READBACK` |
+| Evidence publication | `PASS` |
 | Overall result | `BLOCKED` |
 | PROJECT_STATE_REV_AT_START / END | `8 / 8` |
 | META-8A / previous blocked HW0 evidence | `VERIFIED / VERIFIED` |
@@ -218,8 +218,8 @@ Publication is sealed locally and awaits the containing commit, non-force push, 
 | G2B-HW0-PRODUCT / G2B-HW qualification | `BLOCKED / NOT_PROVEN` |
 | SSOT update required | `NO` |
 | Evidence repository / directory | `lukaszsudul/AHD-diagnostic-evidence / v41-hardware-g2b-hw0-product-live-path-bringup-r1` |
-| Evidence commit | `PENDING` |
-| Remote read-back | `NOT_RUN` |
+| Evidence commit | `77d3d30f5ebd4df3fa7be69e18b671a1ef8bcc0d` |
+| Remote read-back | `PASS` |
 | Main report | `C:\FPGA\V41_G2B_EVIDENCE\v41-hardware-g2b-hw0-product-live-path-bringup-r1\V41_G2B_HW0_PRODUCT_R1_MAIN_REPORT.md` |
 | First blocker | `BLOCKED — SAFE_TARGETED_PCIE_RECOVERY_UNAVAILABLE` |
 

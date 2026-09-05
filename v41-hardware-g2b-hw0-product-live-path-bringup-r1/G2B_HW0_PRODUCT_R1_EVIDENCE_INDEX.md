@@ -1,7 +1,7 @@
 # G2B-HW0-PRODUCT-R1 Evidence Index
 
-Publication status: `AWAITING_POST_COMMIT_REMOTE_READBACK`
-Remote read-back: `NOT_RUN`
+Publication status: `PASS`
+Remote read-back: `PASS`
 
 ## Required artifacts
 
@@ -27,6 +27,7 @@ Remote read-back: `NOT_RUN`
 | `G2B_HW0_PRODUCT_R1_STATE.json` | machine-readable task state |
 | `G2B_HW0_PRODUCT_R1_EVIDENCE_INDEX.md` | this index |
 | `G2B_HW0_PRODUCT_R1_SHA256_MANIFEST.txt` | all other published bytes; self-excluded |
+| `G2B_HW0_PRODUCT_R1_PUBLICATION_RECEIPT.md` | commit-pinned remote byte read-back |
 
 All 20 mandatory filenames are present even though T2 through T5 were not
 reached. Their artifacts explicitly record `NOT_REACHED`, `N/A`, or `NONE`
@@ -64,7 +65,7 @@ instead of omitting the evidence surface.
 | `tools/accepted/r6_jtag_stability_session.tcl` | `7238` | `7CDA6928B3480802E8C47C156641B4BA3C5488D32702ED95A2EDAF281383D62E` |
 | `tools/accepted/select_r6_jtag_target.tcl` | `5676` | `3F315C44C17AF1E5293A314CAA3B0DA63BFAEC687D58E7DADE37BAAE394CD1DE` |
 | `tools/authority_verification.ps1` | `6488` | `D7D59290F709E4728B2FD5A0E2A526AC6D30D8DBD172F8693A555C257F35E537` |
-| `tools/build_evidence_package.py` | `54358` | `E3F08E1C5ADECFCA4AF6C43FA618A99818175A461FC34DF1C3DEE19A13A38EF5` |
+| `tools/build_evidence_package.py` | `54326` | `F8436B5CA8A71EA87078D4FB83CBB64A07B4560BAB1D300E848F27B43EC62E6E` |
 | `tools/final_dut_state_readonly.sh` | `2691` | `7E0FEAD4DF0F566E18B0BE501E86773D28EF9BA7AEDDC5B0384BF27605C1521E` |
 | `tools/jtag_inventory_readonly.tcl` | `3044` | `56CAF0D7DF050A840B92F3A222293A443CC8F6C8D58B4239CF0536D9A0D9FFCC` |
 | `tools/preprogram_inventory_readonly.sh` | `3882` | `2D7611561B7AD4E798E65223D2B113195456CEE2DF257CC7DF7C60A7A9C9B23E` |
