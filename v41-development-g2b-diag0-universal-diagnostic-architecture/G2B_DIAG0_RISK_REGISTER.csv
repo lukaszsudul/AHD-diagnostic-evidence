@@ -1,0 +1,20 @@
+ID,Risk,Severity,Evidence,Mitigation,Closure
+R01,LUT margin,HIGH,2400..4000 incremental LUT estimate crosses3018 budget,share decode/state/memory after real synthesis;gate20384,DIAG1 resource report
+R02,Timing at high utilization,HIGH,PRODUCT WNS0.023ns;two-byte parser/read mux added,registered descriptors/pattern pipeline;full place-route,DIAG1 timing
+R03,NVP-independent clock,LOW,axi_aclk62.5MHz established;physical IDELAY clock depends NVP,synthetic data/control allAXI;ignore NVP readiness,clock-loss simulation
+R04,Unsafe clock selection,LOW,live RAM source clock cannot be dynamically swapped,separate fixed-clock diagnostic ring;no clock mux,netlist/CDC inspection
+R05,Four-input routing and board uncertainty,BLOCKER,C2 selector silicon-proven;current board mapping not found,close B2 with as-built connector/VIN mapping,Owner board authority
+R06,NVP format status validity,BLOCKER,p88 classifier conditional;p51 AUTO limited;R1i forces format,close B1 with authoritative compatible recipe,vendor/current-board initialization evidence
+R07,R1i I2C ownership,HIGH,current ANDed releases not arbitration,exclusive INIT/runtime;qualified byte engine;pre-init equivalence,I2C bus model
+R08,Mode switch with inflight data,HIGH,stalled AXI cannot be cut,record-locked common formatter;drain/quarantine;epoch,every-beat abort/switch
+R09,Frame off-by-one / late closure,HIGH,line1079 output alone does not prove exact frame,source_closed+1080 TLAST ledger;limit reservation,extra/missing1080th line tests
+R10,64-bit MMIO tearing,MEDIUM,32-bit read bus,explicit frozen snapshot and mutex,snapshot stress
+R11,Max-rate starvation/backpressure,HIGH,serialize record writer/reader would lose target,four slots;overlap;<=504 writer/544 output ticks,service-rate assertions/T3
+R12,ABI changes by accident,HIGH,no reserved header extension area,out-of-band mode identity;reference JSON;full-byte validator,ABI/golden diff
+R13,Diagnostic code in PRODUCT/release,HIGH,shared build infrastructure,profile elaboration exclusivity;no wholesale merge,PRODUCT regression
+R14,Scan/rescan frame mixing,HIGH,already-emitted partial frame cannot be retracted,invalidate host frame;drain;segment and epoch,L5 loss pattern test
+R15,1000-frame storage,MEDIUM,4423680000bytes exceeds4GiB,64-bit tools and filesystem;rotated frame files,large sparse/offline fixture
+R16,Scheduler boundaries,MEDIUM,run timeout is graceful and pause after drain,time/count priority;report actual duration,finite/infinite/ties simulation
+R17,PRBS marker collisions,MEDIUM,G2B treats in-payload marker as malformed,video safe8 removes00/FF;record raw PRBS bypasses parser,full pattern/generator tests
+R18,Partial common-path coverage,HIGH,synthetic ring not PRODUCT ring,report matrix;retain separate live CDC tests,review and L tests
+R19,Historical event loss,MEDIUM,latest-cycle summary finite storage,event ACK/overflow;host detects missed metadata,autonomous run+slow observer test

@@ -1,0 +1,5674 @@
+{
+  "name": "G2B_DIAGNOSTIC_MMIO_V1",
+  "version": {
+    "major": 1,
+    "minor": 0
+  },
+  "status": "FROZEN_ARCHITECTURE_WITH_NVP_BLOCKERS_NOT_IMPLEMENTED",
+  "base": 15360,
+  "end_inclusive": 16383,
+  "bytes": 1024,
+  "endianness": "little",
+  "bus_width": 32,
+  "aperture_bytes": 131072,
+  "build_profile": "HW0_DIAGNOSTIC",
+  "source_baseline": "92e9b3d914134c044371779def1ee18eaaeda98a",
+  "states": {
+    "RESET": 0,
+    "IDLE": 1,
+    "CONFIG_VALIDATE": 2,
+    "SCANNING": 3,
+    "ROUTING": 4,
+    "WAIT_LOCK": 5,
+    "WAIT_FRAME_BOUNDARY": 6,
+    "RUNNING": 7,
+    "STOP_PENDING": 8,
+    "DRAINING": 9,
+    "PAUSED": 10,
+    "COMPLETE": 11,
+    "ABORTING": 12,
+    "ERROR": 13
+  },
+  "commands": {
+    "START": 1,
+    "STOP_GRACEFUL": 2,
+    "ABORT": 3,
+    "CLEAR_RUN_STATUS": 4,
+    "SNAPSHOT_COUNTERS": 5
+  },
+  "command_results": {
+    "NONE": 0,
+    "PENDING": 1,
+    "OK": 2,
+    "CONFIG_ERROR": 3,
+    "ILLEGAL_STATE": 4,
+    "BAD_ACCESS": 5,
+    "FATAL_LATCHED": 6,
+    "UNSUPPORTED_CAPABILITY": 7,
+    "CANCELLED": 8
+  },
+  "capabilities": {
+    "LIVE_VIDEO_SUPPORTED": {
+      "bit": 0,
+      "mask": 1,
+      "advertise_before_B1_B2_closure": false
+    },
+    "FOUR_INPUT_SELECTION_SUPPORTED": {
+      "bit": 1,
+      "mask": 2,
+      "advertise_before_B1_B2_closure": false
+    },
+    "AUTO_SCAN_SUPPORTED": {
+      "bit": 2,
+      "mask": 4,
+      "advertise_before_B1_B2_closure": false
+    },
+    "SYNTHETIC_VIDEO_SUPPORTED": {
+      "bit": 3,
+      "mask": 8,
+      "advertise_before_B1_B2_closure": true
+    },
+    "SYNTHETIC_RECORD_SUPPORTED": {
+      "bit": 4,
+      "mask": 16,
+      "advertise_before_B1_B2_closure": true
+    },
+    "FRAME_LIMIT_SUPPORTED": {
+      "bit": 5,
+      "mask": 32,
+      "advertise_before_B1_B2_closure": true
+    },
+    "RECORD_LIMIT_SUPPORTED": {
+      "bit": 6,
+      "mask": 64,
+      "advertise_before_B1_B2_closure": true
+    },
+    "PACED_1080P25_SUPPORTED": {
+      "bit": 7,
+      "mask": 128,
+      "advertise_before_B1_B2_closure": true
+    },
+    "MAX_RATE_SUPPORTED": {
+      "bit": 8,
+      "mask": 256,
+      "advertise_before_B1_B2_closure": true
+    },
+    "STRESS_SCHEDULER_SUPPORTED": {
+      "bit": 9,
+      "mask": 512,
+      "advertise_before_B1_B2_closure": true
+    },
+    "LOSS_RESCAN_SUPPORTED": {
+      "bit": 10,
+      "mask": 1024,
+      "advertise_before_B1_B2_closure": false
+    },
+    "PRBS31_SUPPORTED": {
+      "bit": 11,
+      "mask": 2048,
+      "advertise_before_B1_B2_closure": true
+    },
+    "RUNTIME_MODE_SWITCH_SUPPORTED": {
+      "bit": 12,
+      "mask": 4096,
+      "advertise_before_B1_B2_closure": true
+    }
+  },
+  "capability_mask_before_NVP_closure": 7160,
+  "errors": {
+    "INVALID_CONFIG": {
+      "bit": 0,
+      "mask": 1
+    },
+    "ILLEGAL_COMMAND": {
+      "bit": 1,
+      "mask": 2
+    },
+    "BUSY_CONFIG_CHANGE": {
+      "bit": 2,
+      "mask": 4
+    },
+    "NVP_INIT_NOT_COMPLETE": {
+      "bit": 3,
+      "mask": 8
+    },
+    "NO_INPUT_AVAILABLE": {
+      "bit": 4,
+      "mask": 16
+    },
+    "INPUT_LOCK_TIMEOUT": {
+      "bit": 5,
+      "mask": 32
+    },
+    "INPUT_FORMAT_UNSUPPORTED": {
+      "bit": 6,
+      "mask": 64
+    },
+    "SOURCE_LOST": {
+      "bit": 7,
+      "mask": 128
+    },
+    "SCAN_EXHAUSTED": {
+      "bit": 8,
+      "mask": 256
+    },
+    "PATTERN_ERROR": {
+      "bit": 9,
+      "mask": 512
+    },
+    "RING_OVERFLOW": {
+      "bit": 10,
+      "mask": 1024
+    },
+    "RECORD_DROP": {
+      "bit": 11,
+      "mask": 2048
+    },
+    "SEQUENCE_ERROR": {
+      "bit": 12,
+      "mask": 4096
+    },
+    "ABORTED_RUN": {
+      "bit": 13,
+      "mask": 8192
+    },
+    "AXI_PROTOCOL_ERROR": {
+      "bit": 14,
+      "mask": 16384
+    },
+    "INTERNAL_FATAL": {
+      "bit": 15,
+      "mask": 32768
+    },
+    "I2C_ERROR": {
+      "bit": 16,
+      "mask": 65536
+    },
+    "PACE_OVERRUN": {
+      "bit": 17,
+      "mask": 131072
+    },
+    "COUNTER_OVERFLOW": {
+      "bit": 18,
+      "mask": 262144
+    },
+    "LEGACY_CONTROL_CONFLICT": {
+      "bit": 19,
+      "mask": 524288
+    }
+  },
+  "registers": [
+    {
+      "offset": 0,
+      "absolute_offset": 15360,
+      "name": "DIAG_ID",
+      "access": "RO",
+      "reset": 1195460932,
+      "width": 32,
+      "meaning": "little-endian ASCII DIAG",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "DIAG_ID",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "little-endian ASCII DIAG"
+        }
+      ]
+    },
+    {
+      "offset": 4,
+      "absolute_offset": 15364,
+      "name": "DIAG_VERSION",
+      "access": "RO",
+      "reset": 65536,
+      "width": 32,
+      "meaning": "MMIO major1 minor0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "DIAG_VERSION",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "MMIO major1 minor0"
+        }
+      ]
+    },
+    {
+      "offset": 8,
+      "absolute_offset": 15368,
+      "name": "DIAG_CAPABILITIES",
+      "access": "RO",
+      "reset": 7160,
+      "width": 32,
+      "meaning": "implementable subset; withheld bits stay0 until B1/B2 closed",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIVE_VIDEO_SUPPORTED",
+          "lsb": 0,
+          "msb": 0,
+          "meaning": "withheld pending NVP evidence"
+        },
+        {
+          "name": "FOUR_INPUT_SELECTION_SUPPORTED",
+          "lsb": 1,
+          "msb": 1,
+          "meaning": "withheld pending NVP evidence"
+        },
+        {
+          "name": "AUTO_SCAN_SUPPORTED",
+          "lsb": 2,
+          "msb": 2,
+          "meaning": "withheld pending NVP evidence"
+        },
+        {
+          "name": "SYNTHETIC_VIDEO_SUPPORTED",
+          "lsb": 3,
+          "msb": 3,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "SYNTHETIC_RECORD_SUPPORTED",
+          "lsb": 4,
+          "msb": 4,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "FRAME_LIMIT_SUPPORTED",
+          "lsb": 5,
+          "msb": 5,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "RECORD_LIMIT_SUPPORTED",
+          "lsb": 6,
+          "msb": 6,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "PACED_1080P25_SUPPORTED",
+          "lsb": 7,
+          "msb": 7,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "MAX_RATE_SUPPORTED",
+          "lsb": 8,
+          "msb": 8,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "STRESS_SCHEDULER_SUPPORTED",
+          "lsb": 9,
+          "msb": 9,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "LOSS_RESCAN_SUPPORTED",
+          "lsb": 10,
+          "msb": 10,
+          "meaning": "withheld pending NVP evidence"
+        },
+        {
+          "name": "PRBS31_SUPPORTED",
+          "lsb": 11,
+          "msb": 11,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "RUNTIME_MODE_SWITCH_SUPPORTED",
+          "lsb": 12,
+          "msb": 12,
+          "meaning": "future implementation capability"
+        },
+        {
+          "name": "RESERVED_ZERO",
+          "lsb": 13,
+          "msb": 31,
+          "meaning": "zero"
+        }
+      ]
+    },
+    {
+      "offset": 12,
+      "absolute_offset": 15372,
+      "name": "BUILD_PROFILE",
+      "access": "RO",
+      "reset": 3,
+      "width": 32,
+      "meaning": "1 PRODUCT,2 RESEARCH_DIAGNOSTIC,3 HW0_DIAGNOSTIC; this image3",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "BUILD_PROFILE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "1 PRODUCT,2 RESEARCH_DIAGNOSTIC,3 HW0_DIAGNOSTIC; this image3"
+        }
+      ]
+    },
+    {
+      "offset": 16,
+      "absolute_offset": 15376,
+      "name": "TRANSPORT_ABI_VERSION",
+      "access": "RO",
+      "reset": 65536,
+      "width": 32,
+      "meaning": "unchanged ABI1.0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "TRANSPORT_ABI_VERSION",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "unchanged ABI1.0"
+        }
+      ]
+    },
+    {
+      "offset": 20,
+      "absolute_offset": 15380,
+      "name": "BUILD_FLAGS",
+      "access": "RO",
+      "reset": 1026,
+      "width": 32,
+      "meaning": "bit0 dirty=0; bit1 manifest verified=1; HW0 diagnostic bit10=1; research bit9 and PRODUCT bit8 clear",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "BUILD_FLAGS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "bit0 dirty=0; bit1 manifest verified=1; HW0 diagnostic bit10=1; research bit9 and PRODUCT bit8 clear"
+        }
+      ]
+    },
+    {
+      "offset": 24,
+      "absolute_offset": 15384,
+      "name": "AXI_CLOCK_HZ",
+      "access": "RO",
+      "reset": 62500000,
+      "width": 32,
+      "meaning": "required configured user clock",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "AXI_CLOCK_HZ",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "required configured user clock"
+        }
+      ]
+    },
+    {
+      "offset": 28,
+      "absolute_offset": 15388,
+      "name": "IDENTITY_SCHEMA",
+      "access": "RO",
+      "reset": 65536,
+      "width": 32,
+      "meaning": "source commit identity encoding1.0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "IDENTITY_SCHEMA",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "source commit identity encoding1.0"
+        }
+      ]
+    },
+    {
+      "offset": 32,
+      "absolute_offset": 15392,
+      "name": "SOURCE_COMMIT_W0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected SHA word0; numeric hex characters 0..7; zero is invalid identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_COMMIT_W0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected SHA word0; numeric hex characters 0..7; zero is invalid identity"
+        }
+      ]
+    },
+    {
+      "offset": 36,
+      "absolute_offset": 15396,
+      "name": "SOURCE_COMMIT_W1",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected SHA word1; numeric hex characters 8..15; zero is invalid identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_COMMIT_W1",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected SHA word1; numeric hex characters 8..15; zero is invalid identity"
+        }
+      ]
+    },
+    {
+      "offset": 40,
+      "absolute_offset": 15400,
+      "name": "SOURCE_COMMIT_W2",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected SHA word2; numeric hex characters 16..23; zero is invalid identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_COMMIT_W2",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected SHA word2; numeric hex characters 16..23; zero is invalid identity"
+        }
+      ]
+    },
+    {
+      "offset": 44,
+      "absolute_offset": 15404,
+      "name": "SOURCE_COMMIT_W3",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected SHA word3; numeric hex characters 24..31; zero is invalid identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_COMMIT_W3",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected SHA word3; numeric hex characters 24..31; zero is invalid identity"
+        }
+      ]
+    },
+    {
+      "offset": 48,
+      "absolute_offset": 15408,
+      "name": "SOURCE_COMMIT_W4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected SHA word4; numeric hex characters 32..39; zero is invalid identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_COMMIT_W4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected SHA word4; numeric hex characters 32..39; zero is invalid identity"
+        }
+      ]
+    },
+    {
+      "offset": 52,
+      "absolute_offset": 15412,
+      "name": "DIAG_FIRMWARE_VERSION",
+      "access": "RO",
+      "reset": 65536,
+      "width": 32,
+      "meaning": "diagnostic firmware release1.0; change for future implementation revisions",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "DIAG_FIRMWARE_VERSION",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "diagnostic firmware release1.0; change for future implementation revisions"
+        }
+      ]
+    },
+    {
+      "offset": 56,
+      "absolute_offset": 15416,
+      "name": "MMIO_RANGE_BYTES",
+      "access": "RO",
+      "reset": 1024,
+      "width": 32,
+      "meaning": "this block size",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "MMIO_RANGE_BYTES",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "this block size"
+        }
+      ]
+    },
+    {
+      "offset": 60,
+      "absolute_offset": 15420,
+      "name": "BUILD_ID_VALID",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "build-injected1 only for clean committed full rebuild matching legacy identity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "BUILD_ID_VALID",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "build-injected1 only for clean committed full rebuild matching legacy identity"
+        }
+      ]
+    },
+    {
+      "offset": 64,
+      "absolute_offset": 15424,
+      "name": "COMMAND",
+      "access": "WO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "1 START,2 STOP_GRACEFUL,3 ABORT,4 CLEAR_RUN_STATUS,5 SNAPSHOT_COUNTERS",
+      "valid_states": "ALL",
+      "error_behavior": "Full command DWORD required",
+      "fields": [
+        {
+          "name": "COMMAND",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "1 START,2 STOP_GRACEFUL,3 ABORT,4 CLEAR_RUN_STATUS,5 SNAPSHOT_COUNTERS"
+        }
+      ]
+    },
+    {
+      "offset": 68,
+      "absolute_offset": 15428,
+      "name": "STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "state plus control validity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "STATE",
+          "lsb": 0,
+          "msb": 7,
+          "meaning": "state enum in contract"
+        },
+        {
+          "name": "ACTIVE_VALID",
+          "lsb": 8,
+          "msb": 8,
+          "meaning": "successful START snapshot exists"
+        },
+        {
+          "name": "SNAPSHOT_BUSY",
+          "lsb": 9,
+          "msb": 9,
+          "meaning": "snapshot command pending"
+        },
+        {
+          "name": "SNAPSHOT_VALID",
+          "lsb": 10,
+          "msb": 10,
+          "meaning": "snapshot bank initialized"
+        },
+        {
+          "name": "SOURCE_QUARANTINED",
+          "lsb": 11,
+          "msb": 11,
+          "meaning": "live tokens awaiting clock/epoch retirement"
+        },
+        {
+          "name": "FATAL",
+          "lsb": 12,
+          "msb": 12,
+          "meaning": "external reset/new session required"
+        },
+        {
+          "name": "RESERVED_ZERO",
+          "lsb": 13,
+          "msb": 31,
+          "meaning": "zero"
+        }
+      ]
+    },
+    {
+      "offset": 72,
+      "absolute_offset": 15432,
+      "name": "ERROR_FLAGS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "sticky errors; command clear only",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INVALID_CONFIG",
+          "lsb": 0,
+          "msb": 0,
+          "meaning": "INVALID_CONFIG"
+        },
+        {
+          "name": "ILLEGAL_COMMAND",
+          "lsb": 1,
+          "msb": 1,
+          "meaning": "ILLEGAL_COMMAND"
+        },
+        {
+          "name": "BUSY_CONFIG_CHANGE",
+          "lsb": 2,
+          "msb": 2,
+          "meaning": "BUSY_CONFIG_CHANGE"
+        },
+        {
+          "name": "NVP_INIT_NOT_COMPLETE",
+          "lsb": 3,
+          "msb": 3,
+          "meaning": "NVP_INIT_NOT_COMPLETE"
+        },
+        {
+          "name": "NO_INPUT_AVAILABLE",
+          "lsb": 4,
+          "msb": 4,
+          "meaning": "NO_INPUT_AVAILABLE"
+        },
+        {
+          "name": "INPUT_LOCK_TIMEOUT",
+          "lsb": 5,
+          "msb": 5,
+          "meaning": "INPUT_LOCK_TIMEOUT"
+        },
+        {
+          "name": "INPUT_FORMAT_UNSUPPORTED",
+          "lsb": 6,
+          "msb": 6,
+          "meaning": "INPUT_FORMAT_UNSUPPORTED"
+        },
+        {
+          "name": "SOURCE_LOST",
+          "lsb": 7,
+          "msb": 7,
+          "meaning": "SOURCE_LOST"
+        },
+        {
+          "name": "SCAN_EXHAUSTED",
+          "lsb": 8,
+          "msb": 8,
+          "meaning": "SCAN_EXHAUSTED"
+        },
+        {
+          "name": "PATTERN_ERROR",
+          "lsb": 9,
+          "msb": 9,
+          "meaning": "PATTERN_ERROR"
+        },
+        {
+          "name": "RING_OVERFLOW",
+          "lsb": 10,
+          "msb": 10,
+          "meaning": "RING_OVERFLOW"
+        },
+        {
+          "name": "RECORD_DROP",
+          "lsb": 11,
+          "msb": 11,
+          "meaning": "RECORD_DROP"
+        },
+        {
+          "name": "SEQUENCE_ERROR",
+          "lsb": 12,
+          "msb": 12,
+          "meaning": "SEQUENCE_ERROR"
+        },
+        {
+          "name": "ABORTED_RUN",
+          "lsb": 13,
+          "msb": 13,
+          "meaning": "ABORTED_RUN"
+        },
+        {
+          "name": "AXI_PROTOCOL_ERROR",
+          "lsb": 14,
+          "msb": 14,
+          "meaning": "AXI_PROTOCOL_ERROR"
+        },
+        {
+          "name": "INTERNAL_FATAL",
+          "lsb": 15,
+          "msb": 15,
+          "meaning": "INTERNAL_FATAL"
+        },
+        {
+          "name": "I2C_ERROR",
+          "lsb": 16,
+          "msb": 16,
+          "meaning": "I2C_ERROR"
+        },
+        {
+          "name": "PACE_OVERRUN",
+          "lsb": 17,
+          "msb": 17,
+          "meaning": "PACE_OVERRUN"
+        },
+        {
+          "name": "COUNTER_OVERFLOW",
+          "lsb": 18,
+          "msb": 18,
+          "meaning": "COUNTER_OVERFLOW"
+        },
+        {
+          "name": "LEGACY_CONTROL_CONFLICT",
+          "lsb": 19,
+          "msb": 19,
+          "meaning": "LEGACY_CONTROL_CONFLICT"
+        },
+        {
+          "name": "RESERVED_ZERO",
+          "lsb": 20,
+          "msb": 31,
+          "meaning": "zero"
+        }
+      ]
+    },
+    {
+      "offset": 76,
+      "absolute_offset": 15436,
+      "name": "LAST_COMMAND_RESULT",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 NONE,1 PENDING,2 OK,3 CONFIG_ERROR,4 ILLEGAL_STATE,5 BAD_ACCESS,6 FATAL_LATCHED,7 UNSUPPORTED_CAPABILITY,8 CANCELLED",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_COMMAND_RESULT",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 NONE,1 PENDING,2 OK,3 CONFIG_ERROR,4 ILLEGAL_STATE,5 BAD_ACCESS,6 FATAL_LATCHED,7 UNSUPPORTED_CAPABILITY,8 CANCELLED"
+        }
+      ]
+    },
+    {
+      "offset": 80,
+      "absolute_offset": 15440,
+      "name": "COMMAND_SEQUENCE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "u32 increment each command-port write including rejected commands; poll result after readback fence",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "COMMAND_SEQUENCE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "u32 increment each command-port write including rejected commands; poll result after readback fence"
+        }
+      ]
+    },
+    {
+      "offset": 84,
+      "absolute_offset": 15444,
+      "name": "SNAPSHOT_SEQUENCE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "u32 increments after atomic snapshot publish; host serializes requests",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SNAPSHOT_SEQUENCE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "u32 increments after atomic snapshot publish; host serializes requests"
+        }
+      ]
+    },
+    {
+      "offset": 88,
+      "absolute_offset": 15448,
+      "name": "COMPLETION_REASON",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 NONE,1 COUNT_LIMIT,2 TIME_LIMIT,3 HOST_STOP,4 ABORT,5 SOURCE_ERROR,6 FATAL,7 SCHEDULE_FINISHED",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "COMPLETION_REASON",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 NONE,1 COUNT_LIMIT,2 TIME_LIMIT,3 HOST_STOP,4 ABORT,5 SOURCE_ERROR,6 FATAL,7 SCHEDULE_FINISHED"
+        }
+      ]
+    },
+    {
+      "offset": 92,
+      "absolute_offset": 15452,
+      "name": "CONFIG_ERROR_FIELD",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 none; otherwise1+shadow register index",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CONFIG_ERROR_FIELD",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 none; otherwise1+shadow register index"
+        }
+      ]
+    },
+    {
+      "offset": 96,
+      "absolute_offset": 15456,
+      "name": "CONFIG_ERROR_DETAIL",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 none,1 RANGE,2 ENUM,3 MASKED_INPUT,4 SCAN_PERMUTATION,5 STABILITY_TIMEOUT,6 MODE_RATE,7 CAPABILITY,8 INVALID_INPUT",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CONFIG_ERROR_DETAIL",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 none,1 RANGE,2 ENUM,3 MASKED_INPUT,4 SCAN_PERMUTATION,5 STABILITY_TIMEOUT,6 MODE_RATE,7 CAPABILITY,8 INVALID_INPUT"
+        }
+      ]
+    },
+    {
+      "offset": 100,
+      "absolute_offset": 15460,
+      "name": "FIRST_ERROR_CODE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 none;1+error bit index, retained until successful START",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_CODE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 none;1+error bit index, retained until successful START"
+        }
+      ]
+    },
+    {
+      "offset": 104,
+      "absolute_offset": 15464,
+      "name": "FIRST_ERROR_INPUT",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "0..3; ffffffff not a live input",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_INPUT",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0..3; ffffffff not a live input"
+        }
+      ]
+    },
+    {
+      "offset": 108,
+      "absolute_offset": 15468,
+      "name": "NVP_PLAN_STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 unresolved,1 authoritative runtime recipe and board mapping verified; build constant",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "NVP_PLAN_STATUS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 unresolved,1 authoritative runtime recipe and board mapping verified; build constant"
+        }
+      ]
+    },
+    {
+      "offset": 112,
+      "absolute_offset": 15472,
+      "name": "TRANSPORT_EPOCH",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "frozen snapshot ABI epoch32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "TRANSPORT_EPOCH",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "frozen snapshot ABI epoch32"
+        }
+      ]
+    },
+    {
+      "offset": 116,
+      "absolute_offset": 15476,
+      "name": "I2C_FAILURE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot packed bank[7:0],reg[15:8],phase[23:16],reason[31:24]; phase0none1select2verify3read4write5restore; reason0none1nack2timeout3mismatch4bus_stuck",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "I2C_FAILURE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot packed bank[7:0],reg[15:8],phase[23:16],reason[31:24]; phase0none1select2verify3read4write5restore; reason0none1nack2timeout3mismatch4bus_stuck"
+        }
+      ]
+    },
+    {
+      "offset": 120,
+      "absolute_offset": 15480,
+      "name": "SNAPSHOT_SOURCE_VALID",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot bits0AXI(always1 once valid),1live status fresh,2live mailbox coherent; upper zero",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SNAPSHOT_SOURCE_VALID",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot bits0AXI(always1 once valid),1live status fresh,2live mailbox coherent; upper zero"
+        }
+      ]
+    },
+    {
+      "offset": 124,
+      "absolute_offset": 15484,
+      "name": "RECORD_BYTES",
+      "access": "RO",
+      "reset": 4096,
+      "width": 32,
+      "meaning": "frozen record geometry",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RECORD_BYTES",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "frozen record geometry"
+        }
+      ]
+    },
+    {
+      "offset": 128,
+      "absolute_offset": 15488,
+      "name": "SOURCE_MODE_SHADOW",
+      "access": "RW",
+      "reset": 2,
+      "width": 32,
+      "meaning": "runtime source",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "SOURCE_MODE_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "runtime source"
+        }
+      ],
+      "validation": {
+        "LIVE_VIDEO": 0,
+        "SYNTHETIC_VIDEO": 1,
+        "SYNTHETIC_RECORD": 2
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 132,
+      "absolute_offset": 15492,
+      "name": "LIVE_INPUT_MODE_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "manual or automatic acquisition",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "LIVE_INPUT_MODE_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "manual or automatic acquisition"
+        }
+      ],
+      "validation": {
+        "MANUAL": 0,
+        "AUTO_SCAN_AND_LOCK": 1
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 136,
+      "absolute_offset": 15496,
+      "name": "LIVE_INPUT_SELECT_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "selected enabled manual decoder",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "LIVE_INPUT_SELECT_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "selected enabled manual decoder"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 3
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 140,
+      "absolute_offset": 15500,
+      "name": "SCAN_MASK_SHADOW",
+      "access": "RW",
+      "reset": 15,
+      "width": 32,
+      "meaning": "enabled decoder bitmap",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "SCAN_MASK_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "enabled decoder bitmap"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 15
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 144,
+      "absolute_offset": 15504,
+      "name": "PREFERRED_INPUT_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "auto preferred decoder; ffffffff none",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "PREFERRED_INPUT_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "auto preferred decoder; ffffffff none"
+        }
+      ],
+      "validation": {
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4294967295
+        ]
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 148,
+      "absolute_offset": 15508,
+      "name": "SCAN_ORDER_SHADOW",
+      "access": "RW",
+      "reset": 228,
+      "width": 32,
+      "meaning": "remaining auto order",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "SCAN_ORDER_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "remaining auto order"
+        }
+      ],
+      "validation": {
+        "encoding": "four 2-bit entries low first; permutation 0,1,2,3; upper24 zero"
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 152,
+      "absolute_offset": 15512,
+      "name": "LOSS_POLICY_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "source loss behavior",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "LOSS_POLICY_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "source loss behavior"
+        }
+      ],
+      "validation": {
+        "LOSS_POLICY_STOP": 0,
+        "LOSS_POLICY_RESCAN": 1
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 156,
+      "absolute_offset": 15516,
+      "name": "LOCK_TIMEOUT_MS_SHADOW",
+      "access": "RW",
+      "reset": 2000,
+      "width": 32,
+      "meaning": "candidate/acquisition deadline",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "LOCK_TIMEOUT_MS_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "candidate/acquisition deadline"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 4294967295
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 160,
+      "absolute_offset": 15520,
+      "name": "LOCK_STABLE_MS_SHADOW",
+      "access": "RW",
+      "reset": 100,
+      "width": 32,
+      "meaning": "continuous sampled eligibility time",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "LOCK_STABLE_MS_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "continuous sampled eligibility time"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 4294967295,
+        "lte": "LOCK_TIMEOUT_MS"
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 164,
+      "absolute_offset": 15524,
+      "name": "PATTERN_MODE_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "mode-specific deterministic pattern",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "PATTERN_MODE_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "mode-specific deterministic pattern"
+        }
+      ],
+      "validation": {
+        "video": {
+          "COLOR_BARS_WITH_FRAME_ID": 0,
+          "XY_FRAME_RAMP": 1,
+          "PRBS31": 2
+        },
+        "record": {
+          "COUNTER_PATTERN": 0,
+          "PRBS31_PATTERN": 1
+        }
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 168,
+      "absolute_offset": 15528,
+      "name": "RATE_MODE_SHADOW",
+      "access": "RW",
+      "reset": 1,
+      "width": 32,
+      "meaning": "record requires1; live requires0; video0/1",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "RATE_MODE_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "record requires1; live requires0; video0/1"
+        }
+      ],
+      "validation": {
+        "PACED_1080P25": 0,
+        "MAX_RATE": 1
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 172,
+      "absolute_offset": 15532,
+      "name": "FRAME_LIMIT_SHADOW",
+      "access": "RW",
+      "reset": 1,
+      "width": 32,
+      "meaning": "per-cycle full video frames;0 continuous; ignored record",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "FRAME_LIMIT_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "per-cycle full video frames;0 continuous; ignored record"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 1000
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 176,
+      "absolute_offset": 15536,
+      "name": "RECORD_LIMIT_SHADOW",
+      "access": "RW",
+      "reset": 1,
+      "width": 32,
+      "meaning": "per-cycle records;0 continuous; ignored video",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "RECORD_LIMIT_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "per-cycle records;0 continuous; ignored video"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 180,
+      "absolute_offset": 15540,
+      "name": "RUN_TIME_MS_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 disables timer",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "RUN_TIME_MS_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 disables timer"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 184,
+      "absolute_offset": 15544,
+      "name": "PAUSE_TIME_MS_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "pause after clean drain",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "PAUSE_TIME_MS_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "pause after clean drain"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 188,
+      "absolute_offset": 15548,
+      "name": "CYCLE_COUNT_SHADOW",
+      "access": "RW",
+      "reset": 1,
+      "width": 32,
+      "meaning": "0 infinite when scheduler enabled",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "CYCLE_COUNT_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 infinite when scheduler enabled"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 192,
+      "absolute_offset": 15552,
+      "name": "SCHEDULER_ENABLE_SHADOW",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 single cycle without pause",
+      "valid_states": "ALL",
+      "error_behavior": "Byte enables merge; configuration validated at START",
+      "fields": [
+        {
+          "name": "SCHEDULER_ENABLE_SHADOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 single cycle without pause"
+        }
+      ],
+      "validation": {
+        "values": [
+          0,
+          1
+        ]
+      },
+      "group": "shadow"
+    },
+    {
+      "offset": 196,
+      "absolute_offset": 15556,
+      "name": "RESERVED_0C4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0C4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 200,
+      "absolute_offset": 15560,
+      "name": "RESERVED_0C8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0C8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 204,
+      "absolute_offset": 15564,
+      "name": "RESERVED_0CC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0CC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 208,
+      "absolute_offset": 15568,
+      "name": "RESERVED_0D0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0D0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 212,
+      "absolute_offset": 15572,
+      "name": "RESERVED_0D4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0D4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 216,
+      "absolute_offset": 15576,
+      "name": "RESERVED_0D8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0D8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 220,
+      "absolute_offset": 15580,
+      "name": "RESERVED_0DC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0DC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 224,
+      "absolute_offset": 15584,
+      "name": "RESERVED_0E0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0E0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 228,
+      "absolute_offset": 15588,
+      "name": "RESERVED_0E4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0E4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 232,
+      "absolute_offset": 15592,
+      "name": "RESERVED_0E8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0E8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 236,
+      "absolute_offset": 15596,
+      "name": "RESERVED_0EC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0EC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 240,
+      "absolute_offset": 15600,
+      "name": "RESERVED_0F0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0F0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 244,
+      "absolute_offset": 15604,
+      "name": "RESERVED_0F4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0F4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 248,
+      "absolute_offset": 15608,
+      "name": "RESERVED_0F8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0F8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 252,
+      "absolute_offset": 15612,
+      "name": "RESERVED_0FC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_0FC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 256,
+      "absolute_offset": 15616,
+      "name": "SOURCE_MODE_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "runtime source; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SOURCE_MODE_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "runtime source; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "LIVE_VIDEO": 0,
+        "SYNTHETIC_VIDEO": 1,
+        "SYNTHETIC_RECORD": 2
+      },
+      "group": "active"
+    },
+    {
+      "offset": 260,
+      "absolute_offset": 15620,
+      "name": "LIVE_INPUT_MODE_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "manual or automatic acquisition; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIVE_INPUT_MODE_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "manual or automatic acquisition; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "MANUAL": 0,
+        "AUTO_SCAN_AND_LOCK": 1
+      },
+      "group": "active"
+    },
+    {
+      "offset": 264,
+      "absolute_offset": 15624,
+      "name": "LIVE_INPUT_SELECT_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "selected enabled manual decoder; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIVE_INPUT_SELECT_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "selected enabled manual decoder; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 3
+      },
+      "group": "active"
+    },
+    {
+      "offset": 268,
+      "absolute_offset": 15628,
+      "name": "SCAN_MASK_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "enabled decoder bitmap; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SCAN_MASK_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "enabled decoder bitmap; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 15
+      },
+      "group": "active"
+    },
+    {
+      "offset": 272,
+      "absolute_offset": 15632,
+      "name": "PREFERRED_INPUT_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "auto preferred decoder; ffffffff none; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "PREFERRED_INPUT_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "auto preferred decoder; ffffffff none; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          4294967295
+        ]
+      },
+      "group": "active"
+    },
+    {
+      "offset": 276,
+      "absolute_offset": 15636,
+      "name": "SCAN_ORDER_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "remaining auto order; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SCAN_ORDER_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "remaining auto order; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "encoding": "four 2-bit entries low first; permutation 0,1,2,3; upper24 zero"
+      },
+      "group": "active"
+    },
+    {
+      "offset": 280,
+      "absolute_offset": 15640,
+      "name": "LOSS_POLICY_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "source loss behavior; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LOSS_POLICY_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "source loss behavior; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "LOSS_POLICY_STOP": 0,
+        "LOSS_POLICY_RESCAN": 1
+      },
+      "group": "active"
+    },
+    {
+      "offset": 284,
+      "absolute_offset": 15644,
+      "name": "LOCK_TIMEOUT_MS_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "candidate/acquisition deadline; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LOCK_TIMEOUT_MS_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "candidate/acquisition deadline; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 4294967295
+      },
+      "group": "active"
+    },
+    {
+      "offset": 288,
+      "absolute_offset": 15648,
+      "name": "LOCK_STABLE_MS_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "continuous sampled eligibility time; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LOCK_STABLE_MS_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "continuous sampled eligibility time; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 1,
+        "max": 4294967295,
+        "lte": "LOCK_TIMEOUT_MS"
+      },
+      "group": "active"
+    },
+    {
+      "offset": 292,
+      "absolute_offset": 15652,
+      "name": "PATTERN_MODE_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "mode-specific deterministic pattern; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "PATTERN_MODE_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "mode-specific deterministic pattern; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "video": {
+          "COLOR_BARS_WITH_FRAME_ID": 0,
+          "XY_FRAME_RAMP": 1,
+          "PRBS31": 2
+        },
+        "record": {
+          "COUNTER_PATTERN": 0,
+          "PRBS31_PATTERN": 1
+        }
+      },
+      "group": "active"
+    },
+    {
+      "offset": 296,
+      "absolute_offset": 15656,
+      "name": "RATE_MODE_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "record requires1; live requires0; video0/1; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RATE_MODE_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "record requires1; live requires0; video0/1; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "PACED_1080P25": 0,
+        "MAX_RATE": 1
+      },
+      "group": "active"
+    },
+    {
+      "offset": 300,
+      "absolute_offset": 15660,
+      "name": "FRAME_LIMIT_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "per-cycle full video frames;0 continuous; ignored record; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FRAME_LIMIT_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "per-cycle full video frames;0 continuous; ignored record; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 1000
+      },
+      "group": "active"
+    },
+    {
+      "offset": 304,
+      "absolute_offset": 15664,
+      "name": "RECORD_LIMIT_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "per-cycle records;0 continuous; ignored video; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RECORD_LIMIT_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "per-cycle records;0 continuous; ignored video; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "active"
+    },
+    {
+      "offset": 308,
+      "absolute_offset": 15668,
+      "name": "RUN_TIME_MS_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 disables timer; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_TIME_MS_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 disables timer; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "active"
+    },
+    {
+      "offset": 312,
+      "absolute_offset": 15672,
+      "name": "PAUSE_TIME_MS_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "pause after clean drain; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "PAUSE_TIME_MS_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "pause after clean drain; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "active"
+    },
+    {
+      "offset": 316,
+      "absolute_offset": 15676,
+      "name": "CYCLE_COUNT_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 infinite when scheduler enabled; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_COUNT_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 infinite when scheduler enabled; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "min": 0,
+        "max": 4294967295
+      },
+      "group": "active"
+    },
+    {
+      "offset": 320,
+      "absolute_offset": 15680,
+      "name": "SCHEDULER_ENABLE_ACTIVE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "0 single cycle without pause; invalid until ACTIVE_VALID",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SCHEDULER_ENABLE_ACTIVE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "0 single cycle without pause; invalid until ACTIVE_VALID"
+        }
+      ],
+      "validation": {
+        "values": [
+          0,
+          1
+        ]
+      },
+      "group": "active"
+    },
+    {
+      "offset": 324,
+      "absolute_offset": 15684,
+      "name": "RESERVED_144",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_144",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 328,
+      "absolute_offset": 15688,
+      "name": "RESERVED_148",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_148",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 332,
+      "absolute_offset": 15692,
+      "name": "RESERVED_14C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_14C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 336,
+      "absolute_offset": 15696,
+      "name": "ACTIVE_INPUT",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot selected live0..3; synthetic/unrouted ffffffff",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "ACTIVE_INPUT",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot selected live0..3; synthetic/unrouted ffffffff"
+        }
+      ]
+    },
+    {
+      "offset": 340,
+      "absolute_offset": 15700,
+      "name": "LOCK_STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot bits0present,1AGC,2CLAMP,3H,4format eligible,5stable,6frame qualified,7sample valid; upper zero",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LOCK_STATUS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot bits0present,1AGC,2CLAMP,3H,4format eligible,5stable,6frame qualified,7sample valid; upper zero"
+        }
+      ]
+    },
+    {
+      "offset": 344,
+      "absolute_offset": 15704,
+      "name": "INPUT_PRESENT_BITMAP",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot lower4; consult input status validity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_PRESENT_BITMAP",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot lower4; consult input status validity"
+        }
+      ]
+    },
+    {
+      "offset": 348,
+      "absolute_offset": 15708,
+      "name": "INPUT_LOCK_BITMAP",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot lower4 AND(AGC,CLAMP,H); consult validity",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_LOCK_BITMAP",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot lower4 AND(AGC,CLAMP,H); consult validity"
+        }
+      ]
+    },
+    {
+      "offset": 352,
+      "absolute_offset": 15712,
+      "name": "INPUT_FORMAT_STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot four bytes:0UNKNOWN,1NO_SIGNAL,2AHD1080P25,3OTHER_SUPPORTED_CLASSIFIER_CODE,4UNSTABLE,5STATUS_ERROR; low byte input0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_FORMAT_STATUS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot four bytes:0UNKNOWN,1NO_SIGNAL,2AHD1080P25,3OTHER_SUPPORTED_CLASSIFIER_CODE,4UNSTABLE,5STATUS_ERROR; low byte input0"
+        }
+      ]
+    },
+    {
+      "offset": 356,
+      "absolute_offset": 15716,
+      "name": "INPUT_STATUS_VALID_BITMAP",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot lower4 recent complete NVP samples; stale bits0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_STATUS_VALID_BITMAP",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot lower4 recent complete NVP samples; stale bits0"
+        }
+      ]
+    },
+    {
+      "offset": 360,
+      "absolute_offset": 15720,
+      "name": "NVP_INIT_STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot bits0busy,1done,2error; upper zero",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "NVP_INIT_STATUS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot bits0busy,1done,2error; upper zero"
+        }
+      ]
+    },
+    {
+      "offset": 364,
+      "absolute_offset": 15724,
+      "name": "I2C_OWNER",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot0none,1init,2runtime; research owner not enabled",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "I2C_OWNER",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot0none,1init,2runtime; research owner not enabled"
+        }
+      ]
+    },
+    {
+      "offset": 368,
+      "absolute_offset": 15728,
+      "name": "LAST_SCAN_INPUT",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot last candidate0..3 or none",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_SCAN_INPUT",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot last candidate0..3 or none"
+        }
+      ]
+    },
+    {
+      "offset": 372,
+      "absolute_offset": 15732,
+      "name": "CYCLE_COMPLETION_REASON",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot reason code for most recent cycle",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_COMPLETION_REASON",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot reason code for most recent cycle"
+        }
+      ]
+    },
+    {
+      "offset": 376,
+      "absolute_offset": 15736,
+      "name": "INPUT_FAILURE_REASONS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot four bytes:0none1absent2timeout3unsupported4status_invalid5I2C6board_unverified",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_FAILURE_REASONS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot four bytes:0none1absent2timeout3unsupported4status_invalid5I2C6board_unverified"
+        }
+      ]
+    },
+    {
+      "offset": 380,
+      "absolute_offset": 15740,
+      "name": "LAST_CYCLE_EPOCH",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot most recently started cycle epoch",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_EPOCH",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot most recently started cycle epoch"
+        }
+      ]
+    },
+    {
+      "offset": 384,
+      "absolute_offset": 15744,
+      "name": "RUN_ID_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_ID bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_ID_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_ID bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 388,
+      "absolute_offset": 15748,
+      "name": "RUN_ID_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_ID bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_ID_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_ID bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 392,
+      "absolute_offset": 15752,
+      "name": "CYCLE_ID_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_ID bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_ID_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_ID bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 396,
+      "absolute_offset": 15756,
+      "name": "CYCLE_ID_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_ID bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_ID_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_ID bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 400,
+      "absolute_offset": 15760,
+      "name": "SEGMENT_ID_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank SEGMENT_ID bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SEGMENT_ID_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank SEGMENT_ID bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 404,
+      "absolute_offset": 15764,
+      "name": "SEGMENT_ID_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank SEGMENT_ID bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "SEGMENT_ID_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank SEGMENT_ID bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 408,
+      "absolute_offset": 15768,
+      "name": "FRAMES_REQUESTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FRAMES_REQUESTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FRAMES_REQUESTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FRAMES_REQUESTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 412,
+      "absolute_offset": 15772,
+      "name": "FRAMES_REQUESTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FRAMES_REQUESTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FRAMES_REQUESTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FRAMES_REQUESTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 416,
+      "absolute_offset": 15776,
+      "name": "RECORDS_REQUESTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RECORDS_REQUESTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RECORDS_REQUESTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RECORDS_REQUESTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 420,
+      "absolute_offset": 15780,
+      "name": "RECORDS_REQUESTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RECORDS_REQUESTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RECORDS_REQUESTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RECORDS_REQUESTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 424,
+      "absolute_offset": 15784,
+      "name": "CURRENT_FRAME_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_FRAME bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_FRAME_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_FRAME bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 428,
+      "absolute_offset": 15788,
+      "name": "CURRENT_FRAME_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_FRAME bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_FRAME_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_FRAME bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 432,
+      "absolute_offset": 15792,
+      "name": "CURRENT_LINE_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_LINE bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_LINE_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_LINE bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 436,
+      "absolute_offset": 15796,
+      "name": "CURRENT_LINE_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_LINE bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_LINE_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_LINE bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 440,
+      "absolute_offset": 15800,
+      "name": "CURRENT_RECORD_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_RECORD bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_RECORD_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_RECORD bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 444,
+      "absolute_offset": 15804,
+      "name": "CURRENT_RECORD_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CURRENT_RECORD bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_RECORD_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CURRENT_RECORD bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 448,
+      "absolute_offset": 15808,
+      "name": "TICKS_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank TICKS bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "TICKS_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank TICKS bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 452,
+      "absolute_offset": 15812,
+      "name": "TICKS_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank TICKS bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "TICKS_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank TICKS bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 456,
+      "absolute_offset": 15816,
+      "name": "FIRST_ERROR_FRAME_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_FRAME bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_FRAME_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_FRAME bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 460,
+      "absolute_offset": 15820,
+      "name": "FIRST_ERROR_FRAME_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_FRAME bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_FRAME_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_FRAME bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 464,
+      "absolute_offset": 15824,
+      "name": "FIRST_ERROR_LINE_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_LINE bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_LINE_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_LINE bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 468,
+      "absolute_offset": 15828,
+      "name": "FIRST_ERROR_LINE_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_LINE bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_LINE_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_LINE bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 472,
+      "absolute_offset": 15832,
+      "name": "FIRST_ERROR_RECORD_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_RECORD bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_RECORD_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_RECORD bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 476,
+      "absolute_offset": 15836,
+      "name": "FIRST_ERROR_RECORD_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_RECORD bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_RECORD_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_RECORD bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 480,
+      "absolute_offset": 15840,
+      "name": "RUN_FRAMES_STARTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_FRAMES_STARTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_FRAMES_STARTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_FRAMES_STARTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 484,
+      "absolute_offset": 15844,
+      "name": "RUN_FRAMES_STARTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_FRAMES_STARTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_FRAMES_STARTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_FRAMES_STARTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 488,
+      "absolute_offset": 15848,
+      "name": "RUN_FRAMES_COMPLETED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_FRAMES_COMPLETED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 492,
+      "absolute_offset": 15852,
+      "name": "RUN_FRAMES_COMPLETED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_FRAMES_COMPLETED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 496,
+      "absolute_offset": 15856,
+      "name": "RUN_RECORDS_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_RECORDS_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 500,
+      "absolute_offset": 15860,
+      "name": "RUN_RECORDS_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_RECORDS_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 504,
+      "absolute_offset": 15864,
+      "name": "RUN_BYTES_PAYLOAD_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_BYTES_PAYLOAD_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 508,
+      "absolute_offset": 15868,
+      "name": "RUN_BYTES_PAYLOAD_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_BYTES_PAYLOAD_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 512,
+      "absolute_offset": 15872,
+      "name": "RUN_BYTES_TRANSPORT_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_BYTES_TRANSPORT_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 516,
+      "absolute_offset": 15876,
+      "name": "RUN_BYTES_TRANSPORT_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_BYTES_TRANSPORT_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 520,
+      "absolute_offset": 15880,
+      "name": "RUN_STALL_CYCLES_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_STALL_CYCLES bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_STALL_CYCLES_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_STALL_CYCLES bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 524,
+      "absolute_offset": 15884,
+      "name": "RUN_STALL_CYCLES_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_STALL_CYCLES bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_STALL_CYCLES_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_STALL_CYCLES bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 528,
+      "absolute_offset": 15888,
+      "name": "RUN_DROP_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_DROP_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_DROP_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_DROP_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 532,
+      "absolute_offset": 15892,
+      "name": "RUN_DROP_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_DROP_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_DROP_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_DROP_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 536,
+      "absolute_offset": 15896,
+      "name": "RUN_DISCONTINUITY_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_DISCONTINUITY_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 540,
+      "absolute_offset": 15900,
+      "name": "RUN_DISCONTINUITY_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_DISCONTINUITY_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 544,
+      "absolute_offset": 15904,
+      "name": "RUN_ABORT_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_ABORT_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_ABORT_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_ABORT_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 548,
+      "absolute_offset": 15908,
+      "name": "RUN_ABORT_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_ABORT_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_ABORT_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_ABORT_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 552,
+      "absolute_offset": 15912,
+      "name": "RUN_SOURCE_LOSS_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_SOURCE_LOSS_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 556,
+      "absolute_offset": 15916,
+      "name": "RUN_SOURCE_LOSS_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RUN_SOURCE_LOSS_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 560,
+      "absolute_offset": 15920,
+      "name": "CYCLE_FRAMES_STARTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_FRAMES_STARTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 564,
+      "absolute_offset": 15924,
+      "name": "CYCLE_FRAMES_STARTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_FRAMES_STARTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 568,
+      "absolute_offset": 15928,
+      "name": "CYCLE_FRAMES_COMPLETED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_FRAMES_COMPLETED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 572,
+      "absolute_offset": 15932,
+      "name": "CYCLE_FRAMES_COMPLETED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_FRAMES_COMPLETED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 576,
+      "absolute_offset": 15936,
+      "name": "CYCLE_RECORDS_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_RECORDS_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 580,
+      "absolute_offset": 15940,
+      "name": "CYCLE_RECORDS_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_RECORDS_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 584,
+      "absolute_offset": 15944,
+      "name": "CYCLE_BYTES_PAYLOAD_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_BYTES_PAYLOAD_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 588,
+      "absolute_offset": 15948,
+      "name": "CYCLE_BYTES_PAYLOAD_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_BYTES_PAYLOAD_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 592,
+      "absolute_offset": 15952,
+      "name": "CYCLE_BYTES_TRANSPORT_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_BYTES_TRANSPORT_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 596,
+      "absolute_offset": 15956,
+      "name": "CYCLE_BYTES_TRANSPORT_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_BYTES_TRANSPORT_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 600,
+      "absolute_offset": 15960,
+      "name": "CYCLE_STALL_CYCLES_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_STALL_CYCLES_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 604,
+      "absolute_offset": 15964,
+      "name": "CYCLE_STALL_CYCLES_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_STALL_CYCLES_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 608,
+      "absolute_offset": 15968,
+      "name": "CYCLE_DROP_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_DROP_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_DROP_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_DROP_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 612,
+      "absolute_offset": 15972,
+      "name": "CYCLE_DROP_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_DROP_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_DROP_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_DROP_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 616,
+      "absolute_offset": 15976,
+      "name": "CYCLE_DISCONTINUITY_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_DISCONTINUITY_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 620,
+      "absolute_offset": 15980,
+      "name": "CYCLE_DISCONTINUITY_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_DISCONTINUITY_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 624,
+      "absolute_offset": 15984,
+      "name": "CYCLE_ABORT_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_ABORT_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 628,
+      "absolute_offset": 15988,
+      "name": "CYCLE_ABORT_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_ABORT_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 632,
+      "absolute_offset": 15992,
+      "name": "CYCLE_SOURCE_LOSS_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_SOURCE_LOSS_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 636,
+      "absolute_offset": 15996,
+      "name": "CYCLE_SOURCE_LOSS_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_SOURCE_LOSS_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 640,
+      "absolute_offset": 16000,
+      "name": "LIFETIME_FRAMES_STARTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_FRAMES_STARTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 644,
+      "absolute_offset": 16004,
+      "name": "LIFETIME_FRAMES_STARTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_FRAMES_STARTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 648,
+      "absolute_offset": 16008,
+      "name": "LIFETIME_FRAMES_COMPLETED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_FRAMES_COMPLETED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 652,
+      "absolute_offset": 16012,
+      "name": "LIFETIME_FRAMES_COMPLETED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_FRAMES_COMPLETED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 656,
+      "absolute_offset": 16016,
+      "name": "LIFETIME_RECORDS_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_RECORDS_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 660,
+      "absolute_offset": 16020,
+      "name": "LIFETIME_RECORDS_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_RECORDS_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 664,
+      "absolute_offset": 16024,
+      "name": "LIFETIME_BYTES_PAYLOAD_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_BYTES_PAYLOAD_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 668,
+      "absolute_offset": 16028,
+      "name": "LIFETIME_BYTES_PAYLOAD_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_BYTES_PAYLOAD_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 672,
+      "absolute_offset": 16032,
+      "name": "LIFETIME_BYTES_TRANSPORT_EMITTED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_BYTES_TRANSPORT_EMITTED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 676,
+      "absolute_offset": 16036,
+      "name": "LIFETIME_BYTES_TRANSPORT_EMITTED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_BYTES_TRANSPORT_EMITTED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 680,
+      "absolute_offset": 16040,
+      "name": "LIFETIME_STALL_CYCLES_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_STALL_CYCLES_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 684,
+      "absolute_offset": 16044,
+      "name": "LIFETIME_STALL_CYCLES_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_STALL_CYCLES_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 688,
+      "absolute_offset": 16048,
+      "name": "LIFETIME_DROP_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_DROP_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 692,
+      "absolute_offset": 16052,
+      "name": "LIFETIME_DROP_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_DROP_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 696,
+      "absolute_offset": 16056,
+      "name": "LIFETIME_DISCONTINUITY_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_DISCONTINUITY_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 700,
+      "absolute_offset": 16060,
+      "name": "LIFETIME_DISCONTINUITY_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_DISCONTINUITY_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 704,
+      "absolute_offset": 16064,
+      "name": "LIFETIME_ABORT_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_ABORT_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 708,
+      "absolute_offset": 16068,
+      "name": "LIFETIME_ABORT_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_ABORT_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 712,
+      "absolute_offset": 16072,
+      "name": "LIFETIME_SOURCE_LOSS_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_SOURCE_LOSS_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 716,
+      "absolute_offset": 16076,
+      "name": "LIFETIME_SOURCE_LOSS_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LIFETIME_SOURCE_LOSS_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 720,
+      "absolute_offset": 16080,
+      "name": "CYCLES_COMPLETED_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLES_COMPLETED bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLES_COMPLETED_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLES_COMPLETED bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 724,
+      "absolute_offset": 16084,
+      "name": "CYCLES_COMPLETED_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank CYCLES_COMPLETED bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLES_COMPLETED_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank CYCLES_COMPLETED bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 728,
+      "absolute_offset": 16088,
+      "name": "LAST_CYCLE_FIRST_GLOBAL_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_FIRST_GLOBAL_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 732,
+      "absolute_offset": 16092,
+      "name": "LAST_CYCLE_FIRST_GLOBAL_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_FIRST_GLOBAL_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 736,
+      "absolute_offset": 16096,
+      "name": "LAST_CYCLE_RECORD_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_RECORD_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 740,
+      "absolute_offset": 16100,
+      "name": "LAST_CYCLE_RECORD_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_RECORD_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 744,
+      "absolute_offset": 16104,
+      "name": "LAST_CYCLE_FRAME_COUNT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_FRAME_COUNT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 748,
+      "absolute_offset": 16108,
+      "name": "LAST_CYCLE_FRAME_COUNT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_FRAME_COUNT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 752,
+      "absolute_offset": 16112,
+      "name": "FIRST_ERROR_CYCLE_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_CYCLE_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 756,
+      "absolute_offset": 16116,
+      "name": "FIRST_ERROR_CYCLE_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_CYCLE_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 760,
+      "absolute_offset": 16120,
+      "name": "FIRST_ERROR_SEGMENT_LO",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits31:0",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_SEGMENT_LO",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits31:0"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 764,
+      "absolute_offset": 16124,
+      "name": "FIRST_ERROR_SEGMENT_HI",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits63:32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_SEGMENT_HI",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits63:32"
+        }
+      ],
+      "group": "counter_snapshot"
+    },
+    {
+      "offset": 768,
+      "absolute_offset": 16128,
+      "name": "RESERVED_300",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_300",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 772,
+      "absolute_offset": 16132,
+      "name": "RESERVED_304",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_304",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 776,
+      "absolute_offset": 16136,
+      "name": "RESERVED_308",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_308",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 780,
+      "absolute_offset": 16140,
+      "name": "RESERVED_30C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_30C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 784,
+      "absolute_offset": 16144,
+      "name": "CURRENT_RECORD_EPOCH",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot context epoch",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_RECORD_EPOCH",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot context epoch"
+        }
+      ]
+    },
+    {
+      "offset": 788,
+      "absolute_offset": 16148,
+      "name": "CURRENT_GLOBAL_SEQUENCE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot current/last record global sequence32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_GLOBAL_SEQUENCE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot current/last record global sequence32"
+        }
+      ]
+    },
+    {
+      "offset": 792,
+      "absolute_offset": 16152,
+      "name": "CURRENT_ATTEMPT_SEQUENCE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot current/last attempt32",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CURRENT_ATTEMPT_SEQUENCE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot current/last attempt32"
+        }
+      ]
+    },
+    {
+      "offset": 796,
+      "absolute_offset": 16156,
+      "name": "LAST_CYCLE_SEGMENT",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "low32 of snapshot last cycle segment; full segment in SEGMENT_ID64",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "LAST_CYCLE_SEGMENT",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "low32 of snapshot last cycle segment; full segment in SEGMENT_ID64"
+        }
+      ]
+    },
+    {
+      "offset": 800,
+      "absolute_offset": 16160,
+      "name": "INPUT_SAMPLE_AGE_MS_0",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot saturated ms age; ffffffff never sampled",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_SAMPLE_AGE_MS_0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot saturated ms age; ffffffff never sampled"
+        }
+      ]
+    },
+    {
+      "offset": 804,
+      "absolute_offset": 16164,
+      "name": "INPUT_SAMPLE_AGE_MS_1",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot saturated ms age; ffffffff never sampled",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_SAMPLE_AGE_MS_1",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot saturated ms age; ffffffff never sampled"
+        }
+      ]
+    },
+    {
+      "offset": 808,
+      "absolute_offset": 16168,
+      "name": "INPUT_SAMPLE_AGE_MS_2",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot saturated ms age; ffffffff never sampled",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_SAMPLE_AGE_MS_2",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot saturated ms age; ffffffff never sampled"
+        }
+      ]
+    },
+    {
+      "offset": 812,
+      "absolute_offset": 16172,
+      "name": "INPUT_SAMPLE_AGE_MS_3",
+      "access": "RO",
+      "reset": 4294967295,
+      "width": 32,
+      "meaning": "snapshot saturated ms age; ffffffff never sampled",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "INPUT_SAMPLE_AGE_MS_3",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot saturated ms age; ffffffff never sampled"
+        }
+      ]
+    },
+    {
+      "offset": 816,
+      "absolute_offset": 16176,
+      "name": "EVENT_HISTORY_OVERFLOW",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "sticky1 if run event metadata lost; fail host evidence validation",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "EVENT_HISTORY_OVERFLOW",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "sticky1 if run event metadata lost; fail host evidence validation"
+        }
+      ]
+    },
+    {
+      "offset": 820,
+      "absolute_offset": 16180,
+      "name": "CYCLE_EVENT_SEQUENCE",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "u32 increments at each cycle start/end; host detects missed manifest events",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "CYCLE_EVENT_SEQUENCE",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "u32 increments at each cycle start/end; host detects missed manifest events"
+        }
+      ]
+    },
+    {
+      "offset": 824,
+      "absolute_offset": 16184,
+      "name": "FRAME_CLOSURE_STATUS",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot bits0source_closed,1complete_output,2invalid; pertains CURRENT_FRAME; upper zero",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FRAME_CLOSURE_STATUS",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot bits0source_closed,1complete_output,2invalid; pertains CURRENT_FRAME; upper zero"
+        }
+      ]
+    },
+    {
+      "offset": 828,
+      "absolute_offset": 16188,
+      "name": "FIRST_ERROR_VALID",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "snapshot first failure context is initialized",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "FIRST_ERROR_VALID",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "snapshot first failure context is initialized"
+        }
+      ]
+    },
+    {
+      "offset": 832,
+      "absolute_offset": 16192,
+      "name": "CYCLE_EVENT_ACK",
+      "access": "RW",
+      "reset": 0,
+      "width": 32,
+      "meaning": "full-DWORD write of observed CYCLE_EVENT_SEQUENCE acknowledges latest summary; not configuration; reads last accepted ack; mismatch/partial write rejects with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "Full DWORD and current CYCLE_EVENT_SEQUENCE required; otherwise ILLEGAL_COMMAND, no acknowledgement",
+      "fields": [
+        {
+          "name": "CYCLE_EVENT_ACK",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "full-DWORD write of observed CYCLE_EVENT_SEQUENCE acknowledges latest summary; not configuration; reads last accepted ack; mismatch/partial write rejects with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 836,
+      "absolute_offset": 16196,
+      "name": "RESERVED_344",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_344",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 840,
+      "absolute_offset": 16200,
+      "name": "RESERVED_348",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_348",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 844,
+      "absolute_offset": 16204,
+      "name": "RESERVED_34C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_34C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 848,
+      "absolute_offset": 16208,
+      "name": "RESERVED_350",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_350",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 852,
+      "absolute_offset": 16212,
+      "name": "RESERVED_354",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_354",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 856,
+      "absolute_offset": 16216,
+      "name": "RESERVED_358",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_358",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 860,
+      "absolute_offset": 16220,
+      "name": "RESERVED_35C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_35C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 864,
+      "absolute_offset": 16224,
+      "name": "RESERVED_360",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_360",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 868,
+      "absolute_offset": 16228,
+      "name": "RESERVED_364",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_364",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 872,
+      "absolute_offset": 16232,
+      "name": "RESERVED_368",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_368",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 876,
+      "absolute_offset": 16236,
+      "name": "RESERVED_36C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_36C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 880,
+      "absolute_offset": 16240,
+      "name": "RESERVED_370",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_370",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 884,
+      "absolute_offset": 16244,
+      "name": "RESERVED_374",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_374",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 888,
+      "absolute_offset": 16248,
+      "name": "RESERVED_378",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_378",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 892,
+      "absolute_offset": 16252,
+      "name": "RESERVED_37C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_37C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 896,
+      "absolute_offset": 16256,
+      "name": "RESERVED_380",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_380",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 900,
+      "absolute_offset": 16260,
+      "name": "RESERVED_384",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_384",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 904,
+      "absolute_offset": 16264,
+      "name": "RESERVED_388",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_388",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 908,
+      "absolute_offset": 16268,
+      "name": "RESERVED_38C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_38C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 912,
+      "absolute_offset": 16272,
+      "name": "RESERVED_390",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_390",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 916,
+      "absolute_offset": 16276,
+      "name": "RESERVED_394",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_394",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 920,
+      "absolute_offset": 16280,
+      "name": "RESERVED_398",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_398",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 924,
+      "absolute_offset": 16284,
+      "name": "RESERVED_39C",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_39C",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 928,
+      "absolute_offset": 16288,
+      "name": "RESERVED_3A0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3A0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 932,
+      "absolute_offset": 16292,
+      "name": "RESERVED_3A4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3A4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 936,
+      "absolute_offset": 16296,
+      "name": "RESERVED_3A8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3A8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 940,
+      "absolute_offset": 16300,
+      "name": "RESERVED_3AC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3AC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 944,
+      "absolute_offset": 16304,
+      "name": "RESERVED_3B0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3B0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 948,
+      "absolute_offset": 16308,
+      "name": "RESERVED_3B4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3B4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 952,
+      "absolute_offset": 16312,
+      "name": "RESERVED_3B8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3B8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 956,
+      "absolute_offset": 16316,
+      "name": "RESERVED_3BC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3BC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 960,
+      "absolute_offset": 16320,
+      "name": "RESERVED_3C0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3C0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 964,
+      "absolute_offset": 16324,
+      "name": "RESERVED_3C4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3C4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 968,
+      "absolute_offset": 16328,
+      "name": "RESERVED_3C8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3C8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 972,
+      "absolute_offset": 16332,
+      "name": "RESERVED_3CC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3CC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 976,
+      "absolute_offset": 16336,
+      "name": "RESERVED_3D0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3D0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 980,
+      "absolute_offset": 16340,
+      "name": "RESERVED_3D4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3D4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 984,
+      "absolute_offset": 16344,
+      "name": "RESERVED_3D8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3D8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 988,
+      "absolute_offset": 16348,
+      "name": "RESERVED_3DC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3DC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 992,
+      "absolute_offset": 16352,
+      "name": "RESERVED_3E0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3E0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 996,
+      "absolute_offset": 16356,
+      "name": "RESERVED_3E4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3E4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1000,
+      "absolute_offset": 16360,
+      "name": "RESERVED_3E8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3E8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1004,
+      "absolute_offset": 16364,
+      "name": "RESERVED_3EC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3EC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1008,
+      "absolute_offset": 16368,
+      "name": "RESERVED_3F0",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3F0",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1012,
+      "absolute_offset": 16372,
+      "name": "RESERVED_3F4",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3F4",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1016,
+      "absolute_offset": 16376,
+      "name": "RESERVED_3F8",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3F8",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    },
+    {
+      "offset": 1020,
+      "absolute_offset": 16380,
+      "name": "RESERVED_3FC",
+      "access": "RO",
+      "reset": 0,
+      "width": 32,
+      "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND",
+      "valid_states": "ALL",
+      "error_behavior": "No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write",
+      "fields": [
+        {
+          "name": "RESERVED_3FC",
+          "lsb": 0,
+          "msb": 31,
+          "meaning": "reserved; read0, writes ignored with ILLEGAL_COMMAND"
+        }
+      ]
+    }
+  ],
+  "counter_read_protocol": "SNAPSHOT_COUNTERS; wait busy0,valid1,sequence advanced; read all LO/HI under exclusive host snapshot lock; verify sequence unchanged",
+  "counter_arithmetic": "diagnostic u64 saturate+COUNTER_OVERFLOW; ABI u32 modulo unchanged",
+  "counter_aliases": {
+    "FRAMES_STARTED": "RUN_FRAMES_STARTED",
+    "FRAMES_COMPLETED": "RUN_FRAMES_COMPLETED",
+    "RECORDS_EMITTED": "RUN_RECORDS_EMITTED",
+    "BYTES_PAYLOAD_EMITTED": "RUN_BYTES_PAYLOAD_EMITTED",
+    "BYTES_TRANSPORT_EMITTED": "RUN_BYTES_TRANSPORT_EMITTED",
+    "STALL_CYCLES": "RUN_STALL_CYCLES",
+    "DROP_COUNT": "RUN_DROP_COUNT",
+    "DISCONTINUITY_COUNT": "RUN_DISCONTINUITY_COUNT",
+    "ABORT_COUNT": "RUN_ABORT_COUNT",
+    "SOURCE_LOSS_COUNT": "RUN_SOURCE_LOSS_COUNT"
+  },
+  "counter_groups": {
+    "current_run": "RUN_",
+    "current_cycle": "CYCLE_",
+    "lifetime": "LIFETIME_"
+  },
+  "configuration_snapshot": "candidate copied at START acceptance; validate frozen candidate; ACTIVE and RUN_ID update only on success",
+  "timing": {
+    "axi_hz": 62500000,
+    "ticks_per_ms": 62500,
+    "paced_ticks_per_frame": 2500000,
+    "poll_ms": 10,
+    "status_stale_ms": 20
+  },
+  "limits": {
+    "frame": {
+      "min": 0,
+      "max": 1000,
+      "zero": "continuous",
+      "scope": "cycle"
+    },
+    "record": {
+      "min": 0,
+      "max": 4294967295,
+      "zero": "continuous",
+      "scope": "cycle"
+    },
+    "cycles": {
+      "min": 0,
+      "max": 4294967295,
+      "zero": "infinite if scheduler enabled"
+    },
+    "run_time_zero": "disabled"
+  },
+  "cross_field_validation": [
+    "SCAN_ORDER is permutation with upper24 bits zero",
+    "1<=LOCK_STABLE_MS<=LOCK_TIMEOUT_MS",
+    "manual input enabled in SCAN_MASK",
+    "SOURCE_MODE=LIVE requires RATE_MODE=0 and live capability",
+    "SOURCE_MODE=RECORD requires RATE_MODE=1 and record pattern0..1",
+    "SOURCE_MODE=VIDEO permits rate0..1 and pattern0..2",
+    "loss RESCAN requires corresponding capability",
+    "scheduler enabled requires scheduler capability",
+    "FRAME_LIMIT<=1000 even when inactive",
+    "all enums and full scalar ranges validated at START"
+  ],
+  "patterns": {
+    "normative_video_pseudocode": "All integer shifts below are unsigned; u32(x)=x mod2^32; byte(x)=x mod256. F is source_frame_sequence in the header (first ever frame1; not reset at START), L is source_line_sequence0..1079, q is pair index0..959, k is lane0..3. Pattern selection and seed context are held per record.\n\nsafe8(x): b=byte(x); return1 if b==0 else254 if b==255 else b.\nThis avoids reserved00/FF video payload bytes and accidental FF0000 marker detection. It is normative, not an undocumented escape in the host. Record-mode payload uses raw bytes and bypasses the parser.\n\nPATTERN_0 COLOR_BARS_WITH_FRAME_ID: select bar=floor((2*q)/240) (eight equal240-pixel bars). (Y,U,V) table, in order white,yellow,cyan,green,magenta,red,blue,black:\n[(235,128,128),(210,16,146),(170,166,16),(145,54,34),(106,202,222),(81,90,240),(41,240,110),(16,128,128)]. Emit [U,Y,V,Y]. Override top32 lines and first512 pixels:32 binary tiles of16 pixels. For pair q<256 and L<32, bit=(F >> floor((2*q)/16)) &1; emit [128,235 if bit else16,128,235 if bit else16]. This shows low32 frame bits, little-bit-order left to right; no font.\n\nPATTERN_1 XY_FRAME_RAMP: payload[4*q+k]=safe8(F + 3*L + 5*q + 67*k). Thus all U/Y/V lanes depend deterministically on frame,line,pair and lane; wrap before safe8. Simple constant adds/shifts, no multiplier required.\n\nPRBS31 exact recurrence: polynomial x^31+x^28+1. State s is31 bits, never zero. next_bit(): b=(s>>30)&1; s=((s<<1)&0x7fffffff) | (((s>>30)^(s>>27))&1); return b. next_byte(): sum(next_bit()<<j for j=0..7). This recurrence and bit order are normative even if a library labels reciprocal-polynomial implementations differently.\n\nfold64(x)=u32(x) XOR u32(x>>32).\nseed(R,C,F,L)=((0x7fffffff XOR fold64(R) XOR rotl32(fold64(C),7) XOR rotl32(u32(F),13) XOR u32(L)) &0x7fffffff); replace zero with1.\nrotl32(x,n)=u32((x<<n)|(x>>(32-n))).\n\nPATTERN_2 PRBS31 in video: reseed at each line with seed(RUN_ID,CYCLE_ID,F,L); emit safe8(next_byte()) for offsets0..3839 in ascending order. SEGMENT_ID does not enter seed; resumed frame identity is reflected in F and the manifest. Never advance generator state during a stall or for bytes not accepted by the synthetic parser. Host can reproduce a line independently; no full frame BRAM needed. R/C are64-bit metadata from the host run manifest, not repurposed ABI fields.",
+    "normative_record_pseudocode": "RECORD_LIMIT=0 continuous;1..0xffffffff exactly that many complete4096-byte records per cycle, absent a prior time/stop/error event. T1 uses1. The limit counts TLAST handshakes. Reserve a finite record budget at admission so filling/committed/inflight records cannot exceed remaining demand. Counters are64-bit even when the configured limit is32-bit.\n\nSynthetic records are virtual valid active lines in the unchanged video-shaped ABI, not opaque records with reinterpreted header fields. Virtual line increments0..1079, then next virtual frame; first frame1. This source frame/capture state persists across transport epoch resets/START. A finite record test may end within a virtual frame; host record mode does not claim that prefix is a complete video frame. Header VALID means the generated3840-byte virtual line was complete. Logical channel0, active count1, physical_input_id0 remains an ABI-compatible fixture mapping; source identity comes from ACTIVE and the manifest, never a new physical-input enum.\n\nLet R=RUN_ID,C=CYCLE_ID,Q=zero-based synthetic record ordinal within the cycle,j=payload offset0..3839. No admitted record may vanish unnoticed: on successful MAX_RATE synthetic runs Q has no gaps. Q is recorded out of band as cycle-first global sequence plus ordinal, including modulo wrap tracking; transport resets do not occur within a healthy record cycle.\n\nCOUNTER_PATTERN (record pattern0): byte_j=(fold64(R)+3*fold64(C)+5*fold64(Q)+j) mod256. fold64 is defined in the video pattern specification. This defines every byte and has no dependency on host timing.\n\nPRBS31_PATTERN (record pattern1): s=((0x7fffffff XOR fold64(R) XOR rotl32(fold64(C),7) XOR rotl32(fold64(Q),13)) &0x7fffffff); if zero use1. At every record reseed; byte_j=the jth next_byte() from the exact PRBS31 recurrence in PATTERN_SPECIFICATION. Do NOT apply safe8 in record mode. Eight byte steps generate each64-bit write word; state advances only on accepted ring write. Use a parallel64-bit LFSR transform and pipeline as needed, never serialize at1bit or1byte/AXI tick.\n\nNormative host validator: negotiate unchanged ABI; for each fixed4096-byte record validate header/padding; derive Q from expected ordinal and run/cycle manifest, independently regenerate3840 bytes using the selected formula, compare every payload byte. Require global sequence contiguous, correct virtual frame/line and unchanged input mapping; increment Q only for a complete accepted record. A reported aborted/uncommitted attempt is an explicit failed-test event, not a silent Q repair. Bytes0..63 retain ABI header layout;3904..4095 are zero."
+  },
+  "abi_reference": "G2B_DIAG0_ABI_REFERENCE.json",
+  "nvp_status_plan": "UNRESOLVED",
+  "blockers": [
+    "B1 NVP_RUNTIME_FORMAT_VALIDITY_UNPROVEN",
+    "B2 FOUR_INPUT_BOARD_MAPPING_UNVERIFIED"
+  ],
+  "normative_semantic_documents": [
+    "G2B_DIAG0_CONFIGURATION_ATOMICITY.md",
+    "G2B_DIAG0_COUNTER_COHERENCY.md",
+    "G2B_DIAG0_STRESS_SCHEDULER.md",
+    "G2B_DIAG0_DATA_INTEGRITY_CONTRACT.md",
+    "G2B_DIAG0_ERROR_MODEL.md"
+  ],
+  "cycle_event_ack_protocol": "full-DWORD current sequence acknowledgement; overwritten unacknowledged summary sets EVENT_HISTORY_OVERFLOW; new successful START clears overflow after prior-run evidence collection",
+  "capability_advertisement_rule": "masks are future build constants; before B1/B2 closure withhold live/four-input/scan/rescan; no current PRODUCT feature claim"
+}

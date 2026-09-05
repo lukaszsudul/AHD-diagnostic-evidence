@@ -1,0 +1,296 @@
+Offset,Register,Access,Reset_Value,Width,Field,Bits,Meaning,Valid_States,Error_Behavior
+0x3C00,DIAG_ID,RO,0x47414944,32,DIAG_ID,31:0,little-endian ASCII DIAG,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C04,DIAG_VERSION,RO,0x00010000,32,DIAG_VERSION,31:0,MMIO major1 minor0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,LIVE_VIDEO_SUPPORTED,0:0,withheld pending NVP evidence,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,FOUR_INPUT_SELECTION_SUPPORTED,1:1,withheld pending NVP evidence,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,AUTO_SCAN_SUPPORTED,2:2,withheld pending NVP evidence,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,SYNTHETIC_VIDEO_SUPPORTED,3:3,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,SYNTHETIC_RECORD_SUPPORTED,4:4,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,FRAME_LIMIT_SUPPORTED,5:5,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,RECORD_LIMIT_SUPPORTED,6:6,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,PACED_1080P25_SUPPORTED,7:7,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,MAX_RATE_SUPPORTED,8:8,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,STRESS_SCHEDULER_SUPPORTED,9:9,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,LOSS_RESCAN_SUPPORTED,10:10,withheld pending NVP evidence,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,PRBS31_SUPPORTED,11:11,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,RUNTIME_MODE_SWITCH_SUPPORTED,12:12,future implementation capability,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C08,DIAG_CAPABILITIES,RO,0x00001BF8,32,RESERVED_ZERO,31:13,zero,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C0C,BUILD_PROFILE,RO,0x00000003,32,BUILD_PROFILE,31:0,"1 PRODUCT,2 RESEARCH_DIAGNOSTIC,3 HW0_DIAGNOSTIC; this image3",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C10,TRANSPORT_ABI_VERSION,RO,0x00010000,32,TRANSPORT_ABI_VERSION,31:0,unchanged ABI1.0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C14,BUILD_FLAGS,RO,0x00000402,32,BUILD_FLAGS,31:0,bit0 dirty=0; bit1 manifest verified=1; HW0 diagnostic bit10=1; research bit9 and PRODUCT bit8 clear,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C18,AXI_CLOCK_HZ,RO,0x03B9ACA0,32,AXI_CLOCK_HZ,31:0,required configured user clock,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C1C,IDENTITY_SCHEMA,RO,0x00010000,32,IDENTITY_SCHEMA,31:0,source commit identity encoding1.0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C20,SOURCE_COMMIT_W0,RO,0x00000000,32,SOURCE_COMMIT_W0,31:0,build-injected SHA word0; numeric hex characters 0..7; zero is invalid identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C24,SOURCE_COMMIT_W1,RO,0x00000000,32,SOURCE_COMMIT_W1,31:0,build-injected SHA word1; numeric hex characters 8..15; zero is invalid identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C28,SOURCE_COMMIT_W2,RO,0x00000000,32,SOURCE_COMMIT_W2,31:0,build-injected SHA word2; numeric hex characters 16..23; zero is invalid identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C2C,SOURCE_COMMIT_W3,RO,0x00000000,32,SOURCE_COMMIT_W3,31:0,build-injected SHA word3; numeric hex characters 24..31; zero is invalid identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C30,SOURCE_COMMIT_W4,RO,0x00000000,32,SOURCE_COMMIT_W4,31:0,build-injected SHA word4; numeric hex characters 32..39; zero is invalid identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C34,DIAG_FIRMWARE_VERSION,RO,0x00010000,32,DIAG_FIRMWARE_VERSION,31:0,diagnostic firmware release1.0; change for future implementation revisions,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C38,MMIO_RANGE_BYTES,RO,0x00000400,32,MMIO_RANGE_BYTES,31:0,this block size,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C3C,BUILD_ID_VALID,RO,0x00000000,32,BUILD_ID_VALID,31:0,build-injected1 only for clean committed full rebuild matching legacy identity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C40,COMMAND,WO,0x00000000,32,COMMAND,31:0,"1 START,2 STOP_GRACEFUL,3 ABORT,4 CLEAR_RUN_STATUS,5 SNAPSHOT_COUNTERS",ALL,Full command DWORD required
+0x3C44,STATUS,RO,0x00000000,32,STATE,7:0,state enum in contract,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,ACTIVE_VALID,8:8,successful START snapshot exists,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,SNAPSHOT_BUSY,9:9,snapshot command pending,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,SNAPSHOT_VALID,10:10,snapshot bank initialized,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,SOURCE_QUARANTINED,11:11,live tokens awaiting clock/epoch retirement,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,FATAL,12:12,external reset/new session required,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C44,STATUS,RO,0x00000000,32,RESERVED_ZERO,31:13,zero,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,INVALID_CONFIG,0:0,INVALID_CONFIG,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,ILLEGAL_COMMAND,1:1,ILLEGAL_COMMAND,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,BUSY_CONFIG_CHANGE,2:2,BUSY_CONFIG_CHANGE,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,NVP_INIT_NOT_COMPLETE,3:3,NVP_INIT_NOT_COMPLETE,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,NO_INPUT_AVAILABLE,4:4,NO_INPUT_AVAILABLE,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,INPUT_LOCK_TIMEOUT,5:5,INPUT_LOCK_TIMEOUT,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,INPUT_FORMAT_UNSUPPORTED,6:6,INPUT_FORMAT_UNSUPPORTED,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,SOURCE_LOST,7:7,SOURCE_LOST,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,SCAN_EXHAUSTED,8:8,SCAN_EXHAUSTED,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,PATTERN_ERROR,9:9,PATTERN_ERROR,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,RING_OVERFLOW,10:10,RING_OVERFLOW,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,RECORD_DROP,11:11,RECORD_DROP,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,SEQUENCE_ERROR,12:12,SEQUENCE_ERROR,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,ABORTED_RUN,13:13,ABORTED_RUN,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,AXI_PROTOCOL_ERROR,14:14,AXI_PROTOCOL_ERROR,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,INTERNAL_FATAL,15:15,INTERNAL_FATAL,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,I2C_ERROR,16:16,I2C_ERROR,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,PACE_OVERRUN,17:17,PACE_OVERRUN,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,COUNTER_OVERFLOW,18:18,COUNTER_OVERFLOW,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,LEGACY_CONTROL_CONFLICT,19:19,LEGACY_CONTROL_CONFLICT,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C48,ERROR_FLAGS,RO,0x00000000,32,RESERVED_ZERO,31:20,zero,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C4C,LAST_COMMAND_RESULT,RO,0x00000000,32,LAST_COMMAND_RESULT,31:0,"0 NONE,1 PENDING,2 OK,3 CONFIG_ERROR,4 ILLEGAL_STATE,5 BAD_ACCESS,6 FATAL_LATCHED,7 UNSUPPORTED_CAPABILITY,8 CANCELLED",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C50,COMMAND_SEQUENCE,RO,0x00000000,32,COMMAND_SEQUENCE,31:0,u32 increment each command-port write including rejected commands; poll result after readback fence,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C54,SNAPSHOT_SEQUENCE,RO,0x00000000,32,SNAPSHOT_SEQUENCE,31:0,u32 increments after atomic snapshot publish; host serializes requests,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C58,COMPLETION_REASON,RO,0x00000000,32,COMPLETION_REASON,31:0,"0 NONE,1 COUNT_LIMIT,2 TIME_LIMIT,3 HOST_STOP,4 ABORT,5 SOURCE_ERROR,6 FATAL,7 SCHEDULE_FINISHED",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C5C,CONFIG_ERROR_FIELD,RO,0x00000000,32,CONFIG_ERROR_FIELD,31:0,0 none; otherwise1+shadow register index,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C60,CONFIG_ERROR_DETAIL,RO,0x00000000,32,CONFIG_ERROR_DETAIL,31:0,"0 none,1 RANGE,2 ENUM,3 MASKED_INPUT,4 SCAN_PERMUTATION,5 STABILITY_TIMEOUT,6 MODE_RATE,7 CAPABILITY,8 INVALID_INPUT",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C64,FIRST_ERROR_CODE,RO,0x00000000,32,FIRST_ERROR_CODE,31:0,"0 none;1+error bit index, retained until successful START",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C68,FIRST_ERROR_INPUT,RO,0xFFFFFFFF,32,FIRST_ERROR_INPUT,31:0,0..3; ffffffff not a live input,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C6C,NVP_PLAN_STATUS,RO,0x00000000,32,NVP_PLAN_STATUS,31:0,"0 unresolved,1 authoritative runtime recipe and board mapping verified; build constant",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C70,TRANSPORT_EPOCH,RO,0x00000000,32,TRANSPORT_EPOCH,31:0,frozen snapshot ABI epoch32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C74,I2C_FAILURE,RO,0x00000000,32,I2C_FAILURE,31:0,"snapshot packed bank[7:0],reg[15:8],phase[23:16],reason[31:24]; phase0none1select2verify3read4write5restore; reason0none1nack2timeout3mismatch4bus_stuck",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C78,SNAPSHOT_SOURCE_VALID,RO,0x00000000,32,SNAPSHOT_SOURCE_VALID,31:0,"snapshot bits0AXI(always1 once valid),1live status fresh,2live mailbox coherent; upper zero",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C7C,RECORD_BYTES,RO,0x00001000,32,RECORD_BYTES,31:0,frozen record geometry,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3C80,SOURCE_MODE_SHADOW,RW,0x00000002,32,SOURCE_MODE_SHADOW,31:0,runtime source,ALL,Byte enables merge; configuration validated at START
+0x3C84,LIVE_INPUT_MODE_SHADOW,RW,0x00000000,32,LIVE_INPUT_MODE_SHADOW,31:0,manual or automatic acquisition,ALL,Byte enables merge; configuration validated at START
+0x3C88,LIVE_INPUT_SELECT_SHADOW,RW,0x00000000,32,LIVE_INPUT_SELECT_SHADOW,31:0,selected enabled manual decoder,ALL,Byte enables merge; configuration validated at START
+0x3C8C,SCAN_MASK_SHADOW,RW,0x0000000F,32,SCAN_MASK_SHADOW,31:0,enabled decoder bitmap,ALL,Byte enables merge; configuration validated at START
+0x3C90,PREFERRED_INPUT_SHADOW,RW,0x00000000,32,PREFERRED_INPUT_SHADOW,31:0,auto preferred decoder; ffffffff none,ALL,Byte enables merge; configuration validated at START
+0x3C94,SCAN_ORDER_SHADOW,RW,0x000000E4,32,SCAN_ORDER_SHADOW,31:0,remaining auto order,ALL,Byte enables merge; configuration validated at START
+0x3C98,LOSS_POLICY_SHADOW,RW,0x00000000,32,LOSS_POLICY_SHADOW,31:0,source loss behavior,ALL,Byte enables merge; configuration validated at START
+0x3C9C,LOCK_TIMEOUT_MS_SHADOW,RW,0x000007D0,32,LOCK_TIMEOUT_MS_SHADOW,31:0,candidate/acquisition deadline,ALL,Byte enables merge; configuration validated at START
+0x3CA0,LOCK_STABLE_MS_SHADOW,RW,0x00000064,32,LOCK_STABLE_MS_SHADOW,31:0,continuous sampled eligibility time,ALL,Byte enables merge; configuration validated at START
+0x3CA4,PATTERN_MODE_SHADOW,RW,0x00000000,32,PATTERN_MODE_SHADOW,31:0,mode-specific deterministic pattern,ALL,Byte enables merge; configuration validated at START
+0x3CA8,RATE_MODE_SHADOW,RW,0x00000001,32,RATE_MODE_SHADOW,31:0,record requires1; live requires0; video0/1,ALL,Byte enables merge; configuration validated at START
+0x3CAC,FRAME_LIMIT_SHADOW,RW,0x00000001,32,FRAME_LIMIT_SHADOW,31:0,per-cycle full video frames;0 continuous; ignored record,ALL,Byte enables merge; configuration validated at START
+0x3CB0,RECORD_LIMIT_SHADOW,RW,0x00000001,32,RECORD_LIMIT_SHADOW,31:0,per-cycle records;0 continuous; ignored video,ALL,Byte enables merge; configuration validated at START
+0x3CB4,RUN_TIME_MS_SHADOW,RW,0x00000000,32,RUN_TIME_MS_SHADOW,31:0,0 disables timer,ALL,Byte enables merge; configuration validated at START
+0x3CB8,PAUSE_TIME_MS_SHADOW,RW,0x00000000,32,PAUSE_TIME_MS_SHADOW,31:0,pause after clean drain,ALL,Byte enables merge; configuration validated at START
+0x3CBC,CYCLE_COUNT_SHADOW,RW,0x00000001,32,CYCLE_COUNT_SHADOW,31:0,0 infinite when scheduler enabled,ALL,Byte enables merge; configuration validated at START
+0x3CC0,SCHEDULER_ENABLE_SHADOW,RW,0x00000000,32,SCHEDULER_ENABLE_SHADOW,31:0,0 single cycle without pause,ALL,Byte enables merge; configuration validated at START
+0x3CC4,RESERVED_0C4,RO,0x00000000,32,RESERVED_0C4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CC8,RESERVED_0C8,RO,0x00000000,32,RESERVED_0C8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CCC,RESERVED_0CC,RO,0x00000000,32,RESERVED_0CC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CD0,RESERVED_0D0,RO,0x00000000,32,RESERVED_0D0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CD4,RESERVED_0D4,RO,0x00000000,32,RESERVED_0D4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CD8,RESERVED_0D8,RO,0x00000000,32,RESERVED_0D8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CDC,RESERVED_0DC,RO,0x00000000,32,RESERVED_0DC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CE0,RESERVED_0E0,RO,0x00000000,32,RESERVED_0E0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CE4,RESERVED_0E4,RO,0x00000000,32,RESERVED_0E4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CE8,RESERVED_0E8,RO,0x00000000,32,RESERVED_0E8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CEC,RESERVED_0EC,RO,0x00000000,32,RESERVED_0EC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CF0,RESERVED_0F0,RO,0x00000000,32,RESERVED_0F0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CF4,RESERVED_0F4,RO,0x00000000,32,RESERVED_0F4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CF8,RESERVED_0F8,RO,0x00000000,32,RESERVED_0F8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3CFC,RESERVED_0FC,RO,0x00000000,32,RESERVED_0FC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D00,SOURCE_MODE_ACTIVE,RO,0x00000000,32,SOURCE_MODE_ACTIVE,31:0,runtime source; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D04,LIVE_INPUT_MODE_ACTIVE,RO,0x00000000,32,LIVE_INPUT_MODE_ACTIVE,31:0,manual or automatic acquisition; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D08,LIVE_INPUT_SELECT_ACTIVE,RO,0x00000000,32,LIVE_INPUT_SELECT_ACTIVE,31:0,selected enabled manual decoder; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D0C,SCAN_MASK_ACTIVE,RO,0x00000000,32,SCAN_MASK_ACTIVE,31:0,enabled decoder bitmap; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D10,PREFERRED_INPUT_ACTIVE,RO,0x00000000,32,PREFERRED_INPUT_ACTIVE,31:0,auto preferred decoder; ffffffff none; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D14,SCAN_ORDER_ACTIVE,RO,0x00000000,32,SCAN_ORDER_ACTIVE,31:0,remaining auto order; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D18,LOSS_POLICY_ACTIVE,RO,0x00000000,32,LOSS_POLICY_ACTIVE,31:0,source loss behavior; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D1C,LOCK_TIMEOUT_MS_ACTIVE,RO,0x00000000,32,LOCK_TIMEOUT_MS_ACTIVE,31:0,candidate/acquisition deadline; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D20,LOCK_STABLE_MS_ACTIVE,RO,0x00000000,32,LOCK_STABLE_MS_ACTIVE,31:0,continuous sampled eligibility time; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D24,PATTERN_MODE_ACTIVE,RO,0x00000000,32,PATTERN_MODE_ACTIVE,31:0,mode-specific deterministic pattern; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D28,RATE_MODE_ACTIVE,RO,0x00000000,32,RATE_MODE_ACTIVE,31:0,record requires1; live requires0; video0/1; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D2C,FRAME_LIMIT_ACTIVE,RO,0x00000000,32,FRAME_LIMIT_ACTIVE,31:0,per-cycle full video frames;0 continuous; ignored record; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D30,RECORD_LIMIT_ACTIVE,RO,0x00000000,32,RECORD_LIMIT_ACTIVE,31:0,per-cycle records;0 continuous; ignored video; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D34,RUN_TIME_MS_ACTIVE,RO,0x00000000,32,RUN_TIME_MS_ACTIVE,31:0,0 disables timer; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D38,PAUSE_TIME_MS_ACTIVE,RO,0x00000000,32,PAUSE_TIME_MS_ACTIVE,31:0,pause after clean drain; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D3C,CYCLE_COUNT_ACTIVE,RO,0x00000000,32,CYCLE_COUNT_ACTIVE,31:0,0 infinite when scheduler enabled; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D40,SCHEDULER_ENABLE_ACTIVE,RO,0x00000000,32,SCHEDULER_ENABLE_ACTIVE,31:0,0 single cycle without pause; invalid until ACTIVE_VALID,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D44,RESERVED_144,RO,0x00000000,32,RESERVED_144,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D48,RESERVED_148,RO,0x00000000,32,RESERVED_148,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D4C,RESERVED_14C,RO,0x00000000,32,RESERVED_14C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D50,ACTIVE_INPUT,RO,0xFFFFFFFF,32,ACTIVE_INPUT,31:0,snapshot selected live0..3; synthetic/unrouted ffffffff,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D54,LOCK_STATUS,RO,0x00000000,32,LOCK_STATUS,31:0,"snapshot bits0present,1AGC,2CLAMP,3H,4format eligible,5stable,6frame qualified,7sample valid; upper zero",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D58,INPUT_PRESENT_BITMAP,RO,0x00000000,32,INPUT_PRESENT_BITMAP,31:0,snapshot lower4; consult input status validity,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D5C,INPUT_LOCK_BITMAP,RO,0x00000000,32,INPUT_LOCK_BITMAP,31:0,"snapshot lower4 AND(AGC,CLAMP,H); consult validity",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D60,INPUT_FORMAT_STATUS,RO,0x00000000,32,INPUT_FORMAT_STATUS,31:0,"snapshot four bytes:0UNKNOWN,1NO_SIGNAL,2AHD1080P25,3OTHER_SUPPORTED_CLASSIFIER_CODE,4UNSTABLE,5STATUS_ERROR; low byte input0",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D64,INPUT_STATUS_VALID_BITMAP,RO,0x00000000,32,INPUT_STATUS_VALID_BITMAP,31:0,snapshot lower4 recent complete NVP samples; stale bits0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D68,NVP_INIT_STATUS,RO,0x00000000,32,NVP_INIT_STATUS,31:0,"snapshot bits0busy,1done,2error; upper zero",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D6C,I2C_OWNER,RO,0x00000000,32,I2C_OWNER,31:0,"snapshot0none,1init,2runtime; research owner not enabled",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D70,LAST_SCAN_INPUT,RO,0xFFFFFFFF,32,LAST_SCAN_INPUT,31:0,snapshot last candidate0..3 or none,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D74,CYCLE_COMPLETION_REASON,RO,0x00000000,32,CYCLE_COMPLETION_REASON,31:0,snapshot reason code for most recent cycle,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D78,INPUT_FAILURE_REASONS,RO,0x00000000,32,INPUT_FAILURE_REASONS,31:0,snapshot four bytes:0none1absent2timeout3unsupported4status_invalid5I2C6board_unverified,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D7C,LAST_CYCLE_EPOCH,RO,0x00000000,32,LAST_CYCLE_EPOCH,31:0,snapshot most recently started cycle epoch,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D80,RUN_ID_LO,RO,0x00000000,32,RUN_ID_LO,31:0,coherent SNAPSHOT bank RUN_ID bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D84,RUN_ID_HI,RO,0x00000000,32,RUN_ID_HI,31:0,coherent SNAPSHOT bank RUN_ID bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D88,CYCLE_ID_LO,RO,0x00000000,32,CYCLE_ID_LO,31:0,coherent SNAPSHOT bank CYCLE_ID bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D8C,CYCLE_ID_HI,RO,0x00000000,32,CYCLE_ID_HI,31:0,coherent SNAPSHOT bank CYCLE_ID bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D90,SEGMENT_ID_LO,RO,0x00000000,32,SEGMENT_ID_LO,31:0,coherent SNAPSHOT bank SEGMENT_ID bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D94,SEGMENT_ID_HI,RO,0x00000000,32,SEGMENT_ID_HI,31:0,coherent SNAPSHOT bank SEGMENT_ID bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D98,FRAMES_REQUESTED_LO,RO,0x00000000,32,FRAMES_REQUESTED_LO,31:0,coherent SNAPSHOT bank FRAMES_REQUESTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3D9C,FRAMES_REQUESTED_HI,RO,0x00000000,32,FRAMES_REQUESTED_HI,31:0,coherent SNAPSHOT bank FRAMES_REQUESTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DA0,RECORDS_REQUESTED_LO,RO,0x00000000,32,RECORDS_REQUESTED_LO,31:0,coherent SNAPSHOT bank RECORDS_REQUESTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DA4,RECORDS_REQUESTED_HI,RO,0x00000000,32,RECORDS_REQUESTED_HI,31:0,coherent SNAPSHOT bank RECORDS_REQUESTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DA8,CURRENT_FRAME_LO,RO,0x00000000,32,CURRENT_FRAME_LO,31:0,coherent SNAPSHOT bank CURRENT_FRAME bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DAC,CURRENT_FRAME_HI,RO,0x00000000,32,CURRENT_FRAME_HI,31:0,coherent SNAPSHOT bank CURRENT_FRAME bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DB0,CURRENT_LINE_LO,RO,0x00000000,32,CURRENT_LINE_LO,31:0,coherent SNAPSHOT bank CURRENT_LINE bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DB4,CURRENT_LINE_HI,RO,0x00000000,32,CURRENT_LINE_HI,31:0,coherent SNAPSHOT bank CURRENT_LINE bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DB8,CURRENT_RECORD_LO,RO,0x00000000,32,CURRENT_RECORD_LO,31:0,coherent SNAPSHOT bank CURRENT_RECORD bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DBC,CURRENT_RECORD_HI,RO,0x00000000,32,CURRENT_RECORD_HI,31:0,coherent SNAPSHOT bank CURRENT_RECORD bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DC0,TICKS_LO,RO,0x00000000,32,TICKS_LO,31:0,coherent SNAPSHOT bank TICKS bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DC4,TICKS_HI,RO,0x00000000,32,TICKS_HI,31:0,coherent SNAPSHOT bank TICKS bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DC8,FIRST_ERROR_FRAME_LO,RO,0x00000000,32,FIRST_ERROR_FRAME_LO,31:0,coherent SNAPSHOT bank FIRST_ERROR_FRAME bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DCC,FIRST_ERROR_FRAME_HI,RO,0x00000000,32,FIRST_ERROR_FRAME_HI,31:0,coherent SNAPSHOT bank FIRST_ERROR_FRAME bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DD0,FIRST_ERROR_LINE_LO,RO,0x00000000,32,FIRST_ERROR_LINE_LO,31:0,coherent SNAPSHOT bank FIRST_ERROR_LINE bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DD4,FIRST_ERROR_LINE_HI,RO,0x00000000,32,FIRST_ERROR_LINE_HI,31:0,coherent SNAPSHOT bank FIRST_ERROR_LINE bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DD8,FIRST_ERROR_RECORD_LO,RO,0x00000000,32,FIRST_ERROR_RECORD_LO,31:0,coherent SNAPSHOT bank FIRST_ERROR_RECORD bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DDC,FIRST_ERROR_RECORD_HI,RO,0x00000000,32,FIRST_ERROR_RECORD_HI,31:0,coherent SNAPSHOT bank FIRST_ERROR_RECORD bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DE0,RUN_FRAMES_STARTED_LO,RO,0x00000000,32,RUN_FRAMES_STARTED_LO,31:0,coherent SNAPSHOT bank RUN_FRAMES_STARTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DE4,RUN_FRAMES_STARTED_HI,RO,0x00000000,32,RUN_FRAMES_STARTED_HI,31:0,coherent SNAPSHOT bank RUN_FRAMES_STARTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DE8,RUN_FRAMES_COMPLETED_LO,RO,0x00000000,32,RUN_FRAMES_COMPLETED_LO,31:0,coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DEC,RUN_FRAMES_COMPLETED_HI,RO,0x00000000,32,RUN_FRAMES_COMPLETED_HI,31:0,coherent SNAPSHOT bank RUN_FRAMES_COMPLETED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DF0,RUN_RECORDS_EMITTED_LO,RO,0x00000000,32,RUN_RECORDS_EMITTED_LO,31:0,coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DF4,RUN_RECORDS_EMITTED_HI,RO,0x00000000,32,RUN_RECORDS_EMITTED_HI,31:0,coherent SNAPSHOT bank RUN_RECORDS_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DF8,RUN_BYTES_PAYLOAD_EMITTED_LO,RO,0x00000000,32,RUN_BYTES_PAYLOAD_EMITTED_LO,31:0,coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3DFC,RUN_BYTES_PAYLOAD_EMITTED_HI,RO,0x00000000,32,RUN_BYTES_PAYLOAD_EMITTED_HI,31:0,coherent SNAPSHOT bank RUN_BYTES_PAYLOAD_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E00,RUN_BYTES_TRANSPORT_EMITTED_LO,RO,0x00000000,32,RUN_BYTES_TRANSPORT_EMITTED_LO,31:0,coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E04,RUN_BYTES_TRANSPORT_EMITTED_HI,RO,0x00000000,32,RUN_BYTES_TRANSPORT_EMITTED_HI,31:0,coherent SNAPSHOT bank RUN_BYTES_TRANSPORT_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E08,RUN_STALL_CYCLES_LO,RO,0x00000000,32,RUN_STALL_CYCLES_LO,31:0,coherent SNAPSHOT bank RUN_STALL_CYCLES bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E0C,RUN_STALL_CYCLES_HI,RO,0x00000000,32,RUN_STALL_CYCLES_HI,31:0,coherent SNAPSHOT bank RUN_STALL_CYCLES bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E10,RUN_DROP_COUNT_LO,RO,0x00000000,32,RUN_DROP_COUNT_LO,31:0,coherent SNAPSHOT bank RUN_DROP_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E14,RUN_DROP_COUNT_HI,RO,0x00000000,32,RUN_DROP_COUNT_HI,31:0,coherent SNAPSHOT bank RUN_DROP_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E18,RUN_DISCONTINUITY_COUNT_LO,RO,0x00000000,32,RUN_DISCONTINUITY_COUNT_LO,31:0,coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E1C,RUN_DISCONTINUITY_COUNT_HI,RO,0x00000000,32,RUN_DISCONTINUITY_COUNT_HI,31:0,coherent SNAPSHOT bank RUN_DISCONTINUITY_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E20,RUN_ABORT_COUNT_LO,RO,0x00000000,32,RUN_ABORT_COUNT_LO,31:0,coherent SNAPSHOT bank RUN_ABORT_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E24,RUN_ABORT_COUNT_HI,RO,0x00000000,32,RUN_ABORT_COUNT_HI,31:0,coherent SNAPSHOT bank RUN_ABORT_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E28,RUN_SOURCE_LOSS_COUNT_LO,RO,0x00000000,32,RUN_SOURCE_LOSS_COUNT_LO,31:0,coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E2C,RUN_SOURCE_LOSS_COUNT_HI,RO,0x00000000,32,RUN_SOURCE_LOSS_COUNT_HI,31:0,coherent SNAPSHOT bank RUN_SOURCE_LOSS_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E30,CYCLE_FRAMES_STARTED_LO,RO,0x00000000,32,CYCLE_FRAMES_STARTED_LO,31:0,coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E34,CYCLE_FRAMES_STARTED_HI,RO,0x00000000,32,CYCLE_FRAMES_STARTED_HI,31:0,coherent SNAPSHOT bank CYCLE_FRAMES_STARTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E38,CYCLE_FRAMES_COMPLETED_LO,RO,0x00000000,32,CYCLE_FRAMES_COMPLETED_LO,31:0,coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E3C,CYCLE_FRAMES_COMPLETED_HI,RO,0x00000000,32,CYCLE_FRAMES_COMPLETED_HI,31:0,coherent SNAPSHOT bank CYCLE_FRAMES_COMPLETED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E40,CYCLE_RECORDS_EMITTED_LO,RO,0x00000000,32,CYCLE_RECORDS_EMITTED_LO,31:0,coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E44,CYCLE_RECORDS_EMITTED_HI,RO,0x00000000,32,CYCLE_RECORDS_EMITTED_HI,31:0,coherent SNAPSHOT bank CYCLE_RECORDS_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E48,CYCLE_BYTES_PAYLOAD_EMITTED_LO,RO,0x00000000,32,CYCLE_BYTES_PAYLOAD_EMITTED_LO,31:0,coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E4C,CYCLE_BYTES_PAYLOAD_EMITTED_HI,RO,0x00000000,32,CYCLE_BYTES_PAYLOAD_EMITTED_HI,31:0,coherent SNAPSHOT bank CYCLE_BYTES_PAYLOAD_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E50,CYCLE_BYTES_TRANSPORT_EMITTED_LO,RO,0x00000000,32,CYCLE_BYTES_TRANSPORT_EMITTED_LO,31:0,coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E54,CYCLE_BYTES_TRANSPORT_EMITTED_HI,RO,0x00000000,32,CYCLE_BYTES_TRANSPORT_EMITTED_HI,31:0,coherent SNAPSHOT bank CYCLE_BYTES_TRANSPORT_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E58,CYCLE_STALL_CYCLES_LO,RO,0x00000000,32,CYCLE_STALL_CYCLES_LO,31:0,coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E5C,CYCLE_STALL_CYCLES_HI,RO,0x00000000,32,CYCLE_STALL_CYCLES_HI,31:0,coherent SNAPSHOT bank CYCLE_STALL_CYCLES bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E60,CYCLE_DROP_COUNT_LO,RO,0x00000000,32,CYCLE_DROP_COUNT_LO,31:0,coherent SNAPSHOT bank CYCLE_DROP_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E64,CYCLE_DROP_COUNT_HI,RO,0x00000000,32,CYCLE_DROP_COUNT_HI,31:0,coherent SNAPSHOT bank CYCLE_DROP_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E68,CYCLE_DISCONTINUITY_COUNT_LO,RO,0x00000000,32,CYCLE_DISCONTINUITY_COUNT_LO,31:0,coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E6C,CYCLE_DISCONTINUITY_COUNT_HI,RO,0x00000000,32,CYCLE_DISCONTINUITY_COUNT_HI,31:0,coherent SNAPSHOT bank CYCLE_DISCONTINUITY_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E70,CYCLE_ABORT_COUNT_LO,RO,0x00000000,32,CYCLE_ABORT_COUNT_LO,31:0,coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E74,CYCLE_ABORT_COUNT_HI,RO,0x00000000,32,CYCLE_ABORT_COUNT_HI,31:0,coherent SNAPSHOT bank CYCLE_ABORT_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E78,CYCLE_SOURCE_LOSS_COUNT_LO,RO,0x00000000,32,CYCLE_SOURCE_LOSS_COUNT_LO,31:0,coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E7C,CYCLE_SOURCE_LOSS_COUNT_HI,RO,0x00000000,32,CYCLE_SOURCE_LOSS_COUNT_HI,31:0,coherent SNAPSHOT bank CYCLE_SOURCE_LOSS_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E80,LIFETIME_FRAMES_STARTED_LO,RO,0x00000000,32,LIFETIME_FRAMES_STARTED_LO,31:0,coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E84,LIFETIME_FRAMES_STARTED_HI,RO,0x00000000,32,LIFETIME_FRAMES_STARTED_HI,31:0,coherent SNAPSHOT bank LIFETIME_FRAMES_STARTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E88,LIFETIME_FRAMES_COMPLETED_LO,RO,0x00000000,32,LIFETIME_FRAMES_COMPLETED_LO,31:0,coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E8C,LIFETIME_FRAMES_COMPLETED_HI,RO,0x00000000,32,LIFETIME_FRAMES_COMPLETED_HI,31:0,coherent SNAPSHOT bank LIFETIME_FRAMES_COMPLETED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E90,LIFETIME_RECORDS_EMITTED_LO,RO,0x00000000,32,LIFETIME_RECORDS_EMITTED_LO,31:0,coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E94,LIFETIME_RECORDS_EMITTED_HI,RO,0x00000000,32,LIFETIME_RECORDS_EMITTED_HI,31:0,coherent SNAPSHOT bank LIFETIME_RECORDS_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E98,LIFETIME_BYTES_PAYLOAD_EMITTED_LO,RO,0x00000000,32,LIFETIME_BYTES_PAYLOAD_EMITTED_LO,31:0,coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3E9C,LIFETIME_BYTES_PAYLOAD_EMITTED_HI,RO,0x00000000,32,LIFETIME_BYTES_PAYLOAD_EMITTED_HI,31:0,coherent SNAPSHOT bank LIFETIME_BYTES_PAYLOAD_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EA0,LIFETIME_BYTES_TRANSPORT_EMITTED_LO,RO,0x00000000,32,LIFETIME_BYTES_TRANSPORT_EMITTED_LO,31:0,coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EA4,LIFETIME_BYTES_TRANSPORT_EMITTED_HI,RO,0x00000000,32,LIFETIME_BYTES_TRANSPORT_EMITTED_HI,31:0,coherent SNAPSHOT bank LIFETIME_BYTES_TRANSPORT_EMITTED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EA8,LIFETIME_STALL_CYCLES_LO,RO,0x00000000,32,LIFETIME_STALL_CYCLES_LO,31:0,coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EAC,LIFETIME_STALL_CYCLES_HI,RO,0x00000000,32,LIFETIME_STALL_CYCLES_HI,31:0,coherent SNAPSHOT bank LIFETIME_STALL_CYCLES bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EB0,LIFETIME_DROP_COUNT_LO,RO,0x00000000,32,LIFETIME_DROP_COUNT_LO,31:0,coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EB4,LIFETIME_DROP_COUNT_HI,RO,0x00000000,32,LIFETIME_DROP_COUNT_HI,31:0,coherent SNAPSHOT bank LIFETIME_DROP_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EB8,LIFETIME_DISCONTINUITY_COUNT_LO,RO,0x00000000,32,LIFETIME_DISCONTINUITY_COUNT_LO,31:0,coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EBC,LIFETIME_DISCONTINUITY_COUNT_HI,RO,0x00000000,32,LIFETIME_DISCONTINUITY_COUNT_HI,31:0,coherent SNAPSHOT bank LIFETIME_DISCONTINUITY_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EC0,LIFETIME_ABORT_COUNT_LO,RO,0x00000000,32,LIFETIME_ABORT_COUNT_LO,31:0,coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EC4,LIFETIME_ABORT_COUNT_HI,RO,0x00000000,32,LIFETIME_ABORT_COUNT_HI,31:0,coherent SNAPSHOT bank LIFETIME_ABORT_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EC8,LIFETIME_SOURCE_LOSS_COUNT_LO,RO,0x00000000,32,LIFETIME_SOURCE_LOSS_COUNT_LO,31:0,coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3ECC,LIFETIME_SOURCE_LOSS_COUNT_HI,RO,0x00000000,32,LIFETIME_SOURCE_LOSS_COUNT_HI,31:0,coherent SNAPSHOT bank LIFETIME_SOURCE_LOSS_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3ED0,CYCLES_COMPLETED_LO,RO,0x00000000,32,CYCLES_COMPLETED_LO,31:0,coherent SNAPSHOT bank CYCLES_COMPLETED bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3ED4,CYCLES_COMPLETED_HI,RO,0x00000000,32,CYCLES_COMPLETED_HI,31:0,coherent SNAPSHOT bank CYCLES_COMPLETED bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3ED8,LAST_CYCLE_FIRST_GLOBAL_LO,RO,0x00000000,32,LAST_CYCLE_FIRST_GLOBAL_LO,31:0,coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EDC,LAST_CYCLE_FIRST_GLOBAL_HI,RO,0x00000000,32,LAST_CYCLE_FIRST_GLOBAL_HI,31:0,coherent SNAPSHOT bank LAST_CYCLE_FIRST_GLOBAL bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EE0,LAST_CYCLE_RECORD_COUNT_LO,RO,0x00000000,32,LAST_CYCLE_RECORD_COUNT_LO,31:0,coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EE4,LAST_CYCLE_RECORD_COUNT_HI,RO,0x00000000,32,LAST_CYCLE_RECORD_COUNT_HI,31:0,coherent SNAPSHOT bank LAST_CYCLE_RECORD_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EE8,LAST_CYCLE_FRAME_COUNT_LO,RO,0x00000000,32,LAST_CYCLE_FRAME_COUNT_LO,31:0,coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EEC,LAST_CYCLE_FRAME_COUNT_HI,RO,0x00000000,32,LAST_CYCLE_FRAME_COUNT_HI,31:0,coherent SNAPSHOT bank LAST_CYCLE_FRAME_COUNT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EF0,FIRST_ERROR_CYCLE_LO,RO,0x00000000,32,FIRST_ERROR_CYCLE_LO,31:0,coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EF4,FIRST_ERROR_CYCLE_HI,RO,0x00000000,32,FIRST_ERROR_CYCLE_HI,31:0,coherent SNAPSHOT bank FIRST_ERROR_CYCLE bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EF8,FIRST_ERROR_SEGMENT_LO,RO,0x00000000,32,FIRST_ERROR_SEGMENT_LO,31:0,coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits31:0,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3EFC,FIRST_ERROR_SEGMENT_HI,RO,0x00000000,32,FIRST_ERROR_SEGMENT_HI,31:0,coherent SNAPSHOT bank FIRST_ERROR_SEGMENT bits63:32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F00,RESERVED_300,RO,0x00000000,32,RESERVED_300,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F04,RESERVED_304,RO,0x00000000,32,RESERVED_304,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F08,RESERVED_308,RO,0x00000000,32,RESERVED_308,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F0C,RESERVED_30C,RO,0x00000000,32,RESERVED_30C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F10,CURRENT_RECORD_EPOCH,RO,0x00000000,32,CURRENT_RECORD_EPOCH,31:0,snapshot context epoch,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F14,CURRENT_GLOBAL_SEQUENCE,RO,0x00000000,32,CURRENT_GLOBAL_SEQUENCE,31:0,snapshot current/last record global sequence32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F18,CURRENT_ATTEMPT_SEQUENCE,RO,0x00000000,32,CURRENT_ATTEMPT_SEQUENCE,31:0,snapshot current/last attempt32,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F1C,LAST_CYCLE_SEGMENT,RO,0x00000000,32,LAST_CYCLE_SEGMENT,31:0,low32 of snapshot last cycle segment; full segment in SEGMENT_ID64,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F20,INPUT_SAMPLE_AGE_MS_0,RO,0xFFFFFFFF,32,INPUT_SAMPLE_AGE_MS_0,31:0,snapshot saturated ms age; ffffffff never sampled,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F24,INPUT_SAMPLE_AGE_MS_1,RO,0xFFFFFFFF,32,INPUT_SAMPLE_AGE_MS_1,31:0,snapshot saturated ms age; ffffffff never sampled,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F28,INPUT_SAMPLE_AGE_MS_2,RO,0xFFFFFFFF,32,INPUT_SAMPLE_AGE_MS_2,31:0,snapshot saturated ms age; ffffffff never sampled,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F2C,INPUT_SAMPLE_AGE_MS_3,RO,0xFFFFFFFF,32,INPUT_SAMPLE_AGE_MS_3,31:0,snapshot saturated ms age; ffffffff never sampled,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F30,EVENT_HISTORY_OVERFLOW,RO,0x00000000,32,EVENT_HISTORY_OVERFLOW,31:0,sticky1 if run event metadata lost; fail host evidence validation,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F34,CYCLE_EVENT_SEQUENCE,RO,0x00000000,32,CYCLE_EVENT_SEQUENCE,31:0,u32 increments at each cycle start/end; host detects missed manifest events,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F38,FRAME_CLOSURE_STATUS,RO,0x00000000,32,FRAME_CLOSURE_STATUS,31:0,"snapshot bits0source_closed,1complete_output,2invalid; pertains CURRENT_FRAME; upper zero",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F3C,FIRST_ERROR_VALID,RO,0x00000000,32,FIRST_ERROR_VALID,31:0,snapshot first failure context is initialized,ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F40,CYCLE_EVENT_ACK,RW,0x00000000,32,CYCLE_EVENT_ACK,31:0,full-DWORD write of observed CYCLE_EVENT_SEQUENCE acknowledges latest summary; not configuration; reads last accepted ack; mismatch/partial write rejects with ILLEGAL_COMMAND,ALL,"Full DWORD and current CYCLE_EVENT_SEQUENCE required; otherwise ILLEGAL_COMMAND, no acknowledgement"
+0x3F44,RESERVED_344,RO,0x00000000,32,RESERVED_344,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F48,RESERVED_348,RO,0x00000000,32,RESERVED_348,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F4C,RESERVED_34C,RO,0x00000000,32,RESERVED_34C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F50,RESERVED_350,RO,0x00000000,32,RESERVED_350,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F54,RESERVED_354,RO,0x00000000,32,RESERVED_354,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F58,RESERVED_358,RO,0x00000000,32,RESERVED_358,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F5C,RESERVED_35C,RO,0x00000000,32,RESERVED_35C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F60,RESERVED_360,RO,0x00000000,32,RESERVED_360,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F64,RESERVED_364,RO,0x00000000,32,RESERVED_364,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F68,RESERVED_368,RO,0x00000000,32,RESERVED_368,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F6C,RESERVED_36C,RO,0x00000000,32,RESERVED_36C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F70,RESERVED_370,RO,0x00000000,32,RESERVED_370,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F74,RESERVED_374,RO,0x00000000,32,RESERVED_374,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F78,RESERVED_378,RO,0x00000000,32,RESERVED_378,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F7C,RESERVED_37C,RO,0x00000000,32,RESERVED_37C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F80,RESERVED_380,RO,0x00000000,32,RESERVED_380,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F84,RESERVED_384,RO,0x00000000,32,RESERVED_384,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F88,RESERVED_388,RO,0x00000000,32,RESERVED_388,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F8C,RESERVED_38C,RO,0x00000000,32,RESERVED_38C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F90,RESERVED_390,RO,0x00000000,32,RESERVED_390,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F94,RESERVED_394,RO,0x00000000,32,RESERVED_394,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F98,RESERVED_398,RO,0x00000000,32,RESERVED_398,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3F9C,RESERVED_39C,RO,0x00000000,32,RESERVED_39C,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FA0,RESERVED_3A0,RO,0x00000000,32,RESERVED_3A0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FA4,RESERVED_3A4,RO,0x00000000,32,RESERVED_3A4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FA8,RESERVED_3A8,RO,0x00000000,32,RESERVED_3A8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FAC,RESERVED_3AC,RO,0x00000000,32,RESERVED_3AC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FB0,RESERVED_3B0,RO,0x00000000,32,RESERVED_3B0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FB4,RESERVED_3B4,RO,0x00000000,32,RESERVED_3B4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FB8,RESERVED_3B8,RO,0x00000000,32,RESERVED_3B8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FBC,RESERVED_3BC,RO,0x00000000,32,RESERVED_3BC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FC0,RESERVED_3C0,RO,0x00000000,32,RESERVED_3C0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FC4,RESERVED_3C4,RO,0x00000000,32,RESERVED_3C4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FC8,RESERVED_3C8,RO,0x00000000,32,RESERVED_3C8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FCC,RESERVED_3CC,RO,0x00000000,32,RESERVED_3CC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FD0,RESERVED_3D0,RO,0x00000000,32,RESERVED_3D0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FD4,RESERVED_3D4,RO,0x00000000,32,RESERVED_3D4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FD8,RESERVED_3D8,RO,0x00000000,32,RESERVED_3D8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FDC,RESERVED_3DC,RO,0x00000000,32,RESERVED_3DC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FE0,RESERVED_3E0,RO,0x00000000,32,RESERVED_3E0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FE4,RESERVED_3E4,RO,0x00000000,32,RESERVED_3E4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FE8,RESERVED_3E8,RO,0x00000000,32,RESERVED_3E8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FEC,RESERVED_3EC,RO,0x00000000,32,RESERVED_3EC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FF0,RESERVED_3F0,RO,0x00000000,32,RESERVED_3F0,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FF4,RESERVED_3F4,RO,0x00000000,32,RESERVED_3F4,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FF8,RESERVED_3F8,RO,0x00000000,32,RESERVED_3F8,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write
+0x3FFC,RESERVED_3FC,RO,0x00000000,32,RESERVED_3FC,31:0,"reserved; read0, writes ignored with ILLEGAL_COMMAND",ALL,No write side effect; ILLEGAL_COMMAND on RO/invalid/unaligned write

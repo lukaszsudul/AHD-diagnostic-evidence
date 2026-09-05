@@ -1,0 +1,10 @@
+Block,LIVE_VIDEO,SYNTHETIC_VIDEO,SYNTHETIC_RECORD,Reason,Coverage_Limitation
+NVP analog decoder / routing,YES conditional,NO,NO,Live only,All four inputs not board-qualified; NVP plan blocked
+Physical IBUF IDELAY IDDR and VDO4/5 correction,YES,NO,NO,Synthetic injection is after physical ingress,No synthetic I/O timing coverage
+PRODUCT G2B marker/line interpretation,YES,FUNCTIONAL_EQUIVALENT_INSTANCE,NO,Synthetic uses same transition definition two bytes/tick,Not the same physical parser registers; no claim of full BT.656 standard compliance
+Legacy capture bt656_record_producer / PIO slots,OBSERVES_LIVE_IN_PARALLEL,NO,NO,Not on G2B C2H path,Not counted as common C2H coverage
+PRODUCT four-slot RAM and ownership CDC,YES,NO,NO,Keep original live ring,Synthetic ring does not qualify groups9-17 CDC
+Diagnostic four-slot ring,NO,YES,YES,Fixed axi_aclk write/read,New ring must be verified
+Line validation / header producer,YES,EQUIVALENT_LOGIC,HEADER_ONLY,Record mode supplies validated virtual line records,Record mode does not test marker/length parsing
+Common owned-record scheduler / formatter,YES,YES,YES,Single selected descriptor and RAM response,Live grant CDC only in live mode
+AXI64 TKEEP TLAST / XDMA C2H,YES,YES,YES,Single common output,Offline architecture is not measured hardware throughput
