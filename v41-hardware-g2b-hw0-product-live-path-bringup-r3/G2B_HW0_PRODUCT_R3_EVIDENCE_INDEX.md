@@ -1,10 +1,9 @@
 # G2B-HW0-PRODUCT-R3 evidence index
 
-State: **CONTROLLER-LOCAL PUBLIC STAGING; PUBLICATION PENDING**
+State: **PUBLISHED; REMOTE READ-BACK PASS**
 
-All user-required report/CSV/JSON filenames are present except the SHA-256
-manifest, which is intentionally left to the final validator after the package
-is complete.
+All user-required report/CSV/JSON filenames and the self-excluding SHA-256
+manifest are present.
 
 ## Required artifacts
 
@@ -34,7 +33,7 @@ is complete.
 - `G2B_HW0_PRODUCT_R3_GATE_MATRIX.csv`
 - `G2B_HW0_PRODUCT_R3_STATE.json`
 - `G2B_HW0_PRODUCT_R3_EVIDENCE_INDEX.md`
-- `G2B_HW0_PRODUCT_R3_SHA256_MANIFEST.txt` — validator-generated last
+- `G2B_HW0_PRODUCT_R3_SHA256_MANIFEST.txt`
 
 ## Tool source
 
@@ -54,12 +53,19 @@ is complete.
 
 No `.ko`, secret/credential, raw log, C2H record, raw frame, reconstructed
 image, or camera payload is present. Raw controller/DUT evidence remains sealed
-outside public staging.
+outside the public package.
 
 ## Publication target
 
 - repository: `lukaszsudul/AHD-diagnostic-evidence`
 - branch: `main`
 - directory: `v41-hardware-g2b-hw0-product-live-path-bringup-r3`
-- commit: NONE
-- push/read-back: NOT_RUN
+- required initial commit message:
+  `Run AHD v41 G2B-HW0 PRODUCT R3 exact-driver live-path qualification`
+- initial evidence commit: `e277c22e14a8fd42c12b70d223db94c0763deac4`
+- initial commit-pinned read-back: `PASS` at
+  `2026-09-06T16:11:22.397776+00:00`
+- files / manifest entries: `67 / 66`
+- missing / size mismatch / SHA-256 mismatch counts: `0 / 0 / 0`
+- completion commit: `CONTAINING_GIT_COMMIT`
+- final completion-commit read-back: recorded externally after push

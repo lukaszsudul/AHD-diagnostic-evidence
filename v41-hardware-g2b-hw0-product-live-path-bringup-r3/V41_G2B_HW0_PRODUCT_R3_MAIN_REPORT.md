@@ -3,15 +3,14 @@
 ## Result
 
 - Engineering gate: **FAIL**
-- Evidence publication: **PENDING**
+- Evidence publication: **PASS**
 - Overall result: **FAIL**
 - First blocker: **FAIL — PRIOR_IMMUTABLE_ARTIFACT_BOUNDARY_VIOLATION**
 - Final execution point: **HARD STOP BEFORE T1 INSMOD**
 
-This controller-local public-staging package records a governed stop. It is not
-a publication receipt and has not been committed or pushed. The exact sealed
-driver was statically reverified, but it was never loaded. No automatic probe,
-device-node creation, MMIO access, DMA read, or stream-control write occurred.
+This published package records a governed stop. The exact sealed driver was
+statically reverified, but it was never loaded. No automatic probe, device-node
+creation, MMIO access, DMA read, or stream-control write occurred.
 
 ## Why the task failed
 
@@ -101,7 +100,23 @@ observation was `1` at `2026-09-06T14:55:47Z`; it was not re-read in the
 15:18 final snapshot.
 
 No `.ko`, credential, raw log, raw video, frame, or reconstructed image is in
-this staging package.
+this public package.
+
+## Evidence publication
+
+- required initial commit message:
+  `Run AHD v41 G2B-HW0 PRODUCT R3 exact-driver live-path qualification`
+- initial evidence commit:
+  `e277c22e14a8fd42c12b70d223db94c0763deac4`
+- commit-pinned remote read-back: `PASS`
+- checked UTC: `2026-09-06T16:11:22.397776+00:00`
+- files / manifest entries: `67 / 66`
+- missing files / size mismatches / SHA-256 mismatches: `0 / 0 / 0`
+- initial manifest SHA-256:
+  `12C9EAD435A13E4B4E48AFEF3E731D55F2E92039ECF3E8FD9E4837A05006E4AC`
+
+The completion commit is the commit containing this receipt. Its final
+commit-pinned read-back is recorded externally to avoid self-reference.
 
 ## Qualification boundary
 

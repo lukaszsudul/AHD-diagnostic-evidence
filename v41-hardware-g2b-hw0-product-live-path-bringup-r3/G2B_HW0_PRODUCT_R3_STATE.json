@@ -2,7 +2,7 @@
   "schema": "AHD_G2B_HW0_PRODUCT_R3_STATE_V1",
   "task": "G2B-HW0-PRODUCT-R3",
   "engineering_gate": "FAIL",
-  "evidence_publication": "PENDING",
+  "evidence_publication": "PASS",
   "overall_result": "FAIL",
   "first_blocker": "FAIL — PRIOR_IMMUTABLE_ARTIFACT_BOUNDARY_VIOLATION",
   "final_execution_point": "HARD STOP BEFORE T1 INSMOD",
@@ -135,7 +135,18 @@
   "publication": {
     "repository": "lukaszsudul/AHD-diagnostic-evidence",
     "directory": "v41-hardware-g2b-hw0-product-live-path-bringup-r3",
-    "commit": null,
-    "remote_readback": "NOT_RUN"
+    "required_initial_commit_message": "Run AHD v41 G2B-HW0 PRODUCT R3 exact-driver live-path qualification",
+    "initial_evidence_commit": "e277c22e14a8fd42c12b70d223db94c0763deac4",
+    "remote_readback": "PASS",
+    "remote_readback_commit": "e277c22e14a8fd42c12b70d223db94c0763deac4",
+    "remote_readback_utc": "2026-09-06T16:11:22.397776+00:00",
+    "remote_readback_files": 67,
+    "remote_readback_manifest_entries": 66,
+    "remote_readback_manifest_sha256": "12C9EAD435A13E4B4E48AFEF3E731D55F2E92039ECF3E8FD9E4837A05006E4AC",
+    "remote_readback_missing": 0,
+    "remote_readback_size_mismatches": 0,
+    "remote_readback_sha256_mismatches": 0,
+    "completion_commit": "CONTAINING_GIT_COMMIT",
+    "external_final_commit_pinned_readback": "REQUIRED_AFTER_FINAL_COMMIT_AND_RECORDED_OUTSIDE_THIS_SELF_REFERENTIAL_PACKAGE"
   }
 }
