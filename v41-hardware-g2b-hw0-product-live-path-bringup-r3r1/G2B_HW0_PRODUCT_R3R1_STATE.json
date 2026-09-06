@@ -1,0 +1,62 @@
+{
+  "schema": "G2B_HW0_PRODUCT_R3R1_STATE_V1",
+  "task": "G2B-HW0-PRODUCT-R3R1",
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PASS",
+  "overall_result": "BLOCKED",
+  "first_blocker": "R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT",
+  "project_state_rev_at_start": 8,
+  "project_state_rev_at_end": 8,
+  "authority": {
+    "owner_r3r1_authorization": "GRANTED",
+    "meta_8a": "VERIFIED",
+    "recovery_4": "VERIFIED",
+    "r2": "VERIFIED",
+    "drv1": "VERIFIED",
+    "prior_r3": "VERIFIED",
+    "product_source_commit": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "product_bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+    "driver_candidate_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "transport_abi_sha256": "AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6"
+  },
+  "boundary": {
+    "fresh_run_root": "C:\\FPGA\\G2B_HW0_PRODUCT_R3R1_20260906T172600Z",
+    "credential_helper_sha256": "50C1736A178B8807C1AEC752041C266BF58CE7015765EDCCC0D7C4A688F2F42E",
+    "credential_helper_hard_gate": "PASS",
+    "helper_executions": 0,
+    "authenticated_dut_connections": 0,
+    "credential_remnants": 0,
+    "prior_immutable_artifact_new_writes": 0,
+    "prior_immutable_boundary_gate": "PASS"
+  },
+  "operations": {
+    "hardware_accessed": false,
+    "jtag_operations": 0,
+    "pcie_operations": 0,
+    "driver_load_attempts": 0,
+    "mmio_reads": 0,
+    "mmio_writes": 0,
+    "dma_c2h_reads": 0,
+    "fpga_sram_programming": false,
+    "flash_programming": false,
+    "reboot": false,
+    "power_cycle": false
+  },
+  "gates": {
+    "t0": "BLOCKED",
+    "t1": "NOT_REACHED",
+    "t2": "NOT_REACHED",
+    "t3": "NOT_REACHED",
+    "t4": "NOT_REACHED",
+    "t5": "NOT_REACHED"
+  },
+  "qualification": {
+    "one_channel_fixed_live_ahd_path": "NOT_PROVEN",
+    "hardware_throughput_288_MBps": "NOT_PROVEN",
+    "four_input_selection": "NOT_QUALIFIED",
+    "two_channel_capture": "NOT_QUALIFIED",
+    "synthetic_generator": "NOT_TESTED",
+    "v4l2": "NOT_TESTED"
+  },
+  "corrective_action": "Issue a new governed decision explicitly authorizing 0x380C=0x00000004 once per actual capture-session start and exact legal 0x383C post-reset fatal-bit W1C masks if required."
+}

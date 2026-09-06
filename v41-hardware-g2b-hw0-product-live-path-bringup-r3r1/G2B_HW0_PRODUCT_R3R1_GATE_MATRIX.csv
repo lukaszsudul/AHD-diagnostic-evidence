@@ -1,0 +1,11 @@
+gate,result,claim_basis,first_blocker
+Engineering,BLOCKED,Frozen ABI session-start requirement conflicts with literal R3R1 MMIO write authority,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+Evidence publication,PASS,Complete truthful blocker package prepared with no hardware or credential payload,NONE
+T0 procedural authority exclusivity,BLOCKED,Conflict established before first DUT connection,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+T1 driver bind node,NOT_REACHED,No DUT connection or module load,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+T2 runtime MMIO live source,NOT_REACHED,No MMIO or hardware operation,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+T3 one record,NOT_REACHED,No DMA or C2H read,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+T4 finite capture,NOT_REACHED,No capture,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+T5 continuous capture,NOT_REACHED,No capture,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
+Credential and immutable boundary,PASS,Zero credential remnants and zero predecessor writes,NONE
+Overall,BLOCKED,Engineering blocked while evidence publication passes,R3R1_AUTHORIZATION_CONFLICT_WITH_FROZEN_C2H_SESSION_START_CONTRACT
