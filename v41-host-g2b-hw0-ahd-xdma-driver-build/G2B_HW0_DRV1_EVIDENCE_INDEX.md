@@ -8,15 +8,15 @@
 | Branch | `main` |
 | Directory | `v41-host-g2b-hw0-ahd-xdma-driver-build` |
 | Engineering gate | `PASS` |
-| Publication gate | `PENDING` |
-| Evidence commit | `PENDING` |
+| Publication gate | `PASS` |
+| Qualification payload commit | `879d578d8759b6afca8961be4fe55344e02264ca` |
 | SHA-256 manifest | `PRESENT` |
-| Commit-pinned remote read-back | `NOT_RUN` |
+| Commit-pinned remote read-back | `PASS` |
 
-No file should be treated as published merely because it exists locally.
-Publication becomes `PASS` only after the final package manifest is generated,
-the package is committed and pushed without force, and every required file is
-read back from the exact remote commit with matching size and SHA-256.
+Publication is `PASS`: the package manifest was generated, the qualification
+payload was committed and pushed without force, and every file was read back
+from exact commit `879d578d8759b6afca8961be4fe55344e02264ca` with matching
+size and SHA-256.
 
 ## Required public evidence files
 
@@ -50,6 +50,7 @@ read back from the exact remote commit with matching size and SHA-256.
 | `G2B_HW0_DRV1_SEALING.log` | Authenticated remote sealing and manifest-verification receipt | `PRESENT` |
 | `G2B_HW0_DRV1_FINAL_DUT_STATE.log` | Final authenticated read-only DUT-state receipt | `PRESENT` |
 | `G2B_HW0_DRV1_SEALED_ARTIFACT_SHA256_MANIFEST.txt` | Hash manifest stored with both sealed artifact copies | `PRESENT` |
+| `G2B_HW0_DRV1_REMOTE_READBACK.log` | Commit-pinned 29-file byte/hash and driver-branch read-back receipt | `PRESENT` |
 
 The final assembler must update assembly states from the actual filesystem and
 must not infer presence from this planned index.
@@ -114,16 +115,16 @@ copies, and the remote sealed directory is mode `0555` with no writable file.
 - [x] Generate `G2B_HW0_DRV1_SHA256_MANIFEST.txt` after content is final.
 - [x] Cross-check module hash, size, names, vermagic, aliases, branch commit,
       and source tree in every document.
-- [ ] Commit with message
+- [x] Commit with message
       `Build and qualify AHD PCIe XDMA driver candidate`.
-- [ ] Push `main` without force.
-- [ ] Read back the exact remote commit, not the moving branch head.
-- [ ] Verify every required file's size and SHA-256 against the local package.
-- [ ] Verify driver branch
+- [x] Push `main` without force.
+- [x] Read back the exact remote commit, not the moving branch head.
+- [x] Verify every required file's size and SHA-256 against the local package.
+- [x] Verify driver branch
       `host/v41-g2b-hw0-ahd-xdma-driver` is remotely visible at exact commit
       `0a201aab7adb13be079e784c6ed97dfad2ed7764`.
-- [ ] Record the evidence commit and change publication from `PENDING` to
-      `PASS` only after all checks pass.
+- [x] Record the qualification payload commit and change publication to
+      `PASS` only after all checks passed.
 
 ## Nonclaims
 

@@ -28,7 +28,7 @@ those operations.
 | Vermagic | `7.0.0-29-generic SMP preempt mod_unload modversions ` |
 | Candidate alias | `pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*` |
 | Signature disposition | `UNSIGNED_ACCEPTABLE_FOR_SEPARATELY_AUTHORIZED_TEST` |
-| Final DRV1 evidence commit | `PENDING PUBLICATION`; R3 must cite the exact remotely read-back commit |
+| DRV1 qualification payload commit | `879d578d8759b6afca8961be4fe55344e02264ca`; commit-pinned remote read-back `PASS` |
 
 Pinned sealing targets:
 

@@ -10,7 +10,7 @@
 | Kernel offline compatibility | PASS_WITH_NONBLOCKING_WARNING |
 | Binary reproducibility | BYTE_IDENTICAL |
 | Runtime hardware qualification | NOT_PERFORMED |
-| Evidence publication | PENDING |
+| Evidence publication | PASS |
 | First offline engineering blocker | NONE |
 
 ## Authority and provenance

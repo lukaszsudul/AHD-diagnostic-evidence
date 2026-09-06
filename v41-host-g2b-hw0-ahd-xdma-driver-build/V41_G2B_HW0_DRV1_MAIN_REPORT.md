@@ -5,16 +5,18 @@
 | Gate | Result |
 |---|---|
 | Engineering gate | `PASS` |
-| Evidence publication | `PENDING` |
+| Evidence publication | `PASS` |
 | Candidate classification | `OFFLINE_QUALIFIED_AHD_PCIE_XDMA_DRIVER_CANDIDATE` |
 | First engineering blocker | `NONE` |
 | Runtime qualification | `NOT_PERFORMED` |
 
 Engineering `PASS` is limited to governed source authority, two clean builds,
 byte reproducibility, exact module identity, exact PCI alias policy, static ELF
-and module inspection, and offline kernel compatibility. Publication remains
-`PENDING` until the evidence branch is committed, pushed without force, and
-commit-pinned remote byte/hash read-back passes.
+and module inspection, and offline kernel compatibility. The qualification
+payload was committed and pushed without force at
+`879d578d8759b6afca8961be4fe55344e02264ca`; a fresh commit-pinned clone
+matched all 29 files byte-for-byte, and its 28-entry self-excluded manifest
+verified `PASS`.
 
 This result does not claim that the module loads, probes, binds, creates device
 nodes, maps a BAR, completes MMIO, or transfers DMA. Those are separately
@@ -290,9 +292,9 @@ hardware qualification.
 |---|---|
 | Evidence repository | `lukaszsudul/AHD-diagnostic-evidence` |
 | Evidence directory | `v41-host-g2b-hw0-ahd-xdma-driver-build` |
-| Evidence commit | `PENDING` |
-| Remote read-back | `NOT_RUN` |
-| Driver ready for R3 | `YES_WITH_OWNER_AUTHORIZATION`, after evidence publication closure |
+| Qualification payload commit | `879d578d8759b6afca8961be4fe55344e02264ca` |
+| Remote read-back | `PASS` |
+| Driver ready for R3 | `YES_WITH_OWNER_AUTHORIZATION` |
 
 Recommended next step after evidence publication is
 `G2B-HW0-PRODUCT-R3`: exact sealed driver load, automatic exact-alias PCI
