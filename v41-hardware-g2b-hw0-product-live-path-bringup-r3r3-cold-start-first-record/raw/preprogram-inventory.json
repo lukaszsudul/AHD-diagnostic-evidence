@@ -1,0 +1,50 @@
+{
+  "hostname": "VCDE-DUT-1",
+  "machine_id": "0e90f50d9465492b80258da5658446f8",
+  "boot_id": "9fec7547-fd31-4592-a9ce-89ea082d2484",
+  "kernel": "7.0.0-29-generic",
+  "architecture": "x86_64",
+  "modules": [],
+  "nodes": [],
+  "class_nodes": [],
+  "matching_processes": [],
+  "open_xdma_fds": [],
+  "matching_locks": [],
+  "xilinx_endpoints": [
+    {
+      "bdf": "0000:0b:00.0",
+      "realpath": "/sys/devices/pci0000:00/0000:00:02.2/0000:0b:00.0",
+      "vendor": "0x10ee",
+      "device": "0x7021",
+      "subsystem_vendor": "0x10ee",
+      "subsystem_device": "0xf0a1",
+      "class": "0x070001",
+      "modalias": "pci:v000010EEd00007021sv000010EEsd0000F0A1bc07sc00i01",
+      "driver_override": "(null)",
+      "current_link_speed": "5.0 GT/s PCIe",
+      "current_link_width": "1",
+      "max_link_speed": "5.0 GT/s PCIe",
+      "max_link_width": "1",
+      "iommu_group": "22",
+      "driver": null
+    },
+    {
+      "bdf": "0000:01:00.0",
+      "realpath": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0",
+      "vendor": "0x10ee",
+      "device": "0x7011",
+      "subsystem_vendor": "0x10ee",
+      "subsystem_device": "0x0007",
+      "class": "0x058000",
+      "modalias": "pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00",
+      "driver_override": "(null)",
+      "current_link_speed": "5.0 GT/s PCIe",
+      "current_link_width": "1",
+      "max_link_speed": "5.0 GT/s PCIe",
+      "max_link_width": "1",
+      "iommu_group": "13",
+      "driver": null
+    }
+  ],
+  "inhibitors": "WHO            UID   USER        PID  COMM           WHAT                                                     WHY                                         MODE\nModemManager   0     root        1470 ModemManager   sleep                                                    ModemManager needs to reset devices         delay\nNetworkManager 0     root        1432 NetworkManager sleep                                                    NetworkManager needs to turn off networks   delay\nRealtime Kit   0     root        2061 rtkit-daemon   sleep                                                    Demote realtime scheduling and stop canary. delay\nUPower         0     root        2343 upowerd        sleep                                                    Pause device polling                        delay\nGNOME Shell    60578 gdm-greeter 2222 gnome-shell    sleep                                                    GNOME needs to save screen time data        delay\ngdm-greeter    60578 gdm-greeter 2364 gsd-media-keys handle-power-key:handle-suspend-key:handle-hibernate-key GNOME handling keypresses                   block\ngdm-greeter    60578 gdm-greeter 2364 gsd-media-keys sleep                                                    GNOME handling keypresses                   delay\ngdm-greeter    60578 gdm-greeter 2368 gsd-power      sleep                                                    GNOME needs to lock the screen              delay\n\n8 inhibitors listed.\n"
+}

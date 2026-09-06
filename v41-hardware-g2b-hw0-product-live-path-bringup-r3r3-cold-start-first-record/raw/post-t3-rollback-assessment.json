@@ -1,0 +1,81 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R3",
+  "phase": "POST_T3_ROLLBACK_ASSESSMENT",
+  "utc_ns": 1788727692034189248,
+  "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+  "expected_boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+  "holders_before": [],
+  "holders_after": [],
+  "mmio": {
+    "0x380C": 0,
+    "0x3810": 1268,
+    "0x3814": 0,
+    "0x3818": 0,
+    "0x381C": 0,
+    "0x3820": 0,
+    "0x3824": 0,
+    "0x3828": 0,
+    "0x382C": 0,
+    "0x3830": 0,
+    "0x3838": 2,
+    "0x383C": 7,
+    "0x3840": 2,
+    "0x3850": 0,
+    "0x3854": 2
+  },
+  "ledger": [
+    {
+      "Timestamp": "1788727653704615711",
+      "Session": "T3",
+      "Node": "/dev/xdma0_user",
+      "BDF": "0000:01:00.0",
+      "Offset": "0x380C",
+      "Value": "0x00000004",
+      "Purpose": "RESET_STREAM_STATE",
+      "Authorized": "YES",
+      "Precondition": "DISABLED_NO_READER_NOT_RESET_BUSY",
+      "Result": "INTENT"
+    },
+    {
+      "Timestamp": "1788727653725606165",
+      "Session": "T3",
+      "Node": "/dev/xdma0_user",
+      "BDF": "0000:01:00.0",
+      "Offset": "0x3844",
+      "Value": "0x00000001",
+      "Purpose": "COHERENT_SNAPSHOT",
+      "Authorized": "YES",
+      "Precondition": "PRE_CAPTURE",
+      "Result": "INTENT"
+    },
+    {
+      "Timestamp": "1788727653800514826",
+      "Session": "T3",
+      "Node": "/dev/xdma0_user",
+      "BDF": "0000:01:00.0",
+      "Offset": "0x380C",
+      "Value": "0x00000001",
+      "Purpose": "ENABLE_C2H",
+      "Authorized": "YES",
+      "Precondition": "RESET_EPOCH_SNAPSHOT_PASS_READER_READY",
+      "Result": "INTENT"
+    },
+    {
+      "Timestamp": "1788727653804578789",
+      "Session": "T3",
+      "Node": "/dev/xdma0_user",
+      "BDF": "0000:01:00.0",
+      "Offset": "0x380C",
+      "Value": "0x00000000",
+      "Purpose": "NORMAL_DISABLE",
+      "Authorized": "YES",
+      "Precondition": "FIRST_COMPLETE_4096_BYTE_RECORD_ASSEMBLED",
+      "Result": "INTENT"
+    }
+  ],
+  "module_loaded": true,
+  "platform_xdma_loaded": false,
+  "endpoint_driver": "xdma_ahd_pcie",
+  "dma_quiescent": true,
+  "result": "PASS"
+}
