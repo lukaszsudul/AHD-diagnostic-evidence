@@ -1,0 +1,33 @@
+[CmdletBinding()]
+param()
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = 'Stop'
+
+$taskRoot = 'C:\FPGA\V41_G2B_HW_EVIDENCE\G2B_HW0_PRODUCT_R3_20260906T140148Z'
+$controllerReceipt = 'C:\FPGA\.AHD_DUT_EXCLUSIVE_LOCK\receipt.json'
+$helper = 'C:\FPGA\G2B_HW0_PRODUCT_R1_20260905\tools\Invoke-G2BR1Plink.ps1'
+$plink = 'C:\Users\Łukasz Suduł\Documents\ChatGPT\AHD_20260807\T1_RCA_PUTTY_CONTROL_20260820\00_PUTTY\putty-0.84-w64\plink.exe'
+$scriptPath = Join-Path $taskRoot 'tools\prelock_identity_exclusivity_readonly_v2.sh'
+$evidencePath = Join-Path $taskRoot 'raw\PRELOCK_IDENTITY_EXCLUSIVITY_READONLY_V2.log'
+
+foreach ($required in @($controllerReceipt, $helper, $plink, $scriptPath)) {
+    if (-not (Test-Path -LiteralPath $required -PathType Leaf)) { throw "REQUIRED_FILE_MISSING=$required" }
+}
+if (Test-Path -LiteralPath $evidencePath) { throw 'PRELOCK_V2_EVIDENCE_ALREADY_EXISTS' }
+$lock = Get-Content -LiteralPath $controllerReceipt -Raw | ConvertFrom-Json
+if ($lock.state -cne 'HELD' -or $lock.task -cne 'G2B-HW0-PRODUCT-R3' -or $lock.linux_lock_state -cne 'NOT_YET_ACQUIRED') {
+    throw 'CONTROLLER_LOCK_STATE_INVALID_FOR_PRELOCK_V2'
+}
+
+$remoteCommand = Get-Content -LiteralPath $scriptPath -Raw
+& $helper `
+    -PlinkPath $plink `
+    -HostKey 'SHA256:yunI1fwP5I6WfGcSVkyaPxd0siCbdSiOOXVrP0wtEu8' `
+    -RemoteCommand $remoteCommand `
+    -EvidencePath $evidencePath `
+    -ExpectedIp '10.132.1.111' `
+    -ExpectedUser 'vcdeagent1' `
+    -EvidenceKind 'R3_PRELOCK_IDENTITY_EXCLUSIVITY_READONLY_V2' `
+    -TimeoutSeconds 45
+exit $LASTEXITCODE
