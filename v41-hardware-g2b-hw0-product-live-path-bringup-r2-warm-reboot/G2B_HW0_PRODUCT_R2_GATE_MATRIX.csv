@@ -1,0 +1,27 @@
+gate,prerequisite,result,evidence,blocker_or_note
+R1_EVIDENCE,exact R1 package and final state,PASS,G2B_HW0_PRODUCT_R2_R1_STATE_VERIFICATION.md,VERIFIED
+SSOT_META8A,rev8 and promoted META-8A,PASS,raw/LOCAL_AUTHORITY_VERIFICATION.json,SSOT unchanged
+CANDIDATE,source/bitstream/DCP exact,PASS,raw/LOCAL_AUTHORITY_VERIFICATION.json,no R2 programming
+DUT_AUTH_PRE,exact authenticated DUT,PASS,raw/DUT_IDENTITY_PRELOCK_PASS.log,37131b8d-0e38-4b4e-b77a-b3bda55b4e97
+EXCLUSIVITY_PRE,fresh inventory and two locks,PASS,G2B_HW0_PRODUCT_R2_LOCK_RECEIPT.md,controller lock held through reboot
+JTAG_PRE,exact FPGA and DONE=1,PASS,raw/JTAG_PRE_REBOOT_SESSION.csv,five of five DONE=1
+T0,pre-reboot authority/exclusivity,PASS,raw/PRE_REBOOT_AUTHORITY_RECEIPT.json,warm reboot authorized to proceed
+LOCAL_WRAPPER_REJECTION,prove no remote effect,PASS,raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json,zero remote deliveries/reboots
+WARM_REBOOT,one graceful OS reboot,PASS,raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json,one authenticated boot transition
+EXACT_IP_RECONNECT,disconnect and bounded exact-IP reconnect,PASS,raw/EXACT_IP_RECONNECT_SUMMARY.json,30.280 s within 895 s
+EXCLUSIVITY_POST,fresh inventory and Linux relock,PASS,raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json,no competing owner
+CANDIDATE_RETENTION,same JTAG device and DONE=1,PASS,raw/POST_REBOOT_JTAG_RETENTION_GATE.json,zero R2 programs
+AHD_ENDPOINT,exact endpoint enumerated,PASS,raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log,0000:01:00.0
+JTAG_PCIE_CORRELATION,physical board to current endpoint/root,PASS,raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json,not vendor-ID-only
+PCIE_GEN2_X1,measured LnkCap/LnkSta,PASS,raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json,5 GT/s x1
+SAFE_AHD_XDMA_BIND,installed module must support exact PCI modalias,BLOCKED,raw/T1_DRIVER_GATE_DECISION.json,BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE
+XDMA_NODE_MAPPING,exact user/C2H nodes to BDF,NOT_REACHED,raw/T1_DRIVER_GATE_DECISION.json,stopped before load/bind
+T1,reboot + endpoint + link + XDMA + nodes,BLOCKED,G2B_HW0_PRODUCT_R2_PCIE_XDMA_INVENTORY.md,BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE
+T2,runtime/MMIO,NOT_REACHED,G2B_HW0_PRODUCT_R2_RUNTIME_IDENTITY.md,blocked by T1
+T3,one 4096-byte record,NOT_REACHED,G2B_HW0_PRODUCT_R2_FIRST_RECORD_ANALYSIS.md,blocked by T1
+T4,2500 records and frame,NOT_REACHED,G2B_HW0_PRODUCT_R2_FINITE_CAPTURE_SUMMARY.md,blocked by T1
+T5,60-second capture,NOT_REACHED,G2B_HW0_PRODUCT_R2_CONTINUOUS_CAPTURE_SUMMARY.md,blocked by T1
+FINAL_STATE,capture and ordered lock release,PASS,raw/FINAL_STATE_VALIDATION.json,candidate retained; endpoint unbound
+PERSISTENT_PROTECTION,source/XDC/SSOT/Flash/driver/package unchanged,PASS,G2B_HW0_PRODUCT_R2_FINAL_HARDWARE_STATE.md,no persistent mutation
+EVIDENCE_PUBLICATION,new directory and non-force push,AWAITING_POST_COMMIT_REMOTE_READBACK,G2B_HW0_PRODUCT_R2_EVIDENCE_INDEX.md,separate publication field
+REMOTE_READBACK,commit-pinned byte verification,NOT_RUN,G2B_HW0_PRODUCT_R2_STATE.json,pending

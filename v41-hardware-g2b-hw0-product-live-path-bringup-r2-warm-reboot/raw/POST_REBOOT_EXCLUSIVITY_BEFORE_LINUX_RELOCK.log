@@ -1,0 +1,77 @@
+UTC_START=2026-09-06T07:12:05.6170931Z
+UTC_END=2026-09-06T07:12:06.5778130Z
+EVIDENCE_KIND=R2_POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK=G2B-HW0-PRODUCT-R2
+PHASE=POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK
+UTC=2026-09-06T07:12:06.087940326Z
+HOSTNAME=VCDE-DUT-1
+REMOTE_USER=vcdeagent1
+BOOT_ID=52b0bf13-e9d1-4558-ae13-d08f4ecc8dac
+UPTIME_SECONDS=232.33
+RELEVANT_PROCESS_COMMANDS_BEGIN
+RELEVANT_PROCESS_COMMANDS_END
+XDMA_MODULE_COUNT=0
+XDMA_DRIVER_SYSFS=ABSENT
+XDMA_DEVICE_NODE_COUNT=0
+TASK_LOCKS_BEGIN
+TASK_LOCKS_END
+PRE_REBOOT_LINUX_LOCK=ABSENT_AFTER_REBOOT
+POST_REBOOT_LINUX_LOCK=ABSENT_READY_TO_ACQUIRE
+LOGGED_IN_USERS_BEGIN
+LOGGED_IN_USERS_END
+REBOOT_INHIBITORS_BEGIN
+WHO            UID   USER        PID  COMM           WHAT                                                     WHY                                         MODE
+ModemManager   0     root        1444 ModemManager   sleep                                                    ModemManager needs to reset devices         delay
+NetworkManager 0     root        1411 NetworkManager sleep                                                    NetworkManager needs to turn off networks   delay
+Realtime Kit   0     root        2025 rtkit-daemon   sleep                                                    Demote realtime scheduling and stop canary. delay
+UPower         0     root        2318 upowerd        sleep                                                    Pause device polling                        delay
+GNOME Shell    60578 gdm-greeter 2185 gnome-shell    sleep                                                    GNOME needs to save screen time data        delay
+gdm-greeter    60578 gdm-greeter 2342 gsd-media-keys handle-power-key:handle-suspend-key:handle-hibernate-key GNOME handling keypresses                   block
+gdm-greeter    60578 gdm-greeter 2342 gsd-media-keys sleep                                                    GNOME handling keypresses                   delay
+gdm-greeter    60578 gdm-greeter 2343 gsd-power      sleep                                                    GNOME needs to lock the screen              delay
+
+8 inhibitors listed.
+REBOOT_INHIBITORS_END
+EXACT_AHD_ENDPOINTS_BEGIN
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+EXACT_AHD_ENDPOINTS_END
+EXACT_AHD_ENDPOINT_COUNT=1
+RELEVANT_PCIE_FUNCTIONS_BEGIN
+RELEVANT_PCIE_FUNCTIONS_END
+HISTORICAL_ROOT_PORT_BEGIN
+0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ed] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin ? routed to IRQ 27
+	IOMMU group: 1
+	Bus: primary=00, secondary=01, subordinate=01, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: f6f00000-f6ffffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+HISTORICAL_ROOT_PORT_END
+RESULT=PASS
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

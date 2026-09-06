@@ -1,0 +1,6282 @@
+{
+  "schema": "AHD_V41_G2B_HW0_PRODUCT_R2_RAW_EXECUTION_VALIDATION_V1",
+  "task": "G2B-HW0-PRODUCT-R2",
+  "generated_at_utc": "2026-09-06T07:52:33.859Z",
+  "validation_scope": "LOCAL_PRESERVED_R2_RAW_EVIDENCE_ONLY; NO_DUT_OR_REPOSITORY_ACCESS",
+  "result": "PASS",
+  "engineering_gate": "BLOCKED",
+  "first_blocker": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+  "validator": {
+    "path": "tools/validate_raw_r2_execution.py",
+    "sha256": "0B636870B2507FF6FD0D3D81ED37DD718288F308BF86EB3217CAA2961364A549",
+    "bytes": 67323,
+    "fail_closed": true
+  },
+  "summary": {
+    "checks_total": 531,
+    "checks_passed": 531,
+    "checks_failed": 0,
+    "required_sources": 54,
+    "source_hashes_recorded": 54
+  },
+  "exact_final_outcomes": {
+    "task": "G2B-HW0-PRODUCT-R2",
+    "project_state_rev_at_start": 8,
+    "raw_execution_validation": "PASS",
+    "engineering_gate": "BLOCKED",
+    "overall_result": "BLOCKED",
+    "first_blocker": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+    "T0_pre_reboot_authority_exclusivity_gate": "PASS",
+    "T1_warm_reboot_endpoint_gate": "BLOCKED",
+    "T2_runtime_mmio_gate": "NOT_REACHED",
+    "T3_one_record_gate": "NOT_REACHED",
+    "T4_finite_capture_gate": "NOT_REACHED",
+    "T5_continuous_capture_gate": "NOT_REACHED",
+    "warm_reboots_executed": 1,
+    "maximum_warm_reboots": 1,
+    "authorized_reboot_budget_remaining": 0,
+    "pre_reboot_boot_id": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+    "post_reboot_boot_id": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+    "authenticated_boot_id_change": "PASS",
+    "candidate_retained_across_warm_reboot": "PASS",
+    "final_jtag_state": "xc7a35t 0362D093 index0 DONE1",
+    "endpoint": {
+      "bdf": "0000:01:00.0",
+      "vendor_device": "10ee:7011",
+      "subsystem": "10ee:0007",
+      "class": "058000",
+      "upstream_bdf": "0000:00:01.1",
+      "actual_link": "Gen2 x1",
+      "jtag_to_pcie_correlation": "PASS",
+      "driver": "UNBOUND"
+    },
+    "xdma": {
+      "module_path": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+      "module_sha256": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+      "bus_aliases": [
+        "platform:xdma"
+      ],
+      "matching_platform_devices": 0,
+      "exact_pci_modalias_resolution_exit_code": 1,
+      "safe_bind_gate": "BLOCKED",
+      "decision": "DO_NOT_LOAD_OR_BIND",
+      "module_loaded_during_r2": false,
+      "device_node_count": 0
+    },
+    "operation_counts": {
+      "power_cycles": 0,
+      "sram_programs_r2": 0,
+      "flash_programs": 0,
+      "xdma_module_loads": 0,
+      "driver_binds": 0,
+      "driver_unbinds": 0,
+      "mmio_reads": 0,
+      "mmio_writes": 0,
+      "dma_operations": 0,
+      "stream_enable_writes": 0,
+      "pcie_rescans": 0,
+      "pcie_resets": 0
+    },
+    "final_candidate_state": "RETAINED_IN_VOLATILE_SRAM",
+    "linux_lock_release": "PASS_AFTER_FINAL_STATE_CAPTURE",
+    "controller_lock_release": "PASS_LAST"
+  },
+  "source_hashes": {
+    "raw/OWNER_R2_CONTRACT.txt": {
+      "sha256": "D35A63FE787CC36735A1627A8A06A86E491F898F6B6D9CB04B922D7A1BEA43A1",
+      "bytes": 31405,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LOCAL_AUTHORITY_VERIFICATION.json": {
+      "sha256": "EAC20613B201C6B9F892AB02E3A908F59A442A09B30C5DE6C08418820EED1EC1",
+      "bytes": 5226,
+      "text_encoding": "UTF-8"
+    },
+    "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json": {
+      "sha256": "96B489481549A6F76AA6E4B92D718E27942822EE3327CFE34E53A1F3CF8CA001",
+      "bytes": 473,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json": {
+      "sha256": "CBC6CF99E947917B12C2D84441F57460320925E92CF6676663A1DE945CBB7854",
+      "bytes": 621,
+      "text_encoding": "UTF-8"
+    },
+    "raw/PRE_REBOOT_LINUX_SNAPSHOT.log": {
+      "sha256": "D188C78C8C2ACF3A5C8B6B1495BAA0DA118E6EDB288A580698394ADC239BDC92",
+      "bytes": 93119,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LOCKS_PRE_REBOOT_VERIFY.log": {
+      "sha256": "6E3C34A8E01CEE9C9A659E7CAFF97EB422D187A87AB853AA0E476484F716550A",
+      "bytes": 1159,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_PRE_REBOOT_SESSION.csv": {
+      "sha256": "DA062BE2DE5109C59177CB55CB46B4769CE4DD353D9A070AFBB512DCB9B2611E",
+      "bytes": 980,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_PRE_REBOOT_TARGET_PROPERTIES.tsv": {
+      "sha256": "DEE1AF4E5274B4E9F79835EB5B330145E4C2ACD250A8E9E330ED80D709F25518",
+      "bytes": 327,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_PRE_REBOOT_DEVICE_PROPERTIES.tsv": {
+      "sha256": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE",
+      "bytes": 4427,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_PRE_REBOOT_VIVADO.log": {
+      "sha256": "735C00642D488275C952F60520F13F0FD00E3B97BB151A099FCC47E7D07C3CFA",
+      "bytes": 7341,
+      "text_encoding": "Windows-1252"
+    },
+    "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json": {
+      "sha256": "C7A6B871610DE6064045DE499FC0FB902EE4F6524E6989742BC15B0F353B9CC7",
+      "bytes": 1849,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_COMMAND.log": {
+      "sha256": "40DC8A65707F905CA9865D7DA1E9EADCE0D437173CBB58A1DF19F099EE430E14",
+      "bytes": 507,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json": {
+      "sha256": "D6386DEED4606865F442D12732DC6FDD5F733107CFABF92A0BD9AB2FEECD0B09",
+      "bytes": 578,
+      "text_encoding": "UTF-8"
+    },
+    "raw/AFTER_LOCAL_REJECTION_NO_REBOOT_VERIFY.log": {
+      "sha256": "3694DECE1E9DBA7FF822816D3DA0C594432810CB39B29E3DF5FE1E17A042887C",
+      "bytes": 631,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json": {
+      "sha256": "A5811324E22498ABF0A67ECE59CBB89C9724D0D7B7F5F5EFD0E7D95800E4C647",
+      "bytes": 1614,
+      "text_encoding": "UTF-8"
+    },
+    "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json": {
+      "sha256": "9DB371D88137C8EE486145CE3416FFFC818849C28701769C3FDFA63DC722550D",
+      "bytes": 1308,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json": {
+      "sha256": "C608EB5DEAD4F9CC0DFDF34E9C15208A508F7A6A75968AA9A2D3A3D267B36D66",
+      "bytes": 1242,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json": {
+      "sha256": "BBCD63A037CBE894016654BEC9769354F47C5FE58F1F3AEEBA94970F3AB20317",
+      "bytes": 711,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_COMMAND_DELIVERED.log": {
+      "sha256": "3252EB6DF00CF0E374194824A82D7D0AB3CF6A20D625978F1A2A0176981DA31D",
+      "bytes": 978,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json": {
+      "sha256": "3D56073292C60B7B37025BD9013FE0763875097430CE9E13C0D55760A136A98C",
+      "bytes": 877,
+      "text_encoding": "UTF-8"
+    },
+    "raw/EXACT_IP_RECONNECT_SUMMARY.json": {
+      "sha256": "2F98BEB97E5008E6BB5E67AA322AE5E6591CC6AA2A77F9C95971C516AEB70019",
+      "bytes": 654,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_AUTHENTICATED_IDENTITY.log": {
+      "sha256": "B02CEC64A188824C1925F62599492C9A09CC750D699F415CD8703C8D6455E6D1",
+      "bytes": 10530,
+      "text_encoding": "UTF-8"
+    },
+    "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json": {
+      "sha256": "94430796BFB0AFB77BB63F182249E9F93FEEAFA7740C994E8A12135281965A50",
+      "bytes": 1149,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json": {
+      "sha256": "DF9DD51F4600D3166A635CCC75195D812A129F007B14BF6C0A405758148C44DE",
+      "bytes": 1971,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK.log": {
+      "sha256": "E6887760D4262A2EB017365902589B96684E7F6CF3822B33453AEEC877612ABE",
+      "bytes": 3823,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json": {
+      "sha256": "D1538355B63E370AFAEE90C565BE34AAFED9E33F2188D5916CBC997D6F4E44D0",
+      "bytes": 1130,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_CORRECTED.log": {
+      "sha256": "BAA72FBDEF4B19619748699D0648A049E813033C4B50C9BC6290E6C7516E8496",
+      "bytes": 1744,
+      "text_encoding": "UTF-8"
+    },
+    "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json": {
+      "sha256": "976B028F38C41B872B24A067418B921226D1D74F94D81058BEDE3EDDD1860609",
+      "bytes": 1014,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json": {
+      "sha256": "8241E3A6105148FB7397ED1A746853210C4417690EE1609E963FA4072E93393E",
+      "bytes": 2283,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_LOCKS_REMOTE_VERIFY.log": {
+      "sha256": "C1B2B74B2C2DC503D63193F699A353A16286821342A1284DDF5E4AF30297D194",
+      "bytes": 959,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json": {
+      "sha256": "8DCB73CE65B824EA1BCC019371EE9F1B3CC96C8F7CBF838428EEE4B266EF2E5C",
+      "bytes": 711,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_POST_REBOOT_SESSION.csv": {
+      "sha256": "072D09CF422BD4E2410DDA81BB07185FA36D48263DE141AB603A5C91DFD27917",
+      "bytes": 980,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_POST_REBOOT_TARGET_PROPERTIES.tsv": {
+      "sha256": "DEE1AF4E5274B4E9F79835EB5B330145E4C2ACD250A8E9E330ED80D709F25518",
+      "bytes": 327,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_POST_REBOOT_DEVICE_PROPERTIES.tsv": {
+      "sha256": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE",
+      "bytes": 4427,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_POST_REBOOT_VIVADO.log": {
+      "sha256": "85BCA1EF126181D46C2943885D2666EFA7B731C373310148D2DEB8A7F844506B",
+      "bytes": 20912,
+      "text_encoding": "Windows-1252"
+    },
+    "raw/JTAG_POST_REBOOT_VIVADO.jou": {
+      "sha256": "C38A6480F91B9F33D08080EC19BC266191A5798DC244A33B4A3E6981D33CDB35",
+      "bytes": 1612,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_JTAG_RETENTION_GATE.json": {
+      "sha256": "78942B9088BE180F3777F43ECC2587E67B6774B986233D78D10D9F8A4579AC16",
+      "bytes": 1632,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log": {
+      "sha256": "B93C6A9D7123EBAE2D99DF7892EA7DD0C43EC784211129553DD76C1A438137D1",
+      "bytes": 72528,
+      "text_encoding": "UTF-8"
+    },
+    "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json": {
+      "sha256": "F25D43313ACE02FD6EDBB3F8541DEF2B623E3AB72130C62F9BF9E3AFA98695AD",
+      "bytes": 1693,
+      "text_encoding": "UTF-8"
+    },
+    "raw/XDMA_BINDING_FEASIBILITY_READONLY.log": {
+      "sha256": "FAB5CBBFBA761B1890178FF8FF246BC3B2BFE3C13462BC9922BC53B22C974C5F",
+      "bytes": 7940,
+      "text_encoding": "UTF-8"
+    },
+    "raw/T1_DRIVER_GATE_DECISION.json": {
+      "sha256": "1DDD46CD6C7C9337438928B0676E7553ABB9DAA219E353B25CA6F38D3851F311",
+      "bytes": 1900,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_FINAL_SESSION.csv": {
+      "sha256": "972AA727039908E5C52C135476FDBB90467948807191EC18C0E50AF4CCF9BD2A",
+      "bytes": 980,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_FINAL_TARGET_PROPERTIES.tsv": {
+      "sha256": "DEE1AF4E5274B4E9F79835EB5B330145E4C2ACD250A8E9E330ED80D709F25518",
+      "bytes": 327,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_FINAL_DEVICE_PROPERTIES.tsv": {
+      "sha256": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE",
+      "bytes": 4427,
+      "text_encoding": "UTF-8"
+    },
+    "raw/JTAG_FINAL_VIVADO.log": {
+      "sha256": "37B0F06A4813BE48609FA51ED23280DF8E69DE723E72E3CE367D9A3011E02B78",
+      "bytes": 20873,
+      "text_encoding": "Windows-1252"
+    },
+    "raw/JTAG_FINAL_VIVADO.jou": {
+      "sha256": "2ACBD96872E9217EF4BA426623A2B619D8E6492829292C07EFAD83160F357CE1",
+      "bytes": 1575,
+      "text_encoding": "UTF-8"
+    },
+    "raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log": {
+      "sha256": "B8896FFEBA3E4A3280E5A31EF27B1971E2294BD364B498FAC8ED78F0B720CF8D",
+      "bytes": 33824,
+      "text_encoding": "UTF-8"
+    },
+    "raw/FINAL_STATE_VALIDATION.json": {
+      "sha256": "F1B729F7DEA37421E175E9954EE01BA7F9FBBCE14E5AEE7E8DE64E02BE02328A",
+      "bytes": 1440,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json": {
+      "sha256": "314A892AB0F1525160F79928051A33AE03CB04EE0B03DA86F39D3B53E4D435DA",
+      "bytes": 2619,
+      "text_encoding": "UTF-8"
+    },
+    "raw/LINUX_LOCK_POST_REBOOT_RELEASE.log": {
+      "sha256": "44EB640DC8343F719E5394409519BEA27C8273D307D1E47F6E2BC3F043F9235C",
+      "bytes": 2228,
+      "text_encoding": "UTF-8"
+    },
+    "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json": {
+      "sha256": "74A693ACBA6C436EF97D272C8D493981BE8EC0C023B4FDA5C505EC7F7DE6D6CC",
+      "bytes": 1397,
+      "text_encoding": "UTF-8"
+    },
+    "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json": {
+      "sha256": "C3C4110C68250551A1287CC73D83F5A275407FBCCCCB9A6EBAD0D396ACD50B60",
+      "bytes": 2872,
+      "text_encoding": "UTF-8"
+    },
+    "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json": {
+      "sha256": "A05590DD3C9198D1B1F25AF9F428D7DB66C2F0F612D8C30AA950235A2898B280",
+      "bytes": 3101,
+      "text_encoding": "UTF-8"
+    },
+    "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json": {
+      "sha256": "48FA7C313FBD78E51D7E14AEA8E82F3353F11E3FF8EF2D49F7F0C13FE12554C7",
+      "bytes": 589,
+      "text_encoding": "UTF-8"
+    }
+  },
+  "checks": [
+    {
+      "name": "source_available::raw/OWNER_R2_CONTRACT.txt",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 31405,
+      "sources": [
+        "raw/OWNER_R2_CONTRACT.txt"
+      ]
+    },
+    {
+      "name": "source_available::raw/LOCAL_AUTHORITY_VERIFICATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 5226,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 473,
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 621,
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/PRE_REBOOT_LINUX_SNAPSHOT.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 93119,
+      "sources": [
+        "raw/PRE_REBOOT_LINUX_SNAPSHOT.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/LOCKS_PRE_REBOOT_VERIFY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1159,
+      "sources": [
+        "raw/LOCKS_PRE_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_PRE_REBOOT_SESSION.csv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 980,
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_PRE_REBOOT_TARGET_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 327,
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_TARGET_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_PRE_REBOOT_DEVICE_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 4427,
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_DEVICE_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_PRE_REBOOT_VIVADO.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 7341,
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_VIVADO.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1849,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_COMMAND.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 507,
+      "sources": [
+        "raw/WARM_REBOOT_COMMAND.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 578,
+      "sources": [
+        "raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/AFTER_LOCAL_REJECTION_NO_REBOOT_VERIFY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 631,
+      "sources": [
+        "raw/AFTER_LOCAL_REJECTION_NO_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1614,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1308,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1242,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 711,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_COMMAND_DELIVERED.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 978,
+      "sources": [
+        "raw/WARM_REBOOT_COMMAND_DELIVERED.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 877,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/EXACT_IP_RECONNECT_SUMMARY.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 654,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_AUTHENTICATED_IDENTITY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 10530,
+      "sources": [
+        "raw/POST_REBOOT_AUTHENTICATED_IDENTITY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1149,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1971,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 3823,
+      "sources": [
+        "raw/POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1130,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_CORRECTED.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1744,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_CORRECTED.log"
+      ]
+    },
+    {
+      "name": "source_available::locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1014,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 2283,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_LOCKS_REMOTE_VERIFY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 959,
+      "sources": [
+        "raw/POST_REBOOT_LOCKS_REMOTE_VERIFY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 711,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_POST_REBOOT_SESSION.csv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 980,
+      "sources": [
+        "raw/JTAG_POST_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_POST_REBOOT_TARGET_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 327,
+      "sources": [
+        "raw/JTAG_POST_REBOOT_TARGET_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_POST_REBOOT_DEVICE_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 4427,
+      "sources": [
+        "raw/JTAG_POST_REBOOT_DEVICE_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_POST_REBOOT_VIVADO.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 20912,
+      "sources": [
+        "raw/JTAG_POST_REBOOT_VIVADO.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_POST_REBOOT_VIVADO.jou",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1612,
+      "sources": [
+        "raw/JTAG_POST_REBOOT_VIVADO.jou"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1632,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 72528,
+      "sources": [
+        "raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1693,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/XDMA_BINDING_FEASIBILITY_READONLY.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 7940,
+      "sources": [
+        "raw/XDMA_BINDING_FEASIBILITY_READONLY.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/T1_DRIVER_GATE_DECISION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1900,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_FINAL_SESSION.csv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 980,
+      "sources": [
+        "raw/JTAG_FINAL_SESSION.csv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_FINAL_TARGET_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 327,
+      "sources": [
+        "raw/JTAG_FINAL_TARGET_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_FINAL_DEVICE_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 4427,
+      "sources": [
+        "raw/JTAG_FINAL_DEVICE_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_FINAL_VIVADO.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 20873,
+      "sources": [
+        "raw/JTAG_FINAL_VIVADO.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/JTAG_FINAL_VIVADO.jou",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1575,
+      "sources": [
+        "raw/JTAG_FINAL_VIVADO.jou"
+      ]
+    },
+    {
+      "name": "source_available::raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 33824,
+      "sources": [
+        "raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log"
+      ]
+    },
+    {
+      "name": "source_available::raw/FINAL_STATE_VALIDATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1440,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 2619,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/LINUX_LOCK_POST_REBOOT_RELEASE.log",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 2228,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_RELEASE.log"
+      ]
+    },
+    {
+      "name": "source_available::locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 1397,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 2872,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 3101,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "source_available::raw/CONTROLLER_LOCK_RELEASE_OPERATION.json",
+      "result": "PASS",
+      "expected": "> 0 bytes",
+      "actual": 589,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/CONTROLLER_LOCK_RELEASE_OPERATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/EXACT_IP_RECONNECT_SUMMARY.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/FINAL_STATE_VALIDATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/LOCAL_AUTHORITY_VERIFICATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/T1_DRIVER_GATE_DECISION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "json_parse::raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json",
+      "result": "PASS",
+      "expected": "JSON object",
+      "actual": "JSON object",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "owner_contract_exact_authority_and_stop_policy",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 17
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 17
+      },
+      "sources": [
+        "raw/OWNER_R2_CONTRACT.txt"
+      ]
+    },
+    {
+      "name": "authority_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_r1_commit",
+      "result": "PASS",
+      "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+      "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_r1_manifest_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_r1_manifest_entries",
+      "result": "PASS",
+      "expected": 57,
+      "actual": 57,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_r1_manifest_mismatches",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_r1_manifest_sha256",
+      "result": "PASS",
+      "expected": "D2AD5C4D265E4FDD23E41C294A935DECF1059E166E9B9A146A5B9ED9EAEC19CB",
+      "actual": "D2AD5C4D265E4FDD23E41C294A935DECF1059E166E9B9A146A5B9ED9EAEC19CB",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_ssot_manifest_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_ssot_manifest_entries",
+      "result": "PASS",
+      "expected": 18,
+      "actual": 18,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_ssot_manifest_mismatches",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_ssot_manifest_sha256",
+      "result": "PASS",
+      "expected": "B935E05F75AC1357D29ACB91E08978BD9A6701CD06024F9E6E2C6EB071993EC6",
+      "actual": "B935E05F75AC1357D29ACB91E08978BD9A6701CD06024F9E6E2C6EB071993EC6",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_owner_hardware",
+      "result": "PASS",
+      "expected": "GRANTED",
+      "actual": "GRANTED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_owner_warm_reboot",
+      "result": "PASS",
+      "expected": "GRANTED",
+      "actual": "GRANTED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_maximum_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_power_cycle",
+      "result": "PASS",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_sram_reprogramming",
+      "result": "PASS",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_flash_programming",
+      "result": "PASS",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_legacy_mmio_read",
+      "result": "PASS",
+      "expected": "GRANTED",
+      "actual": "GRANTED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_legacy_mmio_write",
+      "result": "PASS",
+      "expected": "DENIED",
+      "actual": "DENIED",
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_exact_check_set",
+      "result": "PASS",
+      "expected": [
+        "BIT_BYTES",
+        "BIT_SHA256",
+        "CANDIDATE_MATURITY",
+        "DCP_SHA256",
+        "EVIDENCE_TRACKED_CLEAN",
+        "G2B_HW0_READINESS",
+        "G2B_HW0_SCOPE",
+        "G2B_LUT1_READINESS",
+        "G2B_LUT1_STATUS",
+        "PROJECT_STATE_REV",
+        "R1_EVIDENCE_HEAD",
+        "R1_EVIDENCE_ORIGIN_TRACKING",
+        "R1_EVIDENCE_REMOTE",
+        "R1_FINAL_CANDIDATE",
+        "R1_FINAL_DONE",
+        "R1_FINAL_DRIVER",
+        "R1_FINAL_ENDPOINT",
+        "R1_FINAL_NODES",
+        "R1_FLASH",
+        "R1_POWER_CYCLES",
+        "R1_PUBLICATION",
+        "R1_REBOOTS",
+        "R1_REMOTE_READBACK",
+        "SOURCE_BRANCH",
+        "SOURCE_HEAD",
+        "SOURCE_REMOTE",
+        "SOURCE_TRACKED_CLEAN",
+        "SOURCE_TREE"
+      ],
+      "actual": [
+        "BIT_BYTES",
+        "BIT_SHA256",
+        "CANDIDATE_MATURITY",
+        "DCP_SHA256",
+        "EVIDENCE_TRACKED_CLEAN",
+        "G2B_HW0_READINESS",
+        "G2B_HW0_SCOPE",
+        "G2B_LUT1_READINESS",
+        "G2B_LUT1_STATUS",
+        "PROJECT_STATE_REV",
+        "R1_EVIDENCE_HEAD",
+        "R1_EVIDENCE_ORIGIN_TRACKING",
+        "R1_EVIDENCE_REMOTE",
+        "R1_FINAL_CANDIDATE",
+        "R1_FINAL_DONE",
+        "R1_FINAL_DRIVER",
+        "R1_FINAL_ENDPOINT",
+        "R1_FINAL_NODES",
+        "R1_FLASH",
+        "R1_POWER_CYCLES",
+        "R1_PUBLICATION",
+        "R1_REBOOTS",
+        "R1_REMOTE_READBACK",
+        "SOURCE_BRANCH",
+        "SOURCE_HEAD",
+        "SOURCE_REMOTE",
+        "SOURCE_TRACKED_CLEAN",
+        "SOURCE_TREE"
+      ],
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_EVIDENCE_HEAD",
+      "result": "PASS",
+      "expected": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_EVIDENCE_ORIGIN_TRACKING",
+      "result": "PASS",
+      "expected": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_EVIDENCE_REMOTE",
+      "result": "PASS",
+      "expected": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::EVIDENCE_TRACKED_CLEAN",
+      "result": "PASS",
+      "expected": {
+        "actual": "",
+        "expected": "",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "",
+        "expected": "",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_PUBLICATION",
+      "result": "PASS",
+      "expected": {
+        "actual": "PASS",
+        "expected": "PASS",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "PASS",
+        "expected": "PASS",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_REMOTE_READBACK",
+      "result": "PASS",
+      "expected": {
+        "actual": "PASS",
+        "expected": "PASS",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "PASS",
+        "expected": "PASS",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FINAL_CANDIDATE",
+      "result": "PASS",
+      "expected": {
+        "actual": "STILL_LOADED_VOLATILE_SRAM_BY_UNBROKEN_CHAIN",
+        "expected": "STILL_LOADED_VOLATILE_SRAM_BY_UNBROKEN_CHAIN",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "STILL_LOADED_VOLATILE_SRAM_BY_UNBROKEN_CHAIN",
+        "expected": "STILL_LOADED_VOLATILE_SRAM_BY_UNBROKEN_CHAIN",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FINAL_DONE",
+      "result": "PASS",
+      "expected": {
+        "actual": 1,
+        "expected": 1,
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": 1,
+        "expected": 1,
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FINAL_ENDPOINT",
+      "result": "PASS",
+      "expected": {
+        "actual": "ABSENT",
+        "expected": "ABSENT",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "ABSENT",
+        "expected": "ABSENT",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FINAL_DRIVER",
+      "result": "PASS",
+      "expected": {
+        "actual": "NOT_LOADED",
+        "expected": "NOT_LOADED",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "NOT_LOADED",
+        "expected": "NOT_LOADED",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FINAL_NODES",
+      "result": "PASS",
+      "expected": {
+        "actual": [],
+        "expected": [],
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": [],
+        "expected": [],
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_FLASH",
+      "result": "PASS",
+      "expected": {
+        "actual": "NO",
+        "expected": "NO",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "NO",
+        "expected": "NO",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_REBOOTS",
+      "result": "PASS",
+      "expected": {
+        "actual": 0,
+        "expected": 0,
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": 0,
+        "expected": 0,
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::R1_POWER_CYCLES",
+      "result": "PASS",
+      "expected": {
+        "actual": 0,
+        "expected": 0,
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": 0,
+        "expected": 0,
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::PROJECT_STATE_REV",
+      "result": "PASS",
+      "expected": {
+        "actual": 8,
+        "expected": 8,
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": 8,
+        "expected": 8,
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::G2B_LUT1_STATUS",
+      "result": "PASS",
+      "expected": {
+        "actual": "ACCEPTED",
+        "expected": "ACCEPTED",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "ACCEPTED",
+        "expected": "ACCEPTED",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::G2B_LUT1_READINESS",
+      "result": "PASS",
+      "expected": {
+        "actual": "OFFLINE_QUALIFIED",
+        "expected": "OFFLINE_QUALIFIED",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "OFFLINE_QUALIFIED",
+        "expected": "OFFLINE_QUALIFIED",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::CANDIDATE_MATURITY",
+      "result": "PASS",
+      "expected": {
+        "actual": "OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE",
+        "expected": "OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE",
+        "expected": "OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::G2B_HW0_READINESS",
+      "result": "PASS",
+      "expected": {
+        "actual": "AUTHORIZED_FOR_SEPARATE_CONTROLLED_EXECUTION",
+        "expected": "AUTHORIZED_FOR_SEPARATE_CONTROLLED_EXECUTION",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "AUTHORIZED_FOR_SEPARATE_CONTROLLED_EXECUTION",
+        "expected": "AUTHORIZED_FOR_SEPARATE_CONTROLLED_EXECUTION",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::G2B_HW0_SCOPE",
+      "result": "PASS",
+      "expected": {
+        "actual": "ONE_CHANNEL_FIXED_LIVE_AHD_PATH",
+        "expected": "ONE_CHANNEL_FIXED_LIVE_AHD_PATH",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "ONE_CHANNEL_FIXED_LIVE_AHD_PATH",
+        "expected": "ONE_CHANNEL_FIXED_LIVE_AHD_PATH",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::SOURCE_BRANCH",
+      "result": "PASS",
+      "expected": {
+        "actual": "integration/v41-g2b-onech-c2h",
+        "expected": "integration/v41-g2b-onech-c2h",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "integration/v41-g2b-onech-c2h",
+        "expected": "integration/v41-g2b-onech-c2h",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::SOURCE_HEAD",
+      "result": "PASS",
+      "expected": {
+        "actual": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "expected": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "expected": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::SOURCE_TREE",
+      "result": "PASS",
+      "expected": {
+        "actual": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+        "expected": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+        "expected": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::SOURCE_REMOTE",
+      "result": "PASS",
+      "expected": {
+        "actual": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "expected": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "expected": "92e9b3d914134c044371779def1ee18eaaeda98a",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::SOURCE_TRACKED_CLEAN",
+      "result": "PASS",
+      "expected": {
+        "actual": "",
+        "expected": "",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "",
+        "expected": "",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::BIT_BYTES",
+      "result": "PASS",
+      "expected": {
+        "actual": 2192144,
+        "expected": 2192144,
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": 2192144,
+        "expected": 2192144,
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::BIT_SHA256",
+      "result": "PASS",
+      "expected": {
+        "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+        "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+        "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "authority_check::DCP_SHA256",
+      "result": "PASS",
+      "expected": {
+        "actual": "95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175",
+        "expected": "95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175",
+        "result": "PASS"
+      },
+      "actual": {
+        "actual": "95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175",
+        "expected": "95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175",
+        "result": "PASS"
+      },
+      "sources": [
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "prelock_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "prelock_exclusivity",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "prelock_relevant_processes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "prelock_active_lock_directories",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "prelock_current_task_only",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_candidate",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_dut",
+      "result": "PASS",
+      "expected": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "actual": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_max_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_warm_reboots",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_acquire_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_ACQUIRE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_reboot_linux_exact_safe_state",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 11
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 11
+      },
+      "sources": [
+        "raw/PRE_REBOOT_LINUX_SNAPSHOT.log"
+      ]
+    },
+    {
+      "name": "pre_reboot_locks_remote_readback",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 4
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 4
+      },
+      "sources": [
+        "raw/LOCKS_PRE_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "jtag_session_1_csv_shape",
+      "result": "PASS",
+      "expected": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "actual": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_1_exact_identity_done_samples",
+      "result": "PASS",
+      "expected": [
+        {
+          "session_index": "1",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "actual": [
+        {
+          "session_index": "1",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "1",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_1_strictly_increasing_samples",
+      "result": "PASS",
+      "expected": "five strictly increasing monotonic_ms values",
+      "actual": [
+        1788677177565,
+        1788677178372,
+        1788677179197,
+        1788677180011,
+        1788677180821
+      ],
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "pre_reboot_jtag_zero_programming",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "sources": [
+        "raw/JTAG_PRE_REBOOT_VIVADO.log"
+      ]
+    },
+    {
+      "name": "pre_receipt_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_dut",
+      "result": "PASS",
+      "expected": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "actual": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_authority",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_exclusivity",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_controller_lock",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_linux_lock",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_endpoint",
+      "result": "PASS",
+      "expected": "ABSENT",
+      "actual": "ABSENT",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_xdma",
+      "result": "PASS",
+      "expected": "UNLOADED",
+      "actual": "UNLOADED",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_xdma_nodes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_target",
+      "result": "PASS",
+      "expected": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "actual": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_id",
+      "result": "PASS",
+      "expected": "Xilinx/80802026a98b01",
+      "actual": "Xilinx/80802026a98b01",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_part",
+      "result": "PASS",
+      "expected": "xc7a35t",
+      "actual": "xc7a35t",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_idcode",
+      "result": "PASS",
+      "expected": "0362D093",
+      "actual": "0362D093",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_index",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_done",
+      "result": "PASS",
+      "expected": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_jtag_programs",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_candidate_commit",
+      "result": "PASS",
+      "expected": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+      "actual": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_candidate_hash",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_intervening_sram",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_intervening_flash",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_intervening_power",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_other_tasks",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_hash_local_authority",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "EAC20613B201C6B9F892AB02E3A908F59A442A09B30C5DE6C08418820EED1EC1",
+        "computed": "EAC20613B201C6B9F892AB02E3A908F59A442A09B30C5DE6C08418820EED1EC1"
+      },
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+        "raw/LOCAL_AUTHORITY_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_hash_controller_exclusivity",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "96B489481549A6F76AA6E4B92D718E27942822EE3327CFE34E53A1F3CF8CA001",
+        "computed": "96B489481549A6F76AA6E4B92D718E27942822EE3327CFE34E53A1F3CF8CA001"
+      },
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+        "raw/CONTROLLER_EXCLUSIVITY_PRELOCK_REFINED.json"
+      ]
+    },
+    {
+      "name": "pre_receipt_hash_linux_snapshot",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "D188C78C8C2ACF3A5C8B6B1495BAA0DA118E6EDB288A580698394ADC239BDC92",
+        "computed": "D188C78C8C2ACF3A5C8B6B1495BAA0DA118E6EDB288A580698394ADC239BDC92"
+      },
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+        "raw/PRE_REBOOT_LINUX_SNAPSHOT.log"
+      ]
+    },
+    {
+      "name": "pre_receipt_hash_jtag_csv",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "DA062BE2DE5109C59177CB55CB46B4769CE4DD353D9A070AFBB512DCB9B2611E",
+        "computed": "DA062BE2DE5109C59177CB55CB46B4769CE4DD353D9A070AFBB512DCB9B2611E"
+      },
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+        "raw/JTAG_PRE_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "pre_receipt_hash_locks_verify",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "6E3C34A8E01CEE9C9A659E7CAFF97EB422D187A87AB853AA0E476484F716550A",
+        "computed": "6E3C34A8E01CEE9C9A659E7CAFF97EB422D187A87AB853AA0E476484F716550A"
+      },
+      "sources": [
+        "raw/PRE_REBOOT_AUTHORITY_RECEIPT.json",
+        "raw/LOCKS_PRE_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "local_rejection_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_class",
+      "result": "PASS",
+      "expected": "LOCAL_PRE_EXECUTION_ARGUMENT_REJECTION",
+      "actual": "LOCAL_PRE_EXECUTION_ARGUMENT_REJECTION",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_argument_audit",
+      "result": "PASS",
+      "expected": "NOT_RUN",
+      "actual": "NOT_RUN",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_pwfile",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_child",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_plink",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_ssh",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_stdout",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_stderr",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_remote_commands",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_acknowledgements",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_warm_reboots",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_budget",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_same_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_boot_unchanged",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_linux_lock",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_originals_preserved",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "local_rejection_supervisor_preserved",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "rejected_wrapper_raw_pre_dispatch_facts",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 7
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 7
+      },
+      "sources": [
+        "raw/WARM_REBOOT_COMMAND.log"
+      ]
+    },
+    {
+      "name": "same_boot_after_local_rejection",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 3
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 3
+      },
+      "sources": [
+        "raw/AFTER_LOCAL_REJECTION_NO_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "rejection_hash_original_wrapper",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "40DC8A65707F905CA9865D7DA1E9EADCE0D437173CBB58A1DF19F099EE430E14",
+        "computed": "40DC8A65707F905CA9865D7DA1E9EADCE0D437173CBB58A1DF19F099EE430E14"
+      },
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+        "raw/WARM_REBOOT_COMMAND.log"
+      ]
+    },
+    {
+      "name": "rejection_hash_original_supervisor",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "D6386DEED4606865F442D12732DC6FDD5F733107CFABF92A0BD9AB2FEECD0B09",
+        "computed": "D6386DEED4606865F442D12732DC6FDD5F733107CFABF92A0BD9AB2FEECD0B09"
+      },
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+        "raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "rejection_hash_same_boot",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "3694DECE1E9DBA7FF822816D3DA0C594432810CB39B29E3DF5FE1E17A042887C",
+        "computed": "3694DECE1E9DBA7FF822816D3DA0C594432810CB39B29E3DF5FE1E17A042887C"
+      },
+      "sources": [
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+        "raw/AFTER_LOCAL_REJECTION_NO_REBOOT_VERIFY.log"
+      ]
+    },
+    {
+      "name": "correction_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_scope",
+      "result": "PASS",
+      "expected": "LIVE_CONTROLLER_LOCK_BOOKKEEPING_ONLY",
+      "actual": "LIVE_CONTROLLER_LOCK_BOOKKEEPING_ONLY",
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_prior_warm_count",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_prior_consumed",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_remote_attempts",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_remote_deliveries",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_actual_warm_count",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_budget_consumed",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_budget_remaining",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_remote_status",
+      "result": "PASS",
+      "expected": "NOT_ISSUED",
+      "actual": "NOT_ISSUED",
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "correction_hash_rejection_classification",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "A5811324E22498ABF0A67ECE59CBB89C9724D0D7B7F5F5EFD0E7D95800E4C647",
+        "computed": "A5811324E22498ABF0A67ECE59CBB89C9724D0D7B7F5F5EFD0E7D95800E4C647"
+      },
+      "sources": [
+        "raw/CONTROLLER_LOCK_BOOKKEEPING_CORRECTION.json",
+        "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_remote_attempts",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_remote_deliveries",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_warm_reboots",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_budget_remaining",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "corrected_lock_command_status",
+      "result": "PASS",
+      "expected": "NOT_ISSUED",
+      "actual": "NOT_ISSUED",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LOCAL_REJECTION_CORRECTION.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_result",
+      "result": "PASS",
+      "expected": "ARMED",
+      "actual": "ARMED",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_authorization",
+      "result": "PASS",
+      "expected": "OWNER_WARM_REBOOT_AUTHORIZATION=GRANTED",
+      "actual": "OWNER_WARM_REBOOT_AUTHORIZATION=GRANTED",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_maximum",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_prior_attempts",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_prior_deliveries",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_prior_warm",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_budget",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_no_retry",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_arming_controller_lock",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_ARMING_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "reboot_delivery_exact_first_and_only_acknowledged",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 14
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 14
+      },
+      "sources": [
+        "raw/WARM_REBOOT_COMMAND_DELIVERED.log"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_helper_exit",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_argument_audit",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_pwfile",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_remote_attempts",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_remote_deliveries",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_ack",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_budget_consumed",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_budget_remaining",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_maximum",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_second_authorized",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_lock",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "delivery_supervisor_disposition",
+      "result": "PASS",
+      "expected": "MONITOR_EXACT_IP_NO_RETRY",
+      "actual": "MONITOR_EXACT_IP_NO_RETRY",
+      "sources": [
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "reconnect_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_exact_ip",
+      "result": "PASS",
+      "expected": "10.132.1.111",
+      "actual": "10.132.1.111",
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_port",
+      "result": "PASS",
+      "expected": 22,
+      "actual": 22,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_disconnect",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_reconnect",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_lock",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_remote_attempts",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_remote_deliveries",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_second_attempted",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "reconnect_bounded_within_contract",
+      "result": "PASS",
+      "expected": "0 <= elapsed_seconds <= maximum_seconds <= 900",
+      "actual": {
+        "elapsed_seconds": 30.28,
+        "maximum_seconds": 895
+      },
+      "sources": [
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "post_reboot_authenticated_identity_exact",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "sources": [
+        "raw/POST_REBOOT_AUTHENTICATED_IDENTITY.log"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_type",
+      "result": "PASS",
+      "expected": "GRACEFUL_OPERATING_SYSTEM_WARM_REBOOT",
+      "actual": "GRACEFUL_OPERATING_SYSTEM_WARM_REBOOT",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_maximum",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_remote_attempts",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_remote_deliveries",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_acks",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_second_attempted",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_second_authorized",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_power_attempted",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_pre_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_boot_change",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_ip_transition",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_confirmation_lock",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "reboot_boot_ids_are_distinct",
+      "result": "PASS",
+      "expected": {
+        "pre": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+        "post": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "distinct": true
+      },
+      "actual": {
+        "pre": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+        "post": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "confirmation_hash_delivery",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "3252EB6DF00CF0E374194824A82D7D0AB3CF6A20D625978F1A2A0176981DA31D",
+        "computed": "3252EB6DF00CF0E374194824A82D7D0AB3CF6A20D625978F1A2A0176981DA31D"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "raw/WARM_REBOOT_COMMAND_DELIVERED.log"
+      ]
+    },
+    {
+      "name": "confirmation_hash_delivery_supervisor",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "3D56073292C60B7B37025BD9013FE0763875097430CE9E13C0D55760A136A98C",
+        "computed": "3D56073292C60B7B37025BD9013FE0763875097430CE9E13C0D55760A136A98C"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "raw/WARM_REBOOT_REMOTE_DELIVERY_SUPERVISOR.json"
+      ]
+    },
+    {
+      "name": "confirmation_hash_reconnect",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "2F98BEB97E5008E6BB5E67AA322AE5E6591CC6AA2A77F9C95971C516AEB70019",
+        "computed": "2F98BEB97E5008E6BB5E67AA322AE5E6591CC6AA2A77F9C95971C516AEB70019"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "raw/EXACT_IP_RECONNECT_SUMMARY.json"
+      ]
+    },
+    {
+      "name": "confirmation_hash_identity",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "B02CEC64A188824C1925F62599492C9A09CC750D699F415CD8703C8D6455E6D1",
+        "computed": "B02CEC64A188824C1925F62599492C9A09CC750D699F415CD8703C8D6455E6D1"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "raw/POST_REBOOT_AUTHENTICATED_IDENTITY.log"
+      ]
+    },
+    {
+      "name": "controller_confirm_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_revision",
+      "result": "PASS",
+      "expected": 5,
+      "actual": 5,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_remote_attempts",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_remote_deliveries",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_status",
+      "result": "PASS",
+      "expected": "EXECUTION_CONFIRMED_NO_RETRY",
+      "actual": "EXECUTION_CONFIRMED_NO_RETRY",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "controller_confirm_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json"
+      ]
+    },
+    {
+      "name": "post_reboot_exclusivity_before_relock",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 8
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 8
+      },
+      "sources": [
+        "raw/POST_REBOOT_EXCLUSIVITY_BEFORE_LINUX_RELOCK.log"
+      ]
+    },
+    {
+      "name": "linux_relock_rejection_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_rejection_class",
+      "result": "PASS",
+      "expected": "PRE_MUTATION_TASK_LOCK_GUARD_PIPELINE_REJECTION",
+      "actual": "PRE_MUTATION_TASK_LOCK_GUARD_PIPELINE_REJECTION",
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_rejection_mutations",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_rejection_created",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_rejection_hardware_mutations",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_corrected_authorized",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "linux_relock_original_preserved",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_FAILURE_CLASSIFICATION.json"
+      ]
+    },
+    {
+      "name": "post_reboot_linux_lock_correctly_acquired",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 11
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 11
+      },
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_ACQUIRE_CORRECTED.log"
+      ]
+    },
+    {
+      "name": "linux_lock_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_candidate",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_dut",
+      "result": "PASS",
+      "expected": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "actual": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_hostname",
+      "result": "PASS",
+      "expected": "VCDE-DUT-1",
+      "actual": "VCDE-DUT-1",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_pre_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_phase",
+      "result": "PASS",
+      "expected": "POST_REBOOT",
+      "actual": "POST_REBOOT",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_max_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_power",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_sram",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_flash",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_processes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_xdma",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_nodes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_other_locks",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_controller",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_revision",
+      "result": "PASS",
+      "expected": 6,
+      "actual": 6,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_linux_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_warm",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json"
+      ]
+    },
+    {
+      "name": "post_linux_controller_hash_linux_receipt",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "976B028F38C41B872B24A067418B921226D1D74F94D81058BEDE3EDDD1860609",
+        "computed": "976B028F38C41B872B24A067418B921226D1D74F94D81058BEDE3EDDD1860609"
+      },
+      "sources": [
+        "locks/CONTROLLER_LOCK_POST_LINUX_RELOCK.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "combined_lock_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_lock_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_controller_lock",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_controller_revision",
+      "result": "PASS",
+      "expected": 6,
+      "actual": 6,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_linux_lock",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_linux_readback",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_processes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_xdma",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_nodes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_endpoint_count",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json"
+      ]
+    },
+    {
+      "name": "combined_lock_hash_linux_receipt",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "976B028F38C41B872B24A067418B921226D1D74F94D81058BEDE3EDDD1860609",
+        "computed": "976B028F38C41B872B24A067418B921226D1D74F94D81058BEDE3EDDD1860609"
+      },
+      "sources": [
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "combined_lock_remote_readback_log",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "sources": [
+        "raw/POST_REBOOT_LOCKS_REMOTE_VERIFY.log"
+      ]
+    },
+    {
+      "name": "jtag_session_2_csv_shape",
+      "result": "PASS",
+      "expected": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "actual": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "sources": [
+        "raw/JTAG_POST_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_2_exact_identity_done_samples",
+      "result": "PASS",
+      "expected": [
+        {
+          "session_index": "2",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "actual": [
+        {
+          "session_index": "2",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "2",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "sources": [
+        "raw/JTAG_POST_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_2_strictly_increasing_samples",
+      "result": "PASS",
+      "expected": "five strictly increasing monotonic_ms values",
+      "actual": [
+        1788679165715,
+        1788679166522,
+        1788679167338,
+        1788679168152,
+        1788679168969
+      ],
+      "sources": [
+        "raw/JTAG_POST_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "post_reboot_jtag_zero_programming",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "sources": [
+        "raw/JTAG_POST_REBOOT_VIVADO.log"
+      ]
+    },
+    {
+      "name": "retention_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_gate",
+      "result": "PASS",
+      "expected": "POST_REBOOT_CANDIDATE_RETENTION",
+      "actual": "POST_REBOOT_CANDIDATE_RETENTION",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_target_count",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_device_count",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_target",
+      "result": "PASS",
+      "expected": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "actual": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_canonical",
+      "result": "PASS",
+      "expected": "Xilinx/80802026a98b01",
+      "actual": "Xilinx/80802026a98b01",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_part",
+      "result": "PASS",
+      "expected": "xc7a35t",
+      "actual": "xc7a35t",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_idcode",
+      "result": "PASS",
+      "expected": "0362D093",
+      "actual": "0362D093",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_index",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_done",
+      "result": "PASS",
+      "expected": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_done_stable",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_crc_error",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_idcode_error",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_security_error",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_hmac_error",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_bad_packet",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_jtag_programs",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_r2_sram_programs",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_flash_programs",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_candidate",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_outcome",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_qualification",
+      "result": "PASS",
+      "expected": "JTAG_DOES_NOT_READ_BACK_BITSTREAM_HASH",
+      "actual": "JTAG_DOES_NOT_READ_BACK_BITSTREAM_HASH",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "retention_hash::JTAG_POST_REBOOT_SESSION.csv",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "072D09CF422BD4E2410DDA81BB07185FA36D48263DE141AB603A5C91DFD27917",
+        "computed": "072D09CF422BD4E2410DDA81BB07185FA36D48263DE141AB603A5C91DFD27917"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+        "raw/JTAG_POST_REBOOT_SESSION.csv"
+      ]
+    },
+    {
+      "name": "retention_hash::JTAG_POST_REBOOT_TARGET_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "DEE1AF4E5274B4E9F79835EB5B330145E4C2ACD250A8E9E330ED80D709F25518",
+        "computed": "DEE1AF4E5274B4E9F79835EB5B330145E4C2ACD250A8E9E330ED80D709F25518"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+        "raw/JTAG_POST_REBOOT_TARGET_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "retention_hash::JTAG_POST_REBOOT_DEVICE_PROPERTIES.tsv",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE",
+        "computed": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+        "raw/JTAG_POST_REBOOT_DEVICE_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "retention_hash::JTAG_POST_REBOOT_VIVADO.log",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "85BCA1EF126181D46C2943885D2666EFA7B731C373310148D2DEB8A7F844506B",
+        "computed": "85BCA1EF126181D46C2943885D2666EFA7B731C373310148D2DEB8A7F844506B"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+        "raw/JTAG_POST_REBOOT_VIVADO.log"
+      ]
+    },
+    {
+      "name": "retention_hash::JTAG_POST_REBOOT_VIVADO.jou",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "C38A6480F91B9F33D08080EC19BC266191A5798DC244A33B4A3E6981D33CDB35",
+        "computed": "C38A6480F91B9F33D08080EC19BC266191A5798DC244A33B4A3E6981D33CDB35"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json",
+        "raw/JTAG_POST_REBOOT_VIVADO.jou"
+      ]
+    },
+    {
+      "name": "post_reboot_exact_endpoint_inventory",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 23
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 23
+      },
+      "sources": [
+        "raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log"
+      ]
+    },
+    {
+      "name": "correlation_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_gate",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_jtag_target",
+      "result": "PASS",
+      "expected": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "actual": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_jtag_part",
+      "result": "PASS",
+      "expected": "xc7a35t",
+      "actual": "xc7a35t",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_jtag_idcode",
+      "result": "PASS",
+      "expected": "0362D093",
+      "actual": "0362D093",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_jtag_index",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_jtag_done",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_endpoint_bdf",
+      "result": "PASS",
+      "expected": "0000:01:00.0",
+      "actual": "0000:01:00.0",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_vendor_device",
+      "result": "PASS",
+      "expected": "10ee:7011",
+      "actual": "10ee:7011",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_subsystem",
+      "result": "PASS",
+      "expected": "10ee:0007",
+      "actual": "10ee:0007",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_class",
+      "result": "PASS",
+      "expected": "058000",
+      "actual": "058000",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_upstream",
+      "result": "PASS",
+      "expected": "0000:00:01.1",
+      "actual": "0000:00:01.1",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_lnkcap",
+      "result": "PASS",
+      "expected": "Speed 5GT/s, Width x1",
+      "actual": "Speed 5GT/s, Width x1",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_lnksta",
+      "result": "PASS",
+      "expected": "Speed 5GT/s, Width x1",
+      "actual": "Speed 5GT/s, Width x1",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_sysfs_speed",
+      "result": "PASS",
+      "expected": "5.0 GT/s PCIe",
+      "actual": "5.0 GT/s PCIe",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_sysfs_width",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_driver",
+      "result": "PASS",
+      "expected": "NONE",
+      "actual": "NONE",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_gen2_x1",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_r1_binding_hash",
+      "result": "PASS",
+      "expected": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+      "actual": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_hash_retention",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "78942B9088BE180F3777F43ECC2587E67B6774B986233D78D10D9F8A4579AC16",
+        "computed": "78942B9088BE180F3777F43ECC2587E67B6774B986233D78D10D9F8A4579AC16"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json",
+        "raw/POST_REBOOT_JTAG_RETENTION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_hash_inventory",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "B93C6A9D7123EBAE2D99DF7892EA7DD0C43EC784211129553DD76C1A438137D1",
+        "computed": "B93C6A9D7123EBAE2D99DF7892EA7DD0C43EC784211129553DD76C1A438137D1"
+      },
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json",
+        "raw/POST_REBOOT_PCIE_XDMA_INVENTORY.log"
+      ]
+    },
+    {
+      "name": "correlation_embedded_historical_binding_hash",
+      "result": "PASS",
+      "expected": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+      "actual": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "correlation_embedded_r1_manifest_hash",
+      "result": "PASS",
+      "expected": "D2AD5C4D265E4FDD23E41C294A935DECF1059E166E9B9A146A5B9ED9EAEC19CB",
+      "actual": "D2AD5C4D265E4FDD23E41C294A935DECF1059E166E9B9A146A5B9ED9EAEC19CB",
+      "sources": [
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "xdma_platform_only_readonly_feasibility",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 22
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 22
+      },
+      "sources": [
+        "raw/XDMA_BINDING_FEASIBILITY_READONLY.log"
+      ]
+    },
+    {
+      "name": "t1_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_result",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_gate",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_first_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_warm_reboot",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_reconnect",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_boot_transition",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_exclusivity",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_retention",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_endpoint",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_correlation",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_gen2",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_safe_bind",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_node_map",
+      "result": "PASS",
+      "expected": "NOT_REACHED",
+      "actual": "NOT_REACHED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_module_path",
+      "result": "PASS",
+      "expected": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+      "actual": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_module_hash",
+      "result": "PASS",
+      "expected": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+      "actual": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_module_name",
+      "result": "PASS",
+      "expected": "xdma",
+      "actual": "xdma",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_module_aliases",
+      "result": "PASS",
+      "expected": [
+        "platform:xdma"
+      ],
+      "actual": [
+        "platform:xdma"
+      ],
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_platform_devices",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_pci_modalias_match",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_modalias_resolution",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_decision",
+      "result": "PASS",
+      "expected": "DO_NOT_LOAD_OR_BIND",
+      "actual": "DO_NOT_LOAD_OR_BIND",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_module_loaded",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_binds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_unbinds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_mmio_reads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_mmio_writes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_dma",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t2_not_reached",
+      "result": "PASS",
+      "expected": "NOT_REACHED",
+      "actual": "NOT_REACHED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t3_not_reached",
+      "result": "PASS",
+      "expected": "NOT_REACHED",
+      "actual": "NOT_REACHED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t4_not_reached",
+      "result": "PASS",
+      "expected": "NOT_REACHED",
+      "actual": "NOT_REACHED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t5_not_reached",
+      "result": "PASS",
+      "expected": "NOT_REACHED",
+      "actual": "NOT_REACHED",
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "t1_hash_correlation",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "F25D43313ACE02FD6EDBB3F8541DEF2B623E3AB72130C62F9BF9E3AFA98695AD",
+        "computed": "F25D43313ACE02FD6EDBB3F8541DEF2B623E3AB72130C62F9BF9E3AFA98695AD"
+      },
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json",
+        "raw/POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json"
+      ]
+    },
+    {
+      "name": "t1_hash_feasibility",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "FAB5CBBFBA761B1890178FF8FF246BC3B2BFE3C13462BC9922BC53B22C974C5F",
+        "computed": "FAB5CBBFBA761B1890178FF8FF246BC3B2BFE3C13462BC9922BC53B22C974C5F"
+      },
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json",
+        "raw/XDMA_BINDING_FEASIBILITY_READONLY.log"
+      ]
+    },
+    {
+      "name": "jtag_session_3_csv_shape",
+      "result": "PASS",
+      "expected": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "actual": {
+        "header": [
+          "session_index",
+          "sample_index",
+          "monotonic_ms",
+          "utc",
+          "target_count",
+          "device_count",
+          "target_path",
+          "canonical_id",
+          "server_endpoint",
+          "transport_class",
+          "part",
+          "idcode",
+          "done",
+          "refresh_result"
+        ],
+        "rows": 5,
+        "error": null
+      },
+      "sources": [
+        "raw/JTAG_FINAL_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_3_exact_identity_done_samples",
+      "result": "PASS",
+      "expected": [
+        {
+          "session_index": "3",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "actual": [
+        {
+          "session_index": "3",
+          "sample_index": "1",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "2",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "3",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "4",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        },
+        {
+          "session_index": "3",
+          "sample_index": "5",
+          "target_count": "1",
+          "device_count": "1",
+          "target_path": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+          "canonical_id": "Xilinx/80802026a98b01",
+          "server_endpoint": "localhost:3121",
+          "transport_class": "xilinx_tcf",
+          "part": "xc7a35t",
+          "idcode": "0362D093",
+          "done": "1",
+          "refresh_result": "PASS"
+        }
+      ],
+      "sources": [
+        "raw/JTAG_FINAL_SESSION.csv"
+      ]
+    },
+    {
+      "name": "jtag_session_3_strictly_increasing_samples",
+      "result": "PASS",
+      "expected": "five strictly increasing monotonic_ms values",
+      "actual": [
+        1788679821832,
+        1788679822637,
+        1788679823451,
+        1788679824262,
+        1788679825071
+      ],
+      "sources": [
+        "raw/JTAG_FINAL_SESSION.csv"
+      ]
+    },
+    {
+      "name": "final_jtag_zero_programming",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 6
+      },
+      "sources": [
+        "raw/JTAG_FINAL_VIVADO.log"
+      ]
+    },
+    {
+      "name": "final_dut_exact_controlled_stop_state",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 34
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 34
+      },
+      "sources": [
+        "raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log"
+      ]
+    },
+    {
+      "name": "final_validation_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_validation_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_engineering_gate",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_first_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_fpga_state",
+      "result": "PASS",
+      "expected": "xc7a35t IDCODE 0362D093 index 0; five final DONE=1 samples; candidate retained in volatile SRAM; zero R2 programming operations",
+      "actual": "xc7a35t IDCODE 0362D093 index 0; five final DONE=1 samples; candidate retained in volatile SRAM; zero R2 programming operations",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_pcie_state",
+      "result": "PASS",
+      "expected": "0000:01:00.0 10ee:7011 subsystem 10ee:0007 class 058000 behind 0000:00:01.1; Gen2 x1; unbound; xdma unloaded; zero xdma nodes",
+      "actual": "0000:01:00.0 10ee:7011 subsystem 10ee:0007 class 058000 behind 0000:00:01.1; Gen2 x1; unbound; xdma unloaded; zero xdma nodes",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_jtag_gate",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_linux_gate",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_linux_lock_pre_release",
+      "result": "PASS",
+      "expected": "HELD_PENDING_RELEASE",
+      "actual": "HELD_PENDING_RELEASE",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_controller_lock_pre_release",
+      "result": "PASS",
+      "expected": "HELD_PENDING_LAST_RELEASE",
+      "actual": "HELD_PENDING_LAST_RELEASE",
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_count_warm_reboots",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::power_cycles",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::sram_programs_r2",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::flash_programs",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::xdma_module_loads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::driver_binds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::driver_unbinds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::mmio_reads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::mmio_writes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::dma_operations",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::stream_enable_writes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::pcie_rescans",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_zero_operation::pcie_resets",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json"
+      ]
+    },
+    {
+      "name": "final_hash_linux_state",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "B8896FFEBA3E4A3280E5A31EF27B1971E2294BD364B498FAC8ED78F0B720CF8D",
+        "computed": "B8896FFEBA3E4A3280E5A31EF27B1971E2294BD364B498FAC8ED78F0B720CF8D"
+      },
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json",
+        "raw/FINAL_DUT_STATE_BEFORE_LOCK_RELEASE.log"
+      ]
+    },
+    {
+      "name": "final_hash_jtag_csv",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "972AA727039908E5C52C135476FDBB90467948807191EC18C0E50AF4CCF9BD2A",
+        "computed": "972AA727039908E5C52C135476FDBB90467948807191EC18C0E50AF4CCF9BD2A"
+      },
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json",
+        "raw/JTAG_FINAL_SESSION.csv"
+      ]
+    },
+    {
+      "name": "final_hash_jtag_device",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE",
+        "computed": "CF5588EAA2FCD3994173124FD45B2CB349388B62C656D5635F744191E6DD2FAE"
+      },
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json",
+        "raw/JTAG_FINAL_DEVICE_PROPERTIES.tsv"
+      ]
+    },
+    {
+      "name": "final_hash_t1",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "1DDD46CD6C7C9337438928B0676E7553ABB9DAA219E353B25CA6F38D3851F311",
+        "computed": "1DDD46CD6C7C9337438928B0676E7553ABB9DAA219E353B25CA6F38D3851F311"
+      },
+      "sources": [
+        "raw/FINAL_STATE_VALIDATION.json",
+        "raw/T1_DRIVER_GATE_DECISION.json"
+      ]
+    },
+    {
+      "name": "release_precondition_controller_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_state",
+      "result": "PASS",
+      "expected": "READY_FOR_LINUX_LOCK_RELEASE",
+      "actual": "READY_FOR_LINUX_LOCK_RELEASE",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_revision",
+      "result": "PASS",
+      "expected": 7,
+      "actual": 7,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_linux_lock",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_engineering",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_validation",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_module_loads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_binds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_mmio_reads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_mmio_writes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "release_precondition_dma",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/CONTROLLER_LOCK_BEFORE_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "linux_release_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_candidate",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_pre_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_warm",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_power",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_sram",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_flash",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_controller_held",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_state",
+      "result": "PASS",
+      "expected": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "actual": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_bdf",
+      "result": "PASS",
+      "expected": "0000:01:00.0",
+      "actual": "0000:01:00.0",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_endpoint",
+      "result": "PASS",
+      "expected": "10ee:7011 Gen2 x1 UNBOUND",
+      "actual": "10ee:7011 Gen2 x1 UNBOUND",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_xdma",
+      "result": "PASS",
+      "expected": "MODULE_UNLOADED; PCI_DRIVER_ABSENT; DEVICE_NODES_0",
+      "actual": "MODULE_UNLOADED; PCI_DRIVER_ABSENT; DEVICE_NODES_0",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_jtag",
+      "result": "PASS",
+      "expected": "xc7a35t 0362D093 index0 DONE1",
+      "actual": "xc7a35t 0362D093 index0 DONE1",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_release_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "linux_lock_release_operation",
+      "result": "PASS",
+      "expected": {
+        "missing_markers": [],
+        "marker_count": 5
+      },
+      "actual": {
+        "missing_markers": [],
+        "marker_count": 5
+      },
+      "sources": [
+        "raw/LINUX_LOCK_POST_REBOOT_RELEASE.log"
+      ]
+    },
+    {
+      "name": "after_linux_release_controller_state",
+      "result": "PASS",
+      "expected": "HELD",
+      "actual": "HELD",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_state",
+      "result": "PASS",
+      "expected": "READY_FOR_CONTROLLER_LOCK_RELEASE",
+      "actual": "READY_FOR_CONTROLLER_LOCK_RELEASE",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_revision",
+      "result": "PASS",
+      "expected": 8,
+      "actual": 8,
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_linux_state",
+      "result": "PASS",
+      "expected": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "actual": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_engineering",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json"
+      ]
+    },
+    {
+      "name": "after_linux_release_hash_receipt",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "74A693ACBA6C436EF97D272C8D493981BE8EC0C023B4FDA5C505EC7F7DE6D6CC",
+        "computed": "74A693ACBA6C436EF97D272C8D493981BE8EC0C023B4FDA5C505EC7F7DE6D6CC"
+      },
+      "sources": [
+        "locks/CONTROLLER_LOCK_AFTER_LINUX_RELEASE.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_candidate",
+      "result": "PASS",
+      "expected": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "actual": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_pre_boot",
+      "result": "PASS",
+      "expected": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "actual": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_post_boot",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_maximum",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_remote_attempts",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_remote_deliveries",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_warm",
+      "result": "PASS",
+      "expected": 1,
+      "actual": 1,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_budget_consumed",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_budget",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_status",
+      "result": "PASS",
+      "expected": "EXECUTION_CONFIRMED_NO_RETRY",
+      "actual": "EXECUTION_CONFIRMED_NO_RETRY",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_state",
+      "result": "PASS",
+      "expected": "RELEASED",
+      "actual": "RELEASED",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_release_state",
+      "result": "PASS",
+      "expected": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "actual": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_revision",
+      "result": "PASS",
+      "expected": 9,
+      "actual": 9,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_linux_state",
+      "result": "PASS",
+      "expected": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "actual": "RELEASED_AFTER_FINAL_STATE_CAPTURE",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_engineering",
+      "result": "PASS",
+      "expected": "BLOCKED",
+      "actual": "BLOCKED",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_blocker",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_module_loads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_binds",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_mmio_reads",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_mmio_writes",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_dma",
+      "result": "PASS",
+      "expected": 0,
+      "actual": 0,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_absent",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_hash_linux_receipt",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "74A693ACBA6C436EF97D272C8D493981BE8EC0C023B4FDA5C505EC7F7DE6D6CC",
+        "computed": "74A693ACBA6C436EF97D272C8D493981BE8EC0C023B4FDA5C505EC7F7DE6D6CC"
+      },
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_task",
+      "result": "PASS",
+      "expected": "G2B-HW0-PRODUCT-R2",
+      "actual": "G2B-HW0-PRODUCT-R2",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_result",
+      "result": "PASS",
+      "expected": "PASS",
+      "actual": "PASS",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_directory",
+      "result": "PASS",
+      "expected": "C:\\FPGA\\.AHD_DUT_EXCLUSIVE_LOCK",
+      "actual": "C:\\FPGA\\.AHD_DUT_EXCLUSIVE_LOCK",
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_recursive",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_receipt",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_empty_dir",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_absent",
+      "result": "PASS",
+      "expected": false,
+      "actual": false,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_linux_first",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_controller_last",
+      "result": "PASS",
+      "expected": true,
+      "actual": true,
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "controller_release_operation_hash_receipt",
+      "result": "PASS",
+      "expected": "declared SHA-256 equals computed source SHA-256",
+      "actual": {
+        "declared": "A05590DD3C9198D1B1F25AF9F428D7DB66C2F0F612D8C30AA950235A2898B280",
+        "computed": "A05590DD3C9198D1B1F25AF9F428D7DB66C2F0F612D8C30AA950235A2898B280"
+      },
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json",
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "controller_lock_currently_absent_after_recorded_release",
+      "result": "PASS",
+      "expected": {
+        "path": "C:\\FPGA\\.AHD_DUT_EXCLUSIVE_LOCK",
+        "exists": false
+      },
+      "actual": {
+        "path": "C:\\FPGA\\.AHD_DUT_EXCLUSIVE_LOCK",
+        "exists": false
+      },
+      "sources": [
+        "raw/CONTROLLER_LOCK_RELEASE_OPERATION.json"
+      ]
+    },
+    {
+      "name": "one_warm_reboot_consensus",
+      "result": "PASS",
+      "expected": "all authoritative receipts equal 1",
+      "actual": {
+        "confirmation": 1,
+        "controller_confirmation": 1,
+        "linux_lock": 1,
+        "combined_lock": 1,
+        "final_state": 1,
+        "linux_release": 1,
+        "controller_release": 1
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json",
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json",
+        "raw/FINAL_STATE_VALIDATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json",
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "post_boot_id_consensus",
+      "result": "PASS",
+      "expected": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+      "actual": {
+        "confirmation": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "controller_confirmation": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "linux_lock": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "combined_lock": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "linux_release": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+        "controller_release": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac"
+      },
+      "sources": [
+        "raw/WARM_REBOOT_EXECUTION_CONFIRMATION.json",
+        "locks/CONTROLLER_LOCK_POST_REBOOT_CONFIRMATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RECEIPT.json",
+        "raw/POST_REBOOT_COMBINED_LOCK_VERIFICATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json",
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    },
+    {
+      "name": "first_blocker_consensus",
+      "result": "PASS",
+      "expected": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+      "actual": {
+        "t1": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+        "final_state": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+        "linux_release": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+        "controller_release": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE"
+      },
+      "sources": [
+        "raw/T1_DRIVER_GATE_DECISION.json",
+        "raw/FINAL_STATE_VALIDATION.json",
+        "locks/LINUX_LOCK_POST_REBOOT_RELEASE_RECEIPT.json",
+        "raw/CONTROLLER_LOCK_RELEASE_RECEIPT.json"
+      ]
+    }
+  ],
+  "failed_check_names": []
+}

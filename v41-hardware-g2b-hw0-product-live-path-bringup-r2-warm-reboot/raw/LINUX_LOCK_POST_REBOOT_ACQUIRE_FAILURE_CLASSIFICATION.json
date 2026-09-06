@@ -1,0 +1,19 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "recorded_at_utc": "2026-09-06T07:16:01.2345735Z",
+  "result": "PASS",
+  "determination": "PRE_MUTATION_TASK_LOCK_GUARD_PIPELINE_REJECTION",
+  "post_reboot_linux_lock_acquire_attempts": 1,
+  "post_reboot_linux_lock_mutations_completed": 0,
+  "post_reboot_linux_lock_created": false,
+  "hardware_mutations": 0,
+  "cause": "With pipefail enabled, the lock-namespace find command returned 1 on unreadable systemd-private directories before mkdir executed; the count itself was zero.",
+  "corrective_action": "Use depth-one lock-namespace enumeration that does not descend into unrelated private directories, retain all identity/exclusivity guards, and write distinct evidence.",
+  "corrected_acquisition_authorized": true,
+  "original_evidence_preserved": true,
+  "source_sha256": {
+    "failed_acquire_evidence": "6E5CA8AF8540E7420E0E06DA342BFE2274420022F0CDC00ED49451FF27CDF875",
+    "failure_diagnostic": "21A9719AFBF32F458090F0A481CB02099FAAF6D6B9C9FBBAC86B7CE08C569540",
+    "failed_acquire_script": "5E87117E78762640D0EE020D186CBAEACCB69B527EDFEBF48C8972F5674E7A51"
+  }
+}

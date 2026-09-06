@@ -1,0 +1,48 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "result": "PASS",
+  "recorded_at_utc": "2026-09-06T06:49:39.641191Z",
+  "pre_reboot_boot_id": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+  "authoritative_dut": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+  "authority_verification": "PASS",
+  "fresh_exclusivity": "PASS",
+  "controller_lock": "HELD",
+  "linux_lock": "HELD",
+  "pre_reboot_ahd_endpoint": "ABSENT",
+  "pre_reboot_xdma_module": "UNLOADED",
+  "pre_reboot_xdma_nodes": 0,
+  "pre_reboot_jtag": {
+    "target": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+    "canonical_id": "Xilinx/80802026a98b01",
+    "part": "xc7a35t",
+    "idcode": "0362D093",
+    "chain_index": 0,
+    "done_samples": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "program_operations": 0
+  },
+  "candidate_continuity_basis": {
+    "r1_final_evidence_commit": "eb3a75c09925574c6947d67cdefb8e2a723add9e",
+    "r1_candidate_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+    "same_codex_window": true,
+    "known_intervening_sram_programs": 0,
+    "known_intervening_flash_operations": 0,
+    "known_intervening_power_cycles": 0,
+    "other_active_ahd_hardware_tasks": 0,
+    "fresh_exact_jtag_identity": "PASS",
+    "fresh_done": 1,
+    "qualification": "OPERATION_CONTINUITY_PLUS_JTAG_CONFIGURED_STATE; JTAG_DOES_NOT_READ_BACK_BITSTREAM_HASH"
+  },
+  "evidence_sha256": {
+    "local_authority": "EAC20613B201C6B9F892AB02E3A908F59A442A09B30C5DE6C08418820EED1EC1",
+    "controller_exclusivity": "96B489481549A6F76AA6E4B92D718E27942822EE3327CFE34E53A1F3CF8CA001",
+    "linux_pre_reboot": "D188C78C8C2ACF3A5C8B6B1495BAA0DA118E6EDB288A580698394ADC239BDC92",
+    "jtag_session": "DA062BE2DE5109C59177CB55CB46B4769CE4DD353D9A070AFBB512DCB9B2611E",
+    "locks_verify": "6E3C34A8E01CEE9C9A659E7CAFF97EB422D187A87AB853AA0E476484F716550A"
+  }
+}

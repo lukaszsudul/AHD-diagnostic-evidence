@@ -1,0 +1,49 @@
+UTC_START=2026-09-06T07:16:13.6084178Z
+UTC_END=2026-09-06T07:16:14.6330930Z
+EVIDENCE_KIND=R2_LINUX_LOCK_POST_REBOOT_ACQUIRE_CORRECTED
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+LINUX_POST_REBOOT_LOCK=HELD
+LINUX_POST_REBOOT_LOCK_PATH=/tmp/ahd-g2b-hw0-product-r2-post-reboot.lock
+RELEVANT_PROCESS_COUNT_BEFORE_LOCK=0
+XDMA_MODULE_COUNT_BEFORE_LOCK=0
+XDMA_DEVICE_NODE_COUNT_BEFORE_LOCK=0
+OTHER_TASK_LOCK_COUNT_BEFORE_LOCK=0
+{
+  "task_id": "G2B-HW0-PRODUCT-R2",
+  "candidate_bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+  "controller_identity": "NBLSUDUL",
+  "linux_dut_identity": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+  "hostname": "VCDE-DUT-1",
+  "pre_reboot_boot_id": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+  "post_reboot_boot_id": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+  "task_owner_session": "Codex task 01a07308-25ee-7e23-9402-5c9b49a6c7bc / root agent",
+  "lock_phase": "POST_REBOOT",
+  "lock_timestamp_utc": "2026-09-06T07:16:14.208526Z",
+  "maximum_warm_reboots": 1,
+  "warm_reboots_executed": 1,
+  "authorized_reboot_budget_remaining": 0,
+  "power_cycles_executed": 0,
+  "sram_program_operations_in_r2": 0,
+  "flash_program_operations": 0,
+  "relevant_process_count_before_lock": 0,
+  "xdma_module_count_before_lock": 0,
+  "xdma_device_node_count_before_lock": 0,
+  "other_task_lock_count_before_lock": 0,
+  "controller_lock_state": "HELD",
+  "lock_release_state": "HELD"
+}
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

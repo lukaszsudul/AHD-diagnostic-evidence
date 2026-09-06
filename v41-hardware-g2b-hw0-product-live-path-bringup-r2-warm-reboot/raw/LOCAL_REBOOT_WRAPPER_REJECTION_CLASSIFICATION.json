@@ -1,0 +1,32 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "recorded_at_utc": "2026-09-06T07:02:16.7912369Z",
+  "result": "PASS",
+  "determination": "LOCAL_PRE_EXECUTION_ARGUMENT_REJECTION",
+  "local_wrapper_attempts": 1,
+  "argument_token_audit": "NOT_RUN",
+  "password_file_created": false,
+  "child_process_started": false,
+  "plink_started": false,
+  "ssh_connection_attempted": false,
+  "remote_stdout_bytes": 0,
+  "remote_stderr_bytes": 0,
+  "remote_reboot_commands_issued": 0,
+  "reboot_schedule_acknowledgements": 0,
+  "warm_reboots_executed": 0,
+  "maximum_warm_reboots": 1,
+  "authorized_reboot_budget_remaining": 1,
+  "same_dut_reachable_after_rejection": true,
+  "verified_post_rejection_boot_id": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+  "pre_reboot_boot_id_unchanged": true,
+  "linux_lock_still_held": true,
+  "original_evidence_preserved": true,
+  "original_supervisor_preserved": true,
+  "rationale": "The helper rejected the command during controller-local argument validation before password-file creation or child-process launch. No Plink process, SSH session, remote command, reboot acknowledgement, or reboot occurred.",
+  "source_sha256": {
+    "rejected_wrapper_evidence_sha256": "40DC8A65707F905CA9865D7DA1E9EADCE0D437173CBB58A1DF19F099EE430E14",
+    "rejected_wrapper_supervisor_sha256": "D6386DEED4606865F442D12732DC6FDD5F733107CFABF92A0BD9AB2FEECD0B09",
+    "same_boot_verification_sha256": "3694DECE1E9DBA7FF822816D3DA0C594432810CB39B29E3DF5FE1E17A042887C",
+    "controller_lock_pre_correction_sha256": "A7DDAE5FAE0643D9834DE1B1682C6EE8EE871B6EBCCD6EF16B6BAF5BD6D29D73"
+  }
+}

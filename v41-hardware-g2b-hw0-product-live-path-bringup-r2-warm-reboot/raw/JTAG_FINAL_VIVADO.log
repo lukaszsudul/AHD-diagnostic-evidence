@@ -1,0 +1,489 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sun Sep  6 09:29:48 2026
+# Process ID         : 22780
+# Current directory  : C:/FPGA/G2B_HW0_PRODUCT_R2_20260906
+# Command line       : vivado.exe -mode batch -log C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_VIVADO.log -journal C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_VIVADO.jou -source C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\tools\r2_jtag_final_state_session.tcl -tclargs 3 C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_SESSION.csv C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_TARGET_PROPERTIES.tsv C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_DEVICE_PROPERTIES.tsv
+# Log file           : C:/FPGA/G2B_HW0_PRODUCT_R2_20260906/raw/JTAG_FINAL_VIVADO.log
+# Journal file       : C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\raw\JTAG_FINAL_VIVADO.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 6174 MB
+# Total Virtual      : 23202 MB
+# Available Virtual  : 11625 MB
+#-----------------------------------------------------------
+WARNING: [Runs 36-547] User Strategy 'Vivado Implementation Defaults' from file 'C:\Users\£ukasz Sudu³\AppData\Roaming/Xilinx/Vivado/2025.2/strategies/Vivado Implementation Defaults.Vivado Implementation 2025.psg' discarded because strategy with same name already parsed from 'C:/AMDDesignTools/2025.2/Vivado/strategies/VDI2025.psg'
+source {C:\FPGA\G2B_HW0_PRODUCT_R2_20260906\tools\r2_jtag_final_state_session.tcl}
+# if {$argc != 4} {
+#   puts stderr {usage: r6_jtag_stability_session.tcl SESSION_INDEX SESSION_CSV TARGET_PROPERTIES DEVICE_PROPERTIES}
+#   exit 2
+# }
+# set session_index [lindex $argv 0]
+# set session_csv [file normalize [lindex $argv 1]]
+# set target_properties_path [file normalize [lindex $argv 2]]
+# set device_properties_path [file normalize [lindex $argv 3]]
+# if {$session_index ne {3}} {
+#   puts stderr "invalid session index: $session_index"
+#   exit 2
+# }
+# source [file join [file dirname [info script]] select_r6_jtag_target.tcl]
+## namespace eval r6_target {
+##   variable canonical_id {Xilinx/80802026a98b01}
+##   variable canonical_suffix {/Xilinx/80802026a98b01}
+##   variable legacy_id {Digilent/210241768436}
+## 
+##   proc emit {key value} {
+##     puts "$key=$value"
+##     flush stdout
+##   }
+## 
+##   proc normalized_path {target_path} {
+##     return [string map {\\ /} [string trim $target_path]]
+##   }
+## 
+##   proc canonical_id_from_path {target_path} {
+##     variable canonical_id
+##     variable canonical_suffix
+##     set normalized [normalized_path $target_path]
+##     if {$normalized eq $canonical_id} {
+##       return $canonical_id
+##     }
+##     set suffix_length [string length $canonical_suffix]
+##     if {[string length $normalized] > $suffix_length &&
+##         [string range $normalized end-[expr {$suffix_length - 1}] end] eq $canonical_suffix} {
+##       return $canonical_id
+##     }
+##     return {}
+##   }
+## 
+##   proc classify_nonmatch {target_path} {
+##     variable canonical_id
+##     variable legacy_id
+##     set normalized [normalized_path $target_path]
+##     if {$normalized eq $legacy_id || [string match "*/$legacy_id" $normalized]} {
+##       return FAIL_OLD_TARGET_NOT_SELECTED
+##     }
+## 
+##     set expected_leaf [lindex [split $canonical_id /] end]
+##     set actual_components [split $normalized /]
+##     set actual_vendor [lindex $actual_components end-1]
+##     set actual_leaf [lindex $actual_components end]
+##     if {$actual_vendor eq {Xilinx} &&
+##         ([string first $actual_leaf $expected_leaf] == 0 ||
+##          [string first $expected_leaf $actual_leaf] == 0)} {
+##       return FAIL_NEAR_MATCH
+##     }
+##     return FAIL_CANONICAL_ID_MISMATCH
+##   }
+## 
+##   proc classify_target_paths {target_paths} {
+##     set total_count [llength $target_paths]
+##     if {$total_count == 0} {
+##       return [dict create status FAIL_NO_TARGET selected_path {} canonical_id {} total_count 0 exact_match_count 0]
+##     }
+## 
+##     set exact_matches {}
+##     foreach target_path $target_paths {
+##       if {[canonical_id_from_path $target_path] ne {}} {
+##         lappend exact_matches $target_path
+##       }
+##     }
+##     set exact_match_count [llength $exact_matches]
+## 
+##     if {$total_count != 1} {
+##       set status [expr {$exact_match_count > 1 ? {FAIL_DUPLICATE} : {FAIL_TARGET_COUNT_NOT_ONE}}]
+##       return [dict create status $status selected_path {} canonical_id {} total_count $total_count exact_match_count $exact_match_count]
+##     }
+## 
+##     set only_target [lindex $target_paths 0]
+##     set canonical [canonical_id_from_path $only_target]
+##     if {$canonical eq {}} {
+##       return [dict create status [classify_nonmatch $only_target] selected_path {} canonical_id {} total_count 1 exact_match_count 0]
+##     }
+## 
+##     return [dict create status PASS selected_path $only_target canonical_id $canonical total_count 1 exact_match_count 1]
+##   }
+## 
+##   proc safe_property_value {value} {
+##     return [string map [list "\r" {\r} "\n" {\n}] $value]
+##   }
+## 
+##   proc record_object_properties {label object} {
+##     set properties [lsort -dictionary [list_property $object]]
+##     emit ${label}_PROPERTY_COUNT [llength $properties]
+##     set property_index 0
+##     foreach property_name $properties {
+##       if {[catch {get_property $property_name $object} property_value]} {
+##         set property_value {UNREADABLE}
+##       }
+##       emit ${label}_PROPERTY_${property_index}_NAME $property_name
+##       emit ${label}_PROPERTY_${property_index}_VALUE [safe_property_value $property_value]
+##       incr property_index
+##     }
+##     return $properties
+##   }
+## 
+##   proc write_object_properties {object output_path} {
+##     set normalized_output [file normalize $output_path]
+##     if {[file exists $normalized_output]} {
+##       error "property evidence already exists: $normalized_output"
+##     }
+##     set handle [open $normalized_output {WRONLY CREAT EXCL}]
+##     set properties [lsort -dictionary [list_property $object]]
+##     puts $handle "property_name\tproperty_value"
+##     foreach property_name $properties {
+##       if {[catch {get_property $property_name $object} property_value]} {
+##         set property_value {UNREADABLE}
+##       }
+##       puts $handle "$property_name\t[safe_property_value $property_value]"
+##     }
+##     close $handle
+##     return [llength $properties]
+##   }
+## 
+##   proc select_live_target {} {
+##     set targets [get_hw_targets -quiet]
+##     set target_paths {}
+##     set target_index 0
+##     foreach target $targets {
+##       set target_path [string trim $target]
+##       lappend target_paths $target_path
+##       emit R6_ENUMERATED_TARGET_${target_index}_PATH $target_path
+##       record_object_properties R6_ENUMERATED_TARGET_${target_index} $target
+##       incr target_index
+##     }
+## 
+##     set classification [classify_target_paths $target_paths]
+##     emit R6_TOTAL_TARGET_COUNT [dict get $classification total_count]
+##     emit R6_EXACT_CANONICAL_MATCH_COUNT [dict get $classification exact_match_count]
+##     emit R6_TARGET_SELECTOR_STATUS [dict get $classification status]
+##     if {[dict get $classification status] ne {PASS}} {
+##       error "R6 target selector failed: [dict get $classification status]"
+##     }
+## 
+##     set selected_path [dict get $classification selected_path]
+##     set selected_objects [get_hw_targets -quiet $selected_path]
+##     if {[llength $selected_objects] != 1} {
+##       error "R6 selected target object count changed: [llength $selected_objects]"
+##     }
+##     emit R6_SELECTED_JTAG_CANONICAL_ID [dict get $classification canonical_id]
+##     emit R6_FULL_JTAG_TARGET_PATH $selected_path
+##     emit R6_TARGET_MATCH_MODE EXACT_CANONICAL_ID_OR_EXACT_PATH_SUFFIX
+##     emit R6_FALLBACK_TO_FIRST_TARGET NO
+##     emit R6_LEGACY_HS2_REQUIRED NO
+##     return [lindex $selected_objects 0]
+##   }
+## }
+# set expected_canonical_id {Xilinx/80802026a98b01}
+# set expected_full_target_path {localhost:3121/xilinx_tcf/Xilinx/80802026a98b01}
+# set expected_part {xc7a35t}
+# set expected_idcode {0362D093}
+# set sample_count 5
+# set inter_sample_delay_ms 500
+# proc emit {key value} {
+#   puts "$key=$value"
+#   flush stdout
+# }
+# proc utc_now {} {
+#   return [clock format [clock seconds] -format {%Y-%m-%dT%H:%M:%SZ} -gmt 1]
+# }
+# proc monotonic_ms {} {
+#   return [clock clicks -milliseconds]
+# }
+# proc normalized_idcode {dev} {
+#   set properties [list_property $dev]
+#   if {[lsearch -exact $properties IDCODE_HEX] >= 0} {
+#     set raw [get_property IDCODE_HEX $dev]
+#   } else {
+#     set raw [get_property IDCODE $dev]
+#   }
+#   if {[string match -nocase {0x*} $raw]} {
+#     set raw [string range $raw 2 end]
+#   }
+#   if {[string is integer -strict $raw]} {
+#     return [format %08X $raw]
+#   }
+#   return [string toupper $raw]
+# }
+# proc target_metadata {target_path} {
+#   set normalized [r6_target::normalized_path $target_path]
+#   set marker {/xilinx_tcf/}
+#   set marker_index [string first $marker $normalized]
+#   if {$marker_index < 1} {
+#     error "target path lacks exact transport marker: $normalized"
+#   }
+#   set server_endpoint [string range $normalized 0 [expr {$marker_index - 1}]]
+#   return [dict create server_endpoint $server_endpoint transport_class {xilinx_tcf}]
+# }
+# proc cleanup_hw {} {
+#   catch {close_hw_target}
+#   catch {disconnect_hw_server}
+#   catch {close_hw_manager}
+# }
+# set csv_handle {}
+# set rc 0
+# if {[catch {
+#   foreach output_path [list $session_csv $target_properties_path $device_properties_path] {
+#     if {[file exists $output_path]} {
+#       error "session evidence already exists: $output_path"
+#     }
+#   }
+# 
+#   set csv_handle [open $session_csv {WRONLY CREAT EXCL}]
+#   puts $csv_handle {session_index,sample_index,monotonic_ms,utc,target_count,device_count,target_path,canonical_id,server_endpoint,transport_class,part,idcode,done,refresh_result}
+#   flush $csv_handle
+# 
+#   emit R6_JTAG_SESSION_START_UTC [utc_now]
+#   emit R6_JTAG_SESSION_INDEX $session_index
+#   emit EXPECTED_SAMPLE_COUNT $sample_count
+#   emit INTER_SAMPLE_DELAY_MS $inter_sample_delay_ms
+#   emit R6_LEGACY_HS2_REQUIRED NO
+#   emit R6_JTAG_FREQUENCY_CHANGED NO
+# 
+#   open_hw_manager
+#   connect_hw_server -url localhost:3121
+# 
+#   set selected_target [r6_target::select_live_target]
+#   set initial_target_path [string trim $selected_target]
+#   if {$initial_target_path ne $expected_full_target_path} {
+#     error "initial full target path mismatch: $initial_target_path"
+#   }
+#   set initial_canonical [r6_target::canonical_id_from_path $initial_target_path]
+#   if {$initial_canonical ne $expected_canonical_id} {
+#     error "initial canonical target mismatch: $initial_canonical"
+#   }
+#   set metadata [target_metadata $initial_target_path]
+#   set server_endpoint [dict get $metadata server_endpoint]
+#   set transport_class [dict get $metadata transport_class]
+#   emit R6_JTAG_SERVER_ENDPOINT $server_endpoint
+#   emit R6_JTAG_TRANSPORT_CLASS $transport_class
+# 
+#   r6_target::write_object_properties $selected_target $target_properties_path
+#   current_hw_target $selected_target
+#   open_hw_target
+# 
+#   set initial_devices [get_hw_devices -quiet]
+#   emit INITIAL_DEVICE_COUNT [llength $initial_devices]
+#   if {[llength $initial_devices] != 1} {
+#     error "expected exactly one hardware device; found [llength $initial_devices]"
+#   }
+# 
+#   set dev [lindex $initial_devices 0]
+#   current_hw_device $dev
+#   r6_target::write_object_properties $dev $device_properties_path
+#   set device_properties [list_property $dev]
+#   if {[lsearch -exact $device_properties REGISTER.IR.BIT5_DONE] < 0} {
+#     error {REGISTER.IR.BIT5_DONE property is unavailable}
+#   }
+# 
+#   for {set sample_index 1} {$sample_index <= $sample_count} {incr sample_index} {
+#     refresh_hw_device $dev
+#     set sample_monotonic_ms [monotonic_ms]
+#     set sample_utc [utc_now]
+# 
+#     set sample_targets [get_hw_targets -quiet]
+#     set classification [r6_target::classify_target_paths $sample_targets]
+#     set target_count [dict get $classification total_count]
+#     if {[dict get $classification status] ne {PASS}} {
+#       error "sample $sample_index selector status: [dict get $classification status]"
+#     }
+#     set sample_target_path [dict get $classification selected_path]
+#     set sample_canonical [dict get $classification canonical_id]
+#     if {$sample_target_path ne $initial_target_path ||
+#         $sample_target_path ne $expected_full_target_path} {
+#       error "sample $sample_index full target path changed: $sample_target_path"
+#     }
+# 
+#     set sample_devices [get_hw_devices -quiet]
+#     set device_count [llength $sample_devices]
+#     if {$device_count != 1} {
+#       error "sample $sample_index device count is $device_count, expected 1"
+#     }
+#     set sample_dev [lindex $sample_devices 0]
+#     set part [get_property PART $sample_dev]
+#     set idcode [normalized_idcode $sample_dev]
+#     if {![string equal -nocase $part $expected_part] ||
+#         ![string equal -nocase $idcode $expected_idcode]} {
+#       error "sample $sample_index device identity mismatch: part=$part idcode=$idcode"
+#     }
+# 
+#     set sample_properties [list_property $sample_dev]
+#     if {[lsearch -exact $sample_properties REGISTER.IR.BIT5_DONE] < 0} {
+#       error "sample $sample_index DONE property is unavailable"
+#     }
+#     set done [string trim [get_property REGISTER.IR.BIT5_DONE $sample_dev]]
+#     if {$done ni {0 1}} {
+#       error "sample $sample_index DONE value is unreadable: $done"
+#     }
+# 
+#     puts $csv_handle "$session_index,$sample_index,$sample_monotonic_ms,$sample_utc,$target_count,$device_count,$sample_target_path,$sample_canonical,$server_endpoint,$transport_class,$part,$idcode,$done,PASS"
+#     flush $csv_handle
+# 
+#     emit SAMPLE_${sample_index}_MONOTONIC_MS $sample_monotonic_ms
+#     emit SAMPLE_${sample_index}_TARGET_COUNT $target_count
+#     emit SAMPLE_${sample_index}_DEVICE_COUNT $device_count
+#     emit SAMPLE_${sample_index}_TARGET_PATH $sample_target_path
+#     emit SAMPLE_${sample_index}_CANONICAL_ID $sample_canonical
+#     emit SAMPLE_${sample_index}_PART $part
+#     emit SAMPLE_${sample_index}_IDCODE $idcode
+#     emit SAMPLE_${sample_index}_DONE $done
+#     emit SAMPLE_${sample_index}_REFRESH_RESULT PASS
+# 
+#     if {$sample_index < $sample_count} {
+#       after $inter_sample_delay_ms
+#     }
+#   }
+# 
+#   close $csv_handle
+#   set csv_handle {}
+#   emit SESSION_SAMPLE_COUNT $sample_count
+#   emit SESSION_GATE PASS
+#   emit R6_JTAG_SESSION_END_UTC [utc_now]
+# } err opts]} {
+#   puts stderr "R6_JTAG_SESSION_ERROR=$err"
+#   puts stderr "R6_JTAG_SESSION_ERROR_OPTIONS=$opts"
+#   flush stderr
+#   emit SESSION_GATE FAIL
+#   set rc 1
+# }
+R6_JTAG_SESSION_START_UTC=2026-09-06T07:29:55Z
+R6_JTAG_SESSION_INDEX=3
+EXPECTED_SAMPLE_COUNT=5
+INTER_SAMPLE_DELAY_MS=500
+R6_LEGACY_HS2_REQUIRED=NO
+R6_JTAG_FREQUENCY_CHANGED=NO
+open_hw_manager: Time (s): cpu = 00:00:22 ; elapsed = 00:00:15 . Memory (MB): peak = 538.262 ; gain = 224.781
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:0
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2025.2.0
+  ****** Build date   : Nov 14 2025-00:16:52
+    **** Build number : 2025.2.1763075812
+      ** Copyright 2017-2022 Xilinx, Inc. All Rights Reserved.
+      ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:10 . Memory (MB): peak = 543.199 ; gain = 4.938
+R6_ENUMERATED_TARGET_0_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+R6_ENUMERATED_TARGET_0_PROPERTY_COUNT=13
+R6_ENUMERATED_TARGET_0_PROPERTY_0_NAME=CLASS
+R6_ENUMERATED_TARGET_0_PROPERTY_0_VALUE=hw_target
+R6_ENUMERATED_TARGET_0_PROPERTY_1_NAME=DEVICE_COUNT
+R6_ENUMERATED_TARGET_0_PROPERTY_1_VALUE=0
+R6_ENUMERATED_TARGET_0_PROPERTY_2_NAME=HW_JTAG
+R6_ENUMERATED_TARGET_0_PROPERTY_2_VALUE=
+R6_ENUMERATED_TARGET_0_PROPERTY_3_NAME=IS_OPENED
+R6_ENUMERATED_TARGET_0_PROPERTY_3_VALUE=0
+R6_ENUMERATED_TARGET_0_PROPERTY_4_NAME=IS_STAPL
+R6_ENUMERATED_TARGET_0_PROPERTY_4_VALUE=0
+R6_ENUMERATED_TARGET_0_PROPERTY_5_NAME=IS_SVF
+R6_ENUMERATED_TARGET_0_PROPERTY_5_VALUE=0
+R6_ENUMERATED_TARGET_0_PROPERTY_6_NAME=MAX_DEVICE_COUNT
+R6_ENUMERATED_TARGET_0_PROPERTY_6_VALUE=32
+R6_ENUMERATED_TARGET_0_PROPERTY_7_NAME=NAME
+R6_ENUMERATED_TARGET_0_PROPERTY_7_VALUE=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+R6_ENUMERATED_TARGET_0_PROPERTY_8_NAME=PARAM.DEVICE
+R6_ENUMERATED_TARGET_0_PROPERTY_8_VALUE=jsn-DLC10-80802026a98b01
+R6_ENUMERATED_TARGET_0_PROPERTY_9_NAME=PARAM.FREQUENCY
+R6_ENUMERATED_TARGET_0_PROPERTY_9_VALUE=6000000
+R6_ENUMERATED_TARGET_0_PROPERTY_10_NAME=PARAM.TYPE
+R6_ENUMERATED_TARGET_0_PROPERTY_10_VALUE=xilinx_tcf
+R6_ENUMERATED_TARGET_0_PROPERTY_11_NAME=TID
+R6_ENUMERATED_TARGET_0_PROPERTY_11_VALUE=jsn-DLC10-80802026a98b01
+R6_ENUMERATED_TARGET_0_PROPERTY_12_NAME=UID
+R6_ENUMERATED_TARGET_0_PROPERTY_12_VALUE=Xilinx/80802026a98b01
+R6_TOTAL_TARGET_COUNT=1
+R6_EXACT_CANONICAL_MATCH_COUNT=1
+R6_TARGET_SELECTOR_STATUS=PASS
+R6_SELECTED_JTAG_CANONICAL_ID=Xilinx/80802026a98b01
+R6_FULL_JTAG_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+R6_TARGET_MATCH_MODE=EXACT_CANONICAL_ID_OR_EXACT_PATH_SUFFIX
+R6_FALLBACK_TO_FIRST_TARGET=NO
+R6_LEGACY_HS2_REQUIRED=NO
+R6_JTAG_SERVER_ENDPOINT=localhost:3121
+R6_JTAG_TRANSPORT_CLASS=xilinx_tcf
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+INITIAL_DEVICE_COUNT=1
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+SAMPLE_1_MONOTONIC_MS=1788679821832
+SAMPLE_1_TARGET_COUNT=1
+SAMPLE_1_DEVICE_COUNT=1
+SAMPLE_1_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+SAMPLE_1_CANONICAL_ID=Xilinx/80802026a98b01
+SAMPLE_1_PART=xc7a35t
+SAMPLE_1_IDCODE=0362D093
+SAMPLE_1_DONE=1
+SAMPLE_1_REFRESH_RESULT=PASS
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+SAMPLE_2_MONOTONIC_MS=1788679822637
+SAMPLE_2_TARGET_COUNT=1
+SAMPLE_2_DEVICE_COUNT=1
+SAMPLE_2_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+SAMPLE_2_CANONICAL_ID=Xilinx/80802026a98b01
+SAMPLE_2_PART=xc7a35t
+SAMPLE_2_IDCODE=0362D093
+SAMPLE_2_DONE=1
+SAMPLE_2_REFRESH_RESULT=PASS
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+SAMPLE_3_MONOTONIC_MS=1788679823451
+SAMPLE_3_TARGET_COUNT=1
+SAMPLE_3_DEVICE_COUNT=1
+SAMPLE_3_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+SAMPLE_3_CANONICAL_ID=Xilinx/80802026a98b01
+SAMPLE_3_PART=xc7a35t
+SAMPLE_3_IDCODE=0362D093
+SAMPLE_3_DONE=1
+SAMPLE_3_REFRESH_RESULT=PASS
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+SAMPLE_4_MONOTONIC_MS=1788679824262
+SAMPLE_4_TARGET_COUNT=1
+SAMPLE_4_DEVICE_COUNT=1
+SAMPLE_4_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+SAMPLE_4_CANONICAL_ID=Xilinx/80802026a98b01
+SAMPLE_4_PART=xc7a35t
+SAMPLE_4_IDCODE=0362D093
+SAMPLE_4_DONE=1
+SAMPLE_4_REFRESH_RESULT=PASS
+INFO: [Labtools 27-1434] Device xc7a35t (JTAG device index = 0) is programmed with a design that has no supported soft debug core(s) in it.
+SAMPLE_5_MONOTONIC_MS=1788679825071
+SAMPLE_5_TARGET_COUNT=1
+SAMPLE_5_DEVICE_COUNT=1
+SAMPLE_5_TARGET_PATH=localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+SAMPLE_5_CANONICAL_ID=Xilinx/80802026a98b01
+SAMPLE_5_PART=xc7a35t
+SAMPLE_5_IDCODE=0362D093
+SAMPLE_5_DONE=1
+SAMPLE_5_REFRESH_RESULT=PASS
+SESSION_SAMPLE_COUNT=5
+SESSION_GATE=PASS
+R6_JTAG_SESSION_END_UTC=2026-09-06T07:30:25Z
+# if {$csv_handle ne {}} {
+#   catch {close $csv_handle}
+# }
+# cleanup_hw
+INFO: [Labtoolstcl 44-464] Closing hw_target localhost:3121/xilinx_tcf/Xilinx/80802026a98b01
+# emit FPGA_PROGRAM_OPERATIONS_THIS_SESSION 0
+FPGA_PROGRAM_OPERATIONS_THIS_SESSION=0
+# exit $rc
+INFO: [Common 17-206] Exiting Vivado at Sun Sep  6 09:30:25 2026...

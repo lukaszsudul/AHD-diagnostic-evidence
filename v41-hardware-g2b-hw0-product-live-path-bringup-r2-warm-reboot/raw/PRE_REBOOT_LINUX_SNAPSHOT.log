@@ -1,0 +1,1910 @@
+UTC_START=2026-09-06T06:47:13.2692374Z
+UTC_END=2026-09-06T06:47:15.3373083Z
+EVIDENCE_KIND=R2_PRE_REBOOT_LINUX_SNAPSHOT
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK=G2B-HW0-PRODUCT-R2
+PHASE=PRE_REBOOT_LINUX_SNAPSHOT
+UTC=2026-09-06T06:47:13Z
+HOSTNAME=VCDE-DUT-1
+USER=vcdeagent1
+UID=1000
+MACHINE_ID=0e90f50d9465492b80258da5658446f8
+BOOT_ID=37131b8d-0e38-4b4e-b77a-b3bda55b4e97
+UPTIME_SECONDS=39707.16
+KERNEL=7.0.0-29-generic
+Linux VCDE-DUT-1 7.0.0-29-generic #29-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:52:35 UTC 2026 x86_64 GNU/Linux
+=== CONTROLLER_EXPECTED_STATE ===
+CONTROLLER_LOCK_EXPECTED=HELD
+MAXIMUM_WARM_REBOOTS=1
+WARM_REBOOT_COMMANDS_ISSUED=0
+SRAM_PROGRAMS_R2=0
+FLASH_OPERATIONS_R2=0
+POWER_CYCLES_R2=0
+=== LINUX_LOCK ===
+LINUX_LOCK=HELD
+{
+  "task_id": "G2B-HW0-PRODUCT-R2",
+  "candidate_bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+  "controller_identity": "NBLSUDUL",
+  "linux_dut_identity": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+  "hostname": "VCDE-DUT-1",
+  "pre_reboot_boot_id": "37131b8d-0e38-4b4e-b77a-b3bda55b4e97",
+  "task_owner_session": "Codex task 01a07308-25ee-7e23-9402-5c9b49a6c7bc / root agent",
+  "lock_phase": "PRE_REBOOT",
+  "lock_timestamp_utc": "2026-09-06T06:45:02.576295Z",
+  "maximum_warm_reboots": 1,
+  "warm_reboots_executed": 0,
+  "lock_release_state": "HELD"
+}
+=== REBOOT_INHIBITORS ===
+WHO            UID   USER        PID  COMM           WHAT                                                     WHY                                         MODE
+ModemManager   0     root        1445 ModemManager   sleep                                                    ModemManager needs to reset devices         delay
+NetworkManager 0     root        1409 NetworkManager sleep                                                    NetworkManager needs to turn off networks   delay
+Realtime Kit   0     root        2029 rtkit-daemon   sleep                                                    Demote realtime scheduling and stop canary. delay
+UPower         0     root        2309 upowerd        sleep                                                    Pause device polling                        delay
+GNOME Shell    60578 gdm-greeter 2178 gnome-shell    sleep                                                    GNOME needs to save screen time data        delay
+gdm-greeter    60578 gdm-greeter 2335 gsd-media-keys handle-power-key:handle-suspend-key:handle-hibernate-key GNOME handling keypresses                   block
+gdm-greeter    60578 gdm-greeter 2335 gsd-media-keys sleep                                                    GNOME handling keypresses                   delay
+gdm-greeter    60578 gdm-greeter 2336 gsd-power      sleep                                                    GNOME needs to lock the screen              delay
+
+8 inhibitors listed.
+=== BOOT_HISTORY ===
+bash: line 38: last: command not found
+IDX BOOT ID                          FIRST ENTRY                  LAST ENTRY
+-98 845d5e06bcd148cda4ba329443e49646 Mon 2026-08-17 20:26:07 CEST Mon 2026-08-17 20:28:04 CEST
+-97 ed17ded27a984baf9c598f25a37189d0 Mon 2026-08-17 21:54:21 CEST Mon 2026-08-17 22:03:11 CEST
+-96 18d1e92d07e14de889cc84ad9be15365 Mon 2026-08-17 22:05:16 CEST Mon 2026-08-17 20:13:08 CEST
+-95 92ac948618e344ca899cef7558cab85b Mon 2026-08-17 20:15:02 CEST Mon 2026-08-17 20:57:20 CEST
+-94 7219ff7a2afa4a89a533fcb49541e559 Mon 2026-08-17 20:57:36 CEST Mon 2026-08-17 22:40:00 CEST
+-93 54894fafb79b465faeb5f12362ccc81e Mon 2026-08-17 22:54:05 CEST Mon 2026-08-17 23:26:13 CEST
+-92 3bfb14b72dac4483be88b47df14ab753 Mon 2026-08-17 23:28:35 CEST Mon 2026-08-17 23:36:10 CEST
+-91 6209a89adae542cfbafc3696eb121a21 Mon 2026-08-17 23:36:35 CEST Tue 2026-08-18 00:00:38 CEST
+-90 d42b9e2eac12449a9a9000f679060f67 Tue 2026-08-18 00:05:18 CEST Tue 2026-08-18 00:11:17 CEST
+-89 c744ea4fbf9e49a9b95d6b3d36a13762 Tue 2026-08-18 00:11:42 CEST Tue 2026-08-18 00:20:43 CEST
+-88 364f3397c8c342caa6fbb543d3a5b237 Tue 2026-08-18 00:22:47 CEST Tue 2026-08-18 00:28:23 CEST
+-87 74641d2ac3cb4fecb888015131becd3f Tue 2026-08-18 00:28:48 CEST Tue 2026-08-18 00:42:10 CEST
+-86 9aeb59cf4c5644da8c70ed6420d9de31 Tue 2026-08-18 00:42:35 CEST Tue 2026-08-18 09:16:00 CEST
+-85 b2905770af794b68b90a3980c3c16ab5 Tue 2026-08-18 09:16:25 CEST Tue 2026-08-18 13:02:02 CEST
+-84 99f8fd49dc5a4ef993ce024d3c81fbab Tue 2026-08-18 13:02:27 CEST Tue 2026-08-18 13:27:51 CEST
+-83 b0bac5b3aa2445bcbcfd014da3d35826 Tue 2026-08-18 13:28:16 CEST Tue 2026-08-18 15:00:01 CEST
+-82 cdc49b707c9f48769fd575144b7a3b58 Tue 2026-08-18 15:05:19 CEST Tue 2026-08-18 15:25:58 CEST
+-81 4d1b92c2b5be43619e1c546509bbb2df Tue 2026-08-18 15:26:22 CEST Tue 2026-08-18 23:00:21 CEST
+-80 fbb23d86fecd40ed8ac1df3cbcf6185b Tue 2026-08-18 23:00:46 CEST Tue 2026-08-18 23:26:36 CEST
+-79 6ef0e57789124becb3c4ed9404446b59 Tue 2026-08-18 23:27:01 CEST Wed 2026-08-19 12:28:01 CEST
+-78 b03be26c7f2e48e4b663588973b9d0e7 Wed 2026-08-19 12:28:26 CEST Wed 2026-08-19 13:15:34 CEST
+-77 80d57c1d33e54f4eb814eb5c640fe398 Wed 2026-08-19 13:15:58 CEST Wed 2026-08-19 16:10:25 CEST
+-76 9bc88f45bc654d82b944e74a52e9426e Wed 2026-08-19 16:10:50 CEST Wed 2026-08-19 20:22:40 CEST
+-75 b636cf2783734ca08819ef2b8a722822 Wed 2026-08-19 20:23:06 CEST Thu 2026-08-20 14:53:49 CEST
+-74 474a99f8a6c7433082b6fe6dab644f82 Thu 2026-08-20 14:54:14 CEST Thu 2026-08-20 15:04:55 CEST
+-73 8607adb405c049758a73a6378b90b496 Thu 2026-08-20 15:05:20 CEST Thu 2026-08-20 15:13:43 CEST
+-72 1f7bf99746b64b0eb21806569fb2f1ea Thu 2026-08-20 15:14:08 CEST Thu 2026-08-20 15:24:31 CEST
+-71 1e4d2733a37b45219d70f9a39aa5e078 Thu 2026-08-20 15:24:56 CEST Thu 2026-08-20 19:25:13 CEST
+-70 eee3d96445ae4da086942737902956cb Thu 2026-08-20 19:25:38 CEST Thu 2026-08-20 19:25:56 CEST
+-69 20ce3f8563d74d02a3ad9c87de8ad794 Thu 2026-08-20 19:26:21 CEST Fri 2026-08-21 01:05:29 CEST
+-68 39b94b36cd8b43f0b84376991f23ebd5 Fri 2026-08-21 01:07:39 CEST Fri 2026-08-21 13:05:45 CEST
+-67 644279683d604dfeacee451a2ae75c6a Fri 2026-08-21 13:06:10 CEST Fri 2026-08-21 13:16:24 CEST
+-66 2a59eb4187ae45f9b083f8f01e7373bc Fri 2026-08-21 13:16:49 CEST Fri 2026-08-21 13:25:07 CEST
+-65 7f8db2e512aa4421b44a28e72fff483f Fri 2026-08-21 13:25:32 CEST Sat 2026-08-22 00:57:51 CEST
+-64 b9d58c87657445968ff9b61052ba26dc Sat 2026-08-22 00:58:16 CEST Sat 2026-08-22 09:50:39 CEST
+-63 2051bd6b28c445708ed9f127a7002bae Sat 2026-08-22 09:51:04 CEST Sat 2026-08-22 11:48:13 CEST
+-62 44edad94c398438d92d1c9c7966bec79 Sat 2026-08-22 11:48:38 CEST Sat 2026-08-22 11:54:01 CEST
+-61 9c1e46abca514b74bb708b005642f6d3 Sat 2026-08-22 11:54:27 CEST Sat 2026-08-22 11:59:32 CEST
+-60 f86e72b5a51643dab320841b715bb926 Sat 2026-08-22 11:59:58 CEST Sat 2026-08-22 13:43:29 CEST
+-59 2350417a408c431eb59da952b2c877ee Sat 2026-08-22 13:43:53 CEST Sat 2026-08-22 14:09:13 CEST
+-58 a2b8dff1e2964b32a230fe6d8a2caa49 Sat 2026-08-22 14:09:37 CEST Sun 2026-08-23 21:50:00 CEST
+-57 e4701179b370472580469891f2fc220a Sun 2026-08-23 21:52:28 CEST Sun 2026-08-23 21:52:34 CEST
+-56 dd140158f8dc46eb9a0527bb532713aa Sun 2026-08-23 21:54:32 CEST Mon 2026-08-24 01:04:47 CEST
+-55 093fec434e324c5a87cccbaa389662a1 Mon 2026-08-24 01:05:16 CEST Mon 2026-08-24 01:17:16 CEST
+-54 c6cf85f00a064d2f86565bca7cbb19a3 Mon 2026-08-24 01:17:41 CEST Mon 2026-08-24 01:26:38 CEST
+-53 e2a2517ac2754ea9bf1183c0db94111e Mon 2026-08-24 01:27:03 CEST Tue 2026-08-25 16:02:14 CEST
+-52 468cb859d9e144d0be362cd32fb1837d Tue 2026-08-25 16:02:39 CEST Tue 2026-08-25 16:20:03 CEST
+-51 f499234e2f8b48408df5576aae813c3f Tue 2026-08-25 16:20:28 CEST Tue 2026-08-25 16:44:01 CEST
+-50 c525d4a99ccd4fc5ba1f454aa17e0d9b Tue 2026-08-25 16:44:26 CEST Tue 2026-08-25 16:56:12 CEST
+-49 b5f9d759e72c4293b0c0f7225f4bb076 Tue 2026-08-25 16:56:37 CEST Tue 2026-08-25 17:09:19 CEST
+-48 00da61f0844646418938b32c3deb0b74 Tue 2026-08-25 17:09:44 CEST Tue 2026-08-25 17:22:35 CEST
+-47 bd02a516d90c44f180978f313e439e81 Tue 2026-08-25 17:23:00 CEST Tue 2026-08-25 17:33:38 CEST
+-46 3173fe9aac634a5bad3ab781e83e73f5 Tue 2026-08-25 17:34:03 CEST Thu 2026-08-27 10:04:23 CEST
+-45 f643f635d74c493396508d08edb48ab4 Thu 2026-08-27 10:05:04 CEST Thu 2026-08-27 10:22:14 CEST
+-44 bdc373e1dc764ce29c28068e717b66c2 Thu 2026-08-27 10:22:55 CEST Thu 2026-08-27 10:29:31 CEST
+-43 beea15f333d74af9b393d8444012177b Thu 2026-08-27 10:30:13 CEST Fri 2026-08-28 09:33:16 CEST
+-42 86ae932ed5e34aa3b0bc89759561f6a5 Fri 2026-08-28 09:36:59 CEST Fri 2026-08-28 09:40:04 CEST
+-41 c53a4c284120452789e21108cfaaa2f3 Fri 2026-08-28 09:47:47 CEST Fri 2026-08-28 13:33:00 CEST
+-40 41176f615c0445bbb836bc85f612c87d Fri 2026-08-28 13:33:25 CEST Fri 2026-08-28 14:03:12 CEST
+-39 c2764ac1bf914025bb6cff91c1b613ee Fri 2026-08-28 14:03:36 CEST Fri 2026-08-28 14:20:18 CEST
+-38 edbaacfbc92144b0b883d25b5acfc21f Fri 2026-08-28 14:20:43 CEST Fri 2026-08-28 14:41:13 CEST
+-37 f9579d81131a499ca8b727a0d45d943a Fri 2026-08-28 14:41:37 CEST Fri 2026-08-28 15:09:14 CEST
+-36 5470734a050c453998dd9e8f592f5053 Fri 2026-08-28 15:09:39 CEST Fri 2026-08-28 15:54:32 CEST
+-35 c75e10c6ceef4fea8aa0c1bbdf839bed Fri 2026-08-28 15:54:58 CEST Fri 2026-08-28 16:08:31 CEST
+-34 ca4445a97e264ee5b126b529279352a5 Fri 2026-08-28 16:08:56 CEST Fri 2026-08-28 16:31:44 CEST
+-33 e1260e4e7caa455f82e3a8c4445c976d Fri 2026-08-28 16:32:09 CEST Fri 2026-08-28 16:50:36 CEST
+-32 39d5bb88875d44a1922800b69953d931 Fri 2026-08-28 16:51:01 CEST Fri 2026-08-28 17:06:26 CEST
+-31 387df38429f44c09874ba9c8b6a18adc Fri 2026-08-28 17:06:52 CEST Fri 2026-08-28 17:20:19 CEST
+-30 133e8f328a6246b99d0327335ab998bb Fri 2026-08-28 17:20:44 CEST Fri 2026-08-28 17:37:28 CEST
+-29 0d1ddd572c96416faf2928b311a4cdbd Fri 2026-08-28 17:37:52 CEST Fri 2026-08-28 17:51:28 CEST
+-28 978d072fd7a6439bb82e2115d533f7a3 Fri 2026-08-28 17:51:53 CEST Fri 2026-08-28 18:09:47 CEST
+-27 68b2be869c7a4ff39ac25b2848e7808a Fri 2026-08-28 18:10:11 CEST Fri 2026-08-28 18:24:17 CEST
+-26 ab61981198404795bb1b6411542015a5 Fri 2026-08-28 18:24:41 CEST Fri 2026-08-28 18:40:39 CEST
+-25 e973858e0bc94822a857343cd930f9a2 Fri 2026-08-28 18:41:03 CEST Fri 2026-08-28 18:57:23 CEST
+-24 c0adf34883ff4f679f7c07c588253a30 Fri 2026-08-28 18:57:47 CEST Fri 2026-08-28 19:17:54 CEST
+-23 aa4bdc0810ce45139ec5d4907e61a362 Fri 2026-08-28 19:18:18 CEST Fri 2026-08-28 19:49:06 CEST
+-22 e4c5bb4ff0c24fd9b95e0beb84768581 Fri 2026-08-28 19:49:30 CEST Fri 2026-08-28 20:05:52 CEST
+-21 471fed49f2ef46938105b61814d6e100 Fri 2026-08-28 20:06:16 CEST Fri 2026-08-28 20:22:52 CEST
+-20 d12b3a07ea254769829388ee8fc92ef2 Fri 2026-08-28 20:23:16 CEST Sat 2026-08-29 14:22:08 CEST
+-19 64a892f93f6c4c4c9c3b26119eee9c2a Sat 2026-08-29 14:22:32 CEST Sun 2026-08-30 20:56:36 CEST
+-18 6147a01a2abe4473a97f5a9b16b4d2c8 Sun 2026-08-30 20:56:58 CEST Sun 2026-08-30 21:16:19 CEST
+-17 c1462b73169c4bb3a553bd06a4855e20 Sun 2026-08-30 21:16:42 CEST Sun 2026-08-30 22:38:43 CEST
+-16 1768b1104e2d4e2b924bc4bdb78ebda3 Sun 2026-08-30 22:39:05 CEST Mon 2026-08-31 09:00:52 CEST
+-15 ac6a1c7b200641da964e7feffeeb89bc Mon 2026-08-31 09:06:47 CEST Mon 2026-08-31 13:01:19 CEST
+-14 e5cb22fd8a2e43eaaf16c8365ab2dfc5 Mon 2026-08-31 13:01:41 CEST Mon 2026-08-31 15:00:39 CEST
+-13 b5add4eba661413090f3388a8b1e3a42 Mon 2026-08-31 15:06:40 CEST Mon 2026-08-31 15:10:02 CEST
+-12 4b19708ee4be42cdb673c60503af81ec Mon 2026-08-31 18:21:06 CEST Mon 2026-08-31 20:09:48 CEST
+-11 6a1c3fcd48a24c5f8b97bf55fc95d5e5 Mon 2026-08-31 20:10:10 CEST Tue 2026-09-01 01:46:39 CEST
+-10 a6445268203248eeb394be5bcc59ffdb Tue 2026-09-01 01:47:01 CEST Tue 2026-09-01 09:00:17 CEST
+ -9 7199366006f04e528bf54a955825e87b Tue 2026-09-01 12:55:43 CEST Tue 2026-09-01 16:36:54 CEST
+ -8 35e46f6234c14f6da6fd56b022a1a772 Tue 2026-09-01 16:37:16 CEST Tue 2026-09-01 19:44:45 CEST
+ -7 8bda37453436493da9eca3e20abb18ba Tue 2026-09-01 19:49:00 CEST Tue 2026-09-01 20:22:46 CEST
+ -6 111b6d20ccf44ed49a36d9d62a6594df Tue 2026-09-01 20:23:08 CEST Tue 2026-09-01 23:37:31 CEST
+ -5 4630222566914537ac8390c8b41db82f Wed 2026-09-02 08:39:01 CEST Thu 2026-09-03 17:00:00 CEST
+ -4 eef2a95b4d2a4567bd2d8a9c1b32b887 Thu 2026-09-03 17:13:02 CEST Fri 2026-09-04 10:10:19 CEST
+ -3 3a38ea4e4b89426babdf27c62dcd0357 Fri 2026-09-04 10:10:40 CEST Sat 2026-09-05 21:26:45 CEST
+ -2 e922f7d7a9ce4419909b016bb746e1ac Sat 2026-09-05 21:31:14 CEST Sat 2026-09-05 21:31:43 CEST
+ -1 3bbb3f48cc55423b8006e955ddd12f31 Sat 2026-09-05 21:34:00 CEST Sat 2026-09-05 21:42:00 CEST
+  0 37131b8d0e384b4eb77ab3bda55b4e97 Sat 2026-09-05 21:45:27 CEST Sun 2026-09-06 08:47:14 CEST
+=== PCIE_TREE ===
+-[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+           +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+           +-01.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+           +-02.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+           +-02.1-[01-09]----00.0-[02-09]--+-00.0-[03]--
+           |                               +-08.0-[04]--
+           |                               +-09.0-[05]--
+           |                               +-0a.0-[06]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168]
+           |                               +-0b.0-[07]--
+           |                               +-0c.0-[08]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7]
+           |                               \-0d.0-[09]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6]
+           +-03.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+           +-04.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+           +-08.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+           +-08.1-[0a]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf]
+           |            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640]
+           |            +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device [1022:15b9]
+           |            +-00.4  Advanced Micro Devices, Inc. [AMD] Device [1022:15ba]
+           |            \-00.6  Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3]
+           +-08.2-[0b]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+           |            \-00.1  Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+           +-08.3-[0c]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+           |            \-00.4  Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b]
+           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e]
+           +-18.0  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+           +-18.1  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+           +-18.2  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+           +-18.3  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+           +-18.4  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+           +-18.5  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+           +-18.6  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+           \-18.7  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+=== PCIE_NUMERIC ===
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+0000:01:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01)
+0000:02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:02:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:06:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+0000:08:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01)
+0000:09:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01)
+0000:0a:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev 05)
+0000:0a:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640]
+0000:0a:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15b9]
+0000:0a:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15ba]
+0000:0a:00.6 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3]
+0000:0b:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0b:00.1 Signal processing controller [1180]: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+0000:0c:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0c:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+0000:0c:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+=== PCIE_DRIVER_MAP ===
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: piix4_smbus
+	Kernel modules: i2c_piix4, sp5100_tco
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+	Kernel driver in use: k10temp
+	Kernel modules: k10temp
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+0000:01:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:02:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+0000:06:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+	DeviceName: Realtek RTL8111H (1G LAN)
+	Subsystem: ASUSTeK Computer Inc. Onboard RTL8111H Ethernet [1043:8677]
+	Kernel driver in use: r8169
+	Kernel modules: r8169
+0000:08:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:1142]
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+0000:09:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01)
+	Subsystem: ASMedia Technology Inc. Device [1b21:1062]
+	Kernel driver in use: ahci
+	Kernel modules: ahci
+0000:0a:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev 05)
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: amdgpu
+	Kernel modules: amdgpu
+0000:0a:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: snd_hda_intel
+	Kernel modules: snd_hda_intel
+0000:0a:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: ccp
+	Kernel modules: ccp
+0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15b9]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+0000:0a:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15ba]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+0000:0a:00.6 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3]
+	DeviceName: Realtek ALC897 Audio
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8803]
+	Kernel driver in use: snd_hda_intel
+	Kernel modules: snd_hda_intel
+0000:0b:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0b:00.1 Signal processing controller [1180]: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+	Kernel driver in use: amdxdna
+	Kernel modules: amdxdna
+0000:0c:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0c:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+0000:0c:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+=== PCIE_VERBOSE ===
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O- Mem- BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0
+	Interrupt: pin A routed to IRQ 26
+	Capabilities: <access denied>
+
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 0
+
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 1
+
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin ? routed to IRQ 27
+	IOMMU group: 2
+	Bus: primary=00, secondary=01, subordinate=09, sec-latency=0
+	I/O behind bridge: f000-ffff [size=4K] [16-bit]
+	Memory behind bridge: f6a00000-f6cfffff [size=3M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 3
+
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 4
+
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 5
+
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 28
+	IOMMU group: 6
+	Bus: primary=00, secondary=0a, subordinate=0a, sec-latency=0
+	I/O behind bridge: e000-efff [size=4K] [16-bit]
+	Memory behind bridge: f6400000-f69fffff [size=6M] [32-bit]
+	Prefetchable memory behind bridge: fce0000000-fcefffffff [size=256M] [32-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 29
+	IOMMU group: 7
+	Bus: primary=00, secondary=0b, subordinate=0b, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: f6f00000-f6ffffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: fcf0000000-fcf00fffff [size=1M] [32-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 30
+	IOMMU group: 8
+	Bus: primary=00, secondary=0c, subordinate=0c, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: f6d00000-f6efffff [size=2M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap- 66MHz+ UDF- FastB2B- ParErr- DEVSEL=medium >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 9
+	Kernel driver in use: piix4_smbus
+	Kernel modules: i2c_piix4, sp5100_tco
+
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle+ MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz+ UDF- FastB2B- ParErr- DEVSEL=medium >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0
+	IOMMU group: 9
+
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+	Kernel driver in use: k10temp
+	Kernel modules: k10temp
+
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 10
+
+0000:01:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 24
+	IOMMU group: 11
+	Bus: primary=01, secondary=02, subordinate=09, sec-latency=0
+	I/O behind bridge: f000-ffff [size=4K] [16-bit]
+	Memory behind bridge: f6a00000-f6cfffff [size=3M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 31
+	IOMMU group: 12
+	Bus: primary=02, secondary=03, subordinate=03, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: [disabled] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 32
+	IOMMU group: 13
+	Bus: primary=02, secondary=04, subordinate=04, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: [disabled] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 34
+	IOMMU group: 14
+	Bus: primary=02, secondary=05, subordinate=05, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: [disabled] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 36
+	IOMMU group: 15
+	Bus: primary=02, secondary=06, subordinate=06, sec-latency=0
+	I/O behind bridge: f000-ffff [size=4K] [16-bit]
+	Memory behind bridge: f6c00000-f6cfffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 38
+	IOMMU group: 16
+	Bus: primary=02, secondary=07, subordinate=07, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: [disabled] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 24
+	IOMMU group: 17
+	Bus: primary=02, secondary=08, subordinate=08, sec-latency=0
+	I/O behind bridge: [disabled] [16-bit]
+	Memory behind bridge: f6b00000-f6bfffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:02:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01) (prog-if 00 [Normal decode])
+	Subsystem: ASMedia Technology Inc. Device [1b21:3328]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 33
+	IOMMU group: 18
+	Bus: primary=02, secondary=09, subordinate=09, sec-latency=0
+	I/O behind bridge: [disabled] [16-bit]
+	Memory behind bridge: f6a00000-f6afffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+0000:06:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+	DeviceName: Realtek RTL8111H (1G LAN)
+	Subsystem: ASUSTeK Computer Inc. Onboard RTL8111H Ethernet [1043:8677]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 35
+	IOMMU group: 15
+	Region 0: I/O ports at f000 [size=256]
+	Region 2: Memory at f6c04000 (64-bit, non-prefetchable) [size=4K]
+	Region 4: Memory at f6c00000 (64-bit, non-prefetchable) [size=16K]
+	Capabilities: <access denied>
+	Kernel driver in use: r8169
+	Kernel modules: r8169
+
+0000:08:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01) (prog-if 30 [XHCI])
+	Subsystem: ASMedia Technology Inc. Device [1b21:1142]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 24
+	IOMMU group: 17
+	Region 0: Memory at f6b00000 (64-bit, non-prefetchable) [size=32K]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+0000:09:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01) (prog-if 01 [AHCI 1.0])
+	Subsystem: ASMedia Technology Inc. Device [1b21:1062]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 57
+	IOMMU group: 18
+	Region 5: Memory at f6a80000 (32-bit, non-prefetchable) [size=1K]
+	Expansion ROM at f6a00000 [disabled] [size=512K]
+	Capabilities: <access denied>
+	Kernel driver in use: ahci
+	Kernel modules: ahci
+
+0000:0a:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev 05) (prog-if 00 [VGA controller])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 50
+	IOMMU group: 19
+	Region 0: Memory at fce0000000 (64-bit, prefetchable) [size=256M]
+	Region 2: Memory at f6400000 (64-bit, prefetchable) [size=2M]
+	Region 4: I/O ports at e000 [size=256]
+	Region 5: Memory at f6900000 (32-bit, non-prefetchable) [size=512K]
+	Capabilities: <access denied>
+	Kernel driver in use: amdgpu
+	Kernel modules: amdgpu
+
+0000:0a:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640] (prog-if 00 [HDA compatible])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin B routed to IRQ 59
+	IOMMU group: 20
+	Region 0: Memory at f6988000 (32-bit, non-prefetchable) [size=16K]
+	Capabilities: <access denied>
+	Kernel driver in use: snd_hda_intel
+	Kernel modules: snd_hda_intel
+
+0000:0a:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin C routed to IRQ 54
+	IOMMU group: 21
+	Region 2: Memory at f6800000 (32-bit, non-prefetchable) [size=1M]
+	Region 5: Memory at f698c000 (32-bit, non-prefetchable) [size=8K]
+	Capabilities: <access denied>
+	Kernel driver in use: ccp
+	Kernel modules: ccp
+
+0000:0a:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15b9] (prog-if 30 [XHCI])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin D routed to IRQ 48
+	IOMMU group: 22
+	Region 0: Memory at f6700000 (64-bit, non-prefetchable) [size=1M]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+0000:0a:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15ba] (prog-if 30 [XHCI])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 50
+	IOMMU group: 23
+	Region 0: Memory at f6600000 (64-bit, non-prefetchable) [size=1M]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+0000:0a:00.6 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3] (prog-if 00 [HDA compatible])
+	DeviceName: Realtek ALC897 Audio
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8803]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin C routed to IRQ 60
+	IOMMU group: 24
+	Region 0: Memory at f6980000 (32-bit, non-prefetchable) [size=32K]
+	Capabilities: <access denied>
+	Kernel driver in use: snd_hda_intel
+	Kernel modules: snd_hda_intel
+
+0000:0b:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 25
+	Capabilities: <access denied>
+
+0000:0b:00.1 Signal processing controller [1180]: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 61
+	IOMMU group: 26
+	Region 0: Memory at f6f00000 (32-bit, non-prefetchable) [size=512K]
+	Region 1: Memory at f6fc0000 (32-bit, non-prefetchable) [size=8K]
+	Region 2: Memory at fcf0000000 (64-bit, prefetchable) [size=256K]
+	Region 4: Memory at f6f80000 (32-bit, non-prefetchable) [size=256K]
+	Capabilities: <access denied>
+	Kernel driver in use: amdxdna
+	Kernel modules: amdxdna
+
+0000:0c:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	IOMMU group: 27
+	Capabilities: <access denied>
+
+0000:0c:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0] (prog-if 30 [XHCI])
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin A routed to IRQ 35
+	IOMMU group: 28
+	Region 0: Memory at f6e00000 (64-bit, non-prefetchable) [size=1M]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+0000:0c:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1] (prog-if 30 [XHCI])
+	Subsystem: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin B routed to IRQ 37
+	IOMMU group: 29
+	Region 0: Memory at f6d00000 (64-bit, non-prefetchable) [size=1M]
+	Capabilities: <access denied>
+	Kernel driver in use: xhci_hcd
+	Kernel modules: xhci_pci
+
+=== EXACT_AHD_IDENTITY_SEARCH ===
+AHD_ENDPOINT=ABSENT
+HISTORICAL_ROOT_0000_00_01_1=ABSENT
+=== XDMA_MODULE_AND_FILES ===
+filename:       /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+license:        GPL
+author:         XRT Team <runtimeca39d@amd.com>
+description:    AMD XDMA driver
+srcversion:     8F61105E6B60B5A7A441D9A
+alias:          platform:xdma
+depends:        
+intree:         Y
+name:           xdma
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+sig_id:         PKCS#7
+signer:         Build time autogenerated kernel key
+sig_key:        25:84:45:71:EF:28:15:5F:FB:E8:A3:AE:5F:FD:86:B9:DC:66:18:CD
+sig_hashalgo:   sha512
+signature:      06:11:86:11:60:07:ED:6D:70:E2:D8:61:56:E1:87:77:5A:09:29:01:
+		88:55:DD:C0:46:01:27:36:6A:2A:A2:43:32:52:D2:A5:0D:58:F4:E6:
+		DC:1B:EF:B3:A9:40:D1:4B:E4:4F:AB:BD:08:81:41:8A:FF:C6:9F:1D:
+		12:8D:49:67:4B:97:2F:54:9D:28:1B:8A:BE:43:10:BE:7E:01:8A:A0:
+		5B:F9:46:7A:8A:E2:33:09:2A:F6:30:98:DA:72:A9:73:60:BB:43:74:
+		9B:D7:98:A7:72:5D:ED:FE:B2:A2:B8:0B:EE:86:11:BD:41:46:B2:8B:
+		11:73:6F:9E:48:18:38:0F:BA:39:CB:2F:B6:ED:D4:44:B4:59:71:72:
+		14:EC:E8:A5:0F:65:80:6E:1A:B7:4E:90:21:9F:06:93:36:AF:36:BD:
+		D4:E8:B6:B8:C9:00:DA:34:10:7E:F5:5E:97:A0:56:88:1D:7F:4A:46:
+		63:06:A2:D3:FF:BE:12:38:45:A5:4D:9D:3C:BB:EB:38:CE:08:98:AC:
+		34:5C:AF:92:DF:14:5F:6B:7F:2F:9C:35:D0:21:B2:90:C4:71:DB:DE:
+		4A:CB:3F:FC:9D:EB:E0:C0:01:01:7E:1D:9F:D8:AA:61:4D:37:2B:F5:
+		46:84:8F:D5:7E:86:92:11:ED:9B:C1:86:7A:85:98:82:E8:4F:FC:CE:
+		D3:DC:2B:7D:7A:B0:41:4E:75:E0:BB:FC:0B:AD:0D:CE:C4:2D:42:2F:
+		EE:1F:87:55:4B:1C:60:F9:D2:7A:AE:83:E0:31:3D:DD:84:DF:62:EB:
+		F5:C6:CE:5C:6A:74:97:28:A5:94:4F:A7:6B:78:7F:02:8A:0C:A4:99:
+		1D:D9:5A:D9:51:97:63:8A:79:4D:2A:18:F4:2F:0D:CB:07:E2:4A:D6:
+		E6:2A:CE:89:47:97:9D:F9:49:51:64:56:16:B4:5A:E1:0A:69:E6:A7:
+		58:6F:D6:FD:DE:A9:71:92:B1:2E:D2:67:C2:CF:97:3B:DB:CE:35:3D:
+		32:BC:28:4D:0D:7F:C1:BC:23:E9:6A:36:15:BF:BE:2E:51:9F:35:1A:
+		A3:69:8C:E9:CE:37:55:49:EB:CC:11:10:47:46:34:C3:97:2C:AD:01:
+		51:73:98:0D:71:3B:0C:DB:5B:73:74:8F:9C:7E:47:53:5E:5C:F3:ED:
+		BD:5C:DA:DA:27:9A:AF:B4:71:42:A7:F6:6C:47:27:6F:80:E2:0E:72:
+		46:59:46:0E:44:F6:DC:78:ED:90:89:C0:F6:32:7A:44:CC:B1:AC:12:
+		DF:FB:2C:A3:99:C5:2A:32:2E:65:69:08:9F:B7:71:48:5B:20:70:C2:
+		78:D2:0D:B6:AA:8E:9B:D9:A4:35:D7:8F
+=== XDMA_DRIVER_SYSFS ===
+XDMA_DRIVER_SYSFS=ABSENT
+=== XDMA_NODES_AND_USERS ===
+XDMA_NODE_COUNT=0
+=== RELEVANT_PROCESSES ===
+   9558    9382 vcdeage+ S    awk             awk BEGIN{IGNORECASE=1} /xdma|vivado|hw_server|jtag|fpga|g2b|ahd|hdmi|v4l2/ {print}
+=== AER_SYSFS ===
+DEVICE=0000:01:00.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:00.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:08.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:09.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:0a.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:0b.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:0c.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:02:0d.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:06:00.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:08:00.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:09:00.0
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+DEVICE=0000:0b:00.1
+--- aer_dev_correctable
+RxErr 0
+BadTLP 0
+BadDLLP 0
+Rollover 0
+Timeout 0
+NonFatalErr 0
+CorrIntErr 0
+HeaderOF 0
+TOTAL_ERR_COR 0
+--- aer_dev_fatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_FATAL 0
+--- aer_dev_nonfatal
+Undefined 0
+DLP 0
+SDES 0
+TLP 0
+FCP 0
+CmpltTO 0
+CmpltAbrt 0
+UnxCmplt 0
+RxOF 0
+MalfTLP 0
+ECRC 0
+UnsupReq 0
+ACSViol 0
+UncorrIntErr 0
+BlockedTLP 0
+AtomicOpBlocked 0
+TLPBlockedErr 0
+PoisonTLPBlocked 0
+DMWrReqBlocked 0
+IDECheck 0
+MisIDETLP 0
+PCRC_CHECK 0
+TLPXlatBlocked 0
+TOTAL_ERR_NONFATAL 0
+=== KERNEL_PCIE_XDMA_LOGS_CURRENT_BOOT ===
+Sep 05 21:45:27 VCDE-DUT-1 kernel: PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [io  0x0000-0x03af window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [io  0x03e0-0x0cf7 window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [io  0x03b0-0x03df window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000dffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [mem 0x80000000-0xf6ffffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [mem 0x880000000-0xfcffffffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: root bus resource [bus 00-ff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:00.0: [1022:14e8] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:00.2: [1022:14e9] type 00 class 0x080600 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:01.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 01-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:03.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:04.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0a]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [io  0xe000-0xefff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xf6400000-0xf69fffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0b]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xf6f00000-0xf6ffffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xfcf0000000-0xfcf00fffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0c]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3:   bridge window [mem 0xf6d00000-0xf6efffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:14.0: [1022:790b] type 00 class 0x0c0500 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:14.3: [1022:790e] type 00 class 0x060100 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.0: [1022:14f0] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.1: [1022:14f1] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.2: [1022:14f2] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.3: [1022:14f3] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.4: [1022:14f4] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.5: [1022:14f5] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.6: [1022:14f6] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.7: [1022:14f7] type 00 class 0x060000 conventional PCI endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 01-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: PCI bridge to [bus 04]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: PCI bridge to [bus 05]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: PCI bridge to [bus 06]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0:   bridge window [mem 0xf6c00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: PCI bridge to [bus 07]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: PCI bridge to [bus 08]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0:   bridge window [mem 0xf6b00000-0xf6bfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: PCI bridge to [bus 09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0:   bridge window [mem 0xf6a00000-0xf6afffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: PCI bridge to [bus 04]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: PCI bridge to [bus 05]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: BAR 0 [io  0xf000-0xf0ff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: BAR 2 [mem 0xf6c04000-0xf6c04fff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: BAR 4 [mem 0xf6c00000-0xf6c03fff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: supports D1 D2
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: PCI bridge to [bus 06]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: PCI bridge to [bus 07]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:08:00.0: [1022:43f7] type 00 class 0x0c0330 PCIe Legacy Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:08:00.0: BAR 0 [mem 0xf6b00000-0xf6b07fff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:08:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:08:00.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: PCI bridge to [bus 08]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: [1022:43f6] type 00 class 0x010601 PCIe Legacy Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: BAR 5 [mem 0xf6a80000-0xf6a803ff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: ROM [mem 0xf6a00000-0xf6a7ffff pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: PCI bridge to [bus 09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: [1002:15bf] type 00 class 0x030000 PCIe Legacy Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: BAR 0 [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: BAR 2 [mem 0xf6400000-0xf65fffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: BAR 4 [io  0xe000-0xe0ff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: BAR 5 [mem 0xf6900000-0xf697ffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: PME# supported from D1 D2 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: [1002:1640] type 00 class 0x040300 PCIe Legacy Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: BAR 0 [mem 0xf6988000-0xf698bfff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: PME# supported from D1 D2 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.2: [1022:15c7] type 00 class 0x108000 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.2: BAR 2 [mem 0xf6800000-0xf68fffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.2: BAR 5 [mem 0xf698c000-0xf698dfff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.2: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.3: [1022:15b9] type 00 class 0x0c0330 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.3: BAR 0 [mem 0xf6700000-0xf67fffff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.3: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.3: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.4: [1022:15ba] type 00 class 0x0c0330 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.4: BAR 0 [mem 0xf6600000-0xf66fffff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.4: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.4: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.6: [1022:15e3] type 00 class 0x040300 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.6: BAR 0 [mem 0xf6980000-0xf6987fff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.6: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.6: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0a]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.0: PME# supported from D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: [1022:1502] type 00 class 0x118000 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: BAR 0 [mem 0xf6f00000-0xf6f7ffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: BAR 1 [mem 0xf6fc0000-0xf6fc1fff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: BAR 2 [mem 0xfcf0000000-0xfcf003ffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: BAR 4 [mem 0xf6f80000-0xf6fbffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0b]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.0: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.3: [1022:15c0] type 00 class 0x0c0330 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.3: BAR 0 [mem 0xf6e00000-0xf6efffff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.3: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.3: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.4: [1022:15c1] type 00 class 0x0c0330 PCIe Endpoint
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.4: BAR 0 [mem 0xf6d00000-0xf6dfffff 64bit]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.4: enabling Extended Tags
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.4: PME# supported from D0 D3hot D3cold
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0c]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: iommu: Default domain type: Translated
+Sep 05 21:45:27 VCDE-DUT-1 kernel: iommu: DMA domain TLB invalidation policy: lazy mode
+Sep 05 21:45:27 VCDE-DUT-1 kernel: PCI: pci_cache_line_size set to 64 bytes
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: vgaarb: setting as boot VGA device
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: vgaarb: bridge control possible
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: PCI bridge to [bus 04]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: PCI bridge to [bus 05]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: PCI bridge to [bus 06]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0:   bridge window [mem 0xf6c00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: PCI bridge to [bus 07]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: PCI bridge to [bus 08]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0:   bridge window [mem 0xf6b00000-0xf6bfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: PCI bridge to [bus 09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0:   bridge window [mem 0xf6a00000-0xf6afffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: PCI bridge to [bus 02-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 01-09]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0a]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [io  0xe000-0xefff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xf6400000-0xf69fffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0b]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xf6f00000-0xf6ffffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xfcf0000000-0xfcf00fffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0c]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3:   bridge window [mem 0xf6d00000-0xf6efffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 4 [io  0x0000-0x03af window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 5 [io  0x03e0-0x0cf7 window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 6 [io  0x03b0-0x03df window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 7 [io  0x0d00-0xffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 8 [mem 0x000a0000-0x000dffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 9 [mem 0x80000000-0xf6ffffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:00: resource 10 [mem 0x880000000-0xfcffffffff window]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:01: resource 0 [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:01: resource 1 [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:02: resource 0 [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:02: resource 1 [mem 0xf6a00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:06: resource 0 [io  0xf000-0xffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:06: resource 1 [mem 0xf6c00000-0xf6cfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:08: resource 1 [mem 0xf6b00000-0xf6bfffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:09: resource 1 [mem 0xf6a00000-0xf6afffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0a: resource 0 [io  0xe000-0xefff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0a: resource 1 [mem 0xf6400000-0xf69fffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0a: resource 2 [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0b: resource 1 [mem 0xf6f00000-0xf6ffffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0b: resource 2 [mem 0xfcf0000000-0xfcf00fffff 64bit pref]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci_bus 0000:0c: resource 1 [mem 0xf6d00000-0xf6efffff]
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: D0 power state depends on 0000:0a:00.0
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:00.2: AMD-Vi: IOMMU performance counters supported
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:01.0: Adding to iommu group 0
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.0: Adding to iommu group 1
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:02.1: Adding to iommu group 2
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:03.0: Adding to iommu group 3
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:04.0: Adding to iommu group 4
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.0: Adding to iommu group 5
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.1: Adding to iommu group 6
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.2: Adding to iommu group 7
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:08.3: Adding to iommu group 8
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:14.0: Adding to iommu group 9
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:14.3: Adding to iommu group 9
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.0: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.1: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.2: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.3: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.4: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.5: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.6: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:00:18.7: Adding to iommu group 10
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:01:00.0: Adding to iommu group 11
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:00.0: Adding to iommu group 12
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:08.0: Adding to iommu group 13
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:09.0: Adding to iommu group 14
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0a.0: Adding to iommu group 15
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0b.0: Adding to iommu group 16
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0c.0: Adding to iommu group 17
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:02:0d.0: Adding to iommu group 18
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:06:00.0: Adding to iommu group 15
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:08:00.0: Adding to iommu group 17
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:09:00.0: Adding to iommu group 18
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.0: Adding to iommu group 19
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.1: Adding to iommu group 20
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.2: Adding to iommu group 21
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.3: Adding to iommu group 22
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.4: Adding to iommu group 23
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0a:00.6: Adding to iommu group 24
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.0: Adding to iommu group 25
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0b:00.1: Adding to iommu group 26
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.0: Adding to iommu group 27
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.3: Adding to iommu group 28
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pci 0000:0c:00.4: Adding to iommu group 29
+Sep 05 21:45:27 VCDE-DUT-1 kernel: perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 27
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pcieport 0000:00:08.1: PME: Signaling with IRQ 28
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pcieport 0000:00:08.2: PME: Signaling with IRQ 29
+Sep 05 21:45:27 VCDE-DUT-1 kernel: pcieport 0000:00:08.3: PME: Signaling with IRQ 30
+Sep 05 21:45:28 VCDE-DUT-1 kernel: input: Video Bus as /devices/pci0000:00/0000:00:08.1/acpi.video_bus.0/input/input2
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:08.1/0000:0a:00.1/sound/card7/input3
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic HDMI/DP,pcm=7 as /devices/pci0000:00/0000:00:08.1/0000:0a:00.1/sound/card7/input4
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic Rear Mic as /devices/pci0000:00/0000:00:08.1/0000:0a:00.6/sound/card8/input5
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic Front Mic as /devices/pci0000:00/0000:00:08.1/0000:0a:00.6/sound/card8/input6
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic Line as /devices/pci0000:00/0000:00:08.1/0000:0a:00.6/sound/card8/input7
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic Line Out as /devices/pci0000:00/0000:00:08.1/0000:0a:00.6/sound/card8/input8
+Sep 05 21:45:31 VCDE-DUT-1 kernel: input: HD-Audio Generic Front Headphone as /devices/pci0000:00/0000:00:08.1/0000:0a:00.6/sound/card8/input9
+PRE_REBOOT_LINUX_SNAPSHOT=COMPLETE
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

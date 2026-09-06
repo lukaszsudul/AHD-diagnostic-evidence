@@ -1,0 +1,1143 @@
+UTC_START=2026-09-06T07:22:49.9161149Z
+UTC_END=2026-09-06T07:22:51.3415277Z
+EVIDENCE_KIND=R2_POST_REBOOT_PCIE_XDMA_READ_ONLY_INVENTORY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK=G2B-HW0-PRODUCT-R2
+PHASE=POST_REBOOT_PCIE_XDMA_READ_ONLY_INVENTORY
+UTC=2026-09-06T07:22:50.274227469Z
+HOSTNAME=VCDE-DUT-1
+REMOTE_USER=vcdeagent1
+BOOT_ID=52b0bf13-e9d1-4558-ae13-d08f4ecc8dac
+LINUX_POST_REBOOT_LOCK=HELD
+EXACT_AHD_ENDPOINT_COUNT=1
+ENDPOINT_BDF=0000:01:00.0
+ENDPOINT_VENDOR_DEVICE=10ee:7011
+ENDPOINT_SYSFS_PATH=/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0
+UPSTREAM_BDF=0000:00:01.1
+FULL_PCIE_TOPOLOGY_BEGIN
+-[0000:00]-+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex
+           +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU
+           +-01.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-01.1-[01]----00.0  Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug)
+           +-02.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-02.1-[02-0a]----00.0-[03-0a]--+-00.0-[04]--
+           |                               +-08.0-[05]--
+           |                               +-09.0-[06]--
+           |                               +-0a.0-[07]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller
+           |                               +-0b.0-[08]--
+           |                               +-0c.0-[09]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller
+           |                               \-0d.0-[0a]----00.0  Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller
+           +-02.2-[0b]----00.0  Xilinx Corporation Device 7021
+           +-03.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-04.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+           +-08.1-[0c]--+-00.0  Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1
+           |            +-00.1  Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller
+           |            +-00.2  Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15b9
+           |            +-00.4  Advanced Micro Devices, Inc. [AMD] Device 15ba
+           |            \-00.6  Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller
+           +-08.2-[0d]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            \-00.1  Advanced Micro Devices, Inc. [AMD] AMD IPU Device
+           +-08.3-[0e]--+-00.0  Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+           |            +-00.3  Advanced Micro Devices, Inc. [AMD] Device 15c0
+           |            \-00.4  Advanced Micro Devices, Inc. [AMD] Device 15c1
+           +-14.0  Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller
+           +-14.3  Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge
+           +-18.0  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0
+           +-18.1  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1
+           +-18.2  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2
+           +-18.3  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3
+           +-18.4  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4
+           +-18.5  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5
+           +-18.6  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6
+           \-18.7  Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7
+FULL_PCIE_TOPOLOGY_END
+FULL_PCIE_NUMERIC_INVENTORY_BEGIN
+0000:00:00.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex [1022:14e8]
+0000:00:00.2 IOMMU [0806]: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU [1022:14e9]
+0000:00:01.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ed]
+0000:00:02.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:02.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+0000:00:02.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ee]
+0000:00:03.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:04.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge [1022:14ea]
+0000:00:08.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.2 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:08.3 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A] [1022:14eb]
+0000:00:14.0 SMBus [0c05]: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71)
+0000:00:14.3 ISA bridge [0601]: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+0000:00:18.0 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0 [1022:14f0]
+0000:00:18.1 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1 [1022:14f1]
+0000:00:18.2 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2 [1022:14f2]
+0000:00:18.3 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3 [1022:14f3]
+0000:00:18.4 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4 [1022:14f4]
+0000:00:18.5 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5 [1022:14f5]
+0000:00:18.6 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6 [1022:14f6]
+0000:00:18.7 Host bridge [0600]: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7 [1022:14f7]
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+0000:02:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Upstream Port [1022:43f4] (rev 01)
+0000:03:00.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:08.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:09.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:0a.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:0b.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:0c.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:03:0d.0 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset PCIe Switch Downstream Port [1022:43f5] (rev 01)
+0000:07:00.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL8111/8168/8211/8411 PCI Express Gigabit Ethernet Controller [10ec:8168] (rev 15)
+0000:09:00.0 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset USB 3.2 Controller [1022:43f7] (rev 01)
+0000:0a:00.0 SATA controller [0106]: Advanced Micro Devices, Inc. [AMD] 600 Series Chipset SATA Controller [1022:43f6] (rev 01)
+0000:0b:00.0 Serial controller [0700]: Xilinx Corporation Device [10ee:7021]
+0000:0c:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev 05)
+0000:0c:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640]
+0000:0c:00.2 Encryption controller [1080]: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device [1022:15c7]
+0000:0c:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15b9]
+0000:0c:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15ba]
+0000:0c:00.6 Audio device [0403]: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3]
+0000:0d:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0d:00.1 Signal processing controller [1180]: Advanced Micro Devices, Inc. [AMD] AMD IPU Device [1022:1502]
+0000:0e:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function [1022:14ec]
+0000:0e:00.3 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c0]
+0000:0e:00.4 USB controller [0c03]: Advanced Micro Devices, Inc. [AMD] Device [1022:15c1]
+FULL_PCIE_NUMERIC_INVENTORY_END
+RELEVANT_ENDPOINTS_BEGIN
+BDF=0000:01:00.0 VENDOR=0x10ee DEVICE=0x7011 CLASS=0x058000 DRIVER=NONE IOMMU_GROUP=13 PHYSICAL_SLOT=NONE SYSFS=/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0
+BDF=0000:0b:00.0 VENDOR=0x10ee DEVICE=0x7021 CLASS=0x070001 DRIVER=NONE IOMMU_GROUP=22 PHYSICAL_SLOT=NONE SYSFS=/sys/devices/pci0000:00/0000:00:02.2/0000:0b:00.0
+BDF=0000:0c:00.0 VENDOR=0x1002 DEVICE=0x15bf CLASS=0x030000 DRIVER=amdgpu IOMMU_GROUP=23 PHYSICAL_SLOT=NONE SYSFS=/sys/devices/pci0000:00/0000:00:08.1/0000:0c:00.0
+BDF=0000:0c:00.1 VENDOR=0x1002 DEVICE=0x1640 CLASS=0x040300 DRIVER=snd_hda_intel IOMMU_GROUP=24 PHYSICAL_SLOT=NONE SYSFS=/sys/devices/pci0000:00/0000:00:08.1/0000:0c:00.1
+BDF=0000:0c:00.6 VENDOR=0x1022 DEVICE=0x15e3 CLASS=0x040300 DRIVER=snd_hda_intel IOMMU_GROUP=28 PHYSICAL_SLOT=NONE SYSFS=/sys/devices/pci0000:00/0000:00:08.1/0000:0c:00.6
+RELEVANT_ENDPOINTS_END
+ENDPOINT_SYSFS_ATTRIBUTES_BEGIN
+VENDOR=0x10ee
+DEVICE=0x7011
+CLASS=0x058000
+SUBSYSTEM_VENDOR=0x10ee
+SUBSYSTEM_DEVICE=0x0007
+IRQ=255
+NUMA_NODE=-1
+CURRENT_LINK_SPEED=5.0 GT/s PCIe
+CURRENT_LINK_WIDTH=1
+MAX_LINK_SPEED=5.0 GT/s PCIe
+MAX_LINK_WIDTH=1
+MODALIAS=pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00
+DRIVER_OVERRIDE=(null)
+POWER_STATE=D0
+DRIVER=NONE
+RESOURCE_BEGIN
+0x00000000f6f00000 0x00000000f6f1ffff 0x0000000000040200
+0x00000000f6f20000 0x00000000f6f2ffff 0x0000000000040200
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+RESOURCE_END
+UEVENT_BEGIN
+PCI_CLASS=58000
+PCI_ID=10EE:7011
+PCI_SUBSYS_ID=10EE:0007
+PCI_SLOT_NAME=0000:01:00.0
+MODALIAS=pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00
+UEVENT_END
+ENDPOINT_SYSFS_ATTRIBUTES_END
+UPSTREAM_SYSFS_ATTRIBUTES_BEGIN
+UPSTREAM_SYSFS_PATH=/sys/devices/pci0000:00/0000:00:01.1
+VENDOR=0x1022
+DEVICE=0x14ed
+CLASS=0x060400
+SUBSYSTEM_VENDOR=0x1043
+SUBSYSTEM_DEVICE=0x8877
+IRQ=27
+NUMA_NODE=-1
+CURRENT_LINK_SPEED=5.0 GT/s PCIe
+CURRENT_LINK_WIDTH=1
+MAX_LINK_SPEED=16.0 GT/s PCIe
+MAX_LINK_WIDTH=8
+DRIVER=pcieport
+UPSTREAM_SYSFS_ATTRIBUTES_END
+FIRMWARE_SLOT_MAP_BEGIN
+FIRMWARE_SLOT_COUNT=0
+FIRMWARE_SLOT_MAP_END
+ENDPOINT_LSPCI_ROOT_VERBOSE_BEGIN
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+	Subsystem: Xilinx Corporation Device [10ee:0007]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 255
+	IOMMU group: 13
+	Region 0: Memory at f6f00000 (32-bit, non-prefetchable) [disabled] [size=128K]
+	Region 1: Memory at f6f20000 (32-bit, non-prefetchable) [disabled] [size=64K]
+	Capabilities: [40] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold-)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [48] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [60] Express (v2) Endpoint, IntMsgNum 0
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 unlimited
+			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset- SlotPowerLimit 75W TEE-IO-
+		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 5GT/s, Width x1, ASPM L0s, Exit Latency L0s unlimited
+			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt- FltModeDis-
+		LnkSta:	Speed 5GT/s, Width x1
+			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range B, TimeoutDis- NROPrPrP- LTR-
+			 10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS- TPHComp- ExtTPHComp-
+			 AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+			 AtomicOpsCtl: ReqEn-
+			 IDOReq- IDOCompl- LTR- EmergencyPowerReductionReq-
+			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+		LnkCtl2: Target Link Speed: 5GT/s, EnterCompliance- SpeedDis-
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+		LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete- EqualizationPhase1-
+			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+			 Retimer- 2Retimers- CrosslinkRes: unsupported, FltMode-
+	Capabilities: [100 v1] Device Serial Number 00-00-00-00-00-00-00-00
+00: ee 10 11 70 00 00 10 00 00 00 80 05 10 00 00 00
+10: 00 00 f0 f6 00 00 f2 f6 00 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 ee 10 07 00
+30: 00 00 00 00 40 00 00 00 00 00 00 00 ff 01 00 00
+40: 01 48 03 78 08 00 00 00 05 60 80 00 00 00 00 00
+50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+60: 10 00 02 00 22 8e 2c 01 30 29 00 00 12 f4 03 00
+70: 40 00 12 10 00 00 00 00 00 00 00 00 00 00 00 00
+80: 00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00
+90: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+100: 03 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
+110: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+120: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+130: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+140: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+150: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+160: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+220: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+230: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+240: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+250: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+260: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+270: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+290: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+360: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+370: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+380: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+390: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+410: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+420: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+430: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+440: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+450: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+460: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+470: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+590: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+620: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+630: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+640: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+650: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+660: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+670: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+680: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+690: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+700: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+710: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+720: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+740: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+750: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+770: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+780: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+790: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+820: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+850: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+860: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+870: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+890: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+900: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+910: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+920: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+930: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+940: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+950: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+960: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+970: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+980: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+990: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+aa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ca0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ce0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+da0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+dc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+dd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+de0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+df0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+eb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+ENDPOINT_LSPCI_ROOT_VERBOSE_END
+UPSTREAM_LSPCI_ROOT_VERBOSE_BEGIN
+0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ed] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin ? routed to IRQ 27
+	IOMMU group: 1
+	Bus: primary=00, secondary=01, subordinate=01, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: f6f00000-f6ffffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: [50] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1-,D2-,D3hot+,D3cold+)
+		Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [58] Express (v2) Root Port (Slot+), IntMsgNum 0
+		DevCap:	MaxPayload 256 bytes, PhantFunc 0
+			ExtTag+ RBE+ TEE-IO-
+		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 512 bytes
+		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 16GT/s, Width x8, ASPM L1, Exit Latency L1 <64us
+			ClockPM- Surprise- LLActRep+ BwNot+ ASPMOptComp+
+		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk+
+			ExtSynch- ClockPM- AutWidDis- BWInt+ AutBWInt+ FltModeDis-
+		LnkSta:	Speed 5GT/s, Width x1
+			TrErr- Train- SlotClk+ DLActive+ BWMgmt- ABWMgmt-
+		SltCap:	AttnBtn- PwrCtrl- MRL- AttnInd- PwrInd- HotPlug- Surprise-
+			Slot #0, PowerLimit 75W; Interlock- NoCompl+
+		SltCtl:	Enable: AttnBtn- PwrFlt- MRL- PresDet- CmdCplt- HPIrq- LinkChg-
+			Control: AttnInd Unknown, PwrInd Unknown, Power- Interlock-
+		SltSta:	Status: AttnBtn- PowerFlt- MRL- CmdCplt- PresDet+ Interlock-
+			Changed: MRL- PresDet- LinkState+
+		RootCap: CRSVisible+
+		RootCtl: ErrCorrectable- ErrNon-Fatal- ErrFatal- PMEIntEna+ CRSVisible+
+		RootSta: PME ReqID 0000, PMEStatus- PMEPending-
+		DevCap2: Completion Timeout: Range ABCD, TimeoutDis+ NROPrPrP- LTR+
+			 10BitTagComp+ 10BitTagReq+ OBFF Not Supported, ExtFmt+ EETLPPrefix+, MaxEETLPPrefixes 1
+			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+			 FRS- LN System CLS Not Supported, TPHComp+ ExtTPHComp- ARIFwd+
+			 AtomicOpsCap: Routing+ 32bit+ 64bit+ 128bitCAS-
+		DevCtl2: Completion Timeout: 65ms to 210ms, TimeoutDis- ARIFwd-
+			 AtomicOpsCtl: ReqEn- EgressBlck-
+			 IDOReq- IDOCompl- LTR+ EmergencyPowerReductionReq-
+			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+		LnkCap2: Supported Link Speeds: 2.5-16GT/s, Crosslink- Retimer+ 2Retimers+ DRS-
+		LnkCtl2: Target Link Speed: 16GT/s, EnterCompliance- SpeedDis-
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+		LnkSta2: Current De-emphasis Level: -3.5dB, EqualizationComplete- EqualizationPhase1-
+			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+			 Retimer- 2Retimers- CrosslinkRes: unsupported, FltMode-
+	Capabilities: [a0] MSI: Enable+ Count=1/1 Maskable- 64bit+
+		Address: 00000000fee00000  Data: 0000
+	Capabilities: [c0] Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Capabilities: [c8] HyperTransport: MSI Mapping Enable+ Fixed+
+	Capabilities: [100 v1] Vendor Specific Information: ID=0001 Rev=1 Len=010 <?>
+	Capabilities: [270 v1] Secondary PCI Express
+		LnkCtl3: LnkEquIntrruptEn- PerformEqu-
+		LaneErrStat: 0
+	Capabilities: [2a0 v1] Access Control Services
+		ACSCap:	SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
+		ACSCtl:	SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
+	Capabilities: [370 v1] L1 PM Substates
+		L1SubCap: PCI-PM_L1.2- PCI-PM_L1.1+ ASPM_L1.2- ASPM_L1.1- L1_PM_Substates+
+		L1SubCtl1: PCI-PM_L1.2- PCI-PM_L1.1- ASPM_L1.2- ASPM_L1.1-
+		L1SubCtl2:
+	Capabilities: [3c4 v1] Designated Vendor-Specific: Vendor=1022 ID=0001 Rev=1 Len=44 <?>
+	Capabilities: [400 v1] Data Link Feature <?>
+	Capabilities: [410 v1] Physical Layer 16.0 GT/s
+		Phy16Sta: EquComplete- EquPhase1- EquPhase2- EquPhase3- LinkEquRequest-
+	Capabilities: [440 v1] Lane Margining at the Receiver
+		PortCap: Uses Driver-
+		PortSta: MargReady- MargSoftReady-
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+00: 22 10 ed 14 07 04 10 00 00 00 04 06 10 00 81 00
+10: 00 00 00 00 00 00 00 00 00 01 01 00 f1 01 00 00
+20: f0 f6 f0 f6 f1 ff 01 00 00 00 00 00 00 00 00 00
+30: 00 00 00 00 50 00 00 00 00 00 00 00 ff 00 12 00
+40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+50: 01 58 03 c8 00 00 00 00 10 a0 42 01 21 80 00 00
+60: 30 29 00 00 84 78 73 00 40 0c 12 30 80 25 04 00
+70: 00 00 40 01 18 00 01 00 00 00 00 00 ff 19 73 00
+80: 06 04 00 00 1e 00 80 01 44 00 01 00 00 00 00 00
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 05 c0 81 00 00 00 e0 fe 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c0: 0d c8 00 00 43 10 77 88 08 00 03 a8 00 00 00 00
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 fc 27 ff 9f 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+100: 0b 00 01 27 01 00 01 01 00 00 00 00 00 00 00 00
+110: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+120: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+130: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+140: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+150: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+160: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+1f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+220: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+230: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+240: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+250: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+260: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+270: 19 00 01 2a 00 00 00 00 00 00 00 00 34 34 34 34
+280: 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34 34
+290: 34 34 34 34 34 34 34 34 34 34 34 34 00 00 00 00
+2a0: 0d 00 01 37 5f 00 1d 00 00 00 00 00 00 00 00 00
+2b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+360: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+370: 1e 00 41 3c 12 00 00 00 00 00 00 00 00 00 00 00
+380: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+390: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+3c0: 00 00 00 00 23 00 01 40 22 10 c1 02 01 00 00 04
+3d0: 00 00 00 00 00 00 ff 3f ff ff 07 00 00 00 00 00
+3e0: 01 04 10 00 01 04 10 00 01 04 10 00 01 00 00 00
+3f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+400: 25 00 01 41 01 00 00 80 00 00 00 00 00 00 00 00
+410: 26 00 01 44 00 00 00 00 00 00 00 00 00 00 00 00
+420: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+430: 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13 13
+440: 27 00 01 00 00 00 00 00 38 9c 00 00 38 9c 00 00
+450: 38 9c 00 00 38 9c 00 00 38 9c 00 00 38 9c 00 00
+460: 38 9c 00 00 38 9c 00 00 38 9c 00 00 38 9c 00 00
+470: 38 9c 00 00 38 9c 00 00 38 9c 00 00 38 9c 00 00
+480: 38 9c 00 00 38 9c 00 00 00 00 00 00 00 00 00 00
+490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+4f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+590: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+5f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+620: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+630: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+640: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+650: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+660: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+670: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+680: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+690: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+6f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+700: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+710: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+720: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+740: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+750: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+770: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+780: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+790: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+7f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+820: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+850: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+860: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+870: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+880: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+890: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+8f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+900: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+910: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+920: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+930: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+940: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+950: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+960: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+970: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+980: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+990: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+9f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+aa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+bf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ca0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ce0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+cf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+da0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+db0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+dc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+dd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+de0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+df0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+eb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ef0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+UPSTREAM_LSPCI_ROOT_VERBOSE_END
+XDMA_MODULE_INVENTORY_BEGIN
+XDMA_MODULE_LOADED_COUNT=0
+filename:       /lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+license:        GPL
+author:         XRT Team <runtimeca39d@amd.com>
+description:    AMD XDMA driver
+srcversion:     8F61105E6B60B5A7A441D9A
+alias:          platform:xdma
+depends:        
+intree:         Y
+name:           xdma
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+sig_id:         PKCS#7
+signer:         Build time autogenerated kernel key
+sig_key:        25:84:45:71:EF:28:15:5F:FB:E8:A3:AE:5F:FD:86:B9:DC:66:18:CD
+sig_hashalgo:   sha512
+signature:      06:11:86:11:60:07:ED:6D:70:E2:D8:61:56:E1:87:77:5A:09:29:01:
+		88:55:DD:C0:46:01:27:36:6A:2A:A2:43:32:52:D2:A5:0D:58:F4:E6:
+		DC:1B:EF:B3:A9:40:D1:4B:E4:4F:AB:BD:08:81:41:8A:FF:C6:9F:1D:
+		12:8D:49:67:4B:97:2F:54:9D:28:1B:8A:BE:43:10:BE:7E:01:8A:A0:
+		5B:F9:46:7A:8A:E2:33:09:2A:F6:30:98:DA:72:A9:73:60:BB:43:74:
+		9B:D7:98:A7:72:5D:ED:FE:B2:A2:B8:0B:EE:86:11:BD:41:46:B2:8B:
+		11:73:6F:9E:48:18:38:0F:BA:39:CB:2F:B6:ED:D4:44:B4:59:71:72:
+		14:EC:E8:A5:0F:65:80:6E:1A:B7:4E:90:21:9F:06:93:36:AF:36:BD:
+		D4:E8:B6:B8:C9:00:DA:34:10:7E:F5:5E:97:A0:56:88:1D:7F:4A:46:
+		63:06:A2:D3:FF:BE:12:38:45:A5:4D:9D:3C:BB:EB:38:CE:08:98:AC:
+		34:5C:AF:92:DF:14:5F:6B:7F:2F:9C:35:D0:21:B2:90:C4:71:DB:DE:
+		4A:CB:3F:FC:9D:EB:E0:C0:01:01:7E:1D:9F:D8:AA:61:4D:37:2B:F5:
+		46:84:8F:D5:7E:86:92:11:ED:9B:C1:86:7A:85:98:82:E8:4F:FC:CE:
+		D3:DC:2B:7D:7A:B0:41:4E:75:E0:BB:FC:0B:AD:0D:CE:C4:2D:42:2F:
+		EE:1F:87:55:4B:1C:60:F9:D2:7A:AE:83:E0:31:3D:DD:84:DF:62:EB:
+		F5:C6:CE:5C:6A:74:97:28:A5:94:4F:A7:6B:78:7F:02:8A:0C:A4:99:
+		1D:D9:5A:D9:51:97:63:8A:79:4D:2A:18:F4:2F:0D:CB:07:E2:4A:D6:
+		E6:2A:CE:89:47:97:9D:F9:49:51:64:56:16:B4:5A:E1:0A:69:E6:A7:
+		58:6F:D6:FD:DE:A9:71:92:B1:2E:D2:67:C2:CF:97:3B:DB:CE:35:3D:
+		32:BC:28:4D:0D:7F:C1:BC:23:E9:6A:36:15:BF:BE:2E:51:9F:35:1A:
+		A3:69:8C:E9:CE:37:55:49:EB:CC:11:10:47:46:34:C3:97:2C:AD:01:
+		51:73:98:0D:71:3B:0C:DB:5B:73:74:8F:9C:7E:47:53:5E:5C:F3:ED:
+		BD:5C:DA:DA:27:9A:AF:B4:71:42:A7:F6:6C:47:27:6F:80:E2:0E:72:
+		46:59:46:0E:44:F6:DC:78:ED:90:89:C0:F6:32:7A:44:CC:B1:AC:12:
+		DF:FB:2C:A3:99:C5:2A:32:2E:65:69:08:9F:B7:71:48:5B:20:70:C2:
+		78:D2:0D:B6:AA:8E:9B:D9:A4:35:D7:8F
+XDMA_MODULE_PATH=/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst
+XDMA_MODULE_SHA256=523ed1f77a4700773ef1df846a54592d7396774826acabbcb222e104cc5a9490
+XDMA_MODULE_INVENTORY_END
+XDMA_BINDINGS_AND_NODES_BEGIN
+XDMA_DRIVER_SYSFS=ABSENT
+XDMA_DEVICE_NODE_COUNT=0
+XDMA_BINDINGS_AND_NODES_END
+CURRENT_BOOT_PCIE_KERNEL_LOG_BEGIN
+Sep 06 09:08:14 VCDE-DUT-1 kernel: [gap 0x80000000-0xfedfffff] available for PCI devices
+Sep 06 09:08:14 VCDE-DUT-1 kernel: acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+Sep 06 09:08:14 VCDE-DUT-1 kernel: ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+Sep 06 09:08:14 VCDE-DUT-1 kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeHotplug SHPCHotplug PME AER PCIeCapability LTR DPC]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: PCI host bridge to bus 0000:00
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:00.0: [1022:14e8] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:00.2: [1022:14e9] type 00 class 0x080600 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: [1022:14ed] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: PCI bridge to [bus 01]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1:   bridge window [mem 0xf6f00000-0xf6ffffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 02-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [mem 0xf6800000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: [1022:14ee] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: PCI bridge to [bus 0b]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2:   bridge window [mem 0xf6e00000-0xf6efffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:03.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:04.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.0: [1022:14ea] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0c]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [io  0xe000-0xefff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xf6200000-0xf67fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0d]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xf6d00000-0xf6dfffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xfcf0000000-0xfcf00fffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: [1022:14eb] type 01 class 0x060400 PCIe Root Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0e]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3:   bridge window [mem 0xf6b00000-0xf6cfffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:14.0: [1022:790b] type 00 class 0x0c0500 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:14.3: [1022:790e] type 00 class 0x060100 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.0: [1022:14f0] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.1: [1022:14f1] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.2: [1022:14f2] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.3: [1022:14f3] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.4: [1022:14f4] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.5: [1022:14f5] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.6: [1022:14f6] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.7: [1022:14f7] type 00 class 0x060000 conventional PCI endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:01:00.0: [10ee:7011] type 00 class 0x058000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:01:00.0: BAR 0 [mem 0xf6f00000-0xf6f1ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:01:00.0: BAR 1 [mem 0xf6f20000-0xf6f2ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:01:00.0: PME# supported from D0 D1 D2 D3hot
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: PCI bridge to [bus 01]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: [1022:43f4] type 01 class 0x060400 PCIe Switch Upstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0:   bridge window [mem 0xf6800000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 02-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: PCI bridge to [bus 04]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: PCI bridge to [bus 05]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: PCI bridge to [bus 06]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: PCI bridge to [bus 07]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0:   bridge window [mem 0xf6a00000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: PCI bridge to [bus 08]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: PCI bridge to [bus 09]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0:   bridge window [mem 0xf6900000-0xf69fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: [1022:43f5] type 01 class 0x060400 PCIe Switch Downstream Port
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: PCI bridge to [bus 0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0:   bridge window [mem 0xf6800000-0xf68fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: PCI bridge to [bus 04]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: PCI bridge to [bus 05]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: PCI bridge to [bus 06]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: BAR 0 [io  0xf000-0xf0ff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: BAR 2 [mem 0xf6a04000-0xf6a04fff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: BAR 4 [mem 0xf6a00000-0xf6a03fff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: supports D1 D2
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: PCI bridge to [bus 07]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: PCI bridge to [bus 08]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:09:00.0: [1022:43f7] type 00 class 0x0c0330 PCIe Legacy Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:09:00.0: BAR 0 [mem 0xf6900000-0xf6907fff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:09:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:09:00.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: PCI bridge to [bus 09]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: [1022:43f6] type 00 class 0x010601 PCIe Legacy Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: BAR 5 [mem 0xf6880000-0xf68803ff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: ROM [mem 0xf6800000-0xf687ffff pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: PCI bridge to [bus 0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0b:00.0: [10ee:7021] type 00 class 0x070001 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0b:00.0: BAR 0 [mem 0xf6e10000-0xf6e1ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0b:00.0: BAR 1 [mem 0xf6e00000-0xf6e0ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0b:00.0: PME# supported from D0 D1 D2 D3hot
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: PCI bridge to [bus 0b]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: [1002:15bf] type 00 class 0x030000 PCIe Legacy Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: BAR 0 [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: BAR 2 [mem 0xf6200000-0xf63fffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: BAR 4 [io  0xe000-0xe0ff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: BAR 5 [mem 0xf6700000-0xf677ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: PME# supported from D1 D2 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: [1002:1640] type 00 class 0x040300 PCIe Legacy Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: BAR 0 [mem 0xf6788000-0xf678bfff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: PME# supported from D1 D2 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.2: [1022:15c7] type 00 class 0x108000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.2: BAR 2 [mem 0xf6600000-0xf66fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.2: BAR 5 [mem 0xf678c000-0xf678dfff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.2: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.3: [1022:15b9] type 00 class 0x0c0330 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.3: BAR 0 [mem 0xf6500000-0xf65fffff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.3: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.3: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.4: [1022:15ba] type 00 class 0x0c0330 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.4: BAR 0 [mem 0xf6400000-0xf64fffff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.4: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.4: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.6: [1022:15e3] type 00 class 0x040300 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.6: BAR 0 [mem 0xf6780000-0xf6787fff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.6: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.6: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0c]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.0: PME# supported from D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: [1022:1502] type 00 class 0x118000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: BAR 0 [mem 0xf6d00000-0xf6d7ffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: BAR 1 [mem 0xf6dc0000-0xf6dc1fff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: BAR 2 [mem 0xfcf0000000-0xfcf003ffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: BAR 4 [mem 0xf6d80000-0xf6dbffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0d]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.0: [1022:14ec] type 00 class 0x130000 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.0: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.3: [1022:15c0] type 00 class 0x0c0330 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.3: BAR 0 [mem 0xf6c00000-0xf6cfffff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.3: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.3: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.4: [1022:15c1] type 00 class 0x0c0330 PCIe Endpoint
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.4: BAR 0 [mem 0xf6b00000-0xf6bfffff 64bit]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.4: enabling Extended Tags
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.4: PME# supported from D0 D3hot D3cold
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0e]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: vgaarb: setting as boot VGA device
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: vgaarb: bridge control possible
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: PCI bridge to [bus 01]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1:   bridge window [mem 0xf6f00000-0xf6ffffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: PCI bridge to [bus 04]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: PCI bridge to [bus 05]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: PCI bridge to [bus 06]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: PCI bridge to [bus 07]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0:   bridge window [mem 0xf6a00000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: PCI bridge to [bus 08]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: PCI bridge to [bus 09]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0:   bridge window [mem 0xf6900000-0xf69fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: PCI bridge to [bus 0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0:   bridge window [mem 0xf6800000-0xf68fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: PCI bridge to [bus 03-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0:   bridge window [mem 0xf6800000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: PCI bridge to [bus 02-0a]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [io  0xf000-0xffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1:   bridge window [mem 0xf6800000-0xf6afffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: PCI bridge to [bus 0b]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2:   bridge window [mem 0xf6e00000-0xf6efffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: PCI bridge to [bus 0c]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [io  0xe000-0xefff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xf6200000-0xf67fffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1:   bridge window [mem 0xfce0000000-0xfcefffffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: PCI bridge to [bus 0d]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xf6d00000-0xf6dfffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2:   bridge window [mem 0xfcf0000000-0xfcf00fffff 64bit pref]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: PCI bridge to [bus 0e]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3:   bridge window [mem 0xf6b00000-0xf6cfffff]
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: D0 power state depends on 0000:0c:00.0
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:00.2: AMD-Vi: IOMMU performance counters supported
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.0: Adding to iommu group 0
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:01.1: Adding to iommu group 1
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.0: Adding to iommu group 2
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.1: Adding to iommu group 3
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:02.2: Adding to iommu group 4
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:03.0: Adding to iommu group 5
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:04.0: Adding to iommu group 6
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.0: Adding to iommu group 7
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.1: Adding to iommu group 8
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.2: Adding to iommu group 9
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:08.3: Adding to iommu group 10
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:14.0: Adding to iommu group 11
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:14.3: Adding to iommu group 11
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.0: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.1: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.2: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.3: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.4: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.5: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.6: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:00:18.7: Adding to iommu group 12
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:01:00.0: Adding to iommu group 13
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:02:00.0: Adding to iommu group 14
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:00.0: Adding to iommu group 15
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:08.0: Adding to iommu group 16
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:09.0: Adding to iommu group 17
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0a.0: Adding to iommu group 18
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0b.0: Adding to iommu group 19
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0c.0: Adding to iommu group 20
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:03:0d.0: Adding to iommu group 21
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:07:00.0: Adding to iommu group 18
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:09:00.0: Adding to iommu group 20
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0a:00.0: Adding to iommu group 21
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0b:00.0: Adding to iommu group 22
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.0: Adding to iommu group 23
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.1: Adding to iommu group 24
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.2: Adding to iommu group 25
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.3: Adding to iommu group 26
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.4: Adding to iommu group 27
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0c:00.6: Adding to iommu group 28
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.0: Adding to iommu group 29
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0d:00.1: Adding to iommu group 30
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.0: Adding to iommu group 31
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.3: Adding to iommu group 32
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pci 0000:0e:00.4: Adding to iommu group 33
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:01.1: PME: Signaling with IRQ 27
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:02.1: PME: Signaling with IRQ 28
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:02.2: PME: Signaling with IRQ 29
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:08.1: PME: Signaling with IRQ 30
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:08.2: PME: Signaling with IRQ 31
+Sep 06 09:08:14 VCDE-DUT-1 kernel: pcieport 0000:00:08.3: PME: Signaling with IRQ 32
+Sep 06 09:08:19 VCDE-DUT-1 kernel: amdgpu 0000:0c:00.0: [drm] PCIE GART of 512M enabled (table at 0x000000801FD00000).
+CURRENT_BOOT_PCIE_KERNEL_LOG_END
+MMIO_READS=0
+MMIO_WRITES=0
+DMA_OPERATIONS=0
+DRIVER_CHANGES=0
+PCI_RESCANS=0
+PCI_RESETS=0
+RESULT=PASS
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

@@ -1,0 +1,27 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "recorded_at_utc": "2026-09-06T07:02:16.7912369Z",
+  "result": "PASS",
+  "correction_scope": "LIVE_CONTROLLER_LOCK_BOOKKEEPING_ONLY",
+  "preserved_original_supervisor": "raw/WARM_REBOOT_ISSUANCE_SUPERVISOR.json",
+  "preserved_original_evidence": "raw/WARM_REBOOT_COMMAND.log",
+  "classification": "raw/LOCAL_REBOOT_WRAPPER_REJECTION_CLASSIFICATION.json",
+  "original_live_lock_sha256": "A7DDAE5FAE0643D9834DE1B1682C6EE8EE871B6EBCCD6EF16B6BAF5BD6D29D73",
+  "classification_sha256": "A5811324E22498ABF0A67ECE59CBB89C9724D0D7B7F5F5EFD0E7D95800E4C647",
+  "prior_bookkeeping": {
+    "warm_reboots_executed": 1,
+    "reboot_budget_consumed": true,
+    "reboot_command_number": 1,
+    "reboot_acknowledgement": "AMBIGUOUS_STOP_NO_RETRY"
+  },
+  "corrected_bookkeeping": {
+    "local_wrapper_attempts": 1,
+    "remote_reboot_command_delivery_attempts": 0,
+    "remote_reboot_command_deliveries": 0,
+    "warm_reboots_executed": 0,
+    "reboot_budget_consumed": false,
+    "authorized_reboot_budget_remaining": 1,
+    "remote_reboot_command_status": "NOT_ISSUED"
+  },
+  "correction_basis": "Conclusive pre-dispatch evidence: argument audit NOT_RUN, password file not created, no child process, empty stdout/stderr, and same boot ID verified afterward."
+}

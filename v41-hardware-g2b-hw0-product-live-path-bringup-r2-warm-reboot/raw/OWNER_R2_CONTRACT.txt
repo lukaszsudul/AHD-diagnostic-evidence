@@ -1,0 +1,1709 @@
+# AHD v41 — G2B-HW0-PRODUCT-R2
+# Controlled Warm-Reboot PCIe Re-enumeration and Live-Path Continuation
+
+Continue in the SAME Codex window in which:
+
+G2B-HW0-PRODUCT-R1
+
+was executed.
+
+Use the authoritative source worktree:
+
+C:\FPGA\V41_G2B
+
+This is a NEW governed hardware execution:
+
+G2B-HW0-PRODUCT-R2 —
+Controlled Warm-Reboot PCIe Re-enumeration and Live-Path Continuation
+
+The immediate predecessor R1 stopped after successful SRAM programming because
+the programmed AHD endpoint did not re-enumerate and no safe targeted PCIe
+recovery was available.
+
+R1 authoritative result:
+
+- authenticated DUT connection = PASS;
+- DUT exclusivity = PASS;
+- JTAG-to-PCIe board correlation = PASS;
+- FPGA device = xc7a35t;
+- IDCODE = 0362D093;
+- JTAG chain index = 0;
+- exact PRODUCT candidate programmed to volatile SRAM = PASS;
+- DONE = 1;
+- Flash programming = NO;
+- AHD endpoint after programming = absent;
+- XDMA module at final state = unloaded;
+- XDMA nodes at final state = zero;
+- reboot = NO;
+- power-cycle = NO;
+- candidate remained loaded in volatile SRAM;
+- first blocker =
+  SAFE_TARGETED_PCIE_RECOVERY_UNAVAILABLE.
+
+The purpose of R2 is to perform exactly ONE controlled warm reboot of the
+authoritative Linux DUT while the exact candidate remains loaded in FPGA SRAM,
+allowing firmware/BIOS/Linux PCIe enumeration to discover the endpoint from a
+clean boot.
+
+If the endpoint appears, continue with the previously authorized runtime,
+MMIO and one-channel live-path DMA tests.
+
+Do NOT repeat SRAM programming in R2.
+
+Do NOT program Flash.
+
+Do NOT power-cycle the DUT.
+
+Do NOT modify FPGA source, XDC or SSOT.
+
+---
+
+## 1. Previous R1 evidence authority
+
+Read and verify:
+
+Evidence repository:
+lukaszsudul/AHD-diagnostic-evidence
+
+Evidence directory:
+v41-hardware-g2b-hw0-product-live-path-bringup-r1
+
+Evidence commit:
+eb3a75c09925574c6947d67cdefb8e2a723add9e
+
+Verify the R1 evidence package and exact final hardware state.
+
+Required R1 starting state for this task:
+
+FPGA:
+exact PRODUCT candidate last programmed to volatile SRAM
+
+DONE:
+1
+
+AHD endpoint:
+absent
+
+XDMA:
+unloaded
+
+XDMA nodes:
+zero
+
+Flash:
+unchanged
+
+Reboot:
+not previously performed by R1
+
+If the preserved R1 evidence differs:
+
+STOP:
+
+BLOCKED — R1_FINAL_STATE_AUTHORITY_MISMATCH
+
+---
+
+## 2. Explicit Owner authorization
+
+OWNER_HARDWARE_AUTHORIZATION:
+GRANTED
+
+OWNER_WARM_REBOOT_AUTHORIZATION:
+GRANTED
+
+MAXIMUM_WARM_REBOOTS:
+1
+
+POWER_CYCLE_AUTHORIZATION:
+DENIED
+
+SRAM_REPROGRAMMING_AUTHORIZATION_IN_R2:
+DENIED
+
+FLASH_PROGRAMMING_AUTHORIZATION:
+DENIED
+
+The Owner explicitly authorizes exactly one graceful warm reboot of:
+
+VCDE-DUT-HOST-01
+VCDE-DUT-1
+10.132.1.111
+
+The reboot must be initiated only after:
+
+- authoritative state verification;
+- fresh exclusivity verification;
+- controller-side lock acquisition;
+- pre-reboot FPGA/JTAG state capture;
+- pre-reboot Linux state capture;
+- reboot recovery plan and stop conditions are recorded.
+
+No second reboot is authorized.
+
+If the first reboot does not recover the endpoint, stop and preserve evidence.
+
+Do not substitute a shutdown, poweroff, cold restart, AC cycle or physical
+power operation for the authorized warm reboot.
+
+---
+
+## 3. Existing MMIO authorization remains active
+
+READ-ONLY legacy MMIO authorization remains GRANTED for:
+
+0x0000..0x0030
+
+and:
+
+0x0080..0x00B4
+
+LEGACY_MMIO_WRITE_AUTHORIZATION:
+DENIED
+
+Documented G2B control-register writes remain authorized only within:
+
+0x3800..0x3BFF
+
+Rules:
+
+- use only exact documented G2B control registers;
+- preserve initial status and counters before any write;
+- do not write reserved addresses;
+- do not clear unexplained errors merely to continue;
+- do not write any legacy identity, NVP or video telemetry register.
+
+---
+
+## 4. Operations authorized in R2
+
+The Owner authorizes:
+
+- read-only controller inventory;
+- authenticated SSH connection to the exact DUT;
+- pre-reboot Linux inventory;
+- pre-reboot JTAG inventory;
+- controller-side and Linux-side task locks;
+- exactly one graceful warm reboot;
+- bounded wait for SSH disconnect and reconnect;
+- verification that the Linux boot ID changed exactly once;
+- post-reboot JTAG inventory;
+- post-reboot PCIe enumeration;
+- read-only Linux PCIe, sysfs, AER, driver and kernel-log inspection;
+- use of the already installed XDMA driver;
+- one load of the exact already installed XDMA kernel module if required and
+  proven not to affect an unrelated endpoint;
+- one exact bind of the proven AHD BDF if required and safe;
+- authorized legacy MMIO reads;
+- documented G2B control writes;
+- bounded C2H live-path captures;
+- stopping the G2B stream at task completion.
+
+The Owner does NOT authorize:
+
+- another FPGA SRAM programming;
+- Flash programming;
+- a second reboot;
+- power-cycle;
+- global PCIe rescan;
+- broad root-port reset;
+- global XDMA module unload;
+- driver compilation or installation;
+- package installation;
+- modification or interruption of an HDMI endpoint;
+- four-input selection;
+- two-channel capture;
+- synthetic generator tests;
+- V4L2;
+- release/v41.0.0 creation.
+
+---
+
+## 5. Authoritative SSOT
+
+Read:
+
+lukaszsudul/AHD-diagnostic-evidence/project-current-state/
+
+Required:
+
+PROJECT_STATE_REV = 8
+
+Verify:
+
+META-8A:
+VERIFIED / PROMOTED
+
+G2B-LUT1:
+ACCEPTED / OFFLINE_QUALIFIED
+
+Candidate maturity:
+OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE
+
+G2B-HW0-PRODUCT:
+AUTHORIZED_FOR_SEPARATE_CONTROLLED_EXECUTION
+
+Initial hardware scope:
+ONE_CHANNEL_FIXED_LIVE_AHD_PATH
+
+Persistent Flash programming:
+NOT_AUTHORIZED
+
+If any mismatch exists:
+
+STOP:
+
+BLOCKED — SSOT_REV8_MISMATCH
+
+Do not modify SSOT.
+
+---
+
+## 6. Exact candidate authority
+
+Verify again before any hardware operation:
+
+PRODUCT bitstream:
+
+C:\FPGA\G2B_LUT1_SIGNOFF_RECOVERY4_20260905_112316\G2B_PRODUCT_RECOVERY4.bit
+
+Expected size:
+
+2192144 bytes
+
+Expected SHA-256:
+
+AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7
+
+Signed-off DCP:
+
+C:\FPGA\G2B_LUT1_SIGNOFF_RECOVERY4_20260905_112316\G2B_PRODUCT_SIGNED_OFF.dcp
+
+Expected DCP SHA-256:
+
+95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175
+
+Source worktree:
+
+C:\FPGA\V41_G2B
+
+Source branch:
+
+integration/v41-g2b-onech-c2h
+
+Source commit:
+
+92e9b3d914134c044371779def1ee18eaaeda98a
+
+Source tree:
+
+cf6bf82249c90782eab1978c68541ed9c0e6430b
+
+If any local identity differs:
+
+STOP:
+
+BLOCKED — PRODUCT_CANDIDATE_IDENTITY_MISMATCH
+
+Do not replace, rebuild or reprogram the candidate.
+
+---
+
+## 7. Dual-layer runtime identity contract
+
+Governed candidate identity:
+
+Source commit:
+92e9b3d914134c044371779def1ee18eaaeda98a
+
+Source tree:
+cf6bf82249c90782eab1978c68541ed9c0e6430b
+
+Bitstream SHA-256:
+AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7
+
+Signed-off DCP SHA-256:
+95587CCEE934942C4745EC10EB6367D7C212DDB116B94A32C2B6D973AA29A175
+
+SSOT revision:
+8
+
+Expected embedded runtime identity:
+
+GIT_SHA:
+224d194e5f82c85bcb29297561c5d5e76d28063b
+
+BUILD_FLAGS:
+0x00000103
+
+The older runtime GIT_SHA is expected because Recovery-4 reused the sealed
+routed logic and added constraints-only sign-off changes.
+
+Do not require the runtime registers to return source commit 92e9b3d....
+
+---
+
+## 8. Authoritative Linux DUT
+
+Use only:
+
+Logical name:
+VCDE-DUT-HOST-01
+
+Hostname:
+VCDE-DUT-1
+
+Address:
+10.132.1.111
+
+Use the same authenticated user and trusted SSH identity successfully used in
+R1.
+
+Do not use a stale archived alias.
+
+Do not scan the network.
+
+If the exact authenticated connection cannot be established:
+
+STOP:
+
+BLOCKED — AUTHORITATIVE_DUT_CONNECTION_FAILED
+
+---
+
+## 9. Fresh exclusivity and locking
+
+The R1 lock is historical and cannot be reused.
+
+Perform a fresh read-only exclusivity inventory.
+
+Check:
+
+- local Vivado processes;
+- local hw_server processes;
+- JTAG processes;
+- active AHD hardware tasks;
+- active Codex tasks declaring AHD DUT ownership;
+- Linux processes using relevant PCIe resources;
+- current `/dev/xdma*` users;
+- existing hardware lock/lease records;
+- any HDMI task or endpoint that could be affected.
+
+Do not terminate unrelated tasks.
+
+Acquire a controller-side durable lock before the warm reboot.
+
+The controller lock must remain held while the Linux host is rebooting.
+
+Before reboot, also create a Linux-side task lock.
+
+After reboot, the old Linux lock may disappear; reacquire a new Linux-side lock
+only after reconnect and fresh exclusivity verification.
+
+Lock receipt must include:
+
+- task = G2B-HW0-PRODUCT-R2;
+- candidate SHA-256;
+- controller identity;
+- DUT identity;
+- pre-reboot boot ID;
+- task owner/session;
+- lock timestamps;
+- final release state.
+
+If exclusivity is unavailable:
+
+STOP:
+
+BLOCKED — DUT_EXCLUSIVITY_NOT_AVAILABLE
+
+---
+
+## 10. Pre-reboot FPGA/JTAG verification
+
+Perform read-only JTAG inventory.
+
+Expected:
+
+FPGA:
+xc7a35t
+
+IDCODE:
+0362D093
+
+Chain index:
+0
+
+DONE:
+1
+
+Verify that the candidate programmed in R1 has not been displaced by another
+known hardware operation.
+
+Do not program SRAM.
+
+Do not modify JTAG configuration.
+
+If:
+
+DONE != 1
+
+or the expected FPGA cannot be identified:
+
+STOP:
+
+BLOCKED — R1_CANDIDATE_NOT_PRESENT_BEFORE_REBOOT
+
+---
+
+## 11. Pre-reboot Linux snapshot
+
+Before reboot collect:
+
+- hostname;
+- authenticated user;
+- current `/proc/sys/kernel/random/boot_id`;
+- uptime;
+- kernel version;
+- current PCIe topology;
+- current AHD endpoint presence/absence;
+- current relevant root-port state;
+- current XDMA module state;
+- current XDMA nodes;
+- current device-node users;
+- relevant AER counters;
+- relevant `dmesg` / journal lines;
+- current shutdown/reboot inhibitors if any.
+
+Expected inherited R1 state:
+
+AHD endpoint:
+absent
+
+XDMA module:
+unloaded
+
+XDMA nodes:
+zero
+
+Record discrepancies, but do not infer failure solely from a harmless state
+change.
+
+Create a pre-reboot receipt before issuing reboot.
+
+---
+
+## 12. Warm-reboot execution
+
+Issue exactly one graceful operating-system warm reboot on:
+
+VCDE-DUT-1 / 10.132.1.111
+
+Use the normal system reboot mechanism.
+
+Do not use:
+
+- shutdown with power-off;
+- AC power control;
+- cold reset;
+- chassis power cycle;
+- BMC power cycle;
+- second reboot.
+
+Record:
+
+- reboot command;
+- command timestamp;
+- command exit/acknowledgement;
+- SSH disconnect timestamp;
+- controller lock continuity.
+
+Do not issue another reboot if the command acknowledgement is ambiguous.
+
+---
+
+## 13. Bounded reconnect procedure
+
+After reboot command:
+
+1. confirm the old SSH session disconnects;
+2. poll only the exact IP 10.132.1.111;
+3. use bounded reconnect attempts;
+4. maximum reconnect window = 15 minutes;
+5. do not scan other addresses.
+
+After reconnect verify:
+
+- hostname = VCDE-DUT-1;
+- authenticated identity;
+- new boot ID;
+- boot ID differs from pre-reboot boot ID;
+- exactly one boot transition is evidenced;
+- uptime is consistent with one recent reboot.
+
+If the host does not reconnect within 15 minutes:
+
+STOP:
+
+BLOCKED — WARM_REBOOT_RECONNECT_TIMEOUT
+
+Do not power-cycle.
+
+Do not issue a second reboot.
+
+---
+
+## 14. Post-reboot exclusivity
+
+Keep the controller lock held.
+
+After reconnect:
+
+- repeat Linux process/device-owner inventory;
+- recreate the Linux-side R2 lock;
+- verify no other AHD task acquired the DUT during reboot;
+- verify no unrelated process is using the future AHD endpoint or XDMA nodes.
+
+If exclusivity was lost:
+
+STOP:
+
+BLOCKED — DUT_EXCLUSIVITY_LOST_DURING_REBOOT
+
+Do not modify the endpoint or driver.
+
+---
+
+## 15. Post-reboot candidate-retention gate
+
+Perform a fresh read-only JTAG inventory.
+
+Verify:
+
+FPGA:
+xc7a35t
+
+IDCODE:
+0362D093
+
+Chain index:
+0
+
+DONE:
+1
+
+Do not reprogram SRAM.
+
+If DONE is 0, the chain is missing, or evidence shows the candidate was lost:
+
+classify:
+
+CANDIDATE_NOT_RETAINED_ACROSS_WARM_REBOOT
+
+STOP.
+
+Do not program the candidate again in R2.
+
+Do not issue a second reboot.
+
+The reason for stopping must be preserved for a separately authorized recovery.
+
+---
+
+## 16. Post-reboot PCIe enumeration
+
+Perform fresh read-only Linux PCIe inventory.
+
+Collect:
+
+- full relevant PCIe topology;
+- all Xilinx/AMD candidate endpoints;
+- endpoint BDF;
+- vendor/device ID;
+- subsystem IDs;
+- physical slot where exposed;
+- upstream bridge/root port;
+- LnkCap;
+- LnkSta;
+- negotiated speed;
+- negotiated width;
+- AER status;
+- relevant kernel enumeration logs.
+
+Correlate the endpoint to:
+
+- the exact AHD board;
+- the previously proven JTAG device;
+- the physical root port;
+- the R1 board-correlation evidence.
+
+A BDF may legitimately differ after reboot.
+
+Do not require an old BDF.
+
+If no exact AHD endpoint appears after the single warm reboot:
+
+STOP:
+
+BLOCKED — AHD_ENDPOINT_ABSENT_AFTER_AUTHORIZED_WARM_REBOOT
+
+Do not rescan all PCIe buses.
+
+Do not reboot again.
+
+Do not power-cycle.
+
+---
+
+## 17. JTAG-to-PCIe correlation after reboot
+
+Re-establish correlation:
+
+JTAG FPGA
+↔ physical AHD board
+↔ current PCIe endpoint
+↔ current upstream/root port
+
+Do not infer correlation solely from vendor/device ID.
+
+Use:
+
+- accepted R1 physical correlation;
+- JTAG chain identity;
+- root-port topology;
+- expected endpoint behavior;
+- absence of conflicting candidate boards.
+
+If ambiguous:
+
+STOP:
+
+BLOCKED — POST_REBOOT_JTAG_PCIE_CORRELATION_AMBIGUOUS
+
+---
+
+## 18. PCIe Gen2 x1 gate
+
+Verify actual hardware negotiation.
+
+Required:
+
+PCIe Gen2 x1
+
+Record:
+
+- LnkCap;
+- LnkSta;
+- speed in GT/s;
+- width;
+- endpoint BDF;
+- upstream port BDF.
+
+Do not infer this from Vivado or XCI configuration.
+
+If actual negotiated state is not Gen2 x1:
+
+STOP before DMA qualification.
+
+Record:
+
+PCIE_GEN2_X1_GATE = FAIL
+
+---
+
+## 19. XDMA driver policy
+
+First inventory:
+
+- whether `xdma` is loaded;
+- exact installed module path;
+- module version;
+- module SHA-256;
+- supported aliases;
+- all endpoints potentially matching the driver;
+- any HDMI or unrelated endpoint that could be affected.
+
+Preferred order:
+
+A. If the exact AHD endpoint is already safely bound:
+   use the existing binding.
+
+B. If the module is loaded but the exact AHD endpoint is unbound:
+   allow one exact bind only to the proven AHD BDF.
+
+C. If the module is not loaded:
+   one load of the exact already installed module is authorized only if the
+   inventory proves that it will not unexpectedly bind or disturb an HDMI or
+   unrelated endpoint.
+
+Do not:
+
+- compile a module;
+- install a module;
+- replace module files;
+- unload the module globally;
+- unbind another endpoint;
+- change another device's driver.
+
+If safe module loading or exact binding cannot be guaranteed:
+
+STOP:
+
+BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE
+
+---
+
+## 20. XDMA node mapping
+
+After driver binding, identify:
+
+- exact AHD BDF;
+- exact XDMA user node;
+- exact C2H node;
+- any control/event nodes;
+- sysfs mapping from each node to BDF;
+- device-node permissions;
+- current node users.
+
+Do not assume `/dev/xdma0_*` belongs to AHD.
+
+If mapping is ambiguous:
+
+STOP:
+
+BLOCKED — AHD_XDMA_NODE_MAPPING_AMBIGUOUS
+
+---
+
+## 21. T1 warm-reboot/endpoint gate
+
+T1 PASS requires:
+
+- one and only one warm reboot;
+- DUT reconnect PASS;
+- new boot ID PASS;
+- candidate retained in SRAM;
+- DONE = 1;
+- exact AHD endpoint enumerated;
+- JTAG-to-PCIe correlation PASS;
+- PCIe Gen2 x1 PASS;
+- exact XDMA driver mapping PASS;
+- exact AHD user/C2H nodes PASS;
+- no unrelated endpoint affected.
+
+---
+
+## 22. Runtime legacy identity reads
+
+On the exact AHD XDMA user node, perform aligned READ-ONLY accesses in:
+
+0x0000..0x0030
+
+Read and decode:
+
+- block identity;
+- protocol/schema identity;
+- build identity schema;
+- GIT_SHA words;
+- Vivado version/build;
+- BUILD_FLAGS;
+- PRODUCT indication;
+- transport signature.
+
+Expected embedded identity:
+
+GIT_SHA:
+224d194e5f82c85bcb29297561c5d5e76d28063b
+
+BUILD_FLAGS:
+0x00000103
+
+Preserve:
+
+- raw offset/value pairs;
+- byte order;
+- decoded values;
+- timestamps.
+
+Do not write any legacy register.
+
+---
+
+## 23. NVP/video telemetry reads
+
+Perform aligned READ-ONLY accesses in:
+
+0x0080..0x00B4
+
+Decode using the authoritative register map.
+
+Capture:
+
+- NVP initialization state;
+- initialization complete state;
+- NACK count;
+- INIT_ERROR;
+- source/video readiness;
+- VCLK status/counter;
+- SAV/frame status or counters where defined;
+- any relevant fatal/error indication.
+
+Do not clear initial errors.
+
+Do not write in this range.
+
+---
+
+## 24. G2B MMIO baseline
+
+Read the documented G2B range:
+
+0x3800..0x3BFF
+
+Verify:
+
+- transport magic;
+- ABI version;
+- capabilities;
+- PRODUCT profile;
+- channel/input identity;
+- reset epoch;
+- current counters;
+- current errors;
+- current transport status;
+- acknowledged snapshot mechanism.
+
+Expected:
+
+Transport ABI:
+AHD_C2H_TRANSPORT_ABI_V1
+
+ABI version:
+1
+
+Record bytes:
+4096
+
+Header bytes:
+64
+
+Payload bytes:
+3840
+
+Padding bytes:
+192
+
+Do not write reserved locations.
+
+---
+
+## 25. T2 runtime/MMIO gate
+
+T2 PASS requires:
+
+- dual-layer identity PASS;
+- runtime GIT_SHA PASS;
+- BUILD_FLAGS PASS;
+- PRODUCT profile PASS;
+- ABI v1 PASS;
+- G2B MMIO baseline PASS;
+- NVP initialization completed;
+- INIT_ERROR = 0;
+- accepted NACK state;
+- fixed live source/video readiness PASS;
+- no unexplained formatter fatal;
+- no unexplained ownership fatal.
+
+If an unexpected error exists:
+
+preserve it and stop.
+
+Do not clear it merely to continue.
+
+---
+
+## 26. Fixed live-path scope
+
+Use only:
+
+ONE_CHANNEL_FIXED_LIVE_AHD_PATH
+
+Logical channel:
+0
+
+Physical input:
+0
+
+Do not test:
+
+- another physical input;
+- four-input selection;
+- auto-scan;
+- two simultaneous channels;
+- synthetic source;
+- V4L2.
+
+The path is:
+
+camera
+→ NVP
+→ BT.656
+→ G2B PRODUCT ring
+→ formatter
+→ XDMA C2H
+→ Linux userspace
+
+---
+
+## 27. T3 — one complete C2H record
+
+Perform only the minimum documented G2B control operation needed to start the
+stream.
+
+Capture exactly one complete record from the exact AHD C2H node.
+
+Use a bounded timeout.
+
+Preserve the raw 4096 bytes.
+
+Verify:
+
+- record size = 4096 bytes;
+- record magic;
+- ABI/record version;
+- header size = 64 bytes;
+- payload size = 3840 bytes;
+- padding size = 192 bytes;
+- all padding bytes = 0;
+- channel/input identity;
+- frame identity;
+- line identity;
+- sequence;
+- epoch;
+- flags;
+- reserved fields;
+- no malformed state;
+- no fatal state.
+
+Do not claim direct observation of internal TKEEP/TLAST in the PRODUCT image
+without debug probes.
+
+Create:
+
+G2B_HW0_PRODUCT_R2_FIRST_RECORD.bin
+
+Record its SHA-256.
+
+If a complete record does not arrive:
+
+- stop the stream if safely possible;
+- preserve MMIO counters and errors;
+- stop the task.
+
+---
+
+## 28. T4 — finite 2500-record capture
+
+Only after T3 PASS:
+
+capture exactly:
+
+2500 complete records
+
+Validate:
+
+- complete record count;
+- record boundaries;
+- sequence continuity;
+- duplicate count;
+- gap count;
+- epoch continuity;
+- channel/input consistency;
+- frame/line ordering;
+- header validity;
+- zero padding;
+- malformed count;
+- overflow/drop state;
+- formatter fatal;
+- ownership fatal;
+- ring ownership/release counters.
+
+Do not silently discard an invalid record.
+
+Preserve hashes and bounded samples rather than publishing a large raw capture.
+
+---
+
+## 29. Frame reconstruction
+
+From T4 reconstruct at least one complete frame when record headers permit it.
+
+Verify:
+
+- 1080 active lines;
+- no missing lines;
+- no duplicate lines;
+- correct line order;
+- coherent frame identity;
+- coherent epoch;
+- 3840-byte line payload;
+- no stale-slot mixing.
+
+Save an appropriate lossless reconstruction artifact.
+
+Record its SHA-256.
+
+A real camera frame does not need a synthetic golden-image match.
+
+---
+
+## 30. T5 — 60-second continuous live capture
+
+Only after T0–T4 PASS:
+
+run a bounded 60-second capture.
+
+Use streaming validation.
+
+Do not store an uncontrolled multi-gigabyte file.
+
+Preserve:
+
+- initial record sample;
+- final record sample;
+- anomaly windows;
+- before/after MMIO snapshots;
+- rolling or chunk hashes;
+- final statistics.
+
+Measure:
+
+- exact duration;
+- complete records;
+- records per second;
+- complete frames;
+- frame rate across the complete interval;
+- application payload MB/s;
+- transport MB/s;
+- sequence gaps;
+- duplicates;
+- malformed records;
+- padding errors;
+- epoch changes;
+- drop/overflow counters;
+- formatter fatal;
+- ownership fatal.
+
+Nominal one-channel 1080p25 expectation:
+
+27000 records/s
+
+103.68 MB/s application payload
+
+110.592 MB/s transport
+
+Do not require 288 MB/s in this one-channel PRODUCT test.
+
+Record:
+
+HARDWARE_THROUGHPUT_288_MB_S = NOT_PROVEN
+
+---
+
+## 31. Stop conditions
+
+Stop immediately at the first failed gate.
+
+Mandatory blockers include:
+
+CANDIDATE_NOT_RETAINED_ACROSS_WARM_REBOOT
+
+WARM_REBOOT_RECONNECT_TIMEOUT
+
+DUT_EXCLUSIVITY_LOST_DURING_REBOOT
+
+AHD_ENDPOINT_ABSENT_AFTER_AUTHORIZED_WARM_REBOOT
+
+POST_REBOOT_JTAG_PCIE_CORRELATION_AMBIGUOUS
+
+PCIE_GEN2_X1_GATE_FAIL
+
+SAFE_AHD_XDMA_BIND_UNAVAILABLE
+
+AHD_XDMA_NODE_MAPPING_AMBIGUOUS
+
+RUNTIME_IDENTITY_MISMATCH
+
+ABI_PROFILE_MISMATCH
+
+NVP_INITIALIZATION_FAILURE
+
+LIVE_SOURCE_NOT_READY
+
+FIRST_RECORD_TIMEOUT
+
+FIRST_RECORD_MALFORMED
+
+SEQUENCE_CORRUPTION
+
+NONZERO_PADDING
+
+UNEXPECTED_EPOCH_CHANGE
+
+FORMATTER_FATAL
+
+OWNERSHIP_FATAL
+
+Do not attempt:
+
+- another reboot;
+- another SRAM programming;
+- power-cycle;
+- broad PCIe rescan;
+- error-clearing recovery not explicitly authorized.
+
+---
+
+## 32. Final-state policy
+
+At task completion or controlled stop:
+
+- stop the G2B stream using the documented protocol if it was started;
+- capture final MMIO state;
+- capture final endpoint/driver/node mapping;
+- capture final JTAG DONE state;
+- record whether the candidate remains in SRAM;
+- preserve relevant kernel logs;
+- release the Linux-side lock;
+- release the controller-side lock last.
+
+Leave the candidate in volatile SRAM.
+
+Do not restore another image.
+
+Do not program Flash.
+
+---
+
+## 33. Source and persistent-state protection
+
+Required:
+
+C:\FPGA\FPGA_AHD modified:
+NO
+
+C:\FPGA\V41_G2B tracked source modified:
+NO
+
+Active XDC modified:
+NO
+
+SSOT modified:
+NO
+
+Flash modified:
+NO
+
+Driver files modified:
+NO
+
+Package state modified:
+NO
+
+Warm reboots:
+0 or 1
+
+Power-cycle:
+NO
+
+SRAM programming in R2:
+NO
+
+---
+
+## 34. Evidence publication
+
+Publish a NEW evidence directory:
+
+Repository:
+lukaszsudul/AHD-diagnostic-evidence
+
+Branch:
+main
+
+Directory:
+v41-hardware-g2b-hw0-product-live-path-bringup-r2-warm-reboot
+
+Do not overwrite R1 evidence.
+
+Publish at minimum:
+
+V41_G2B_HW0_PRODUCT_R2_MAIN_REPORT.md
+G2B_HW0_PRODUCT_R2_AUTHORIZATION_RECEIPT.md
+G2B_HW0_PRODUCT_R2_R1_STATE_VERIFICATION.md
+G2B_HW0_PRODUCT_R2_LOCK_RECEIPT.md
+G2B_HW0_PRODUCT_R2_PRE_REBOOT_STATE.md
+G2B_HW0_PRODUCT_R2_WARM_REBOOT_RECEIPT.md
+G2B_HW0_PRODUCT_R2_POST_REBOOT_STATE.md
+G2B_HW0_PRODUCT_R2_JTAG_PCIE_CORRELATION.md
+G2B_HW0_PRODUCT_R2_PCIE_XDMA_INVENTORY.md
+G2B_HW0_PRODUCT_R2_LEGACY_MMIO_RAW.csv
+G2B_HW0_PRODUCT_R2_RUNTIME_IDENTITY.md
+G2B_HW0_PRODUCT_R2_G2B_MMIO_BASELINE.csv
+G2B_HW0_PRODUCT_R2_FIRST_RECORD_ANALYSIS.md
+G2B_HW0_PRODUCT_R2_FINITE_CAPTURE_SUMMARY.md
+G2B_HW0_PRODUCT_R2_FRAME_RECONSTRUCTION.md
+G2B_HW0_PRODUCT_R2_CONTINUOUS_CAPTURE_SUMMARY.md
+G2B_HW0_PRODUCT_R2_GATE_MATRIX.csv
+G2B_HW0_PRODUCT_R2_FINAL_HARDWARE_STATE.md
+G2B_HW0_PRODUCT_R2_STATE.json
+G2B_HW0_PRODUCT_R2_EVIDENCE_INDEX.md
+G2B_HW0_PRODUCT_R2_SHA256_MANIFEST.txt
+
+Include the first raw record and reconstructed frame only if evidence policy
+permits.
+
+Otherwise publish:
+
+- SHA-256;
+- byte size;
+- exact local path;
+- bounded previews/metadata.
+
+---
+
+## 35. Evidence commit
+
+Commit message:
+
+Run AHD v41 G2B-HW0 PRODUCT warm-reboot live-path bring-up R2
+
+Push without force.
+
+Perform remote read-back.
+
+---
+
+## 36. SSOT policy
+
+Do not modify SSOT.
+
+Required:
+
+PROJECT_STATE_REV_AT_START = 8
+
+PROJECT_STATE_REV_AT_END = 8
+
+If T0–T5 PASS:
+
+SSOT_UPDATE_REQUIRED = YES
+
+for later promotion of the partial live-path hardware result.
+
+Do not perform that META update here.
+
+---
+
+## 37. Acceptance criteria
+
+Engineering PASS requires:
+
+- R1 evidence verified;
+- SSOT rev8 verified;
+- exact candidate authority verified;
+- one warm reboot authorization recognized;
+- exactly one warm reboot completed;
+- new boot ID confirmed;
+- DUT reconnect PASS;
+- exclusivity retained/reacquired;
+- candidate retained in SRAM;
+- DONE = 1;
+- exact AHD endpoint enumerated;
+- post-reboot JTAG/PCIe correlation PASS;
+- actual PCIe Gen2 x1 PASS;
+- exact XDMA driver and nodes mapped;
+- dual-layer identity PASS;
+- ABI v1 and PRODUCT profile PASS;
+- NVP/live source readiness PASS;
+- first 4096-byte record PASS;
+- 2500-record capture PASS;
+- at least one frame reconstructed;
+- 60-second capture PASS;
+- no unexplained corruption, gaps or fatal errors;
+- no second reboot;
+- no SRAM programming in R2;
+- Flash unchanged;
+- no power-cycle;
+- no unrelated endpoint affected;
+- evidence publication PASS;
+- remote read-back PASS.
+
+Engineering PASS does not require 288 MB/s hardware throughput.
+
+---
+
+## 38. Final response format
+
+Return exactly:
+
+AHD v41 G2B-HW0-PRODUCT-R2 Warm-Reboot PCIe Re-enumeration and Live-Path Bring-Up
+
+Engineering gate:
+PASS | BLOCKED | FAIL
+
+Evidence publication:
+PASS | BLOCKED | FAIL
+
+Overall result:
+PASS |
+PASS_WITH_EVIDENCE_PUBLICATION_BLOCKER |
+BLOCKED |
+FAIL
+
+PROJECT_STATE_REV_AT_START:
+8
+
+PROJECT_STATE_REV_AT_END:
+8
+
+META-8A:
+VERIFIED | FAIL
+
+R1 evidence:
+VERIFIED | FAIL
+
+Owner warm-reboot authorization:
+GRANTED
+
+Maximum warm reboots:
+1
+
+Warm reboots executed:
+<0 or 1>
+
+Power-cycle authorization:
+DENIED
+
+SRAM reprogramming authorization in R2:
+DENIED
+
+Legacy MMIO read authorization:
+GRANTED
+
+Legacy MMIO write authorization:
+DENIED
+
+Authoritative Linux DUT:
+VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111
+
+Authenticated DUT connection before reboot:
+PASS | FAIL
+
+Pre-reboot boot ID:
+<value or N/A>
+
+Pre-reboot candidate present:
+PASS | FAIL
+
+Pre-reboot DONE:
+1 | 0 | N/A
+
+Pre-reboot AHD endpoint:
+ABSENT | PRESENT | N/A
+
+Controller lock held through reboot:
+YES | NO
+
+Warm reboot:
+PASS | NOT_RUN | FAIL
+
+SSH disconnect observed:
+YES | NO | N/A
+
+DUT reconnect:
+PASS | TIMEOUT | FAIL | NOT_RUN
+
+Post-reboot boot ID:
+<value or N/A>
+
+Exactly one boot transition:
+PASS | FAIL | NOT_REACHED
+
+Post-reboot DUT exclusivity:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+Post-reboot FPGA device:
+<exact or N/A>
+
+Post-reboot DONE:
+1 | 0 | NOT_REACHED
+
+Candidate retained across warm reboot:
+PASS | FAIL | NOT_REACHED
+
+PRODUCT bitstream SHA-256:
+AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7
+
+SRAM programming in R2:
+NO
+
+Flash programming:
+NO
+
+AHD endpoint after warm reboot:
+PASS | ABSENT | FAIL | NOT_REACHED
+
+Endpoint BDF:
+<value or N/A>
+
+PCIe vendor/device:
+<value or N/A>
+
+Upstream/root port:
+<value or N/A>
+
+PCIe LnkCap:
+<value or N/A>
+
+PCIe LnkSta:
+<value or N/A>
+
+PCIe Gen2 x1 hardware gate:
+PASS | FAIL | NOT_REACHED
+
+Post-reboot JTAG-to-PCIe correlation:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+XDMA module:
+PASS | FAIL | NOT_REACHED
+
+XDMA module loaded during R2:
+YES | NO
+
+XDMA driver version/hash:
+<value or N/A>
+
+XDMA user device:
+<path or N/A>
+
+XDMA C2H device:
+<path or N/A>
+
+XDMA node-to-BDF mapping:
+PASS | FAIL | NOT_REACHED
+
+Runtime embedded GIT_SHA:
+<value or N/A>
+
+Expected runtime embedded GIT_SHA:
+224d194e5f82c85bcb29297561c5d5e76d28063b
+
+Runtime BUILD_FLAGS:
+<value or N/A>
+
+Expected runtime BUILD_FLAGS:
+0x00000103
+
+Dual-layer identity:
+PASS | FAIL | NOT_REACHED
+
+Transport ABI:
+AHD_C2H_TRANSPORT_ABI_V1 |
+OTHER |
+NOT_REACHED
+
+ABI version:
+<value or N/A>
+
+PRODUCT profile:
+PASS | FAIL | NOT_REACHED
+
+Legacy identity MMIO:
+PASS | FAIL | NOT_REACHED
+
+NVP/video telemetry MMIO:
+PASS | FAIL | NOT_REACHED
+
+G2B MMIO baseline:
+PASS | FAIL | NOT_REACHED
+
+NVP initialization:
+PASS | FAIL | NOT_REACHED
+
+NACK count:
+<value or N/A>
+
+INIT_ERROR:
+<value or N/A>
+
+Fixed live source:
+PASS | FAIL | NOT_REACHED
+
+T0 pre-reboot authority/exclusivity gate:
+PASS | BLOCKED | FAIL
+
+T1 warm-reboot/endpoint gate:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+T2 runtime/MMIO gate:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+T3 one-record gate:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+First record bytes:
+<count or N/A>
+
+First record SHA-256:
+<SHA or NONE>
+
+Header:
+PASS | FAIL | NOT_REACHED
+
+Payload:
+PASS | FAIL | NOT_REACHED
+
+Padding:
+PASS | FAIL | NOT_REACHED
+
+T4 finite-capture gate:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+Finite records requested:
+2500
+
+Finite records received:
+<count or N/A>
+
+Sequence gaps:
+<count or N/A>
+
+Sequence duplicates:
+<count or N/A>
+
+Padding errors:
+<count or N/A>
+
+Epoch changes:
+<count or N/A>
+
+Frame reconstruction:
+PASS | FAIL | NOT_REACHED
+
+Reconstructed frame SHA-256:
+<SHA or NONE>
+
+T5 continuous-capture gate:
+PASS | BLOCKED | FAIL | NOT_REACHED
+
+Continuous measured duration:
+<seconds or N/A>
+
+Complete records:
+<count or N/A>
+
+Records per second:
+<value or N/A>
+
+Complete frames:
+<count or N/A>
+
+Estimated frame rate:
+<value or N/A>
+
+Application payload:
+<MB/s or N/A>
+
+Transport throughput:
+<MB/s or N/A>
+
+Malformed records:
+<count or N/A>
+
+Unexplained drops/gaps:
+<count or N/A>
+
+Formatter fatal:
+<value or N/A>
+
+Ownership fatal:
+<value or N/A>
+
+One-channel live AHD path:
+PASS | FAIL | NOT_REACHED
+
+Hardware throughput >=288 MB/s:
+NOT_PROVEN
+
+Four-input selection:
+NOT_QUALIFIED
+
+Two-channel capture:
+NOT_QUALIFIED
+
+Synthetic generator:
+NOT_TESTED
+
+V4L2:
+NOT_TESTED
+
+release/v41.0.0:
+NOT_CREATED
+
+Final FPGA state:
+<exact>
+
+Final PCIe/driver state:
+<exact>
+
+Candidate left in volatile SRAM:
+YES | NO | UNKNOWN
+
+Persistent state modified:
+NO
+
+Warm reboots:
+<0 or 1>
+
+Reboot limit respected:
+YES | NO
+
+Power-cycle:
+NO
+
+Hardware accessed:
+YES | NO
+
+G2B-HW0-PRODUCT-R2:
+PASS | BLOCKED | FAIL
+
+G2B-HW qualification:
+PARTIAL_LIVE_PATH_PROVEN |
+NOT_PROVEN
+
+SSOT update required:
+YES | NO
+
+Evidence repository:
+lukaszsudul/AHD-diagnostic-evidence
+
+Evidence directory:
+v41-hardware-g2b-hw0-product-live-path-bringup-r2-warm-reboot
+
+Evidence commit:
+<SHA or NONE>
+
+Remote read-back:
+PASS | FAIL | NOT_RUN
+
+Main report:
+<path>
+
+First blocker:
+<NONE or exact blocker>
+
+Recommended next step:
+<one exact action>
+
+Final execution point:
+HARD STOP AFTER G2B-HW0-PRODUCT-R2 WARM-REBOOT LIVE-PATH BRING-UP

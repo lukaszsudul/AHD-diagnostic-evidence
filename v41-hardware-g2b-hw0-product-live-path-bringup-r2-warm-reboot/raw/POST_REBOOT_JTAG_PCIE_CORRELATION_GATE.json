@@ -1,0 +1,41 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "recorded_at_utc": "2026-09-06T07:28:28.589110Z",
+  "result": "PASS",
+  "post_reboot_jtag_to_pcie_correlation": "PASS",
+  "correlation_basis": [
+    "R1_ACCEPTED_PHYSICAL_BINDING_HASH_VERIFIED",
+    "SAME_AUTHORITATIVE_DUT_AND_CONTROLLER_LOCK",
+    "SAME_EXACT_JTAG_TARGET_PART_IDCODE_AND_CHAIN_INDEX",
+    "EXACT_HISTORICAL_PCIE_BDF_PARENT_VENDOR_DEVICE_SUBSYSTEM_CLASS_REAPPEARED",
+    "EXACT_VENDOR_DEVICE_ENDPOINT_COUNT_ONE",
+    "OTHER_XILINX_DEVICE_HAS_DIFFERENT_ID_CLASS_AND_ROOT_PATH"
+  ],
+  "jtag": {
+    "target": "localhost:3121/xilinx_tcf/Xilinx/80802026a98b01",
+    "part": "xc7a35t",
+    "idcode": "0362D093",
+    "chain_index": 0,
+    "done": 1
+  },
+  "pcie": {
+    "endpoint_bdf": "0000:01:00.0",
+    "vendor_device": "10ee:7011",
+    "subsystem": "10ee:0007",
+    "class": "058000",
+    "upstream_bdf": "0000:00:01.1",
+    "endpoint_lnkcap": "Speed 5GT/s, Width x1",
+    "endpoint_lnksta": "Speed 5GT/s, Width x1",
+    "sysfs_current_link_speed": "5.0 GT/s PCIe",
+    "sysfs_current_link_width": 1,
+    "driver": "NONE"
+  },
+  "pcie_gen2_x1_hardware_gate": "PASS",
+  "r1_binding_sha256": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+  "source_sha256": {
+    "POST_REBOOT_JTAG_RETENTION_GATE.json": "78942B9088BE180F3777F43ECC2587E67B6774B986233D78D10D9F8A4579AC16",
+    "POST_REBOOT_PCIE_XDMA_INVENTORY.log": "B93C6A9D7123EBAE2D99DF7892EA7DD0C43EC784211129553DD76C1A438137D1",
+    "HISTORICAL_JTAG_PCIE_BINDING_VERIFICATION.log": "961D435339A94A5DA3F225EFD589D7E1D549398EF855BF77455E246DBC2AB765",
+    "G2B_HW0_PRODUCT_R1_SHA256_MANIFEST.txt": "D2AD5C4D265E4FDD23E41C294A935DECF1059E166E9B9A146A5B9ED9EAEC19CB"
+  }
+}

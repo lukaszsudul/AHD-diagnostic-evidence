@@ -1,0 +1,125 @@
+UTC_START=2026-09-06T06:42:38.5101848Z
+UTC_END=2026-09-06T06:42:39.5789992Z
+EVIDENCE_KIND=R2_PRELOCK_EXCLUSIVITY_READONLY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+TASK=G2B-HW0-PRODUCT-R2
+PHASE=PRELOCK_EXCLUSIVITY_READONLY
+UTC=2026-09-06T06:42:39Z
+HOSTNAME=VCDE-DUT-1
+USER=vcdeagent1
+BOOT_ID=37131b8d-0e38-4b4e-b77a-b3bda55b4e97
+UPTIME_SECONDS=39432.30
+=== RELEVANT_PROCESSES ===
+   8739    8709 vcdeage+ S    awk             awk BEGIN{IGNORECASE=1} /xdma|vivado|hw_server|jtag|fpga|g2b|ahd|hdmi|v4l2/ {print}
+=== XDMA_MODULE ===
+=== XDMA_NODES_AND_USERS ===
+XDMA_NODE_COUNT=0
+=== XDMA_SYSFS_BINDINGS ===
+XDMA_DRIVER_SYSFS=ABSENT
+=== RELEVANT_LOCK_RECORDS ===
+d /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_a_driver
+d /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_b_driver
+d /home/vcdeagent1/FPGA_AHD
+d /home/vcdeagent1/FPGA_AHD_HOST
+d /home/vcdeagent1/FPGA_AHD_HOST/dma_ip_drivers/XDMA
+d /home/vcdeagent1/FPGA_AHD_HOST/xdma_build_evidence
+f /home/vcdeagent1/ahd_attempt_a_minimum_baseline_raw.txt
+f /home/vcdeagent1/ahd_attempt_b_minimum_baseline_raw.txt
+f /home/vcdeagent1/ahd_new_host_apt_python_pil.log
+f /home/vcdeagent1/ahd_new_host_apt_transaction.log
+f /home/vcdeagent1/ahd_new_host_git_provision_bundle.log
+f /home/vcdeagent1/ahd_new_host_git_provision.log
+f /home/vcdeagent1/ahd_new_host_hardening_report_raw.txt
+f /home/vcdeagent1/ahd_new_host_prechange_inventory.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_a_driver/lsmod_xdma.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_a_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_a_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_a_driver/xdma_nodes.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_b_driver/lsmod_xdma.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_b_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_b_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/ahd_phase3_nvp_ab_attempt_b_driver/xdma_nodes.txt
+f /home/vcdeagent1/formal_restore_r1/driver/lsmod_xdma.txt
+f /home/vcdeagent1/formal_restore_r1/driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/formal_restore_r1/driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/formal_restore_r1/driver/xdma_nodes.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/bits/ahd_capture_v40_1_0_RC_A.bit
+f /home/vcdeagent1/FPGA_AHD_HOST/bits/ahd_capture_v41_phase2_p1.bit
+f /home/vcdeagent1/FPGA_AHD/host_hardening/99-ahd-forensic.conf
+f /home/vcdeagent1/FPGA_AHD/host_hardening/99-ahd-persistent.conf
+f /home/vcdeagent1/FPGA_AHD_HOST/i25_arm_b_formal_restore_20260821T2301Z/lsmod_xdma.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/i25_arm_b_formal_restore_20260821T2301Z/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/i25_arm_b_formal_restore_20260821T2301Z/xdma_driver_dmesg.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/i25_arm_b_formal_restore_20260821T2301Z/xdma_nodes.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_load_xdma_driver.sh
+f /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_xdma_driver_8721136.tar
+f /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/phase2_xdma_validate.sh
+f /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/xdma_axil_read
+f /home/vcdeagent1/FPGA_AHD_HOST/phase2_precheck_accepted/xdma_axil_read.c
+f /home/vcdeagent1/FPGA_AHD_HOST/t1_contextual_formal_restore_driver/lsmod_xdma.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/t1_contextual_formal_restore_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/t1_contextual_formal_restore_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/t1_contextual_formal_restore_driver/xdma_nodes.txt
+f /home/vcdeagent1/FPGA_AHD_HOST/xdma_build_evidence/xdma_clean.log
+f /home/vcdeagent1/FPGA_AHD_HOST/xdma_build_evidence/xdma_driver_build_kcflags.log
+f /home/vcdeagent1/FPGA_AHD_HOST/xdma_build_evidence/xdma_driver_build.log
+f /home/vcdeagent1/FPGA_AHD_HOST/xdma_build_evidence/xdma_driver_build_verbose.log
+f /home/vcdeagent1/FPGA_AHD_PRE_NEW_HOST_MIGRATION.bundle
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/KERNEL_PCIE_XDMA_FILTERED.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_DRIVER_COMMIT.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_LOCAL_MODULE_PATHS.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_LSMOD.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_MODINFO.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_NODES.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/host_health/XDMA_PINNED_MODULE_SHA256.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_driver/lsmod_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_driver/xdma_nodes.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_validation/KERNEL_PCIE_XDMA_FILTERED.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_validation/XDMA_DRIVER_COMMIT.txt
+f /home/vcdeagent1/nvp_ack_phase_r2/stage_b_restore_validation/XDMA_NODES.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_driver/lsmod_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_driver/xdma_nodes.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_restore_driver/lsmod_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_restore_driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_restore_driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/nvp_ack_phase_z8/stage_c_restore_driver/xdma_nodes.txt
+f /home/vcdeagent1/nvp_trace_measurement_r1/driver/lsmod_xdma.txt
+f /home/vcdeagent1/nvp_trace_measurement_r1/driver/modinfo_loaded_xdma.txt
+f /home/vcdeagent1/nvp_trace_measurement_r1/driver/xdma_driver_dmesg.txt
+f /home/vcdeagent1/nvp_trace_measurement_r1/driver/xdma_nodes.txt
+f /home/vcdeagent1/xdma_axil_phase3_qual
+f /home/vcdeagent1/xdma_axil_phase3_qual.c
+=== LOGGED_IN_USERS ===
+=== REBOOT_INHIBITORS ===
+WHO            UID   USER        PID  COMM           WHAT                                                     WHY                                         MODE
+ModemManager   0     root        1445 ModemManager   sleep                                                    ModemManager needs to reset devices         delay
+NetworkManager 0     root        1409 NetworkManager sleep                                                    NetworkManager needs to turn off networks   delay
+Realtime Kit   0     root        2029 rtkit-daemon   sleep                                                    Demote realtime scheduling and stop canary. delay
+UPower         0     root        2309 upowerd        sleep                                                    Pause device polling                        delay
+GNOME Shell    60578 gdm-greeter 2178 gnome-shell    sleep                                                    GNOME needs to save screen time data        delay
+gdm-greeter    60578 gdm-greeter 2335 gsd-media-keys handle-power-key:handle-suspend-key:handle-hibernate-key GNOME handling keypresses                   block
+gdm-greeter    60578 gdm-greeter 2335 gsd-media-keys sleep                                                    GNOME handling keypresses                   delay
+gdm-greeter    60578 gdm-greeter 2336 gsd-power      sleep                                                    GNOME needs to lock the screen              delay
+
+8 inhibitors listed.
+=== RELEVANT_PCIE_ENDPOINTS ===
+PRELOCK_EXCLUSIVITY_READONLY=COMPLETE
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END

@@ -1,0 +1,50 @@
+{
+  "task": "G2B-HW0-PRODUCT-R2",
+  "recorded_at_utc": "2026-09-06T07:28:28.593107Z",
+  "result": "BLOCKED",
+  "t1_warm_reboot_endpoint_gate": "BLOCKED",
+  "first_blocker": "BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE",
+  "passed_subgates": {
+    "warm_reboot": "PASS",
+    "exact_ip_reconnect": "PASS",
+    "exactly_one_boot_transition": "PASS",
+    "post_reboot_exclusivity": "PASS",
+    "candidate_retention": "PASS",
+    "endpoint_enumeration": "PASS",
+    "jtag_to_pcie_correlation": "PASS",
+    "pcie_gen2_x1": "PASS"
+  },
+  "blocked_subgates": {
+    "safe_ahd_xdma_bind": "BLOCKED",
+    "xdma_node_to_bdf_mapping": "NOT_REACHED"
+  },
+  "installed_module": {
+    "path": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+    "sha256": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+    "name": "xdma",
+    "bus_aliases": [
+      "platform:xdma"
+    ],
+    "matching_platform_devices": 0,
+    "matches_ahd_pci_modalias": false,
+    "exact_pci_modalias_resolution_exit_code": 1
+  },
+  "decision": "DO_NOT_LOAD_OR_BIND",
+  "decision_reason": "The only installed xdma module is a platform-bus driver. It cannot bind the PCI endpoint, and no installed PCI module resolves the exact 10ee:7011 modalias. Loading it would be an irrelevant recovery experiment and cannot create the required user/C2H nodes.",
+  "xdma_module_loaded_during_r2": false,
+  "driver_bind_operations": 0,
+  "driver_unbind_operations": 0,
+  "mmio_reads": 0,
+  "mmio_writes": 0,
+  "dma_operations": 0,
+  "downstream_gates": {
+    "T2": "NOT_REACHED",
+    "T3": "NOT_REACHED",
+    "T4": "NOT_REACHED",
+    "T5": "NOT_REACHED"
+  },
+  "source_sha256": {
+    "POST_REBOOT_JTAG_PCIE_CORRELATION_GATE.json": "F25D43313ACE02FD6EDBB3F8541DEF2B623E3AB72130C62F9BF9E3AFA98695AD",
+    "XDMA_BINDING_FEASIBILITY_READONLY.log": "FAB5CBBFBA761B1890178FF8FF246BC3B2BFE3C13462BC9922BC53B22C974C5F"
+  }
+}
