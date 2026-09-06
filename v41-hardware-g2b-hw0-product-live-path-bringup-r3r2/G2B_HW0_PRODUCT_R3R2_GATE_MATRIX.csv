@@ -1,0 +1,11 @@
+Gate,Result,Reason
+T0,PASS,Fresh authority inventory and exclusivity before boot change
+T1,PASS,Exact module auto bind and node proof
+T2,PASS,Runtime and live readiness verified
+T3,BLOCKED,R3R2_DUT_BOOT_CHANGED_EXCLUSIVITY_LOST
+T4,NOT_REACHED,T3 not PASS
+T5,NOT_REACHED,T4 not reached
+Cleanup,BLOCKED,Unexpected reboot prevented normal unload proof
+WriteAudit,PASS,No executed writes recorded or start reached
+ImmutableBoundary,PASS,Zero differences
+Engineering,BLOCKED,R3R2_DUT_BOOT_CHANGED_EXCLUSIVITY_LOST
