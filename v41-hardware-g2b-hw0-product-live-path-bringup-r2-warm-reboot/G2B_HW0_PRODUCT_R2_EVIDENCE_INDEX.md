@@ -1,12 +1,12 @@
 # G2B-HW0-PRODUCT-R2 Evidence Index
 
-- Publication status: `AWAITING_POST_COMMIT_REMOTE_READBACK`.
-- Remote read-back: `NOT_RUN`.
+- Publication status: `PASS`.
+- Remote read-back: `PASS`.
 - Repository/branch: `lukaszsudul/AHD-diagnostic-evidence` / `main`.
 - Directory: `v41-hardware-g2b-hw0-product-live-path-bringup-r2-warm-reboot`.
 - Required initial commit message: `Run AHD v41 G2B-HW0 PRODUCT warm-reboot live-path bring-up R2`.
 
-Commit-pinned remote byte read-back has not yet run.
+Initial commit `3ebab4c05e9c9c3271ed1c5f9d800aabd3020632` was read back at `2026-09-06T08:24:17.478544Z`; `129` files matched byte-for-byte with zero mismatches.
 
 ## Required top-level artifacts
 
@@ -139,7 +139,7 @@ T2 through T5 artifacts remain present and explicitly record `NOT_REACHED`,
 | `tools/release_controller_lock_last.ps1` | `4857` | `C27024B2325556DECED6A75D23388B6B782D6C131088C38BAB16DC9A2CABC3DC` |
 | `tools/release_linux_task_lock_post_reboot.ps1` | `4290` | `102E816653DAA9CA94D06F812753FC7750AB014876433AF539FA0DA108A55CC7` |
 | `tools/release_linux_task_lock_post_reboot.sh` | `2492` | `C8DA9E2206011B424DB5C1B1D333141372C4C9864CEF158B97947100E052B756` |
-| `tools/remote_readback_r2.py` | `17347` | `36CC007EA3533A216CA01BF15C394E4B7CF84141B6E4648FAC96B845ECCFC978` |
+| `tools/remote_readback_r2.py` | `20627` | `DC7ED3CAF603C6BBA85545601292C6B0DF5D61D06AE618023581F130061FAD5C` |
 | `tools/select_r6_jtag_target.tcl` | `5676` | `3F315C44C17AF1E5293A314CAA3B0DA63BFAEC687D58E7DADE37BAAE394CD1DE` |
 | `tools/validate_evidence_package_r2.py` | `29210` | `392101EAEAE5BDB519A58CF1F4242D666B035C28AB8226CCACB927BD5A9BB40A` |
 | `tools/validate_pcie_correlation_and_t1_driver_gate.py` | `8621` | `FFA108944FC02A5F9AD0154310D7DFE24080BB8A592C452D64441065D1D3688B` |

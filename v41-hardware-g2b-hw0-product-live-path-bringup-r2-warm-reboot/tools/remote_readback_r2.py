@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import io
 import json
 import re
 import subprocess
@@ -135,6 +136,82 @@ def remote_head(remote_url: str) -> str:
     return fields[0].lower()
 
 
+def read_blobs_batch(repo: Path, object_ids: list[str]) -> dict[str, bytes]:
+    unique_object_ids = list(dict.fromkeys(object_ids))
+    for object_id in unique_object_ids:
+        if len(object_id) not in {40, 64} or any(
+            character not in "0123456789abcdefABCDEF" for character in object_id
+        ):
+            raise ReadbackError(f"INVALID_TREE_OBJECT_ID:{object_id!r}")
+
+    query = b"".join(object_id.encode("ascii") + b"\n" for object_id in unique_object_ids)
+    completed = subprocess.run(
+        ["git", "cat-file", "--batch"],
+        cwd=repo,
+        input=query,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if completed.returncode != 0:
+        stderr = completed.stderr.decode("utf-8", errors="replace").strip()
+        raise ReadbackError(
+            f"GIT_CAT_FILE_BATCH_FAILED:returncode={completed.returncode}:stderr={stderr}"
+        )
+
+    stream = io.BytesIO(completed.stdout)
+    by_object_id: dict[str, bytes] = {}
+    for expected_object_id in unique_object_ids:
+        header = stream.readline()
+        if not header.endswith(b"\n"):
+            raise ReadbackError(
+                f"TRUNCATED_CAT_FILE_BATCH_HEADER:{expected_object_id}:{header!r}"
+            )
+        fields = header[:-1].split()
+        if len(fields) == 2 and fields[1] == b"missing":
+            raise ReadbackError(f"MISSING_TREE_BLOB:{expected_object_id}")
+        if len(fields) != 3:
+            raise ReadbackError(
+                f"MALFORMED_CAT_FILE_BATCH_HEADER:{expected_object_id}:{header!r}"
+            )
+        actual_object_id_bytes, object_type, size_bytes = fields
+        try:
+            actual_object_id = actual_object_id_bytes.decode("ascii")
+            size = int(size_bytes.decode("ascii"))
+        except (UnicodeDecodeError, ValueError) as exc:
+            raise ReadbackError(
+                f"MALFORMED_CAT_FILE_BATCH_HEADER:{expected_object_id}:{header!r}"
+            ) from exc
+        if actual_object_id.casefold() != expected_object_id.casefold():
+            raise ReadbackError(
+                "CAT_FILE_BATCH_OBJECT_ID_MISMATCH:"
+                f"expected={expected_object_id}:actual={actual_object_id}"
+            )
+        if object_type != b"blob":
+            raise ReadbackError(
+                f"CAT_FILE_BATCH_NON_BLOB:{expected_object_id}:{object_type!r}"
+            )
+        if size < 0:
+            raise ReadbackError(f"CAT_FILE_BATCH_NEGATIVE_SIZE:{expected_object_id}:{size}")
+        data = stream.read(size)
+        if len(data) != size:
+            raise ReadbackError(
+                f"TRUNCATED_CAT_FILE_BATCH_BLOB:{expected_object_id}:"
+                f"expected={size}:actual={len(data)}"
+            )
+        delimiter = stream.read(1)
+        if delimiter != b"\n":
+            raise ReadbackError(
+                f"CAT_FILE_BATCH_DELIMITER_MISMATCH:{expected_object_id}:{delimiter!r}"
+            )
+        by_object_id[expected_object_id.casefold()] = data
+
+    trailing = stream.read()
+    if trailing:
+        raise ReadbackError(f"UNEXPECTED_CAT_FILE_BATCH_TRAILING_BYTES:{len(trailing)}")
+    return by_object_id
+
+
 def read_commit_tree(
     repo: Path, commit: str
 ) -> tuple[dict[str, bytes], dict[str, tuple[str, str]]]:
@@ -149,7 +226,6 @@ def read_commit_tree(
         PACKAGE_DIRECTORY,
         cwd=repo,
     )
-    files: dict[str, bytes] = {}
     metadata: dict[str, tuple[str, str]] = {}
     prefix = f"{PACKAGE_DIRECTORY}/"
     for record in raw.split(b"\0"):
@@ -168,10 +244,14 @@ def read_commit_tree(
             raise ReadbackError(f"UNSAFE_TREE_PATH:{path}")
         if object_type != "blob" or mode not in {"100644", "100755"}:
             raise ReadbackError(f"NONREGULAR_TREE_ENTRY:{path}:{mode}:{object_type}")
-        if relative in files:
+        if relative in metadata:
             raise ReadbackError(f"DUPLICATE_TREE_PATH:{relative}")
-        files[relative] = run("git", "cat-file", "blob", object_id, cwd=repo)
         metadata[relative] = (mode, object_id.lower())
+    blobs = read_blobs_batch(repo, [object_id for _mode, object_id in metadata.values()])
+    files = {
+        relative: blobs[object_id.casefold()]
+        for relative, (_mode, object_id) in metadata.items()
+    }
     return files, metadata
 
 

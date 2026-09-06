@@ -5,7 +5,7 @@
 | Field | Result |
 |---|---|
 | Engineering gate | `BLOCKED` |
-| Evidence publication | `AWAITING_POST_COMMIT_REMOTE_READBACK` |
+| Evidence publication | `PASS` |
 | Overall result | `BLOCKED` |
 | T0 pre-reboot authority/exclusivity gate | `PASS` |
 | T1 warm-reboot/endpoint gate | `BLOCKED` |
@@ -13,7 +13,7 @@
 | T3 one-record gate | `NOT_REACHED` |
 | T4 finite-capture gate | `NOT_REACHED` |
 | T5 continuous-capture gate | `NOT_REACHED` |
-| Remote read-back | `NOT_RUN` |
+| Remote read-back | `PASS` |
 | First blocker | `BLOCKED — SAFE_AHD_XDMA_BIND_UNAVAILABLE` |
 | Final execution point | `HARD STOP AFTER G2B-HW0-PRODUCT-R2 WARM-REBOOT LIVE-PATH BRING-UP` |
 
@@ -142,7 +142,7 @@ tests were not run; `release/v41.0.0` was not created. G2B-HW qualification is
 - Directory: `v41-hardware-g2b-hw0-product-live-path-bringup-r2-warm-reboot`.
 - Required initial commit message: `Run AHD v41 G2B-HW0 PRODUCT warm-reboot live-path bring-up R2`.
 - Push mode: ordinary non-force.
-- Evidence publication: `AWAITING_POST_COMMIT_REMOTE_READBACK`.
-- Remote read-back: `NOT_RUN`.
+- Evidence publication: `PASS`.
+- Remote read-back: `PASS`.
 
-The complete package awaits its containing commit, ordinary non-force push, and commit-pinned byte read-back.
+Commit-pinned remote byte read-back is PASS for initial evidence commit `3ebab4c05e9c9c3271ed1c5f9d800aabd3020632`, covering `129` files at `2026-09-06T08:24:17.478544Z` with zero missing paths, size mismatches, or SHA-256 mismatches.
