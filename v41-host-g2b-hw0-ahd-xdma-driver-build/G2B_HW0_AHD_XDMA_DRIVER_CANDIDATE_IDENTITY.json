@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "record_type": "G2B_HW0_AHD_XDMA_DRIVER_CANDIDATE_IDENTITY",
+  "classification": "OFFLINE_QUALIFIED_AHD_PCIE_XDMA_DRIVER_CANDIDATE",
+  "qualification_scope": "STATIC_OFFLINE_ONLY",
+  "project_linkage": {
+    "project": "AHD v41 G2B",
+    "task": "G2B-HW0-DRV1",
+    "project_state_revision": 8,
+    "product_source_branch": "integration/v41-g2b-onech-c2h",
+    "product_source_commit": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "product_source_tree": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+    "product_bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+    "hardware_r2_evidence_commit": "9caa9c339966eda999219e4ed686c01654b9a87e",
+    "hdmi_reuse_evidence_commit": "b3920c7ce5ef3cb83800c85a29eb8febca357319"
+  },
+  "driver_source": {
+    "branch": "host/v41-g2b-hw0-ahd-xdma-driver",
+    "base_commit": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "commit": "0a201aab7adb13be079e784c6ed97dfad2ed7764",
+    "tree": "6f079bf086878ddbce1f1ec82fece3039eae6573",
+    "remote_publication": "PASS"
+  },
+  "upstream": {
+    "repository": "https://github.com/Xilinx/dma_ip_drivers.git",
+    "authority": "Xilinx/dma_ip_drivers",
+    "commit": "b8466090b4e812e191da9e9305ffb11cb7ace768",
+    "tree": "f9286c5d1bdae57285570ac5c23244d54076b99f",
+    "retrieval_date_utc": "2026-09-06"
+  },
+  "source_delta": {
+    "patch_filename": "0001-ahd-exact-pci-match.patch",
+    "patch_sha256": "415F0836E56782D0F8667FA4510E63016A065A6F175A25433CD6D2EAA57E6AD7",
+    "source_diff_sha256": "415F0836E56782D0F8667FA4510E63016A065A6F175A25433CD6D2EAA57E6AD7",
+    "source_input_manifest_sha256": "7D28F66A4253A213E75B73036ED38D8E2F8974DEDDA4378CB3D028B5C2956019",
+    "allowed_change_classes": [
+      "EXACT_AHD_PCI_SUBSYSTEM_MATCH",
+      "UNIQUE_KERNEL_MODULE_AND_PCIE_DRIVER_IDENTITY",
+      "MINIMAL_DISTINGUISHING_METADATA",
+      "PROVEN_KERNEL_7_KBUILD_CCFLAGS_COMPATIBILITY"
+    ],
+    "generic_transport_behavior": "UNCHANGED",
+    "transport_policy": "GENERIC_PCIE_XDMA_TRANSPORT_ONLY"
+  },
+  "build_environment": {
+    "authoritative_dut": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+    "hostname": "VCDE-DUT-1",
+    "authenticated_user": "vcdeagent1",
+    "machine_id": "0e90f50d9465492b80258da5658446f8",
+    "boot_id": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+    "kernel_release": "7.0.0-29-generic",
+    "uname": "Linux VCDE-DUT-1 7.0.0-29-generic #29-Ubuntu SMP PREEMPT_DYNAMIC Fri Jul 17 20:52:35 UTC 2026 x86_64 GNU/Linux",
+    "architecture": "x86_64",
+    "headers_root": "/usr/src/linux-headers-7.0.0-29-generic",
+    "kernel_config_path": "/boot/config-7.0.0-29-generic",
+    "kernel_config_sha256": "D81A84B5BF2B94D5F08A5A87B6D052CD25E96DF5324BAB246790A679349A987B",
+    "module_symvers_sha256": "88EC24BC876CCE4C2D7947424F964E5B2A76011801288209BD96539647BEE4BA",
+    "module_symvers_size": 2382007,
+    "module_symvers_lines": 32698,
+    "config": {
+      "CONFIG_MODULES": "y",
+      "CONFIG_PCI": "y",
+      "CONFIG_MODVERSIONS": "y",
+      "CONFIG_MODULE_UNLOAD": "y",
+      "CONFIG_SMP": "y"
+    },
+    "kernel_compiler": {
+      "executable_name": "x86_64-linux-gnu-gcc",
+      "identity": "x86_64-linux-gnu-gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0"
+    },
+    "build_compiler": {
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-15",
+      "identity": "x86_64-linux-gnu-gcc-15 (Ubuntu 15.2.0-16ubuntu1) 15.2.0"
+    },
+    "make": "GNU Make 4.4.1",
+    "git": "git version 2.53.0",
+    "binutils": "GNU Binutils for Ubuntu 2.46",
+    "kmod": "kmod version 34.2",
+    "secure_boot": "SecureBoot disabled",
+    "deterministic_environment": {
+      "SOURCE_DATE_EPOCH": "1787236279",
+      "KBUILD_BUILD_TIMESTAMP": "Thu Aug 20 14:31:19 UTC 2026",
+      "KBUILD_BUILD_USER": "ahd-drv1",
+      "KBUILD_BUILD_HOST": "vcde-dut-1",
+      "KBUILD_BUILD_VERSION": "1",
+      "canonical_debug_prefix": "/usr/src/xdma_ahd_pcie"
+    }
+  },
+  "module": {
+    "filename": "xdma_ahd_pcie.ko",
+    "internal_name": "xdma_ahd_pcie",
+    "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "size": 3296104,
+    "architecture": "x86_64",
+    "elf_class": "ELF64",
+    "elf_data": "2's complement, little endian",
+    "elf_type": "REL",
+    "elf_machine": "Advanced Micro Devices X86-64",
+    "vermagic": "7.0.0-29-generic SMP preempt mod_unload modversions ",
+    "version": "2025.2.0",
+    "srcversion": "EE8B149D1883AE8C6B1EE31",
+    "license": "Dual BSD/GPL",
+    "description": "Xilinx XDMA Reference Driver (AHD exact PCI match)",
+    "author": "Xilinx, Inc.",
+    "dependencies": [],
+    "aliases": [
+      "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*"
+    ],
+    "parameters": [
+      "h2c_timeout",
+      "c2h_timeout",
+      "poll_mode",
+      "interrupt_mode",
+      "enable_st_c2h_credit",
+      "desc_blen_max"
+    ],
+    "build_id": "1471c3a284ec1cb26115fe9e9bd59890a034f83e",
+    "debug_info_present": true,
+    "stripped": false,
+    "modversion_metadata_present": true,
+    "undefined_kernel_symbol_reference_count": 134,
+    "defined_global_symbol_count": 89,
+    "signature": {
+      "signed": false,
+      "signer": null,
+      "sig_id": null,
+      "sig_hashalgo": null,
+      "disposition": "UNSIGNED_ACCEPTABLE_FOR_SEPARATELY_AUTHORIZED_TEST"
+    }
+  },
+  "pci_policy": {
+    "policy": "EXACT_SUBSYSTEM_ONLY",
+    "vendor": "10ee",
+    "device": "7011",
+    "subsystem_vendor": "10ee",
+    "subsystem_device": "0007",
+    "exact_positive_modalias": "pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00",
+    "generated_alias": "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*",
+    "alias_count": 1,
+    "unintended_broad_pci_aliases": 0
+  },
+  "alias_tests": [
+    {
+      "test": "AHD exact modalias",
+      "modalias": "pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00",
+      "expected": "MATCH",
+      "actual": "MATCH",
+      "result": "PASS"
+    },
+    {
+      "test": "AHD vendor/device alternate subsystem",
+      "modalias": "pci:v000010EEd00007011sv000010EEsd00000008bc05sc80i00",
+      "expected": "NO_MATCH",
+      "actual": "NO_MATCH",
+      "result": "PASS"
+    },
+    {
+      "test": "Synthetic HDMI-ID class variant",
+      "modalias": "pci:v000010EEd00007021sv000010EEsd0000F0A1bc05sc80i00",
+      "expected": "NO_MATCH",
+      "actual": "NO_MATCH",
+      "result": "PASS"
+    },
+    {
+      "test": "Generic Xilinx PCI device",
+      "modalias": "pci:v000010EEd00009048sv000010EEsd00000000bc05sc80i00",
+      "expected": "NO_MATCH",
+      "actual": "NO_MATCH",
+      "result": "PASS"
+    },
+    {
+      "test": "Platform XDMA",
+      "modalias": "platform:xdma",
+      "expected": "NO_MATCH",
+      "actual": "NO_MATCH",
+      "result": "PASS"
+    },
+    {
+      "test": "Installed Xilinx endpoint 0000:0b:00.0",
+      "modalias": "pci:v000010EEd00007021sv000010EEsd0000F0A1bc07sc00i01",
+      "expected": "NO_MATCH",
+      "actual": "NO_MATCH",
+      "result": "PASS"
+    }
+  ],
+  "builds": {
+    "A": {
+      "root": "/home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_A",
+      "module_path": "/home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_A/source/XDMA/linux-kernel/xdma/xdma_ahd_pcie.ko",
+      "wrapper_start_utc": "2026-09-06T12:17:19.3422661Z",
+      "wrapper_end_utc": "2026-09-06T12:17:26.9259375Z",
+      "result": "PASS",
+      "modpost": "PASS",
+      "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+      "size": 3296104
+    },
+    "B": {
+      "root": "/home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_B",
+      "module_path": "/home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_B/source/XDMA/linux-kernel/xdma/xdma_ahd_pcie.ko",
+      "wrapper_start_utc": "2026-09-06T12:18:01.7405981Z",
+      "wrapper_end_utc": "2026-09-06T12:18:09.0383392Z",
+      "result": "PASS",
+      "modpost": "PASS",
+      "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+      "size": 3296104
+    }
+  },
+  "reproducibility": {
+    "result": "PASS",
+    "clean_build_count": 2,
+    "third_build_required": false,
+    "module_cmp": "IDENTICAL",
+    "source_diff_cmp": "IDENTICAL",
+    "source_input_manifest_cmp": "IDENTICAL",
+    "build_path_leak_A": false,
+    "build_path_leak_B": false,
+    "byte_identical": true,
+    "completed_utc": "2026-09-06T12:19:11.5069127Z"
+  },
+  "kernel_offline_compatibility": "PASS_WITH_NONBLOCKING_WARNING",
+  "nonblocking_warnings": [
+    {
+      "type": "UPSTREAM_MAKE_XVC_FLAGS_INFORMATIONAL",
+      "detail": "The upstream Makefile printed 'XVC_FLAGS: .' three times in each build; the governed XVC_FLAGS value was intentionally empty."
+    },
+    {
+      "type": "COMPILER_EXECUTABLE_NAME",
+      "detail": "Kernel compiler x86_64-linux-gnu-gcc and build compiler x86_64-linux-gnu-gcc-15 have the identical Ubuntu 15.2.0-16ubuntu1 GCC 15.2.0 identity."
+    },
+    {
+      "type": "PAHOLE_VERSION",
+      "detail": "Kernel build recorded pahole 131; module build environment reported 0."
+    },
+    {
+      "type": "BTF_SKIPPED",
+      "detail": "BTF generation was skipped because /usr/src/linux-headers-7.0.0-29-generic/vmlinux was unavailable."
+    }
+   ],
+  "expected_node_model": {
+    "class_name": "xdma",
+    "character_device_prefix": "xdma",
+    "expected_user_node": "/dev/xdma0_user",
+    "expected_c2h_node": "/dev/xdma0_c2h_0",
+    "generic_user_node_model": "/dev/xdmaN_user",
+    "generic_c2h_node_model": "/dev/xdmaN_c2h_M",
+    "possible_additional_nodes": [
+      "/dev/xdmaN_control",
+      "/dev/xdmaN_xvc",
+      "/dev/xdmaN_events_M",
+      "/dev/xdmaN_h2c_M",
+      "/dev/xdmaN_bypass"
+    ],
+    "multi_device_indexing": "SUPPORTED_DYNAMIC_PROBE_ORDER",
+    "live_node_creation_claimed": false
+  },
+  "platform_module": {
+    "path": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+    "sha256": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+    "internal_name": "xdma",
+    "alias": "platform:xdma",
+    "preserved_unchanged": true,
+    "loaded_at_preflight": false,
+    "module_name_collision": false,
+    "coexistence_runtime_test": "NOT_AUTHORIZED_NOT_RUN"
+  },
+  "sealed_artifacts": {
+    "status": "SEALED_READ_ONLY",
+    "remote_module_path": "/home/vcdeagent1/vcde_artifacts/g2b_hw0_drv1/20260906T121539Z/xdma_ahd_pcie.ko",
+    "controller_module_path": "C:\\FPGA\\V41_G2B_DRIVER_ARTIFACTS\\G2B_HW0_DRV1_20260906T121539Z\\xdma_ahd_pcie.ko",
+    "sealed_copy_hash_agreement": "PASS",
+    "sealed_module_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "sealed_module_size": 3296104,
+    "remote_directory_mode": "0555",
+    "remote_writable_file_count": 0,
+    "controller_module_read_only": true,
+    "sealed_manifest": "G2B_HW0_DRV1_SEALED_SHA256_MANIFEST.txt",
+    "controller_raw_export": "C:\\FPGA\\V41_G2B_DRIVER_ARTIFACTS\\G2B_HW0_DRV1_20260906T121539Z\\raw_export"
+  },
+  "publication": {
+    "driver_branch": "PASS",
+    "evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "evidence_directory": "v41-host-g2b-hw0-ahd-xdma-driver-build",
+    "evidence_status": "PENDING",
+    "evidence_commit": null,
+    "remote_readback": "PENDING"
+  },
+  "installed": false,
+  "loaded": false,
+  "bound": false,
+  "hardware_qualification": false,
+  "runtime_state": {
+    "candidate_installed": false,
+    "candidate_loaded": false,
+    "candidate_bound": false,
+    "endpoint_bdf_at_preflight": "0000:01:00.0",
+    "endpoint_driver_at_preflight": null,
+    "xdma_device_node_count_at_preflight": 0,
+    "hardware_qualification": false
+  },
+  "final_dut_audit": {
+    "completed_utc": "2026-09-06T12:43:29Z",
+    "result": "PASS",
+    "boot_id_unchanged": true,
+    "kernel_release": "7.0.0-29-generic",
+    "candidate_installed": false,
+    "candidate_loaded": false,
+    "platform_module_loaded": false,
+    "endpoint_present": true,
+    "endpoint_bdf": "0000:01:00.0",
+    "endpoint_driver": null,
+    "endpoint_link": "Gen2 x1",
+    "xdma_device_node_count": 0,
+    "platform_module_sha256": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+    "latest_apt_history_end_date": "2026-09-05 06:43:34"
+  },
+  "no_touch": {
+    "packages_installed": false,
+    "module_load_or_unload": false,
+    "pci_bind_or_unbind": false,
+    "driver_override_or_new_id": false,
+    "mmio_access": false,
+    "dma_execution": false,
+    "pci_reset_or_rescan": false,
+    "jtag_or_fpga_programming": false,
+    "reboot": false,
+    "power_cycle": false,
+    "product_candidate_modified": false,
+    "ahd_ssot_modified": false,
+    "hdmi_ssot_modified": false
+  },
+  "r3_readiness": "PENDING_EVIDENCE_PUBLICATION"
+}

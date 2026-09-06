@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "record_type": "G2B_HW0_DRV1_STATE",
+  "task": "G2B-HW0-DRV1",
+  "execution_status": "IN_PROGRESS_PENDING_EVIDENCE_PUBLICATION",
+  "engineering_gate": "PASS",
+  "evidence_publication": "PENDING",
+  "overall_result": "PENDING",
+  "project_state_rev_at_start": 8,
+  "project_state_rev_at_end": 8,
+  "r2_evidence": "VERIFIED",
+  "hdmi_reuse_evidence": "VERIFIED",
+  "owner_build_authorization": "GRANTED",
+  "authoritative_dut": {
+    "identity": "VCDE-DUT-HOST-01 / VCDE-DUT-1 / 10.132.1.111",
+    "authenticated_connection": "PASS",
+    "authenticated_user": "vcdeagent1",
+    "machine_id": "0e90f50d9465492b80258da5658446f8",
+    "boot_id": "52b0bf13-e9d1-4558-ae13-d08f4ecc8dac",
+    "running_kernel": "7.0.0-29-generic",
+    "architecture": "x86_64",
+    "exact_kernel_headers": "PASS",
+    "secure_boot": "SecureBoot disabled"
+  },
+  "product": {
+    "source_worktree": "PRESERVED",
+    "branch": "integration/v41-g2b-onech-c2h",
+    "commit": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "tree": "cf6bf82249c90782eab1978c68541ed9c0e6430b",
+    "bitstream_sha256": "AF10C6108B5D99AD239E0F0008ACF7C790333CA1FDD69FD775394091CDEEF4B7",
+    "modified": false
+  },
+  "driver_source": {
+    "branch": "host/v41-g2b-hw0-ahd-xdma-driver",
+    "worktree": "C:\\FPGA\\V41_G2B_DRV",
+    "base": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "commit": "0a201aab7adb13be079e784c6ed97dfad2ed7764",
+    "tree": "6f079bf086878ddbce1f1ec82fece3039eae6573",
+    "publication": "PASS"
+  },
+  "upstream": {
+    "repository": "Xilinx/dma_ip_drivers",
+    "commit": "b8466090b4e812e191da9e9305ffb11cb7ace768",
+    "tree": "f9286c5d1bdae57285570ac5c23244d54076b99f",
+    "authority": "VERIFIED",
+    "patch_sha256": "415F0836E56782D0F8667FA4510E63016A065A6F175A25433CD6D2EAA57E6AD7"
+  },
+  "candidate": {
+    "classification": "OFFLINE_QUALIFIED_AHD_PCIE_XDMA_DRIVER_CANDIDATE",
+    "module_filename": "xdma_ahd_pcie.ko",
+    "internal_module_name": "xdma_ahd_pcie",
+    "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "size": 3296104,
+    "architecture": "x86_64",
+    "vermagic": "7.0.0-29-generic SMP preempt mod_unload modversions ",
+    "build_id": "1471c3a284ec1cb26115fe9e9bd59890a034f83e",
+    "generated_alias": "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*",
+    "transport_behavior": "GENERIC_PCIE_XDMA_TRANSPORT_ONLY",
+    "kernel_offline_compatibility": "PASS_WITH_NONBLOCKING_WARNING",
+    "signature_disposition": "UNSIGNED_ACCEPTABLE_FOR_SEPARATELY_AUTHORIZED_TEST"
+  },
+  "build_gates": {
+    "build_A": "PASS",
+    "build_A_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "build_B": "PASS",
+    "build_B_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "modpost_A": "PASS",
+    "modpost_B": "PASS",
+    "binary_reproducibility": "BYTE_IDENTICAL",
+    "clean_build_count": 2,
+    "third_build_required": false
+  },
+  "alias_gates": {
+    "exact_ahd_modalias": "PASS",
+    "alternate_subsystem_match": false,
+    "hdmi_modalias_match": false,
+    "generic_xilinx_device_match": false,
+    "platform_xdma_alias_match": false,
+    "installed_xilinx_endpoint_match": false,
+    "unintended_broad_pci_aliases": 0
+  },
+  "expected_node_model": {
+    "class": "xdma",
+    "user": "/dev/xdma0_user",
+    "c2h": "/dev/xdma0_c2h_0",
+    "multi_device_indexing": "SUPPORTED_DYNAMIC_PROBE_ORDER",
+    "live_nodes_claimed": false
+  },
+  "platform_module": {
+    "path": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+    "sha256": "523ED1F77A4700773EF1DF846A54592D7396774826ACABBCB222E104CC5A9490",
+    "internal_name": "xdma",
+    "alias": "platform:xdma",
+    "preserved": true,
+    "module_name_collision": false
+  },
+  "warnings": [
+    "UPSTREAM_MAKE_XVC_FLAGS_INFORMATIONAL",
+    "COMPILER_EXECUTABLE_NAME_ONLY",
+    "PAHOLE_VERSION_131_VS_0",
+    "BTF_SKIPPED_VMLINUX_UNAVAILABLE"
+  ],
+  "sealed_artifacts": {
+    "remote_module_path": "/home/vcdeagent1/vcde_artifacts/g2b_hw0_drv1/20260906T121539Z/xdma_ahd_pcie.ko",
+    "controller_module_path": "C:\\FPGA\\V41_G2B_DRIVER_ARTIFACTS\\G2B_HW0_DRV1_20260906T121539Z\\xdma_ahd_pcie.ko",
+    "status": "SEALED_READ_ONLY",
+    "hash_agreement": "PASS",
+    "remote_directory_mode": "0555",
+    "remote_writable_file_count": 0,
+    "controller_module_read_only": true,
+    "controller_raw_export": "C:\\FPGA\\V41_G2B_DRIVER_ARTIFACTS\\G2B_HW0_DRV1_20260906T121539Z\\raw_export"
+  },
+  "publication": {
+    "evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "evidence_directory": "v41-host-g2b-hw0-ahd-xdma-driver-build",
+    "evidence_commit": null,
+    "remote_readback": "PENDING"
+  },
+  "runtime_and_no_touch": {
+    "packages_installed": false,
+    "module_installed": false,
+    "module_loaded": false,
+    "endpoint_bound": false,
+    "driver_override_or_new_id_used": false,
+    "mmio_accessed": false,
+    "dma_executed": false,
+    "fpga_programmed": false,
+    "reboot": false,
+    "power_cycle": false,
+    "product_candidate_modified": false,
+    "ahd_ssot_modified": false,
+    "hdmi_ssot_modified": false,
+    "hardware_qualification": false
+  },
+  "installed": false,
+  "loaded": false,
+  "bound": false,
+  "hardware_qualification": false,
+  "ssot_update_required": "NO",
+  "driver_ready_for_r3": "PENDING_EVIDENCE_PUBLICATION",
+  "first_blocker": "NONE",
+  "recommended_next_step": "Complete commit-pinned evidence publication, then run G2B-HW0-PRODUCT-R3 only with separate owner authorization.",
+  "final_execution_point": "HARD STOP AFTER G2B-HW0-DRV1 OFFLINE DRIVER QUALIFICATION"
+}

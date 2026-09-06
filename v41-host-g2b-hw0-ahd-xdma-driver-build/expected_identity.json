@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "record_type": "G2B_HW0_DRV1_EXPECTED_DRIVER_IDENTITY",
+  "classification": "EXPECTED_OFFLINE_AHD_PCIE_XDMA_CANDIDATE",
+  "upstream": {
+    "repository": "https://github.com/Xilinx/dma_ip_drivers.git",
+    "commit": "b8466090b4e812e191da9e9305ffb11cb7ace768",
+    "tree": "f9286c5d1bdae57285570ac5c23244d54076b99f"
+  },
+  "patch_sha256": "415F0836E56782D0F8667FA4510E63016A065A6F175A25433CD6D2EAA57E6AD7",
+  "kernel_release": "7.0.0-29-generic",
+  "architecture": "x86_64",
+  "module_filename": "xdma_ahd_pcie.ko",
+  "internal_module_name": "xdma_ahd_pcie",
+  "pci_identity": {
+    "vendor": "10ee",
+    "device": "7011",
+    "subsystem_vendor": "10ee",
+    "subsystem_device": "0007",
+    "exact_observed_modalias": "pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00",
+    "expected_generated_alias": "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*",
+    "alias_count": 1
+  },
+  "transport_behavior": "GENERIC_PCIE_XDMA_TRANSPORT_ONLY",
+  "character_device_prefix": "xdma",
+  "expected_user_node_model": "/dev/xdmaN_user",
+  "expected_c2h_node_model": "/dev/xdmaN_c2h_0",
+  "installed": false,
+  "loaded": false,
+  "bound": false,
+  "hardware_qualification": false
+}
+

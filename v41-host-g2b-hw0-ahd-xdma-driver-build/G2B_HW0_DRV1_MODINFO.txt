@@ -1,0 +1,17 @@
+filename:       /home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_A/source/XDMA/linux-kernel/xdma/xdma_ahd_pcie.ko
+license:        Dual BSD/GPL
+version:        2025.2.0
+description:    Xilinx XDMA Reference Driver (AHD exact PCI match)
+author:         Xilinx, Inc.
+srcversion:     EE8B149D1883AE8C6B1EE31
+alias:          pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*
+depends:        
+name:           xdma_ahd_pcie
+retpoline:      Y
+vermagic:       7.0.0-29-generic SMP preempt mod_unload modversions 
+parm:           h2c_timeout:H2C sgdma timeout in seconds, default is 10 sec. (uint)
+parm:           c2h_timeout:C2H sgdma timeout in seconds, default is 10 sec. (uint)
+parm:           poll_mode:Set 1 for hw polling, default is 0 (interrupts) (uint)
+parm:           interrupt_mode:0 - Auto , 1 - MSI, 2 - Legacy, 3 - MSI-x (uint)
+parm:           enable_st_c2h_credit:Set 1 to enable ST C2H engine credit feature, default is 0 ( credit control disabled) (uint)
+parm:           desc_blen_max:per descriptor max. buffer length, default is (1 << 28) - 1 (uint)
