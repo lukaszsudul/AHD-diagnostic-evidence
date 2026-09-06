@@ -1,0 +1,96 @@
+UTC_START=2026-09-06T11:03:26.8545356Z
+UTC_END=2026-09-06T11:03:30.4780656Z
+EVIDENCE_KIND=G2B_HW0_DRV_REUSE0_DUT_READ_ONLY_INVENTORY
+RESULT=PASS
+EXIT_CODE=0
+ARGUMENT_TOKEN_AUDIT=PASS
+PLINK_PW_OPTION_USED=NO
+PLINK_PWFILE_OPTION_USED=YES
+USERNAME_ROLE_OCCURRENCE=YES_AUTHORIZED
+PASSWORD_ROLE_ARGUMENT_OCCURRENCE=NO
+REMOTE_COMMAND_SHARED_LITERAL=NO
+INHERITED_ENVIRONMENT_AUDIT=PASS
+PWFILE_CREATED=YES
+PWFILE_DELETED=YES
+STDOUT_BEGIN
+AUDIT=G2B-HW0-DRV-REUSE0
+UTC=2026-09-06T11:03:29Z
+HOSTNAME=VCDE-DUT-1
+HOSTNAMECTL_STATIC=VCDE-DUT-1
+MACHINE_ID=0e90f50d9465492b80258da5658446f8
+AUTHENTICATED_USER=vcdeagent1
+AUTHENTICATED_UID=1000
+ARCH=x86_64
+BOOT_ID=52b0bf13-e9d1-4558-ae13-d08f4ecc8dac
+KERNEL=7.0.0-29-generic
+UPTIME_SECONDS=14116.06
+ENDPOINT_PRESENT=YES
+ENDPOINT_BDF=0000:01:00.0
+VENDOR=0x10ee
+DEVICE=0x7011
+SUBSYSTEM_VENDOR=0x10ee
+SUBSYSTEM_DEVICE=0x0007
+CLASS=0x058000
+MODALIAS=pci:v000010EEd00007011sv000010EEsd00000007bc05sc80i00
+DRIVER=UNBOUND
+DRIVER_SYMLINK=NONE
+DRIVER_OVERRIDE=(null)
+CURRENT_LINK_SPEED=5.0 GT/s PCIe
+CURRENT_LINK_WIDTH=1
+ENDPOINT_SYSFS_REALPATH=/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0
+UPSTREAM_BDF=0000:00:01.1
+LSPCI_ENDPOINT_BEGIN
+0000:01:00.0 Memory controller [0580]: Xilinx Corporation 7-Series FPGA Hard PCIe block (AXI/debug) [10ee:7011]
+	Subsystem: Xilinx Corporation Device [10ee:0007]
+	Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 255
+	IOMMU group: 13
+	Region 0: Memory at f6f00000 (32-bit, non-prefetchable) [disabled] [size=128K]
+	Region 1: Memory at f6f20000 (32-bit, non-prefetchable) [disabled] [size=64K]
+	Capabilities: <access denied>
+
+LSPCI_ENDPOINT_END
+LSPCI_UPSTREAM_BEGIN
+0000:00:01.1 PCI bridge [0604]: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge [1022:14ed] (prog-if 00 [Normal decode])
+	Subsystem: ASUSTeK Computer Inc. Device [1043:8877]
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 64 bytes
+	Interrupt: pin ? routed to IRQ 27
+	IOMMU group: 1
+	Bus: primary=00, secondary=01, subordinate=01, sec-latency=0
+	I/O behind bridge: [disabled] [32-bit]
+	Memory behind bridge: f6f00000-f6ffffff [size=1M] [32-bit]
+	Prefetchable memory behind bridge: [disabled] [64-bit]
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR+ NoISA- VGA- VGA16+ MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: <access denied>
+	Kernel driver in use: pcieport
+	Kernel modules: shpchp
+
+LSPCI_UPSTREAM_END
+XDMA_PROC_MODULES_BEGIN
+XDMA_PROC_MODULES_END
+XDMA_MODULE_LOADED=NO
+XDMA_NODES_BEGIN
+XDMA_NODES_END
+SECURE_BOOT_BEGIN
+SecureBoot disabled
+SECURE_BOOT_END
+LOCKDOWN=[none] integrity confidentiality
+CONFIG_MODULE_SIG_FORCE_NOT_SET
+CONCURRENT_PROCESSES_BEGIN
+   7197    7196 vcdeage+ Sun Sep  6 13:03:28 2026 bash -c #!/usr/bin/env bash set -u  endpoint=/sys/bus/pci/devices/0000:01:00.0  echo "AUDIT=G2B-HW0-DRV-REUSE0" echo "UTC=$(date -u +%Y-%m-%dT%H:%M:%SZ)" echo "HOSTNAME=$(hostname)" echo "HOSTNAMECTL_STATIC=$(hostnamectl --static 2>/dev/null || true)" echo "MACHINE_ID=$(cat /etc/machine-id 2>/dev/null || true)" echo "AUTHENTICATED_USER=$(id -un)" echo "AUTHENTICATED_UID=$(id -u)" echo "ARCH=$(uname -m)" echo "BOOT_ID=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || true)" echo "KERNEL=$(uname -r)" echo "UPTIME_SECONDS=$(cut -d' ' -f1 /proc/uptime 2>/dev/null || true)"  if [ -d "$endpoint" ]; then   echo "ENDPOINT_PRESENT=YES"   echo "ENDPOINT_BDF=0000:01:00.0"   echo "VENDOR=$(cat "$endpoint/vendor" 2>/dev/null || true)"   echo "DEVICE=$(cat "$endpoint/device" 2>/dev/null || true)"   echo "SUBSYSTEM_VENDOR=$(cat "$endpoint/subsystem_vendor" 2>/dev/null || true)"   echo "SUBSYSTEM_DEVICE=$(cat "$endpoint/subsystem_device" 2>/dev/null || true)"   echo "CLASS=$(cat "$endpoint/class" 2>/dev/null || true)"   echo "MODALIAS=$(cat "$endpoint/modalias" 2>/dev/null || true)"   if [ -L "$endpoint/driver" ]; then     echo "DRIVER=$(basename "$(readlink -f "$endpoint/driver")")"     echo "DRIVER_SYMLINK=$(readlink "$endpoint/driver")"   else     echo "DRIVER=UNBOUND"     echo "DRIVER_SYMLINK=NONE"   fi   echo "DRIVER_OVERRIDE=$(cat "$endpoint/driver_override" 2>/dev/null || true)"   echo "CURRENT_LINK_SPEED=$(cat "$endpoint/current_link_speed" 2>/dev/null || true)"   echo "CURRENT_LINK_WIDTH=$(cat "$endpoint/current_link_width" 2>/dev/null || true)"   endpoint_real=$(readlink -f "$endpoint")   upstream_path=$(dirname "$endpoint_real")   echo "ENDPOINT_SYSFS_REALPATH=$endpoint_real"   echo "UPSTREAM_BDF=$(basename "$upstream_path")"   echo "LSPCI_ENDPOINT_BEGIN"   lspci -D -s 0000:01:00.0 -nn -vv 2>&1 || true   echo "LSPCI_ENDPOINT_END"   upstream_bdf=$(basename "$upstream_path")   echo "LSPCI_UPSTREAM_BEGIN"   lspci -D -s "$upstream_bdf" -nn -vv 2>&1 || true   echo "LSPCI_UPSTREAM_END" else   echo "ENDPOINT_PRESENT=NO"   echo "ENDPOINT_BDF=NONE" fi  echo "XDMA_PROC_MODULES_BEGIN" awk '$1 == "xdma" {print}' /proc/modules 2>/dev/null || true echo "XDMA_PROC_MODULES_END" if [ -d /sys/module/xdma ]; then   echo "XDMA_MODULE_LOADED=YES" else   echo "XDMA_MODULE_LOADED=NO" fi echo "XDMA_NODES_BEGIN" find /dev -maxdepth 1 -name 'xdma*' -printf '%p %y %m %u:%g\n' 2>/dev/null | sort echo "XDMA_NODES_END"  echo "SECURE_BOOT_BEGIN" if command -v mokutil >/dev/null 2>&1; then   mokutil --sb-state 2>&1 || true else   echo "mokutil unavailable" fi echo "SECURE_BOOT_END" echo "LOCKDOWN=$(cat /sys/kernel/security/lockdown 2>/dev/null || true)" kernel_config=/boot/config-$(uname -r) if [ -r "$kernel_config" ]; then   grep '^CONFIG_MODULE_SIG_FORCE=' "$kernel_config" 2>/dev/null || echo 'CONFIG_MODULE_SIG_FORCE_NOT_SET' else   echo 'CONFIG_MODULE_SIG_FORCE_UNREADABLE' fi  echo "CONCURRENT_PROCESSES_BEGIN" ps -eo pid=,ppid=,user=,lstart=,args= | grep -E '[x]dma|[i]nsmod|[m]odprobe|[r]mmod|/sys/bus/pci/.*/(bind|unbind|rescan|reset)|[v]ivado|[h]w_server|[o]penocd|[f]pga|[a]pt(-get)?|[d]pkg|[u]nattended-upgrade|[m]ake .*xdma|[g]cc .*xdma' || true echo "CONCURRENT_PROCESSES_END" echo "SYSTEMD_JOBS_BEGIN" systemctl list-jobs --no-legend 2>&1 || true echo "SYSTEMD_JOBS_END" echo "PACKAGE_LOCK_HOLDERS_BEGIN" for lockfile in /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock; do   if command -v fuser >/dev/null 2>&1; then     fuser "$lockfile" 2>&1 || true   fi done echo "PACKAGE_LOCK_HOLDERS_END" echo "AUDIT_COMPLETE=YES" 
+   7353    7197 vcdeage+ Sun Sep  6 13:03:29 2026 grep -E [x]dma|[i]nsmod|[m]odprobe|[r]mmod|/sys/bus/pci/.*/(bind|unbind|rescan|reset)|[v]ivado|[h]w_server|[o]penocd|[f]pga|[a]pt(-get)?|[d]pkg|[u]nattended-upgrade|[m]ake .*xdma|[g]cc .*xdma
+CONCURRENT_PROCESSES_END
+SYSTEMD_JOBS_BEGIN
+SYSTEMD_JOBS_END
+PACKAGE_LOCK_HOLDERS_BEGIN
+PACKAGE_LOCK_HOLDERS_END
+AUDIT_COMPLETE=YES
+STDOUT_END
+STDERR_BEGIN
+
+STDERR_END
