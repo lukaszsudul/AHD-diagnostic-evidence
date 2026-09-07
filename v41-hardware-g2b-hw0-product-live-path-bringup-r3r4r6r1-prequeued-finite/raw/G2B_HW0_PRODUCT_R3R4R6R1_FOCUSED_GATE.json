@@ -1,0 +1,82 @@
+{
+  "schema": "R3R4R6R1_FOCUSED_HOST_TOOL_GATE_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R6R1",
+  "result": "PASS",
+  "passed": 6,
+  "total": 6,
+  "source_lineage": "R3R4R6_SOURCE_REUSED_UNCHANGED",
+  "compiler_correction_iterations": 0,
+  "non_dut_compiler_host_10_132_1_227_used": false,
+  "dut_build_only_connection": "PASS",
+  "hardware_accessed_during_build_phase": false,
+  "cases": [
+    {
+      "name": "NATIVE_HELPER_COMPILES_PASS",
+      "result": "PASS",
+      "detail": {
+        "compile_location": "AUTHORITATIVE_DUT_BUILD_ONLY",
+        "compiler": "/usr/bin/gcc 15.2.0",
+        "source_sha256": "D9F4DA042A02BB55FE8B1BCC990BC2D2001D2F01F5DFB8987094042F9731CCD7",
+        "binary_sha256": "FF57965546A4AC86DB46558BFD9787903070D9B1399D595AF5068E98D46A853D",
+        "architecture": "x86-64",
+        "compile_return_code": 0,
+        "warnings": [],
+        "smoke_exit_code": 64,
+        "smoke_test": "PASS",
+        "hardware_accessed_during_build_phase": false
+      }
+    },
+    {
+      "name": "NO_ACTIVE_DMA_SIGNAL_INTERRUPTION_PASS",
+      "result": "PASS",
+      "detail": {
+        "forbidden_hits": [],
+        "controller_forced_termination": false
+      }
+    },
+    {
+      "name": "C2H_OPEN_FLAGS_PASS",
+      "result": "PASS",
+      "detail": {
+        "read_only": true,
+        "close_on_exec": true,
+        "no_follow": true,
+        "truncate": false,
+        "eop_flush": false
+      }
+    },
+    {
+      "name": "TWO_AIO_REQUESTS_PREQUEUED_PASS",
+      "result": "PASS",
+      "detail": {
+        "program_order": [
+          "PRIMARY_SUBMIT",
+          "GUARD_SUBMIT",
+          "PREQUEUE_READY"
+        ],
+        "both_submit_results_required": true
+      }
+    },
+    {
+      "name": "PREQUEUE_READY_ENABLE_DEPENDENCY_PASS",
+      "result": "PASS",
+      "detail": {
+        "prequeue_ready_before_enable": true,
+        "enable_precondition": "PREQUEUE_READY"
+      }
+    },
+    {
+      "name": "METRIC_SPLIT_FIXTURE_PASS",
+      "result": "PASS",
+      "detail": {
+        "valid_discontinuity_record_integrity": "PASS",
+        "valid_malformed_preceding_record_integrity": "PASS",
+        "continuity_classification_separate": true,
+        "bad_magic_integrity": "FAIL_EXPECTED",
+        "nonzero_padding_integrity": "FAIL_EXPECTED",
+        "partial_returned_bytes": 3584,
+        "partial_counted_as_additional_malformed_record": false
+      }
+    }
+  ]
+}

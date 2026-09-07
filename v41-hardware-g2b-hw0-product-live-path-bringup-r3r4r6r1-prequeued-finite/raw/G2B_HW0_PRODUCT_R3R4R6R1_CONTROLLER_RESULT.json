@@ -1,0 +1,153 @@
+{
+  "schema": "R3R4R6R1_CONTROLLER_RESULT_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R6R1",
+  "result": "FAIL",
+  "blocker": "R3R4R6R1_NATIVE_HELPER_EVENT_TIMEOUT",
+  "events": [
+    {
+      "type": "PREQUEUE_READY",
+      "primary_request_id": 1,
+      "guard_request_id": 2,
+      "primary_bytes": 10240000,
+      "guard_bytes": 4194304,
+      "total_bytes": 14434304,
+      "buffer_alignment": 4096,
+      "primary_buffer_mod_alignment": 0,
+      "guard_buffer_mod_alignment": 0,
+      "primary_submit_result": 1,
+      "guard_submit_result": 1,
+      "buffers_prefaulted": true,
+      "aio_context_active": true,
+      "monotonic_ns": 87443998693345,
+      "realtime_ns": 1788814407769278103
+    },
+    {
+      "type": "PRIMARY_BUFFER_COMPLETE",
+      "request_id": 1,
+      "result_bytes": 643072,
+      "result2": 0,
+      "monotonic_ns": 87444004577041
+    }
+  ],
+  "parent_owned_mmio": true,
+  "raw_payload_control_ipc": false,
+  "primary_requested_bytes": 10240000,
+  "guard_requested_bytes": 4194304,
+  "unauthorized_mmio_writes": 0,
+  "linux_lock_receipt": {
+    "task": "G2B-HW0-PRODUCT-R3R4R6R1",
+    "state": "HELD",
+    "remote_root": "/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r6r1/20260907T202452Z",
+    "process_id": 24061,
+    "acquired_utc_ns": 1788814302378393735
+  },
+  "S0": {
+    "Checkpoint": "S0",
+    "Epoch": 3,
+    "ErrorStatus": 7,
+    "LastErrorCause": 3,
+    "Attempted": 226,
+    "Committed": 154,
+    "Streamed": 154,
+    "Dropped": 72,
+    "Overflow": 71,
+    "Discontinuity": 21,
+    "Timestamp": 1788814407763489122
+  },
+  "S0_owner_expected": {
+    "Epoch": 3,
+    "ErrorStatus": 7,
+    "LastErrorCause": 3
+  },
+  "S0_deviations": {},
+  "S1": {
+    "Checkpoint": "S1",
+    "Epoch": 4,
+    "ErrorStatus": 7,
+    "LastErrorCause": 3,
+    "Attempted": 226,
+    "Committed": 154,
+    "Streamed": 154,
+    "Dropped": 72,
+    "Overflow": 71,
+    "Discontinuity": 21,
+    "Timestamp": 1788814407763638538
+  },
+  "session_normalization_w1c_mask": 7,
+  "S2": {
+    "Checkpoint": "S2",
+    "Epoch": 4,
+    "ErrorStatus": 0,
+    "LastErrorCause": 3,
+    "Attempted": 226,
+    "Committed": 154,
+    "Streamed": 154,
+    "Dropped": 72,
+    "Overflow": 71,
+    "Discontinuity": 21,
+    "Timestamp": 1788814407763831625
+  },
+  "baseline_snapshot": {
+    "label": "BASELINE_PRE_ENABLE",
+    "epoch": 4,
+    "generation": 4,
+    "attempted": 226,
+    "committed": 154,
+    "streamed": 154,
+    "dropped": 72,
+    "overflow": 71,
+    "discontinuity": 21,
+    "beats_low": 78848,
+    "beats_high": 0,
+    "last_global": 4294967295,
+    "abandoned": 0,
+    "reset_events": 4,
+    "last_attempt": 4294967295,
+    "beats": 78848
+  },
+  "prequeue_ready": {
+    "type": "PREQUEUE_READY",
+    "primary_request_id": 1,
+    "guard_request_id": 2,
+    "primary_bytes": 10240000,
+    "guard_bytes": 4194304,
+    "total_bytes": 14434304,
+    "buffer_alignment": 4096,
+    "primary_buffer_mod_alignment": 0,
+    "guard_buffer_mod_alignment": 0,
+    "primary_submit_result": 1,
+    "guard_submit_result": 1,
+    "buffers_prefaulted": true,
+    "aio_context_active": true,
+    "monotonic_ns": 87443998693345,
+    "realtime_ns": 1788814407769278103
+  },
+  "prequeue_ready_to_enable_latency_us": 137.364,
+  "primary_completion": {
+    "type": "PRIMARY_BUFFER_COMPLETE",
+    "request_id": 1,
+    "result_bytes": 643072,
+    "result2": 0,
+    "monotonic_ns": 87444004577041
+  },
+  "primary_completion_to_disable_latency_us": 111.185,
+  "parent_hardware_quiescence": {
+    "result": "PASS",
+    "samples": 5,
+    "accepted_samples": 5,
+    "span_ms": 401.405
+  },
+  "exception_type": "GateError",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r6r1/20260907T202452Z/scripts/controller_r3r4r6r1.py\", line 450, in run\n    event = read_native_event(process, selector, native_deadline)\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r6r1/20260907T202452Z/scripts/controller_r3r4r6r1.py\", line 248, in read_native_event\n    raise GateError(\"R3R4R6R1_NATIVE_HELPER_EVENT_TIMEOUT\")\nGateError: R3R4R6R1_NATIVE_HELPER_EVENT_TIMEOUT\n",
+  "mmio_write_intents": 5,
+  "mmio_write_counts": {
+    "RESET_STREAM_STATE": 1,
+    "SESSION_NORMALIZATION_W1C": 1,
+    "COHERENT_SNAPSHOT": 1,
+    "STREAM_ENABLE": 1,
+    "NORMAL_DISABLE": 0,
+    "SAFETY_DISABLE": 1
+  },
+  "normal_disable_completed": false,
+  "parent_quiescent_completed": true
+}

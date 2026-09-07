@@ -1,0 +1,66 @@
+# R3R4R6R1 Evidence Index
+
+Engineering result: **FAIL** — `PRIMARY_AIO_FINITE_BUFFER_NOT_FILLED:EXPECTED_10240000_ACTUAL_643072`.
+
+The package contains only source, hashes, counters, headers, control
+metadata, and reports. It contains no compiled executable, credentials,
+driver, bitstream, raw record buffer, raw frame, or camera PNG.
+
+## Files
+
+- `build/compile-command.txt`
+- `build/compile-return-code.txt`
+- `build/compile.stderr.txt`
+- `build/compile.stdout.txt`
+- `build/gcc.path.txt`
+- `build/gcc.version.txt`
+- `build/smoke-return-code.txt`
+- `build/smoke.stderr.txt`
+- `build/smoke.stdout.txt`
+- `G2B_HW0_PRODUCT_R3R4R6R1_AIO_COMPLETIONS.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_AUTHORIZATION_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_CLEANUP_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_COUNTER_RECONCILIATION.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_DUT_LOCAL_BUILD_REPORT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_ERROR_TIMELINE.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FINAL_STATE.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FIRST_RECORD_HEADER.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FIRST_RECORD_REPORT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FLAG_PREDICTION.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FLAG_PREDICTION_COMPARISON.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FOCUSED_HOST_TOOL_GATE.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_FRAME_RECONSTRUCTION_REPORT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_GATE_MATRIX.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_HOST_DMA_ACCOUNTING.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_MALFORMED_PRECEDING_TIMELINE.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_MMIO_WRITE_LEDGER.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_NATIVE_BINARY_IDENTITY.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_OWNER_CONTINUITY_ATTESTATION.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_PCIE_AER_KERNEL_REVIEW.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_PREQUEUE_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R1_RECORD_INTEGRITY_METRICS.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R1_STATE.json`
+- `G2B_HW0_PRODUCT_R3R4R6R1_STREAM_CONTINUITY_METRICS.csv`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_CONTROLLER_RESULT.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_FAILURE_FINALIZE_RESULT.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_FOCUSED_GATE.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_HEALTH_AFTER-CAPTURE.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_HEALTH_AFTER-DRIVER-LOAD.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_HEALTH_BASELINE.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_HEALTH_CLEANUP-BLOCKED.json`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_MMIO_RAW.csv`
+- `raw/G2B_HW0_PRODUCT_R3R4R6R1_QUIESCENCE_SAMPLES.csv`
+- `tools/abi_v1.py`
+- `tools/Controller-Lock-R3R4R6R1.ps1`
+- `tools/controller_r3r4r6r1.py`
+- `tools/failure_finalize_r3r4r6r1.py`
+- `tools/focused_gate_r3r4r6r1.py`
+- `tools/focused_selftest_r3r4r6.py`
+- `tools/frame_reconstruct_r3r4.py`
+- `tools/Invoke-R3R4R6R1DutConnection.ps1`
+- `tools/linux_lock_r3r4r6r1.py`
+- `tools/minimal_health_r3r4r6r1.py`
+- `tools/prequeued_c2h_capture.c`
+- `tools/V41_C2H_TRANSPORT_ABI_V1.json`
+- `tools/validate_r3r4r6r1.py`
+- `V41_G2B_HW0_PRODUCT_R3R4R6R1_MAIN_REPORT.md`
