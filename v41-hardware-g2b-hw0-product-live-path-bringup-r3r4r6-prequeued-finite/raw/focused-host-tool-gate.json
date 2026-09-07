@@ -1,0 +1,69 @@
+{
+  "schema": "R3R4R6_FOCUSED_HOST_TOOL_GATE_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R6",
+  "result": "FAIL",
+  "passed": 5,
+  "total": 6,
+  "correction_iterations_used": 0,
+  "cases": [
+    {
+      "name": "NATIVE_HELPER_COMPILES_PASS",
+      "result": "FAIL",
+      "detail": "AssertionError:offline Linux compilation failed: ssh: connect to host 10.132.1.227 port 22: Connection timed out"
+    },
+    {
+      "name": "NO_ACTIVE_DMA_SIGNAL_INTERRUPTION_PASS",
+      "result": "PASS",
+      "detail": {
+        "forbidden_hits": [],
+        "controller_forced_termination": false
+      }
+    },
+    {
+      "name": "C2H_OPEN_FLAGS_PASS",
+      "result": "PASS",
+      "detail": {
+        "read_only": true,
+        "close_on_exec": true,
+        "no_follow": true,
+        "truncate": false,
+        "eop_flush": false
+      }
+    },
+    {
+      "name": "TWO_AIO_REQUESTS_PREQUEUED_PASS",
+      "result": "PASS",
+      "detail": {
+        "program_order": [
+          "PRIMARY_SUBMIT",
+          "GUARD_SUBMIT",
+          "PREQUEUE_READY"
+        ],
+        "both_submit_results_required": true
+      }
+    },
+    {
+      "name": "PREQUEUE_READY_ENABLE_DEPENDENCY_PASS",
+      "result": "PASS",
+      "detail": {
+        "prequeue_ready_before_enable": true,
+        "enable_precondition": "PREQUEUE_READY"
+      }
+    },
+    {
+      "name": "METRIC_SPLIT_FIXTURE_PASS",
+      "result": "PASS",
+      "detail": {
+        "valid_discontinuity_record_integrity": "PASS",
+        "valid_malformed_preceding_record_integrity": "PASS",
+        "continuity_classification_separate": true,
+        "bad_magic_integrity": "FAIL_EXPECTED",
+        "nonzero_padding_integrity": "FAIL_EXPECTED",
+        "partial_returned_bytes": 3584,
+        "partial_counted_as_additional_malformed_record": false
+      }
+    }
+  ],
+  "dut_connection": false,
+  "hardware_access": false
+}

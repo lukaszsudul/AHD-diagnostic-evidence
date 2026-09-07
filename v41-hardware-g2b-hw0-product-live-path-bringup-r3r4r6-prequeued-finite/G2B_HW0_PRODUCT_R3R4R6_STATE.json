@@ -1,0 +1,57 @@
+{
+  "schema": "R3R4R6_STATE_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R6",
+  "generated_utc": "2026-09-07T18:13:21.892Z",
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PENDING_COMMIT_PINNED_REMOTE_READBACK",
+  "overall_result": "BLOCKED",
+  "first_blocker": "R3R4R6_FOCUSED_HOST_TOOL_GATE_FAILED:NATIVE_HELPER_COMPILES_PASS:NON_DUT_OFFLINE_COMPILER_UNREACHABLE",
+  "project_state_rev": "8 \u2014 OWNER_ATTESTED_NOT_REVERIFIED",
+  "owner_continuity_attestation": "ACCEPTED",
+  "fresh_run_root": "C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R6_20260907T174249Z",
+  "prior_run_directories_modified_by_r3r4r6": "NO",
+  "focused_host_tool_gate": {
+    "passed": 5,
+    "total": 6,
+    "result": "FAIL",
+    "correction_iterations_used": 0
+  },
+  "native_helper": {
+    "path": "C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R6_20260907T174249Z\\scripts\\prequeued_c2h_capture.c",
+    "sha256": "D9F4DA042A02BB55FE8B1BCC990BC2D2001D2F01F5DFB8987094042F9731CCD7",
+    "compiled": false
+  },
+  "credential_helper": {
+    "path": "C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R6_20260907T174249Z\\scripts\\Invoke-R3R4R6DutConnection.ps1",
+    "sha256": "677727ED53345BAB68B015714AE3638D45A0C553EF3B84E7B9C1909D742EC79A",
+    "syntax": "PASS",
+    "exact_target_ip_only": true,
+    "credentials_in_command_line_arguments": false,
+    "credential_remnants": 0
+  },
+  "hardware": {
+    "accessed": false,
+    "dut_connections": 0,
+    "driver_load_attempts": 0,
+    "mmio_operations": 0,
+    "dma_operations": 0,
+    "fpga_programming": false,
+    "warm_reboot": false,
+    "flash_programming": false,
+    "power_cycle": false
+  },
+  "requested_capture": {
+    "primary_records": 2500,
+    "primary_bytes": 10240000,
+    "guard_bytes": 4194304,
+    "total_bytes": 14434304
+  },
+  "capture": {
+    "status": "NOT_REACHED",
+    "primary_records": 0,
+    "primary_bytes": 0
+  },
+  "working_causal_model": "NOT_REACHED",
+  "ssot_update_required": "NO",
+  "raw_camera_data_published": false
+}
