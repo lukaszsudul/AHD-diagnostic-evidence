@@ -1,0 +1,618 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R5",
+  "result": "PASS",
+  "utc_ns": 1788796974453322812,
+  "post_capture_error_cleared": false,
+  "statistics_cleared": false,
+  "blocker": "NONE",
+  "capture_result": "FAIL",
+  "capture_first_blocker": "R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set",
+  "pre_snapshot": {
+    "0x3814": 78,
+    "0x3818": 53,
+    "0x381C": 53,
+    "0x3820": 25,
+    "0x3824": 24,
+    "0x3828": 14,
+    "0x382C": 27136,
+    "0x3830": 0,
+    "0x3834": 4294967295,
+    "0x3850": 0,
+    "0x3854": 3,
+    "0x3858": 4294967295,
+    "epoch": 3,
+    "generation": 2,
+    "label": "PRE_CAPTURE_BASELINE"
+  },
+  "final_snapshot": {
+    "0x3814": 226,
+    "0x3818": 154,
+    "0x381C": 154,
+    "0x3820": 72,
+    "0x3824": 71,
+    "0x3828": 21,
+    "0x382C": 78848,
+    "0x3830": 0,
+    "0x3834": 100,
+    "0x3850": 0,
+    "0x3854": 3,
+    "0x3858": 147,
+    "epoch": 3,
+    "generation": 3,
+    "label": "POST_FAILURE_FINAL_NO_CLEAR"
+  },
+  "pre_snapshot_generation": 2,
+  "final_snapshot_generation": 3,
+  "control_before_snapshot": 0,
+  "status_before_snapshot": 1268,
+  "error_status_before_snapshot": 7,
+  "last_error_cause_before_snapshot": 3,
+  "final_control": 0,
+  "final_status": 1268,
+  "final_error_status": 7,
+  "final_last_error_cause": 3,
+  "reset_epoch": 3,
+  "hardware_quiescent": true,
+  "primary_records": 100,
+  "primary_bytes": 409600,
+  "drain_records": 0,
+  "drain_bytes": 0,
+  "incomplete_trailing_bytes": 3584,
+  "primary_sha256": "E3C0071AD358156E896D2CFBE990B813942F3FBF0115B3EEB52A6C4E61F93AD2",
+  "drain_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+  "trailing_sha256": "553387143692C04D765E25D98C94BA01BDD9F851DAE6AC4CC9006C720F57FBB9",
+  "combined_complete_sha256": "E3C0071AD358156E896D2CFBE990B813942F3FBF0115B3EEB52A6C4E61F93AD2",
+  "first_record_reread_bytes": 4096,
+  "first_record_sha256": "E92D4DFC7E46F7F3A619A0CA9D184A6E019429533FC96959316BC295C970B5F4",
+  "first_record_equals_primary_offset_zero": true,
+  "payload_file_exists": false,
+  "payload_slice_bytes": 3840,
+  "payload_slice_sha256": "5E9FA6E20944A1B9B3AE2B2322B47A4501E6A86F5FD38ABFC20D40956AA07028",
+  "record_assessment_source": "REREAD_PERSISTED_FILES",
+  "complete_record_assessments": 100,
+  "malformed_records": 99,
+  "padding_errors": 75,
+  "session_fatal_records": 99,
+  "sequence_gap_records": 0,
+  "discontinuity_flag_records": 1,
+  "malformed_preceding_flag_records": 1,
+  "overflow_flag_records": 0,
+  "assessment_issues": [
+    {
+      "index": 0,
+      "reasons": [
+        "DISCONTINUITY flag is set",
+        "MALFORMED_PRECEDING flag is set"
+      ],
+      "errors": [],
+      "session_fatal": false
+    },
+    {
+      "index": 1,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x254FED80",
+        "bad record version 0x00000000",
+        "bad payload length 1",
+        "source line 258194416 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 0",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 2,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x254FFDC8",
+        "bad record version 0x00000000",
+        "bad payload length 10042",
+        "SOF does not agree with source line zero",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999336",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 3,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x00002749",
+        "bad record version 0x00000000",
+        "bad payload length 259752752",
+        "SOF does not agree with source line zero",
+        "reserved flag bit is nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 4,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000001A",
+        "bad record version 0x00000000",
+        "bad payload length 0",
+        "VALID flag is clear",
+        "illegal active logical channel count 0",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 5,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 6,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 7,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 8,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 9,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 10,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 11,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 12,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 13,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 14,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 15,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 16,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 17,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 18,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 19,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 20,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 21,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 22,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 23,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 24,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 25,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 26,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 27,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 28,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500FC8",
+        "bad record version 0x00000000",
+        "bad payload length 10058",
+        "source line 626004152 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 626003944",
+        "logical channel upper bits are nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 29,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x10801080",
+        "bad record version 0x10801080",
+        "bad payload length 276828288",
+        "source line 276828288 is outside 0..1079",
+        "VALID flag is clear",
+        "reserved flag bit is nonzero",
+        "illegal active logical channel count 276828288",
+        "logical channel upper bits are nonzero",
+        "physical input upper bits are nonzero",
+        "source slot reserved bits 7:4 are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 30,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x0000052E",
+        "bad record version 0x0000001A",
+        "bad payload length 0",
+        "source line 1132 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 10028",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    },
+    {
+      "index": 31,
+      "reasons": [],
+      "errors": [
+        "bad magic 0x25500038",
+        "bad record version 0x00000000",
+        "bad payload length 1141",
+        "source line 625999832 is outside 0..1079",
+        "VALID flag is clear",
+        "illegal active logical channel count 625999928",
+        "logical channel upper bits are nonzero",
+        "padding byte 3904 is nonzero"
+      ],
+      "session_fatal": true
+    }
+  ],
+  "first_record_assessment": {
+    "index": 0,
+    "classifications": [
+      "VALID_RECORD",
+      "NEW_EPOCH",
+      "DISCONTINUITY"
+    ],
+    "discontinuity_reasons": [
+      "DISCONTINUITY flag is set",
+      "MALFORMED_PRECEDING flag is set"
+    ],
+    "errors": [],
+    "session_fatal": false,
+    "header": {
+      "magic": 1279543361,
+      "record_version": 16641,
+      "reset_epoch": 3,
+      "source_frame_sequence": 1747685,
+      "source_line_sequence": 650,
+      "source_capture_sequence": 1887498843,
+      "payload_length": 3840,
+      "flags": 52,
+      "active_logical_channel_count": 1,
+      "source_slot_generation_and_slot": 256,
+      "source_malformed_count_snapshot": 36701343,
+      "source_dropped_count_snapshot": 25,
+      "logical_channel_id": 0,
+      "physical_input_id": 0,
+      "channel_attempt_sequence": 0,
+      "global_stream_sequence": 0
+    }
+  },
+  "counters": {
+    "records_attempted_delta": 148,
+    "records_committed_delta": 101,
+    "records_streamed_delta": 101,
+    "records_dropped_delta": 47,
+    "overflow_count_delta": 47,
+    "discontinuity_delta": 7,
+    "beats_streamed_delta": 51712,
+    "records_abandoned_delta": 0,
+    "reset_events_delta": 0,
+    "last_global_observed": 100,
+    "last_channel_observed": 147,
+    "host_complete_records": 100,
+    "expected_host_complete_beats": 51200,
+    "trailing_bytes": 3584
+  },
+  "counter_reconciliation": "FAIL_NOT_2500",
+  "frame_reconstruction": "NOT_REACHED"
+}

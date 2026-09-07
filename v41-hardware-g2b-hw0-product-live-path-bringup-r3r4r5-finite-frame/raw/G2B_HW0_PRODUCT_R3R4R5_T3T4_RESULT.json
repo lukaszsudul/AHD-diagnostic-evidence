@@ -1,0 +1,342 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R5",
+  "session": "T3T4",
+  "result": "FAIL",
+  "blocker": "R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set",
+  "primary_target": 2500,
+  "raw_payload_control_ipc": false,
+  "parent_owned_mmio": true,
+  "parent_owned_quiescence": true,
+  "last_completed_operation": "STREAM_ENABLED_ONCE",
+  "exception_type": "FailureError",
+  "exception_repr": "FailureError('R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set')",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 1294, in run\n    raise FailureError(\n        result['FIRST_RECORD_VALID'].get(\n            'blocker', 'R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED'))\nFailureError: R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set\n",
+  "events": [
+    {
+      "type": "READER_READY",
+      "monotonic_ns": 69784566835198,
+      "pid": 18200,
+      "node": "/dev/xdma0_c2h_0"
+    },
+    {
+      "type": "FIRST_RECORD_ASSEMBLED",
+      "monotonic_ns": 69784568203096,
+      "bytes": 4096,
+      "primary_record": 1
+    },
+    {
+      "type": "FIRST_RECORD_VALID",
+      "monotonic_ns": 69784572100882,
+      "valid": false,
+      "blocker": "R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set"
+    },
+    {
+      "type": "ERROR",
+      "monotonic_ns": 69784572145675,
+      "source": "FIRST_RECORD_PERSISTER",
+      "blocker": "R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set",
+      "exception_type": "GateError",
+      "exception_repr": "GateError('R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set')",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 472, in _persist_first\n    require(assessment.structurally_valid and not assessment.session_fatal and\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            not errors, 'R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:' +\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            ';'.join(errors[:8]))\n            ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 77, in require\n    raise GateError(message)\n__mp_main__.GateError: R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set\n"
+    },
+    {
+      "type": "ERROR",
+      "monotonic_ns": 69784673660950,
+      "source": "C2H_READER",
+      "blocker": "ReadDeadline",
+      "exception_type": "ReadDeadline",
+      "exception_repr": "ReadDeadline()",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 830, in reader_worker\n    chunk = os.read(fd, 256 * 1024)\nTimeoutError: [Errno 110] Connection timed out\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 834, in reader_worker\n    signal.setitimer(signal.ITIMER_REAL, 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 789, in _alarm_handler\n    raise ReadDeadline()\n__mp_main__.ReadDeadline\n"
+    },
+    {
+      "type": "READER_EXITED",
+      "monotonic_ns": 69784684759276,
+      "reader_result": {
+        "result": "BLOCKED",
+        "blocker": "ReadDeadline",
+        "primary_records": 100,
+        "primary_bytes": 409600,
+        "drain_records": 0,
+        "drain_bytes": 0,
+        "complete_records": 100,
+        "incomplete_trailing_bytes": 3584,
+        "primary_sha256": "E3C0071AD358156E896D2CFBE990B813942F3FBF0115B3EEB52A6C4E61F93AD2",
+        "drain_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "capture_hash_source": "REREAD_PERSISTED_FILES",
+        "first_record_durable": false,
+        "first_record_valid": false,
+        "first_record_sha256": null,
+        "first_payload_sha256": null,
+        "first_header": null,
+        "first_record_hash_source": "REREAD_PERSISTED_FILE",
+        "first_payload_hash_source": "REREAD_PERSISTED_FILE",
+        "abi_parse_source": "REREAD_PERSISTED_FIRST_RECORD",
+        "checkpoint_schedule": [
+          1024,
+          2048,
+          2500
+        ],
+        "checkpoint_requested": [],
+        "checkpoint_passed": [],
+        "checkpoint_communication": "METADATA_ONLY_RECORD_COUNT",
+        "exception_type": "ReadDeadline",
+        "exception_repr": "ReadDeadline()",
+        "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 830, in reader_worker\n    chunk = os.read(fd, 256 * 1024)\nTimeoutError: [Errno 110] Connection timed out\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 834, in reader_worker\n    signal.setitimer(signal.ITIMER_REAL, 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 789, in _alarm_handler\n    raise ReadDeadline()\n__mp_main__.ReadDeadline\n",
+        "last_completed_operation": "ALL_CAPTURE_FILES_DURABLE",
+        "raw_payload_control_ipc": false
+      }
+    }
+  ],
+  "pre_reset": {
+    "0x3800": 1127368753,
+    "0x3804": 65536,
+    "0x3808": 720927,
+    "0x380C": 0,
+    "0x3810": 1268,
+    "0x3814": 0,
+    "0x3818": 0,
+    "0x381C": 0,
+    "0x3820": 0,
+    "0x3824": 0,
+    "0x3828": 0,
+    "0x382C": 0,
+    "0x3830": 0,
+    "0x3834": 4294967295,
+    "0x3838": 2,
+    "0x383C": 7,
+    "0x3840": 2,
+    "0x3844": 0,
+    "0x3848": 2,
+    "0x384C": 1,
+    "0x3850": 0,
+    "0x3854": 2,
+    "0x3858": 4294967295
+  },
+  "post_reset_epoch": 3,
+  "post_reset_error_status_before_w1c": 7,
+  "post_reset_last_error_cause": 2,
+  "session_normalization_w1c_mask": 7,
+  "session_normalization_w1c_writes": 1,
+  "post_normalization_error_status": 0,
+  "snapshot_before": {
+    "0x3814": 78,
+    "0x3818": 53,
+    "0x381C": 53,
+    "0x3820": 25,
+    "0x3824": 24,
+    "0x3828": 14,
+    "0x382C": 27136,
+    "0x3830": 0,
+    "0x3834": 4294967295,
+    "0x3850": 0,
+    "0x3854": 3,
+    "0x3858": 4294967295,
+    "epoch": 3,
+    "generation": 2,
+    "label": "PRE_CAPTURE_BASELINE"
+  },
+  "READER_READY": {
+    "type": "READER_READY",
+    "monotonic_ns": 69784566835198,
+    "pid": 18200,
+    "node": "/dev/xdma0_c2h_0"
+  },
+  "enable_monotonic_ns": 69784569649991,
+  "FIRST_RECORD_ASSEMBLED": {
+    "type": "FIRST_RECORD_ASSEMBLED",
+    "monotonic_ns": 69784568203096,
+    "bytes": 4096,
+    "primary_record": 1
+  },
+  "FIRST_RECORD_VALID": {
+    "type": "FIRST_RECORD_VALID",
+    "monotonic_ns": 69784572100882,
+    "valid": false,
+    "blocker": "R3R4R5_FIRST_RECORD_ABI_VALIDATION_FAILED:DISCONTINUITY flag is set;MALFORMED_PRECEDING flag is set"
+  },
+  "ERROR": {
+    "type": "ERROR",
+    "monotonic_ns": 69784673660950,
+    "source": "C2H_READER",
+    "blocker": "ReadDeadline",
+    "exception_type": "ReadDeadline",
+    "exception_repr": "ReadDeadline()",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 830, in reader_worker\n    chunk = os.read(fd, 256 * 1024)\nTimeoutError: [Errno 110] Connection timed out\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 834, in reader_worker\n    signal.setitimer(signal.ITIMER_REAL, 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 789, in _alarm_handler\n    raise ReadDeadline()\n__mp_main__.ReadDeadline\n"
+  },
+  "failure_quiescence_observations": [
+    {
+      "utc_ns": 1788796748376154732,
+      "monotonic_ns": 69784605570525,
+      "sample": 1,
+      "consecutive": 1,
+      "span_ms": 0.0,
+      "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+      "lock_held": true,
+      "bdf": "0000:01:00.0",
+      "bdf_unchanged": true,
+      "driver_bound": true,
+      "control": 0,
+      "status": 1268,
+      "error_status": 7,
+      "fatal_clear": true,
+      "node_holders_allowed": true,
+      "holders": [
+        {
+          "pid": 18082,
+          "comm": "python3",
+          "target": "/dev/xdma0_user"
+        },
+        {
+          "pid": 18200,
+          "comm": "python3",
+          "target": "/dev/xdma0_c2h_0"
+        }
+      ],
+      "hardware_quiescent": true,
+      "accepted": true
+    },
+    {
+      "utc_ns": 1788796748474173754,
+      "monotonic_ns": 69784703589326,
+      "sample": 2,
+      "consecutive": 2,
+      "span_ms": 98.02,
+      "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+      "lock_held": true,
+      "bdf": "0000:01:00.0",
+      "bdf_unchanged": true,
+      "driver_bound": true,
+      "control": 0,
+      "status": 1140,
+      "error_status": 7,
+      "fatal_clear": true,
+      "node_holders_allowed": true,
+      "holders": [
+        {
+          "pid": 18082,
+          "comm": "python3",
+          "target": "/dev/xdma0_user"
+        }
+      ],
+      "hardware_quiescent": true,
+      "accepted": true
+    },
+    {
+      "utc_ns": 1788796748576314996,
+      "monotonic_ns": 69784805730528,
+      "sample": 3,
+      "consecutive": 3,
+      "span_ms": 200.162,
+      "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+      "lock_held": true,
+      "bdf": "0000:01:00.0",
+      "bdf_unchanged": true,
+      "driver_bound": true,
+      "control": 0,
+      "status": 1268,
+      "error_status": 7,
+      "fatal_clear": true,
+      "node_holders_allowed": true,
+      "holders": [
+        {
+          "pid": 18082,
+          "comm": "python3",
+          "target": "/dev/xdma0_user"
+        }
+      ],
+      "hardware_quiescent": true,
+      "accepted": true
+    },
+    {
+      "utc_ns": 1788796748676442275,
+      "monotonic_ns": 69784905857767,
+      "sample": 4,
+      "consecutive": 4,
+      "span_ms": 300.289,
+      "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+      "lock_held": true,
+      "bdf": "0000:01:00.0",
+      "bdf_unchanged": true,
+      "driver_bound": true,
+      "control": 0,
+      "status": 1268,
+      "error_status": 7,
+      "fatal_clear": true,
+      "node_holders_allowed": true,
+      "holders": [
+        {
+          "pid": 18082,
+          "comm": "python3",
+          "target": "/dev/xdma0_user"
+        }
+      ],
+      "hardware_quiescent": true,
+      "accepted": true
+    },
+    {
+      "utc_ns": 1788796748776812102,
+      "monotonic_ns": 69785006227594,
+      "sample": 5,
+      "consecutive": 5,
+      "span_ms": 400.659,
+      "boot_id": "614295f4-c62b-4430-ae67-06013bea7084",
+      "lock_held": true,
+      "bdf": "0000:01:00.0",
+      "bdf_unchanged": true,
+      "driver_bound": true,
+      "control": 0,
+      "status": 1268,
+      "error_status": 7,
+      "fatal_clear": true,
+      "node_holders_allowed": true,
+      "holders": [
+        {
+          "pid": 18082,
+          "comm": "python3",
+          "target": "/dev/xdma0_user"
+        }
+      ],
+      "hardware_quiescent": true,
+      "accepted": true
+    }
+  ],
+  "parent_hardware_quiescence": "PASS",
+  "READER_EXITED": {
+    "type": "READER_EXITED",
+    "monotonic_ns": 69784684759276,
+    "reader_result": {
+      "result": "BLOCKED",
+      "blocker": "ReadDeadline",
+      "primary_records": 100,
+      "primary_bytes": 409600,
+      "drain_records": 0,
+      "drain_bytes": 0,
+      "complete_records": 100,
+      "incomplete_trailing_bytes": 3584,
+      "primary_sha256": "E3C0071AD358156E896D2CFBE990B813942F3FBF0115B3EEB52A6C4E61F93AD2",
+      "drain_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "capture_hash_source": "REREAD_PERSISTED_FILES",
+      "first_record_durable": false,
+      "first_record_valid": false,
+      "first_record_sha256": null,
+      "first_payload_sha256": null,
+      "first_header": null,
+      "first_record_hash_source": "REREAD_PERSISTED_FILE",
+      "first_payload_hash_source": "REREAD_PERSISTED_FILE",
+      "abi_parse_source": "REREAD_PERSISTED_FIRST_RECORD",
+      "checkpoint_schedule": [
+        1024,
+        2048,
+        2500
+      ],
+      "checkpoint_requested": [],
+      "checkpoint_passed": [],
+      "checkpoint_communication": "METADATA_ONLY_RECORD_COUNT",
+      "exception_type": "ReadDeadline",
+      "exception_repr": "ReadDeadline()",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 830, in reader_worker\n    chunk = os.read(fd, 256 * 1024)\nTimeoutError: [Errno 110] Connection timed out\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 834, in reader_worker\n    signal.setitimer(signal.ITIMER_REAL, 0)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r5/20260907T151342Z/scripts/capture_r3r4.py\", line 789, in _alarm_handler\n    raise ReadDeadline()\n__mp_main__.ReadDeadline\n",
+      "last_completed_operation": "ALL_CAPTURE_FILES_DURABLE",
+      "raw_payload_control_ipc": false
+    }
+  }
+}

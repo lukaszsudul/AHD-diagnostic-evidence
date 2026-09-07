@@ -1,0 +1,48 @@
+{
+  "schema": "R3R4R5_EVENT_ORDERING_PROOF_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R5",
+  "result": "PASS",
+  "ORDERING_PROOF_BASIS": "EVENT_SEQUENCE_PLUS_EXPLICIT_DEPENDENCY",
+  "MONOTONIC_TIMESTAMP_USED_AS_CAUSAL_PROOF": "NO",
+  "EQUAL_TIMESTAMP_CASE": "PASS",
+  "RUNTIME_CAPTURE_SEMANTICS_CHANGED": "NO",
+  "events": [
+    {
+      "name": "FIRST_RECORD_DURABLE",
+      "event_sequence": 6,
+      "monotonic_ns": 1234567890000000,
+      "dependency_state": "FIRST_RECORD_DURABLE_SUCCESS",
+      "first_record_durable_success": true
+    },
+    {
+      "name": "PRIMARY_TARGET_REACHED",
+      "event_sequence": 7,
+      "monotonic_ns": 1234567890000000,
+      "dependency_state": "FIRST_RECORD_DURABLE_SUCCESS",
+      "first_record_durable_success": true
+    }
+  ],
+  "timestamp_relation": "EQUAL",
+  "equal_timestamps_used": true,
+  "target_before_durable_rejected": true,
+  "target_before_durable_rejection": {
+    "type": "PRIMARY_TARGET_REACHED",
+    "callback_sequence": 4,
+    "monotonic_ns": 1234567890000000,
+    "accepted": false,
+    "dependency_state": "FIRST_RECORD_DURABLE_SUCCESS_FALSE",
+    "first_record_durable_success": false,
+    "blocker": "PRIMARY_TARGET_REACHED_REJECTED:FIRST_RECORD_DURABLE_SUCCESS_FALSE"
+  },
+  "delayed_durability_proof": {
+    "primary_count_reached": 2500,
+    "target_withheld_before_durable": true,
+    "first_record_durable_event_sequence": 6,
+    "primary_target_reached_event_sequence": 7,
+    "timestamps_equal": true,
+    "dependency_state_at_target": "FIRST_RECORD_DURABLE_SUCCESS",
+    "first_record_durable_success_at_target": true
+  },
+  "runtime_capture_code_changed": false,
+  "raw_payload_in_receipt": false
+}
