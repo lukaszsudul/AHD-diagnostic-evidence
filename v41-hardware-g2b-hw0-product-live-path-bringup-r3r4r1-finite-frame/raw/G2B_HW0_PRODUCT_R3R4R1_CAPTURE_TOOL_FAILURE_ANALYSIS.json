@@ -1,0 +1,120 @@
+{
+  "schema": "R3R4R1_STOPPED_SELFTEST_DIAGNOSIS_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R1",
+  "governed_suite_rerun": false,
+  "capture_tool_or_selftest_modified_after_failure": false,
+  "hardware_access": false,
+  "dut_connections": 0,
+  "suite_result": "BLOCKED",
+  "first_blocker": "R3R4R1_CAPTURE_TOOL_HARD_GATE_FAILED",
+  "exception_type": "AssertionError",
+  "exception_repr": "AssertionError()",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R1_20260907T050126Z\\scripts\\capture_r3r4_selftest.py\", line 392, in main\n    result = run_suite(root, root / 'scripts' / 'V41_C2H_TRANSPORT_ABI_V1.json')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R1_20260907T050126Z\\scripts\\capture_r3r4_selftest.py\", line 226, in run_suite\n    assert completions == [False, False, False, False, False, False, True]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "passed": 4,
+  "total": 11,
+  "cases": {
+    "FIRST_RECORD_PERSISTENCE_PASS": "PASS",
+    "PARTIAL_READ_ASSEMBLY_PASS": "PASS",
+    "PRIMARY_2500_BOUNDARY_PASS": "PASS",
+    "DRAIN_CAPTURE_PASS": "PASS",
+    "PARENT_QUIESCENCE_HANDSHAKE_PASS": "FAIL",
+    "FAILURE_PRESERVES_RAW_DATA_PASS": "NOT_REACHED",
+    "EXCEPTION_DETAIL_PASS": "NOT_REACHED",
+    "COMPLETE_FRAME_RECONSTRUCTION_PASS": "NOT_REACHED",
+    "EXACT_CAPTURE_HASH_PASS": "NOT_REACHED",
+    "NO_BLANK_BLOCKER_PASS": "NOT_REACHED",
+    "NO_RAW_RECORD_IPC_PASS": "NOT_REACHED"
+  },
+  "partial_read_semantic_checks": {
+    "chunk_smaller_than_4096": true,
+    "chunk_larger_than_4096": true,
+    "cumulative_boundary_unaligned": true,
+    "chunk_spans_multiple_records": true,
+    "more_than_one_chunk": true,
+    "complete_records_2507": true,
+    "reconstructed_stream_byte_identical": true,
+    "primary_records_2500": true,
+    "primary_bytes_10240000": true,
+    "drain_records_7": true,
+    "drain_bytes_28672": true,
+    "trailing_bytes_zero": true,
+    "primary_hash_independently_matches": true,
+    "drain_hash_independently_matches": true
+  },
+  "partial_read_semantic_result": "PASS",
+  "quiet_window_timeline": [
+    {
+      "parent_quiescent": false,
+      "data_received": false,
+      "time_seconds": 0.0,
+      "actual_complete": false,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": false,
+      "data_received": true,
+      "time_seconds": 0.2,
+      "actual_complete": false,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": true,
+      "data_received": false,
+      "time_seconds": 1.0,
+      "actual_complete": false,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": true,
+      "data_received": true,
+      "time_seconds": 1.4,
+      "actual_complete": false,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": true,
+      "data_received": false,
+      "time_seconds": 2.0,
+      "actual_complete": false,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": true,
+      "data_received": false,
+      "time_seconds": 2.8,
+      "actual_complete": true,
+      "coded_expected_complete": false
+    },
+    {
+      "parent_quiescent": true,
+      "data_received": false,
+      "time_seconds": 3.01,
+      "actual_complete": true,
+      "coded_expected_complete": true
+    }
+  ],
+  "actual_completions": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true
+  ],
+  "coded_expected_completions": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true
+  ],
+  "diagnosed_failed_assertion": "PARENT_QUIESCENCE_HANDSHAKE_EXPECTATION_MISMATCH",
+  "diagnosis": "At t=2.8 seconds the frozen function correctly reports completion because 1.4 seconds elapsed since data at t=1.4; the self-test incorrectly expects False at that position.",
+  "primary_sha256": "DDAA9A65751C6D11C0AB0D41B01BC8518ED3AFB9A17BDA769313CB82F2DEB92A",
+  "drain_sha256": "08F3DCE8880BD7585606A7F1C099036DB1C853418BF7DBA8B0FCE0776DE3817D",
+  "first_record_sha256": "33E1CC12F8A92FD2AF46A23CE3770FEE96F24DBD71BBFBE614864E550984447C",
+  "first_payload_sha256": "9863117A7F05702B7E31450F4A7C6344B46A10104051079EEC3379141DE024B8"
+}

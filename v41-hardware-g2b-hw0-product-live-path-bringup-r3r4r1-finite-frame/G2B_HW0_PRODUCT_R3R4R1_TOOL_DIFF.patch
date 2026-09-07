@@ -1,0 +1,877 @@
+--- R3R4/capture_r3r4.py
++++ R3R4R1/capture_r3r4.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""R3R4 persistent 2500-record capture with parent-only MMIO authority."""
++"""R3R4R1 persistent 2500-record capture with parent-only MMIO authority."""
+ from __future__ import annotations
+ 
+ import csv
+@@ -23,9 +23,9 @@
+ 
+ 
+ P = Path
+-ROOT = P('/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4/20260906T215021Z')
+-LOCK = P('/tmp/ahd-g2b-hw0-product-r3r4-20260906T215021Z.lock/receipt.json')
+-TASK = 'G2B-HW0-PRODUCT-R3R4'
++ROOT = P('/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r1/20260907T050126Z')
++LOCK = P('/tmp/ahd-g2b-hw0-product-r3r4r1-20260907T050126Z.lock/receipt.json')
++TASK = 'G2B-HW0-PRODUCT-R3R4R1'
+ EXPECTED_BOOT = '614295f4-c62b-4430-ae67-06013bea7084'
+ ABI_SHA256 = 'AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6'
+ RECORD_BYTES = 4096
+@@ -104,23 +104,23 @@
+ 
+ def compact_emit(channel, event_type: str, **fields) -> None:
+     require(event_type in CONTROL_EVENT_TYPES,
+-            'R3R4_CONTROL_IPC_EVENT_NOT_ALLOWED')
++            'R3R4R1_CONTROL_IPC_EVENT_NOT_ALLOWED')
+     message = {'type': event_type, 'monotonic_ns': time.monotonic_ns(), **fields}
+-    require(not _contains_bytes(message), 'R3R4_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
++    require(not _contains_bytes(message), 'R3R4R1_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
+     encoded = json.dumps(message, sort_keys=True)
+     require(len(encoded) < RECORD_BYTES,
+-            'R3R4_CONTROL_IPC_MESSAGE_NOT_COMPACT')
++            'R3R4R1_CONTROL_IPC_MESSAGE_NOT_COMPACT')
+     channel.put(message, timeout=0.5)
+ 
+ 
+ def read_lock() -> dict:
+-    require(LOCK.is_file(), 'R3R4_LINUX_LOCK_REQUIRED')
++    require(LOCK.is_file(), 'R3R4R1_LINUX_LOCK_REQUIRED')
+     lock = json.loads(LOCK.read_text(encoding='utf-8'))
+     require(lock.get('task') == TASK and lock.get('state') == 'HELD',
+-            'R3R4_LINUX_LOCK_OWNER_MISMATCH')
++            'R3R4R1_LINUX_LOCK_OWNER_MISMATCH')
+     boot = P('/proc/sys/kernel/random/boot_id').read_text().strip()
+     require(boot == EXPECTED_BOOT and boot == lock.get('boot_id'),
+-            'R3R4_BOOT_CONTINUITY_LOST')
++            'R3R4R1_BOOT_CONTINUITY_LOST')
+     return lock
+ 
+ 
+@@ -253,7 +253,7 @@
+             require(precondition == 'POST_RESET_QUIESCENT',
+                     'FATAL_W1C_PRECONDITION')
+         else:
+-            raise GateError('R3R4_MMIO_WRITE_ALLOWLIST_VIOLATION')
++            raise GateError('R3R4R1_MMIO_WRITE_ALLOWLIST_VIOLATION')
+ 
+         stamp = time.time_ns()
+         base = {
+@@ -356,7 +356,7 @@
+         self.journal = self.journal_path.open('x', encoding='utf-8', newline='\n')
+         self.first_queue: queue.Queue = queue.Queue(maxsize=1)
+         self.first_thread = threading.Thread(
+-            target=self._persist_first, name='r3r4-first-record-persister',
++            target=self._persist_first, name='r3r4r1-first-record-persister',
+             daemon=False,
+         )
+         self.first_thread.start()
+@@ -365,7 +365,7 @@
+ 
+     def _journal(self, event: str, **fields) -> None:
+         row = {'event': event, 'utc_ns': time.time_ns(), **fields}
+-        require(not _contains_bytes(row), 'R3R4_PRIVATE_JOURNAL_RAW_BYTES_FORBIDDEN')
++        require(not _contains_bytes(row), 'R3R4R1_PRIVATE_JOURNAL_RAW_BYTES_FORBIDDEN')
+         self.journal.write(json.dumps(row, sort_keys=True) + '\n')
+         self.journal.flush()
+ 
+@@ -379,14 +379,14 @@
+             with self.first_path.open('xb', buffering=0) as handle:
+                 written = handle.write(blob)
+                 require(written == RECORD_BYTES,
+-                        'R3R4_FIRST_RECORD_SHORT_PERSIST')
++                        'R3R4R1_FIRST_RECORD_SHORT_PERSIST')
+                 handle.flush()
+                 os.fsync(handle.fileno())
+             payload = blob[self.contract.payload_first:self.contract.padding_first]
+             with self.payload_path.open('xb', buffering=0) as handle:
+                 written = handle.write(payload)
+                 require(written == self.contract.payload_bytes,
+-                        'R3R4_FIRST_PAYLOAD_SHORT_PERSIST')
++                        'R3R4R1_FIRST_PAYLOAD_SHORT_PERSIST')
+                 handle.flush()
+                 os.fsync(handle.fileno())
+             self.first_record_hash = hashlib.sha256(blob).hexdigest().upper()
+@@ -400,12 +400,12 @@
+             assessment = validator.accept(blob)
+             errors = list(assessment.errors) + list(assessment.discontinuity_reasons)
+             require(assessment.structurally_valid and not assessment.session_fatal and
+-                    not errors, 'R3R4_FIRST_RECORD_ABI_VALIDATION_FAILED:' +
++                    not errors, 'R3R4R1_FIRST_RECORD_ABI_VALIDATION_FAILED:' +
+                     ';'.join(errors[:8]))
+             record = assessment.record
+-            require(record is not None, 'R3R4_FIRST_RECORD_PARSE_MISSING')
++            require(record is not None, 'R3R4R1_FIRST_RECORD_PARSE_MISSING')
+             require(record.reset_epoch == self.armed_epoch,
+-                    'R3R4_FIRST_RECORD_STALE_EPOCH')
++                    'R3R4R1_FIRST_RECORD_STALE_EPOCH')
+             self.first_header = dict(record.header)
+             self.first_valid = True
+             self.emit('FIRST_RECORD_VALID', valid=True,
+@@ -427,8 +427,8 @@
+                 pass
+ 
+     def accept(self, chunk: bytes) -> None:
+-        require(not self.closed, 'R3R4_RECORD_SINK_ALREADY_CLOSED')
+-        require(isinstance(chunk, bytes), 'R3R4_READER_CHUNK_NOT_BYTES')
++        require(not self.closed, 'R3R4R1_RECORD_SINK_ALREADY_CLOSED')
++        require(isinstance(chunk, bytes), 'R3R4R1_READER_CHUNK_NOT_BYTES')
+         if not chunk:
+             return
+         self.pending.extend(chunk)
+@@ -438,7 +438,7 @@
+             del self.pending[:RECORD_BYTES]
+             if self.primary_count < self.primary_target:
+                 written = self.primary_file.write(blob)
+-                require(written == RECORD_BYTES, 'R3R4_PRIMARY_SHORT_WRITE')
++                require(written == RECORD_BYTES, 'R3R4R1_PRIMARY_SHORT_WRITE')
+                 self.primary_hash.update(blob)
+                 self.primary_count += 1
+                 self._journal('PRIMARY_RECORD_WRITTEN', count=self.primary_count)
+@@ -452,9 +452,9 @@
+                               primary_bytes=self.primary_count * RECORD_BYTES)
+             else:
+                 require(self.drain_count < self.drain_limit,
+-                        'R3R4_DRAIN_RECORD_LIMIT_EXCEEDED')
++                        'R3R4R1_DRAIN_RECORD_LIMIT_EXCEEDED')
+                 written = self.drain_file.write(blob)
+-                require(written == RECORD_BYTES, 'R3R4_DRAIN_SHORT_WRITE')
++                require(written == RECORD_BYTES, 'R3R4R1_DRAIN_SHORT_WRITE')
+                 self.drain_hash.update(blob)
+                 self.drain_count += 1
+                 self._journal('DRAIN_RECORD_WRITTEN', count=self.drain_count)
+@@ -475,7 +475,7 @@
+         self.first_thread.join(timeout=5.0)
+         if self.first_thread.is_alive():
+             result = 'BLOCKED'
+-            blocker = 'R3R4_FIRST_RECORD_PERSISTER_EXIT_TIMEOUT'
++            blocker = 'R3R4R1_FIRST_RECORD_PERSISTER_EXIT_TIMEOUT'
+         if self.first_error and result == 'PASS':
+             result = 'FAIL'
+             blocker = self.first_error['blocker']
+@@ -483,7 +483,7 @@
+             exception_repr = self.first_error['exception_repr']
+             traceback_text = self.first_error['traceback']
+         blocker = blocker.strip() if blocker else ''
+-        require(bool(blocker), 'R3R4_BLANK_BLOCKER_FORBIDDEN')
++        require(bool(blocker), 'R3R4R1_BLANK_BLOCKER_FORBIDDEN')
+         try:
+             for handle in (self.primary_file, self.drain_file):
+                 handle.flush()
+@@ -505,7 +505,7 @@
+         except BaseException as exc:
+             if result == 'PASS':
+                 result = 'BLOCKED'
+-                blocker = 'R3R4_CAPTURE_FINAL_SYNC_FAILED:' + _nonempty_problem(exc)
++                blocker = 'R3R4R1_CAPTURE_FINAL_SYNC_FAILED:' + _nonempty_problem(exc)
+                 exception_type = type(exc).__name__
+                 exception_repr = repr(exc)
+                 traceback_text = traceback_module.format_exc()
+@@ -557,14 +557,14 @@
+     fd = -1
+     sink = None
+     result = None
+-    blocker = 'R3R4_READER_UNFINISHED'
++    blocker = 'R3R4R1_READER_UNFINISHED'
+     exception_type = None
+     exception_repr = None
+     trace = None
+     quiet_since = None
+     try:
+         st = os.stat(c2h_node)
+-        require(stat.S_ISCHR(st.st_mode), 'R3R4_C2H_NODE_NOT_CHAR_DEVICE')
++        require(stat.S_ISCHR(st.st_mode), 'R3R4R1_C2H_NODE_NOT_CHAR_DEVICE')
+         fd = os.open(c2h_node, os.O_RDONLY | os.O_NOFOLLOW)
+         emit = lambda event_type, **fields: compact_emit(
+             messages, event_type, **fields)
+@@ -664,7 +664,7 @@
+                 break
+             if len(blob) != RECORD_BYTES:
+                 raise FailureError(
+-                    f'R3R4_CAPTURE_FILE_TRAILING_BYTES:{path.name}:{len(blob)}')
++                    f'R3R4R1_CAPTURE_FILE_TRAILING_BYTES:{path.name}:{len(blob)}')
+             yield blob
+ 
+ 
+@@ -672,11 +672,11 @@
+                      primary_path: Path, drain_path: Path,
+                      trailing_path: Path) -> dict:
+     require(primary_path.stat().st_size == PRIMARY_BYTES,
+-            'R3R4_PRIMARY_FILE_SIZE_INVALID')
++            'R3R4R1_PRIMARY_FILE_SIZE_INVALID')
+     require(drain_path.stat().st_size % RECORD_BYTES == 0,
+-            'R3R4_DRAIN_FILE_SIZE_INVALID')
++            'R3R4R1_DRAIN_FILE_SIZE_INVALID')
+     require(trailing_path.stat().st_size == 0,
+-            'R3R4_INCOMPLETE_TRAILING_BYTES_NONZERO')
++            'R3R4R1_INCOMPLETE_TRAILING_BYTES_NONZERO')
+     validator = StreamValidator(contract, armed_epoch=armed_epoch)
+     total = 0
+     malformed = 0
+@@ -735,11 +735,11 @@
+                 errors.append('session_fatal')
+     drain_records = drain_path.stat().st_size // RECORD_BYTES
+     require(total == PRIMARY_TARGET + drain_records,
+-            'R3R4_HOST_RECORD_COUNT_FILE_MISMATCH')
++            'R3R4R1_HOST_RECORD_COUNT_FILE_MISMATCH')
+     if (malformed or padding_errors or gaps or unexpected_epoch or duplicates or
+             source_snapshot_changes or errors):
+         raise FailureError(
+-            'R3R4_FULL_RECORD_VALIDATION_FAILED:' +
++            'R3R4R1_FULL_RECORD_VALIDATION_FAILED:' +
+             json.dumps({
+                 'malformed': malformed, 'padding_errors': padding_errors,
+                 'gaps': gaps, 'unexpected_epoch': unexpected_epoch,
+@@ -749,7 +749,7 @@
+             }, sort_keys=True)
+         )
+     require(first_header is not None and last_header is not None,
+-            'R3R4_NO_VALID_RECORDS')
++            'R3R4R1_NO_VALID_RECORDS')
+     return {
+         'result': 'PASS', 'total_complete_records': total,
+         'primary_records': PRIMARY_TARGET, 'drain_records': drain_records,
+@@ -804,7 +804,7 @@
+         values['last_channel_observed'] == last_channel,
+     )
+     if not all(checks):
+-        raise FailureError('R3R4_COUNTER_RECONCILIATION_FAILED:' +
++        raise FailureError('R3R4R1_COUNTER_RECONCILIATION_FAILED:' +
+                            json.dumps(values, sort_keys=True))
+     return {'result': 'PASS', **values}
+ 
+@@ -819,9 +819,9 @@
+         first = False
+         event_type = message.get('type')
+         require(event_type in CONTROL_EVENT_TYPES,
+-                'R3R4_CONTROL_IPC_EVENT_NOT_ALLOWED')
++                'R3R4R1_CONTROL_IPC_EVENT_NOT_ALLOWED')
+         require(not _contains_bytes(message),
+-                'R3R4_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
++                'R3R4R1_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
+         state.setdefault('events', []).append(message)
+         state[event_type] = message
+ 
+@@ -860,7 +860,7 @@
+ 
+     result = {
+         'task': TASK, 'session': 'T34', 'result': 'BLOCKED',
+-        'blocker': 'R3R4_CAPTURE_UNFINISHED', 'primary_target': PRIMARY_TARGET,
++        'blocker': 'R3R4R1_CAPTURE_UNFINISHED', 'primary_target': PRIMARY_TARGET,
+         'raw_payload_control_ipc': False, 'parent_owned_mmio': True,
+         'parent_owned_quiescence': True,
+         'last_completed_operation': 'CAPTURE_START_MARKER_CREATED',
+@@ -876,12 +876,12 @@
+     reader_result = None
+     try:
+         require(not _open_holders(proof['c2h']),
+-                'R3R4_C2H_READER_ALREADY_ATTACHED')
++                'R3R4R1_C2H_READER_ALREADY_ATTACHED')
+         mmio = MMIO('T34_PARENT')
+         control = mmio.read(0x380C)
+         status = mmio.read(0x3810)
+         require(control == 0 and not (status & 0x100),
+-                'R3R4_DISABLED_BASELINE_NOT_CLEAN')
++                'R3R4R1_DISABLED_BASELINE_NOT_CLEAN')
+         pre_reset = {f'0x{offset:04X}': mmio.read(offset)
+                      for offset in range(0x3800, 0x385C, 4)}
+         result['pre_reset'] = pre_reset
+@@ -892,11 +892,11 @@
+         deadline = time.monotonic() + 5.0
+         while not quiescent(mmio.read(0x380C), mmio.read(0x3810)):
+             require(time.monotonic() < deadline,
+-                    'R3R4_SESSION_RESET_TIMEOUT')
++                    'R3R4R1_SESSION_RESET_TIMEOUT')
+             time.sleep(0.001)
+         epoch = mmio.read(0x3838)
+         require(epoch == ((pre_reset['0x3838'] + 1) & 0xFFFFFFFF),
+-                'R3R4_SESSION_EPOCH_TRANSITION_INVALID')
++                'R3R4R1_SESSION_EPOCH_TRANSITION_INVALID')
+         post_reset_error = mmio.read(0x383C)
+         post_reset_cause = mmio.read(0x3840)
+         nonfatal_mask = post_reset_error & 0x7
+@@ -926,15 +926,15 @@
+                        'POST_RESET_QUIESCENT')
+         normalized_error = mmio.read(0x383C)
+         require(normalized_error == 0,
+-                'R3R4_POST_NORMALIZATION_ERROR_STATUS_NONZERO')
++                'R3R4R1_POST_NORMALIZATION_ERROR_STATUS_NONZERO')
+         result['post_normalization_error_status'] = normalized_error
+         result['last_completed_operation'] = 'POST_RESET_NORMALIZATION_PASS'
+ 
+         status = mmio.read(0x3810)
+         require(quiescent(mmio.read(0x380C), status) and
+                 status & 0xC0 == 0xC0 and not (status & 0x800),
+-                'R3R4_FINAL_PRE_ENABLE_BASELINE_FAILED')
+-        require(mmio.read(0x3838) == epoch, 'R3R4_UNEXPECTED_EPOCH_CHANGE')
++                'R3R4R1_FINAL_PRE_ENABLE_BASELINE_FAILED')
++        require(mmio.read(0x3838) == epoch, 'R3R4R1_UNEXPECTED_EPOCH_CHANGE')
+         baseline = mmio.snapshot('PRE_CAPTURE_BASELINE')
+         result['snapshot_before'] = baseline
+         result['last_completed_operation'] = 'COHERENT_BASELINE_SNAPSHOT_PASS'
+@@ -953,8 +953,8 @@
+         while 'READER_READY' not in result and time.monotonic() < ready_deadline:
+             _drain_messages(messages, result, wait=0.1)
+             require(child.is_alive() or 'READER_READY' in result,
+-                    'R3R4_READER_EXITED_BEFORE_READY')
+-        require('READER_READY' in result, 'R3R4_READER_READY_TIMEOUT')
++                    'R3R4R1_READER_EXITED_BEFORE_READY')
++        require('READER_READY' in result, 'R3R4R1_READER_READY_TIMEOUT')
+         mmio.write(0x380C, 0x00000001, 'ENABLE_C2H',
+                    'RESET_SNAPSHOT_PASS_READER_READY')
+         stream_enabled = True
+@@ -969,13 +969,13 @@
+                     result['FIRST_RECORD_VALID'].get('valid'):
+                 raise FailureError(
+                     result['FIRST_RECORD_VALID'].get(
+-                        'blocker', 'R3R4_FIRST_RECORD_ABI_VALIDATION_FAILED'))
++                        'blocker', 'R3R4R1_FIRST_RECORD_ABI_VALIDATION_FAILED'))
+             if 'ERROR' in result:
+                 raise GateError(result['ERROR'].get('blocker',
+-                                                    'R3R4_READER_ERROR'))
+-            require(child.is_alive(), 'R3R4_READER_EXITED_BEFORE_PRIMARY_TARGET')
++                                                    'R3R4R1_READER_ERROR'))
++            require(child.is_alive(), 'R3R4R1_READER_EXITED_BEFORE_PRIMARY_TARGET')
+             require(time.monotonic() < primary_deadline,
+-                    'R3R4_PRIMARY_2500_TIMEOUT')
++                    'R3R4R1_PRIMARY_2500_TIMEOUT')
+         mmio.write(0x380C, 0x00000000, 'NORMAL_DISABLE',
+                    'PRIMARY_2500_FULLY_ASSEMBLED_AND_WRITTEN')
+         normal_disabled = True
+@@ -987,7 +987,7 @@
+         result['parent_quiescence_observations'] = observations
+         result['parent_hardware_quiescence'] = 'PASS' if quiescence_pass else 'FAIL'
+         require(quiescence_pass,
+-                'R3R4_POST_DISABLE_HARDWARE_NOT_QUIESCENT')
++                'R3R4R1_POST_DISABLE_HARDWARE_NOT_QUIESCENT')
+         parent_quiescent.set()
+         result['last_completed_operation'] = 'PARENT_HARDWARE_QUIESCENCE_PASS'
+ 
+@@ -998,24 +998,24 @@
+                 _drain_messages(messages, result, wait=0.2)
+                 break
+         child.join(timeout=0.5)
+-        require(not child.is_alive(), 'R3R4_READER_COOPERATIVE_EXIT_TIMEOUT')
++        require(not child.is_alive(), 'R3R4R1_READER_COOPERATIVE_EXIT_TIMEOUT')
+         _drain_messages(messages, result, wait=0.2)
+-        require('READER_QUIET' in result, 'R3R4_READER_QUIET_WINDOW_MISSING')
+-        require('READER_EXITED' in result, 'R3R4_READER_RESULT_MISSING')
++        require('READER_QUIET' in result, 'R3R4R1_READER_QUIET_WINDOW_MISSING')
++        require('READER_EXITED' in result, 'R3R4R1_READER_RESULT_MISSING')
+         reader_result = result['READER_EXITED']['reader_result']
+         result['reader'] = reader_result
+         require(reader_result.get('result') == 'PASS',
+-                reader_result.get('blocker') or 'R3R4_READER_FAILED')
++                reader_result.get('blocker') or 'R3R4R1_READER_FAILED')
+         require(reader_result.get('primary_records') == PRIMARY_TARGET,
+-                'R3R4_PRIMARY_RECORD_COUNT_INVALID')
++                'R3R4R1_PRIMARY_RECORD_COUNT_INVALID')
+         require(reader_result.get('drain_records', DRAIN_LIMIT + 1) <= DRAIN_LIMIT,
+-                'R3R4_DRAIN_RECORD_LIMIT_EXCEEDED')
++                'R3R4R1_DRAIN_RECORD_LIMIT_EXCEEDED')
+         require(reader_result.get('incomplete_trailing_bytes') == 0,
+-                'R3R4_INCOMPLETE_TRAILING_BYTES_NONZERO')
++                'R3R4R1_INCOMPLETE_TRAILING_BYTES_NONZERO')
+         require('FIRST_RECORD_DURABLE' in result and
+                 'FIRST_RECORD_VALID' in result and
+                 result['FIRST_RECORD_VALID'].get('valid'),
+-                'R3R4_FIRST_RECORD_PERSISTENCE_OR_VALIDATION_MISSING')
++                'R3R4R1_FIRST_RECORD_PERSISTENCE_OR_VALIDATION_MISSING')
+         result['last_completed_operation'] = 'READER_QUIET_EXIT_PASS'
+ 
+         final_snapshot = mmio.snapshot('POST_DISABLE_POST_DRAIN_FINAL')
+@@ -1024,11 +1024,11 @@
+         final_error = mmio.read(0x383C)
+         final_cause = mmio.read(0x3840)
+         require(quiescent(final_control, final_status),
+-                'R3R4_FINAL_STREAM_OR_DMA_NOT_QUIESCENT')
++                'R3R4R1_FINAL_STREAM_OR_DMA_NOT_QUIESCENT')
+         if final_error != 0:
+-            raise FailureError('R3R4_NEW_ERROR_STATUS_DURING_FINITE_CAPTURE')
++            raise FailureError('R3R4R1_NEW_ERROR_STATUS_DURING_FINITE_CAPTURE')
+         require(final_snapshot['epoch'] == epoch,
+-                'R3R4_UNEXPECTED_EPOCH_CHANGE')
++                'R3R4R1_UNEXPECTED_EPOCH_CHANGE')
+         result.update(
+             snapshot_after=final_snapshot, final_control=final_control,
+             final_status=final_status, final_error_status=final_error,
+@@ -1088,7 +1088,7 @@
+                     pass
+             child.join(timeout=3.0)
+         if child is not None and child.is_alive():
+-            result['rollback'] = 'R3R4_ROLLBACK_UNSAFE_ACTIVE_DMA'
++            result['rollback'] = 'R3R4R1_ROLLBACK_UNSAFE_ACTIVE_DMA'
+         elif messages is not None:
+             try:
+                 _drain_messages(messages, result, wait=0.2)
+@@ -1098,7 +1098,7 @@
+         if mmio is not None:
+             mmio.close()
+         require(bool(str(result.get('blocker', '')).strip()),
+-                'R3R4_BLANK_BLOCKER_FORBIDDEN')
++                'R3R4R1_BLANK_BLOCKER_FORBIDDEN')
+         _replace_json(ROOT / 'logs/T34-result.json', result)
+         print(json.dumps(result, indent=2), flush=True)
+     return result
+--- R3R4/capture_r3r4_selftest.py
++++ R3R4R1/capture_r3r4_selftest.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Offline hard-gate suite for the R3R4 capture architecture."""
++"""Offline hard-gate suite for the R3R4R1 capture architecture."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -70,16 +70,30 @@
+     return records
+ 
+ 
+-def feed_partial(sink: capture.RecordSink, stream: bytes) -> int:
++def feed_partial(sink: capture.RecordSink, stream: bytes) -> dict:
+     sizes = (1, 7, 4095, 2, 8191, 31, 65537, 8192, 3, 131071)
+     offset = 0
+-    parts = 0
++    chunk_sizes = []
++    cumulative_boundaries = []
++    multi_record_spans = []
+     while offset < len(stream):
+-        size = sizes[parts % len(sizes)]
+-        sink.accept(stream[offset:offset + size])
+-        offset += size
+-        parts += 1
+-    return parts
++        requested = sizes[len(chunk_sizes) % len(sizes)]
++        end = min(offset + requested, len(stream))
++        actual = end - offset
++        sink.accept(stream[offset:end])
++        chunk_sizes.append(actual)
++        cumulative_boundaries.append(end)
++        multi_record_spans.append(
++            actual > 0 and
++            offset // capture.RECORD_BYTES !=
++            (end - 1) // capture.RECORD_BYTES)
++        offset = end
++    return {
++        'chunk_count': len(chunk_sizes),
++        'chunk_sizes': chunk_sizes,
++        'cumulative_boundaries': cumulative_boundaries,
++        'multi_record_spans': multi_record_spans,
++    }
+ 
+ 
+ def write_markdown(path: Path, title: str, rows: list[tuple[str, str]]) -> None:
+@@ -95,11 +109,11 @@
+ def run_suite(root: Path, abi_path: Path) -> dict:
+     expected_scripts = root / 'scripts'
+     if Path(__file__).resolve().parent != expected_scripts.resolve():
+-        raise RuntimeError('R3R4_SELFTEST_LOCATION_INVALID')
++        raise RuntimeError('R3R4R1_SELFTEST_LOCATION_INVALID')
+     abi_bytes = abi_path.read_bytes()
+     abi_hash = hashlib.sha256(abi_bytes).hexdigest().upper()
+     if abi_hash != ABI_SHA256:
+-        raise RuntimeError('R3R4_FROZEN_ABI_HASH_DRIFT')
++        raise RuntimeError('R3R4R1_FROZEN_ABI_HASH_DRIFT')
+     contract = AbiContract.load(abi_path)
+     suite_root = root / 'artifacts' / 'offline-selftest'
+     suite_root.mkdir(parents=True, exist_ok=False)
+@@ -116,7 +130,7 @@
+         drain_limit=capture.DRAIN_LIMIT,
+         first_persist_delay=1.0,
+     )
+-    part_count = feed_partial(sink, complete_stream)
++    part_metrics = feed_partial(sink, complete_stream)
+     success = sink.finalize(result='PASS', blocker='NONE')
+     events = {item['type']: item for item in collector.events}
+ 
+@@ -132,15 +146,58 @@
+     cases['FIRST_RECORD_PERSISTENCE_PASS'] = 'PASS'
+     details['first_record_async'] = True
+ 
+-    assert part_count > len(records)
++    primary = success_dir / 'T34-primary-records.bin'
++    drain = success_dir / 'T34-drain-records.bin'
++    primary_bytes = primary.read_bytes()
++    drain_bytes = drain.read_bytes()
++    expected_primary_hash = hashlib.sha256(
++        complete_stream[:capture.PRIMARY_BYTES]).hexdigest().upper()
++    expected_drain_hash = hashlib.sha256(
++        complete_stream[capture.PRIMARY_BYTES:]).hexdigest().upper()
++
++    assert any(size < capture.RECORD_BYTES
++               for size in part_metrics['chunk_sizes'])
++    assert any(size > capture.RECORD_BYTES
++               for size in part_metrics['chunk_sizes'])
++    assert any(boundary % capture.RECORD_BYTES != 0
++               for boundary in part_metrics['cumulative_boundaries'][:-1])
++    assert any(part_metrics['multi_record_spans'])
++    assert part_metrics['chunk_count'] > 1
+     assert success['complete_records'] == len(records)
++    assert primary_bytes + drain_bytes == complete_stream
++    assert success['primary_records'] == 2500
++    assert success['primary_bytes'] == 10_240_000
++    assert success['drain_records'] == 7
++    assert success['drain_bytes'] == 28_672
+     assert success['incomplete_trailing_bytes'] == 0
+     assert (success_dir / 'T34-incomplete-trailing.bin').stat().st_size == 0
++    assert success['primary_sha256'] == expected_primary_hash
++    assert success['drain_sha256'] == expected_drain_hash
++    assert hashlib.sha256(primary_bytes).hexdigest().upper() == \
++        expected_primary_hash
++    assert hashlib.sha256(drain_bytes).hexdigest().upper() == \
++        expected_drain_hash
+     cases['PARTIAL_READ_ASSEMBLY_PASS'] = 'PASS'
+-    details['arbitrary_partial_chunks'] = part_count
+-
+-    primary = success_dir / 'T34-primary-records.bin'
+-    drain = success_dir / 'T34-drain-records.bin'
++    details['arbitrary_partial_chunks'] = part_metrics['chunk_count']
++    details['partial_read_semantics'] = {
++        'chunk_sizes': part_metrics['chunk_sizes'],
++        'cumulative_boundaries': part_metrics['cumulative_boundaries'],
++        'has_chunk_smaller_than_record': True,
++        'has_chunk_larger_than_record': True,
++        'has_unaligned_cumulative_boundary': True,
++        'has_chunk_spanning_multiple_records': True,
++        'uses_more_than_one_chunk': True,
++        'reconstructed_stream_byte_identical': True,
++        'supplied_records': len(records),
++        'primary_records': success['primary_records'],
++        'primary_bytes': success['primary_bytes'],
++        'drain_records': success['drain_records'],
++        'drain_bytes': success['drain_bytes'],
++        'incomplete_trailing_bytes': success['incomplete_trailing_bytes'],
++        'primary_expected_sha256': expected_primary_hash,
++        'drain_expected_sha256': expected_drain_hash,
++    }
++
+     assert success['primary_records'] == 2500
+     assert success['primary_bytes'] == 10_240_000
+     assert primary.stat().st_size == 10_240_000
+@@ -215,8 +272,6 @@
+     cases['COMPLETE_FRAME_RECONSTRUCTION_PASS'] = 'PASS'
+     details['frame'] = frame
+ 
+-    expected_primary_hash = hashlib.sha256(b''.join(records[:2500])).hexdigest().upper()
+-    expected_drain_hash = hashlib.sha256(b''.join(records[2500:])).hexdigest().upper()
+     assert success['primary_sha256'] == expected_primary_hash
+     assert success['drain_sha256'] == expected_drain_hash
+     assert hashlib.sha256(primary.read_bytes()).hexdigest().upper() == expected_primary_hash
+@@ -243,7 +298,7 @@
+     details['control_event_count'] = len(all_events)
+ 
+     if tuple(cases) != CASE_NAMES or any(value != 'PASS' for value in cases.values()):
+-        raise RuntimeError('R3R4_CAPTURE_TOOL_HARD_GATE_FAILED')
++        raise RuntimeError('R3R4R1_CAPTURE_TOOL_HARD_GATE_FAILED')
+     result = {
+         'task': capture.TASK,
+         'result': 'PASS',
+@@ -258,15 +313,15 @@
+         'parent_owned_mmio': True,
+         'parent_owned_quiescence': True,
+     }
+-    output = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4_CAPTURE_TOOL_SELFTEST.json'
++    output = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R1_CAPTURE_TOOL_SELFTEST.json'
+     with output.open('x', encoding='utf-8', newline='\n') as handle:
+         json.dump(result, handle, indent=2)
+         handle.write('\n')
+         handle.flush()
+         os.fsync(handle.fileno())
+     write_markdown(
+-        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4_CAPTURE_TOOL_SELFTEST.md',
+-        'G2B-HW0-PRODUCT-R3R4 capture-tool offline self-test',
++        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R1_CAPTURE_TOOL_SELFTEST.md',
++        'G2B-HW0-PRODUCT-R3R4R1 capture-tool offline self-test',
+         [(name, cases[name]) for name in CASE_NAMES] +
+         [('Hardware access', 'NO'), ('DUT connections', '0')],
+     )
+@@ -276,7 +331,7 @@
+ def architecture_audit(root: Path, result: dict) -> dict:
+     capture_path = root / 'scripts' / 'capture_r3r4.py'
+     frame_path = root / 'scripts' / 'frame_reconstruct_r3r4.py'
+-    helper_path = root / 'scripts' / 'Invoke-R3R4DutConnection.ps1'
++    helper_path = root / 'scripts' / 'Invoke-R3R4R1DutConnection.ps1'
+     source = capture_path.read_text(encoding='utf-8')
+     reader_source = inspect.getsource(capture.reader_worker)
+     checks = {
+@@ -286,7 +341,7 @@
+         'SPAWN_PREVENTS_MMIO_FD_INHERITANCE': "mp.get_context('spawn')" in source,
+         'ZERO_RAW_RECORD_CONTROL_IPC': result['raw_record_control_ipc'] is False,
+         'ASYNC_FIRST_RECORD_PERSISTER':
+-            'r3r4-first-record-persister' in source and 'threading.Thread' in source,
++            'r3r4r1-first-record-persister' in source and 'threading.Thread' in source,
+         'PRIMARY_TARGET_2500': capture.PRIMARY_TARGET == 2500,
+         'PRIMARY_BYTES_10240000': capture.PRIMARY_BYTES == 10_240_000,
+         'DRAIN_LIMIT_512': capture.DRAIN_LIMIT == 512,
+@@ -296,7 +351,7 @@
+         'FROZEN_ABI_HASH': result['abi_sha256'] == ABI_SHA256,
+     }
+     if not all(checks.values()):
+-        raise RuntimeError('R3R4_CAPTURE_TOOL_HARD_GATE_FAILED:' +
++        raise RuntimeError('R3R4R1_CAPTURE_TOOL_HARD_GATE_FAILED:' +
+                            json.dumps(checks, sort_keys=True))
+     hashes = {}
+     for path in (capture_path, frame_path, helper_path,
+@@ -313,15 +368,15 @@
+         'selftests_passed': result['passed'],
+         'selftests_total': result['total'],
+     }
+-    with (root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4_CAPTURE_TOOL_AUDIT.json').open(
++    with (root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R1_CAPTURE_TOOL_AUDIT.json').open(
+             'x', encoding='utf-8', newline='\n') as handle:
+         json.dump(audit, handle, indent=2)
+         handle.write('\n')
+         handle.flush()
+         os.fsync(handle.fileno())
+     write_markdown(
+-        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4_CAPTURE_TOOL_AUDIT.md',
+-        'G2B-HW0-PRODUCT-R3R4 capture-tool architecture audit',
++        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R1_CAPTURE_TOOL_AUDIT.md',
++        'G2B-HW0-PRODUCT-R3R4R1 capture-tool architecture audit',
+         [(name, 'PASS' if value else 'FAIL') for name, value in checks.items()] +
+         [('Offline self-tests', f"{result['passed']}/{result['total']}")],
+     )
+@@ -341,13 +396,13 @@
+     except BaseException as exc:
+         failure = {
+             'task': capture.TASK, 'result': 'BLOCKED',
+-            'blocker': 'R3R4_CAPTURE_TOOL_HARD_GATE_FAILED',
++            'blocker': 'R3R4R1_CAPTURE_TOOL_HARD_GATE_FAILED',
+             'exception_type': type(exc).__name__,
+             'exception_repr': repr(exc),
+             'traceback': traceback.format_exc(),
+             'hardware_access': False, 'dut_connections': 0,
+         }
+-        path = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4_CAPTURE_TOOL_FAILURE.json'
++        path = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R1_CAPTURE_TOOL_FAILURE.json'
+         path.write_text(json.dumps(failure, indent=2) + '\n', encoding='utf-8')
+         print(json.dumps(failure, indent=2))
+         return 1
+--- R3R4/frame_reconstruct_r3r4.py
++++ R3R4R1/frame_reconstruct_r3r4.py
+@@ -41,7 +41,7 @@
+                     break
+                 if len(blob) != RECORD_BYTES:
+                     raise ReconstructionError(
+-                        f"R3R4_FRAME_INPUT_TRAILING_BYTES:{path}:{len(blob)}"
++                        f"R3R4R1_FRAME_INPUT_TRAILING_BYTES:{path}:{len(blob)}"
+                     )
+                 yield blob
+ 
+@@ -54,7 +54,7 @@
+     expected = width * height * 2
+     if len(raw) != expected:
+         raise ReconstructionError(
+-            f"R3R4_UYVY_SIZE_INVALID:{len(raw)}:{expected}"
++            f"R3R4R1_UYVY_SIZE_INVALID:{len(raw)}:{expected}"
+         )
+     stride = width * 2
+     for line in range(height):
+@@ -110,27 +110,27 @@
+         records_examined += 1
+         if not assessment.structurally_valid or assessment.session_fatal:
+             raise ReconstructionError(
+-                "R3R4_FRAME_RECORD_INVALID:" +
++                "R3R4R1_FRAME_RECORD_INVALID:" +
+                 ";".join(assessment.errors + assessment.discontinuity_reasons)
+             )
+         if assessment.discontinuity_reasons:
+             raise ReconstructionError(
+-                "R3R4_FRAME_DISCONTINUITY:" +
++                "R3R4R1_FRAME_DISCONTINUITY:" +
+                 ";".join(assessment.discontinuity_reasons)
+             )
+         completed = assembler.push(assessment)
+         if completed is not None:
+             break
+     if completed is None:
+-        raise ReconstructionError("R3R4_COMPLETE_FRAME_NOT_FOUND")
++        raise ReconstructionError("R3R4R1_COMPLETE_FRAME_NOT_FOUND")
+ 
+     expected_size = contract.pixels_per_line * contract.lines_per_frame * 2
+     if len(completed.raw_uyvy) != expected_size:
+         raise ReconstructionError(
+-            f"R3R4_FRAME_SIZE_INVALID:{len(completed.raw_uyvy)}:{expected_size}"
++            f"R3R4R1_FRAME_SIZE_INVALID:{len(completed.raw_uyvy)}:{expected_size}"
+         )
+     if completed.line_sequences != tuple(range(contract.lines_per_frame)):
+-        raise ReconstructionError("R3R4_FRAME_LINE_SET_INVALID")
++        raise ReconstructionError("R3R4R1_FRAME_LINE_SET_INVALID")
+ 
+     raw_sha = _fsync_file(raw_output, completed.raw_uyvy)
+     png_sha = write_png_from_uyvy(
+--- R3R4/Invoke-R3R4DutConnection.ps1
++++ R3R4R1/Invoke-R3R4R1DutConnection.ps1
+@@ -11,8 +11,8 @@
+ Set-StrictMode -Version Latest
+ $ErrorActionPreference = 'Stop'
+ 
+-$run = 'C:\FPGA\G2B_HW0_PRODUCT_R3R4_20260906T215021Z'
+-$linuxRun = '/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4/20260906T215021Z'
++$run = 'C:\FPGA\G2B_HW0_PRODUCT_R3R4R1_20260907T050126Z'
++$linuxRun = '/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r1/20260907T050126Z'
+ $private = Join-Path $run 'private'
+ $credentialTemp = Join-Path $private 'credential-temp'
+ $receipt = Join-Path $run ('logs\connection-' + $ReceiptName + '.json')
+@@ -29,14 +29,14 @@
+   if (-not $acl.AreAccessRulesProtected -or $rules.Count -ne 1 -or
+       $rules[0].IdentityReference.Value -cne $sid.Value -or
+       $rules[0].AccessControlType -ne 'Allow') {
+-    throw 'R3R4_PRIVATE_ACL_INVALID'
++    throw 'R3R4R1_PRIVATE_ACL_INVALID'
+   }
+ }
+ 
+ if ([IO.Path]::GetFullPath($PSScriptRoot) -cne (Join-Path $run 'scripts')) {
+-  throw 'R3R4_HELPER_LOCATION_INVALID'
+-}
+-if (Test-Path -LiteralPath $receipt) { throw 'R3R4_RECEIPT_EXISTS' }
++  throw 'R3R4R1_HELPER_LOCATION_INVALID'
++}
++if (Test-Path -LiteralPath $receipt) { throw 'R3R4R1_RECEIPT_EXISTS' }
+ if (-not (Test-Path -LiteralPath $credentialTemp -PathType Container)) {
+   New-Item -ItemType Directory -Path $credentialTemp | Out-Null
+   $acl = [Security.AccessControl.DirectorySecurity]::new()
+@@ -49,10 +49,10 @@
+ Assert-PrivateAcl $private
+ Assert-PrivateAcl $credentialTemp
+ if (@(Get-ChildItem -LiteralPath $credentialTemp -Force).Count) {
+-  throw 'R3R4_CREDENTIAL_TEMP_NOT_EMPTY'
++  throw 'R3R4R1_CREDENTIAL_TEMP_NOT_EMPTY'
+ }
+ if ((Get-FileHash -LiteralPath $plink).Hash -cne $plinkHash) {
+-  throw 'R3R4_PLINK_HASH_MISMATCH'
++  throw 'R3R4R1_PLINK_HASH_MISMATCH'
+ }
+ 
+ $pw = $null
+@@ -75,7 +75,7 @@
+   foreach ($line in [IO.File]::ReadAllLines('C:\FPGA\VCDE-DUT-1.txt')) {
+     if (-not $line.Trim() -or $line.Trim().StartsWith('#')) { continue }
+     if ($line -notmatch '^\s*([^:=]+?)\s*[:=]\s*(.*?)\s*$') {
+-      throw 'R3R4_CREDENTIAL_FORMAT'
++      throw 'R3R4R1_CREDENTIAL_FORMAT'
+     }
+     $label = ($Matches[1] -replace '[^A-Za-z0-9]','').ToLowerInvariant()
+     $val = $Matches[2]
+@@ -83,31 +83,31 @@
+       {$_ -in @('ip','adresip')} {'ip'}
+       {$_ -in @('user','username','uzytkownik','sudouser')} {'user'}
+       {$_ -in @('password','haslo')} {'password'}
+-      default { throw 'R3R4_CREDENTIAL_FIELD' }
+-    }
+-    if ($fields.ContainsKey($key)) { throw 'R3R4_DUPLICATE_CREDENTIAL_FIELD' }
++      default { throw 'R3R4R1_CREDENTIAL_FIELD' }
++    }
++    if ($fields.ContainsKey($key)) { throw 'R3R4R1_DUPLICATE_CREDENTIAL_FIELD' }
+     $fields[$key] = $val
+   }
+   if ($fields.Count -ne 3 -or $fields.ip -cne $ip -or $fields.user -cne $login) {
+-    throw 'R3R4_CREDENTIAL_IDENTITY'
++    throw 'R3R4R1_CREDENTIAL_IDENTITY'
+   }
+   $pw = [string]$fields.password
+   $fields.Clear()
+   $val = $null
+   $line = $null
+-  if ([string]::IsNullOrWhiteSpace($pw)) { throw 'R3R4_EMPTY_CREDENTIAL' }
++  if ([string]::IsNullOrWhiteSpace($pw)) { throw 'R3R4R1_EMPTY_CREDENTIAL' }
+ 
+   if ($mode -eq 'UPLOAD') {
+     $resolvedUpload = [IO.Path]::GetFullPath($UploadFile)
+     if (-not $resolvedUpload.StartsWith((Join-Path $run 'scripts') + '\',[StringComparison]::OrdinalIgnoreCase)) {
+-      throw 'R3R4_UPLOAD_SOURCE_BOUNDARY'
++      throw 'R3R4R1_UPLOAD_SOURCE_BOUNDARY'
+     }
+     if (-not (Test-Path -LiteralPath $resolvedUpload -PathType Leaf)) {
+-      throw 'R3R4_UPLOAD_SOURCE_MISSING'
++      throw 'R3R4R1_UPLOAD_SOURCE_MISSING'
+     }
+     $escapedRun = [Regex]::Escape($linuxRun)
+     if ($RemotePath -notmatch ('^' + $escapedRun + '/scripts/[A-Za-z0-9._-]+$')) {
+-      throw 'R3R4_UPLOAD_DESTINATION_BOUNDARY'
++      throw 'R3R4R1_UPLOAD_DESTINATION_BOUNDARY'
+     }
+     $uploadBytes = (Get-Item -LiteralPath $resolvedUpload).Length
+     $uploadSha256 = (Get-FileHash -LiteralPath $resolvedUpload).Hash
+@@ -123,7 +123,7 @@
+ 
+   $temp = Join-Path $credentialTemp ([Guid]::NewGuid().ToString('N') + '.credential.tmp')
+   if (-not [IO.Path]::GetFullPath($temp).StartsWith($credentialTemp + '\',[StringComparison]::OrdinalIgnoreCase)) {
+-    throw 'R3R4_TEMP_BOUNDARY'
++    throw 'R3R4R1_TEMP_BOUNDARY'
+   }
+   $stream = [IO.File]::Open($temp,'CreateNew','Write','None')
+   $stream.Dispose()
+@@ -146,9 +146,9 @@
+   $argsList = @('-batch','-ssh','-4','-P','22','-l',$login,'-pwfile',$temp,
+                 '-noagent','-noshare','-hostkey',$hostKey,'-T',$ip,$remote)
+   for ($i=0; $i -lt $argsList.Count; $i++) {
+-    if ($argsList[$i] -ceq '-pw') { throw 'R3R4_SECRET_ARGUMENT' }
++    if ($argsList[$i] -ceq '-pw') { throw 'R3R4R1_SECRET_ARGUMENT' }
+     if ($i -ne 6 -and $argsList[$i].Contains($pw,[StringComparison]::Ordinal)) {
+-      throw 'R3R4_SECRET_ARGUMENT'
++      throw 'R3R4R1_SECRET_ARGUMENT'
+     }
+     [void]$psi.ArgumentList.Add($argsList[$i])
+   }
+@@ -161,7 +161,7 @@
+   $proc = [Diagnostics.Process]::new()
+   $proc.StartInfo = $psi
+   $started = $proc.Start()
+-  if (-not $started) { throw 'R3R4_PROCESS_START' }
++  if (-not $started) { throw 'R3R4R1_PROCESS_START' }
+   $outTask = $proc.StandardOutput.ReadToEndAsync()
+   $errTask = $proc.StandardError.ReadToEndAsync()
+   if ($Sudo) {
+@@ -176,16 +176,16 @@
+     $proc.Kill($true)
+     $proc.WaitForExit()
+     $exitCode = 124
+-    throw 'R3R4_CONNECTION_TIMEOUT'
++    throw 'R3R4R1_CONNECTION_TIMEOUT'
+   }
+   $stdout = $outTask.GetAwaiter().GetResult()
+   $stderr = $errTask.GetAwaiter().GetResult()
+   $exitCode = $proc.ExitCode
+ } catch {
+-  $problem = if ($_.Exception.Message -like 'R3R4_*') {
++  $problem = if ($_.Exception.Message -like 'R3R4R1_*') {
+     $_.Exception.Message
+   } else {
+-    'R3R4_SANITIZED_LOCAL_EXCEPTION'
++    'R3R4R1_SANITIZED_LOCAL_EXCEPTION'
+   }
+ } finally {
+   if ($proc) {
+@@ -202,11 +202,11 @@
+   }
+ }
+ 
+-if (-not $deleted) { $exitCode=126; $problem='R3R4_CREDENTIAL_DELETE_FAILED' }
++if (-not $deleted) { $exitCode=126; $problem='R3R4R1_CREDENTIAL_DELETE_FAILED' }
+ $remaining = @(Get-ChildItem -LiteralPath $credentialTemp -Force).Count
+-if ($remaining -ne 0) { $exitCode=127; $problem='R3R4_CREDENTIAL_REMNANT' }
++if ($remaining -ne 0) { $exitCode=127; $problem='R3R4R1_CREDENTIAL_REMNANT' }
+ $result = [ordered]@{
+-  task='G2B-HW0-PRODUCT-R3R4'
++  task='G2B-HW0-PRODUCT-R3R4R1'
+   mode=$mode
+   helper=$PSCommandPath
+   helper_sha256=(Get-FileHash -LiteralPath $PSCommandPath).Hash
+@@ -215,7 +215,7 @@
+   ip=$ip
+   host_key_pinned=$true
+   credential_in_process_arguments=$false
+-  temporary_path_class='R3R4_PRIVATE_CREDENTIAL_TEMP'
++  temporary_path_class='R3R4R1_PRIVATE_CREDENTIAL_TEMP'
+   temporary_created=$created
+   temporary_deleted=$deleted
+   credential_temp_remaining=$remaining
+@@ -231,4 +231,4 @@
+ [IO.File]::WriteAllText($receipt,$json + "`n",[Text.UTF8Encoding]::new($false))
+ $pw = $null
+ Write-Output $json
+-if ($exitCode -ne 0 -or $problem) { throw 'R3R4_CONNECTION_FAILED_SEE_RECEIPT' }
++if ($exitCode -ne 0 -or $problem) { throw 'R3R4R1_CONNECTION_FAILED_SEE_RECEIPT' }
