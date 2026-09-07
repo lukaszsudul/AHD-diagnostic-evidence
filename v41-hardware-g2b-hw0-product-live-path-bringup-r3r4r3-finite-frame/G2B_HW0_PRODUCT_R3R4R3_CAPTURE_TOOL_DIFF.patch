@@ -1,0 +1,1489 @@
+--- R3R4R2/tools/capture_r3r4.py
++++ R3R4R3/scripts/capture_r3r4.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""R3R4R2 persistent 2500-record capture with parent-only MMIO authority."""
++"""R3R4R3 persistent 2500-record capture with parent-only MMIO authority."""
+ from __future__ import annotations
+ 
+ import csv
+@@ -23,9 +23,9 @@
+ 
+ 
+ P = Path
+-ROOT = P('/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r2/20260907T071912Z')
+-LOCK = P('/tmp/ahd-g2b-hw0-product-r3r4r2-20260907T071912Z.lock/receipt.json')
+-TASK = 'G2B-HW0-PRODUCT-R3R4R2'
++ROOT = P('/home/vcdeagent1/vcde_artifacts/g2b_hw0_product_r3r4r3/20260907T075856Z')
++LOCK = P('/tmp/ahd-g2b-hw0-product-r3r4r3-20260907T075856Z.lock/receipt.json')
++TASK = 'G2B-HW0-PRODUCT-R3R4R3'
+ EXPECTED_BOOT = '614295f4-c62b-4430-ae67-06013bea7084'
+ ABI_SHA256 = 'AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6'
+ RECORD_BYTES = 4096
+@@ -35,10 +35,14 @@
+ PRIMARY_TIMEOUT_SECONDS = 30.0
+ QUIESCENCE_TIMEOUT_SECONDS = 10.0
+ QUIET_WINDOW_SECONDS = 1.0
++PRIMARY_CHECKPOINT_COUNTS = (1024, 2048, 2500)
++QUIESCENCE_REQUIRED_SAMPLES = 5
++QUIESCENCE_SAMPLE_INTERVAL_SECONDS = 0.1
++QUIESCENCE_MINIMUM_SPAN_SECONDS = 0.4
+ CONTROL_EVENT_TYPES = frozenset({
+     'READER_READY', 'FIRST_RECORD_ASSEMBLED', 'FIRST_RECORD_DURABLE',
+-    'FIRST_RECORD_VALID', 'PRIMARY_TARGET_REACHED', 'READER_QUIET',
+-    'READER_EXITED', 'ERROR',
++    'FIRST_RECORD_VALID', 'PRIMARY_CHECKPOINT_DURABLE',
++    'PRIMARY_TARGET_REACHED', 'READER_QUIET', 'READER_EXITED', 'ERROR',
+ })
+ MMIO_COLUMNS = [
+     'Timestamp', 'Session', 'UserNode', 'BDF', 'Offset', 'Operation',
+@@ -48,6 +52,12 @@
+     'Timestamp', 'Session', 'UserNode', 'BDF', 'Offset', 'Operation',
+     'Value', 'Purpose', 'Authorized', 'Precondition', 'Result',
+ ]
++QUIESCENCE_COLUMNS = [
++    'Timestamp', 'MonotonicNs', 'Sample', 'Consecutive', 'SpanMs',
++    'BootId', 'LockHeld', 'BDF', 'BDFUnchanged', 'DriverBound',
++    'Control', 'Status', 'ErrorStatus', 'FatalClear', 'NodeHoldersAllowed',
++    'Quiescent', 'Accepted',
++]
+ 
+ 
+ class GateError(RuntimeError):
+@@ -91,6 +101,31 @@
+     os.replace(temporary, path)
+ 
+ 
++def _read_exact_nofollow(path: Path, expected_bytes: int) -> bytes:
++    flags = os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_BINARY', 0)
++    fd = os.open(path, flags)
++    try:
++        chunks = []
++        remaining = expected_bytes
++        while remaining:
++            chunk = os.read(fd, remaining)
++            require(bool(chunk), 'R3R4R3_PERSISTED_FILE_SHORT_REREAD')
++            chunks.append(chunk)
++            remaining -= len(chunk)
++        require(os.read(fd, 1) == b'', 'R3R4R3_PERSISTED_FILE_LONG_REREAD')
++        return b''.join(chunks)
++    finally:
++        os.close(fd)
++
++
++def _append_jsonl(path: Path, row: Mapping) -> None:
++    require(not _contains_bytes(row), 'R3R4R3_JSONL_RAW_BYTES_FORBIDDEN')
++    with path.open('a', encoding='utf-8', newline='\n') as handle:
++        handle.write(json.dumps(row, sort_keys=True) + '\n')
++        handle.flush()
++        os.fsync(handle.fileno())
++
++
+ def _contains_bytes(value) -> bool:
+     if isinstance(value, (bytes, bytearray, memoryview)):
+         return True
+@@ -104,29 +139,65 @@
+ 
+ def compact_emit(channel, event_type: str, **fields) -> None:
+     require(event_type in CONTROL_EVENT_TYPES,
+-            'R3R4R2_CONTROL_IPC_EVENT_NOT_ALLOWED')
++            'R3R4R3_CONTROL_IPC_EVENT_NOT_ALLOWED')
+     message = {'type': event_type, 'monotonic_ns': time.monotonic_ns(), **fields}
+-    require(not _contains_bytes(message), 'R3R4R2_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
++    require(not _contains_bytes(message), 'R3R4R3_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
+     encoded = json.dumps(message, sort_keys=True)
+     require(len(encoded) < RECORD_BYTES,
+-            'R3R4R2_CONTROL_IPC_MESSAGE_NOT_COMPACT')
++            'R3R4R3_CONTROL_IPC_MESSAGE_NOT_COMPACT')
+     channel.put(message, timeout=0.5)
+ 
+ 
+ def read_lock() -> dict:
+-    require(LOCK.is_file(), 'R3R4R2_LINUX_LOCK_REQUIRED')
++    require(LOCK.is_file(), 'R3R4R3_LINUX_LOCK_REQUIRED')
+     lock = json.loads(LOCK.read_text(encoding='utf-8'))
+     require(lock.get('task') == TASK and lock.get('state') == 'HELD',
+-            'R3R4R2_LINUX_LOCK_OWNER_MISMATCH')
++            'R3R4R3_LINUX_LOCK_OWNER_MISMATCH')
+     boot = P('/proc/sys/kernel/random/boot_id').read_text().strip()
+     require(boot == EXPECTED_BOOT and boot == lock.get('boot_id'),
+-            'R3R4R2_BOOT_CONTINUITY_LOST')
++            'R3R4R3_BOOT_CONTINUITY_LOST')
+     return lock
+ 
+ 
+ def quiescent(control: int, status: int) -> bool:
+     # CONTROL disabled; reset not busy; C2H inactive; ring empty; ring not full.
+     return control == 0 and status & 0x10F == 0x004
++
++
++def combined_session_normalization(read_error: Callable[[], int],
++                                   write_w1c: Callable[[int], None]) -> dict:
++    """Use exactly one pre-write observation and zero or one combined W1C."""
++    observed = read_error()
++    mask = observed & 0x0000003F
++    writes = 0
++    post = observed
++    if mask:
++        write_w1c(mask)
++        writes = 1
++        post = read_error()
++        require((post & 0x3F) == 0,
++                'R3R4R3_SESSION_NORMALIZATION_DID_NOT_CLEAR')
++    return {
++        'observed_error_status': observed,
++        'session_normalization_mask': mask,
++        'w1c_writes': writes,
++        'post_normalization_error_status': post,
++    }
++
++
++def quiescence_streak_update(sample_pass: bool, now: float,
++                             consecutive: int, first_pass_time: float | None
++                             ) -> tuple[int, float | None, float, bool]:
++    """Pure five-sample state transition used by parent proof and self-test."""
++    if not sample_pass:
++        return 0, None, 0.0, False
++    if consecutive == 0 or first_pass_time is None:
++        first_pass_time = now
++    consecutive += 1
++    span = now - first_pass_time
++    complete = (consecutive >= QUIESCENCE_REQUIRED_SAMPLES and
++                span >= QUIESCENCE_MINIMUM_SPAN_SECONDS)
++    return consecutive, first_pass_time, span, complete
+ 
+ 
+ def _append_csv(path: Path, columns: list[str], row: Mapping) -> None:
+@@ -214,10 +285,8 @@
+         normal_disable = sum(row['Purpose'] == 'NORMAL_DISABLE' for row in intents)
+         safety_disable = sum(row['Purpose'] == 'SAFETY_DISABLE' for row in intents)
+         snapshots = sum(row['Offset'] == '0x3844' for row in intents)
+-        nonfatal_w1c = sum(row['Purpose'] == 'POST_RESET_NONFATAL_W1C'
+-                           for row in intents)
+-        fatal_w1c = sum(row['Purpose'] == 'POST_RESET_FATAL_W1C'
+-                        for row in intents)
++        normalization_w1c = sum(
++            row['Purpose'] == 'SESSION_NORMALIZATION_W1C' for row in intents)
+ 
+         if offset == 0x380C and value == 0x00000004:
+             require(purpose == 'RESET_STREAM_STATE' and reset_count == 0,
+@@ -236,24 +305,17 @@
+         elif offset == 0x3844 and value == 0x00000001:
+             require(purpose == 'COHERENT_SNAPSHOT' and snapshots < 3,
+                     'SNAPSHOT_WRITE_BUDGET_EXCEEDED')
+-        elif offset == 0x383C and 0 < value <= 0x7:
+-            require(purpose == 'POST_RESET_NONFATAL_W1C' and nonfatal_w1c == 0,
+-                    'NONFATAL_W1C_BUDGET_EXCEEDED')
++        elif offset == 0x383C and 0 < value <= 0x3F:
++            require(purpose == 'SESSION_NORMALIZATION_W1C' and
++                    normalization_w1c == 0,
++                    'SESSION_NORMALIZATION_W1C_BUDGET_EXCEEDED')
+             require(self.last_error_read is not None and
+-                    value == (self.last_error_read & 0x7),
+-                    'NONFATAL_W1C_MASK_MISMATCH')
++                    value == (self.last_error_read & 0x3F),
++                    'SESSION_NORMALIZATION_W1C_MASK_MISMATCH')
+             require(precondition == 'POST_RESET_QUIESCENT',
+-                    'NONFATAL_W1C_PRECONDITION')
+-        elif offset == 0x383C and value & ~0x38 == 0 and value != 0:
+-            require(purpose == 'POST_RESET_FATAL_W1C' and fatal_w1c == 0,
+-                    'FATAL_W1C_BUDGET_EXCEEDED')
+-            require(self.last_error_read is not None and
+-                    value == (self.last_error_read & 0x38),
+-                    'FATAL_W1C_MASK_MISMATCH')
+-            require(precondition == 'POST_RESET_QUIESCENT',
+-                    'FATAL_W1C_PRECONDITION')
++                    'SESSION_NORMALIZATION_W1C_PRECONDITION')
+         else:
+-            raise GateError('R3R4R2_MMIO_WRITE_ALLOWLIST_VIOLATION')
++            raise GateError('R3R4R3_MMIO_WRITE_ALLOWLIST_VIOLATION')
+ 
+         stamp = time.time_ns()
+         base = {
+@@ -349,25 +411,44 @@
+         self.trailing_path = private_dir / 'T3T4-incomplete-trailing.bin'
+         self.first_path = private_dir / 'T3T4-first-record.bin'
+         self.payload_path = private_dir / 'T3T4-first-payload.bin'
++        self.first_receipt_path = (
++            private_dir /
++            'G2B_HW0_PRODUCT_R3R4R3_PERSISTED_FIRST_RECORD_RECEIPT.json')
++        self.checkpoint_receipt_path = (
++            private_dir /
++            'G2B_HW0_PRODUCT_R3R4R3_PRIMARY_DURABILITY_CHECKPOINTS.jsonl')
+         self.journal_path = private_dir / 'T3T4-capture-journal.jsonl'
+         self.result_path = private_dir / 'T3T4-reader-result.json'
+         self.primary_file = self.primary_path.open('xb', buffering=0)
+         self.drain_file = self.drain_path.open('xb', buffering=0)
+         self.journal = self.journal_path.open('x', encoding='utf-8', newline='\n')
++        self.journal_lock = threading.Lock()
+         self.first_queue: queue.Queue = queue.Queue(maxsize=1)
+         self.first_thread = threading.Thread(
+-            target=self._persist_first, name='r3r4r2-first-record-persister',
++            target=self._persist_first, name='r3r4r3-first-record-persister',
+             daemon=False,
+         )
++        self.checkpoint_queue: queue.Queue = queue.Queue(
++            maxsize=len(PRIMARY_CHECKPOINT_COUNTS) + 1)
++        self.checkpoint_condition = threading.Condition()
++        self.checkpoint_requested: list[int] = []
++        self.checkpoint_results: dict[int, dict] = {}
++        self.checkpoint_error: dict | None = None
++        self.checkpoint_thread = threading.Thread(
++            target=self._checkpoint_worker,
++            name='r3r4r3-primary-durability-worker', daemon=False,
++        )
+         self.first_thread.start()
++        self.checkpoint_thread.start()
+         self.closed = False
+         self.last_completed_operation = 'RECORD_SINK_READY'
+ 
+     def _journal(self, event: str, **fields) -> None:
+         row = {'event': event, 'utc_ns': time.time_ns(), **fields}
+-        require(not _contains_bytes(row), 'R3R4R2_PRIVATE_JOURNAL_RAW_BYTES_FORBIDDEN')
+-        self.journal.write(json.dumps(row, sort_keys=True) + '\n')
+-        self.journal.flush()
++        require(not _contains_bytes(row), 'R3R4R3_PRIVATE_JOURNAL_RAW_BYTES_FORBIDDEN')
++        with self.journal_lock:
++            self.journal.write(json.dumps(row, sort_keys=True) + '\n')
++            self.journal.flush()
+ 
+     def _persist_first(self) -> None:
+         try:
+@@ -379,37 +460,72 @@
+             with self.first_path.open('xb', buffering=0) as handle:
+                 written = handle.write(blob)
+                 require(written == RECORD_BYTES,
+-                        'R3R4R2_FIRST_RECORD_SHORT_PERSIST')
++                        'R3R4R3_FIRST_RECORD_SHORT_PERSIST')
+                 handle.flush()
+                 os.fsync(handle.fileno())
+-            payload = blob[self.contract.payload_first:self.contract.padding_first]
++            del blob
++            persisted_record = _read_exact_nofollow(self.first_path, RECORD_BYTES)
++
++            validator = StreamValidator(self.contract, armed_epoch=self.armed_epoch)
++            assessment = validator.accept(persisted_record)
++            errors = list(assessment.errors) + list(assessment.discontinuity_reasons)
++            require(assessment.structurally_valid and not assessment.session_fatal and
++                    not errors, 'R3R4R3_FIRST_RECORD_ABI_VALIDATION_FAILED:' +
++                    ';'.join(errors[:8]))
++            record = assessment.record
++            require(record is not None, 'R3R4R3_FIRST_RECORD_PARSE_MISSING')
++            require(record.reset_epoch == self.armed_epoch,
++                    'R3R4R3_FIRST_RECORD_STALE_EPOCH')
++            persisted_payload_slice = persisted_record[
++                self.contract.payload_first:self.contract.padding_first]
+             with self.payload_path.open('xb', buffering=0) as handle:
+-                written = handle.write(payload)
++                written = handle.write(persisted_payload_slice)
+                 require(written == self.contract.payload_bytes,
+-                        'R3R4R2_FIRST_PAYLOAD_SHORT_PERSIST')
++                        'R3R4R3_FIRST_PAYLOAD_SHORT_PERSIST')
+                 handle.flush()
+                 os.fsync(handle.fileno())
+-            self.first_record_hash = hashlib.sha256(blob).hexdigest().upper()
+-            self.first_payload_hash = hashlib.sha256(payload).hexdigest().upper()
++            persisted_payload = _read_exact_nofollow(
++                self.payload_path, self.contract.payload_bytes)
++            require(persisted_payload == persisted_payload_slice,
++                    'R3R4R3_REREAD_PAYLOAD_RECORD_SLICE_MISMATCH')
++
++            self.first_record_hash = hashlib.sha256(
++                persisted_record).hexdigest().upper()
++            self.first_payload_hash = hashlib.sha256(
++                persisted_payload).hexdigest().upper()
++            self.first_header = dict(record.header)
++            self.first_valid = True
++            durable_utc_ns = time.time_ns()
++            receipt = {
++                'schema': 'R3R4R3_PERSISTED_FIRST_RECORD_RECEIPT_V1',
++                'task': TASK,
++                'first_record_path': str(self.first_path),
++                'first_payload_path': str(self.payload_path),
++                'first_record_written_bytes': RECORD_BYTES,
++                'first_record_reread_bytes': len(persisted_record),
++                'first_payload_written_bytes': self.contract.payload_bytes,
++                'first_payload_reread_bytes': len(persisted_payload),
++                'record_fsync_complete': True,
++                'payload_fsync_complete': True,
++                'record_sha256': self.first_record_hash,
++                'payload_sha256': self.first_payload_hash,
++                'record_hash_source': 'REREAD_PERSISTED_FILE',
++                'payload_hash_source': 'REREAD_PERSISTED_FILE',
++                'abi_parse_source': 'REREAD_PERSISTED_FIRST_RECORD',
++                'payload_equals_record_slice': True,
++                'abi_result': 'PASS',
++                'first_record_durable_utc_ns': durable_utc_ns,
++                'raw_payload_in_receipt': False,
++            }
++            _write_json_exclusive(self.first_receipt_path, receipt)
++            self.emit('FIRST_RECORD_VALID', valid=True,
++                      header=self.first_header, padding_zero=True)
+             self.first_durable = True
+             self.emit('FIRST_RECORD_DURABLE', bytes=RECORD_BYTES,
+                       record_sha256=self.first_record_hash,
+-                      payload_sha256=self.first_payload_hash)
+-
+-            validator = StreamValidator(self.contract, armed_epoch=self.armed_epoch)
+-            assessment = validator.accept(blob)
+-            errors = list(assessment.errors) + list(assessment.discontinuity_reasons)
+-            require(assessment.structurally_valid and not assessment.session_fatal and
+-                    not errors, 'R3R4R2_FIRST_RECORD_ABI_VALIDATION_FAILED:' +
+-                    ';'.join(errors[:8]))
+-            record = assessment.record
+-            require(record is not None, 'R3R4R2_FIRST_RECORD_PARSE_MISSING')
+-            require(record.reset_epoch == self.armed_epoch,
+-                    'R3R4R2_FIRST_RECORD_STALE_EPOCH')
+-            self.first_header = dict(record.header)
+-            self.first_valid = True
+-            self.emit('FIRST_RECORD_VALID', valid=True,
+-                      header=self.first_header, padding_zero=True)
++                      payload_sha256=self.first_payload_hash,
++                      durable_utc_ns=durable_utc_ns,
++                      receipt=self.first_receipt_path.name)
+         except BaseException as exc:
+             trace = traceback_module.format_exc()
+             self.first_error = {
+@@ -426,9 +542,99 @@
+             except BaseException:
+                 pass
+ 
++    def _request_checkpoint(self, record_count: int) -> None:
++        require(record_count in PRIMARY_CHECKPOINT_COUNTS,
++                'R3R4R3_PRIMARY_CHECKPOINT_COUNT_NOT_ALLOWED')
++        require(record_count not in self.checkpoint_requested,
++                'R3R4R3_PRIMARY_CHECKPOINT_DUPLICATE_REQUEST')
++        self.checkpoint_requested.append(record_count)
++        self.checkpoint_queue.put(record_count, timeout=0.5)
++        self._journal('PRIMARY_CHECKPOINT_REQUESTED', record_count=record_count,
++                      communication='METADATA_ONLY_RECORD_COUNT')
++
++    def _checkpoint_worker(self) -> None:
++        try:
++            while True:
++                record_count = self.checkpoint_queue.get()
++                if record_count is None:
++                    return
++                requested_utc_ns = time.time_ns()
++                flags = (os.O_RDWR | getattr(os, 'O_NOFOLLOW', 0) |
++                         getattr(os, 'O_BINARY', 0))
++                fd = os.open(self.primary_path, flags)
++                try:
++                    os.fsync(fd)
++                    persisted_size = os.fstat(fd).st_size
++                finally:
++                    os.close(fd)
++                required_size = record_count * RECORD_BYTES
++                require(persisted_size >= required_size,
++                        'R3R4R3_PRIMARY_CHECKPOINT_FILE_TOO_SHORT')
++                row = {
++                    'schema': 'R3R4R3_PRIMARY_DURABILITY_CHECKPOINT_V1',
++                    'task': TASK,
++                    'record_count': record_count,
++                    'required_size': required_size,
++                    'persisted_size': persisted_size,
++                    'fsync_complete': True,
++                    'communication': 'METADATA_ONLY_RECORD_COUNT',
++                    'requested_utc_ns': requested_utc_ns,
++                    'completed_utc_ns': time.time_ns(),
++                    'result': 'PASS',
++                    'raw_payload_in_communication': False,
++                }
++                _append_jsonl(self.checkpoint_receipt_path, row)
++                with self.checkpoint_condition:
++                    self.checkpoint_results[record_count] = row
++                    self.checkpoint_condition.notify_all()
++                self.emit('PRIMARY_CHECKPOINT_DURABLE',
++                          record_count=record_count,
++                          persisted_size=persisted_size,
++                          fsync_complete=True,
++                          communication='METADATA_ONLY_RECORD_COUNT')
++        except BaseException as exc:
++            problem = {
++                'blocker': 'R3R4R3_PRIMARY_CHECKPOINT_FAILED:' +
++                           _nonempty_problem(exc),
++                'exception_type': type(exc).__name__,
++                'exception_repr': repr(exc),
++                'traceback': traceback_module.format_exc(),
++            }
++            with self.checkpoint_condition:
++                self.checkpoint_error = problem
++                self.checkpoint_condition.notify_all()
++            try:
++                self.emit('ERROR', source='PRIMARY_DURABILITY_WORKER', **problem)
++            except BaseException:
++                pass
++
++    def _wait_checkpoint(self, record_count: int, timeout: float = 5.0) -> dict:
++        deadline = time.monotonic() + timeout
++        with self.checkpoint_condition:
++            while (record_count not in self.checkpoint_results and
++                   self.checkpoint_error is None):
++                remaining = deadline - time.monotonic()
++                require(remaining > 0,
++                        f'R3R4R3_PRIMARY_CHECKPOINT_TIMEOUT:{record_count}')
++                self.checkpoint_condition.wait(remaining)
++            require(self.checkpoint_error is None,
++                    (self.checkpoint_error or {}).get(
++                        'blocker', 'R3R4R3_PRIMARY_CHECKPOINT_FAILED'))
++            return self.checkpoint_results[record_count]
++
++    def _await_primary_target_prerequisites(self) -> None:
++        self.first_thread.join(timeout=5.0)
++        require(not self.first_thread.is_alive(),
++                'R3R4R3_FIRST_RECORD_PERSISTER_EXIT_TIMEOUT')
++        require(self.first_error is None and self.first_durable and self.first_valid,
++                (self.first_error or {}).get(
++                    'blocker', 'R3R4R3_FIRST_RECORD_DURABLE_BEFORE_PRIMARY_TARGET'))
++        self._wait_checkpoint(1024)
++        self._wait_checkpoint(2048)
++
+     def accept(self, chunk: bytes) -> None:
+-        require(not self.closed, 'R3R4R2_RECORD_SINK_ALREADY_CLOSED')
+-        require(isinstance(chunk, bytes), 'R3R4R2_READER_CHUNK_NOT_BYTES')
++        require(not self.closed, 'R3R4R3_RECORD_SINK_ALREADY_CLOSED')
++        require(isinstance(chunk, bytes), 'R3R4R3_READER_CHUNK_NOT_BYTES')
+         if not chunk:
+             return
+         self.pending.extend(chunk)
+@@ -438,7 +644,7 @@
+             del self.pending[:RECORD_BYTES]
+             if self.primary_count < self.primary_target:
+                 written = self.primary_file.write(blob)
+-                require(written == RECORD_BYTES, 'R3R4R2_PRIMARY_SHORT_WRITE')
++                require(written == RECORD_BYTES, 'R3R4R3_PRIMARY_SHORT_WRITE')
+                 self.primary_hash.update(blob)
+                 self.primary_count += 1
+                 self._journal('PRIMARY_RECORD_WRITTEN', count=self.primary_count)
+@@ -446,15 +652,21 @@
+                     self.emit('FIRST_RECORD_ASSEMBLED', bytes=RECORD_BYTES,
+                               primary_record=1)
+                     self.first_queue.put(blob, timeout=0.5)
++                if self.primary_count in PRIMARY_CHECKPOINT_COUNTS:
++                    self._request_checkpoint(self.primary_count)
+                 if self.primary_count == self.primary_target:
++                    self._await_primary_target_prerequisites()
+                     self.emit('PRIMARY_TARGET_REACHED',
+                               primary_records=self.primary_count,
+-                              primary_bytes=self.primary_count * RECORD_BYTES)
++                              primary_bytes=self.primary_count * RECORD_BYTES,
++                              first_record_durable=True,
++                              checkpoint_1024=True, checkpoint_2048=True,
++                              final_checkpoint_pending=True)
+             else:
+                 require(self.drain_count < self.drain_limit,
+-                        'R3R4R2_DRAIN_RECORD_LIMIT_EXCEEDED')
++                        'R3R4R3_DRAIN_RECORD_LIMIT_EXCEEDED')
+                 written = self.drain_file.write(blob)
+-                require(written == RECORD_BYTES, 'R3R4R2_DRAIN_SHORT_WRITE')
++                require(written == RECORD_BYTES, 'R3R4R3_DRAIN_SHORT_WRITE')
+                 self.drain_hash.update(blob)
+                 self.drain_count += 1
+                 self._journal('DRAIN_RECORD_WRITTEN', count=self.drain_count)
+@@ -475,7 +687,31 @@
+         self.first_thread.join(timeout=5.0)
+         if self.first_thread.is_alive():
+             result = 'BLOCKED'
+-            blocker = 'R3R4R2_FIRST_RECORD_PERSISTER_EXIT_TIMEOUT'
++            blocker = 'R3R4R3_FIRST_RECORD_PERSISTER_EXIT_TIMEOUT'
++        if 2500 in self.checkpoint_requested:
++            try:
++                self._wait_checkpoint(2500)
++            except BaseException as exc:
++                if result == 'PASS':
++                    result = 'BLOCKED'
++                    blocker = _nonempty_problem(exc)
++                    exception_type = type(exc).__name__
++                    exception_repr = repr(exc)
++                    traceback_text = traceback_module.format_exc()
++        try:
++            self.checkpoint_queue.put(None, timeout=0.5)
++        except queue.Full:
++            pass
++        self.checkpoint_thread.join(timeout=5.0)
++        if self.checkpoint_thread.is_alive() and result == 'PASS':
++            result = 'BLOCKED'
++            blocker = 'R3R4R3_PRIMARY_CHECKPOINT_WORKER_EXIT_TIMEOUT'
++        if self.checkpoint_error and result == 'PASS':
++            result = 'BLOCKED'
++            blocker = self.checkpoint_error['blocker']
++            exception_type = self.checkpoint_error['exception_type']
++            exception_repr = self.checkpoint_error['exception_repr']
++            traceback_text = self.checkpoint_error['traceback']
+         if self.first_error and result == 'PASS':
+             result = 'FAIL'
+             blocker = self.first_error['blocker']
+@@ -483,7 +719,7 @@
+             exception_repr = self.first_error['exception_repr']
+             traceback_text = self.first_error['traceback']
+         blocker = blocker.strip() if blocker else ''
+-        require(bool(blocker), 'R3R4R2_BLANK_BLOCKER_FORBIDDEN')
++        require(bool(blocker), 'R3R4R3_BLANK_BLOCKER_FORBIDDEN')
+         try:
+             for handle in (self.primary_file, self.drain_file):
+                 handle.flush()
+@@ -502,10 +738,16 @@
+             self.journal.flush()
+             os.fsync(self.journal.fileno())
+             self.journal.close()
++            primary_sha256 = hashlib.sha256(
++                self.primary_path.read_bytes()).hexdigest().upper()
++            drain_sha256 = hashlib.sha256(
++                self.drain_path.read_bytes()).hexdigest().upper()
+         except BaseException as exc:
++            primary_sha256 = self.primary_hash.hexdigest().upper()
++            drain_sha256 = self.drain_hash.hexdigest().upper()
+             if result == 'PASS':
+                 result = 'BLOCKED'
+-                blocker = 'R3R4R2_CAPTURE_FINAL_SYNC_FAILED:' + _nonempty_problem(exc)
++                blocker = 'R3R4R3_CAPTURE_FINAL_SYNC_FAILED:' + _nonempty_problem(exc)
+                 exception_type = type(exc).__name__
+                 exception_repr = repr(exc)
+                 traceback_text = traceback_module.format_exc()
+@@ -518,13 +760,21 @@
+             'drain_bytes': self.drain_count * RECORD_BYTES,
+             'complete_records': self.primary_count + self.drain_count,
+             'incomplete_trailing_bytes': len(self.pending),
+-            'primary_sha256': self.primary_hash.hexdigest().upper(),
+-            'drain_sha256': self.drain_hash.hexdigest().upper(),
++            'primary_sha256': primary_sha256,
++            'drain_sha256': drain_sha256,
++            'capture_hash_source': 'REREAD_PERSISTED_FILES',
+             'first_record_durable': self.first_durable,
+             'first_record_valid': self.first_valid,
+             'first_record_sha256': self.first_record_hash,
+             'first_payload_sha256': self.first_payload_hash,
+             'first_header': self.first_header,
++            'first_record_hash_source': 'REREAD_PERSISTED_FILE',
++            'first_payload_hash_source': 'REREAD_PERSISTED_FILE',
++            'abi_parse_source': 'REREAD_PERSISTED_FIRST_RECORD',
++            'checkpoint_schedule': list(PRIMARY_CHECKPOINT_COUNTS),
++            'checkpoint_requested': list(self.checkpoint_requested),
++            'checkpoint_passed': sorted(self.checkpoint_results),
++            'checkpoint_communication': 'METADATA_ONLY_RECORD_COUNT',
+             'exception_type': exception_type,
+             'exception_repr': exception_repr,
+             'traceback': traceback_text,
+@@ -557,14 +807,14 @@
+     fd = -1
+     sink = None
+     result = None
+-    blocker = 'R3R4R2_READER_UNFINISHED'
++    blocker = 'R3R4R3_READER_UNFINISHED'
+     exception_type = None
+     exception_repr = None
+     trace = None
+     quiet_since = None
+     try:
+         st = os.stat(c2h_node)
+-        require(stat.S_ISCHR(st.st_mode), 'R3R4R2_C2H_NODE_NOT_CHAR_DEVICE')
++        require(stat.S_ISCHR(st.st_mode), 'R3R4R3_C2H_NODE_NOT_CHAR_DEVICE')
+         fd = os.open(c2h_node, os.O_RDONLY | os.O_NOFOLLOW)
+         emit = lambda event_type, **fields: compact_emit(
+             messages, event_type, **fields)
+@@ -664,7 +914,7 @@
+                 break
+             if len(blob) != RECORD_BYTES:
+                 raise FailureError(
+-                    f'R3R4R2_CAPTURE_FILE_TRAILING_BYTES:{path.name}:{len(blob)}')
++                    f'R3R4R3_CAPTURE_FILE_TRAILING_BYTES:{path.name}:{len(blob)}')
+             yield blob
+ 
+ 
+@@ -672,11 +922,11 @@
+                      primary_path: Path, drain_path: Path,
+                      trailing_path: Path) -> dict:
+     require(primary_path.stat().st_size == PRIMARY_BYTES,
+-            'R3R4R2_PRIMARY_FILE_SIZE_INVALID')
++            'R3R4R3_PRIMARY_FILE_SIZE_INVALID')
+     require(drain_path.stat().st_size % RECORD_BYTES == 0,
+-            'R3R4R2_DRAIN_FILE_SIZE_INVALID')
++            'R3R4R3_DRAIN_FILE_SIZE_INVALID')
+     require(trailing_path.stat().st_size == 0,
+-            'R3R4R2_INCOMPLETE_TRAILING_BYTES_NONZERO')
++            'R3R4R3_INCOMPLETE_TRAILING_BYTES_NONZERO')
+     validator = StreamValidator(contract, armed_epoch=armed_epoch)
+     total = 0
+     malformed = 0
+@@ -692,8 +942,19 @@
+     last_header = None
+     source_snapshot_first = None
+     source_snapshot_changes = 0
++    primary_hash = hashlib.sha256()
++    drain_hash = hashlib.sha256()
++    combined_hash = hashlib.sha256()
++    first_primary_record = None
+     for path in (primary_path, drain_path):
+         for blob in _iter_file_records(path):
++            if path == primary_path:
++                primary_hash.update(blob)
++                if first_primary_record is None:
++                    first_primary_record = blob
++            else:
++                drain_hash.update(blob)
++            combined_hash.update(blob)
+             assessment = validator.accept(blob)
+             total += 1
+             if not assessment.structurally_valid:
+@@ -735,11 +996,21 @@
+                 errors.append('session_fatal')
+     drain_records = drain_path.stat().st_size // RECORD_BYTES
+     require(total == PRIMARY_TARGET + drain_records,
+-            'R3R4R2_HOST_RECORD_COUNT_FILE_MISMATCH')
++            'R3R4R3_HOST_RECORD_COUNT_FILE_MISMATCH')
++    require(first_primary_record is not None, 'R3R4R3_FIRST_PRIMARY_RECORD_MISSING')
++    first_path = primary_path.parent / 'T3T4-first-record.bin'
++    payload_path = primary_path.parent / 'T3T4-first-payload.bin'
++    persisted_first = _read_exact_nofollow(first_path, RECORD_BYTES)
++    persisted_payload = _read_exact_nofollow(payload_path, contract.payload_bytes)
++    require(persisted_first == first_primary_record,
++            'R3R4R3_FIRST_RECORD_NOT_PRIMARY_OFFSET_ZERO')
++    require(persisted_payload == persisted_first[
++        contract.payload_first:contract.padding_first],
++        'R3R4R3_FIRST_PAYLOAD_NOT_FIRST_RECORD_SLICE')
+     if (malformed or padding_errors or gaps or unexpected_epoch or duplicates or
+             source_snapshot_changes or errors):
+         raise FailureError(
+-            'R3R4R2_FULL_RECORD_VALIDATION_FAILED:' +
++            'R3R4R3_FULL_RECORD_VALIDATION_FAILED:' +
+             json.dumps({
+                 'malformed': malformed, 'padding_errors': padding_errors,
+                 'gaps': gaps, 'unexpected_epoch': unexpected_epoch,
+@@ -749,7 +1020,7 @@
+             }, sort_keys=True)
+         )
+     require(first_header is not None and last_header is not None,
+-            'R3R4R2_NO_VALID_RECORDS')
++            'R3R4R3_NO_VALID_RECORDS')
+     return {
+         'result': 'PASS', 'total_complete_records': total,
+         'primary_records': PRIMARY_TARGET, 'drain_records': drain_records,
+@@ -760,6 +1031,15 @@
+         'stale_epoch_records': unexpected_epoch,
+         'source_snapshot_changes': source_snapshot_changes,
+         'source_snapshot_first': source_snapshot_first,
++        'primary_sha256': primary_hash.hexdigest().upper(),
++        'drain_sha256': drain_hash.hexdigest().upper(),
++        'combined_complete_record_sha256': combined_hash.hexdigest().upper(),
++        'first_record_sha256': hashlib.sha256(
++            persisted_first).hexdigest().upper(),
++        'first_payload_sha256': hashlib.sha256(
++            persisted_payload).hexdigest().upper(),
++        'hash_source': 'REREAD_PERSISTED_FILES',
++        'first_record_equals_primary_offset_zero': True,
+         'first_header': first_header, 'last_header': last_header,
+         'last_global': last_header['global_stream_sequence'],
+         'last_channel': last_header['channel_attempt_sequence'],
+@@ -804,7 +1084,7 @@
+         values['last_channel_observed'] == last_channel,
+     )
+     if not all(checks):
+-        raise FailureError('R3R4R2_COUNTER_RECONCILIATION_FAILED:' +
++        raise FailureError('R3R4R3_COUNTER_RECONCILIATION_FAILED:' +
+                            json.dumps(values, sort_keys=True))
+     return {'result': 'PASS', **values}
+ 
+@@ -819,28 +1099,81 @@
+         first = False
+         event_type = message.get('type')
+         require(event_type in CONTROL_EVENT_TYPES,
+-                'R3R4R2_CONTROL_IPC_EVENT_NOT_ALLOWED')
++                'R3R4R3_CONTROL_IPC_EVENT_NOT_ALLOWED')
+         require(not _contains_bytes(message),
+-                'R3R4R2_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
++                'R3R4R3_RAW_RECORD_CONTROL_IPC_FORBIDDEN')
+         state.setdefault('events', []).append(message)
+         state[event_type] = message
+ 
+ 
+-def _parent_quiescence(mmio: MMIO, timeout: float) -> tuple[bool, list[dict]]:
++def _parent_quiescence(mmio: MMIO, timeout: float,
++                       allowed_pids: set[int]) -> tuple[bool, list[dict]]:
+     observations = []
+     deadline = time.monotonic() + timeout
++    consecutive_quiescent = 0
++    first_quiescent_time = None
++    expected_bdf = mmio.proof['bdf']
++    sample_number = 0
+     while True:
++        sample_started = time.monotonic()
++        lock = read_lock()
++        bdf_path = P('/sys/bus/pci/devices') / expected_bdf
++        bdf_unchanged = bdf_path.is_dir() and bdf_path.name == expected_bdf
++        driver_link = bdf_path / 'driver'
++        driver_bound = (driver_link.is_symlink() and
++                        driver_link.resolve().name == 'xdma_ahd_pcie')
++        holders = (_open_holders(mmio.proof['user']) +
++                   _open_holders(mmio.proof['c2h']))
++        holders_allowed = all(item['pid'] in allowed_pids for item in holders)
+         control = mmio.read(0x380C)
+         status = mmio.read(0x3810)
+-        observations.append({
+-            'utc_ns': time.time_ns(), 'control': control, 'status': status,
+-            'quiescent': quiescent(control, status),
++        error_status = mmio.read(0x383C)
++        hardware_quiescent = quiescent(control, status)
++        fatal_clear = (error_status & 0x38) == 0
++        sample_pass = (bdf_unchanged and driver_bound and holders_allowed and
++                       hardware_quiescent and fatal_clear)
++        now = time.monotonic()
++        consecutive_quiescent, first_quiescent_time, span, complete = (
++            quiescence_streak_update(
++                sample_pass, now, consecutive_quiescent,
++                first_quiescent_time))
++        sample_number += 1
++        observation = {
++            'utc_ns': time.time_ns(), 'monotonic_ns': time.monotonic_ns(),
++            'sample': sample_number, 'consecutive': consecutive_quiescent,
++            'span_ms': round(span * 1000.0, 3),
++            'boot_id': lock['boot_id'], 'lock_held': True,
++            'bdf': expected_bdf, 'bdf_unchanged': bdf_unchanged,
++            'driver_bound': driver_bound, 'control': control,
++            'status': status, 'error_status': error_status,
++            'fatal_clear': fatal_clear, 'node_holders_allowed': holders_allowed,
++            'holders': holders, 'hardware_quiescent': hardware_quiescent,
++            'accepted': sample_pass,
++        }
++        observations.append(observation)
++        _append_csv(ROOT / 'logs/quiescence-samples.csv', QUIESCENCE_COLUMNS, {
++            'Timestamp': observation['utc_ns'],
++            'MonotonicNs': observation['monotonic_ns'],
++            'Sample': sample_number, 'Consecutive': consecutive_quiescent,
++            'SpanMs': observation['span_ms'], 'BootId': lock['boot_id'],
++            'LockHeld': 'YES', 'BDF': expected_bdf,
++            'BDFUnchanged': 'YES' if bdf_unchanged else 'NO',
++            'DriverBound': 'YES' if driver_bound else 'NO',
++            'Control': f'0x{control:08X}', 'Status': f'0x{status:08X}',
++            'ErrorStatus': f'0x{error_status:08X}',
++            'FatalClear': 'YES' if fatal_clear else 'NO',
++            'NodeHoldersAllowed': 'YES' if holders_allowed else 'NO',
++            'Quiescent': 'YES' if hardware_quiescent else 'NO',
++            'Accepted': 'YES' if sample_pass else 'NO',
+         })
+-        if quiescent(control, status):
++        if complete:
+             return True, observations
+         if time.monotonic() >= deadline:
+             return False, observations
+-        time.sleep(0.005)
++        sleep_for = (QUIESCENCE_SAMPLE_INTERVAL_SECONDS -
++                     (time.monotonic() - sample_started))
++        if sleep_for > 0:
++            time.sleep(sleep_for)
+ 
+ 
+ def run() -> dict:
+@@ -860,7 +1193,7 @@
+ 
+     result = {
+         'task': TASK, 'session': 'T3T4', 'result': 'BLOCKED',
+-        'blocker': 'R3R4R2_CAPTURE_UNFINISHED', 'primary_target': PRIMARY_TARGET,
++        'blocker': 'R3R4R3_CAPTURE_UNFINISHED', 'primary_target': PRIMARY_TARGET,
+         'raw_payload_control_ipc': False, 'parent_owned_mmio': True,
+         'parent_owned_quiescence': True,
+         'last_completed_operation': 'CAPTURE_START_MARKER_CREATED',
+@@ -876,12 +1209,12 @@
+     reader_result = None
+     try:
+         require(not _open_holders(proof['c2h']),
+-                'R3R4R2_C2H_READER_ALREADY_ATTACHED')
++                'R3R4R3_C2H_READER_ALREADY_ATTACHED')
+         mmio = MMIO('T3T4_PARENT')
+         control = mmio.read(0x380C)
+         status = mmio.read(0x3810)
+         require(control == 0 and not (status & 0x100),
+-                'R3R4R2_DISABLED_BASELINE_NOT_CLEAN')
++                'R3R4R3_DISABLED_BASELINE_NOT_CLEAN')
+         pre_reset = {f'0x{offset:04X}': mmio.read(offset)
+                      for offset in range(0x3800, 0x385C, 4)}
+         result['pre_reset'] = pre_reset
+@@ -892,49 +1225,40 @@
+         deadline = time.monotonic() + 5.0
+         while not quiescent(mmio.read(0x380C), mmio.read(0x3810)):
+             require(time.monotonic() < deadline,
+-                    'R3R4R2_SESSION_RESET_TIMEOUT')
++                    'R3R4R3_SESSION_RESET_TIMEOUT')
+             time.sleep(0.001)
+         epoch = mmio.read(0x3838)
+         require(epoch == ((pre_reset['0x3838'] + 1) & 0xFFFFFFFF),
+-                'R3R4R2_SESSION_EPOCH_TRANSITION_INVALID')
+-        post_reset_error = mmio.read(0x383C)
++                'R3R4R3_SESSION_EPOCH_TRANSITION_INVALID')
+         post_reset_cause = mmio.read(0x3840)
+-        nonfatal_mask = post_reset_error & 0x7
+-        fatal_mask = post_reset_error & 0x38
++        require(quiescent(mmio.read(0x380C), mmio.read(0x3810)),
++                'R3R4R3_POST_RESET_NOT_QUIESCENT')
++        normalization = combined_session_normalization(
++            lambda: mmio.read(0x383C),
++            lambda mask: mmio.write(
++                0x383C, mask, 'SESSION_NORMALIZATION_W1C',
++                'POST_RESET_QUIESCENT'),
++        )
++        require((normalization['post_normalization_error_status'] & 0x3F) == 0,
++                'R3R4R3_POST_NORMALIZATION_ERROR_STATUS_NONZERO')
+         result.update(
+             post_reset_epoch=epoch,
+-            post_reset_error_status_before_w1c=post_reset_error,
++            post_reset_error_status_before_w1c=(
++                normalization['observed_error_status']),
+             post_reset_last_error_cause=post_reset_cause,
+-            nonfatal_w1c_mask=nonfatal_mask,
+-            fatal_w1c_mask=fatal_mask,
++            session_normalization_w1c_mask=(
++                normalization['session_normalization_mask']),
++            session_normalization_w1c_writes=normalization['w1c_writes'],
++            post_normalization_error_status=(
++                normalization['post_normalization_error_status']),
+         )
+-        if nonfatal_mask:
+-            require(quiescent(mmio.read(0x380C), mmio.read(0x3810)),
+-                    'POST_RESET_NOT_QUIESCENT')
+-            current = mmio.read(0x383C)
+-            require((current & 0x7) == nonfatal_mask,
+-                    'NONFATAL_W1C_OBSERVED_MASK_CHANGED')
+-            mmio.write(0x383C, nonfatal_mask, 'POST_RESET_NONFATAL_W1C',
+-                       'POST_RESET_QUIESCENT')
+-        if fatal_mask:
+-            require(quiescent(mmio.read(0x380C), mmio.read(0x3810)),
+-                    'POST_RESET_FATAL_CLEAR_STATE_NOT_QUALIFIED')
+-            current = mmio.read(0x383C)
+-            require((current & 0x38) == fatal_mask,
+-                    'FATAL_W1C_OBSERVED_MASK_CHANGED')
+-            mmio.write(0x383C, fatal_mask, 'POST_RESET_FATAL_W1C',
+-                       'POST_RESET_QUIESCENT')
+-        normalized_error = mmio.read(0x383C)
+-        require(normalized_error == 0,
+-                'R3R4R2_POST_NORMALIZATION_ERROR_STATUS_NONZERO')
+-        result['post_normalization_error_status'] = normalized_error
+         result['last_completed_operation'] = 'POST_RESET_NORMALIZATION_PASS'
+ 
+         status = mmio.read(0x3810)
+         require(quiescent(mmio.read(0x380C), status) and
+                 status & 0xC0 == 0xC0 and not (status & 0x800),
+-                'R3R4R2_FINAL_PRE_ENABLE_BASELINE_FAILED')
+-        require(mmio.read(0x3838) == epoch, 'R3R4R2_UNEXPECTED_EPOCH_CHANGE')
++                'R3R4R3_FINAL_PRE_ENABLE_BASELINE_FAILED')
++        require(mmio.read(0x3838) == epoch, 'R3R4R3_UNEXPECTED_EPOCH_CHANGE')
+         baseline = mmio.snapshot('PRE_CAPTURE_BASELINE')
+         result['snapshot_before'] = baseline
+         result['last_completed_operation'] = 'COHERENT_BASELINE_SNAPSHOT_PASS'
+@@ -946,15 +1270,15 @@
+             target=reader_worker,
+             args=(proof['c2h'], str(ROOT / 'private'), contract, epoch,
+                   parent_quiescent, messages),
+-            name='r3r4r2-c2h-reader',
++            name='r3r4r3-c2h-reader',
+         )
+         child.start()
+         ready_deadline = time.monotonic() + 5.0
+         while 'READER_READY' not in result and time.monotonic() < ready_deadline:
+             _drain_messages(messages, result, wait=0.1)
+             require(child.is_alive() or 'READER_READY' in result,
+-                    'R3R4R2_READER_EXITED_BEFORE_READY')
+-        require('READER_READY' in result, 'R3R4R2_READER_READY_TIMEOUT')
++                    'R3R4R3_READER_EXITED_BEFORE_READY')
++        require('READER_READY' in result, 'R3R4R3_READER_READY_TIMEOUT')
+         mmio.write(0x380C, 0x00000001, 'ENABLE_C2H',
+                    'RESET_SNAPSHOT_PASS_READER_READY')
+         stream_enabled = True
+@@ -969,13 +1293,17 @@
+                     result['FIRST_RECORD_VALID'].get('valid'):
+                 raise FailureError(
+                     result['FIRST_RECORD_VALID'].get(
+-                        'blocker', 'R3R4R2_FIRST_RECORD_ABI_VALIDATION_FAILED'))
++                        'blocker', 'R3R4R3_FIRST_RECORD_ABI_VALIDATION_FAILED'))
+             if 'ERROR' in result:
+                 raise GateError(result['ERROR'].get('blocker',
+-                                                    'R3R4R2_READER_ERROR'))
+-            require(child.is_alive(), 'R3R4R2_READER_EXITED_BEFORE_PRIMARY_TARGET')
++                                                    'R3R4R3_READER_ERROR'))
++            require(child.is_alive(), 'R3R4R3_READER_EXITED_BEFORE_PRIMARY_TARGET')
+             require(time.monotonic() < primary_deadline,
+-                    'R3R4R2_PRIMARY_2500_TIMEOUT')
++                    'R3R4R3_PRIMARY_2500_TIMEOUT')
++        require(result['PRIMARY_TARGET_REACHED'].get('first_record_durable') and
++                result['PRIMARY_TARGET_REACHED'].get('checkpoint_1024') and
++                result['PRIMARY_TARGET_REACHED'].get('checkpoint_2048'),
++                'R3R4R3_PRIMARY_TARGET_ORDERING_PROOF_MISSING')
+         mmio.write(0x380C, 0x00000000, 'NORMAL_DISABLE',
+                    'PRIMARY_2500_FULLY_ASSEMBLED_AND_WRITTEN')
+         normal_disabled = True
+@@ -983,11 +1311,15 @@
+         result['last_completed_operation'] = 'NORMAL_STREAM_DISABLE_WRITTEN'
+ 
+         quiescence_pass, observations = _parent_quiescence(
+-            mmio, QUIESCENCE_TIMEOUT_SECONDS)
++            mmio, QUIESCENCE_TIMEOUT_SECONDS, {os.getpid(), child.pid})
+         result['parent_quiescence_observations'] = observations
+         result['parent_hardware_quiescence'] = 'PASS' if quiescence_pass else 'FAIL'
++        result['parent_quiescence_samples_passed'] = (
++            observations[-1]['consecutive'] if observations else 0)
++        result['parent_quiescence_sample_span_ms'] = (
++            observations[-1]['span_ms'] if observations else 0.0)
+         require(quiescence_pass,
+-                'R3R4R2_POST_DISABLE_HARDWARE_NOT_QUIESCENT')
++                'R3R4R3_POST_DISABLE_HARDWARE_NOT_QUIESCENT')
+         parent_quiescent.set()
+         result['last_completed_operation'] = 'PARENT_HARDWARE_QUIESCENCE_PASS'
+ 
+@@ -998,24 +1330,24 @@
+                 _drain_messages(messages, result, wait=0.2)
+                 break
+         child.join(timeout=0.5)
+-        require(not child.is_alive(), 'R3R4R2_READER_COOPERATIVE_EXIT_TIMEOUT')
++        require(not child.is_alive(), 'R3R4R3_READER_COOPERATIVE_EXIT_TIMEOUT')
+         _drain_messages(messages, result, wait=0.2)
+-        require('READER_QUIET' in result, 'R3R4R2_READER_QUIET_WINDOW_MISSING')
+-        require('READER_EXITED' in result, 'R3R4R2_READER_RESULT_MISSING')
++        require('READER_QUIET' in result, 'R3R4R3_READER_QUIET_WINDOW_MISSING')
++        require('READER_EXITED' in result, 'R3R4R3_READER_RESULT_MISSING')
+         reader_result = result['READER_EXITED']['reader_result']
+         result['reader'] = reader_result
+         require(reader_result.get('result') == 'PASS',
+-                reader_result.get('blocker') or 'R3R4R2_READER_FAILED')
++                reader_result.get('blocker') or 'R3R4R3_READER_FAILED')
+         require(reader_result.get('primary_records') == PRIMARY_TARGET,
+-                'R3R4R2_PRIMARY_RECORD_COUNT_INVALID')
++                'R3R4R3_PRIMARY_RECORD_COUNT_INVALID')
+         require(reader_result.get('drain_records', DRAIN_LIMIT + 1) <= DRAIN_LIMIT,
+-                'R3R4R2_DRAIN_RECORD_LIMIT_EXCEEDED')
++                'R3R4R3_DRAIN_RECORD_LIMIT_EXCEEDED')
+         require(reader_result.get('incomplete_trailing_bytes') == 0,
+-                'R3R4R2_INCOMPLETE_TRAILING_BYTES_NONZERO')
++                'R3R4R3_INCOMPLETE_TRAILING_BYTES_NONZERO')
+         require('FIRST_RECORD_DURABLE' in result and
+                 'FIRST_RECORD_VALID' in result and
+                 result['FIRST_RECORD_VALID'].get('valid'),
+-                'R3R4R2_FIRST_RECORD_PERSISTENCE_OR_VALIDATION_MISSING')
++                'R3R4R3_FIRST_RECORD_PERSISTENCE_OR_VALIDATION_MISSING')
+         result['last_completed_operation'] = 'READER_QUIET_EXIT_PASS'
+ 
+         final_snapshot = mmio.snapshot('POST_DISABLE_POST_DRAIN_FINAL')
+@@ -1024,11 +1356,11 @@
+         final_error = mmio.read(0x383C)
+         final_cause = mmio.read(0x3840)
+         require(quiescent(final_control, final_status),
+-                'R3R4R2_FINAL_STREAM_OR_DMA_NOT_QUIESCENT')
++                'R3R4R3_FINAL_STREAM_OR_DMA_NOT_QUIESCENT')
+         if final_error != 0:
+-            raise FailureError('R3R4R2_NEW_ERROR_STATUS_DURING_FINITE_CAPTURE')
++            raise FailureError('R3R4R3_NEW_ERROR_STATUS_DURING_FINITE_CAPTURE')
+         require(final_snapshot['epoch'] == epoch,
+-                'R3R4R2_UNEXPECTED_EPOCH_CHANGE')
++                'R3R4R3_UNEXPECTED_EPOCH_CHANGE')
+         result.update(
+             snapshot_after=final_snapshot, final_control=final_control,
+             final_status=final_status, final_error_status=final_error,
+@@ -1073,7 +1405,9 @@
+                                'POST_ENABLE_FAILURE_CONTROL_STILL_ENABLED')
+                     stream_enabled = False
+                 passed, observations = _parent_quiescence(
+-                    mmio, QUIESCENCE_TIMEOUT_SECONDS)
++                    mmio, QUIESCENCE_TIMEOUT_SECONDS,
++                    ({os.getpid()} |
++                     ({child.pid} if child is not None and child.pid else set())))
+                 result['failure_quiescence_observations'] = observations
+                 result['parent_hardware_quiescence'] = 'PASS' if passed else 'FAIL'
+                 if passed and parent_quiescent is not None:
+@@ -1088,7 +1422,7 @@
+                     pass
+             child.join(timeout=3.0)
+         if child is not None and child.is_alive():
+-            result['rollback'] = 'R3R4R2_ROLLBACK_UNSAFE_ACTIVE_DMA'
++            result['rollback'] = 'R3R4R3_ROLLBACK_UNSAFE_ACTIVE_DMA'
+         elif messages is not None:
+             try:
+                 _drain_messages(messages, result, wait=0.2)
+@@ -1098,7 +1432,7 @@
+         if mmio is not None:
+             mmio.close()
+         require(bool(str(result.get('blocker', '')).strip()),
+-                'R3R4R2_BLANK_BLOCKER_FORBIDDEN')
++                'R3R4R3_BLANK_BLOCKER_FORBIDDEN')
+         _replace_json(ROOT / 'logs/T3T4-result.json', result)
+         print(json.dumps(result, indent=2), flush=True)
+     return result
+--- R3R4R2/tools/capture_r3r4_selftest.py
++++ R3R4R3/scripts/capture_r3r4_selftest.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Offline hard-gate suite for the R3R4R2 capture architecture."""
++"""Offline hard-gate suite for the R3R4R3 capture architecture."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -10,6 +10,7 @@
+ from pathlib import Path
+ import shutil
+ import sys
++import threading
+ import time
+ import traceback
+ 
+@@ -33,7 +34,13 @@
+     'EXACT_CAPTURE_HASH_PASS',
+     'NO_BLANK_BLOCKER_PASS',
+     'NO_RAW_RECORD_IPC_PASS',
++    'PERSISTED_FIRST_RECORD_REREAD_PROOF_PASS',
++    'PRIMARY_PERIODIC_FSYNC_PASS',
++    'FIRST_RECORD_DURABLE_BEFORE_PRIMARY_TARGET_PASS',
++    'PARENT_MULTI_SAMPLE_QUIESCENCE_PASS',
++    'SINGLE_COMBINED_SESSION_NORMALIZATION_W1C_PASS',
+ )
++CURRENT_CASE = 'SUITE_SETUP'
+ 
+ 
+ class Collector:
+@@ -107,13 +114,14 @@
+ 
+ 
+ def run_suite(root: Path, abi_path: Path) -> dict:
++    global CURRENT_CASE
+     expected_scripts = root / 'scripts'
+     if Path(__file__).resolve().parent != expected_scripts.resolve():
+-        raise RuntimeError('R3R4R2_SELFTEST_LOCATION_INVALID')
++        raise RuntimeError('R3R4R3_SELFTEST_LOCATION_INVALID')
+     abi_bytes = abi_path.read_bytes()
+     abi_hash = hashlib.sha256(abi_bytes).hexdigest().upper()
+     if abi_hash != ABI_SHA256:
+-        raise RuntimeError('R3R4R2_FROZEN_ABI_HASH_DRIFT')
++        raise RuntimeError('R3R4R3_FROZEN_ABI_HASH_DRIFT')
+     contract = AbiContract.load(abi_path)
+     suite_root = root / 'artifacts' / 'offline-selftest'
+     suite_root.mkdir(parents=True, exist_ok=False)
+@@ -134,6 +142,7 @@
+     success = sink.finalize(result='PASS', blocker='NONE')
+     events = {item['type']: item for item in collector.events}
+ 
++    CURRENT_CASE = 'FIRST_RECORD_PERSISTENCE_PASS'
+     first_blob = records[0]
+     first_payload = first_blob[contract.payload_first:contract.padding_first]
+     assert success['first_record_durable'] and success['first_record_valid']
+@@ -141,10 +150,11 @@
+     assert (success_dir / 'T3T4-first-payload.bin').read_bytes() == first_payload
+     assert success['first_record_sha256'] == hashlib.sha256(first_blob).hexdigest().upper()
+     assert success['first_payload_sha256'] == hashlib.sha256(first_payload).hexdigest().upper()
+-    assert events['PRIMARY_TARGET_REACHED']['monotonic_ns'] < \
+-        events['FIRST_RECORD_DURABLE']['monotonic_ns']
++    assert events['FIRST_RECORD_DURABLE']['monotonic_ns'] < \
++        events['PRIMARY_TARGET_REACHED']['monotonic_ns']
+     cases['FIRST_RECORD_PERSISTENCE_PASS'] = 'PASS'
+     details['first_record_async'] = True
++    details['first_record_durable_before_primary_target'] = True
+ 
+     primary = success_dir / 'T3T4-primary-records.bin'
+     drain = success_dir / 'T3T4-drain-records.bin'
+@@ -155,6 +165,7 @@
+     expected_drain_hash = hashlib.sha256(
+         complete_stream[capture.PRIMARY_BYTES:]).hexdigest().upper()
+ 
++    CURRENT_CASE = 'PARTIAL_READ_ASSEMBLY_PASS'
+     assert any(size < capture.RECORD_BYTES
+                for size in part_metrics['chunk_sizes'])
+     assert any(size > capture.RECORD_BYTES
+@@ -198,16 +209,19 @@
+         'drain_expected_sha256': expected_drain_hash,
+     }
+ 
++    CURRENT_CASE = 'PRIMARY_2500_BOUNDARY_PASS'
+     assert success['primary_records'] == 2500
+     assert success['primary_bytes'] == 10_240_000
+     assert primary.stat().st_size == 10_240_000
+     cases['PRIMARY_2500_BOUNDARY_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'DRAIN_CAPTURE_PASS'
+     assert success['drain_records'] == 7
+     assert success['drain_bytes'] == 7 * 4096
+     assert drain.read_bytes() == b''.join(records[2500:])
+     cases['DRAIN_CAPTURE_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'PARENT_QUIESCENCE_HANDSHAKE_PASS'
+     quiet_since = None
+     timeline = [
+         (False, False, 0.0),
+@@ -228,6 +242,7 @@
+     details['timed_no_data_reads_emulated'] = 4
+     details['delayed_parent_quiescence_emulated'] = True
+ 
++    CURRENT_CASE = 'FAILURE_PRESERVES_RAW_DATA_PASS'
+     failure_dir = suite_root / 'failure-preservation'
+     failure_collector = Collector()
+     failure_sink = capture.RecordSink(
+@@ -251,6 +266,7 @@
+     assert failure_state['incomplete_trailing_bytes'] == 333
+     cases['FAILURE_PRESERVES_RAW_DATA_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'EXCEPTION_DETAIL_PASS'
+     assert failure_state['exception_type'] == 'ValueError'
+     assert failure_state['exception_repr'] == \
+         "ValueError('SELFTEST_EXCEPTION_AFTER_PERSISTED_RECORDS')"
+@@ -258,6 +274,7 @@
+     assert failure_state['last_completed_operation'] == 'ALL_CAPTURE_FILES_DURABLE'
+     cases['EXCEPTION_DETAIL_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'COMPLETE_FRAME_RECONSTRUCTION_PASS'
+     frame = reconstruct_first_frame(
+         contract, [primary],
+         suite_root / 'T3T4-frame-1920x1080.uyvy',
+@@ -272,18 +289,21 @@
+     cases['COMPLETE_FRAME_RECONSTRUCTION_PASS'] = 'PASS'
+     details['frame'] = frame
+ 
++    CURRENT_CASE = 'EXACT_CAPTURE_HASH_PASS'
+     assert success['primary_sha256'] == expected_primary_hash
+     assert success['drain_sha256'] == expected_drain_hash
+     assert hashlib.sha256(primary.read_bytes()).hexdigest().upper() == expected_primary_hash
+     assert hashlib.sha256(drain.read_bytes()).hexdigest().upper() == expected_drain_hash
+     cases['EXACT_CAPTURE_HASH_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'NO_BLANK_BLOCKER_PASS'
+     assert success['blocker'] == 'NONE'
+     assert failure_state['blocker'].strip()
+     assert all(item.get('blocker', 'NONE').strip()
+                for item in (success, failure_state))
+     cases['NO_BLANK_BLOCKER_PASS'] = 'PASS'
+ 
++    CURRENT_CASE = 'NO_RAW_RECORD_IPC_PASS'
+     all_events = collector.events + failure_collector.events
+     assert all(not capture._contains_bytes(item) for item in all_events)
+     assert all(item['type'] in capture.CONTROL_EVENT_TYPES for item in all_events)
+@@ -297,8 +317,209 @@
+     cases['NO_RAW_RECORD_IPC_PASS'] = 'PASS'
+     details['control_event_count'] = len(all_events)
+ 
++    # Contract test 12: authoritative first-record results survive invalidation
++    # of the caller's original mutable buffer because all results come from disk.
++    CURRENT_CASE = 'PERSISTED_FIRST_RECORD_REREAD_PROOF_PASS'
++    reread_dir = suite_root / 'persisted-reread-proof'
++    reread_collector = Collector()
++    original_buffer = bytearray(first_blob)
++    original_hash = hashlib.sha256(original_buffer).hexdigest().upper()
++    reread_sink = capture.RecordSink(
++        reread_dir, contract, 77, reread_collector,
++        primary_target=capture.PRIMARY_TARGET,
++    )
++    reread_sink.accept(bytes(original_buffer))
++    reread_sink.first_thread.join(timeout=5.0)
++    assert not reread_sink.first_thread.is_alive()
++    original_buffer[:] = b'\xA5' * len(original_buffer)
++    assert hashlib.sha256(original_buffer).hexdigest().upper() != original_hash
++    reread_state = reread_sink.finalize(
++        result='BLOCKED', blocker='SELFTEST_SINGLE_RECORD_COMPLETE')
++    persisted_receipt = json.loads((
++        reread_dir /
++        'G2B_HW0_PRODUCT_R3R4R3_PERSISTED_FIRST_RECORD_RECEIPT.json'
++    ).read_text(encoding='utf-8'))
++    reread_record = (reread_dir / 'T3T4-first-record.bin').read_bytes()
++    reread_payload = (reread_dir / 'T3T4-first-payload.bin').read_bytes()
++    persist_source = inspect.getsource(capture.RecordSink._persist_first)
++    assert persist_source.index('del blob') < \
++        persist_source.index('hashlib.sha256(\n                persisted_record)')
++    assert persisted_receipt['first_record_reread_bytes'] == 4096
++    assert persisted_receipt['first_payload_reread_bytes'] == 3840
++    assert persisted_receipt['record_hash_source'] == 'REREAD_PERSISTED_FILE'
++    assert persisted_receipt['payload_hash_source'] == 'REREAD_PERSISTED_FILE'
++    assert persisted_receipt['abi_parse_source'] == \
++        'REREAD_PERSISTED_FIRST_RECORD'
++    assert persisted_receipt['payload_equals_record_slice'] is True
++    assert persisted_receipt['abi_result'] == 'PASS'
++    assert reread_payload == reread_record[
++        contract.payload_first:contract.padding_first]
++    assert reread_state['first_record_sha256'] == \
++        hashlib.sha256(reread_record).hexdigest().upper() == original_hash
++    assert reread_state['first_payload_sha256'] == \
++        hashlib.sha256(reread_payload).hexdigest().upper()
++    cases['PERSISTED_FIRST_RECORD_REREAD_PROOF_PASS'] = 'PASS'
++    details['persisted_first_record_reread_proof'] = {
++        'original_mutable_buffer_invalidated': True,
++        'record_hash_source': persisted_receipt['record_hash_source'],
++        'payload_hash_source': persisted_receipt['payload_hash_source'],
++        'abi_parse_source': persisted_receipt['abi_parse_source'],
++        'payload_equals_record_slice': True,
++    }
++
++    # Contract test 13: the dedicated worker receives record counts only and
++    # completes all required persisted-size/fsync checkpoints.
++    CURRENT_CASE = 'PRIMARY_PERIODIC_FSYNC_PASS'
++    checkpoint_rows = [json.loads(line) for line in (
++        success_dir /
++        'G2B_HW0_PRODUCT_R3R4R3_PRIMARY_DURABILITY_CHECKPOINTS.jsonl'
++    ).read_text(encoding='utf-8').splitlines() if line.strip()]
++    assert [row['record_count'] for row in checkpoint_rows] == [1024, 2048, 2500]
++    assert all(row['result'] == 'PASS' and row['fsync_complete']
++               for row in checkpoint_rows)
++    assert all(row['persisted_size'] >= row['record_count'] * 4096
++               for row in checkpoint_rows)
++    assert all(row['communication'] == 'METADATA_ONLY_RECORD_COUNT' and
++               row['raw_payload_in_communication'] is False
++               for row in checkpoint_rows)
++    checkpoint_events = [item for item in collector.events
++                         if item['type'] == 'PRIMARY_CHECKPOINT_DURABLE']
++    assert len(checkpoint_events) == 3
++    assert all(not capture._contains_bytes(item) for item in checkpoint_events)
++    assert success['checkpoint_passed'] == [1024, 2048, 2500]
++    checkpoint_source = inspect.getsource(capture.RecordSink._checkpoint_worker)
++    request_source = inspect.getsource(capture.RecordSink._request_checkpoint)
++    assert 'self.checkpoint_queue.put(record_count' in request_source
++    assert 'os.fsync(fd)' in checkpoint_source
++    assert 'self.primary_file.write' not in checkpoint_source
++    cases['PRIMARY_PERIODIC_FSYNC_PASS'] = 'PASS'
++    details['primary_durability_checkpoints'] = checkpoint_rows
++
++    # Contract test 14: reaching count 2500 while persistence is deliberately
++    # delayed does not permit the target event until durability is complete.
++    CURRENT_CASE = 'FIRST_RECORD_DURABLE_BEFORE_PRIMARY_TARGET_PASS'
++    ordering_dir = suite_root / 'ordering-proof'
++    ordering_collector = Collector()
++    ordering_sink = capture.RecordSink(
++        ordering_dir, contract, 77, ordering_collector,
++        primary_target=capture.PRIMARY_TARGET,
++        first_persist_delay=5.0,
++    )
++    feeder_error = []
++
++    def feed_ordering_capture() -> None:
++        try:
++            ordering_sink.accept(complete_stream[:capture.PRIMARY_BYTES])
++        except BaseException as exc:
++            feeder_error.append(exc)
++
++    feeder = threading.Thread(target=feed_ordering_capture,
++                              name='r3r4r3-selftest-ordering-feeder')
++    feeder.start()
++    count_deadline = time.monotonic() + 4.0
++    while ordering_sink.primary_count < capture.PRIMARY_TARGET:
++        assert time.monotonic() < count_deadline
++        time.sleep(0.005)
++    assert feeder.is_alive()
++    assert not any(item['type'] == 'PRIMARY_TARGET_REACHED'
++                   for item in ordering_collector.events)
++    assert not ordering_sink.first_durable
++    feeder.join(timeout=8.0)
++    assert not feeder.is_alive() and not feeder_error
++    ordering_events = {item['type']: item for item in ordering_collector.events}
++    assert ordering_events['FIRST_RECORD_DURABLE']['monotonic_ns'] < \
++        ordering_events['PRIMARY_TARGET_REACHED']['monotonic_ns']
++    assert ordering_events['PRIMARY_TARGET_REACHED']['checkpoint_1024']
++    assert ordering_events['PRIMARY_TARGET_REACHED']['checkpoint_2048']
++    ordering_state = ordering_sink.finalize(result='PASS', blocker='NONE')
++    assert ordering_state['result'] == 'PASS'
++    cases['FIRST_RECORD_DURABLE_BEFORE_PRIMARY_TARGET_PASS'] = 'PASS'
++    details['ordering_proof'] = {
++        'count_2500_observed_while_target_withheld': True,
++        'first_record_durable_precedes_primary_target': True,
++        'checkpoint_1024_precedes_target': True,
++        'checkpoint_2048_precedes_target': True,
++    }
++
++    # Contract test 15: an isolated sample cannot pass and any failed sample
++    # resets the streak. Completion requires five consecutive samples and 0.4s.
++    CURRENT_CASE = 'PARENT_MULTI_SAMPLE_QUIESCENCE_PASS'
++    streak = 0
++    first_time = None
++    q_results = []
++    q_timeline = [
++        (True, 0.0), (False, 0.1),
++        (True, 0.2), (True, 0.3), (False, 0.4),
++        (True, 1.0), (True, 1.1), (True, 1.2), (True, 1.3), (True, 1.4),
++    ]
++    for sample_pass, now in q_timeline:
++        streak, first_time, span, complete = capture.quiescence_streak_update(
++            sample_pass, now, streak, first_time)
++        q_results.append({
++            'sample_pass': sample_pass, 'now': now, 'streak': streak,
++            'span': span, 'complete': complete,
++        })
++    assert q_results[0]['complete'] is False
++    assert q_results[1]['streak'] == 0
++    assert q_results[4]['streak'] == 0
++    assert all(not row['complete'] for row in q_results[:-1])
++    assert q_results[-1]['complete'] is True
++    assert q_results[-1]['streak'] == 5
++    assert q_results[-1]['span'] >= 0.4
++    cases['PARENT_MULTI_SAMPLE_QUIESCENCE_PASS'] = 'PASS'
++    details['parent_multi_sample_quiescence'] = q_results
++
++    # Contract test 16: one observed mask produces zero or one exact combined
++    # W1C. A residual active bit blocks and can never trigger a second write.
++    CURRENT_CASE = 'SINGLE_COMBINED_SESSION_NORMALIZATION_W1C_PASS'
++    normalization_results = {}
++    for initial in (0x00, 0x07, 0x38, 0x3F):
++        writes = []
++
++        def read_status(initial=initial, writes=writes) -> int:
++            return initial if not writes else 0
++
++        normalized = capture.combined_session_normalization(
++            read_status, lambda mask, writes=writes: writes.append(mask))
++        expected_writes = [] if initial == 0 else [initial]
++        assert writes == expected_writes
++        assert normalized['w1c_writes'] == len(expected_writes)
++        assert normalized['session_normalization_mask'] == initial
++        normalization_results[f'0x{initial:02X}'] = {
++            'writes': writes, 'result': 'PASS',
++        }
++    residual_writes = []
++
++    def residual_read() -> int:
++        return 0x07 if not residual_writes else 0x01
++
++    residual_blocker = None
++    try:
++        capture.combined_session_normalization(
++            residual_read, lambda mask: residual_writes.append(mask))
++    except capture.GateError as exc:
++        residual_blocker = str(exc)
++    assert residual_writes == [0x07]
++    assert residual_blocker == 'R3R4R3_SESSION_NORMALIZATION_DID_NOT_CLEAR'
++    normalization_source = inspect.getsource(
++        capture.combined_session_normalization)
++    mmio_write_source = inspect.getsource(capture.MMIO.write)
++    capture_path_source = Path(capture.__file__).read_text(encoding='utf-8')
++    assert 'POST_RESET_NONFATAL_W1C' not in capture_path_source
++    assert 'POST_RESET_FATAL_W1C' not in capture_path_source
++    assert "purpose == 'SESSION_NORMALIZATION_W1C'" in mmio_write_source
++    assert 'write_w1c(mask)' in normalization_source
++    assert normalization_source.count('write_w1c(') == 1
++    cases['SINGLE_COMBINED_SESSION_NORMALIZATION_W1C_PASS'] = 'PASS'
++    details['single_combined_session_normalization'] = {
++        'cases': normalization_results,
++        'residual_writes': residual_writes,
++        'residual_blocker': residual_blocker,
++        'maximum_writes': 1,
++    }
++
+     if tuple(cases) != CASE_NAMES or any(value != 'PASS' for value in cases.values()):
+-        raise RuntimeError('R3R4R2_CAPTURE_TOOL_HARD_GATE_FAILED')
++        raise RuntimeError('R3R4R3_CAPTURE_TOOL_HARD_GATE_FAILED')
+     result = {
+         'task': capture.TASK,
+         'result': 'PASS',
+@@ -312,16 +533,20 @@
+         'raw_record_control_ipc': False,
+         'parent_owned_mmio': True,
+         'parent_owned_quiescence': True,
+-    }
+-    output = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R2_CAPTURE_TOOL_SELFTEST.json'
++        'capture_tool_sha256': hashlib.sha256(
++            (root / 'scripts' / 'capture_r3r4.py').read_bytes()).hexdigest().upper(),
++        'selftest_tool_sha256': hashlib.sha256(
++            Path(__file__).read_bytes()).hexdigest().upper(),
++    }
++    output = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R3_CAPTURE_TOOL_SELFTEST.json'
+     with output.open('x', encoding='utf-8', newline='\n') as handle:
+         json.dump(result, handle, indent=2)
+         handle.write('\n')
+         handle.flush()
+         os.fsync(handle.fileno())
+     write_markdown(
+-        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R2_CAPTURE_TOOL_SELFTEST.md',
+-        'G2B-HW0-PRODUCT-R3R4R2 capture-tool offline self-test',
++        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R3_CAPTURE_TOOL_SELFTEST.md',
++        'G2B-HW0-PRODUCT-R3R4R3 capture-tool offline self-test',
+         [(name, cases[name]) for name in CASE_NAMES] +
+         [('Hardware access', 'NO'), ('DUT connections', '0')],
+     )
+@@ -331,27 +556,57 @@
+ def architecture_audit(root: Path, result: dict) -> dict:
+     capture_path = root / 'scripts' / 'capture_r3r4.py'
+     frame_path = root / 'scripts' / 'frame_reconstruct_r3r4.py'
+-    helper_path = root / 'scripts' / 'Invoke-R3R4R2DutConnection.ps1'
++    helper_path = root / 'scripts' / 'Invoke-R3R4R3DutConnection.ps1'
+     source = capture_path.read_text(encoding='utf-8')
+     reader_source = inspect.getsource(capture.reader_worker)
++    sink_source = inspect.getsource(capture.RecordSink)
++    persist_source = inspect.getsource(capture.RecordSink._persist_first)
++    target_source = inspect.getsource(
++        capture.RecordSink._await_primary_target_prerequisites)
++    quiescence_source = inspect.getsource(capture._parent_quiescence)
++    normalization_source = inspect.getsource(
++        capture.combined_session_normalization)
+     checks = {
++        'OFFLINE_SELFTESTS_16_OF_16': result['passed'] == 16,
+         'PARENT_SOLE_MMIO_OWNER': 'MMIO(' not in reader_source,
+         'READER_ONLY_EXPLICIT_DEVICE_OPEN_IS_C2H':
+             'os.open(c2h_node' in reader_source and '_user' not in reader_source,
+         'SPAWN_PREVENTS_MMIO_FD_INHERITANCE': "mp.get_context('spawn')" in source,
+         'ZERO_RAW_RECORD_CONTROL_IPC': result['raw_record_control_ipc'] is False,
+         'ASYNC_FIRST_RECORD_PERSISTER':
+-            'r3r4r2-first-record-persister' in source and 'threading.Thread' in source,
++            'r3r4r3-first-record-persister' in source and 'threading.Thread' in source,
++        'FIRST_RECORD_RESULTS_FROM_REREAD_FILES':
++            'persisted_record = _read_exact_nofollow' in persist_source and
++            'persisted_payload = _read_exact_nofollow' in persist_source and
++            'del blob' in persist_source,
++        'PRIMARY_CHECKPOINT_WORKER_ASYNCHRONOUS':
++            'r3r4r3-primary-durability-worker' in sink_source and
++            'self.checkpoint_queue' in sink_source,
++        'PRIMARY_CHECKPOINTS_EXACT':
++            capture.PRIMARY_CHECKPOINT_COUNTS == (1024, 2048, 2500),
++        'PRIMARY_TARGET_ORDERING_DEPENDENCIES':
++            'self.first_durable and self.first_valid' in target_source and
++            'self._wait_checkpoint(1024)' in target_source and
++            'self._wait_checkpoint(2048)' in target_source,
+         'PRIMARY_TARGET_2500': capture.PRIMARY_TARGET == 2500,
+         'PRIMARY_BYTES_10240000': capture.PRIMARY_BYTES == 10_240_000,
+         'DRAIN_LIMIT_512': capture.DRAIN_LIMIT == 512,
+         'PARENT_QUIESCENCE_TIMEOUT_10S': capture.QUIESCENCE_TIMEOUT_SECONDS == 10.0,
++        'PARENT_QUIESCENCE_FIVE_SAMPLES':
++            capture.QUIESCENCE_REQUIRED_SAMPLES == 5 and
++            'consecutive_quiescent' in quiescence_source,
++        'PARENT_QUIESCENCE_MINIMUM_400MS':
++            capture.QUIESCENCE_MINIMUM_SPAN_SECONDS == 0.4,
+         'QUIET_WINDOW_1S': capture.QUIET_WINDOW_SECONDS == 1.0,
++        'SINGLE_COMBINED_NORMALIZATION_W1C':
++            normalization_source.count('write_w1c(') == 1 and
++            'POST_RESET_NONFATAL_W1C' not in source and
++            'POST_RESET_FATAL_W1C' not in source,
+         'NO_BLANK_BLOCKER': result['cases']['NO_BLANK_BLOCKER_PASS'] == 'PASS',
+         'FROZEN_ABI_HASH': result['abi_sha256'] == ABI_SHA256,
+     }
+     if not all(checks.values()):
+-        raise RuntimeError('R3R4R2_CAPTURE_TOOL_HARD_GATE_FAILED:' +
++        raise RuntimeError('R3R4R3_CAPTURE_TOOL_HARD_GATE_FAILED:' +
+                            json.dumps(checks, sort_keys=True))
+     hashes = {}
+     for path in (capture_path, frame_path, helper_path,
+@@ -368,15 +623,15 @@
+         'selftests_passed': result['passed'],
+         'selftests_total': result['total'],
+     }
+-    with (root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R2_CAPTURE_TOOL_AUDIT.json').open(
++    with (root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R3_CAPTURE_TOOL_AUDIT.json').open(
+             'x', encoding='utf-8', newline='\n') as handle:
+         json.dump(audit, handle, indent=2)
+         handle.write('\n')
+         handle.flush()
+         os.fsync(handle.fileno())
+     write_markdown(
+-        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R2_CAPTURE_TOOL_AUDIT.md',
+-        'G2B-HW0-PRODUCT-R3R4R2 capture-tool architecture audit',
++        root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R3_CAPTURE_TOOL_AUDIT.md',
++        'G2B-HW0-PRODUCT-R3R4R3 capture-tool architecture audit',
+         [(name, 'PASS' if value else 'FAIL') for name, value in checks.items()] +
+         [('Offline self-tests', f"{result['passed']}/{result['total']}")],
+     )
+@@ -390,19 +645,18 @@
+     root = args.root.resolve()
+     try:
+         result = run_suite(root, root / 'scripts' / 'V41_C2H_TRANSPORT_ABI_V1.json')
+-        audit = architecture_audit(root, result)
+-        print(json.dumps({'selftest': result, 'audit': audit}, indent=2))
++        print(json.dumps({'selftest': result}, indent=2))
+         return 0
+     except BaseException as exc:
+         failure = {
+             'task': capture.TASK, 'result': 'BLOCKED',
+-            'blocker': 'R3R4R2_CAPTURE_TOOL_HARD_GATE_FAILED',
++            'blocker': 'R3R4R3_CAPTURE_TOOL_SELFTEST_FAILED:' + CURRENT_CASE,
+             'exception_type': type(exc).__name__,
+             'exception_repr': repr(exc),
+             'traceback': traceback.format_exc(),
+             'hardware_access': False, 'dut_connections': 0,
+         }
+-        path = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R2_CAPTURE_TOOL_FAILURE.json'
++        path = root / 'artifacts' / 'G2B_HW0_PRODUCT_R3R4R3_CAPTURE_TOOL_FAILURE.json'
+         path.write_text(json.dumps(failure, indent=2) + '\n', encoding='utf-8')
+         print(json.dumps(failure, indent=2))
+         return 1

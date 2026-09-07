@@ -1,0 +1,23 @@
+{
+  "schema": "R3R4R3_SELFTEST_FAILURE_ANALYSIS_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R3",
+  "result": "PASS",
+  "formal_suite_result": "BLOCKED",
+  "first_blocker": "R3R4R3_CAPTURE_TOOL_SELFTEST_FAILED:FIRST_RECORD_PERSISTENCE_PASS",
+  "failed_case": "FIRST_RECORD_PERSISTENCE_PASS",
+  "failed_assertion": "events['FIRST_RECORD_DURABLE']['monotonic_ns'] < events['PRIMARY_TARGET_REACHED']['monotonic_ns']",
+  "expected_relation": "FIRST_RECORD_DURABLE_TIMESTAMP_STRICTLY_LESS_THAN_PRIMARY_TARGET_TIMESTAMP",
+  "assertion_result": false,
+  "runtime_program_order": "FIRST_RECORD_DURABLE_CALLBACK_COMPLETES_BEFORE_PRIMARY_TARGET_REACHED_CALLBACK_BEGINS",
+  "runtime_program_order_proven": true,
+  "monotonic_clock_nonadjustable": true,
+  "monotonic_clock_resolution_seconds": 0.015625,
+  "monotonic_clock_implementation": "GetTickCount64()",
+  "actual_relation_inferred": "TIMESTAMPS_EQUAL",
+  "numeric_timestamp_values": "NOT_PERSISTED_BY_FAILED_CASE",
+  "diagnosis": "SELFTEST_STRICT_TIMESTAMP_SEPARATION_ASSUMPTION; formal event dependency is encoded by thread completion, durable/valid state, checkpoint acknowledgements, and source order, but two ordered callbacks may receive the same observable monotonic clock tick",
+  "runtime_modified_after_suite": false,
+  "suite_rerun": false,
+  "hardware_access": false,
+  "dut_connections": 0
+}

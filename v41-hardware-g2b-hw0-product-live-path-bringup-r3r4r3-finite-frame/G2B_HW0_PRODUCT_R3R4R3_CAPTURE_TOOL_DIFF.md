@@ -1,0 +1,63 @@
+# G2B-HW0-PRODUCT-R3R4R3 Capture-Tool Diff
+
+- Result: `PASS`
+- Authorized delta: `FIVE_CAPTURE_CONTRACT_CLOSURES_PLUS_RUN_IDENTITY_ONLY`
+- Baseline: published R3R4R2 tools at commit `3749e2eb484eb1ccff2b7c4ed86598d8f4cfbb81`
+- Runtime quiet-window function changed: `NO`
+- Quiet-window expected vector: `[False, False, False, False, False, True, True]`
+- Invalid chunk-count assertion present: `NO`
+
+| Check | Result |
+|---|---|
+| `BASELINE_HASH_capture_r3r4.py` | `PASS` |
+| `BASELINE_HASH_capture_r3r4_selftest.py` | `PASS` |
+| `BASELINE_HASH_frame_reconstruct_r3r4.py` | `PASS` |
+| `BASELINE_HASH_abi_v1.py` | `PASS` |
+| `BASELINE_HASH_V41_C2H_TRANSPORT_ABI_V1.json` | `PASS` |
+| `BASELINE_HASH_Invoke-R3R4R2DutConnection.ps1` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_require` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__nonempty_problem` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__write_json_exclusive` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__replace_json` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__contains_bytes` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_compact_emit` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_read_lock` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_quiescent` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__append_csv` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__alarm_handler` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_quiet_window_update` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_reader_worker` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__open_holders` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__iter_file_records` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION_reconcile_counters` | `PASS` |
+| `UNCHANGED_RUNTIME_FUNCTION__drain_messages` | `PASS` |
+| `UNCHANGED_MMIO_METHOD___init__` | `PASS` |
+| `UNCHANGED_MMIO_METHOD_close` | `PASS` |
+| `UNCHANGED_MMIO_METHOD__guard` | `PASS` |
+| `UNCHANGED_MMIO_METHOD_read` | `PASS` |
+| `UNCHANGED_MMIO_METHOD__intent_rows` | `PASS` |
+| `UNCHANGED_MMIO_METHOD_snapshot` | `PASS` |
+| `UNCHANGED_SELFTEST_HELPER_Collector` | `PASS` |
+| `UNCHANGED_SELFTEST_HELPER_build_records` | `PASS` |
+| `UNCHANGED_SELFTEST_HELPER_feed_partial` | `PASS` |
+| `UNCHANGED_SELFTEST_HELPER_write_markdown` | `PASS` |
+| `ABI_PARSER_BYTE_IDENTICAL` | `PASS` |
+| `ABI_JSON_BYTE_IDENTICAL` | `PASS` |
+| `FRAME_TOOL_IDENTITY_ONLY` | `PASS` |
+| `HELPER_IDENTITY_ONLY` | `PASS` |
+| `RECORD_BYTES_UNCHANGED_4096` | `PASS` |
+| `PRIMARY_TARGET_UNCHANGED_2500` | `PASS` |
+| `DRAIN_LIMIT_UNCHANGED_512` | `PASS` |
+| `QUIET_WINDOW_UNCHANGED_1_SECOND` | `PASS` |
+| `RUNTIME_QUIET_WINDOW_BYTE_EQUIVALENT` | `PASS` |
+| `QUIET_WINDOW_EXPECTED_VECTOR_PRESERVED` | `PASS` |
+| `INVALID_CHUNK_COUNT_ASSERTION_ABSENT` | `PASS` |
+| `EXISTING_CASES_PRESERVED_IN_ORDER` | `PASS` |
+| `FIVE_NEW_CASES_EXACT_IN_ORDER` | `PASS` |
+| `PERSISTED_REREAD_CLOSURE_PRESENT` | `PASS` |
+| `PRIMARY_CHECKPOINT_CLOSURE_PRESENT` | `PASS` |
+| `ORDERING_CLOSURE_PRESENT` | `PASS` |
+| `MULTI_SAMPLE_QUIESCENCE_CLOSURE_PRESENT` | `PASS` |
+| `SINGLE_COMBINED_W1C_CLOSURE_PRESENT` | `PASS` |
+| `PARENT_ONLY_MMIO_PRESERVED` | `PASS` |
+| `NO_RAW_PAYLOAD_IPC_PRESERVED` | `PASS` |
