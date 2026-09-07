@@ -1,0 +1,95 @@
+{
+  "schema": "R3R4R2_CAPTURE_TOOL_DELTA_AUDIT_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R2",
+  "source_evidence_commit": "9c1ff0473ca336e75c29a19208be17b407d8bf37",
+  "source_evidence_directory": "v41-hardware-g2b-hw0-product-live-path-bringup-r3r4r1-finite-frame",
+  "authorized_tool_delta": "QUIET_WINDOW_EXPECTATION_PLUS_RUN_IDENTITY_ONLY",
+  "runtime_quiet_window_function_changed": false,
+  "quiet_window_expected_completions": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true
+  ],
+  "files": [
+    {
+      "baseline": "capture_r3r4.py",
+      "active": "capture_r3r4.py",
+      "allowed_delta": "RUN_IDENTITY_ONLY",
+      "baseline_sha256": "6B33F767BFA9BB2DB8D200CAB1F2159C23FBF633E00958F4A4666AC3DAB50E3F",
+      "active_sha256": "E86539308771B8763C5B6B367EB8B05F8DB1757DB4EE3357D090DD5B16E9465F",
+      "byte_identical": false,
+      "normalized_equal": true,
+      "result": "PASS"
+    },
+    {
+      "baseline": "capture_r3r4_selftest.py",
+      "active": "capture_r3r4_selftest.py",
+      "allowed_delta": "QUIET_WINDOW_EXPECTATION_PLUS_RUN_IDENTITY",
+      "baseline_sha256": "9EA0A4385F50A41A34EEA0EAACEAE453B9C90708915CAFEC94DBEF9897A5D37F",
+      "active_sha256": "65F529F9E769FFE6131B01F163EDC8F467B59B52E09805F73F5202A162856082",
+      "byte_identical": false,
+      "normalized_equal": true,
+      "result": "PASS"
+    },
+    {
+      "baseline": "frame_reconstruct_r3r4.py",
+      "active": "frame_reconstruct_r3r4.py",
+      "allowed_delta": "RUN_IDENTITY_ONLY",
+      "baseline_sha256": "367DD3733677425B5C4480569088CFDE1BD4B0AC4BDA5E6DF9ACAF8CC582BF23",
+      "active_sha256": "5AABCA122B4E8D8A5E3E53560B33DFAD3A0681C624ED2F8859265F5645E66282",
+      "byte_identical": false,
+      "normalized_equal": true,
+      "result": "PASS"
+    },
+    {
+      "baseline": "abi_v1.py",
+      "active": "abi_v1.py",
+      "allowed_delta": "BYTE_IDENTICAL",
+      "baseline_sha256": "2939FC522A2D9679BB720F287AC022FC48FF042CE06E20877F8E686F35909F1E",
+      "active_sha256": "2939FC522A2D9679BB720F287AC022FC48FF042CE06E20877F8E686F35909F1E",
+      "byte_identical": true,
+      "normalized_equal": true,
+      "result": "PASS"
+    },
+    {
+      "baseline": "V41_C2H_TRANSPORT_ABI_V1.json",
+      "active": "V41_C2H_TRANSPORT_ABI_V1.json",
+      "allowed_delta": "BYTE_IDENTICAL",
+      "baseline_sha256": "AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6",
+      "active_sha256": "AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6",
+      "byte_identical": true,
+      "normalized_equal": true,
+      "result": "PASS"
+    },
+    {
+      "baseline": "Invoke-R3R4R1DutConnection.ps1",
+      "active": "Invoke-R3R4R2DutConnection.ps1",
+      "allowed_delta": "RUN_IDENTITY_ONLY",
+      "baseline_sha256": "74A4342D7B14DF0837ACD3D3C808FE4FA3AF17C6A3D518E1A11A7C38F2B9E659",
+      "active_sha256": "9103B7E6C7F7590578B134F5C1CE528FFDA1EAAA2A7EE0C2E50FB0D916091874",
+      "byte_identical": false,
+      "normalized_equal": true,
+      "result": "PASS"
+    }
+  ],
+  "semantic_checks": {
+    "baseline_old_expected_vector_once": true,
+    "active_new_expected_vector_once": true,
+    "active_old_expected_vector_absent": true,
+    "invalid_part_count_gt_records_absent": true,
+    "invalid_part_count_lt_records_absent": true,
+    "runtime_normalized_byte_equivalent": true,
+    "quiet_window_duration_unchanged": true,
+    "primary_target_unchanged": true,
+    "drain_limit_unchanged": true,
+    "spawn_unchanged": true,
+    "parent_quiescence_function_present": true,
+    "reader_opens_c2h_only": true,
+    "raw_ipc_guard_present": true
+  },
+  "result": "PASS"
+}
