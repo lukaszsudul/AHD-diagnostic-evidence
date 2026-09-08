@@ -1,0 +1,34 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R6R2R4",
+  "result": "PASS",
+  "write_count": 1,
+  "write_offset": "0x380C",
+  "write_value": "0x00000004",
+  "purpose": "CLEANUP_ONLY_RESET_STREAM_STATE",
+  "before": {
+    "Epoch": 3,
+    "Control": "0x00000000",
+    "Status": "0x000004FA",
+    "RecordsAbandoned": 0,
+    "ErrorStatus": "0x00000007",
+    "LastErrorCause": "0x00000001",
+    "TimestampNs": 1788871794776377024
+  },
+  "after": {
+    "Epoch": 4,
+    "Control": "0x00000000",
+    "Status": "0x00000074",
+    "RecordsAbandoned": 0,
+    "ErrorStatus": "0x00000007",
+    "LastErrorCause": "0x00000001",
+    "TimestampNs": 1788871795176831677
+  },
+  "epoch_transition": "3->4",
+  "records_abandoned_delta": 0,
+  "quiescence": {
+    "result": "PASS",
+    "sample_count": 5,
+    "accepted_count": 5,
+    "span_ms": 400.413
+  }
+}

@@ -1,0 +1,17 @@
+Gate,Result,Evidence
+OWNER_CONTINUITY,ACCEPTED,owner attestation
+PRIMARY_PRESERVATION,PASS,size/read-only checks before and after cleanup
+CLEANUP_RESET_ONCE,PASS,epoch 3->4; five-sample quiescence
+CLEANUP_ABANDONED_DELTA,DEVIATION_NONBLOCKING,actual 0; expected 4
+RETAINED_HELPER_TERMINATION,PASS,one SIGTERM; no SIGKILL
+NORMAL_MODULE_UNLOAD,PASS,refcount zero; nodes absent
+RETAINED_LOCK_RELEASE,PASS,exact Linux and controller locks removed
+HOST_DISABLE_PATH,12/12 PASS,device-free gate and native self-test
+PRIMARY_FORENSICS,PASS,2500 fixed records; integrity 0; seq 0..2499
+BOUNDARY_REPRODUCTION,PASS,two identical +21 boundary events confirmed
+DIRECTED_SIMULATION,PASS,focused and existing XSim regressions
+EXACT_HARDWARE_FAILURE_REPRODUCTION,INSUFFICIENT_AUTHORITATIVE_STIMULUS,raw NVP boundary trace absent
+ROOT_CAUSE_CLASSIFICATION,PASS,allowed not-proven/raw-observability decision
+MINIMAL_DIAGNOSTIC,PASS,bounded one-boundary 256-event trace
+NO_SPECULATIVE_RTL_CHANGE,PASS,no branch/worktree/commit
+ENGINEERING,PASS,audit objectives complete

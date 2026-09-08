@@ -1,0 +1,88 @@
+{
+  "schema": "G2B_R3R4R6R2R4_STATE_V1",
+  "task": "G2B-HW0-PRODUCT-R3R4R6R2R4",
+  "project_state_rev": "8 — OWNER_ATTESTED_NOT_REVERIFIED",
+  "engineering_gate": "PASS",
+  "overall_result": "PASS_MINIMAL_DIAGNOSTIC_REQUIRED",
+  "primary": {
+    "path": "/home/<GOVERNED_USER>/vcde_artifacts/g2b_hw0_product_r3r4r6r2r3/20260908T102555Z/private/primary.bin",
+    "size": 10240000,
+    "accepted_sha256": "2AF54B0C894131BCAB0B9A09E5282AD1C7D776184AB193FB4B106D545B5C8EB7",
+    "preserved": true,
+    "modified": false,
+    "rehashed_for_qualification": false
+  },
+  "cleanup": {
+    "result": "PASS",
+    "reset_writes": 1,
+    "epoch_transition": "3->4",
+    "abandoned_delta": 0,
+    "abandoned_expected": 4,
+    "quiescence_samples": 5,
+    "quiescence_span_ms": 400.413,
+    "sigterm_count": 1,
+    "sigkill_count": 0,
+    "helper_terminated": true,
+    "warm_reboot_count": 0,
+    "driver_absent": true,
+    "nodes_absent": true,
+    "retained_locks_released": true
+  },
+  "host_disable_path": {
+    "gate_passed": 12,
+    "gate_total": 12,
+    "guard_records": 128,
+    "durable_logging_before_disable": false,
+    "primary_persistence_before_disable_issued": false,
+    "critical_path_order": "PASS",
+    "next_run_latency_target_us": 500,
+    "actual_hardware_latency": "NOT_MEASURED_NO_CAPTURE"
+  },
+  "forensics": {
+    "result": "PASS",
+    "records": 2500,
+    "integrity_failures": 0,
+    "global_sequence": "0..2499",
+    "overflow_record_index": 441,
+    "frame_boundary_indices": [
+      575,
+      1654
+    ],
+    "frame_boundary_malformed_deltas": [
+      21,
+      21
+    ],
+    "total_malformed_delta": 42,
+    "line_zero_present": false,
+    "clean_sof_present": false,
+    "events_structurally_identical": true
+  },
+  "hypotheses": {
+    "H1_lock_admission": "DISPROVEN_AS_SOLE_ROOT",
+    "H2_vertical_blanking": "OPEN",
+    "H3_line_counter": "DISPROVEN",
+    "H4_nvp_mode": "OPEN",
+    "H5_timing_phase": "NOT_SUPPORTED"
+  },
+  "directed_simulation": {
+    "stable_line": "PASS",
+    "frame_boundary_project_fixture": "PASS",
+    "observed_failure": "INSUFFICIENT_AUTHORITATIVE_STIMULUS",
+    "malformed_regression": "PASS",
+    "overflow_independence": "PASS",
+    "line0_sof": "PASS"
+  },
+  "root_cause_decision": "ROOT_CAUSE_NOT_PROVEN_RAW_MARKER_OBSERVABILITY_REQUIRED",
+  "rtl_candidate_created": false,
+  "minimal_diagnostic_required": true,
+  "minimal_diagnostic_type": "RAW_MARKER_FRAME_BOUNDARY_TRACE",
+  "vdo_timing_model": "EMPIRICALLY_QUALIFIED_SOURCE_SYNCHRONOUS",
+  "vdo_timing_reopened": false,
+  "new_capture": false,
+  "fpga_programming": false,
+  "bitstream_generation": false,
+  "jtag_access": false,
+  "flash_access": false,
+  "power_cycle": false,
+  "credential_remnants": 0
+}

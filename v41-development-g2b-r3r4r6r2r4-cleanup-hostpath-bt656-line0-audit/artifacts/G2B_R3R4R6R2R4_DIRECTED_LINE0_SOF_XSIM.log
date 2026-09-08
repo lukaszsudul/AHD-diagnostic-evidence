@@ -1,0 +1,23 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  8 15:19:15 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/r3r4r6r2r4_line0_xsim/xsim_script.tcl
+# xsim {r3r4r6r2r4_line0_xsim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+R3R4R6R2R4_TEST2_PROJECT_FRAME_BOUNDARY_PASS line1079_to_line0_to_line1 malformed_delta=0
+R3R4R6R2R4_TEST3_OBSERVED_FAILURE_NOT_REPRODUCED project_fixture_delta=0 authoritative_nvp_trace=absent
+R3R4R6R2R4_TEST6_LOCK_ADMISSION_PASS unlocked_line0_observed=1 admitted=0 valid_eav_relocks=1 next_committed_line=1
+R3R4R6R2R4_TEST1_STABLE_ACTIVE_LINE_PASS lines=2,3 malformed_delta=0 discontinuity=0
+R3R4R6R2R4_FOCUSED_LINE0_SOF_XSIM_PASS
+$finish called at time : 28292488001 ps : File "C:/FPGA/G2B_HW0_PRODUCT_R3R4R6R2R4_20260908T124420Z/scripts/tb_r3r4r6r2r4_line0_sof.sv" Line 316
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:01:01 . Memory (MB): peak = 204.750 ; gain = 0.484
+exit
+INFO: xsimkernel Simulation Memory Usage: 11400 KB (Peak: 11400 KB), Simulation CPU Usage: 60890 ms
+INFO: [Common 17-206] Exiting xsim at Tue Sep  8 15:20:23 2026...

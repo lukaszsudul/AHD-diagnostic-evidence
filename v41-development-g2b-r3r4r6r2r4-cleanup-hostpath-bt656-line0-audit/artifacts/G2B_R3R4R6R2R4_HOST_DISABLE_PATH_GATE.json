@@ -1,0 +1,108 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R6R2R4",
+  "result": "PASS",
+  "passed": 12,
+  "total": 12,
+  "guard_records": 128,
+  "durable_logging_before_mmio_disable": false,
+  "primary_persistence_before_disable_issued": false,
+  "critical_path_order": "PASS",
+  "required_next_run_disable_latency_us": 500,
+  "hardware_latency_measured": false,
+  "cases": [
+    {
+      "case": "PRIMARY_EVENT_FAST_DISABLE_FIRST",
+      "result": "PASS",
+      "basis": "simulated trace plus fast_normal_disable AST/source"
+    },
+    {
+      "case": "PRE_DISABLE_DURABLE_LOG_REJECTED",
+      "result": "PASS",
+      "basis": "negative fixture"
+    },
+    {
+      "case": "PRE_DISABLE_ISSUED_PRIMARY_PERSIST_REJECTED",
+      "result": "PASS",
+      "basis": "negative fixture"
+    },
+    {
+      "case": "DISABLE_ISSUED_AFTER_MMIO",
+      "result": "PASS",
+      "basis": "corrected controller source ordering"
+    },
+    {
+      "case": "ACTIVE_PROGRESS_BUFFERED_IN_MEMORY",
+      "result": "PASS",
+      "basis": "fixture and record_event source"
+    },
+    {
+      "case": "BUFFERED_EVENTS_PERSIST_ONLY_AFTER_DISABLE",
+      "result": "PASS",
+      "basis": "positive fixture"
+    },
+    {
+      "case": "GUARD_IS_EXACTLY_128_RECORDS",
+      "result": "PASS",
+      "basis": "controller and native constants"
+    },
+    {
+      "case": "GUARD_CANCEL_AFTER_PARENT_QUIESCENT",
+      "result": "PASS",
+      "basis": "native source ordering and deterministic native fixture"
+    },
+    {
+      "case": "PRIMARY_PERSIST_INDEPENDENT_OF_GUARD_COMPLETION",
+      "result": "PASS",
+      "basis": "deterministic native fixture"
+    },
+    {
+      "case": "PRIMARY_SURVIVES_GUARD_CLEANUP_FAILURE",
+      "result": "PASS",
+      "basis": "negative cleanup fixture and native fixture"
+    },
+    {
+      "case": "NORMAL_SUCCESS_COUNTS",
+      "result": "PASS",
+      "basis": "deterministic success fixture"
+    },
+    {
+      "case": "FAILURE_CLEANUP_NO_FORCE",
+      "result": "PASS",
+      "basis": "static source audit"
+    }
+  ],
+  "call_trace": [
+    "PRIMARY_WINDOW_COMPLETE",
+    "FAST_MMIO_DISABLE_BEGIN",
+    "FAST_MMIO_DISABLE_END",
+    "DISABLE_ISSUED",
+    "FIRST_DURABLE_LOG_WRITE",
+    "PRIMARY_PERSIST_BEGIN"
+  ],
+  "native_self_test": {
+    "type": "SELF_TEST_RESULT",
+    "result": "PASS",
+    "record_bytes": 4096,
+    "primary_records": 2500,
+    "guard_records": 128,
+    "total_logical_requests": 2628,
+    "initial_submitted": 1024,
+    "initial_outstanding": 1024,
+    "maximum_permitted_outstanding": 1024,
+    "total_submitted": 2628,
+    "maximum_outstanding": 1024,
+    "descriptor_starvation_events": 0,
+    "crossed_logical_index_2048": true,
+    "cumulative_submissions_when_2048_crossed": 2049,
+    "primary_completed": 2500,
+    "primary_event_at_2500": true,
+    "primary_completed_when_event_emitted": 2500,
+    "placement_by_logical_index": true,
+    "persistence_before_disable_issued": false,
+    "persistence_after_disable_issued": true,
+    "persistence_started_before_guard_completion": true,
+    "guard_cancel_targets_only": true,
+    "guard_cancel_after_parent_quiescent": true,
+    "completed_data_preserved": true
+  }
+}

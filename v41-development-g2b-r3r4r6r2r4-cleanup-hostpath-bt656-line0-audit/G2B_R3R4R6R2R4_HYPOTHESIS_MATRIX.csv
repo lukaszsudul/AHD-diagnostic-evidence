@@ -1,0 +1,6 @@
+Hypothesis,Disposition,PositiveEvidence,ContraryOrMissingEvidence,NextDiscriminator
+H1_LOCK_ADMISSION_ORDERING,DISPROVEN_AS_SOLE_ROOT,"Directed test proves unlocked line0 is parsed, not admitted, and relocks for line1",Hardware boundary consumes one attempt and adds one drop; project VBI retains lock and commits line0,Raw state trace determines whether H1 follows an earlier malformed episode
+H2_VERTICAL_BLANKING_HANDLING,OPEN,Each boundary has deterministic +21 malformed episodes and one next-record malformed flag,Project VBI fixture causes zero malformed; authoritative NVP VBI bytes absent,Raw marker/state event trace across one boundary
+H3_LINE_COUNTER_OFF_BY_ONE,DISPROVEN,Unmodified RTL simulation produces 1079->0->1 and SOF on admitted line0,Hardware loss coincides with +21 malformed and one dropped attempt,None unless raw trace contradicts simulated sequencing
+H4_NVP_MODE_MISMATCH,OPEN,Forced 1080p25 and output routing values are known,Exact programmed-device boundary marker semantics are not locally documented,Compare captured raw F/V/H markers with configured-mode expectation
+H5_TIMING_PHASE,NOT_SUPPORTED,Accepted source-synchronous timing model passed routed signoff,Two consecutive events are deterministic and identical; no inconsistent raw bytes exist,Reopen only if raw trace shows inconsistent sampling
