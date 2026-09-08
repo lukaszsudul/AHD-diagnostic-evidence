@@ -1,0 +1,22 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  8 17:56:35 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/diag1_trace_xsim/xsim_script.tcl
+# xsim {diag1_trace_xsim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+BT656_DIAG1_T1_PASS clear_arm_status
+BT656_DIAG1_T2_PASS marker_byte_alignment
+BT656_DIAG1_T3_PASS pretrigger_chronological_order
+BT656_DIAG1_T8_PASS dual_clock_mmio_readback
+BT656_DIAG1_T7_PASS event_limit_clock_timeout_freeze
+BT656_DIAG1_TRACE_XSIM_PASS
+$finish called at time : 2035424 ns : File "C:/FPGA/V41_G2B_BT656_DIAG1/tests/g2b/tb_g2b_bt656_diag1_trace.sv" Line 287
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Sep  8 17:56:39 2026...

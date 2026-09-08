@@ -1,0 +1,28 @@
+# Diagnostic build report
+
+- Tool: Vivado 2025.2 build 6299465
+- Source commit: `08cb9f6f227766f3353dfc9ce6b0205d62f03639`
+- Source tree: `dcd5f8e7da149c399ccad73fbf460ac18685a62d`
+- Full nonincremental final build: FAIL
+- Synthesis: PASS
+- opt_design: PASS
+- place_design: PASS
+- phys_opt_design: PASS
+- route_design: completed
+- Fully routed: YES
+- Unrouted nets: 0
+- Partially routed nets: 0
+- WNS / TNS: -4.675 ns / -3545.498 ns
+- WHS / THS: 0.031 ns / 0.000 ns
+- Setup failing endpoints: 1415
+- DRC errors / critical warnings: 0 / 0
+- CDC disposition: FAIL (624 new DIAG1 critical rows have `None` disposition)
+- Total LUT: 18404 / 20800 (88.48%)
+- Total FF: 20633 / 41600 (49.60%)
+- Total BRAM tiles: 30 / 50 (60.00%)
+- Trace LUT / FF / BRAM tiles: 576 / 1195 / 7.5
+- First blocker: `BT656_DIAG1_FULL_BUILD_TIMING_GATE_FAILED:WNS=-4.675ns,TNS=-3545.498ns`
+- Bitstream generated: NO
+- Routed DCP preserved privately: YES
+- Routed DCP SHA-256: `548EB8D755BD3618D286FBA33ABA21868F63CD0DD012D668F8FB858302AF6AB3`
+- Source manifest SHA-256: `7CFB9D8CC09BA07F4ABE9FFD3120BD9BFE2883F32B8B705FF55C7CDFA916EF43`

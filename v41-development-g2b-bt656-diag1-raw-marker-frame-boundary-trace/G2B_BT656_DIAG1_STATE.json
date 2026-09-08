@@ -1,0 +1,69 @@
+{
+  "task": "G2B-BT656-DIAG1",
+  "run_root": "C:\\FPGA\\G2B_BT656_DIAG1_20260908T142811Z",
+  "project_state_rev": "8 — OWNER_ATTESTED_NOT_REVERIFIED",
+  "engineering_gate": "FAIL",
+  "overall_result": "FAIL",
+  "first_blocker": "BT656_DIAG1_FULL_BUILD_TIMING_GATE_FAILED:WNS=-4.675ns,TNS=-3545.498ns",
+  "source": {
+    "base": "92e9b3d914134c044371779def1ee18eaaeda98a",
+    "commit": "08cb9f6f227766f3353dfc9ce6b0205d62f03639",
+    "tree": "dcd5f8e7da149c399ccad73fbf460ac18685a62d",
+    "branch": "diag/v41-g2b-bt656-boundary-trace",
+    "publication": "PASS"
+  },
+  "simulation": {
+    "passed": 10,
+    "total": 10,
+    "functional_noninterference": "PASS"
+  },
+  "build": {
+    "result": "FAIL",
+    "fully_routed": true,
+    "unrouted_nets": 0,
+    "partial_nets": 0,
+    "wns_ns": -4.675,
+    "tns_ns": -3545.498,
+    "whs_ns": 0.031,
+    "ths_ns": 0.0,
+    "drc": "PASS",
+    "cdc": "FAIL",
+    "diag1_unresolved_critical_cdc_rows": 624,
+    "resources": {
+      "lut": {
+        "used": 18404,
+        "available": 20800,
+        "percent": 88.48
+      },
+      "ff": {
+        "used": 20633,
+        "available": 41600,
+        "percent": 49.6
+      },
+      "bram_tiles": {
+        "used": 30.0,
+        "available": 50.0,
+        "percent": 60.0
+      }
+    },
+    "bitstream": null
+  },
+  "hardware": {
+    "accessed": false,
+    "dut_connections": 0,
+    "fpga_programming": 0,
+    "warm_reboot": 0,
+    "driver_loads": 0,
+    "mmio_operations": 0,
+    "dma_operations": 0
+  },
+  "trace": {
+    "captured": false,
+    "binary": null,
+    "replay": "NOT_REACHED"
+  },
+  "root_cause": "NOT_REACHED",
+  "correction_candidate": false,
+  "evidence_commit": "ASSIGNED_BY_ENCLOSING_GIT_COMMIT",
+  "generated_utc": "2026-09-08T17:06:16Z"
+}
