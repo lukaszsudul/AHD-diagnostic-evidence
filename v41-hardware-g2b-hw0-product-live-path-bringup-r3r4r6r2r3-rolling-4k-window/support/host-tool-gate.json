@@ -1,0 +1,141 @@
+{
+  "schema": "R3R4R6R2R3_ROLLING_HOST_TOOL_GATE_V1",
+  "result": "PASS",
+  "passed": 14,
+  "total": 14,
+  "cases": [
+    {
+      "case": "NATIVE_SOURCE_COMPILES_PASS",
+      "result": "PASS",
+      "detail": {
+        "return_code": 0,
+        "unsafe_warning": null
+      }
+    },
+    {
+      "case": "NATIVE_BINARY_X86_64_PASS",
+      "result": "PASS",
+      "detail": "{\"command\": [\"file\", \"/home/<GOVERNED_USER_REDACTED>/vcde_artifacts/g2b_hw0_product_r3r4r6r2r3/20260908T102555Z/build/xdma_c2h_rolling_4k\"], \"return_code\": 0, \"stdout\": \"/home/<GOVERNED_USER_REDACTED>/vcde_artifacts/g2b_hw0_product_r3r4r6r2r3/20260908T102555Z/build/xdma_c2h_rolling_4k: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=e86c5a62747ceaa42db923af84fe1d6b40ebe39b, for GNU/Linux 3.2.0, not stripped\\n\", \"stderr\": \"\"}"
+    },
+    {
+      "case": "NO_DEVICE_USAGE_SMOKE_PASS",
+      "result": "PASS",
+      "detail": {
+        "return_code": 64,
+        "stderr": "usage: /home/<GOVERNED_USER_REDACTED>/vcde_artifacts/g2b_hw0_product_r3r4r6r2r3/20260908T102555Z/build/xdma_c2h_rolling_4k /dev/xdma0_c2h_0 PRIVATE_DIRECTORY"
+      }
+    },
+    {
+      "case": "FROZEN_CONSTANTS_EXACT_PASS",
+      "result": "PASS",
+      "detail": {
+        "record": true,
+        "primary_records": true,
+        "guard_records": true,
+        "max_outstanding": true,
+        "context": true,
+        "batch": true,
+        "progress": true,
+        "no_progress": true,
+        "total_timeout": true,
+        "request_geometry": true
+      }
+    },
+    {
+      "case": "INITIAL_PREQUEUE_EXACTLY_1024_PASS",
+      "result": "PASS",
+      "detail": {
+        "submitted": 1024,
+        "outstanding": 1024
+      }
+    },
+    {
+      "case": "MAX_OUTSTANDING_HARD_LIMIT_1024_PASS",
+      "result": "PASS",
+      "detail": {
+        "permitted": 1024,
+        "observed": 1024
+      }
+    },
+    {
+      "case": "ROLLING_REFILL_REACHES_2532_PASS",
+      "result": "PASS",
+      "detail": {
+        "total_submitted": 2532,
+        "starvation": 0
+      }
+    },
+    {
+      "case": "CUMULATIVE_SUBMISSION_CROSSES_2048_PASS",
+      "result": "PASS",
+      "detail": 2049
+    },
+    {
+      "case": "PRIMARY_WINDOW_EVENT_AT_2500_PASS",
+      "result": "PASS",
+      "detail": {
+        "event": true,
+        "at": 2500
+      }
+    },
+    {
+      "case": "PRIMARY_PLACEMENT_BY_LOGICAL_INDEX_PASS",
+      "result": "PASS",
+      "detail": true
+    },
+    {
+      "case": "PRIMARY_PERSISTENCE_INDEPENDENT_OF_GUARD_PASS",
+      "result": "PASS",
+      "detail": true
+    },
+    {
+      "case": "PARENT_QUIESCENCE_GUARD_ONLY_CANCEL_PASS",
+      "result": "PASS",
+      "detail": true
+    },
+    {
+      "case": "COMPLETED_DATA_SURVIVES_LATER_CLEANUP_FAILURE_PASS",
+      "result": "PASS",
+      "detail": true
+    },
+    {
+      "case": "FORBIDDEN_ACTIVE_DMA_MECHANISMS_ABSENT_PASS",
+      "result": "PASS",
+      "detail": {
+        "SIGALRM": false,
+        "alarm": false,
+        "setitimer": false,
+        "O_TRUNC": false,
+        "eop_flush": false
+      }
+    }
+  ],
+  "synthetic_fixture": {
+    "type": "SELF_TEST_RESULT",
+    "result": "PASS",
+    "record_bytes": 4096,
+    "primary_records": 2500,
+    "guard_records": 32,
+    "total_logical_requests": 2532,
+    "initial_submitted": 1024,
+    "initial_outstanding": 1024,
+    "maximum_permitted_outstanding": 1024,
+    "total_submitted": 2532,
+    "maximum_outstanding": 1024,
+    "descriptor_starvation_events": 0,
+    "crossed_logical_index_2048": true,
+    "cumulative_submissions_when_2048_crossed": 2049,
+    "primary_completed": 2500,
+    "primary_event_at_2500": true,
+    "primary_completed_when_event_emitted": 2500,
+    "placement_by_logical_index": true,
+    "persistence_started_before_guard_completion": true,
+    "guard_cancel_targets_only": true,
+    "completed_data_preserved": true
+  },
+  "smoke_stdout": "",
+  "smoke_stderr": "usage: /home/<GOVERNED_USER_REDACTED>/vcde_artifacts/g2b_hw0_product_r3r4r6r2r3/20260908T102555Z/build/xdma_c2h_rolling_4k /dev/xdma0_c2h_0 PRIVATE_DIRECTORY\n",
+  "synthetic_stdout": "{\"type\":\"SELF_TEST_RESULT\",\"result\":\"PASS\",\"record_bytes\":4096,\"primary_records\":2500,\"guard_records\":32,\"total_logical_requests\":2532,\"initial_submitted\":1024,\"initial_outstanding\":1024,\"maximum_permitted_outstanding\":1024,\"total_submitted\":2532,\"maximum_outstanding\":1024,\"descriptor_starvation_events\":0,\"crossed_logical_index_2048\":true,\"cumulative_submissions_when_2048_crossed\":2049,\"primary_completed\":2500,\"primary_event_at_2500\":true,\"primary_completed_when_event_emitted\":2500,\"placement_by_logical_index\":true,\"persistence_started_before_guard_completion\":true,\"guard_cancel_targets_only\":true,\"completed_data_preserved\":true}\n",
+  "synthetic_stderr": "",
+  "device_access": false
+}
