@@ -1,0 +1,22 @@
+# G2B BT656 DIAG1-R1 build report
+
+- Profile: G2B_BT656_DIAG1_R1
+- Classification: BT656_DIAG1_R1_RAW_MARKER_TRACE_CANDIDATE
+- Source commit: dc04b3954808e5d638636d345115305392ec3288
+- Source tree: 9be0f7f4a2062d26f60459c540a4ee8ca47f2605
+- Vivado: 2025.2 build 6299465
+- Full nonincremental build: PASS
+- Checkpoint reuse: NO
+- Fully routed: YES
+- WNS/TNS: 0.178 / 0.0
+- WHS/THS: 0.035 / 0.0
+- DRC errors/critical warnings: 0 / 0
+- New unresolved DIAG1 critical/warning CDC: 0 / 0
+- Previous transport_hard_hold_axi to post_count_source path: ABSENT
+- Unresolved methodology errors: 0
+- Total LUT/FF/BRAM percentages: 88.346 / 50.142 / 60.000
+- Trace LUT/FF/BRAM: 645 / 1044 / 7.5
+- Bitstream SHA-256: 02B590D4C6DC391A55C2EF237EA167A7352385C2BF0AD46C4DCCEA8D091684FB
+- Routed DCP SHA-256: 81B0C3CC3E4EBC1B61953CC6187F88C38FB190A852A2FE659070384DA8A5B95E
+- Source manifest SHA-256: 252DEC8F3AC0E5644666CFE3897B98442FA44F6F91BF1F6D73976D2D45400320
+- LTX generated: NO

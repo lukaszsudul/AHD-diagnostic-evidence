@@ -1,0 +1,84 @@
+{
+  "Gate": "BT656_DIAG1_R1_SIMULATION_GATE",
+  "ExistingPassed": 10,
+  "ExistingTotal": 10,
+  "Passed": 12,
+  "Total": 12,
+  "Result": "PASS",
+  "FunctionalNoninterference": "PASS",
+  "SourceMutations": 0,
+  "Tests": [
+    {
+      "Test": "T1",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T1_PASS clear_arm_status",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\trace\\xsim.console.log"
+    },
+    {
+      "Test": "T2",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T2_PASS marker_byte_alignment",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\trace\\xsim.console.log"
+    },
+    {
+      "Test": "T3",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T3_PASS pretrigger_chronological_order",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\trace\\xsim.console.log"
+    },
+    {
+      "Test": "T4",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T4_PASS line1079_eav_next_frame_line0_line1_stop malformed=0",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\parser\\xsim.console.log"
+    },
+    {
+      "Test": "T5",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T5_PASS malformed_reason_1_2_3_exact",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\parser\\xsim.console.log"
+    },
+    {
+      "Test": "T6",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T6_PASS ring_full_and_malformed_drop_independent",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\parser\\xsim.console.log"
+    },
+    {
+      "Test": "T7",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T7_PASS event_limit_clock_timeout_freeze",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\trace\\xsim.console.log"
+    },
+    {
+      "Test": "T8",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T8_PASS dual_clock_mmio_readback",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\trace\\xsim.console.log"
+    },
+    {
+      "Test": "T9",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_T9_PASS side_by_side_product_equivalent_vs_trace_armed byte_identical",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\noninterference\\xsim.console.log"
+    },
+    {
+      "Test": "T10",
+      "Result": "PASS",
+      "Evidence": "G2B_ONECH_C2H_XSIM_PASS records=16 bytes=65536 releases=16 expected_queue=16",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\affected_regression\\xsim.console.log"
+    },
+    {
+      "Test": "T11",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_R1_T11_PASS source_registered_aligned_adjacent_events",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\r1_event_register\\xsim.console.log"
+    },
+    {
+      "Test": "T12",
+      "Result": "PASS",
+      "Evidence": "BT656_DIAG1_R1_T12_PASS frozen_metadata_before_done_stable_new_generation",
+      "Log": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z\\build\\simulation_gate_01\\r1_metadata\\xsim.console.log"
+    }
+  ]
+}

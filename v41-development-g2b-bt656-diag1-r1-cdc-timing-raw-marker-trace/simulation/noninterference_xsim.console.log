@@ -1,0 +1,17 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  8 20:25:18 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/diag1_noninterference_xsim/xsim_script.tcl
+# xsim {diag1_noninterference_xsim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+BT656_DIAG1_T9_PASS side_by_side_product_equivalent_vs_trace_armed byte_identical
+$finish called at time : 244704 ns : File "C:/FPGA/V41_G2B_BT656_DIAG1/tests/g2b/tb_g2b_bt656_diag1_noninterference.sv" Line 257
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Sep  8 20:25:24 2026...

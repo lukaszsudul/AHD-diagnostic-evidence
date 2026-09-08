@@ -1,0 +1,23 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  8 20:23:40 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/diag1_parser_xsim/xsim_script.tcl
+# xsim {diag1_parser_xsim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+BT656_DIAG1_T2_PARSER_PASS exact_detector_window
+BT656_DIAG1_T5_PASS malformed_reason_1_2_3_exact
+BT656_DIAG1_T6_PASS ring_full_and_malformed_drop_independent
+BT656_DIAG1_T4_PASS line1079_eav_next_frame_line0_line1_stop malformed=0
+BT656_DIAG1_PARSER_XSIM_PASS
+$finish called at time : 28378272 ns : File "C:/FPGA/V41_G2B_BT656_DIAG1/tests/g2b/tb_g2b_bt656_diag1_parser.sv" Line 451
+run: Time (s): cpu = 00:00:02 ; elapsed = 00:01:25 . Memory (MB): peak = 203.535 ; gain = 0.047
+exit
+INFO: xsimkernel Simulation Memory Usage: 10484 KB (Peak: 10484 KB), Simulation CPU Usage: 84875 ms
+INFO: [Common 17-206] Exiting xsim at Tue Sep  8 20:25:07 2026...

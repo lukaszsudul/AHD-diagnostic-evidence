@@ -1,0 +1,41 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue Sep  8 23:25:24 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/diag1_trace_replay_xsim/xsim_script.tcl
+# xsim {diag1_trace_replay_xsim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+REPLAY_MALFORMED ordinal=1 reason=2 frame=1 line=1080 state_after=0 time=28137928000
+REPLAY_DROP ordinal=1 reason=2 frame=1 line=1080 time=28137928000
+REPLAY_MALFORMED ordinal=2 reason=2 frame=1 line=1081 state_after=0 time=28173484000
+REPLAY_MALFORMED ordinal=3 reason=2 frame=1 line=1082 state_after=0 time=28209039000
+REPLAY_MALFORMED ordinal=4 reason=2 frame=1 line=1083 state_after=0 time=28244595000
+REPLAY_MALFORMED ordinal=5 reason=2 frame=1 line=1084 state_after=0 time=28280150000
+REPLAY_MALFORMED ordinal=6 reason=2 frame=1 line=1085 state_after=0 time=28315706000
+REPLAY_MALFORMED ordinal=7 reason=2 frame=1 line=1086 state_after=0 time=28351261000
+REPLAY_MALFORMED ordinal=8 reason=2 frame=1 line=1087 state_after=0 time=28386817000
+REPLAY_MALFORMED ordinal=9 reason=2 frame=1 line=1088 state_after=0 time=28422372000
+REPLAY_MALFORMED ordinal=10 reason=2 frame=1 line=1089 state_after=0 time=28457928000
+REPLAY_MALFORMED ordinal=11 reason=2 frame=1 line=1090 state_after=0 time=28493483000
+REPLAY_MALFORMED ordinal=12 reason=2 frame=1 line=1091 state_after=0 time=28529039000
+REPLAY_MALFORMED ordinal=13 reason=2 frame=1 line=1092 state_after=0 time=28564594000
+REPLAY_MALFORMED ordinal=14 reason=2 frame=1 line=1093 state_after=0 time=28600150000
+REPLAY_MALFORMED ordinal=15 reason=2 frame=1 line=1094 state_after=0 time=28635705000
+REPLAY_MALFORMED ordinal=16 reason=2 frame=1 line=1095 state_after=0 time=28671261000
+REPLAY_MALFORMED ordinal=17 reason=2 frame=1 line=1096 state_after=0 time=28706816000
+REPLAY_MALFORMED ordinal=18 reason=2 frame=1 line=1097 state_after=0 time=28742372000
+REPLAY_MALFORMED ordinal=19 reason=2 frame=1 line=1098 state_after=0 time=28777927000
+REPLAY_MALFORMED ordinal=20 reason=2 frame=1 line=1099 state_after=0 time=28813483000
+REPLAY_MALFORMED ordinal=21 reason=2 frame=1 line=1100 state_after=0 time=28849038000
+BT656_DIAG1_TRACE_REPLAY_PASS markers=115 malformed=21 reason2=21 drops=1 drop_reason2=1 lock_loss=1 lock_reacquire=1 line0_sav=1 line0_attempt=0 line0_commit=0 line1_commit=1 line1_flags=00000034
+$finish called at time : 30155720 ns : File "C:/FPGA/G2B_BT656_DIAG1_R1_20260908T175752Z/scripts/tb_g2b_bt656_diag1_trace_replay.sv" Line 305
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:01:23 . Memory (MB): peak = 203.758 ; gain = 0.016
+exit
+INFO: xsimkernel Simulation Memory Usage: 11596 KB (Peak: 11596 KB), Simulation CPU Usage: 83109 ms
+INFO: [Common 17-206] Exiting xsim at Tue Sep  8 23:26:50 2026...

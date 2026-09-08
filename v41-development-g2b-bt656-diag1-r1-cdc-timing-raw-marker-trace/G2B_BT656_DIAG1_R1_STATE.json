@@ -1,0 +1,77 @@
+{
+  "task": "G2B-BT656-DIAG1-R1",
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PASS",
+  "overall_result": "BLOCKED",
+  "project_state_rev": "8 \u2014 OWNER_ATTESTED_NOT_REVERIFIED",
+  "run_root": "C:\\FPGA\\G2B_BT656_DIAG1_R1_20260908T175752Z",
+  "product_worktree_modified": false,
+  "diagnostic_commit": "dc04b3954808e5d638636d345115305392ec3288",
+  "diagnostic_tree": "9be0f7f4a2062d26f60459c540a4ee8ca47f2605",
+  "simulation": {
+    "existing": "10/10 PASS",
+    "r1": "12/12 PASS"
+  },
+  "synth_cdc": {
+    "result": "PASS",
+    "critical": 0,
+    "warning": 0
+  },
+  "build": {
+    "result": "PASS",
+    "fully_routed": true,
+    "wns_ns": 0.178,
+    "tns_ns": 0.0,
+    "whs_ns": 0.035,
+    "ths_ns": 0.0,
+    "bitstream_sha256": "02B590D4C6DC391A55C2EF237EA167A7352385C2BF0AD46C4DCCEA8D091684FB"
+  },
+  "hardware": {
+    "programming": "PASS",
+    "warm_reboot_count": 1,
+    "trace_done_to_disable_us": 4.158,
+    "physical_quiescence": "PASS",
+    "normal_disable_writes": 1,
+    "safety_disable_writes": 0,
+    "pending_aio": 1023,
+    "driver_unloaded": false,
+    "nodes_removed": false,
+    "locks_released": false
+  },
+  "trace": {
+    "valid_entries": 147,
+    "pretrigger_entries": 32,
+    "posttrigger_entries": 115,
+    "trigger_frame": 3818,
+    "trigger_line": 1079,
+    "stop_reason": "SOURCE_CLOCK_TIMEOUT",
+    "double_read": "PASS",
+    "overflow": false,
+    "sha256": "F67BF3C69BF76FCE0B652D075E1933993166663C0D8C852D23F120DE2DC577F6",
+    "malformed_events": 21,
+    "malformed_reason": 2
+  },
+  "trace_replay": {
+    "classification": "FUNCTIONALLY_EQUIVALENT_SYMPTOM_REPRODUCED",
+    "malformed_count": 21,
+    "line_0_committed": false,
+    "line_1_committed": true,
+    "line_1_flags": "0x00000034"
+  },
+  "root_cause": "ROOT_CAUSE_PROVEN_VERTICAL_BLANKING_HANDLING",
+  "correction_candidate": {
+    "created": true,
+    "branch": "fix/v41-g2b-bt656-line0-sof",
+    "commit": "bf19702beca9bd85e950fa7ee59fd8ed08b1b2dc",
+    "tree": "2f72f4fa5dd756443c2d79eb7b75d75badefe921",
+    "replay": "PASS",
+    "full_regression": "PASS",
+    "bitstream": false,
+    "hardware_test": false
+  },
+  "first_blocker": "BT656_DIAG1_R1_DRAIN_AIO_CLEANUP_UNRESOLVED",
+  "public_raw_video": false,
+  "public_bitstream": false,
+  "public_dcp": false,
+  "credential_remnants": 0
+}

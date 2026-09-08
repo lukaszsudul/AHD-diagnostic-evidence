@@ -1,0 +1,6 @@
+Hypothesis,Disposition,Evidence
+H1_LOCK_ADMISSION,PROVEN_CONTRIBUTING_EFFECT,Lock falls at first line-1080 reason-2 rejection; next-frame line-0 SAV enters capture with lock low and no attempt.
+H2_VERTICAL_BLANKING_HANDLING,PROVEN,Twenty-one complete V=0 lines 1080..1100 are rejected only by pending_line<=1079 at EAV.
+H3_LINE_COUNTER_OFF_BY_ONE,DISPROVEN,Line 1079 completes successfully; failures begin at correctly numbered line 1080.
+H4_NVP_MODE_MISMATCH,OPEN,Trace proves the emitted marker pattern but contains no NVP mode-register identity.
+H5_TIMING_OR_PHASE,NOT_SUPPORTED,Every implicated raw marker has valid XY/parity and stable 1436/3844 event spacing; routed timing and CDC pass.
