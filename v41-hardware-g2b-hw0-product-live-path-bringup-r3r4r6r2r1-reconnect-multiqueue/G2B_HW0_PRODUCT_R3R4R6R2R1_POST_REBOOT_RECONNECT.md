@@ -1,0 +1,24 @@
+# Post-reboot reconnect
+
+Result: **FAIL / HARD STOP `R3R4R6R2R1_DUT_RECONNECT_TIMEOUT`**
+Attempts: 10
+First start UTC: `2026-09-08T07:40:24.417933+00:00`
+Deadline UTC: `2026-09-08T07:46:24.417933+00:00`
+Final receipt end UTC: `2026-09-08T07:46:35.863319+00:00`
+Receipt interval: `371.445 s`
+Final receipt overrun beyond deadline: `11.445 s`
+
+All attempts used the fresh helper and sole authorized IP. All had exit code 124, problem `R3R4R6R2R1_CONNECTION_TIMEOUT`, empty stdout/stderr, deleted temporary credential file, and zero remnants. No remote command executed.
+
+| Attempt | Start UTC | End UTC | Exit | Remote output |
+|---:|---|---|---:|---|
+| 1 | 2026-09-08T07:40:24.4179330Z | 2026-09-08T07:40:39.7233457Z | 124 | NONE |
+| 2 | 2026-09-08T07:43:10.0430026Z | 2026-09-08T07:43:25.4165309Z | 124 | NONE |
+| 3 | 2026-09-08T07:43:35.4703909Z | 2026-09-08T07:43:50.5090052Z | 124 | NONE |
+| 4 | 2026-09-08T07:44:00.5381343Z | 2026-09-08T07:44:15.5787156Z | 124 | NONE |
+| 5 | 2026-09-08T07:44:25.5977223Z | 2026-09-08T07:44:40.6350838Z | 124 | NONE |
+| 6 | 2026-09-08T07:44:50.6340045Z | 2026-09-08T07:45:05.6712533Z | 124 | NONE |
+| 7 | 2026-09-08T07:45:15.6918936Z | 2026-09-08T07:45:30.7280319Z | 124 | NONE |
+| 8 | 2026-09-08T07:45:40.7392076Z | 2026-09-08T07:45:55.7693450Z | 124 | NONE |
+| 9 | 2026-09-08T07:46:05.7843016Z | 2026-09-08T07:46:20.8162310Z | 124 | NONE |
+| 10 | 2026-09-08T07:46:20.8266213Z | 2026-09-08T07:46:35.8633196Z | 124 | NONE |
