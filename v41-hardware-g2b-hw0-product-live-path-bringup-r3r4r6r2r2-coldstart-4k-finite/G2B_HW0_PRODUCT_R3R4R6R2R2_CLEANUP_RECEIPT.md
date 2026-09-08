@@ -1,0 +1,21 @@
+# Cleanup receipt
+
+- Safety stream-disable writes: 1, PASS.
+- Normal stream-disable writes: 0; primary target was not reached.
+- Parent physical-quiescence proof: FAIL after 100 samples and the complete 10-second window.
+- Last observed CONTROL: `0x00000000`.
+- Last observed STATUS: `0x000004FA`.
+- Helper before terminal reboot: active, PID 3793.
+- Module refcount before terminal reboot: 1.
+- Exact pending AIO count: NOT PROVEN; helper did not persist its completion/pending receipt.
+- Normal module unload: not executed because active DMA quiescence was not proven.
+- Forced process termination or forced unload: NO.
+- Authorized terminal graceful reboot: 1, request accepted.
+- Capture retry after terminal reboot: NO.
+- SSH restoration during six bounded attempts: NO; no further outage diagnosis was performed.
+- Driver unloaded after reboot: not verified.
+- XDMA nodes removed after reboot: not verified.
+- Linux lock released after reboot: not verified.
+- Controller lock: released last at 2026-09-08T09:02:01.7883519Z.
+- Credential remnants: 0.
+- Power cycle: NO. Flash access: NO.

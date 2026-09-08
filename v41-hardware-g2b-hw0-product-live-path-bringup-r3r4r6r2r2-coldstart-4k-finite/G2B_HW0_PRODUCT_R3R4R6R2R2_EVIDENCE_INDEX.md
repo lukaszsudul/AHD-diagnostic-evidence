@@ -1,0 +1,52 @@
+# Evidence index
+
+This package contains sanitized reports, fixed-size AIO metadata, and complete task-tool source. It contains no credential value, executable, driver, bitstream, raw primary record, raw UYVY frame, or camera PNG.
+
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_AIO_COMPLETIONS.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_AIO_SUBMISSIONS.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_AUTHORIZATION_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_CLEANUP_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_DRIVER_LOAD.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_ERROR_TIMELINE.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_EVIDENCE_INDEX.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_FINAL_STATE.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_FIRST_RECORD_REPORT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_FPGA_PROGRAMMING_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_FRAME_RECONSTRUCTION_REPORT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_GATE_MATRIX.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_HOST_TOOL_GATE.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_MALFORMED_PRECEDING_TIMELINE.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_MMIO_WRITE_LEDGER.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_NATIVE_HELPER_BUILD.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_OWNER_COLD_RESET_ATTESTATION.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_PREQUEUE_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_PRIMARY_RECORD_METRICS.csv`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_PUBLICATION_SANITIZATION.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_REBOOT_RECEIPT.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_SHA256_MANIFEST.txt`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_SOURCE_READINESS.md`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_STATE.json`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_STREAM_CONTINUITY_METRICS.csv`
+- `V41_G2B_HW0_PRODUCT_R3R4R6R2R2_MAIN_REPORT.md`
+- `support/host-tool-gate-final.json`
+- `support/host-tool-gate-initial-8of9.json`
+- `support/native-build.json`
+- `support/session-measurements-sanitized.json`
+- `support/source-original-sha256.json`
+- `tools/Controller-Lock-R3R4R6R2R2.ps1`
+- `tools/Invoke-R3R4R6R2R2DutConnection.ps1`
+- `tools/Invoke-R3R4R6R2R2SramProgramOnce.ps1`
+- `tools/Invoke-R3R4R6R2R2TerminalCleanupReboot.ps1`
+- `tools/Invoke-R3R4R6R2R2WarmReboot.ps1`
+- `tools/V41_C2H_TRANSPORT_ABI_V1.json`
+- `tools/abi_v1.py`
+- `tools/controller_r3r4r6r2r2.py`
+- `tools/failure_snapshot_r3r4r6r2r2.py`
+- `tools/focused_gate_r3r4r6r2r2.py`
+- `tools/frame_reconstruct_r3r4.py`
+- `tools/linux_lock_r3r4r6r2r2.py`
+- `tools/program-product-once-r3r4r6r2r2.tcl`
+- `tools/publish_r3r4r6r2r2.py`
+- `tools/validate_r3r4r6r2r2.py`
+- `tools/xdma_c2h_4k_finite.c`
+- `G2B_HW0_PRODUCT_R3R4R6R2R2_SHA256_MANIFEST.txt` (manifest self-entry intentionally omitted)

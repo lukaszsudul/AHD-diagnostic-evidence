@@ -1,0 +1,55 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R6R2R2",
+  "source": "C:\\FPGA\\G2B_HW0_PRODUCT_R3R4R6R2R2_20260908T081532Z\\scripts\\xdma_c2h_4k_finite.c",
+  "source_sha256": "7C13B835DCC037EF529BC915EF045B661BA4166AF6F5B002ED63E7787890A0FB",
+  "checks": [
+    {
+      "name": "NATIVE_SOURCE_COMPILES_ON_DUT",
+      "result": "PASS",
+      "evidence": "/usr/bin/gcc gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0"
+    },
+    {
+      "name": "BINARY_IS_X86_64_LINUX",
+      "result": "PASS",
+      "evidence": "ELF 64-bit LSB pie executable, x86-64, dynamically linked"
+    },
+    {
+      "name": "NO_DEVICE_USAGE_SMOKE_TEST",
+      "result": "PASS",
+      "evidence": "exit=64"
+    },
+    {
+      "name": "NO_ACTIVE_DMA_SIGNAL_INTERRUPTION",
+      "result": "PASS",
+      "evidence": "No signal-driven DMA interruption tokens"
+    },
+    {
+      "name": "NO_O_TRUNC_OR_EOP_FLUSH",
+      "result": "PASS",
+      "evidence": "Forbidden tokens absent"
+    },
+    {
+      "name": "EXACT_2500_IOCBS_OF_4096_BYTES",
+      "result": "PASS",
+      "evidence": "Distinct indexed 4096-byte IOCBs 0..2499"
+    },
+    {
+      "name": "PREQUEUE_READY_AFTER_ALL_SUBMISSIONS",
+      "result": "PASS",
+      "evidence": "PREQUEUE_READY follows the all-submitted hard guard"
+    },
+    {
+      "name": "ASSEMBLY_USES_REQUEST_INDEX",
+      "result": "PASS",
+      "evidence": "Shuffled completion fixture reconstructs A,B,C by request index"
+    },
+    {
+      "name": "COMPLETED_BUFFERS_PRESERVED_AFTER_LATER_FAILURE",
+      "result": "FAIL",
+      "evidence": "Positive completed buffers are persisted by fixed request index before free"
+    }
+  ],
+  "passed": 8,
+  "total": 9,
+  "result": "FAIL"
+}

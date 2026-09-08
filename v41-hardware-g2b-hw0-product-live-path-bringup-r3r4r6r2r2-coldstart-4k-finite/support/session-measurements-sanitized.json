@@ -1,0 +1,100 @@
+{
+  "task": "G2B-HW0-PRODUCT-R3R4R6R2R2",
+  "source_readiness": {
+    "nack_count": 0,
+    "init_error": 0,
+    "physical_input": 0,
+    "source_ready": true,
+    "source_locked": true,
+    "g2b_status": "0x000000C4"
+  },
+  "session": {
+    "S0": {
+      "epoch": 0,
+      "error_status": "0x00000000",
+      "last_error_cause": "0x00000000"
+    },
+    "S1": {
+      "epoch": 1,
+      "error_status": "0x00000000",
+      "last_error_cause": "0x00000000"
+    },
+    "reset_epoch_transition": "PASS",
+    "normalization_w1c": "NONE",
+    "S2": {
+      "epoch": 1,
+      "error_status": "0x00000000",
+      "last_error_cause": "0x00000000"
+    },
+    "reset_writes": 1,
+    "stream_enable_writes": 1,
+    "normal_disable_writes": 0,
+    "safety_disable_writes": 1,
+    "snapshot_writes": 2,
+    "unauthorized_mmio_writes": 0
+  },
+  "prequeue": {
+    "request_size": 4096,
+    "request_count": 2500,
+    "requested_bytes": 10240000,
+    "all_iocbs_submitted_before_enable": true,
+    "submit_calls": 1,
+    "prefaulted": true,
+    "alignment": 4096,
+    "alignment_remainder": 0,
+    "prequeue_ready": "PASS",
+    "prequeue_ready_to_enable_latency_us": 146.171
+  },
+  "primary_window": {
+    "result": "FAIL",
+    "exact_completions": null,
+    "short_completions": null,
+    "failed_completions": null,
+    "pending_completions": null,
+    "bytes_received": null,
+    "records_received": null,
+    "primary_file_sha256": null,
+    "reason": "PRIMARY_WINDOW_COMPLETE was not emitted within 30 seconds",
+    "fpga_streamed_records_at_failure_snapshot": 2048,
+    "fpga_streamed_records_are_not_host_aio_completion_proof": true
+  },
+  "failure_snapshot": {
+    "checkpoint": "FAILURE_PRE_TERMINAL_REBOOT",
+    "epoch": 1,
+    "control": "0x00000000",
+    "status": "0x000004FA",
+    "error_status": "0x00000007",
+    "last_error_cause": "0x00000001",
+    "attempted": 810022,
+    "committed": 2052,
+    "streamed": 2048,
+    "dropped": 807970,
+    "overflow": 807968,
+    "discontinuity": 2,
+    "beats": 1048576,
+    "last_global": 2047,
+    "last_attempt": 2049,
+    "abandoned": 0,
+    "generation": 2,
+    "is_S3": false
+  },
+  "cleanup": {
+    "physical_quiescence": "FAIL",
+    "quiescence_samples_observed": 100,
+    "accepted_quiescence_samples": 0,
+    "final_observed_control": "0x00000000",
+    "final_observed_status": "0x000004FA",
+    "helper_pid_before_terminal_reboot": 3793,
+    "module_refcount_before_terminal_reboot": 1,
+    "exact_pending_aio": null,
+    "terminal_reboot": "REQUEST_ACCEPTED",
+    "capture_retry": "DENIED",
+    "normal_rmmod_executed": false,
+    "post_terminal_reboot_ssh_restored": false,
+    "driver_unloaded_verified": false,
+    "nodes_removed_verified": false,
+    "controller_lock_released": true,
+    "linux_lock_released_verified": false,
+    "credential_remnants": 0
+  }
+}

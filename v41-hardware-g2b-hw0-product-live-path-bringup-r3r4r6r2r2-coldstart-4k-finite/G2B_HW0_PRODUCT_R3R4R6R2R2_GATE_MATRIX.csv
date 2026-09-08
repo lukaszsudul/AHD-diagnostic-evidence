@@ -1,0 +1,20 @@
+Gate,Result,FirstFailure,Evidence
+OWNER_COLD_RESET_ATTESTATION,PASS,NO,Owner-attested starting state accepted
+FRESH_RUN_ROOTS,PASS,NO,fresh controller and DUT-local roots
+CREDENTIAL_HELPER_FOCUSED_CHECKS,PASS,NO,"syntax, exact IP, zero final remnants"
+SPEEDUP_4K_HOST_TOOL_GATE,PASS,NO,9/9
+EXACT_PRODUCT_SRAM_PROGRAMMING,PASS,NO,"one call, DONE=1"
+REQUIRED_WARM_REBOOT,PASS,NO,SSH returned on bounded attempt 2
+DRIVER_LOAD_AND_NODES,PASS,NO,one insmod; exact two nodes
+SOURCE_READINESS,PASS,NO,NACK=0 INIT_ERROR=0 input=0 ready+locked
+RESET_EPOCH_TRANSITION,PASS,NO,0 to 1
+SESSION_NORMALIZATION,PASS,NO,"mask zero, no W1C"
+FOUR_KIB_PREQUEUE,PASS,NO,2500 x 4096 submitted before enable
+PRIMARY_FINITE_CAPTURE,FAIL,YES,R3R4R6R2R2_4K_PRIMARY_WINDOW_INCOMPLETE:PRIMARY_WINDOW_COMPLETE_NOT_RECEIVED_WITHIN_30_SECONDS
+NORMAL_STREAM_DISABLE,NOT_REACHED,NO,primary completion absent; safety disable used
+PHYSICAL_QUIESCENCE,FAIL,NO,100 samples remained status 0x000004FA
+RECORD_PATH_INTEGRITY,NOT_REACHED,NO,no durable primary file
+STREAM_CONTINUITY,NOT_REACHED,NO,no durable primary file
+COMPLETE_FRAME,NOT_REACHED,NO,no durable primary file
+TERMINAL_CLEANUP_REBOOT,PASS,NO,one authorized request accepted; no retry
+EVIDENCE_PUBLICATION,PASS,NO,"exact directory, commit, push, commit-pinned readback"
