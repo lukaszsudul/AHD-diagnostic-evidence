@@ -1,0 +1,44 @@
+{
+  "task": "AHD v41 G2B-NVP-VIDEO-DIAG1",
+  "project_state_rev": 8,
+  "engineering_gate": "FAIL",
+  "evidence_publication": "PASS",
+  "overall_result": "FAIL",
+  "first_blocker": "DIAGNOSTIC_POST_OPT_LUT_RESOURCE_GATE_FAILED:22306/20800=107.240%>98.000%",
+  "source": {
+    "branch": "diag/v41-g2b-nvp-video-scan",
+    "commit": "bed970032dd4acdfbb2cf254f3e21ebcfb60c6f1",
+    "tree": "a0dacf5d727cf051bfb1725136e394ae43317605",
+    "base_commit": "30b14d13b0b789b62b05ab513eb9578c7c43b11a"
+  },
+  "register_authority": "PASS",
+  "simulation_gate": {"passed": 16, "expected": 16, "result": "PASS"},
+  "build": {
+    "vivado": "2025.2 build 6299465",
+    "synthesis": "PASS",
+    "optimization": "PASS",
+    "placement": "NOT_RUN",
+    "routing": "NOT_RUN",
+    "bitstream": "NOT_PRODUCED",
+    "post_opt": {
+      "lut_used": 22306,
+      "lut_available": 20800,
+      "lut_percent": 107.240,
+      "lut_limit_percent": 98.000,
+      "ff_used": 23674,
+      "ff_percent": 56.909,
+      "bram_used": 26.5,
+      "bram_percent": 53.000,
+      "dsp_used": 0,
+      "dsp_percent": 0.000
+    }
+  },
+  "hardware_accessed": false,
+  "scan_sessions_completed": 0,
+  "scan_sessions_requested": 16,
+  "fpga_programmed": false,
+  "warm_reboots": 0,
+  "product_runtime_profile_changed": false,
+  "nvp_state_changed": false,
+  "recommended_correction": "Map the 128x32 diagnostic result table to synchronous BRAM without bulk reset or collect entries host-side at the existing handshake; preserve fixed whitelist and scan semantics."
+}

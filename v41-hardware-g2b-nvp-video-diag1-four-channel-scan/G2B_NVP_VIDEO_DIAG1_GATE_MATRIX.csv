@@ -1,0 +1,22 @@
+Gate,Required,Result,Evidence
+Owner continuity,YES,PASS,Owner attestation accepted
+NVP register authority,YES,PASS,Local PDF and source
+BGDCOL four safe codes,YES,PASS,RED 6 GREEN 4 CYAN 3 WHITE75 1
+Per-channel NOVID authority,YES,PASS,Bank0 A8 bits 3:0
+All-channel configuration audit,YES,PASS,PRODUCT already configures CH1..CH4 forced AHD1080p25
+I2C ownership architecture,YES,PASS,Simulation
+Fixed I2C whitelist,YES,PASS,Simulation and source review
+Simulation,16/16,PASS,NVP_VIDEO_DIAG1_SIMULATION_RECEIPT
+Diagnostic source commit,YES,PASS,bed970032dd4acdfbb2cf254f3e21ebcfb60c6f1
+Fresh synthesis,YES,PASS,0 errors 0 critical warnings
+Post-opt resource,YES,FAIL,22306/20800 LUT = 107.240% > 98.000%
+Placement,YES,NOT_REACHED,Stopped at resource gate
+Routing,YES,NOT_REACHED,Stopped at resource gate
+Timing,YES,NOT_REACHED,Stopped at resource gate
+CDC,YES,NOT_REACHED,Stopped at resource gate
+DRC routed,YES,NOT_REACHED,Stopped at resource gate
+Bitstream,YES,NOT_PRODUCED,Stopped at resource gate
+Hardware programming,YES,NOT_REACHED,Offline gate failed
+16 captures,16,0/16,Offline gate failed
+PRODUCT restore,YES,NOT_REQUIRED,No NVP writes occurred
+Cleanup,YES,PASS,No hardware state created
