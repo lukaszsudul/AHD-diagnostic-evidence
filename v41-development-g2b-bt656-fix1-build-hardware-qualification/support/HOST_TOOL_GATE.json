@@ -1,0 +1,120 @@
+{
+  "task": "AHD-v41-G2B-BT656-FIX1",
+  "result": "PASS",
+  "passed": 16,
+  "total": 16,
+  "cases": [
+    {
+      "case": "NATIVE_HELPER_COMPILES",
+      "result": "PASS",
+      "basis": "DUT-local gcc receipt"
+    },
+    {
+      "case": "NATIVE_HELPER_X86_64",
+      "result": "PASS",
+      "basis": "file/readelf receipt"
+    },
+    {
+      "case": "NO_DEVICE_SMOKE_TEST",
+      "result": "PASS",
+      "basis": "no-argument DUT-local smoke receipt"
+    },
+    {
+      "case": "MAX_OUTSTANDING_1024",
+      "result": "PASS",
+      "basis": "native constants and deterministic fixture"
+    },
+    {
+      "case": "TOTAL_LOGICAL_REQUESTS_2500",
+      "result": "PASS",
+      "basis": "primary-only constant and fixture"
+    },
+    {
+      "case": "NO_GUARD_REQUESTS",
+      "result": "PASS",
+      "basis": "controller/native constants and fixture"
+    },
+    {
+      "case": "NO_REQUEST_AFTER_2499",
+      "result": "PASS",
+      "basis": "bounded next-submit loop and fixture"
+    },
+    {
+      "case": "PRIMARY_WINDOW_AT_2500_EXACT",
+      "result": "PASS",
+      "basis": "native event guard and fixture"
+    },
+    {
+      "case": "PENDING_AIO_ZERO_AT_PRIMARY_WINDOW",
+      "result": "PASS",
+      "basis": "native event and parent acceptance guard"
+    },
+    {
+      "case": "IMMEDIATE_DISABLE_BEFORE_DURABLE_LOGGING",
+      "result": "PASS",
+      "basis": "controller AST/source ordering"
+    },
+    {
+      "case": "PRIMARY_PERSIST_AFTER_DISABLE_ISSUED",
+      "result": "PASS",
+      "basis": "native handshake fixture and source"
+    },
+    {
+      "case": "ACTIVE_EVENTS_BUFFERED_IN_RAM",
+      "result": "PASS",
+      "basis": "record_event AST/source"
+    },
+    {
+      "case": "VERTICAL_TAIL_CAPTURE_SEQUENCE_RULE",
+      "result": "PASS",
+      "basis": "validator bounded frame-boundary rule"
+    },
+    {
+      "case": "POST_TARGET_FLUSH_CANNOT_CHANGE_PRIMARY",
+      "result": "PASS",
+      "basis": "tail flush is parent-side and strictly post-primary/post-disable"
+    },
+    {
+      "case": "NORMAL_PATH_NO_IO_CANCEL",
+      "result": "PASS",
+      "basis": "primary-only deterministic normal path"
+    },
+    {
+      "case": "FORBIDDEN_ACTIVE_RECEIVE_FEATURES_ABSENT",
+      "result": "PASS",
+      "basis": "static source audit"
+    }
+  ],
+  "native_self_test": {
+    "type": "SELF_TEST_RESULT",
+    "result": "PASS",
+    "record_bytes": 4096,
+    "primary_records": 2500,
+    "guard_records": 0,
+    "total_logical_requests": 2500,
+    "initial_submitted": 1024,
+    "initial_outstanding": 1024,
+    "maximum_permitted_outstanding": 1024,
+    "total_submitted": 2500,
+    "maximum_outstanding": 1024,
+    "descriptor_starvation_events": 0,
+    "crossed_logical_index_2048": true,
+    "cumulative_submissions_when_2048_crossed": 2049,
+    "primary_completed": 2500,
+    "primary_event_at_2500": true,
+    "primary_completed_when_event_emitted": 2500,
+    "pending_at_primary_window_complete": 0,
+    "placement_by_logical_index": true,
+    "persistence_before_disable_issued": false,
+    "persistence_after_disable_issued": true,
+    "no_guard_requests": true,
+    "io_cancel_calls": 0,
+    "completed_data_preserved": true
+  },
+  "critical_path_positions": {
+    "event": 6436,
+    "disable": 6624,
+    "ack": 6832,
+    "buffer": 6912
+  }
+}

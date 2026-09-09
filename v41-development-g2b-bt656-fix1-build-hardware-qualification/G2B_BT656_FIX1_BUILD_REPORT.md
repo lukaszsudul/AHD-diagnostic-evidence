@@ -1,0 +1,24 @@
+# Fresh nonincremental PRODUCT build
+
+- Vivado: 2025.2 build 6299465
+- Exact source commit/tree: `30b14d13b0b789b62b05ab513eb9578c7c43b11a` / `bdbe39077a03f8945ebdd1ed9e52761fbe787696`
+- Profile: PRODUCT; diagnostics disabled
+- Checkpoint reuse: NO
+- Project creation: PASS
+- IP generation: PASS
+- Synthesis: PASS
+- opt_design: PASS
+- place_design: PASS
+- phys_opt_design: PASS
+- route_design operation: completed; fully routed; 0 route errors; 0 unrouted; 0 partial
+- Governed build result: **FAIL**
+- Stop stage: `ROUTED_REPORTS`
+- Exact error: `routed timing export must contain exactly 17 bus-skew constraints; found 11`
+- First blocker: `FIX1_FULL_PRODUCT_BUILD_BUS_SKEW_EXPORT_COUNT_FAILED:EXPECTED_17_FOUND_11`
+- Constraint waiver/suppression/edit after failure: NO
+- Second build: NO
+- write_bitstream calls: 0
+- Source identity after failure: PASS
+- Build-result SHA-256: `1ECD4F3823909A59630C5F8672223F88D4AD7EB2D6FC9D93F4C54D49988D682E`
+- Build-input-manifest SHA-256: `D2301FDF63AD19A1EAE36D9571C511608D60CC1AF6BD73D5B6AC5EA3BE0B230D`
+- Build-harness SHA-256: `08CE0D39B11EE4C5B9ADCAB75C705DA3CC3B07ECB2B715A77E7581A6413D8B27`

@@ -1,0 +1,65 @@
+{
+  "schema": "AHD_V41_G2B_BT656_FIX1_STATE_V1",
+  "generated_utc": "2026-09-09T07:42:39.286638Z",
+  "engineering_gate": "FAIL",
+  "evidence_publication": "PASS",
+  "overall_result": "FAIL",
+  "first_blocker": "FIX1_FULL_PRODUCT_BUILD_BUS_SKEW_EXPORT_COUNT_FAILED:EXPECTED_17_FOUND_11",
+  "project_state_rev": "8 — OWNER_ATTESTED_NOT_REVERIFIED",
+  "owner_continuity": "ACCEPTED",
+  "cleanup": {
+    "result": "PASS",
+    "method": "ONE_GRACEFUL_WARM_REBOOT",
+    "sigterm": 1,
+    "cleanup_reboot": 1,
+    "old_state_cleared": true
+  },
+  "erratum": "PASS",
+  "source": {
+    "initial_commit": "bf19702beca9bd85e950fa7ee59fd8ed08b1b2dc",
+    "initial_tree": "2f72f4fa5dd756443c2d79eb7b75d75badefe921",
+    "hardened_commit": "30b14d13b0b789b62b05ab513eb9578c7c43b11a",
+    "hardened_tree": "bdbe39077a03f8945ebdd1ed9e52761fbe787696",
+    "push": "PASS"
+  },
+  "hardening_gate": "9/9 PASS",
+  "host_tool_gate": "16/16 PASS",
+  "build": {
+    "result": "FAIL",
+    "stop_stage": "ROUTED_REPORTS",
+    "fully_routed": true,
+    "unrouted": 0,
+    "partial": 0,
+    "raw_timing_ns": {
+      "WNS": 0.148,
+      "TNS": 0.0,
+      "WHS": 0.044,
+      "THS": 0.0
+    },
+    "bus_skew_expected": 17,
+    "bus_skew_found": 11,
+    "bitstream_produced": false,
+    "synth_dcp_sha256": "129D9B7BD596029A62E2DBB1675788E18CE247FA31679601DEF717137681CD34",
+    "post_opt_dcp_sha256": "6461CAF0B555D17EB7984153CCB725E44A0BA935CAAE0F7070FE6761BD4BCBD6",
+    "routed_dcp_sha256": "45D04813DC3B9C354235F28959067EF8B8F021CCB180E7454A060D44B8FE4173"
+  },
+  "hardware": {
+    "fix1_programming": "NOT_REACHED",
+    "post_program_reboot": "NOT_REACHED",
+    "driver_load": "NOT_REACHED",
+    "mmio": "NOT_REACHED",
+    "dma": "NOT_REACHED",
+    "capture": "NOT_REACHED",
+    "frame": "NOT_REACHED"
+  },
+  "locks_released": true,
+  "credential_remnants": 0,
+  "nonclaims": {
+    "continuous_60_second_performance": "NOT_RUN",
+    "hardware_throughput_288_mb_s": "NOT_PROVEN",
+    "two_channel": "NOT_QUALIFIED",
+    "four_input": "NOT_QUALIFIED",
+    "v4l2": "NOT_TESTED",
+    "release_v41_0_0": "NOT_CREATED"
+  }
+}

@@ -1,0 +1,19 @@
+Gate,Result,FirstFailure,Evidence
+OWNER_CONTINUITY,PASS,NO,accepted without broad requalification
+DIAG1_R1_RETAINED_STATE_CLEANUP,PASS,NO,one SIGTERM then one graceful reboot
+APPEND_ONLY_ERRATUM,PASS,NO,historical commit unchanged
+SOURCE_AUTHORITY,PASS,NO,30b14d13b0b789b62b05ab513eb9578c7c43b11a
+BT656_FIX1_HARDENING_9,PASS,NO,9/9
+CORRECTION_BRANCH_PUBLICATION,PASS,NO,30b14d13b0b789b62b05ab513eb9578c7c43b11a
+HOST_TOOL_16,PASS,NO,16/16
+SYNTHESIS,PASS,NO,PASS
+IMPLEMENTATION_THROUGH_ROUTE,PASS,NO,fully routed; zero unrouted/partial
+ROUTED_BUS_SKEW_EXPORT,FAIL,YES,expected 17 found 11
+TIMING_SIGNOFF,NOT_REACHED,NO,prior bus-skew hard stop
+DRC_SIGNOFF,NOT_REACHED,NO,prior bus-skew hard stop
+CDC_SIGNOFF,NOT_REACHED,NO,prior bus-skew hard stop
+METHODOLOGY_SIGNOFF,NOT_REACHED,NO,prior bus-skew hard stop
+BITSTREAM,NOT_PRODUCED,NO,write_bitstream count 0
+HARDWARE_QUALIFICATION,NOT_REACHED,NO,withheld by build hard gate
+FRESH_LOCK_RELEASE,PASS,NO,Linux and controller released
+EVIDENCE_STAGING,PASS,NO,v41-development-g2b-bt656-fix1-build-hardware-qualification
