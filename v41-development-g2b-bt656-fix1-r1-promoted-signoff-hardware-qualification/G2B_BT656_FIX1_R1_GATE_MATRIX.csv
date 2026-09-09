@@ -1,0 +1,27 @@
+Gate,Result,Evidence
+Owner continuity,PASS,Owner-attested; no broad requalification
+Source authority,PASS,30b14d13b0b789b62b05ab513eb9578c7c43b11a / bdbe39077a03f8945ebdd1ed9e52761fbe787696; tracked clean
+Routed DCP authority,PASS,45D04813DC3B9C354235F28959067EF8B8F021CCB180E7454A060D44B8FE4173
+Active bus skew,PASS,"11/11, zero violations"
+Retired relation absence,PASS,6/6 absent
+Promoted replacements,PASS,17/17
+All governed groups,PASS,Groups 1-17
+Timing restoration,PASS,route/clock/netlist unchanged
+Routed timing,PASS,WNS +0.148 ns; WHS +0.044 ns
+CDC,PASS,0 unresolved critical/warning
+DRC,PASS,0 errors/critical warnings
+Methodology,PASS,0 errors/critical warnings
+Resources,PASS,"LUT 83.745%, FF 46.428%, BRAM 53%, DSP 0%"
+PRODUCT identity,PASS,ABI/MMIO/XDMA/VDO unchanged
+Bitstream,PASS,8180372428577769878C80CBC46E944C050801C9F80781711D39338EE88B68DA
+Programming/reboot,PASS,one SRAM program; one warm reboot
+Runtime/source,PASS,PRODUCT identity and INPUT_0 ready/locked
+Rolling capture,PASS,"2500/2500, 10240000 bytes"
+Disable latency,PASS,76.242 us
+Record integrity,PASS,2500 integral; zero structural errors
+Transport continuity,PASS,global 0..2499; zero gaps/overflow/malformed
+BT656 boundary,PASS,line 0 + SOF; two expected delta-22 boundaries
+Complete frame,PASS,"1920x1080 UYVY, zero synthetic lines"
+Post-target tail,PASS_WITH_FLUSH,3 abandoned; zero drop/overflow; epoch 2->3
+Cleanup/health,PASS,AIO 0; normal unload; nodes/locks removed; kernel clean
+Evidence publication,PENDING,commit and read-back performed after manifest
