@@ -1,0 +1,51 @@
+# VIDEO-CONTENT0 evidence index
+
+This directory contains sanitized metadata and complete source only.
+No raw primary data, UYVY frame, PNG, thumbnail, driver, bitstream,
+compiled helper, or credential is included.
+The connection-helper publication copy redacts the governed account literal
+and its home-path component because the task-local credential-remnant gate
+classifies that literal as secret; the executable task-local source remains
+preserved privately with its recorded hash.
+
+- `abi_v1.py`
+- `analyze_video_content.py`
+- `controller_bt656_fix1.py`
+- `decode_nvp_status.py`
+- `frame_reconstruct_bt656_fix1.py`
+- `G2B_VIDEO_CONTENT0_AIO_SUMMARY.csv`
+- `G2B_VIDEO_CONTENT0_CAMERA_CONTENT_DECISION.md`
+- `G2B_VIDEO_CONTENT0_CAPTURE_INDEX.csv`
+- `G2B_VIDEO_CONTENT0_CAPTURE_RESULTS.csv`
+- `G2B_VIDEO_CONTENT0_CHANNEL_SCAN_REPORT.md`
+- `G2B_VIDEO_CONTENT0_CLEANUP_RECEIPT.md`
+- `G2B_VIDEO_CONTENT0_DATA_LANE_VARIATION.csv`
+- `G2B_VIDEO_CONTENT0_FINAL_STATE.md`
+- `G2B_VIDEO_CONTENT0_FRAME_HASHES.csv`
+- `G2B_VIDEO_CONTENT0_FRAME_STRUCTURE_REPORT.md`
+- `G2B_VIDEO_CONTENT0_GATE_MATRIX.csv`
+- `G2B_VIDEO_CONTENT0_INPUT_MAPPING_DECISION.md`
+- `G2B_VIDEO_CONTENT0_INTERNAL_PATTERN_REPORT.md`
+- `G2B_VIDEO_CONTENT0_MAPPING_EVIDENCE_REFERENCES.md`
+- `G2B_VIDEO_CONTENT0_MMIO_WRITE_LEDGER.csv`
+- `G2B_VIDEO_CONTENT0_NVP_CHANNEL_STATUS.csv`
+- `G2B_VIDEO_CONTENT0_NVP_REGISTER_READ_LEDGER.csv`
+- `G2B_VIDEO_CONTENT0_NVP_RESTORE_RECEIPT.md`
+- `G2B_VIDEO_CONTENT0_NVP_ROUTE_AUDIT.md`
+- `G2B_VIDEO_CONTENT0_NVP_TEMPORARY_WRITE_LEDGER.csv`
+- `G2B_VIDEO_CONTENT0_OWNER_CONTINUITY_ATTESTATION.md`
+- `G2B_VIDEO_CONTENT0_PHYSICAL_INPUT_MAP.csv`
+- `G2B_VIDEO_CONTENT0_PHYSICAL_INPUT_MAP.md`
+- `G2B_VIDEO_CONTENT0_PHYSICAL_OWNER_ACTION.md`
+- `G2B_VIDEO_CONTENT0_PIXEL_STATISTICS.csv`
+- `G2B_VIDEO_CONTENT0_PRIOR_BLACK_FRAME_CLASSIFICATION.md`
+- `G2B_VIDEO_CONTENT0_PRIVATE_IMAGE_MANIFEST.csv`
+- `G2B_VIDEO_CONTENT0_SCANLINE_HASH_ANALYSIS.csv`
+- `G2B_VIDEO_CONTENT0_SCOPE_AND_AUTHORIZATION.md`
+- `G2B_VIDEO_CONTENT0_STATE.json`
+- `G2B_VIDEO_CONTENT0_TEMPORAL_COMPARISON.csv`
+- `Invoke-VideoContent0DutConnection.ps1`
+- `V41_C2H_TRANSPORT_ABI_V1.json`
+- `V41_G2B_HW0_VIDEO_CONTENT0_MAIN_REPORT.md`
+- `validate_bt656_fix1.py`
+- `xdma_c2h_rolling_4k_fix1.c`
