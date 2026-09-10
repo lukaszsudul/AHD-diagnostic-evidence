@@ -1,0 +1,51 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Sep  9 23:29:47 2026
+# Process ID         : 18248
+# Current directory  : C:/FPGA/G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z/build/simulation_gate_committed_final
+# Command line       : xsim.exe -log C:\FPGA\G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z\build\simulation_gate_committed_final\core_xsim.log -mode tcl -source {xsim.dir/nvp_diag1_core/xsim_script.tcl}
+# Log file           : C:/FPGA/G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z/build/simulation_gate_committed_final/core_xsim.log
+# Journal file       : C:/FPGA/G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z/build/simulation_gate_committed_final\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 21323 MB
+# Available Virtual  : 11617 MB
+#-----------------------------------------------------------
+source xsim.dir/nvp_diag1_core/xsim_script.tcl
+# xsim {nvp_diag1_core} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS T1 AUTOINIT_DIAGNOSTIC_I2C_OWNERSHIP
+PASS T2 FIXED_REGISTER_WRITE_WHITELIST
+PASS T3 BANK_PAGE_SAVE_AND_RESTORE
+PASS T4 FOUR_CHANNEL_ROUTE_SWITCH_AND_READBACK
+PASS T5 BGDCOL_NIBBLE_PACKING
+PASS T6 ACTIVE_NOVID_UNSTABLE_CONTRADICTORY_STATUS
+PASS T7 FIVE_CONSECUTIVE_SAMPLE_STABILITY_RULE
+PASS T8 EXACT_4X4_ROTATED_ROUND_SEQUENCE
+PASS T9 SESSION_MATCH_CAPTURE_HANDSHAKE_AND_FAILURE_PATHS
+PASS T10 NO_ROUTE_CHANGE_DURING_ACTIVE_TRANSPORT
+PASS T11 NACK_TIMEOUT_CAPTURE_READBACK_ERROR_SAFE_RESTORE
+PASS T12 EXACT_PRODUCT_BASELINE_RESTORE
+PASS T13 DIAGNOSTIC_MMIO_MAP_AND_CURRENT_SNAPSHOT
+PASS T14 DIAGNOSTIC_IDLE_TRANSPORT_NONINTERFERENCE
+PASS T15 ALL_CHANNEL_FORCED_1080P25_CONFIGURATION_VERIFY
+PASS T16 FOUR_COLOR_LATIN_SQUARE_ROTATION
+PASS T17 CURRENT_SNAPSHOT_ATOMICITY_AND_IMMUTABILITY
+PASS T18 HOST_OWNED_16_SESSION_HISTORY
+PASS TIMING_BOUNDARIES ACCELERATED_SETTLE_2_SAMPLE_1_STATUS_200
+PASS INHERITED_NVP_VIDEO_DIAG1_SIMULATION_GATE 16/16
+PASS NVP_VIDEO_DIAG1_R1_RUNTIME_SIMULATION_GATE 18/18
+$finish called at time : 51725 ns : File "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/tests/nvp_video_diag/tb_g2b_nvp_video_diag.sv" Line 851
+exit
+INFO: [Common 17-206] Exiting xsim at Wed Sep  9 23:29:49 2026...

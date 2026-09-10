@@ -1,0 +1,72 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Thu Sep 10 01:14:02 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -quiet -delay_type max -sort_by slack -max_paths 1 -nworst 1 -from [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/(release_generation_axi|release_epoch_axi)_reg\[2\].*}] {IS_SEQUENTIAL == 1}] -to [filter [get_cells -quiet -hier -regexp .*G2B_ONECH_C2H/reset_abandoned_hold_source_reg.*] {IS_SEQUENTIAL == 1}]] -file C:/FPGA/G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z/reports/vivado_full/PROMOTED_REPLACEMENTS/14_G16_RELEASE_SLOT2_RESET_OVERLAP_ACCOUNTING_TIMING.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             1.448ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/release_epoch_axi_reg[2][8]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/reset_abandoned_hold_source_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        4.582ns  (logic 1.828ns (39.895%)  route 2.754ns (60.105%))
+  Logic Levels:           8  (CARRY4=3 LUT3=1 LUT4=1 LUT6=3)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X64Y39                                      0.000     0.000 r  G2B_ONECH_C2H/release_epoch_axi_reg[2][8]/C
+    SLICE_X64Y39         FDRE (Prop_fdre_C_Q)         0.398     0.398 r  G2B_ONECH_C2H/release_epoch_axi_reg[2][8]/Q
+                         net (fo=2, routed)           0.924     1.322    G2B_ONECH_C2H/release_epoch_axi_reg[2]_5[8]
+    SLICE_X62Y38                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_70/I0
+    SLICE_X62Y38         LUT6 (Prop_lut6_I0_O)        0.234     1.556 r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_70/O
+                         net (fo=1, routed)           0.000     1.556    G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_70_n_0
+    SLICE_X62Y38                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_41/S[2]
+    SLICE_X62Y38         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.332     1.888 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_41/CO[3]
+                         net (fo=1, routed)           0.000     1.888    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_41_n_0
+    SLICE_X62Y39                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_15/CI
+    SLICE_X62Y39         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     1.986 r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_15/CO[3]
+                         net (fo=1, routed)           0.000     1.986    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_15_n_0
+    SLICE_X62Y40                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_8/CI
+    SLICE_X62Y40         CARRY4 (Prop_carry4_CI_CO[2])
+                                                      0.190     2.176 f  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[2]_i_8/CO[2]
+                         net (fo=2, routed)           0.778     2.954    G2B_ONECH_C2H/source_ownership_fatal41_out
+    SLICE_X62Y46                                                      f  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_3/I3
+    SLICE_X62Y46         LUT6 (Prop_lut6_I3_O)        0.261     3.215 r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_3/O
+                         net (fo=3, routed)           0.466     3.681    G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_3_n_0
+    SLICE_X62Y47                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source[0]_i_3/I2
+    SLICE_X62Y47         LUT3 (Prop_lut3_I2_O)        0.105     3.786 f  G2B_ONECH_C2H/reset_abandoned_hold_source[0]_i_3/O
+                         net (fo=2, routed)           0.262     4.047    G2B_ONECH_C2H/reset_abandoned_hold_source[0]_i_3_n_0
+    SLICE_X64Y46                                                      f  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_5/I5
+    SLICE_X64Y46         LUT6 (Prop_lut6_I5_O)        0.105     4.152 r  G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_5/O
+                         net (fo=2, routed)           0.325     4.477    G2B_ONECH_C2H/reset_abandoned_hold_source[2]_i_5_n_0
+    SLICE_X62Y47                                                      r  G2B_ONECH_C2H/reset_abandoned_hold_source[1]_i_1/I3
+    SLICE_X62Y47         LUT4 (Prop_lut4_I3_O)        0.105     4.582 r  G2B_ONECH_C2H/reset_abandoned_hold_source[1]_i_1/O
+                         net (fo=1, routed)           0.000     4.582    G2B_ONECH_C2H/SOURCE_DOMAIN.abandoned_count[1]
+    SLICE_X62Y47         FDRE                                         r  G2B_ONECH_C2H/reset_abandoned_hold_source_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X62Y47         FDRE (Setup_fdre_C_D)        0.030     6.030    G2B_ONECH_C2H/reset_abandoned_hold_source_reg[1]
+  -------------------------------------------------------------------
+                         required time                          6.030    
+                         arrival time                          -4.582    
+  -------------------------------------------------------------------
+                         slack                                  1.448    
+
+
+
+

@@ -1,0 +1,75 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Thu Sep 10 01:13:12 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -quiet -delay_type max -sort_by slack -max_paths 1 -nworst 1 -from [filter [get_cells -quiet -hier -regexp .*G2B_ONECH_C2H/(own_slot_hold_axi|axis_slot)_reg.*] {IS_SEQUENTIAL == 1}] -to [get_pins -quiet -of_objects [filter [get_cells -quiet -hier -regexp .*G2B_ONECH_C2H/(slot_state_source|source_ownership_fatal|source_ownership_fatal_event|source_ownership_fatal_deferred|enable_applied_source|own_ok_hold_source)_reg.*] {IS_SEQUENTIAL == 1}] -filter {REF_PIN_NAME == D}]] -file C:/FPGA/G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z/reports/vivado_full/PROMOTED_REPLACEMENTS/01_G09_OWNERSHIP_SLOT_SETTLING_TIMING.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.528ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/axis_slot_reg[1]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/source_ownership_fatal_reg/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        5.505ns  (logic 2.016ns (36.621%)  route 3.489ns (63.379%))
+  Logic Levels:           9  (CARRY4=3 LUT4=1 LUT5=1 LUT6=4)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X61Y42                                      0.000     0.000 r  G2B_ONECH_C2H/axis_slot_reg[1]/C
+    SLICE_X61Y42         FDRE (Prop_fdre_C_Q)         0.348     0.348 r  G2B_ONECH_C2H/axis_slot_reg[1]/Q
+                         net (fo=144, routed)         0.867     1.215    G2B_ONECH_C2H/own_slot_hold_axi[1]
+    SLICE_X60Y34                                                      r  G2B_ONECH_C2H/slot_state_source[0][2]_i_105/I4
+    SLICE_X60Y34         LUT6 (Prop_lut6_I4_O)        0.242     1.457 r  G2B_ONECH_C2H/slot_state_source[0][2]_i_105/O
+                         net (fo=1, routed)           0.727     2.185    G2B_ONECH_C2H/slot_state_source[0][2]_i_105_n_0
+    SLICE_X59Y38                                                      r  G2B_ONECH_C2H/slot_state_source[0][2]_i_84/I3
+    SLICE_X59Y38         LUT6 (Prop_lut6_I3_O)        0.105     2.290 r  G2B_ONECH_C2H/slot_state_source[0][2]_i_84/O
+                         net (fo=1, routed)           0.000     2.290    G2B_ONECH_C2H/slot_state_source[0][2]_i_84_n_0
+    SLICE_X59Y38                                                      r  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_53/S[1]
+    SLICE_X59Y38         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.457     2.747 r  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_53/CO[3]
+                         net (fo=1, routed)           0.000     2.747    G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_53_n_0
+    SLICE_X59Y39                                                      r  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_28/CI
+    SLICE_X59Y39         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.098     2.845 r  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_28/CO[3]
+                         net (fo=1, routed)           0.000     2.845    G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_28_n_0
+    SLICE_X59Y40                                                      r  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_12/CI
+    SLICE_X59Y40         CARRY4 (Prop_carry4_CI_CO[2])
+                                                      0.190     3.035 f  G2B_ONECH_C2H/slot_state_source_reg[0][2]_i_12/CO[2]
+                         net (fo=1, routed)           0.649     3.683    G2B_ONECH_C2H/source_ownership_fatal37_out
+    SLICE_X59Y52                                                      f  G2B_ONECH_C2H/slot_state_source[0][2]_i_4/I4
+    SLICE_X59Y52         LUT5 (Prop_lut5_I4_O)        0.261     3.944 f  G2B_ONECH_C2H/slot_state_source[0][2]_i_4/O
+                         net (fo=8, routed)           0.515     4.460    G2B_ONECH_C2H/source_ownership_fatal1314_out
+    SLICE_X59Y49                                                      f  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/I2
+    SLICE_X59Y49         LUT6 (Prop_lut6_I2_O)        0.105     4.565 r  G2B_ONECH_C2H/source_ownership_fatal_event_i_5/O
+                         net (fo=2, routed)           0.272     4.837    G2B_ONECH_C2H/source_ownership_fatal_event_i_5_n_0
+    SLICE_X58Y49                                                      r  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/I3
+    SLICE_X58Y49         LUT4 (Prop_lut4_I3_O)        0.105     4.942 f  G2B_ONECH_C2H/source_ownership_fatal_event_i_2/O
+                         net (fo=4, routed)           0.458     5.400    G2B_ONECH_C2H/source_ownership_fatal_event_i_2_n_0
+    SLICE_X57Y49                                                      f  G2B_ONECH_C2H/source_ownership_fatal_i_1/I4
+    SLICE_X57Y49         LUT6 (Prop_lut6_I4_O)        0.105     5.505 r  G2B_ONECH_C2H/source_ownership_fatal_i_1/O
+                         net (fo=1, routed)           0.000     5.505    G2B_ONECH_C2H/source_ownership_fatal_i_1_n_0
+    SLICE_X57Y49         FDRE                                         r  G2B_ONECH_C2H/source_ownership_fatal_reg/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X57Y49         FDRE (Setup_fdre_C_D)        0.033     6.033    G2B_ONECH_C2H/source_ownership_fatal_reg
+  -------------------------------------------------------------------
+                         required time                          6.033    
+                         arrival time                          -5.505    
+  -------------------------------------------------------------------
+                         slack                                  0.528    
+
+
+
+

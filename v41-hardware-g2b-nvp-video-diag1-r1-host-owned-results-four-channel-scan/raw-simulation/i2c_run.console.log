@@ -1,0 +1,19 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Wed Sep  9 23:29:40 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/nvp_diag1_i2c/xsim_script.tcl
+# xsim {nvp_diag1_i2c} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS NVP_I2C_FIXED_MASTER_PHYSICAL_TRANSACTION_GATE
+PASS OPEN_DRAIN_RELEASE_AND_ONE_MASTER_INTERFACE
+PASS BOUNDED_NACK_BUS_IDLE_AND_FINAL_IDLE_FAILURES
+$finish called at time : 21425 ns : File "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/tests/nvp_video_diag/tb_nvp_i2c_fixed_master.sv" Line 137
+exit
+INFO: [Common 17-206] Exiting xsim at Wed Sep  9 23:29:43 2026...
