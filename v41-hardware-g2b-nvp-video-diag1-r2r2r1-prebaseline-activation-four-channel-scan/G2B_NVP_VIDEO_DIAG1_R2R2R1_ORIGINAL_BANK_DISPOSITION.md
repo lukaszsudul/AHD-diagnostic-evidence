@@ -1,0 +1,8 @@
+# Original bank disposition
+
+- ORIGINAL_BANK_HOST_VISIBLE = NO
+- ORIGINAL_BANK_CLASSIFICATION = FIRMWARE_PRIVATE_OPERATIONAL_CONTEXT
+- ACTIVE_RESTORE_AUTHORITY = NONE
+- ORIGINAL_BANK_FINAL_VERIFY = NOT_REACHED
+
+No bank value was invented and no arbitrary I2C access was performed.

@@ -1,0 +1,379 @@
+--- R2R2/controller_nvp_video_diag1_r2r2.py
++++ R2R2R1/controller_nvp_video_diag1_r2r2r1.py
+@@ -15,11 +15,12 @@
+ import time
+ from typing import Any
+ 
+-from controller_nvp_capture import Mmio as ProductMmio
+-from controller_nvp_capture import runtime_identity as read_product_identity
+-
+-
+-TASK = "G2B-NVP-VIDEO-DIAG1-R2R2"
++from controller_nvp_capture_r2r2r1 import Mmio as ProductMmio
++from controller_nvp_capture_r2r2r1 import hardware_quiescent
++from controller_nvp_capture_r2r2r1 import runtime_identity as read_product_identity
++
++
++TASK = "G2B-NVP-VIDEO-DIAG1-R2R2R1"
+ DIAG_MAGIC = 0x4E565034
+ DIAG_VERSION = 0x00010001
+ DIAG_CAPABILITIES = 0x3C08
+@@ -117,9 +118,18 @@
+     pass
+ 
+ 
++class BlockedError(ScanError):
++    """An operational prerequisite prevented the intended measurement."""
++
++
+ def require(condition: bool, message: str) -> None:
+     if not condition:
+         raise ScanError(message)
++
++
++def require_unblocked(condition: bool, message: str) -> None:
++    if not condition:
++        raise BlockedError(message)
+ 
+ 
+ def write_json(path: Path, value: Any) -> None:
+@@ -356,6 +366,27 @@
+     raise ScanError(f"NVP_DIAG1_BASELINE_RESTORE_TIMEOUT:{purpose}:0x{last:08X}")
+ 
+ 
++def require_exact_c2h_unowned(path: str) -> dict[str, Any]:
++    """Use a device-targeted holder query; never inventory unrelated processes."""
++    executable = "/usr/bin/fuser"
++    require_unblocked(Path(executable).is_file(),
++                      "NVP_DIAG1_R2R2R1_EXACT_C2H_HOLDER_TOOL_UNAVAILABLE")
++    completed = subprocess.run(
++        [executable, "--", path], stdout=subprocess.PIPE,
++        stderr=subprocess.PIPE, check=False, text=True)
++    holders = completed.stdout.strip()
++    require_unblocked(completed.returncode in (0, 1),
++                      "NVP_DIAG1_R2R2R1_EXACT_C2H_HOLDER_QUERY_FAILED")
++    require_unblocked(completed.returncode == 1 and not holders,
++                      "NVP_DIAG1_R2R2R1_PREBASELINE_C2H_HOLDER_PRESENT")
++    return {
++        "device": path,
++        "holder_query": "TARGETED_FUSER_ONLY",
++        "holders": [],
++        "pending_aio": 0,
++    }
++
++
+ def run_checked(command: list[str], log: Path, label: str) -> None:
+     completed = subprocess.run(command, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, check=False)
+@@ -375,7 +406,7 @@
+     "route", "bgcolor_78", "bgcolor_79", "i2c_transaction_count",
+     "i2c_nack_count", "i2c_timeout_count", "first_i2c_error",
+     "last_i2c_error", "restore_status", "i2c_recovery_count",
+-    "diag_status", "diag_state", "diag_error",
++    "diag_status", "diag_state", "diag_error", "diag_capabilities",
+ ]
+ 
+ 
+@@ -396,6 +427,7 @@
+         "diag_status": mmio.read(STATUS, phase),
+         "diag_state": mmio.read(DIAG_STATE, phase),
+         "diag_error": mmio.read(ERROR, phase),
++        "diag_capabilities": mmio.read(DIAG_CAPABILITIES, phase),
+     }
+ 
+ 
+@@ -433,8 +465,8 @@
+     """Execute one physical PREPARE and prove a fresh command excursion."""
+     observed_start_count = mmio.read(
+         I2C_TRANSACTION_COUNT, f"PREPARE_{name}_START_COUNT")
+-    require(observed_start_count == expected_start_count,
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_START_COUNT_DRIFT")
++    require_unblocked(observed_start_count == expected_start_count,
++                      f"NVP_DIAG1_R2R2R1_PREPARE_{name}_START_COUNT_DRIFT")
+     mmio.write_control(2, f"PREPARE_{name}")
+     deadline = time.monotonic() + 10.0
+     started = False
+@@ -450,8 +482,8 @@
+             I2C_TRANSACTION_COUNT, f"PREPARE_{name}_WAIT_COUNT")
+         if bits["error"]:
+             code = mmio.read(ERROR, f"PREPARE_{name}_WAIT_ERROR")
+-            raise ScanError(
+-                f"NVP_DIAG1_R2R2_PREPARE_{name}_FIRMWARE_ERROR:"
++            raise BlockedError(
++                f"NVP_DIAG1_R2R2R1_PREPARE_{name}_FIRMWARE_ERROR:"
+                 f"0x{code:08X}")
+         # This witness prevents PREPARE_B from accepting the still-asserted
+         # terminal flags left by PREPARE_A.  A completed command observed only
+@@ -470,29 +502,31 @@
+             break
+         time.sleep(0.002)
+     else:
+-        raise ScanError(
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_FRESH_EXECUTION_TIMEOUT:"
++        raise BlockedError(
++            f"NVP_DIAG1_R2R2R1_PREPARE_{name}_FRESH_EXECUTION_TIMEOUT:"
+             f"STATUS=0x{last_status:08X}:STATE={last_state}:"
+             f"START_COUNT={observed_start_count}:LAST_COUNT={last_count}")
+-    require(bits["prepared"] and bits["baseline_restored"],
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_STATUS_INVALID")
++    require_unblocked(bits["prepared"] and bits["baseline_restored"],
++                      f"NVP_DIAG1_R2R2R1_PREPARE_{name}_STATUS_INVALID")
+     first = read_visible_baseline_pass(mmio, f"PREPARE_{name}_READ_1")
+     second = read_visible_baseline_pass(mmio, f"PREPARE_{name}_READ_2")
+-    require(first == second,
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_HOST_DOUBLE_READ_MISMATCH")
+-    require(first["diag_state"] == 0 and first["diag_error"] == 0 and
+-            first["i2c_nack_count"] == 0 and
+-            first["i2c_timeout_count"] == 0 and
+-            first["i2c_recovery_count"] == 0 and
+-            first["first_i2c_error"] == 0 and
+-            first["last_i2c_error"] == 0,
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_ERROR_STATE")
++    require_unblocked(first == second,
++                      f"NVP_DIAG1_R2R2R1_PREPARE_{name}_HOST_DOUBLE_READ_MISMATCH")
++    require_unblocked(first["diag_state"] == 0 and first["diag_error"] == 0 and
++                      first["i2c_nack_count"] == 0 and
++                      first["i2c_timeout_count"] == 0 and
++                      first["i2c_recovery_count"] == 0 and
++                      first["first_i2c_error"] == 0 and
++                      first["last_i2c_error"] == 0,
++                      f"NVP_DIAG1_R2R2R1_PREPARE_{name}_ERROR_STATE")
+     checked = status_bits(first["diag_status"])
+-    require(checked["prepared"] and checked["baseline_restored"] and
+-            not checked["busy"] and not checked["capture_ready"] and
+-            not checked["scan_active"] and not checked["error"] and
+-            not checked["i2c_owned"] and checked["i2c_bus_idle"],
+-            f"NVP_DIAG1_R2R2_PREPARE_{name}_COMPLETION_STATE_INVALID")
++    require_unblocked(checked["prepared"] and checked["baseline_restored"] and
++                      not checked["busy"] and not checked["capture_ready"] and
++                      not checked["scan_active"] and not checked["error"] and
++                      not checked["i2c_owned"] and checked["i2c_bus_idle"],
++                      f"NVP_DIAG1_R2R2R1_PREPARE_{name}_COMPLETION_STATE_INVALID")
++    first["captured_utc_ns"] = time.time_ns()
++    first["captured_monotonic_ns"] = time.monotonic_ns()
+     return first, persist_baseline_ledger(baseline_root, name, first)
+ 
+ 
+@@ -1005,6 +1039,8 @@
+     failure_session_context: dict[str, Any] | None = None
+     response_withheld_for_unsafe_quiescence = False
+     product_identity: dict[str, Any] | None = None
++    autoinit_identity: dict[str, Any] | None = None
++    prebaseline_quiescence: dict[str, Any] | None = None
+     baseline_a: dict[str, int] | None = None
+     baseline_b: dict[str, int] | None = None
+     baseline_comparison: dict[str, Any] | None = None
+@@ -1035,8 +1071,43 @@
+             require(product_mmio.read(0x3804, "R2R2_TRANSPORT_IDENTITY") ==
+                     0x00010000,
+                     "NVP_DIAG1_R2R2_TRANSPORT_ABI_VERSION_MISMATCH")
++            pre_control = product_mmio.read(0x380C, "R2R2R1_PREBASELINE")
++            pre_status = product_mmio.read(0x3810, "R2R2R1_PREBASELINE")
++            require_unblocked(hardware_quiescent(pre_control, pre_status),
++                              "NVP_DIAG1_R2R2R1_PREBASELINE_NOT_QUIESCENT")
++            autoinit_status = product_mmio.read(0x008C,
++                                                "R2R2R1_AUTOINIT")
++            autoinit_nack_count = product_mmio.read(0x0090,
++                                                    "R2R2R1_AUTOINIT")
++            autoinit_timeout_count = product_mmio.read(0x0094,
++                                                       "R2R2R1_AUTOINIT")
++            autoinit_identity = {
++                "done": bool(autoinit_status & 0x1),
++                "error": bool(autoinit_status & 0x2),
++                "busy": bool(autoinit_status & 0x4),
++                "nack_count": autoinit_nack_count & 0xFFFF,
++                "timeout_count": autoinit_timeout_count & 0xFFFF,
++                "nvp_reset_released": bool(autoinit_status & 0x8),
++                "raw_status": f"0x{autoinit_status:08X}",
++                "raw_nack_count": f"0x{autoinit_nack_count:08X}",
++                "raw_timeout_count": f"0x{autoinit_timeout_count:08X}",
++            }
++            require(not autoinit_identity["busy"] and
++                    not autoinit_identity["error"] and
++                    autoinit_identity["done"] and
++                    autoinit_identity["nack_count"] == 0 and
++                    autoinit_identity["timeout_count"] == 0 and
++                    autoinit_identity["nvp_reset_released"],
++                    "NVP_DIAG1_R2R2R1_AUTOINIT_IDENTITY_MISMATCH")
+         finally:
+             product_mmio.close()
++
++        prebaseline_quiescence = require_exact_c2h_unowned(args.c2h_node)
++        prebaseline_quiescence.update({
++            "control": f"0x{pre_control:08X}",
++            "status": f"0x{pre_status:08X}",
++            "physical_quiescence": "PASS",
++        })
+ 
+         mmio = DiagnosticMmio(args.user_node, ledger)
+         require(mmio.read(0x3C00, "IDENTITY") == DIAG_MAGIC,
+@@ -1093,21 +1164,22 @@
+         baseline_b, baseline_b_sha = execute_prepare(
+             mmio, args.baseline_root, "B", c1)
+         c2 = baseline_b["i2c_transaction_count"]
+-        require(c1 > c0 and c2 > c1,
+-                "NVP_DIAG1_R2R2_PREPARE_TRANSACTION_COUNTER_NOT_STRICTLY_"
+-                "INCREASING")
++        require_unblocked(c1 > c0 and c2 > c1,
++                          "NVP_DIAG1_R2R2R1_PREPARE_TRANSACTION_COUNTER_NOT_"
++                          "STRICTLY_INCREASING")
+         delta_a = c1 - c0
+         delta_b = c2 - c1
+-        require(delta_a == delta_b,
+-                "NVP_DIAG1_R2R2_PREPARE_TRANSACTION_SEQUENCE_MISMATCH")
+-        require(baseline_a["bgcolor_78"] == baseline_b["bgcolor_78"] and
+-                baseline_a["bgcolor_79"] == baseline_b["bgcolor_79"] and
+-                baseline_a["route"] == baseline_b["route"],
+-                "NVP_DIAG1_R2R2_FUNCTIONAL_BASELINE_MISMATCH")
+-        require((baseline_b["bgcolor_78"] & 0xFF) == 0x88 and
+-                (baseline_b["bgcolor_79"] & 0xFF) == 0x88 and
+-                (baseline_b["route"] & 0x0F) == 0,
+-                "NVP_DIAG1_R2R2_BASELINE_CONTRADICTS_ACCEPTED_PRODUCT_STATE")
++        require_unblocked(delta_a == delta_b,
++                          "NVP_DIAG1_R2R2R1_PREPARE_TRANSACTION_SEQUENCE_MISMATCH")
++        require_unblocked(
++            baseline_a["bgcolor_78"] == baseline_b["bgcolor_78"] and
++            baseline_a["bgcolor_79"] == baseline_b["bgcolor_79"] and
++            baseline_a["route"] == baseline_b["route"],
++            "NVP_DIAG1_R2R2R1_FUNCTIONAL_BASELINE_MISMATCH")
++        require_unblocked((baseline_b["bgcolor_78"] & 0xFF) == 0x88 and
++                          (baseline_b["bgcolor_79"] & 0xFF) == 0x88 and
++                          (baseline_b["route"] & 0x0F) == 0,
++                          "NVP_DIAG1_R2R2R1_BASELINE_CONTRADICTS_PRODUCT_AUTOINIT")
+         baseline_comparison = {
+             "result": "PASS",
+             "baseline_a_sha256": baseline_a_sha,
+@@ -1118,6 +1190,12 @@
+             "prepare_b_transaction_start": c1,
+             "prepare_b_transaction_end": c2,
+             "prepare_b_transaction_delta": delta_b,
++            "prepare_a_captured_utc_ns": baseline_a["captured_utc_ns"],
++            "prepare_a_captured_monotonic_ns":
++                baseline_a["captured_monotonic_ns"],
++            "prepare_b_captured_utc_ns": baseline_b["captured_utc_ns"],
++            "prepare_b_captured_monotonic_ns":
++                baseline_b["captured_monotonic_ns"],
+             "bgcolor_78_equal": True,
+             "bgcolor_79_equal": True,
+             "route_equal": True,
+@@ -1125,9 +1203,9 @@
+             "active_restore_authority": "PREPARE_B",
+             "original_bank_host_visible": False,
+             "original_bank_double_host_comparison":
+-                "NOT_AVAILABLE_BY_DESIGN",
++                "NOT_AVAILABLE_BY_FROZEN_FIRMWARE_DESIGN",
+             "original_bank_authority":
+-                "SECOND_PREPARE_FIRMWARE_PRIVATE_VALUE",
++                "PREPARE_B_FIRMWARE_PRIVATE_VALUE",
+             "original_bank_safety_method": (
+                 "EACH_PREPARE_READS_AND_RESTORES_BANK;"
+                 "FINAL_VERIFY_RESTORE_PHYSICALLY_READS_AND_COMPARES_BANK"
+@@ -1136,6 +1214,9 @@
+                 "ACCEPTED_FIRMWARE_PRIVATE_OPERATIONAL_CONTEXT",
+             "functional_nvp_writes_before_baseline_agreement": 0,
+         }
++        baseline_comparison["double_prepare_baseline_gate"] = "PASS"
++        baseline_comparison["scan_start_authorized_monotonic_ns"] = (
++            time.monotonic_ns())
+         write_json(args.baseline_root / "baseline-comparison.json",
+                    baseline_comparison)
+         write_csv(args.baseline_root / "baseline-comparison.csv",
+@@ -1427,6 +1508,8 @@
+                                     "capabilities": f"0x{capabilities:08X}"},
+             "runtime_parameters": runtime_parameters,
+             "product_identity": product_identity,
++            "autoinit_identity": autoinit_identity,
++            "prebaseline_quiescence": prebaseline_quiescence,
+             "baseline_a": baseline_a, "baseline_b": baseline_b,
+             "baseline_comparison": baseline_comparison,
+             "original_baseline": original, "final_state": final_state,
+@@ -1443,9 +1526,26 @@
+                 "history_owner": "HOST",
+             },
+         }
++    except BlockedError as exc:
++        result = {"result": "BLOCKED",
++                  "blocker": str(exc) or type(exc).__name__,
++                  "sessions_completed": len(sessions),
++                  "product_identity": product_identity,
++                  "autoinit_identity": autoinit_identity,
++                  "prebaseline_quiescence": prebaseline_quiescence,
++                  "baseline_a": baseline_a, "baseline_b": baseline_b,
++                  "baseline_comparison": baseline_comparison}
++        if mmio is not None:
++            result["restore_failure"] = (
++                "NOT_ATTEMPTED_BEFORE_DOUBLE_PREPARE_BASELINE_AGREEMENT")
+     except BaseException as exc:
+         result = {"result": "FAIL", "blocker": str(exc) or type(exc).__name__,
+-                  "sessions_completed": len(sessions)}
++                  "sessions_completed": len(sessions),
++                  "product_identity": product_identity,
++                  "autoinit_identity": autoinit_identity,
++                  "prebaseline_quiescence": prebaseline_quiescence,
++                  "baseline_a": baseline_a, "baseline_b": baseline_b,
++                  "baseline_comparison": baseline_comparison}
+         if failure_session_context is not None:
+             result["failure_session_context"] = failure_session_context
+         if mmio is not None:
+@@ -1462,7 +1562,17 @@
+                 else:
+                     safe_restore_complete = (
+                         state["baseline_restored"] and
+-                        not state["i2c_owned"] and state["i2c_bus_idle"])
++                        not state["i2c_owned"] and state["i2c_bus_idle"] and
++                        mmio.read(ERROR, "FAILURE_RESTORE_ERROR") == 0 and
++                        mmio.read(RESTORE_STATUS,
++                                  "FAILURE_RESTORE_STATUS") == 3 and
++                        baseline_b is not None and
++                        (mmio.read(0x3C38, "FAILURE_RESTORE_ROUTE") & 0xFF) ==
++                            (baseline_b["route"] & 0xFF) and
++                        (mmio.read(0x3C3C, "FAILURE_RESTORE_BG78") & 0xFF) ==
++                            (baseline_b["bgcolor_78"] & 0xFF) and
++                        (mmio.read(0x3C40, "FAILURE_RESTORE_BG79") & 0xFF) ==
++                            (baseline_b["bgcolor_79"] & 0xFF))
+                     if not safe_restore_complete:
+                         if response_withheld_for_unsafe_quiescence:
+                             result["restore_failure"] = (
+@@ -1480,6 +1590,32 @@
+                         if not response_withheld_for_unsafe_quiescence:
+                             wait_for_baseline_restore(
+                                 mmio, 15.0, "FAILURE_SAFE_RESTORE_WAIT")
++                            restored = status_bits(mmio.read(
++                                STATUS, "FAILURE_RESTORE_FINAL_STATUS"))
++                            require(restored["baseline_restored"] and
++                                    not restored["i2c_owned"] and
++                                    restored["i2c_bus_idle"] and
++                                    mmio.read(ERROR,
++                                              "FAILURE_RESTORE_FINAL_ERROR") == 0 and
++                                    mmio.read(RESTORE_STATUS,
++                                              "FAILURE_RESTORE_FINAL_CODE") == 3 and
++                                    baseline_b is not None and
++                                    (mmio.read(0x3C38,
++                                               "FAILURE_RESTORE_FINAL_ROUTE") & 0xFF) ==
++                                        (baseline_b["route"] & 0xFF) and
++                                    (mmio.read(0x3C3C,
++                                               "FAILURE_RESTORE_FINAL_BG78") & 0xFF) ==
++                                        (baseline_b["bgcolor_78"] & 0xFF) and
++                                    (mmio.read(0x3C40,
++                                               "FAILURE_RESTORE_FINAL_BG79") & 0xFF) ==
++                                        (baseline_b["bgcolor_79"] & 0xFF),
++                                    "NVP_DIAG1_R2R2R1_PRODUCT_BASELINE_RESTORE_FAILED")
++                            result["failure_restore_verified"] = {
++                                "result": "PASS",
++                                "visible_baseline_equals_prepare_b": True,
++                                "firmware_internal_bank_verify":
++                                    "PASS_FIRMWARE_INTERNAL_PHYSICAL_READBACK",
++                            }
+             except BaseException as restore_error:
+                 result["restore_failure"] = str(restore_error)
+     finally:
+@@ -1502,7 +1638,8 @@
+     print(json.dumps({"result": result["result"],
+                       "overall_result": result.get("overall_result"),
+                       "blocker": result.get("blocker")}, sort_keys=True), flush=True)
+-    return 0 if result["result"] == "PASS" else 1
++    return 0 if result["result"] == "PASS" else (
++        2 if result["result"] == "BLOCKED" else 1)
+ 
+ 
+ if __name__ == "__main__":

@@ -1,0 +1,1031 @@
+{
+  "document": {
+    "name": "V41_C2H_TRANSPORT_ABI_V1",
+    "kind": "machine_readable_transport_abi",
+    "status": "FROZEN_FOR_G2B",
+    "unresolved_mandatory_fields": []
+  },
+  "abi": {
+    "name": "AHD_C2H_TRANSPORT_ABI_V1",
+    "numeric_version": 1,
+    "mmio_version": {
+      "word_hex": "0x00010000",
+      "major": 1,
+      "minor": 0,
+      "major_bits": "31:16",
+      "minor_bits": "15:0"
+    },
+    "record_family": "v41D",
+    "record_version_hex": "0x00004101",
+    "record_version_decimal": 16641,
+    "endianness": "little",
+    "header_scalar_type": "u32",
+    "header_word_count": 16
+  },
+  "geometry": {
+    "record_bytes": 4096,
+    "header_bytes": 64,
+    "payload_bytes": 3840,
+    "padding_bytes": 192,
+    "header_range": {
+      "first_byte": 0,
+      "last_byte": 63
+    },
+    "payload_range": {
+      "first_byte": 64,
+      "last_byte": 3903
+    },
+    "padding_range": {
+      "first_byte": 3904,
+      "last_byte": 4095
+    },
+    "sum_check": {
+      "expression": "64 + 3840 + 192",
+      "result": 4096
+    }
+  },
+  "axis": {
+    "interface": "XDMA_S_AXIS_C2H_0",
+    "data_width_bits": 64,
+    "bytes_per_beat": 8,
+    "beats_per_record": 512,
+    "beat_range": {
+      "first": 0,
+      "last": 511
+    },
+    "byte_mapping": {
+      "record_byte_expression": "8*n+k",
+      "tdata_slice_expression": "TDATA[8*k +: 8]",
+      "n_range": "0..511",
+      "k_range": "0..7"
+    },
+    "tkeep": {
+      "value_hex": "0xFF",
+      "applies_to_beats": "0..511"
+    },
+    "tlast": {
+      "zero_on_beats": "0..510",
+      "one_on_beat": 511
+    },
+    "first_beat_precondition": "complete COMMITTED record and matching descriptor owned in XDMA clock domain",
+    "no_intentional_intra_record_bubbles": true,
+    "stall_rule": {
+      "condition": "TVALID && !TREADY",
+      "stable_signals": [
+        "TVALID",
+        "TDATA",
+        "TKEEP",
+        "TLAST"
+      ]
+    },
+    "advance_condition": "TVALID && TREADY",
+    "release_condition": "beat_index == 511 && TVALID && TREADY",
+    "lock_through_record": [
+      "logical_channel_id",
+      "physical_input_id",
+      "slot",
+      "slot_generation",
+      "reset_epoch",
+      "header_metadata",
+      "global_stream_sequence"
+    ],
+    "reset_rule": "never publish an abandoned suffix; next transfer begins at beat 0 of a complete record in the new epoch"
+  },
+  "header": {
+    "bytes": 64,
+    "word_bytes": 4,
+    "word_count": 16,
+    "all_words_little_endian": true,
+    "unnamed_gaps": false,
+    "fields": [
+      {
+        "index": 0,
+        "offset_hex": "0x00",
+        "offset_bytes": 0,
+        "size_bytes": 4,
+        "name": "magic",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "constant 0x4C444841",
+        "value_hex": "0x4C444841",
+        "producer": "c2h_formatter",
+        "consumers": [
+          "host_record_parser"
+        ],
+        "semantics": "v41 record magic; on-wire bytes 41 48 44 4C",
+        "status": "FROZEN"
+      },
+      {
+        "index": 1,
+        "offset_hex": "0x04",
+        "offset_bytes": 4,
+        "size_bytes": 4,
+        "name": "record_version",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "constant 0x00004101",
+        "value_hex": "0x00004101",
+        "producer": "c2h_formatter",
+        "consumers": [
+          "host_record_parser"
+        ],
+        "semantics": "selects the v41D fixed-layout parser",
+        "status": "FROZEN"
+      },
+      {
+        "index": 2,
+        "offset_hex": "0x08",
+        "offset_bytes": 8,
+        "size_bytes": 4,
+        "name": "reset_epoch",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "FPGA configuration creates epoch 0",
+        "producer": "shared_c2h_reset_epoch_manager",
+        "consumers": [
+          "host_record_parser",
+          "host_frame_assembler"
+        ],
+        "semantics": "per-card shared-C2H-stream reset generation modulo 2^32; not a build ID",
+        "status": "FROZEN"
+      },
+      {
+        "index": 3,
+        "offset_hex": "0x0C",
+        "offset_bytes": 12,
+        "size_bytes": 4,
+        "name": "source_frame_sequence",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "source internal state 0; first emitted frame 1",
+        "producer": "source_line_formatter",
+        "consumers": [
+          "host_frame_assembler"
+        ],
+        "semantics": "source-frame number modulo 2^32; transport reset does not reset it",
+        "status": "FROZEN"
+      },
+      {
+        "index": 4,
+        "offset_hex": "0x10",
+        "offset_bytes": 16,
+        "size_bytes": 4,
+        "name": "source_line_sequence",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "first active line of each frame is 0",
+        "producer": "source_line_formatter",
+        "consumers": [
+          "host_frame_assembler"
+        ],
+        "constraints": {
+          "minimum": 0,
+          "maximum": 1079
+        },
+        "semantics": "zero-based active-line number",
+        "status": "FROZEN"
+      },
+      {
+        "index": 5,
+        "offset_hex": "0x14",
+        "offset_bytes": 20,
+        "size_bytes": 4,
+        "name": "source_capture_sequence",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "source internal state 0; first emitted capture 1",
+        "producer": "source_line_formatter",
+        "consumers": [
+          "host_record_parser"
+        ],
+        "semantics": "successfully completed valid source line records modulo 2^32; failed attempts do not consume it; transport reset does not reset it",
+        "status": "FROZEN"
+      },
+      {
+        "index": 6,
+        "offset_hex": "0x18",
+        "offset_bytes": 24,
+        "size_bytes": 4,
+        "name": "payload_length",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "constant 3840",
+        "value_decimal": 3840,
+        "producer": "c2h_formatter",
+        "consumers": [
+          "host_record_parser"
+        ],
+        "semantics": "useful payload bytes beginning at record byte 64",
+        "status": "FROZEN"
+      },
+      {
+        "index": 7,
+        "offset_hex": "0x1C",
+        "offset_bytes": 28,
+        "size_bytes": 4,
+        "name": "flags",
+        "type": "u32_bitset",
+        "endianness": "little",
+        "reset_default": "per-record composition; streamed records require VALID bit 5 equal to 1",
+        "producer": "source_and_transport_context_formatter",
+        "consumers": [
+          "host_record_parser",
+          "host_frame_assembler"
+        ],
+        "semantics": "bit assignments are defined by the flags section",
+        "status": "FROZEN"
+      },
+      {
+        "index": 8,
+        "offset_hex": "0x20",
+        "offset_bytes": 32,
+        "size_bytes": 4,
+        "name": "active_logical_channel_count",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "G2B emitted value 1",
+        "producer": "applied_channel_control_snapshot",
+        "consumers": [
+          "host_record_parser"
+        ],
+        "constraints": {
+          "legal_values": [
+            1,
+            2
+          ],
+          "g2b_value": 1
+        },
+        "semantics": "number of active logical channels at record admission",
+        "status": "FROZEN"
+      },
+      {
+        "index": 9,
+        "offset_hex": "0x24",
+        "offset_bytes": 36,
+        "size_bytes": 4,
+        "name": "source_slot_generation_and_slot",
+        "type": "packed_u32",
+        "endianness": "little",
+        "reset_default": "per-slot generation state 0; first allocation generation 1",
+        "producer": "source_record_ring",
+        "consumers": [
+          "host_diagnostics",
+          "host_record_parser"
+        ],
+        "bit_fields": [
+          {
+            "name": "slot",
+            "lsb": 0,
+            "msb": 3,
+            "type": "u4",
+            "legal_g2b_values": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "name": "RESERVED_ZERO",
+            "lsb": 4,
+            "msb": 7,
+            "required_value": 0
+          },
+          {
+            "name": "generation",
+            "lsb": 8,
+            "msb": 31,
+            "type": "u24",
+            "increment_event": "WRITABLE_to_FILLING",
+            "initial_value": 0,
+            "reset_events": [
+              "FPGA_configuration",
+              "every_transport_epoch_reset"
+            ],
+            "source_reset_without_epoch_resets": false,
+            "wrap_modulus": 16777216
+          }
+        ],
+        "semantics": "source slot provenance and generation; not a host ownership token",
+        "status": "FROZEN"
+      },
+      {
+        "index": 10,
+        "offset_hex": "0x28",
+        "offset_bytes": 40,
+        "size_bytes": 4,
+        "name": "source_malformed_count_snapshot",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "0 after source formatter/configuration reset",
+        "producer": "source_formatter_counter_bank",
+        "consumers": [
+          "host_diagnostics",
+          "host_record_parser"
+        ],
+        "semantics": "wrapping source-local lifetime snapshot including malformed attempts preceding this committed record; distinct from clearable MMIO statistics",
+        "reset_events": [
+          "FPGA_configuration",
+          "defined_source_sequence_reset_event"
+        ],
+        "non_reset_events": [
+          "RESET_C2H_STATS",
+          "ordinary_transport_enable_disable",
+          "transport_epoch_reset_without_source_reset"
+        ],
+        "status": "FROZEN"
+      },
+      {
+        "index": 11,
+        "offset_hex": "0x2C",
+        "offset_bytes": 44,
+        "size_bytes": 4,
+        "name": "source_dropped_count_snapshot",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "0 after source formatter/configuration reset",
+        "producer": "source_admission_counter_bank",
+        "consumers": [
+          "host_diagnostics",
+          "host_record_parser"
+        ],
+        "semantics": "wrapping source-local lifetime snapshot including all noncommitted eligible attempts preceding this committed record; distinct from clearable MMIO RECORDS_DROPPED",
+        "reset_events": [
+          "FPGA_configuration",
+          "defined_source_sequence_reset_event"
+        ],
+        "non_reset_events": [
+          "RESET_C2H_STATS",
+          "ordinary_transport_enable_disable",
+          "transport_epoch_reset_without_source_reset"
+        ],
+        "status": "FROZEN"
+      },
+      {
+        "index": 12,
+        "offset_hex": "0x30",
+        "offset_bytes": 48,
+        "size_bytes": 4,
+        "name": "logical_channel_id",
+        "type": "semantic_u2_in_u32",
+        "endianness": "little",
+        "reset_default": "G2B emitted value 0",
+        "producer": "applied_mapping_snapshot",
+        "consumers": [
+          "host_demultiplexer",
+          "host_record_parser"
+        ],
+        "constraints": {
+          "semantic_bits": "1:0",
+          "legal_values": [
+            0,
+            1
+          ],
+          "reserved_values": [
+            2
+          ],
+          "invalid_value": 3,
+          "upper_bits": "31:2",
+          "upper_bits_required_value": 0,
+          "g2b_value": 0
+        },
+        "semantics": "logical video-channel identity",
+        "status": "FROZEN"
+      },
+      {
+        "index": 13,
+        "offset_hex": "0x34",
+        "offset_bytes": 52,
+        "size_bytes": 4,
+        "name": "physical_input_id",
+        "type": "semantic_u3_in_u32",
+        "endianness": "little",
+        "reset_default": "G2B emitted value 0",
+        "producer": "applied_mapping_snapshot",
+        "consumers": [
+          "host_record_parser",
+          "host_frame_assembler"
+        ],
+        "constraints": {
+          "semantic_bits": "2:0",
+          "legal_values": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "reserved_values": [
+            4,
+            5,
+            6
+          ],
+          "invalid_value": 7,
+          "upper_bits": "31:3",
+          "upper_bits_required_value": 0,
+          "g2b_value": 0
+        },
+        "semantics": "selected physical AHD input identity",
+        "status": "FROZEN"
+      },
+      {
+        "index": 14,
+        "offset_hex": "0x38",
+        "offset_bytes": 56,
+        "size_bytes": 4,
+        "name": "channel_attempt_sequence",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "next value 0 at each transport epoch",
+        "producer": "channel_admission_controller",
+        "consumers": [
+          "host_per_channel_continuity_checker"
+        ],
+        "semantics": "eligible active-line attempt sequence including attempts later dropped, malformed, or aborted",
+        "status": "FROZEN"
+      },
+      {
+        "index": 15,
+        "offset_hex": "0x3C",
+        "offset_bytes": 60,
+        "size_bytes": 4,
+        "name": "global_stream_sequence",
+        "type": "u32",
+        "endianness": "little",
+        "reset_default": "next value 0 at each transport epoch",
+        "producer": "shared_scheduler_and_c2h_formatter",
+        "consumers": [
+          "host_global_order_checker"
+        ],
+        "semantics": "complete-record order in the single C2H stream",
+        "status": "FROZEN"
+      }
+    ]
+  },
+  "flags": {
+    "field_offset_hex": "0x1C",
+    "width_bits": 32,
+    "scope": "per_record",
+    "pending_state_epoch_reset_rule": "FPGA configuration and every transport epoch reset clear DISCONTINUITY OVERFLOW_OCCURRED and MALFORMED_PRECEDING pending producer state after reset accounting; old-epoch pending context never annotates a new-epoch record",
+    "bits": [
+      {
+        "lsb": 0,
+        "msb": 0,
+        "mask_hex": "0x00000001",
+        "name": "SOF",
+        "meaning": "record is source line 0 and begins a source frame",
+        "assignment": "1 if and only if source_line_sequence equals 0",
+        "clear_rule": "recomputed per record",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 1,
+        "msb": 1,
+        "mask_hex": "0x00000002",
+        "name": "RESERVED_ZERO",
+        "meaning": "no V1.0 meaning",
+        "assignment": "0",
+        "clear_rule": "always zero",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 2,
+        "msb": 2,
+        "mask_hex": "0x00000004",
+        "name": "DISCONTINUITY",
+        "meaning": "same-epoch continuity from the prior emitted record on this logical channel cannot be assumed",
+        "assignment": "copy channel discontinuity-pending state to next committed record",
+        "clear_rule": "pending state clears when annotated record commits",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 3,
+        "msb": 3,
+        "mask_hex": "0x00000008",
+        "name": "OVERFLOW_OCCURRED",
+        "meaning": "one or more ring-full whole-record drops occurred since prior committed record on this channel",
+        "assignment": "copy overflow-pending state to next committed record",
+        "clear_rule": "pending state clears when annotated record commits",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 4,
+        "msb": 4,
+        "mask_hex": "0x00000010",
+        "name": "MALFORMED_PRECEDING",
+        "meaning": "one or more source marker, length, or validation failures occurred since prior committed record",
+        "assignment": "copy malformed-pending state to next committed record",
+        "clear_rule": "pending state clears when annotated record commits",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 5,
+        "msb": 5,
+        "mask_hex": "0x00000020",
+        "name": "VALID",
+        "meaning": "header and payload derive from one completely validated active line",
+        "assignment": "1 only after successful source line validation",
+        "clear_rule": "recomputed; records with 0 must not be streamed",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 6,
+        "msb": 6,
+        "mask_hex": "0x00000040",
+        "name": "WINDOW_END",
+        "meaning": "final record of a bounded legacy capture window",
+        "assignment": "0 for continuous G2B DMA",
+        "clear_rule": "recomputed per record",
+        "status": "FROZEN"
+      },
+      {
+        "lsb": 7,
+        "msb": 31,
+        "mask_hex": "0xFFFFFF80",
+        "name": "RESERVED_ZERO",
+        "meaning": "no V1.0 meaning",
+        "assignment": "0",
+        "clear_rule": "always zero",
+        "status": "FROZEN"
+      }
+    ],
+    "explicitly_absent_flags": [
+      "SOURCE_UNLOCKED",
+      "SOURCE_RECOVERED",
+      "RESET_BOUNDARY",
+      "DROPPED_BEFORE_THIS_RECORD"
+    ],
+    "absent_flag_replacements": {
+      "source_state": "DISCONTINUITY plus source and MMIO state",
+      "reset_boundary": "reset_epoch change",
+      "drop_before_record": "attempt gap plus DISCONTINUITY, OVERFLOW_OCCURRED when ring-full, snapshots, and MMIO counters"
+    }
+  },
+  "channel_identity": {
+    "logical": {
+      "semantic_width_bits": 2,
+      "legal_values": [
+        0,
+        1
+      ],
+      "reserved_values": [
+        2
+      ],
+      "invalid_value": 3,
+      "container_upper_bits_required_zero": true
+    },
+    "physical": {
+      "semantic_width_bits": 3,
+      "legal_values": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reserved_values": [
+        4,
+        5,
+        6
+      ],
+      "invalid_value": 7,
+      "container_upper_bits_required_zero": true
+    },
+    "active_logical_channel_count_legal_values": [
+      1,
+      2
+    ],
+    "g2b_emitted_values": {
+      "logical_channel_id": 0,
+      "physical_input_id": 0,
+      "active_logical_channel_count": 1
+    },
+    "future_two_channel_abi_compatible": true,
+    "card_identity_source": "opened XDMA device/BDF plus authoritative MMIO identity tuple"
+  },
+  "payload": {
+    "format": "UYVY",
+    "format_detail": "packed YCbCr 4:2:2",
+    "pixels_per_line": 1920,
+    "active_lines_per_frame": 1080,
+    "line_number_range": "0..1079",
+    "pixel_pairs_per_line": 960,
+    "bytes_per_pixel_pair": 4,
+    "byte_tuple": [
+      {
+        "relative_offset_expression": "4*p+0",
+        "component": "U0_or_Cb",
+        "applies_to": "pixels 2*p and 2*p+1"
+      },
+      {
+        "relative_offset_expression": "4*p+1",
+        "component": "Y0",
+        "applies_to": "pixel 2*p"
+      },
+      {
+        "relative_offset_expression": "4*p+2",
+        "component": "V0_or_Cr",
+        "applies_to": "pixels 2*p and 2*p+1"
+      },
+      {
+        "relative_offset_expression": "4*p+3",
+        "component": "Y1",
+        "applies_to": "pixel 2*p+1"
+      }
+    ],
+    "pixel_pair_index_range": "0..959",
+    "record_relationship": "one record equals one complete validated active source line",
+    "excluded_content": [
+      "SAV",
+      "EAV",
+      "horizontal_blanking",
+      "vertical_blanking",
+      "line_padding",
+      "checksum",
+      "timestamp",
+      "descriptor_data"
+    ],
+    "frame_boundary": {
+      "sof_rule": "SOF is 1 if and only if source_line_sequence is 0",
+      "eof_flag_present": false,
+      "completion_rule": "line 1079 completes a frame only when exactly one valid instance of every line 0 through 1079 has been received"
+    },
+    "frame_group_key": [
+      "card_identity_from_mmio",
+      "logical_channel_id",
+      "physical_input_id",
+      "reset_epoch",
+      "source_frame_sequence"
+    ],
+    "incomplete_frame_causes": [
+      "missing_line",
+      "duplicate_line",
+      "line_order_break",
+      "identity_change",
+      "source_sequence_break",
+      "DISCONTINUITY",
+      "CORRUPT_RECORD",
+      "NEW_EPOCH"
+    ]
+  },
+  "padding": {
+    "first_byte": 3904,
+    "last_byte": 4095,
+    "bytes": 192,
+    "required_byte_value": 0,
+    "producer": "c2h_formatter_constant_generation",
+    "part_of_fixed_record": true,
+    "tkeep_hex": "0xFF",
+    "consumer_rule": "verify all zero during structural validation, then ignore",
+    "uninitialized_ram_content_allowed": false
+  },
+  "source_sequences": {
+    "reset_events": [
+      "FPGA_configuration",
+      "explicit_source_reset",
+      "source_disable_then_reenable",
+      "applied_physical_input_remap",
+      "explicit_source_formatter_or_source_configuration_reset"
+    ],
+    "non_reset_events": [
+      "PCIe_reset",
+      "axi_reset",
+      "RESET_STREAM_STATE",
+      "standalone_c2h_formatter_transport_reset",
+      "ordinary_stream_enable_disable",
+      "source_loss_without_source_reset",
+      "NVP_or_I2C_reset_or_initialization_without_source_formatter_reset"
+    ],
+    "first_emitted_record": {
+      "source_frame_sequence": 1,
+      "source_line_sequence": 0,
+      "source_capture_sequence": 1
+    },
+    "frame_sequence": {
+      "width_bits": 32,
+      "increment_event": "new source frame first active line",
+      "wrap_modulus": 4294967296
+    },
+    "line_sequence": {
+      "width_bits": 32,
+      "first_value_per_frame": 0,
+      "last_value_per_frame": 1079,
+      "increment_event": "next validated active source line"
+    },
+    "capture_sequence": {
+      "width_bits": 32,
+      "increment_event": "successfully completed valid source line record",
+      "ring_full_attempt_consumes": false,
+      "malformed_attempt_consumes": false,
+      "aborted_attempt_consumes": false,
+      "wrap_modulus": 4294967296
+    },
+    "source_reset_transport_effect": "reset source sequences to their initial state; preserve reset_epoch and transport sequences; abort affected uncommitted record and set discontinuity pending",
+    "source_reset_ordering": "consume transport attempt and increment MMIO dropped accounting for an aborted FILLING attempt, then clear the source-local sequence/header-counter bank so the old-lifetime abort is not reflected in the new source_dropped_count_snapshot"
+  },
+  "transport_sequences": {
+    "channel_attempt_sequence": {
+      "header_offset_hex": "0x38",
+      "width_bits": 32,
+      "scope": "per_logical_channel",
+      "next_initial_value_per_epoch": 0,
+      "assignment_event": "eligible enabled active-line attempt decision",
+      "increment_timing": "immediately after assignment exactly once",
+      "increment_modulus": 4294967296,
+      "admitted_attempt_consumes": true,
+      "ring_full_attempt_consumes": true,
+      "later_malformed_attempt_consumes": true,
+      "later_aborted_attempt_consumes": true,
+      "disabled_line_consumes": false,
+      "ordinary_enable_disable_resets": false,
+      "source_reset_resets": false,
+      "transport_epoch_resets": true,
+      "wire_rule": "streamed record carries the value assigned to its own attempt",
+      "gap_rule": "failed attempts appear as gaps between streamed records"
+    },
+    "global_stream_sequence": {
+      "header_offset_hex": "0x3C",
+      "width_bits": 32,
+      "scope": "shared_single_c2h_stream",
+      "next_initial_value_per_epoch": 0,
+      "assignment_event": "COMMITTED_to_DMA_OWNED before first beat",
+      "increment_event": "beat 511 TVALID and TREADY handshake",
+      "increment_modulus": 4294967296,
+      "ring_full_drop_consumes": false,
+      "malformed_attempt_consumes": false,
+      "aborted_attempt_consumes": false,
+      "reset_abandoned_record_consumes_in_new_epoch": false,
+      "transport_epoch_resets": true,
+      "wire_rule": "assigned value is locked before beat 0",
+      "continuity_rule": "all complete records received within one epoch are contiguous across channels modulo 2^32",
+      "max_simultaneous_dma_owned_slots_shared_stream": 1,
+      "next_assignment_precondition": "prior DMA_OWNED record completed beat 511 handshake and incremented global_stream_next"
+    },
+    "relationship": "channel attempt sequence is per-channel source/admission order; global stream sequence is successful shared-C2H completion order"
+  },
+  "reset_epoch": {
+    "header_offset_hex": "0x08",
+    "width_bits": 32,
+    "scope": "per_card_shared_single_c2h_stream",
+    "owner": "axi_aclk_c2h_transport_reset_coordinator",
+    "owner_reset": "FPGA_configuration_only; epoch state is not cleared by axi_aresetn",
+    "initial_value_after_fpga_configuration": 0,
+    "increment_modulus": 4294967296,
+    "increment_events": [
+      "synchronized release of each later PCIe_PERST_or_axi_aresetn_reset_episode",
+      "accepted RESET_STREAM_STATE command",
+      "standalone C2H formatter_or_transport reset"
+    ],
+    "non_increment_events": [
+      "ordinary_stream_enable",
+      "ordinary_stream_disable",
+      "statistics_reset",
+      "source_loss",
+      "source_reset",
+      "source_formatter_or_source_configuration_reset",
+      "NVP_or_I2C_reset_or_initialization"
+    ],
+    "overlap_rule": "simultaneous or overlapping causes before completed reset release coalesce into one increment",
+    "host_comparison_rule": "inequality, not greater-than, because epoch wraps",
+    "transport_reset_actions": [
+      "disable_admission",
+      "require_explicit_host_reenable",
+      "reset_both_channel_attempt_next_registers_to_zero",
+      "reset_global_stream_next_to_zero",
+      "invalidate_and_flush_all_non_WRITABLE_slots_and_descriptors",
+      "abandon_in_progress_source_or_c2h_record_without_partial_publication",
+      "wait_for_all_active_clock_domains_to_acknowledge_new_epoch",
+      "resume_only_at_beat_zero_of_new_complete_record"
+    ],
+    "source_continues_during_transport_reset": "source sequences continue; records while admission disabled are not admitted",
+    "nvp_i2c_independence": "transport reset must not reset, start, gate, or replay NVP initialization"
+  },
+  "ring": {
+    "slots_per_logical_channel": 4,
+    "g2b_implemented_logical_channels": [
+      0
+    ],
+    "future_abi_supported_logical_channels": [
+      0,
+      1
+    ],
+    "cross_channel_slot_borrowing_allowed": false,
+    "per_channel_commit_order": "depth_four_descriptor_FIFO_oldest_committed_first",
+    "within_channel_reordering_allowed": false,
+    "slot_allocation_order": "implementation_internal; descriptor FIFO order is authoritative",
+    "max_simultaneous_dma_owned_slots_shared_stream": 1,
+    "states": [
+      {
+        "name": "WRITABLE",
+        "owner": "producer",
+        "meaning": "empty slot may be allocated; no valid record is visible"
+      },
+      {
+        "name": "FILLING",
+        "owner": "producer",
+        "meaning": "producer exclusively writes selected slot and metadata; DMA read forbidden"
+      },
+      {
+        "name": "COMMITTED",
+        "owner": "scheduler_queue",
+        "meaning": "complete validated payload/source metadata and descriptor are immutable and scheduler-visible"
+      },
+      {
+        "name": "DMA_OWNED",
+        "owner": "scheduler_and_c2h_formatter",
+        "meaning": "record selected and complete wire image fixed from before beat 0 through beat 511"
+      },
+      {
+        "name": "RELEASABLE",
+        "owner": "release_handshake",
+        "meaning": "final beat completed and matching release token is crossing; reuse still forbidden"
+      }
+    ],
+    "transitions": [
+      {
+        "from": "WRITABLE",
+        "to": "FILLING",
+        "event": "successful slot allocation",
+        "actions": [
+          "increment slot generation modulo 2^24",
+          "latch attempt channel physical and epoch metadata"
+        ]
+      },
+      {
+        "from": "FILLING",
+        "to": "COMMITTED",
+        "event": "exactly 3840 payload bytes and all source validation complete",
+        "actions": [
+          "atomically publish matching descriptor",
+          "increment committed accounting"
+        ]
+      },
+      {
+        "from": "FILLING",
+        "to": "WRITABLE",
+        "event": "malformed or aborted before commit",
+        "actions": [
+          "publish no descriptor",
+          "count failed attempt once",
+          "retain discontinuity context"
+        ]
+      },
+      {
+        "from": "COMMITTED",
+        "to": "DMA_OWNED",
+        "event": "scheduler locks matching channel slot generation and epoch",
+        "actions": [
+          "assign global stream sequence",
+          "fix complete wire image before beat 0"
+        ]
+      },
+      {
+        "from": "DMA_OWNED",
+        "to": "RELEASABLE",
+        "event": "beat 511 TVALID and TREADY handshake",
+        "actions": [
+          "increment streamed and global completion accounting",
+          "send matching release token"
+        ]
+      },
+      {
+        "from": "RELEASABLE",
+        "to": "WRITABLE",
+        "event": "producer validates matching release acknowledgement",
+        "actions": [
+          "make slot eligible for later allocation"
+        ]
+      }
+    ],
+    "reset_rule": "invalidate all non-WRITABLE state; return slots to WRITABLE only after cross-domain epoch handshake",
+    "illegal_transition_rule": "fatal ownership fault; stop new admission until stream-state reset",
+    "partial_overwrite_allowed": false
+  },
+  "drop_policy": {
+    "trigger": "eligible attempt and no WRITABLE slot in that channel",
+    "actions": [
+      "assign and consume channel attempt sequence",
+      "write no byte",
+      "offer no C2H beat",
+      "preserve COMMITTED DMA_OWNED and RELEASABLE records",
+      "increment attempted counter once",
+      "increment dropped counter once",
+      "increment ring overflow counter once",
+      "set DISCONTINUITY pending",
+      "set OVERFLOW_OCCURRED pending"
+    ],
+    "next_committed_record": "carries pending flags and snapshots including the drop",
+    "malformed_or_aborted_after_admission": "consume assigned attempt and increment dropped exactly once; malformed also increments malformed count and sets MALFORMED_PRECEDING",
+    "global_stream_sequence_consumed": false,
+    "forbidden_policies": [
+      "partial_record_drop",
+      "overwrite_oldest",
+      "overwrite_committed",
+      "silent_sequence_repair",
+      "cross_channel_slot_borrowing"
+    ]
+  },
+  "firmware_build_identity": {
+    "per_record_identity_present": false,
+    "header_offset_0x08_use": "reset_epoch",
+    "authoritative_source": "legacy_read_only_mmio_identity_tuple",
+    "tuple": [
+      "BLOCK_ID",
+      "PROTOCOL",
+      "BUILD_ID_SCHEMA",
+      "GIT_SHA_W0",
+      "GIT_SHA_W1",
+      "GIT_SHA_W2",
+      "GIT_SHA_W3",
+      "GIT_SHA_W4",
+      "VIVADO_VERSION",
+      "VIVADO_SW_BUILD",
+      "BUILD_FLAGS"
+    ],
+    "legacy_protocol_rule": "legacy MMIO PROTOCOL remains an identity component and is not the C2H record version; C2H uses the new MMIO ABI page and header record_version",
+    "active_change_host_rule": "stop stream, discard buffered and unassembled data, close and reopen session, renegotiate MMIO, and never combine records across identities"
+  },
+  "parser_contract": {
+    "read_size_rule": "read byte counts must be positive multiples of 4096",
+    "boundary_rule": "parse only fixed 4096-byte boundaries",
+    "resynchronization_scan_allowed": false,
+    "session_start_requirement": "negotiate while disabled; issue RESET_STREAM_STATE; wait for reset completion empty inactive state; record resulting RESET_EPOCH; clear fatal errors through post-reset W1C; explicitly enable",
+    "mid_epoch_attach_allowed": false,
+    "payload_extraction": {
+      "first_byte": 64,
+      "bytes": 3840,
+      "format": "UYVY"
+    },
+    "classifications": {
+      "VALID_RECORD": {
+        "meaning": "all structural fields and padding validate and VALID is 1",
+        "can_also_be": [
+          "NEW_EPOCH",
+          "DISCONTINUITY"
+        ]
+      },
+      "CORRUPT_RECORD": {
+        "causes": [
+          "wrong_record_size_or_boundary",
+          "bad_magic",
+          "unsupported_record_version",
+          "wrong_payload_length",
+          "illegal_channel_or_input",
+          "nonzero_V1_0_reserved_bit_or_subfield",
+          "VALID_clear",
+          "SOF_line_zero_disagreement",
+          "source_line_sequence_above_1079",
+          "nonzero_padding"
+        ],
+        "action": "stop session at fixed boundary; do not scan for magic"
+      },
+      "NEW_EPOCH": {
+        "test": "first valid record after mandatory session-start RESET_STREAM_STATE or reset_epoch differs from prior record",
+        "actions": [
+          "discard_partial_frames",
+          "clear_per_channel_continuity_baselines",
+          "require_first_observed_global_stream_sequence_in_epoch_equal_zero"
+        ],
+        "first_channel_attempt_may_be_nonzero": true
+      },
+      "DISCONTINUITY": {
+        "causes": [
+          "DISCONTINUITY_flag",
+          "same_epoch_channel_attempt_not_previous_plus_one_modulo_2^32",
+          "same_epoch_global_stream_not_previous_plus_one_modulo_2^32",
+          "source_frame_line_or_capture_progression_break",
+          "identity_or_mapping_change",
+          "loss_reported_by_relevant_MMIO_counter_delta"
+        ],
+        "action": "mark affected frame incomplete; an explained drop does not make the following record structurally corrupt"
+      }
+    }
+  },
+  "forward_compatibility": {
+    "major_mismatch_action": "reject and do not enable streaming",
+    "record_version_mismatch_action": "reject unless later negotiated ABI explicitly lists backward compatibility",
+    "minor_0_reserved_rule": "all reserved bits and subfields must be zero; nonzero is corruption",
+    "newer_same_major_rule": "may retain record version 0x00004101 only with unchanged 64-byte base layout, geometry, mandatory fields, and semantics",
+    "old_parser_unknown_rule": "ignore unknown flag bits or newly defined values in V1.0-reserved subfields only when MMIO advertises a newer compatible minor",
+    "old_parser_minor_0_unknown_rule": "must not ignore unknown flags or nonzero reserved values",
+    "unnamed_header_reserved_bytes": 0,
+    "header_expansion_requires_new_major": true,
+    "field_movement_requires_new_major": true,
+    "payload_offset_change_requires_new_major": true,
+    "record_size_change_requires_new_major": true,
+    "padding_is_extension_area": false,
+    "padding_required_zero_for_record_version_0x00004101": true
+  },
+  "frozen_invariants": [
+    "header bytes equal 64",
+    "payload starts at byte 64",
+    "payload ends at byte 3903",
+    "padding starts at byte 3904",
+    "record ends at byte 4095",
+    "64 plus 3840 plus 192 equals 4096",
+    "512 beats times 8 bytes equals 4096",
+    "one record equals one active line and one AXI packet",
+    "no partial record publication",
+    "dropped attempts consume per-channel sequence but not global sequence",
+    "complete streamed records are globally contiguous within an epoch",
+    "MMIO identity is authoritative and no per-record build identity exists"
+  ]
+}
