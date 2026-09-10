@@ -1,0 +1,3 @@
+# G2B_NVP_VIDEO_DIAG1_R2R2_PROGRAMMING_RECEIPT
+
+FPGA SRAM programming: NOT_REACHED. Programming attempts: 0.

@@ -1,0 +1,3 @@
+# G2B_NVP_VIDEO_DIAG1_R2R2_REBOOT_RECEIPT
+
+Warm reboot: NOT_REACHED. Reboot count: 0.

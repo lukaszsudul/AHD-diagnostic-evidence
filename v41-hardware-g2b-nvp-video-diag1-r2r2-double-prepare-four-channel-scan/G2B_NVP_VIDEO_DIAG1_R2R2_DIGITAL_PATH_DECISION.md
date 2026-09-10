@@ -1,0 +1,3 @@
+# G2B_NVP_VIDEO_DIAG1_R2R2_DIGITAL_PATH_DECISION
+
+Downstream digital pixel path: NOT_REACHED.
