@@ -1,0 +1,794 @@
+{
+  "Schema": "G2B_NVP_VIDEO_DIAG1_R2R1_SEMANTIC_MODEL",
+  "SchemaVersion": 1,
+  "Status": "OFFLINE_DEFINITION_ONLY_NOT_A_RECONCILIATION_PASS",
+  "ClassifierPolicy": {
+    "InputObject": "SEQUENTIAL_STARTPOINT_CELL_FULL_NAME",
+    "MatchOperation": "PYTHON_RE_FULLMATCH",
+    "RulesFile": "G2B_NVP_VIDEO_DIAG1_R2R1_SOURCE_FAMILY_DEFINITIONS.csv",
+    "StripPinSuffix": false,
+    "RepresentativePinPolicy": "RESOLVE_REPORT_REPRESENTATIVE_C_PIN_TO_ITS_EXACT_ONE_SEQUENTIAL_OWNER_CELL_BEFORE_CLASSIFICATION",
+    "RequiredMatchesPerCrossClockStartpoint": 1,
+    "UnclassifiedDisposition": "FAIL_UNCLASSIFIED_CROSS_CLOCK_STARTPOINT",
+    "MultipleMatchDisposition": "FAIL_AMBIGUOUS_CROSS_CLOCK_STARTPOINT",
+    "UnknownUseRoleDisposition": "FAIL_UNRESOLVED_USE_ROLE",
+    "LocalSameClockPolicy": "RECORD_SEPARATELY_AND_EXCLUDE_FROM_CROSS_CLOCK_SUPPORT_SET",
+    "StaticPolicy": "RECORD_SEPARATELY_AND_EXCLUDE_FROM_CROSS_CLOCK_SUPPORT_SET",
+    "PrimaryPortOrUnknownClockPolicy": "FAIL_UNRESOLVED_ASYNCHRONOUS_PROVENANCE"
+  },
+  "SupportAtomKey": [
+    "LeafFamily",
+    "ParentFamily",
+    "Slot",
+    "Field",
+    "SourceClock",
+    "UseRole"
+  ],
+  "ComparedMetadata": [
+    "StartpointRole",
+    "GoverningToken",
+    "Protocol",
+    "EarliestUseBarrier",
+    "ReplacementGroup",
+    "ExceptionClass",
+    "ExceptionRequirementNs"
+  ],
+  "CanonicalFamilies": [
+    {
+      "LeafFamily": "RESET_COMMIT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["COMMIT_PHASE"],
+      "Width": 4,
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["RESET_RETURN_COMPLETION"],
+      "GoverningToken": "commit_sync2_axi[3:0]_completion_barrier",
+      "Protocol": "transport request/ack plus synchronized four-slot commit equality",
+      "EarliestUseBarrier": "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP",
+      "ReplacementGroup": "GROUP_13_CHECK_5_RESET_COMMIT_PHASE_COMPLETION_BARRIER",
+      "Authority": "R2 family definition plus Group 13"
+    },
+    {
+      "LeafFamily": "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["COUNT"],
+      "Width": 3,
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["RESET_RETURN_COMPLETION"],
+      "GoverningToken": "transport_ack_sync2_axi_and_commit_sync2_axi_completion",
+      "Protocol": "transport request/ack plus synchronized commit completion",
+      "EarliestUseBarrier": "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP",
+      "ReplacementGroup": "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+      "Authority": "R2 family definition plus Group 13"
+    },
+    {
+      "LeafFamily": "DESCRIPTOR_ATTEMPT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["ATTEMPT"],
+      "WidthPerSlot": 32,
+      "Slots": [0, 1, 2, 3],
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["DESCRIPTOR_COMMIT_CAPTURE"],
+      "GoverningToken": "commit_toggle_source[slot]_to_commit_sync2_axi[slot]",
+      "Protocol": "source descriptor commit followed by synchronized commit enqueue and AXI scheduler capture",
+      "EarliestUseBarrier": "ACTIVE_GROUP_10_3NS_BUS_SKEW_AND_EXISTING_PROTOCOL_BARRIER",
+      "ReplacementGroup": "ACTIVE_GROUP_10_DESCRIPTOR_ATTEMPT_SOURCE_TO_AXI",
+      "Authority": "preserved Group 10 plus source protocol"
+    },
+    {
+      "LeafFamily": "DESCRIPTOR_GENERATION_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["GENERATION"],
+      "WidthPerSlot": 24,
+      "Slots": [0, 1, 2, 3],
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["DESCRIPTOR_COMMIT_CAPTURE"],
+      "GoverningToken": "commit_toggle_source[slot]_to_commit_sync2_axi[slot]",
+      "Protocol": "source descriptor commit followed by synchronized commit enqueue and AXI scheduler capture",
+      "EarliestUseBarrier": "ACTIVE_GROUP_11_3NS_BUS_SKEW_AND_EXISTING_PROTOCOL_BARRIER",
+      "ReplacementGroup": "ACTIVE_GROUP_11_DESCRIPTOR_GENERATION_SOURCE_TO_AXI",
+      "Authority": "preserved Group 11 plus source protocol"
+    },
+    {
+      "LeafFamily": "DESCRIPTOR_EPOCH_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["EPOCH"],
+      "WidthPerSlot": 32,
+      "Slots": [0, 1, 2, 3],
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["DESCRIPTOR_COMMIT_CAPTURE"],
+      "GoverningToken": "descriptor_commit_completion_token",
+      "Protocol": "source descriptor completion followed by AXI-domain capture",
+      "EarliestUseBarrier": "ACTIVE_GROUP_12_3NS_BUS_SKEW_AND_EXISTING_PROTOCOL_BARRIER",
+      "ReplacementGroup": "ACTIVE_GROUP_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI",
+      "Authority": "R2 family definition plus preserved Group 12"
+    },
+    {
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["SLOT", "GENERATION", "EPOCH"],
+      "FieldWidths": {
+        "SLOT": 2,
+        "GENERATION": 24,
+        "EPOCH": 32
+      },
+      "TotalWidth": 58,
+      "SlotSemantics": "SELECTED_SLOT_ENCODED_BY_THE_TWO_BIT_SLOT_FIELD_NOT_A_PER_SLOT_ARRAY",
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["OWNERSHIP_NORMAL", "OWNERSHIP_MISMATCH", "OWNERSHIP_DECISION"],
+      "GoverningToken": "own_req_toggle_axi_to_own_req_sync2_source",
+      "Protocol": "own_ack_toggle_source_to_own_ack_sync2_axi",
+      "EarliestUseBarrier": "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP",
+      "ReplacementGroup": "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX",
+      "Authority": "Group 9; logical own_* holds may be physically merged with axis_* staging aliases"
+    },
+    {
+      "LeafFamily": "OWNERSHIP_RESULT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["RESULT"],
+      "Width": 1,
+      "SourceClock": "nvp_vclk1",
+      "DestinationClock": "userclk1",
+      "AllowedUseRoles": ["OWNERSHIP_ACKNOWLEDGED_RESULT"],
+      "GoverningToken": "own_ack_toggle_source_to_own_ack_sync2_axi",
+      "Protocol": "source result is produced with acknowledgement and held until AXI consumes it",
+      "EarliestUseBarrier": "GROUP_9_ACK_TO_USE_GE_32NS_AND_RETAINED_6NS_CAP",
+      "ReplacementGroup": "GROUP_9_RETAINED_REVERSE_OWN_OK_SOURCE_TO_AXI",
+      "Authority": "Group 9 reverse-result proof; distinct from the forward 58-bit ownership token"
+    },
+    {
+      "LeafFamily": "ENABLE_VALUE_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["VALUE"],
+      "Width": 1,
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["ENABLE_REQUEST"],
+      "GoverningToken": "enable_req_toggle_axi_to_enable_req_sync2_source",
+      "Protocol": "enable_ack_toggle_source_to_enable_ack_sync2_axi",
+      "EarliestUseBarrier": "TWO_NVP_CLOCK_SYNCHRONIZER_PLUS_REGISTERED_USE_AND_HOLD_UNTIL_ACK",
+      "ReplacementGroup": "PRESERVED_AGGREGATE_AXI_TO_SOURCE_MAILBOX_6NS",
+      "Authority": "source mailbox protocol plus active aggregate max-delay constraint"
+    },
+    {
+      "LeafFamily": "TRANSPORT_RESET_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["EPOCH", "HARD", "RELEASE_PHASE", "OWNERSHIP_PHASE"],
+      "FieldWidths": {
+        "EPOCH": 32,
+        "HARD": 1,
+        "RELEASE_PHASE": 4,
+        "OWNERSHIP_PHASE": 1
+      },
+      "TotalWidth": 38,
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["TRANSPORT_RESET_REQUEST", "RESET_OVERLAP_ACCOUNTING"],
+      "GoverningToken": "transport_req_toggle_axi_to_transport_req_sync2_source",
+      "Protocol": "transport acknowledgement is withheld until captured release and ownership phases retire",
+      "EarliestUseBarrier": "TRANSPORT_REQ_SYNC2_SOURCE_SEMANTIC_USE_PLUS_PHASE_RETIREMENT_BARRIER",
+      "ReplacementGroup": "ACTIVE_GROUP_8_TRANSPORT_AXI_TO_SOURCE",
+      "Authority": "preserved Group 8 plus Group 9 and Groups 14-17 reset-retirement evidence"
+    },
+    {
+      "LeafFamily": "SNAPSHOT_REQUEST_EPOCH_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Fields": ["EPOCH"],
+      "Width": 32,
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["SNAPSHOT_REQUEST"],
+      "GoverningToken": "snapshot_req_toggle_axi_to_snapshot_req_sync2_source",
+      "Protocol": "snapshot epoch captured into source echo and returned with snapshot acknowledgement",
+      "EarliestUseBarrier": "TWO_NVP_CLOCK_SYNCHRONIZER_PLUS_SOURCE_CAPTURE",
+      "ReplacementGroup": "ACTIVE_GROUP_7_SNAPSHOT_EPOCH_AXI_TO_SOURCE",
+      "Authority": "preserved Group 7 plus source mailbox protocol"
+    },
+    {
+      "LeafFamily": "RELEASE_GENERATION_FIELD",
+      "LegacyR2FamilyAlias": "RELEASE_SLOT_STABLE_PAYLOAD",
+      "ParentFamily": "RELEASE_TOKEN_STABLE_PAYLOAD",
+      "Fields": ["GENERATION"],
+      "WidthPerSlot": 24,
+      "Slots": [0, 1, 2, 3],
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["ORDINARY_RELEASE_NORMAL", "ORDINARY_RELEASE_MISMATCH", "RESET_OVERLAP_ACCOUNTING"],
+      "Authority": "R2 generation family under an explicit legacy-name alias plus Groups 14-17"
+    },
+    {
+      "LeafFamily": "RELEASE_EPOCH_FIELD",
+      "LegacyR2FamilyAlias": "RELEASE_EPOCH_STABLE_PAYLOAD",
+      "ParentFamily": "RELEASE_TOKEN_STABLE_PAYLOAD",
+      "Fields": ["EPOCH"],
+      "WidthPerSlot": 32,
+      "Slots": [0, 1, 2, 3],
+      "SourceClock": "userclk1",
+      "DestinationClock": "nvp_vclk1",
+      "AllowedUseRoles": ["ORDINARY_RELEASE_NORMAL", "ORDINARY_RELEASE_MISMATCH", "RESET_OVERLAP_ACCOUNTING"],
+      "Authority": "R2 epoch family under an explicit legacy-name alias plus Groups 14-17"
+    }
+  ],
+  "AuxiliarySourceAuthority": {
+    "Purpose": "EXPLICIT_CLASSIFICATION_OF_THE_SIX_PRODUCT_CROSS_CLOCK_OCCURRENCES_OUTSIDE_THE_SIX_REQUESTED_RAW_PAYLOAD_LEAVES",
+    "ProductInventory": {
+      "Path": "cone-proof/product/DESTINATION_STARTPOINT_INVENTORY.csv",
+      "SHA256": "40751B21E66E616B93161B62D1E3D59C8E87FB0EB9E859A253FB3A0BCE4EE9ED"
+    },
+    "Entries": [
+      {
+        "LeafFamily": "ENABLE_VALUE_STABLE_PAYLOAD",
+        "PhysicalCell": "G2B_ONECH_C2H/enable_value_hold_axi_reg",
+        "Field": "VALUE",
+        "UseRole": "ENABLE_REQUEST",
+        "ObservedProductOccurrences": 1,
+        "ObservedDestinations": ["G2B_ONECH_C2H/enable_applied_source_reg/D"],
+        "SourceEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/rtl/g2b/v41_g2b_onech_c2h.sv:141-149,534-540,1857-1861",
+        "ConstraintEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/xdc/common/g2b_cdc.xdc:27-34",
+        "Rationale": "held one-bit request payload sampled only when enable_req_sync2_source changes and acknowledged by enable_ack_toggle_source"
+      },
+      {
+        "LeafFamily": "TRANSPORT_RESET_STABLE_PAYLOAD",
+        "PhysicalCell": "G2B_ONECH_C2H/transport_hard_hold_axi_reg",
+        "Field": "HARD",
+        "UseRole": "TRANSPORT_RESET_REQUEST",
+        "ObservedProductOccurrences": 2,
+        "ObservedDestinations": [
+          "G2B_ONECH_C2H/source_ownership_fatal_event_reg/D",
+          "G2B_ONECH_C2H/source_ownership_fatal_reg/D"
+        ],
+        "SourceEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/rtl/g2b/v41_g2b_onech_c2h.sv:151-162,590-600,629-719",
+        "ConstraintEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/xdc/common/g2b_cdc.xdc:45-48",
+        "Rationale": "explicit Group-8 hard qualifier sampled under transport_req_sync2_source; acknowledgement is withheld through release-phase and ownership-phase retirement"
+      },
+      {
+        "LeafFamily": "OWNERSHIP_RESULT_STABLE_PAYLOAD",
+        "PhysicalCell": "G2B_ONECH_C2H/own_ok_hold_source_reg",
+        "Field": "RESULT",
+        "UseRole": "OWNERSHIP_ACKNOWLEDGED_RESULT",
+        "ObservedProductOccurrences": 3,
+        "ObservedDestinations": [
+          "G2B_ONECH_C2H/axis_state_reg[0]/D",
+          "G2B_ONECH_C2H/axis_state_reg[1]/D",
+          "G2B_ONECH_C2H/axis_state_reg[2]/D"
+        ],
+        "SourceEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/rtl/g2b/v41_g2b_onech_c2h.sv:569-588,1402-1412,1483-1485,1801-1820",
+        "ConstraintEvidence": "C:/FPGA/V41_G2B_NVP_VIDEO_DIAG1/xdc/common/g2b_cdc.xdc:190-203",
+        "PromotedMethodEvidence": "C:/FPGA/V41_G2B_EVIDENCE/v41-development-g2b-bs3-ownership-mailbox-settling-proof/G2B_BS3_PROTOCOL_TIMING_MARGIN.md",
+        "Rationale": "reverse held decision bit produced with own_ack_toggle_source and consumed only after own_ack_sync2_axi equals own_req_toggle_axi"
+      }
+    ],
+    "NoGenericNormalization": true,
+    "UnlistedSourceDisposition": "FAIL_UNCLASSIFIED_CROSS_CLOCK_STARTPOINT"
+  },
+  "CompositeFamilies": [
+    {
+      "ParentFamily": "RELEASE_TOKEN_STABLE_PAYLOAD",
+      "Scope": "PER_SLOT",
+      "Slots": [0, 1, 2, 3],
+      "Children": [
+        {
+          "LeafFamily": "RELEASE_GENERATION_FIELD",
+          "Field": "GENERATION",
+          "Width": 24,
+          "PhysicalBase": "G2B_ONECH_C2H/release_generation_axi_reg"
+        },
+        {
+          "LeafFamily": "RELEASE_EPOCH_FIELD",
+          "Field": "EPOCH",
+          "Width": 32,
+          "PhysicalBase": "G2B_ONECH_C2H/release_epoch_axi_reg"
+        }
+      ],
+      "WidthPerSlot": 56,
+      "RequiredChildFieldsPerObservedSlot": ["GENERATION", "EPOCH"],
+      "ExplicitExclusions": [
+        "G2B_ONECH_C2H/axis_slot_reg",
+        "G2B_ONECH_C2H/own_slot_hold_axi_reg",
+        "G2B_ONECH_C2H/axis_generation_reg",
+        "G2B_ONECH_C2H/own_generation_hold_axi_reg",
+        "G2B_ONECH_C2H/axis_epoch_reg",
+        "G2B_ONECH_C2H/own_epoch_hold_axi_reg"
+      ],
+      "Meaning": "the two distinct child fields are held and consumed together as one per-slot release message; parent membership does not make the children semantically identical"
+    }
+  ],
+  "ReleaseUseRoles": {
+    "ORDINARY_RELEASE_NORMAL": {
+      "DestinationFullmatchRegex": "^G2B_ONECH_C2H/slot_state_source_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>[0-2])\\]/D$",
+      "RequiredReleaseSlot": "DESTINATION_SLOT",
+      "GoverningToken": "release_toggle_axi[slot]_to_release_sync2_source[slot]",
+      "Protocol": "per-slot release-toggle stable-data transfer; matching generation epoch reset epoch and DMA_OWNED state authorize RELEASABLE",
+      "EarliestUseBarrier": "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP",
+      "ReplacementGroup": "GROUP_{14_PLUS_SLOT}_NORMAL_STATE_TRANSITION"
+    },
+    "ORDINARY_RELEASE_MISMATCH": {
+      "DestinationFullmatchRegexes": [
+        "^G2B_ONECH_C2H/enable_applied_source_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_event_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D$"
+      ],
+      "RequiredReleaseSlots": "ACTUAL_EXTRACTED_SLOTS_MUST_BE_PRESERVED",
+      "GoverningToken": "release_toggle_axi[slot]_to_release_sync2_source[slot]",
+      "Protocol": "per-slot release-toggle stable-data transfer; mismatch fails closed through fatal event and admission disable",
+      "EarliestUseBarrier": "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP",
+      "ReplacementGroup": "GROUP_{14_PLUS_SLOT}_MISMATCH_CONTAINMENT"
+    },
+    "RESET_OVERLAP_ACCOUNTING": {
+      "DestinationFullmatchRegex": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[(?P<bit>[0-2])\\]/D$",
+      "RequiredReleaseSlots": [0, 1, 2, 3],
+      "GoverningToken": "transport_req_toggle_axi_to_transport_req_sync2_source",
+      "SemanticUseTrigger": "transport_req_sync2_source",
+      "Protocol": "synchronized transport request consumes the same-episode release tokens for aggregate abandoned-record accounting",
+      "EarliestUseBarrier": "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP_VIA_TRANSPORT_REQUEST",
+      "RetirementBarrier": "transport_release_phase_hold_axi[3:0] captured phase equals release_sync2_source[3:0] before transport acknowledgement",
+      "ReplacementGroup": "GROUP_{14_PLUS_SLOT}_RESET_OVERLAP_ACCOUNTING_PLUS_GROUP_13_RESET_RETURN",
+      "RequiredPerSlotControls": [
+        "release_toggle_axi[slot]",
+        "release_sync1_source[slot]",
+        "release_sync2_source[slot]",
+        "release_seen_source[slot]",
+        "transport_release_phase_hold_axi[slot]"
+      ],
+      "RequiredLocalQualification": "slot_state_source[slot] is COMMITTED or DMA_OWNED and release token match is evaluated"
+    }
+  },
+  "OwnershipUseRoles": {
+    "OWNERSHIP_NORMAL": {
+      "DestinationFullmatchRegex": "^G2B_ONECH_C2H/slot_state_source_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>[0-2])\\]/D$",
+      "GoverningToken": "own_req_toggle_axi_to_own_req_sync2_source",
+      "RequiredFields": ["SLOT", "GENERATION", "EPOCH"]
+    },
+    "OWNERSHIP_MISMATCH": {
+      "DestinationFullmatchRegexes": [
+        "^G2B_ONECH_C2H/enable_applied_source_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_event_reg/D$",
+        "^G2B_ONECH_C2H/source_ownership_fatal_deferred_reg/D$"
+      ],
+      "GoverningToken": "own_req_toggle_axi_to_own_req_sync2_source",
+      "RequiredFields": ["SLOT", "GENERATION", "EPOCH"]
+    },
+    "OWNERSHIP_DECISION": {
+      "DestinationFullmatchRegex": "^G2B_ONECH_C2H/own_ok_hold_source_reg/D$",
+      "GoverningToken": "own_req_toggle_axi_to_own_req_sync2_source",
+      "RequiredFields": ["SLOT", "GENERATION", "EPOCH"],
+      "Meaning": "the complete forward ownership token is evaluated to produce the held decision result; success and failure both use this role"
+    }
+  },
+  "UseRoleResolution": {
+    "Policy": "FIRST_MATCH_IS_FORBIDDEN; EXACTLY_ONE_APPLICABLE_ROLE_MUST_RESULT_FOR_EACH_CLASSIFIED_CROSS_CLOCK_STARTPOINT_AND_DESTINATION_PAIR",
+    "FixedLeafFamilyRoles": {
+      "RESET_COMMIT_STABLE_PAYLOAD": "RESET_RETURN_COMPLETION",
+      "RESET_ABANDONED_COUNT_STABLE_PAYLOAD": "RESET_RETURN_COMPLETION",
+      "DESCRIPTOR_ATTEMPT_STABLE_PAYLOAD": "DESCRIPTOR_COMMIT_CAPTURE",
+      "DESCRIPTOR_GENERATION_STABLE_PAYLOAD": "DESCRIPTOR_COMMIT_CAPTURE",
+      "DESCRIPTOR_EPOCH_STABLE_PAYLOAD": "DESCRIPTOR_COMMIT_CAPTURE",
+      "OWNERSHIP_RESULT_STABLE_PAYLOAD": "OWNERSHIP_ACKNOWLEDGED_RESULT",
+      "ENABLE_VALUE_STABLE_PAYLOAD": "ENABLE_REQUEST",
+      "SNAPSHOT_REQUEST_EPOCH_STABLE_PAYLOAD": "SNAPSHOT_REQUEST"
+    },
+    "DestinationDependentLeafFamilyRoles": {
+      "OWNERSHIP_STABLE_PAYLOAD": "RESOLVE_WITH_OwnershipUseRoles",
+      "RELEASE_GENERATION_FIELD": "RESOLVE_WITH_ReleaseUseRoles",
+      "RELEASE_EPOCH_FIELD": "RESOLVE_WITH_ReleaseUseRoles",
+      "TRANSPORT_RESET_STABLE_PAYLOAD": {
+        "RESET_OVERLAP_ACCOUNTING": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[(?P<bit>[0-2])\\]/D$",
+        "TRANSPORT_RESET_REQUEST": [
+          "^G2B_ONECH_C2H/source_ownership_fatal_reg/D$",
+          "^G2B_ONECH_C2H/source_ownership_fatal_event_reg/D$"
+        ]
+      }
+    },
+    "UnlistedDestinationDisposition": "FAIL_UNRESOLVED_USE_ROLE",
+    "OverlapDisposition": "FAIL_AMBIGUOUS_USE_ROLE"
+  },
+  "ControlStructures": [
+    {
+      "ControlID": "OWNERSHIP_REQUEST_ACK",
+      "UseRoles": ["OWNERSHIP_NORMAL", "OWNERSHIP_MISMATCH", "OWNERSHIP_DECISION", "OWNERSHIP_ACKNOWLEDGED_RESULT"],
+      "Forward": ["own_req_toggle_axi", "own_req_sync1_source", "own_req_sync2_source"],
+      "Reverse": ["own_ack_toggle_source", "own_ack_sync1_axi", "own_ack_sync2_axi"],
+      "RequiredAsyncRegStages": ["own_req_sync1_source", "own_req_sync2_source", "own_ack_sync1_axi", "own_ack_sync2_axi"]
+    },
+    {
+      "ControlID": "RELEASE_SLOT_REQUEST",
+      "UseRoles": ["ORDINARY_RELEASE_NORMAL", "ORDINARY_RELEASE_MISMATCH"],
+      "PerSlot": true,
+      "Slots": [0, 1, 2, 3],
+      "Forward": ["release_toggle_axi[slot]", "release_sync1_source[slot]", "release_sync2_source[slot]"],
+      "Seen": "release_seen_source[slot]",
+      "RequiredAsyncRegStages": ["release_sync1_source[slot]", "release_sync2_source[slot]"]
+    },
+    {
+      "ControlID": "TRANSPORT_REQUEST_ACK_AND_PHASE_RETIREMENT",
+      "UseRoles": ["TRANSPORT_RESET_REQUEST", "RESET_OVERLAP_ACCOUNTING"],
+      "Forward": ["transport_req_toggle_axi", "transport_req_sync1_source", "transport_req_sync2_source"],
+      "Reverse": ["transport_ack_toggle_source", "transport_ack_sync1_axi", "transport_ack_sync2_axi"],
+      "RetirementInputs": ["transport_release_phase_hold_axi[3:0]", "release_sync2_source[3:0]", "transport_own_phase_hold_axi", "own_req_sync2_source"],
+      "RequiredAsyncRegStages": ["transport_req_sync1_source", "transport_req_sync2_source", "transport_ack_sync1_axi", "transport_ack_sync2_axi"]
+    },
+    {
+      "ControlID": "RESET_RETURN_COMPLETION",
+      "UseRoles": ["RESET_RETURN_COMPLETION"],
+      "RequiredPredicate": "stream_reset_busy_axi && transport_ack_sync2_axi == transport_req_toggle_axi && commit_sync2_axi == reset_commit_phase_hold_source && hard_episode_qualification",
+      "RequiredAsyncRegStages": ["transport_ack_sync1_axi", "transport_ack_sync2_axi", "commit_sync1_axi[3:0]", "commit_sync2_axi[3:0]"]
+    },
+    {
+      "ControlID": "DESCRIPTOR_COMMIT_CAPTURE",
+      "UseRoles": ["DESCRIPTOR_COMMIT_CAPTURE"],
+      "PerSlot": true,
+      "Slots": [0, 1, 2, 3],
+      "Forward": ["commit_toggle_source[slot]", "commit_sync1_axi[slot]", "commit_sync2_axi[slot]"],
+      "Use": ["commit_enqueue", "scheduler_pop"],
+      "RequiredAsyncRegStages": ["commit_sync1_axi[slot]", "commit_sync2_axi[slot]"]
+    },
+    {
+      "ControlID": "ENABLE_REQUEST_ACK",
+      "UseRoles": ["ENABLE_REQUEST"],
+      "Forward": ["enable_req_toggle_axi", "enable_req_sync1_source", "enable_req_sync2_source"],
+      "Reverse": ["enable_ack_toggle_source", "enable_ack_sync1_axi", "enable_ack_sync2_axi"],
+      "RequiredAsyncRegStages": ["enable_req_sync1_source", "enable_req_sync2_source", "enable_ack_sync1_axi", "enable_ack_sync2_axi"]
+    },
+    {
+      "ControlID": "SNAPSHOT_REQUEST_ACK",
+      "UseRoles": ["SNAPSHOT_REQUEST"],
+      "Forward": ["snapshot_req_toggle_axi", "snapshot_req_sync1_source", "snapshot_req_sync2_source"],
+      "Reverse": ["snapshot_ack_toggle_source", "snapshot_ack_sync1_axi", "snapshot_ack_sync2_axi"],
+      "RequiredAsyncRegStages": ["snapshot_req_sync1_source", "snapshot_req_sync2_source", "snapshot_ack_sync1_axi", "snapshot_ack_sync2_axi"]
+    }
+  ],
+  "LocalAndControlClassificationPolicy": {
+    "ExplicitControlKinds": [
+      {
+        "ControlKind": "OWNERSHIP_REQUEST_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/own_req_sync2_source_reg$",
+        "UseRoleResolution": "MIRROR_DESTINATION_ROLE_FROM_OwnershipUseRoles",
+        "GoverningToken": "own_req_toggle_axi_to_own_req_sync2_source"
+      },
+      {
+        "ControlKind": "OWNERSHIP_ACK_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/own_ack_sync2_axi_reg$",
+        "UseRole": "OWNERSHIP_ACKNOWLEDGED_RESULT",
+        "GoverningToken": "own_ack_toggle_source_to_own_ack_sync2_axi"
+      },
+      {
+        "ControlKind": "COMMIT_COMPLETION_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/commit_sync2_axi_reg\\[(?P<slot>[0-3])\\]$",
+        "UseRole": "RESET_RETURN_COMPLETION",
+        "GoverningToken": "commit_sync2_axi[3:0]_completion_barrier"
+      },
+      {
+        "ControlKind": "TRANSPORT_ACK_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/transport_ack_sync2_axi_reg$",
+        "UseRole": "RESET_RETURN_COMPLETION",
+        "GoverningToken": "transport_ack_sync2_axi_and_commit_sync2_axi_completion"
+      },
+      {
+        "ControlKind": "RELEASE_REQUEST_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/release_sync2_source_reg\\[(?P<slot>[0-3])\\]$",
+        "UseRoleResolution": "MIRROR_DESTINATION_ROLE_FROM_ReleaseUseRoles",
+        "ResetOverlapGoverningToken": "transport_req_toggle_axi_to_transport_req_sync2_source",
+        "ResetOverlapTreatment": "RELEASE_SYNC2_IS_REQUIRED_PER_SLOT_CONTROL_AND_RETIREMENT_EVIDENCE_NOT_AN_ADDITIONAL_GOVERNING_TOKEN"
+      },
+      {
+        "ControlKind": "TRANSPORT_REQUEST_SYNC2",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/transport_req_sync2_source_reg$",
+        "UseRole": "RESET_OVERLAP_ACCOUNTING",
+        "GoverningToken": "transport_req_toggle_axi_to_transport_req_sync2_source"
+      },
+      {
+        "ControlKind": "RELEASE_SEEN_STATE",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/release_seen_source_reg\\[(?P<slot>[0-3])\\]$",
+        "UseRoleResolution": "MIRROR_DESTINATION_ROLE_FROM_ReleaseUseRoles",
+        "Classification": "EXPLICIT_LOCAL_OR_CONTROL_DEPENDENCY_NOT_A_PAYLOAD_FAMILY",
+        "ResetOverlapGoverningToken": "transport_req_toggle_axi_to_transport_req_sync2_source"
+      },
+      {
+        "ControlKind": "SLOT_STATE_QUALIFIER",
+        "PhysicalCellFullmatchRegex": "^G2B_ONECH_C2H/slot_state_source_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>[0-2])\\]$",
+        "DestinationFullmatchRegex": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[(?P<bit>[0-2])\\]/D$",
+        "UseRole": "RESET_OVERLAP_SLOT_STATE_QUALIFICATION",
+        "Classification": "EXPLICIT_LOCAL_SAME_CLOCK_QUALIFIER_NOT_A_PAYLOAD_FAMILY"
+      }
+    ],
+    "TransportReleasePhasePolicy": "transport_release_phase_hold_axi is PAYLOAD field RELEASE_PHASE under SF016; never duplicate it as a control rule",
+    "UnruledSameClockPolicy": "RECORD_EACH_EXACT_PHYSICAL_CELL_CLOCK_AND_DESTINATION_AS_LOCAL_SAME_CLOCK_WITH_NO_SEMANTIC_FAMILY; THIS IS INVENTORY_NOT_NORMALIZATION_AND CANNOT SATISFY A GOVERNING_TOKEN_PROOF",
+    "InactiveExplicitRulePolicy": "RECORD_THE_EXACT_MATCHED_RULE_ID_AND_DESTINATION_AS_INACTIVE; DO_NOT_PROMOTE_IT_TO_A_CONTROL_DEPENDENCY",
+    "CrossClockDefault": "FAIL_UNCLASSIFIED_CROSS_CLOCK_STARTPOINT"
+  },
+  "RequiredChangedRowPartition": {
+    "PartitionFile": "G2B_NVP_VIDEO_DIAG1_R2R1_ROW_PARTITION.csv",
+    "Critical": {
+      "Total": 302,
+      "SameFamily": 295,
+      "SameFamilyBreakdown": {
+        "RESET_COMMIT_STABLE_PAYLOAD": 285,
+        "OWNERSHIP_STABLE_PAYLOAD": 10
+      },
+      "DestinationConeSupportSet": 7,
+      "DestinationConeRowIDs": [
+        "CDC1-CHG-0286",
+        "CDC1-CHG-0288",
+        "CDC1-CHG-0289",
+        "CDC1-CHG-0290",
+        "CDC1-CHG-0300",
+        "CDC1-CHG-0301",
+        "CDC1-CHG-0302"
+      ]
+    },
+    "Warning": {
+      "Total": 220,
+      "SameFamily": 217,
+      "SameFamilyBreakdown": {
+        "DESCRIPTOR_EPOCH_STABLE_PAYLOAD": 24,
+        "RESET_COMMIT_STABLE_PAYLOAD": 163,
+        "RESET_ABANDONED_COUNT_STABLE_PAYLOAD": 30
+      },
+      "CompositeReleaseToken": 3,
+      "CompositeReleaseRowIDs": [
+        "WARN-CHG-0218",
+        "WARN-CHG-0219",
+        "WARN-CHG-0220"
+      ]
+    },
+    "AllChangedRows": 522,
+    "ExpectedUniqueRowIDs": 522,
+    "ExpectedUniqueDestinationPins": 522,
+    "ExpectedDestinationTerminalCounts": {
+      "D": 226,
+      "CE": 265,
+      "R": 31
+    },
+    "ExpectedClockPairCounts": {
+      "nvp_vclk1->userclk1": 502,
+      "userclk1->nvp_vclk1": 20
+    }
+  },
+  "RequiredSupportCSVColumns": [
+    "RowID",
+    "Rule",
+    "Severity",
+    "DestinationPin",
+    "DestinationCell",
+    "DestinationClock",
+    "ProductReportRepresentative",
+    "DiagnosticReportRepresentative",
+    "ProductPhysicalStartpoints",
+    "DiagnosticPhysicalStartpoints",
+    "ProductSemanticFamilies",
+    "DiagnosticSemanticFamilies",
+    "NewFamilies",
+    "MissingFamilies",
+    "ProductGoverningTokens",
+    "DiagnosticGoverningTokens",
+    "ProtocolDrift",
+    "ExceptionDrift",
+    "BarrierDrift",
+    "ReplacementGroupDrift",
+    "ProofClass",
+    "Disposition",
+    "EvidencePath"
+  ],
+  "RequiredPerRowEvidenceJSON": {
+    "Classification": "G2B_NVP_VIDEO_DIAG1_R2R1_DESTINATION_CONE_ROW_EVIDENCE_V1",
+    "RequiredTopLevelKeys": ["Classification", "RowAuthority", "InputSHA256", "Raw", "Normalized", "Comparison"],
+    "RequiredRawProfiles": ["Product", "Diagnostic"],
+    "RequiredRawProfileKeys": ["Summary", "PhysicalStartpoints"],
+    "RequiredNormalizedProfiles": ["Product", "Diagnostic"],
+    "RequiredNormalizedProfileKeys": [
+      "ClassifiedStartpoints",
+      "SupportAtoms",
+      "GoverningControls",
+      "VirtualControls",
+      "LocalQualifiers",
+      "LocalSameClockStartpoints",
+      "Issues"
+    ],
+    "RequiredClassifiedStartpointKeys": [
+      "PhysicalStartpoint",
+      "PhysicalRef",
+      "ClockRelation",
+      "Role",
+      "RuleID",
+      "LeafFamily",
+      "ParentFamily",
+      "ControlKind",
+      "Slot",
+      "Field",
+      "Bit",
+      "SourceClock",
+      "UseRole",
+      "LegacyR2Family",
+      "GoverningTokens",
+      "Protocols",
+      "Exceptions",
+      "ExceptionRequirementsNs",
+      "Barriers",
+      "ReplacementGroups",
+      "ClassificationStatus"
+    ],
+    "RequiredComparisonKeys": [
+      "ProductSemanticAtoms",
+      "DiagnosticSemanticAtoms",
+      "NewAtoms",
+      "MissingAtoms",
+      "ProductGoverningTokens",
+      "DiagnosticGoverningTokens",
+      "TokenSetDrift",
+      "AtomTokenDrift",
+      "ProtocolDrift",
+      "ExceptionDrift",
+      "ExceptionClassDrift",
+      "ExceptionRequirementDrift",
+      "BarrierDrift",
+      "ReplacementGroupDrift",
+      "GoverningControlDrift",
+      "VirtualGoverningControlDrift",
+      "SourceClockDrift",
+      "ProofClass",
+      "Disposition",
+      "Blockers"
+    ],
+    "EvidencePathPolicy": "TASK_RELATIVE_FORWARD_SLASH_PATH_TO_AN_EXISTING_JSON_FILE"
+  },
+  "RequiredV2Manifest": {
+    "Classification": "PROFILE_SPECIFIC_DIAGNOSTIC_CDC_MANIFEST_V2",
+    "ExpectedRows": 1337,
+    "RequiredUniqueRowIDs": 1337,
+    "RequiredColumns": [
+      "RowID",
+      "ProductPhysicalSource",
+      "DiagnosticPhysicalSource",
+      "DestinationEndpoint",
+      "Rule",
+      "Severity",
+      "SourceClock",
+      "DestinationClock",
+      "Exception",
+      "SemanticFamilyOrSupportSet",
+      "GoverningToken",
+      "Protocol",
+      "EarliestUseBarrier",
+      "ReplacementGroup",
+      "ProofClass",
+      "RowDisposition",
+      "EvidencePath"
+    ],
+    "EvidencePathPolicy": "NONEMPTY_EXISTING_TASK_RELATIVE_FORWARD_SLASH_PATH",
+    "ProofClassCounts": {
+      "BYTE_IDENTICAL": 815,
+      "SAME_FAMILY_REPRESENTATIVE_EQUIVALENCE": 512,
+      "DESTINATION_CONE_SUPPORT_SET_EQUIVALENCE": 7,
+      "COMPOSITE_RELEASE_TOKEN_EQUIVALENCE": 3
+    },
+    "CanonicalArtifactNames": [
+      "G2B_NVP_VIDEO_DIAG1_R2R1_CDC_SEMANTIC_MANIFEST_V2.csv",
+      "G2B_NVP_VIDEO_DIAG1_R2R1_CDC_SEMANTIC_MANIFEST_V2.json",
+      "G2B_NVP_VIDEO_DIAG1_R2R1_CDC_SEMANTIC_MANIFEST_V2.sha256"
+    ],
+    "PromptPhaseIArtifactAliases": [
+      "NVP_VIDEO_DIAG1_R1_CDC_SEMANTIC_MANIFEST_V2.csv",
+      "NVP_VIDEO_DIAG1_R1_CDC_SEMANTIC_MANIFEST_V2.json",
+      "NVP_VIDEO_DIAG1_R1_CDC_SEMANTIC_MANIFEST_V2.sha256"
+    ],
+    "AliasPolicy": "BOTH_THREE_FILE_NAME_SETS_REQUIRED_AND_CORRESPONDING_FILES_MUST_BE_BYTE_IDENTICAL",
+    "SidecarFormat": "KEY_EQUALS_VALUE_LINES",
+    "RequiredSidecarKeys": ["CSV_SHA256", "JSON_SHA256"],
+    "DigestLiteralPolicy": "UPPERCASE_64_HEX"
+  },
+  "RequiredSemanticReconciliationReceipt": {
+    "Path": "cdc/G2B_NVP_VIDEO_DIAG1_R2R1_SEMANTIC_RECONCILIATION_RECEIPT.txt",
+    "Format": "KEY_EQUALS_VALUE_LINES",
+    "DigestLiteralPolicy": "ALL_SHA256_VALUES_ARE_UPPERCASE_64_HEX",
+    "RequiredKeys": [
+      "CLASSIFICATION",
+      "RESULT",
+      "CDC_1_BYTE_IDENTICAL_ROWS",
+      "CDC_10_BYTE_IDENTICAL_ROWS",
+      "CDC_13_BYTE_IDENTICAL_ROWS",
+      "CRITICAL_SAME_FAMILY_ROWS",
+      "CRITICAL_SAME_FAMILY_RECONCILED",
+      "CROSS_FAMILY_CRITICAL_ROWS",
+      "CROSS_FAMILY_CRITICAL_RECONCILED",
+      "TOTAL_CHANGED_CRITICAL_ROWS",
+      "TOTAL_CHANGED_CRITICAL_RECONCILED",
+      "WARNING_SAME_FAMILY_ROWS",
+      "WARNING_SAME_FAMILY_RECONCILED",
+      "COMPOSITE_RELEASE_WARNING_ROWS",
+      "COMPOSITE_RELEASE_WARNING_RECONCILED",
+      "TOTAL_CHANGED_WARNING_ROWS",
+      "TOTAL_CHANGED_WARNING_RECONCILED",
+      "UNCLASSIFIED_CROSS_CLOCK_STARTPOINTS",
+      "DIAGNOSTIC_SOURCE_FAMILIES_IN_FUNCTIONAL_CONES",
+      "ARBITRARY_SOURCE_NORMALIZATION_USED",
+      "OWNERSHIP_RELEASE_MERGED",
+      "COMPOSITE_CHILD_FIELDS_PRESERVED",
+      "SEMANTIC_MODEL_SHA256",
+      "DESTINATION_CONE_COMPARER_RECEIPT_SHA256",
+      "PRODUCT_RAW_CDC_REPORT_SHA256",
+      "DIAGNOSTIC_RAW_CDC_REPORT_SHA256",
+      "PRODUCT_EXTRACTION_RECEIPT_SHA256",
+      "DIAGNOSTIC_EXTRACTION_RECEIPT_SHA256",
+      "SOURCE_FUNCTIONAL_IDENTITY_REPORT_SHA256",
+      "DIAGNOSTIC_TAP_FANOUT_CSV_SHA256"
+    ],
+    "RequiredLiteralValues": {
+      "CDC_1_BYTE_IDENTICAL_ROWS": 121,
+      "CDC_10_BYTE_IDENTICAL_ROWS": 2,
+      "CDC_13_BYTE_IDENTICAL_ROWS": 2,
+      "CRITICAL_SAME_FAMILY_ROWS": 295,
+      "CRITICAL_SAME_FAMILY_RECONCILED": 295,
+      "CROSS_FAMILY_CRITICAL_ROWS": 7,
+      "CROSS_FAMILY_CRITICAL_RECONCILED": 7,
+      "TOTAL_CHANGED_CRITICAL_ROWS": 302,
+      "TOTAL_CHANGED_CRITICAL_RECONCILED": 302,
+      "WARNING_SAME_FAMILY_ROWS": 217,
+      "WARNING_SAME_FAMILY_RECONCILED": 217,
+      "COMPOSITE_RELEASE_WARNING_ROWS": 3,
+      "COMPOSITE_RELEASE_WARNING_RECONCILED": 3,
+      "TOTAL_CHANGED_WARNING_ROWS": 220,
+      "TOTAL_CHANGED_WARNING_RECONCILED": 220,
+      "UNCLASSIFIED_CROSS_CLOCK_STARTPOINTS": 0,
+      "DIAGNOSTIC_SOURCE_FAMILIES_IN_FUNCTIONAL_CONES": 0,
+      "ARBITRARY_SOURCE_NORMALIZATION_USED": "NO",
+      "OWNERSHIP_RELEASE_MERGED": "NO",
+      "COMPOSITE_CHILD_FIELDS_PRESERVED": "YES"
+    }
+  },
+  "HardFailWarnings": [
+    "R2 names RELEASE_SLOT_STABLE_PAYLOAD and RELEASE_EPOCH_STABLE_PAYLOAD are explicit legacy aliases for RELEASE_GENERATION_FIELD and RELEASE_EPOCH_FIELD; never silently rename or merge their meanings.",
+    "OWNERSHIP_STABLE_PAYLOAD is the complete 58-bit SLOT plus GENERATION plus EPOCH token. A slot-only hit is incomplete.",
+    "OWNERSHIP_RESULT_STABLE_PAYLOAD is the reverse one-bit acknowledged result and is not the forward ownership token.",
+    "RELEASE_GENERATION_FIELD and RELEASE_EPOCH_FIELD remain distinct leaves even when represented by RELEASE_TOKEN_STABLE_PAYLOAD.",
+    "Ordinary release is governed by per-slot release sync2. Reset-overlap accounting is triggered by transport request sync2 and has a separate captured-versus-synchronized release-phase retirement barrier.",
+    "reset_abandoned_hold_source_reg is a source-family member when observed from AXI-domain destinations but is the destination for the three reset-overlap composite rows. Classify startpoints, never destination-name bases.",
+    "A report representative ending in /C is not a fan-in Q/startpoint pin. Resolve its exact owning sequential cell and check owner membership separately.",
+    "Pure local same-clock controls are not cross-clock families. Record them in per-row evidence and compare their audited role sets separately.",
+    "The required 23-column support CSV omits source-clock sets, token structures, unclassified sources, and local controls. EvidencePath must identify a detailed per-row JSON containing them.",
+    "Group 9 and Groups 13-17 establish semantic protocol and timing authority, not membership in either current DCP cone. Only extracted DCP objects establish membership.",
+    "Auxiliary family names are exact protocol-specific classifications backed by source and preserved groups; they are not wildcard normalization. Any source outside the explicit fullmatch rules is a hard failure.",
+    "The prompt has a manifest-name contradiction: Phase I names NVP_VIDEO_DIAG1_R1_CDC_SEMANTIC_MANIFEST_V2 while the required artifact list names G2B_NVP_VIDEO_DIAG1_R2R1_CDC_SEMANTIC_MANIFEST_V2. Both three-file name sets are required and corresponding files must be byte-identical.",
+    "This definition artifact does not assert that PRODUCT and diagnostic support sets match; reconciliation PASS requires completed extraction and exact comparison."
+  ],
+  "AuthorityInputs": {
+    "R2CriticalRegistry": {
+      "Path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R2_20260910T064851Z\\cdc\\G2B_NVP_VIDEO_DIAG1_R2_CDC_CRITICAL_RECONCILIATION.csv",
+      "SHA256": "7E60B4855BD2A1D578A8D03E49806A6BDC0806DAEAAB0A490A95F3C8714B4148"
+    },
+    "R2WarningRegistry": {
+      "Path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R2_20260910T064851Z\\cdc\\G2B_NVP_VIDEO_DIAG1_R2_CDC_WARNING_RECONCILIATION.csv",
+      "SHA256": "5A1B267ED3EDA48D0A8DB545DE47DF8E8C83634D4AE7674991F7EE69A078945E"
+    },
+    "R2SourceFamilyDefinitions": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R2_20260910T064851Z\\cdc\\G2B_NVP_VIDEO_DIAG1_R2_SOURCE_FAMILY_DEFINITIONS.csv",
+    "Group9OwnershipEvidence": "C:\\FPGA\\V41_G2B_EVIDENCE\\v41-development-g2b-bs3-ownership-mailbox-settling-proof\\G2B_BS3_OWNERSHIP_PROTOCOL_MODEL.md",
+    "Group13ResetEvidence": "C:\\FPGA\\V41_G2B_EVIDENCE\\v41-development-g2b-g13a-reset-return-signoff-audit\\G2B_G13A_RESET_SEMANTIC_PROOF.md",
+    "Group14ReleaseEvidence": "C:\\FPGA\\V41_G2B_EVIDENCE\\v41-development-g2b-g14a-release-slot0-signoff-audit\\G2B_G14A_CDC_PROTOCOL_PROOF.md",
+    "Groups15To17ReleaseEvidence": "C:\\FPGA\\V41_G2B_EVIDENCE\\v41-development-g2b-g15-17-release-slot-equivalence-audit\\G2B_G15_17_EQ_FAMILIES.csv",
+    "PreservedGroups10To12Evidence": "C:\\FPGA\\V41_G2B_EVIDENCE\\v41-development-g2b-lut1-signoff-recovery\\G2B_LUT1_GROUPS10_17_RESULTS.csv",
+    "DiagnosticSourceProtocol": "C:\\FPGA\\V41_G2B_NVP_VIDEO_DIAG1\\rtl\\g2b\\v41_g2b_onech_c2h.sv",
+    "DiagnosticActiveCDCConstraints": "C:\\FPGA\\V41_G2B_NVP_VIDEO_DIAG1\\xdc\\common\\g2b_cdc.xdc"
+  },
+  "AuthorityInputSHA256": {
+    "R2SourceFamilyDefinitions": "0F85D864694C1BCCA0FEF1EA0B446F24C7AA6AC99CE4371FE9D3D26878D43C92",
+    "Group9OwnershipProtocolModel": "59CF76B9647CDE427BC737BA451A3367775DF6590B7DF22D43AEF7FBA7E5E2C3",
+    "Group9ProtocolTimingMargin": "BE15B2276FABEC8465C16732182BEDF77499F05393EB13CFE8CC4A2AA2F39E5E",
+    "Group13ResetSemanticProof": "D866AC1C5F2E7FD8B3AB3957710A564F8C2FF0C024A3D15211AB74DF035037AE",
+    "Group14ReleaseCDCProtocolProof": "FFF65542D6E3F07491BC6823E655B7FCC2CF42F8C0D7F173BACE9A2259229A22",
+    "Group14ReleaseSemanticModel": "00AF05305058A96C5BADBD11193015B57B704AED3F0EAD80AB649CE150F8D0F2",
+    "Groups15To17Families": "8C8D784F670DEC847041DC580CF66E72036376BFFFF02C0F143D8B87532C163D",
+    "Groups15To17StructuralMatrix": "FF44A5874BD8AE558271A76C75080B045BB49E74A0A8BDAB0AC36235CB0791F5",
+    "PreservedGroups10To17Results": "666A403FC01DADE0E95D3329D119473CF8D7D0E7EAD2B1E624F495FDAB5FFFF7",
+    "Group8TransportBusSkewReport": "CE078FE1393AC6CC58AC815EECB8DD8E017761726F2C3CC1E2EC70696A77CF3B",
+    "Group7SnapshotBusSkewReport": "2DDD133418E684BF9FEBF0681DCBBCA57B86D5ECEAA9E5CF22A639D20934A2DE",
+    "Group12DescriptorEpochBusSkewReport": "0D478B9F6A7C12F83844911C05837D29DF1C264195B3566F89BDB32AF34082F0",
+    "DiagnosticSourceProtocol": "EB4A79608F1954440FA957C4F2571F6430DBD5DC89955B9CEC98B11AB171A97A",
+    "DiagnosticActiveCDCConstraints": "9D6911E4BD8B365853BD04FDB9F4C59F1C99E6F08436EE61DB1AE8C8E6FFA7AE"
+  }
+}

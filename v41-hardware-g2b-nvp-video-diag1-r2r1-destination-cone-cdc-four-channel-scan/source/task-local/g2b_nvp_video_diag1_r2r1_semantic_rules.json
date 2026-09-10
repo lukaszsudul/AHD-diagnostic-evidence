@@ -1,0 +1,762 @@
+{
+  "Schema": "G2B_NVP_VIDEO_DIAG1_R2R1_EXPLICIT_SEMANTIC_RULES_V1",
+  "Policy": {
+    "CrossClockDefault": "FAIL_UNCLASSIFIED",
+    "SameClockDefault": "LOCAL_SAME_CLOCK",
+    "StaticRefs": [
+      "GND",
+      "VCC"
+    ]
+  },
+  "FamilyAuthority": {
+    "Definitions": "cdc/G2B_NVP_VIDEO_DIAG1_R2R1_SOURCE_FAMILY_DEFINITIONS.csv",
+    "SemanticModel": "cdc/G2B_NVP_VIDEO_DIAG1_R2R1_SEMANTIC_MODEL.json",
+    "Disposition": "AUTHORITATIVE_FILES_REQUIRED_AND_HASH_BOUND"
+  },
+  "HistoricalProvisionalFamilyRulesIgnored": [
+    {
+      "RuleID": "RESET_COMMIT_PHASE",
+      "Pattern": "^G2B_ONECH_C2H/reset_commit_phase_hold_source_reg\\[(?P<slot>[0-3])\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "LeafFamily": "RESET_COMMIT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "COMMIT_PHASE",
+      "SlotGroup": "slot",
+      "BitGroup": null,
+      "LegacyR2Family": "RESET_COMMIT_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "RESET_COMPLETION_RETURN",
+          "GoverningTokens": [
+            "commit_sync2_axi[3:0]_completion_barrier"
+          ],
+          "Protocols": [
+            "transport request/ack plus synchronized four-slot commit equality"
+          ],
+          "Barriers": [
+            "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_5_RESET_COMMIT_PHASE_COMPLETION_BARRIER"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "RESET_ABANDONED_COUNT",
+      "Pattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[(?P<bit>[0-2])\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "LeafFamily": "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "COUNT",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "RESET_ACCOUNTING_RETURN",
+          "GoverningTokens": [
+            "transport_ack_sync2_axi_and_commit_sync2_axi_completion"
+          ],
+          "Protocols": [
+            "transport request/ack plus synchronized commit completion"
+          ],
+          "Barriers": [
+            "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "DESCRIPTOR_EPOCH",
+      "Pattern": "^G2B_ONECH_C2H/desc_epoch_source_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>(?:[0-9]|[12][0-9]|3[01]))\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "LeafFamily": "DESCRIPTOR_EPOCH_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "EPOCH",
+      "SlotGroup": "slot",
+      "BitGroup": "bit",
+      "LegacyR2Family": "DESCRIPTOR_EPOCH_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "DESCRIPTOR_COMPLETION_RETURN",
+          "GoverningTokens": [
+            "descriptor_commit_completion_token"
+          ],
+          "Protocols": [
+            "source descriptor completion followed by AXI-domain capture"
+          ],
+          "Barriers": [
+            "ACTIVE_GROUP_12_3NS_BUS_SKEW_AND_EXISTING_PROTOCOL_BARRIER"
+          ],
+          "ReplacementGroups": [
+            "ACTIVE_GROUP_12_DESCRIPTOR_EPOCH_SOURCE_TO_AXI"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_SLOT_AXIS_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/axis_slot_reg\\[(?P<bit>[01])\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "SLOT",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "OWNERSHIP_NORMAL",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "OWNERSHIP_MISMATCH",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/own_ok_hold_source_reg/D$",
+          "UseRole": "OWNERSHIP_DECISION",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_SLOT_HOLD_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/own_slot_hold_axi_reg\\[(?P<bit>[01])\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "SLOT",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_REQUEST_USE",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_GENERATION_AXIS_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/axis_generation_reg\\[(?P<bit>(?:[0-9]|1[0-9]|2[0-3]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "GENERATION",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_REQUEST_USE",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_GENERATION_HOLD_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/own_generation_hold_axi_reg\\[(?P<bit>(?:[0-9]|1[0-9]|2[0-3]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "GENERATION",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_REQUEST_USE",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_EPOCH_AXIS_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/axis_epoch_reg\\[(?P<bit>(?:[0-9]|[12][0-9]|3[01]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "EPOCH",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_REQUEST_USE",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_EPOCH_HOLD_ALIAS",
+      "Pattern": "^G2B_ONECH_C2H/own_epoch_hold_axi_reg\\[(?P<bit>(?:[0-9]|[12][0-9]|3[01]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "OWNERSHIP_STABLE_PAYLOAD",
+      "ParentFamily": null,
+      "Field": "EPOCH",
+      "SlotGroup": null,
+      "BitGroup": "bit",
+      "LegacyR2Family": "OWNERSHIP_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_REQUEST_USE",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "RELEASE_GENERATION",
+      "Pattern": "^G2B_ONECH_C2H/release_generation_axi_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>(?:[0-9]|1[0-9]|2[0-3]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "RELEASE_GENERATION_FIELD",
+      "ParentFamily": "RELEASE_TOKEN_STABLE_PAYLOAD",
+      "Field": "GENERATION",
+      "SlotGroup": "slot",
+      "BitGroup": "bit",
+      "LegacyR2Family": "RELEASE_SLOT_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "NORMAL",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "MISMATCH",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]",
+            "transport_req_toggle_axi_to_transport_req_sync2_source"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer",
+            "transport-request-triggered reset-overlap release evaluation"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP",
+            "transport_release_phase_hold_axi[3:0]_equals_release_sync2_source[3:0]_before_transport_ack"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "RELEASE_EPOCH",
+      "Pattern": "^G2B_ONECH_C2H/release_epoch_axi_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>(?:[0-9]|[12][0-9]|3[01]))\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "LeafFamily": "RELEASE_EPOCH_FIELD",
+      "ParentFamily": "RELEASE_TOKEN_STABLE_PAYLOAD",
+      "Field": "EPOCH",
+      "SlotGroup": "slot",
+      "BitGroup": "bit",
+      "LegacyR2Family": "RELEASE_EPOCH_STABLE_PAYLOAD",
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "NORMAL",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "MISMATCH",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]",
+            "transport_req_toggle_axi_to_transport_req_sync2_source"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer",
+            "transport-request-triggered reset-overlap release evaluation"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP",
+            "transport_release_phase_hold_axi[3:0]_equals_release_sync2_source[3:0]_before_transport_ack"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD",
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        }
+      ]
+    }
+  ],
+  "ControlRules": [
+    {
+      "RuleID": "OWNERSHIP_REQUEST_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/own_req_sync2_source_reg$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "OWNERSHIP_REQUEST_SYNC2",
+      "Field": "REQUEST",
+      "SlotGroup": null,
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "OWNERSHIP_NORMAL",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "OWNERSHIP_MISMATCH",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/own_ok_hold_source_reg/D$",
+          "UseRole": "OWNERSHIP_DECISION",
+          "GoverningTokens": [
+            "own_req_toggle_axi_to_own_req_sync2_source"
+          ],
+          "Protocols": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "OWNERSHIP_ACK_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/own_ack_sync2_axi_reg$",
+      "ExpectedSourceClock": "userclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "OWNERSHIP_ACK_SYNC2",
+      "Field": "ACKNOWLEDGEMENT",
+      "SlotGroup": null,
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "OWNERSHIP_ACKNOWLEDGED_RESULT",
+          "GoverningTokens": [
+            "own_ack_toggle_source_to_own_ack_sync2_axi"
+          ],
+          "Protocols": [
+            "ownership result consumed only after returned acknowledgement"
+          ],
+          "Barriers": [
+            "GROUP_9_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_9_CHECKS_1_TO_3_OWNERSHIP_MAILBOX"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "COMMIT_COMPLETION_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/commit_sync2_axi_reg\\[(?P<slot>[0-3])\\]$",
+      "ExpectedSourceClock": "userclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "COMMIT_COMPLETION_SYNC2",
+      "Field": "COMMIT_PHASE",
+      "SlotGroup": "slot",
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "RESET_RETURN_COMPLETION",
+          "GoverningTokens": [
+            "commit_sync2_axi[3:0]_completion_barrier"
+          ],
+          "Protocols": [
+            "transport request/ack plus synchronized four-slot commit equality"
+          ],
+          "Barriers": [
+            "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_5_RESET_COMMIT_PHASE_COMPLETION_BARRIER"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "TRANSPORT_ACK_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/transport_ack_sync2_axi_reg$",
+      "ExpectedSourceClock": "userclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "TRANSPORT_ACK_SYNC2",
+      "Field": "ACKNOWLEDGEMENT",
+      "SlotGroup": null,
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "*",
+          "UseRole": "RESET_RETURN_COMPLETION",
+          "GoverningTokens": [
+            "transport_ack_sync2_axi_and_commit_sync2_axi_completion"
+          ],
+          "Protocols": [
+            "transport request/ack plus synchronized commit completion"
+          ],
+          "Barriers": [
+            "GROUP_13_EARLIEST_USE_GE_32NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "RELEASE_REQUEST_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/release_sync2_source_reg\\[(?P<slot>[0-3])\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "RELEASE_REQUEST_SYNC2",
+      "Field": "REQUEST",
+      "SlotGroup": "slot",
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "ORDINARY_RELEASE_NORMAL",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer; matching generation epoch reset epoch and DMA_OWNED state authorize RELEASABLE"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_NORMAL_STATE_TRANSITION"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "ORDINARY_RELEASE_MISMATCH",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer; mismatch fails closed through fatal event and admission disable"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_MISMATCH_CONTAINMENT"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP_ACCOUNTING",
+          "GoverningTokens": [
+            "transport_req_toggle_axi_to_transport_req_sync2_source"
+          ],
+          "Protocols": [
+            "synchronized transport request consumes the same-episode release tokens for aggregate abandoned-record accounting"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP_VIA_TRANSPORT_REQUEST",
+            "transport_release_phase_hold_axi[3:0] captured phase equals release_sync2_source[3:0] before transport acknowledgement"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_RESET_OVERLAP_ACCOUNTING_PLUS_GROUP_13_RESET_RETURN"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "TRANSPORT_REQUEST_SYNC2",
+      "Pattern": "^G2B_ONECH_C2H/transport_req_sync2_source_reg$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "TRANSPORT_REQUEST_SYNC2",
+      "Field": "REQUEST",
+      "SlotGroup": null,
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP_ACCOUNTING",
+          "GoverningTokens": [
+            "transport_req_toggle_axi_to_transport_req_sync2_source"
+          ],
+          "Protocols": [
+            "synchronized transport request consumes the same-episode release tokens for aggregate abandoned-record accounting"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP_VIA_TRANSPORT_REQUEST",
+            "transport_release_phase_hold_axi[3:0] captured phase equals release_sync2_source[3:0] before transport acknowledgement"
+          ],
+          "ReplacementGroups": [
+            "GROUP_13_CHECK_4_RESET_ABANDONED_COUNT_STABLE_PAYLOAD"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "RELEASE_SEEN_LOCAL_STATE",
+      "Pattern": "^G2B_ONECH_C2H/release_seen_source_reg\\[(?P<slot>[0-3])\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "Role": "GOVERNING_TOKEN_CONTROL",
+      "ControlKind": "RELEASE_SEEN_STATE",
+      "Field": "SEEN_PHASE",
+      "SlotGroup": "slot",
+      "BitGroup": null,
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[[0-3]\\]\\[[0-2]\\]/D$",
+          "UseRole": "ORDINARY_RELEASE_NORMAL",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer; matching generation epoch reset epoch and DMA_OWNED state authorize RELEASABLE"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_NORMAL_STATE_TRANSITION"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/(?:enable_applied_source|source_ownership_fatal_deferred|source_ownership_fatal_event|source_ownership_fatal)_reg/D$",
+          "UseRole": "ORDINARY_RELEASE_MISMATCH",
+          "GoverningTokens": [
+            "release_toggle_axi[{slot}]_to_release_sync2_source[{slot}]"
+          ],
+          "Protocols": [
+            "per-slot release-toggle stable-data transfer; mismatch fails closed through fatal event and admission disable"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_MISMATCH_CONTAINMENT"
+          ]
+        },
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP_ACCOUNTING",
+          "GoverningTokens": [
+            "transport_req_toggle_axi_to_transport_req_sync2_source"
+          ],
+          "Protocols": [
+            "synchronized transport request consumes the same-episode release tokens for aggregate abandoned-record accounting"
+          ],
+          "Barriers": [
+            "GROUPS_14_TO_17_EARLIEST_USE_13.468NS_AND_6NS_SETTLING_CAP_VIA_TRANSPORT_REQUEST",
+            "transport_release_phase_hold_axi[3:0] captured phase equals release_sync2_source[3:0] before transport acknowledgement"
+          ],
+          "ReplacementGroups": [
+            "GROUP_{14_PLUS_SLOT}_RESET_OVERLAP_ACCOUNTING_PLUS_GROUP_13_RESET_RETURN"
+          ]
+        }
+      ]
+    },
+    {
+      "RuleID": "SLOT_STATE_LOCAL_QUALIFIER",
+      "Pattern": "^G2B_ONECH_C2H/slot_state_source_reg\\[(?P<slot>[0-3])\\]\\[(?P<bit>[0-2])\\]$",
+      "ExpectedSourceClock": "nvp_vclk1",
+      "Role": "LOCAL_SAME_CLOCK",
+      "ControlKind": "SLOT_STATE_QUALIFIER",
+      "Field": "STATE",
+      "SlotGroup": "slot",
+      "BitGroup": "bit",
+      "Uses": [
+        {
+          "DestinationPattern": "^G2B_ONECH_C2H/reset_abandoned_hold_source_reg\\[[0-2]\\]/D$",
+          "UseRole": "RESET_OVERLAP_SLOT_STATE_QUALIFICATION",
+          "GoverningTokens": [],
+          "Protocols": [
+            "release decision requires slot-state qualification"
+          ],
+          "Barriers": [],
+          "ReplacementGroups": [
+            "GROUPS_14_TO_17_RELEASE_SLOT_CHECKS"
+          ]
+        }
+      ]
+    }
+  ]
+}

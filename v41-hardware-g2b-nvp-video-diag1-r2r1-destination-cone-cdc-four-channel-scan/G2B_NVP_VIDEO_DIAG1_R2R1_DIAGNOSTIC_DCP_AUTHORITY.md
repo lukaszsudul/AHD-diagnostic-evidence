@@ -1,0 +1,12 @@
+# DIAGNOSTIC routed-DCP authority
+
+Result: **PASS**
+
+- Exact path: `C:\FPGA\G2B_NVP_VIDEO_DIAG1_R1_20260909T203832Z\reports\vivado_full\G2B_NVP_VIDEO_DIAG1_R1_ROUTED.dcp`
+- Exact SHA-256: `45376E1B2BA92A5A4C19B4349FFE1B7A2F57C39A4B77AAF3AD421644376CE99F`
+- Reopened mode: `EXACT_ROUTED_DCP_REPORT_ONLY`
+- CDC-1 physical manifest SHA-256: `BFD68E3E735133AFFD546985A382CA83F25A744F8B6E4B0B9A5000202968CF99`
+- Constraints changed: NO
+- Implementation changed: NO
+- Source DCP changed: NO
+- Bitstream written during extraction: NO
