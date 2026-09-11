@@ -1,0 +1,43 @@
+{
+  "schema": "BT656_FIX1_CONTROLLER_RESULT_V1",
+  "task": "G2B-NVP-VIDEO-DIAG1-R3",
+  "result": "FAIL",
+  "blocker": "R3R4R6R2R4_LIVE_SOURCE_NOT_READY:{\"g2b_status\": 1092, \"nvp_values\": {\"0x0080\": 2700092140, \"0x0084\": 7940849, \"0x0088\": 0, \"0x008C\": 249, \"0x0090\": 0, \"0x0094\": 0, \"0x0098\": 14027001, \"0x009C\": 0, \"0x00A0\": 14088456, \"0x00A4\": 4278190586, \"0x00A8\": 0, \"0x00AC\": 0, \"0x00B0\": 0, \"0x00B4\": 0}, \"sav_delta\": 0, \"sav_per_second\": 0.0, \"vclk_delta\": 445562417, \"vclk_per_sav\": 445562417.0}",
+  "events": [],
+  "record_bytes": 4096,
+  "primary_records": 2500,
+  "primary_requested_bytes": 10240000,
+  "guard_records": 0,
+  "guard_requested_bytes": 0,
+  "total_logical_requests": 2500,
+  "max_outstanding_iocbs": 1024,
+  "parent_owned_mmio": true,
+  "raw_payload_control_ipc": false,
+  "unauthorized_mmio_writes": 0,
+  "native_helper_pid": null,
+  "runtime_identity": {
+    "result": "PASS",
+    "git_sha": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+    "build_flags": "0x00000402",
+    "block_id": "0xA40A0C07",
+    "protocol": "0x0000400B",
+    "capabilities": "0x00031002",
+    "transport_signature": "0x58444D41"
+  },
+  "exception_type": "GateError",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_nvp_video_diag1_r3/20260910T235841Z/scripts/controller_nvp_capture_r3.py\", line 493, in run\n    result[\"source_readiness\"] = source_readiness(mmio)\n                                 ~~~~~~~~~~~~~~~~^^^^^^\n  File \"/home/vcdeagent1/vcde_artifacts/g2b_nvp_video_diag1_r3/20260910T235841Z/scripts/controller_nvp_capture_r3.py\", line 294, in source_readiness\n    raise GateError(\"R3R4R6R2R4_LIVE_SOURCE_NOT_READY:\" +\n                    json.dumps(last, sort_keys=True))\nGateError: R3R4R6R2R4_LIVE_SOURCE_NOT_READY:{\"g2b_status\": 1092, \"nvp_values\": {\"0x0080\": 2700092140, \"0x0084\": 7940849, \"0x0088\": 0, \"0x008C\": 249, \"0x0090\": 0, \"0x0094\": 0, \"0x0098\": 14027001, \"0x009C\": 0, \"0x00A0\": 14088456, \"0x00A4\": 4278190586, \"0x00A8\": 0, \"0x00AC\": 0, \"0x00B0\": 0, \"0x00B4\": 0}, \"sav_delta\": 0, \"sav_per_second\": 0.0, \"vclk_delta\": 445562417, \"vclk_per_sav\": 445562417.0}\n",
+  "failure_path_quiescence": "PASS",
+  "native_helper_absent": true,
+  "native_helper_state": "ABSENT",
+  "mmio_write_counts": {
+    "RESET_STREAM_STATE": 0,
+    "SESSION_NORMALIZATION_W1C": 0,
+    "COHERENT_SNAPSHOT": 0,
+    "STREAM_ENABLE": 0,
+    "NORMAL_DISABLE": 0,
+    "POST_TARGET_TAIL_FLUSH": 0,
+    "SAFETY_DISABLE": 0
+  },
+  "normal_disable_completed": false,
+  "parent_quiescent_completed": true
+}

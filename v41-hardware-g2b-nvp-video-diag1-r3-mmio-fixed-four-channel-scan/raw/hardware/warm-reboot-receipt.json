@@ -1,0 +1,30 @@
+{
+  "task": "G2B-NVP-VIDEO-DIAG1-R3",
+  "start_utc": "2026-09-11T00:12:12.0775175Z",
+  "programming_receipt_sha256": "9D3D291D96DD48055E2985F66493803D457DD8DD3929A5B1FDF3FB32D9567126",
+  "graceful_warm_reboot_authorized": true,
+  "reboot_delivery_attempts": 1,
+  "second_reboot_allowed": false,
+  "power_cycle_allowed": false,
+  "boot_id_read_or_compared": false,
+  "reconnect_attempt_limit": 2,
+  "reconnect_timeout_seconds": 20,
+  "reconnect_attempts": [
+    {
+      "attempt": 1,
+      "receipt_name": "post-reboot-reconnect-01",
+      "start_utc": "2026-09-11T00:12:28.3468957Z",
+      "result": "FAIL_OR_TIMEOUT",
+      "end_utc": "2026-09-11T00:12:48.4434997Z"
+    },
+    {
+      "attempt": 2,
+      "receipt_name": "post-reboot-reconnect-02",
+      "start_utc": "2026-09-11T00:13:03.4623050Z",
+      "result": "PASS",
+      "end_utc": "2026-09-11T00:13:04.4841134Z"
+    }
+  ],
+  "result": "PASS_RECONNECTED_WITHOUT_BOOT_ID_COMPARISON",
+  "end_utc": "2026-09-11T00:13:04.4847649Z"
+}
