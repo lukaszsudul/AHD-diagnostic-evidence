@@ -1,0 +1,6 @@
+Check,Pattern,Source,Finding,HardwareParityMatch
+private_bank_mapping,5+zero_based_channel_index,nvp6134c_diagnostics_pkg.vhd:552-563,PASS_EXACT_5_6_7_8_MAPPING,N/A_MAPPING_ONLY
+route_code_translation,current_channel-1,g2b_nvp_video_diag.sv:758-760,PASS_EXACT_0_1_2_3_MAPPING,NO_DEFECT
+public_all_channel_overlay,CH1_CH2_CH3_CH4_explicit_contiguous,nvp6134c_diagnostics_pkg.vhd:396-438,NO_ALTERNATING_MASK_OR_STEP,NO_DEFECT
+private_stage2_payload,Bank5_only,nvp6134c_diagnostics_pkg.vhd:244-343,CONFIGURATION_COMPLETENESS_GAP,INCOMPLETE_MATCH_BANK7_ALSO_UNWRITTEN_BUT_WORKS
+odd_even_operators_and_masks,channel&1 channel%2 channel>>1 step2 0x5 0xA,bounded active source search,NO_ACTIVE_CONFIGURATION_PATH_MATCH,NO_DEFECT

@@ -1,0 +1,18 @@
+Observation,RTLSignal,ClockDomain,ExistingCounter,ExistingMMIO,CoherentRead,R3Available,RequiredForRootCause,Gap,RecommendedImplementation
+VCLK edge/count,vclk_edge_count_nvp -> vclk_edge_count_user,nvp_clk to axi_aclk Gray CDC,YES,0x3880,Gray synchronized snapshot,YES,YES,NONE,REUSE
+raw VDO byte-change count,NONE,nvp_clk,NO,NO,NO,NO,YES,cannot distinguish constant bus from changing non-marker data,counter increment when source_byte != previous_source_byte
+raw nonconstant-data count,NONE,nvp_clk,NO,NO,NO,NO,YES,no activity histogram,bounded raw sample/nonconstant counters
+raw 0xFF byte count,marker_p0/p1/p2 hold history but no counter,source_clk,NO,NO,NO,NO,YES,prefix stage unobservable,raw_ff_count
+raw FF 00 count,prefix history only,source_clk,NO,NO,NO,NO,YES,prefix stage unobservable,raw_ff00_count
+raw FF 00 00 count,prefix history only,source_clk,NO,NO,NO,NO,YES,three-byte prefix unobservable,raw_ff0000_count
+raw FF 00 00 XY candidate count,combinational marker predicate exists,source_clk,only legal-marker-derived SAV counter,NO distinct candidate register,NO distinct counter,NO,YES,cannot separate any XY candidate from legality,raw_ff0000xy_candidate_count before XY validation
+legal raw SAV count,active_sav_candidate_count,video/nvp clock,YES,0x3884,source counter surfaced through existing telemetry,YES,YES,does not expose prefix/parity failure stages,REUSE alongside new raw counters
+legal raw EAV count,marker_valid_pipe and H exist; no EAV counter,source_clk,NO,NO,NO,NO,YES,EAV independent rate unavailable,legal_raw_eav_count
+illegal XY/parity marker count,legal predicate rejects silently,source_clk,NO raw counter,NO,NO,NO,YES,cannot identify malformed XY,illegal_xy_or_parity_count after FF0000 prefix
+unexpected marker count,"bad_marker_v is parser/record outcome, not raw prefix counter",source_clk/video clock,PARTIAL qualified-path counter,0x3864,existing telemetry,PARTIAL,YES,no raw unexpected-marker taxonomy,raw unexpected-marker counter separate from record error
+parser state,source_state internal,source_clk,NO,NO direct state,NO,PARTIAL via status outcomes,YES,state not directly exposed,coherent parser-state snapshot
+parser lock,source_locked_source -> source_locked_sync2_axi,source_clk to axi_aclk,state bit,transport status bit,2FF synchronizer,YES,YES,NONE,REUSE
+line-length failure count,bad_length_v/status_bad_length,video clock,YES,0x3868,existing telemetry,YES,SUPPORTING,qualified parser only,REUSE
+payload-count failure count,bad_length_v/status_bad_length,video clock,YES shared,0x3868,existing telemetry,YES,SUPPORTING,not separately categorized,optional separate counter
+source malformed count,source_lifetime_malformed / malformed_v,source/video clock,YES,0x3870 and transport snapshots,existing snapshot/telemetry,YES,SUPPORTING,NONE for aggregate,REUSE
+source dropped count,source_lifetime_dropped / dropped_v,source/video clock,YES,0x3874 and transport snapshots,existing snapshot/telemetry,YES,SUPPORTING,NONE for aggregate,REUSE

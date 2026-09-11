@@ -1,0 +1,67 @@
+{
+  "candidate": {
+    "created": false,
+    "type": "NONE"
+  },
+  "engineering_gate": "PASS",
+  "observability": {
+    "existing_r3_observability": "INSUFFICIENT",
+    "ff0000xy_candidate_counter": "NOT_AVAILABLE",
+    "illegal_marker_counter": "NOT_AVAILABLE",
+    "legal_raw_eav_counter": "NOT_AVAILABLE",
+    "legal_raw_sav_counter": "AVAILABLE",
+    "minimal_raw_marker_extension_required": "YES",
+    "parser_state_observability": "PARTIAL",
+    "raw_ff_counter": "NOT_AVAILABLE",
+    "raw_vdo_toggle_counter": "NOT_AVAILABLE"
+  },
+  "offline_boundary": {
+    "bitstream": false,
+    "driver": false,
+    "dut": false,
+    "hardware_i2c": false,
+    "jtag": false,
+    "mmio": false,
+    "pcie": false,
+    "programming": false,
+    "reboot": false,
+    "vivado": false
+  },
+  "offline_tests": "16/16 PASS",
+  "overall_result": "PASS_STRONG_BANK6_8_CONFIGURATION_CANDIDATE_HARDWARE_ISOLATION_REQUIRED",
+  "private_banks": {
+    "bank5_writes": 51,
+    "bank6_writes": 0,
+    "bank7_writes": 0,
+    "bank8_writes": 0,
+    "defect": "STRONG_CANDIDATE_NOT_PROVEN",
+    "mapping": {
+      "CH1": 5,
+      "CH2": 6,
+      "CH3": 7,
+      "CH4": 8
+    },
+    "relative_addresses": 37
+  },
+  "project_state_rev": "8 \u2014 OWNER_ATTESTED_NOT_REVERIFIED",
+  "publication_commit": "RESOLVED_BY_GIT_COMMIT",
+  "replay": {
+    "configuration_layers": 7,
+    "deterministic": true,
+    "symbolic_unknowns": 112,
+    "transactions": 840,
+    "unresolved_operations": 0
+  },
+  "route": {
+    "mapping": "0_CH1_1_CH2_2_CH3_3_CH4",
+    "omission": "NOT_PROVEN",
+    "rearm_authority": "NO_REARM_AUTHORITY_FOUND"
+  },
+  "source": {
+    "branch": "diag/v41-g2b-nvp-video-scan",
+    "commit": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+    "tracked_clean": true,
+    "tree": "cdff3ea9d786141ff9bfd46f7099198324604663"
+  },
+  "task": "AHD v41 G2B-NVP-VIDEO-DIAG2-OFFLINE"
+}
