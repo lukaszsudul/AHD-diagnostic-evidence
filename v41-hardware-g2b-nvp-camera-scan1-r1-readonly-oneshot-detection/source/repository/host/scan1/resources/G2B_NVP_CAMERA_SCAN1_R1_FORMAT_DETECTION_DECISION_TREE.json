@@ -1,0 +1,36 @@
+{
+  "already_set": {
+    "changed_format": "debounce path; ordinary format changes wait for EQ-set-done",
+    "no_video": "clears format-set-done and EQ-set-done after stable no-detection",
+    "three_buffers": "accept only when buf0 == buf1 == buf2"
+  },
+  "authority": "reference video.c at pinned commit",
+  "initial_detection": {
+    "FHD_AHD_predicate": "slopes >= 80 and ACC gain > 2010; otherwise normalized to CVI code",
+    "FHD_metrics": [
+      "E8/E9 Y-plus",
+      "EA/EB Y-minus",
+      "E2/E3 ACC gain"
+    ],
+    "ambiguous_AHD_CVI_codes": [
+      "0x20",
+      "0x21",
+      "0x2B",
+      "0x2C",
+      "0x30",
+      "0x31",
+      "0x35",
+      "0x36"
+    ],
+    "special_formats": "F3/F4/F5 branches with additional 0x05/0x06 writes and 100 ms delay",
+    "state_effect": "set format-done, keep raw code, seed all three debounce buffers",
+    "temporary_functional_writes": true,
+    "valid_F0": "if neither nibble is 0xF"
+  },
+  "prelude": [
+    "nvp6134_getvideoloss",
+    "fixed 200 ms delay",
+    "read F0/F2/F3/F4/F5 per private bank"
+  ],
+  "scan1_policy": "capture raw tuple only; no temporary writes; report unresolved when context cannot distinguish"
+}

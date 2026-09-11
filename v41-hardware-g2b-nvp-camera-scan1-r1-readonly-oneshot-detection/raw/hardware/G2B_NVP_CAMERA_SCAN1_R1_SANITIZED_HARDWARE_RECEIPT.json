@@ -1,0 +1,35 @@
+{
+  "cleanup": {
+    "controller_lock_release": {
+      "acquired_utc": "2026-09-11T19:49:11.5025361Z",
+      "lock_path": "C:\\FPGA\\.AHD_G2B_NVP_CAMERA_SCAN1_R1_20260911T152909Z.lock",
+      "released_utc": "2026-09-11T19:50:51.6854264Z",
+      "state": "RELEASED",
+      "task": "G2B-NVP-CAMERA-SCAN1-R1"
+    },
+    "end_utc": "2026-09-11T19:50:45.1718601Z",
+    "exit_code": 0,
+    "start_utc": "2026-09-11T19:50:44.6416512Z",
+    "stdout": "DUT_LOCK_RELEASED=YES\nREMOTE_ROOT=ABSENT\nXDMA_MODULE=ABSENT\nXDMA_NODES=ABSENT\nPARTIAL_GATE_CLEANUP=PASS\n"
+  },
+  "first_gate": {
+    "credential_temp_remaining": 0,
+    "end_utc": "2026-09-11T19:49:41.9849842Z",
+    "exit_code": 1,
+    "helper_sha256": "FAA28C004279ADAEBE3A222371FE9AF36EDCC6F5338D5894A234283D861386FA",
+    "operation": "DUT_LOCK",
+    "process_started": true,
+    "start_utc": "2026-09-11T19:49:41.3389643Z",
+    "stderr": "mkdir: No such file or directory\n",
+    "stdout": "",
+    "task": "G2B-NVP-CAMERA-SCAN1-R1",
+    "temporary_credential_created": true,
+    "temporary_credential_deleted": true
+  },
+  "partial_state_audit": {
+    "end_utc": "2026-09-11T19:50:24.6683154Z",
+    "exit_code": 0,
+    "start_utc": "2026-09-11T19:50:24.1058521Z",
+    "stdout": "REMOTE_ROOT=ABSENT\nDUT_LOCK=EXISTS\nDUT_LOCK_OWNER=THIS_TASK\nDUT_LOCK_CHILD=receipt\nXDMA_MODULE=ABSENT\nXDMA_NODES=ABSENT\nPARTIAL_LOCK_STATE_AUDIT=PASS\n"
+  }
+}

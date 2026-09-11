@@ -1,0 +1,40 @@
+{
+  "cleanup": {
+    "controller_lock_released_last": true,
+    "dut_lock_released": true,
+    "fpga_profile": "PREVIOUS_PROFILE_UNCHANGED",
+    "remote_task_root": "ABSENT",
+    "xdma_module": "ABSENT",
+    "xdma_nodes": "ABSENT"
+  },
+  "engineering_gate": "BLOCKED",
+  "evidence_publication": "PASS",
+  "first_blocker": "DUT_LOCK_ACQUIRE_DID_NOT_REACH_PASS: mkdir: No such file or directory",
+  "hardware": {
+    "device_calls": 0,
+    "driver_load_attempts": 0,
+    "jtag_contacted": false,
+    "power_cycles": 0,
+    "programming_attempts": 0,
+    "scans": 0,
+    "warm_reboots": 0
+  },
+  "offline": {
+    "bitstream_count": 1,
+    "bitstream_sha256": "6DACBFFF9B6DA0A904B2A49B18C9BA59695DBA04B834A8A758AD44184769443E",
+    "signoff": "PASS",
+    "simulation_and_host": "24/24_PASS"
+  },
+  "overall_result": "BLOCKED",
+  "physical_owner_action_required": null,
+  "scientific_outcome": "PHYSICAL_CAMPAIGN_NOT_COMPLETED",
+  "source": {
+    "branch": "diag/v41-g2b-nvp-camera-scan1",
+    "commit": "c7e16fa3da26545cef960a6c75427a3614c4b655",
+    "parent": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+    "remote": "PASS",
+    "tree": "56526e17154f8e06f3eb4b95233934c18b6ee06e"
+  },
+  "task": "AHD_V41_G2B_NVP_CAMERA_SCAN1_R1",
+  "working_causal_model": "TASK_LOCAL_DUT_ROOT_PARENT_MISSING_IN_ACQUISITION_HARNESS"
+}

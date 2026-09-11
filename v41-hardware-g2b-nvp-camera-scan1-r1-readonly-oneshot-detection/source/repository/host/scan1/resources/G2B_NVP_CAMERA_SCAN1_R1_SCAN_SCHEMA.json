@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "campaign_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "format_candidate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "format_stability": {
+      "enum": [
+        "UNSTABLE",
+        "STABLE",
+        "INELIGIBLE_SNAPSHOT"
+      ]
+    },
+    "generation": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "manifest_sha256": {
+      "const": "2773DFA86ABEC87EF1E5BFB6F093D83BD8FCB4382B51B1792F3B7E8E302A1B2B"
+    },
+    "primary_blocker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "raw_register_set": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "authority": {
+            "type": "string"
+          },
+          "bank": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "index": {
+            "maximum": 81,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "register": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "status": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "value": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "index",
+          "bank",
+          "register",
+          "value",
+          "status",
+          "authority"
+        ],
+        "type": "object"
+      },
+      "maxItems": 82,
+      "minItems": 82,
+      "type": "array"
+    },
+    "scan_index": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "secondary_findings": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "signal_classification": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "source_authority": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "scan_index",
+    "generation",
+    "manifest_sha256",
+    "raw_register_set",
+    "primary_blocker",
+    "secondary_findings",
+    "format_candidate",
+    "format_stability",
+    "signal_classification",
+    "source_authority"
+  ],
+  "title": "G2B NVP SCAN1 host observation",
+  "type": "object"
+}

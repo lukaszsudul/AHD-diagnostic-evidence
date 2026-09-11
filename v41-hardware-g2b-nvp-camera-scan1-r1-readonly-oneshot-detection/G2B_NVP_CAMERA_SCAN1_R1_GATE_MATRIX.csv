@@ -1,0 +1,22 @@
+Gate,Result,Evidence
+SCAN0 authority,PASS,82 reads; 10 groups; 14 prohibited; 40 partial; 105 transactions
+Source branch and remote,PASS,c7e16fa3da26545cef960a6c75427a3614c4b655
+Simulation and host,PASS,24/24
+Fresh synthesis and implementation,PASS,fully routed 36268/36268
+Timing,PASS,WNS 0.094; WHS 0.035; TNS/THS 0
+CDC,PASS,0 unresolved critical/warning; scanner single-domain
+Governed timing,PASS,11/11 bus-skew; 17/17 promoted
+DRC and methodology,PASS,0 errors; 0 critical warnings
+Resources,PASS,LUT 89.024%; FF 49.077%; BRAM 54%; DSP 0%
+Bitstream generation,PASS,one bitstream; 6DACBFFF9B6DA0A904B2A49B18C9BA59695DBA04B834A8A758AD44184769443E
+Controller lock,PASS,fresh lock acquired and released last
+DUT lock/root,BLOCKED,DUT_LOCK_ACQUIRE_DID_NOT_REACH_PASS: mkdir: No such file or directory
+DUT runtime bundle,NOT_REACHED,not uploaded
+FPGA SRAM programming,NOT_REACHED,0 attempts
+Warm reboot,NOT_REACHED,0 reboots
+Driver and endpoint,NOT_REACHED,module/nodes remained absent
+Runtime identity/MMIO,NOT_REACHED,0/16
+Scanner qualification,NOT_REACHED,0 scans
+Physical campaign,NOT_REACHED,no Owner action requested
+Cleanup,PASS,task locks released; no module/nodes; no hardware activation
+Evidence publication,PASS,commit-pinned remote read-back required before final claim
