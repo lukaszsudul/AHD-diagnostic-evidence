@@ -1,0 +1,11 @@
+ActionID,ChannelScope,Readiness,WritesNVP,Authority,NextEvidence
+ENTER_NOVIDEO_AHD1080P25,CH1_OR_CH3,BLOCKED_BY_NVP6134C_COMPATIBILITY,YES_WHITELISTED_ONLY,reference no-video function plus current product baseline,one controlled compatibility test after SCAN1 qualification
+READ_DETECTION_SNAPSHOT,ALL_READ_ONLY,READY,BANK_SELECT_ONLY,SCAN1 frozen manifest,SCAN1 simulation and hardware qualification
+RESET_FORMAT_DETECTOR_STATE,CAMPAIGN,READY,NO,"video_fmt_det_reset semantic purpose, host-owned state",host unit tests
+STEP_NOVIDEO_SLICE,CH1_OR_CH3,BLOCKED_BY_NVP6134C_COMPATIBILITY,YES_WHITELISTED_ONLY,video.c:1024-1088;1651-1662,"controlled compatibility test of full branch, not isolated three writes"
+APPLY_AHD1080P25_MODE,CH1_OR_CH3,BLOCKED_BY_NVP6134C_COMPATIBILITY,YES_FIXED_211_OPERATION_SEMANTIC_MANIFEST,pinned reference plus bounded NVP6134C guide-note subset,close every reference-only write/readback authority
+INIT_EQ_AHD1080P25,CH1_OR_CH3,BLOCKED_BY_NVP6134C_COMPATIBILITY,YES_FIXED_EQ_SUBMANIFEST,eq_init_each_format reference semantics,controlled compatibility test
+VERIFY_AHD1080P25_LOCK,CH1_OR_CH3,READY,BANK_SELECT_ONLY,NVP6134C Rev1.0 A8/E0/E1/E2/E8+CH,SCAN1 hardware observations
+ROUTE_CHANNEL_TO_VDO1,CH1_OR_CH3,READY,YES_FIXED_BANK1_C2_MASKED_ROUTE,current v41 DIAG1 plus accepted DIAG2 audit,live mapping qualification; no requalification in SCAN0
+RESTORE_PRODUCT_BASELINE,TARGET_PLUS_GLOBAL_TOUCHED_REGISTERS,PARTIAL,YES_BASELINE_LEDGER_ONLY,rollback contract frozen,prove every touched register is safely baseline-readable or has authoritative reset value
+ABORT_AND_RESTORE,ACTIVE_ACTION,PARTIAL,YES_BASELINE_LEDGER_ONLY,rollback contract frozen,fault-injection verification after compatibility closure

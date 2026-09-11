@@ -1,0 +1,14 @@
+Bank,Register,Purpose,Conditionality,TemporaryWriteDependency,Source,SCAN1
+0x00,0xA8,NOVID input to video_fmt_det via getvideoloss,always before format loop,none,"video.c:629,1031-1033",INCLUDE
+0x05+CH,0xF0,raw classifier,always per channel in detector/debounce,none for read itself,video.c:637-642;401-406,INCLUDE_READ_ONLY
+0x05+CH,0xF2,conversion auxiliary,always per channel in detector/debounce,none for read itself,video.c:637-642;401-406,INCLUDE_READ_ONLY
+0x05+CH,0xF3,special-format discriminator,always per channel in detector/debounce,none for read itself,video.c:637-642;401-406,INCLUDE_READ_ONLY
+0x05+CH,0xF4,special-format discriminator,always per channel in detector/debounce,none for read itself,video.c:637-642;401-406,INCLUDE_READ_ONLY
+0x05+CH,0xF5,special-format discriminator,always per channel in detector/debounce,none for read itself,video.c:637-642;401-406,INCLUDE_READ_ONLY
+0x05+CH,0xE2,ACC gain high byte,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:5054-5057,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0xE3,ACC gain low byte,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:5054-5057,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0xE8,Y-plus slope high bits,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:2629-2632,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0xE9,Y-plus slope low byte,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:2629-2632,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0xEA,Y-minus slope high bits,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:2648-2651,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0xEB,Y-minus slope low byte,AHD/CVI discrimination,reference classifier changes gain/comb configuration before interpretation,eq_common.c:2648-2651,INCLUDE_RAW_VALUE_INTERPRETATION_UNRESOLVED
+0x05+CH,0x27,diagnostic ACC-reference read printed by initial FHD branch,raw F0 in 0x30/0x31/0x35/0x36 initial detection,after writes 0x24=0x18 and 0x58=0xD3,video.c:697-709,EXCLUDE_NOT_REQUIRED_BY_R1_TABLE_AND_CONTEXT_DEPENDENT

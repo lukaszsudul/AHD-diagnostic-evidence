@@ -1,0 +1,16 @@
+Capability,ReferenceSource,CurrentV41Implementation,Present,Partial,Absent,SafetyImpact,CameraAcquisitionImpact,RequiredInSCAN1,RequiredInACQ1,RequiredInCAM1
+periodic NOVID read,video.c:nvp6134_getvideoloss,one-shot DIAG1 status sampling only,NO,NO,YES,loss transitions cannot drive acquisition,loss transitions cannot drive acquisition,YES,YES,NO
+private-bank F0/F2/F3/F4/F5 read,video.c:video_fmt_det/debounce,absent,NO,NO,YES,format classifier absent,format classifier absent,YES,YES,NO
+additional format-detection registers,eq_common.c metric helpers,absent,NO,NO,YES,AHD/CVI discrimination absent,AHD/CVI discrimination absent,YES,YES,NO
+format debounce state,video.c:386-599,absent,NO,NO,YES,single observations cannot establish stability,single observations cannot establish stability,NO,YES,NO
+format campaign reset,video.c:1002-1022,absent,NO,NO,YES,host must prevent stale campaign state,host must prevent stale campaign state,NO,YES,NO
+slice-level no-video search,video.c:1024-1088;1651-1662,absent,NO,NO,YES,no bounded input search,no bounded input search,YES,YES,NO
+format mapping,video.c:332-377,absent,NO,NO,YES,raw format not decoded,raw format not decoded,NO,YES,NO
+set_chnmode,video.c:1099-1184,no callable governed equivalent,NO,NO,YES,dynamic mode transition absent,dynamic mode transition absent,YES,YES,NO
+AHD 1080p25 action,video.c:2068-2134;3386-3533,static autoinit profile only,PARTIAL,YES,NO,not an action with baseline/rollback,not an action with baseline/rollback,YES,YES,NO
+EQ initialization,eq.c:78-219,"static table overlap, not reference-equivalent",PARTIAL,YES,NO,initial EQ compatibility unresolved,initial EQ compatibility unresolved,YES,YES,NO
+EQ adaptive update,eq.c:nvp6134_set_equalizer,absent,NO,NO,YES,deferred after first image,deferred after first image,NO,NO,NO
+loss-of-video recovery,video.c and eq_recovery.c,absent,NO,NO,YES,deferred,deferred,NO,NO,NO
+mode-change recovery,video_fmt_debounce/eq_recovery,absent,NO,NO,YES,deferred,deferred,NO,NO,NO
+stable-lock confirmation,reference status helpers,DIAG1 reads 5 stable samples at 100 ms,YES,NO,NO,read-only pattern reusable,read-only pattern reusable,YES,YES,YES
+real-scene capture decision,reference not authoritative for FPGA record gate,existing private closed-runtime capture path,PARTIAL,YES,NO,"CAM1 gate defined, not executed","CAM1 gate defined, not executed",NO,NO,YES

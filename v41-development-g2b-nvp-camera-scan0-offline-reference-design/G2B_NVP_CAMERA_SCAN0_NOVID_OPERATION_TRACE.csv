@@ -1,0 +1,10 @@
+order,bank,register,operation,value/mask,delay,condition,state dependency,source file,source function,source line,NVP6134C authority status
+1,0x00,0xFF,BANK_SELECT,0x00,0,per chip,none,video.c,nvp6134_getvideoloss,1031,bank select documented
+2,0x00,0xA8,READ,bits[3:0] NOVID CH1..CH4,0,per chip,none,video.c,nvp6134_getvideoloss,1032,"Rev1.0 pp42,63 read-only"
+3,STATE,s_slice_cnt,INCREMENT_OR_WRAP,>100=>0 else +1,0,once per getvideoloss call,campaign reset initializes 0,video.c,nvp6134_getvideoloss,1036-1040,software state
+4,0x05+CH,0xFF,BANK_SELECT,0x05+CH,0,NOVID asserted,A8 bit,video.c,nvp6134_getvideoloss,1044-1046,reference semantic; C compatibility test required for following writes
+5,0x05+CH,0x08,WRITE,phase0=0x50 phase1=0x40 phase2=0x60,0,NOVID && !s_fmt_set_done[CH],s_slice_cnt mod 3 after pre-increment,video.c,nvp6134_getvideoloss,1047-1064,reference-only functional write
+6,0x05+CH,0x05,WRITE,0xA4,0,NOVID,none,video.c,nvp6134_getvideoloss,1067,reference-only neighboring write
+7,0x05+CH,0x08,OPTIONAL_WRITE,0x50,0,NOVID && ch_mode_status < NVP6134_VI_720P_2530,SD-mode helper can overwrite phase value,video.c,nvp6134_cvbs_slicelevel_con,1651-1660,reference-only; suppressed after reset because ch_mode_status=0xFF
+8,0x05+CH,0x05,WRITE,0x24,0,video present,A8 bit clear,video.c,nvp6134_getvideoloss,1071-1076,reference-only neighboring branch
+9,0x00/0x05+CH,0xE8+CH and recovery set,READ_AND_OPTIONAL_RECOVERY,FSC lock bit1,bounded in helper,video present && EXT family && FSC unlock,ch_mode_status,video.c,nvp6134_getvideoloss/nvp6134_ResetFSCLock,1077-1084;1609-1633,recovery deferred; not SCAN1

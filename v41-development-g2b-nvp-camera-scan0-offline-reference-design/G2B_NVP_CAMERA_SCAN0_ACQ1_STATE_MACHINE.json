@@ -1,0 +1,102 @@
+{
+  "all_loops_bounded": true,
+  "first_channels": [
+    "CH1",
+    "CH3"
+  ],
+  "first_format": "AHD_1080P25",
+  "generic_i2c": false,
+  "host_command_fields": [
+    "ACTION_ID",
+    "CHANNEL_ID",
+    "CAMPAIGN_GENERATION"
+  ],
+  "states": [
+    "IDLE",
+    "BASELINE_SCAN",
+    "ENTER_NOVIDEO",
+    "DETECTION_SCAN",
+    "SLICE_STEP",
+    "DEBOUNCE",
+    "FORMAT_CONFIRMED",
+    "APPLY_MODE",
+    "INIT_EQ",
+    "VERIFY_LOCK",
+    "ROUTE_TO_VDO1",
+    "READY_FOR_CAM1",
+    "RESTORE",
+    "FAILED_SAFE"
+  ],
+  "transitions": [
+    {
+      "event": "authorized_start",
+      "from": "IDLE",
+      "to": "BASELINE_SCAN"
+    },
+    {
+      "event": "baseline_persisted",
+      "from": "BASELINE_SCAN",
+      "to": "ENTER_NOVIDEO"
+    },
+    {
+      "event": "success",
+      "from": "ENTER_NOVIDEO",
+      "to": "DETECTION_SCAN"
+    },
+    {
+      "event": "NOVID_with_attempt_budget",
+      "from": "DETECTION_SCAN",
+      "to": "SLICE_STEP"
+    },
+    {
+      "event": "success",
+      "from": "SLICE_STEP",
+      "to": "DETECTION_SCAN"
+    },
+    {
+      "event": "candidate",
+      "from": "DETECTION_SCAN",
+      "to": "DEBOUNCE"
+    },
+    {
+      "event": "three_equal_AHD1080P25",
+      "from": "DEBOUNCE",
+      "to": "FORMAT_CONFIRMED"
+    },
+    {
+      "event": "supported",
+      "from": "FORMAT_CONFIRMED",
+      "to": "APPLY_MODE"
+    },
+    {
+      "event": "verified",
+      "from": "APPLY_MODE",
+      "to": "INIT_EQ"
+    },
+    {
+      "event": "verified",
+      "from": "INIT_EQ",
+      "to": "VERIFY_LOCK"
+    },
+    {
+      "event": "stable",
+      "from": "VERIFY_LOCK",
+      "to": "ROUTE_TO_VDO1"
+    },
+    {
+      "event": "verified",
+      "from": "ROUTE_TO_VDO1",
+      "to": "READY_FOR_CAM1"
+    },
+    {
+      "event": "failure_abort_timeout",
+      "from": "ANY_ACTIVE",
+      "to": "RESTORE"
+    },
+    {
+      "event": "baseline_equal",
+      "from": "RESTORE",
+      "to": "FAILED_SAFE"
+    }
+  ]
+}

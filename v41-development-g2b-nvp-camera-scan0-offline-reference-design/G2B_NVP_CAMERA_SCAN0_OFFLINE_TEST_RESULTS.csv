@@ -1,0 +1,25 @@
+Test,Requirement,Result,Evidence
+T1,reference repository exact-commit identity,PASS,081ebbff9a2722d47acf16c680594be43cb179e2
+T2,reference source/hash manifest deterministic,PASS,14 files; digest 91CBA7790DE487AA14B9FAD9ACD9275A95086F6BA76B57FDF68EA3A0E68D02B6
+T3,current-v41 source inventory complete,PASS,9 scoped files at exact commit/tree
+T4,current-v41 behavior extraction deterministic,PASS,required behaviors and source lines present
+T5,gap matrix complete,PASS,15 rows
+T6,getvideoloss semantic extraction complete,PASS,"A8, branches, neighbor operations and state recorded"
+T7,exact slice-cycle context extracted,PASS,canonical cycle plus pre-increment first-call nuance
+T8,video_fmt_det read-set extraction complete,PASS,13 register roles
+T9,format-code map deterministic,PASS,32 mappings; one product-eligible
+T10,debounce model complete,PASS,"three-buffer state, EQ dependency and no-video clear"
+T11,campaign-reset state list complete,PASS,all reference reset variables plus host campaign fields
+T12,set_chnmode call graph complete,PASS,29 dispatch modes and selected nested path
+T13,AHD1080p25 action replay deterministic,PASS,211 semantic operations; CH1 1C83F7F1DD20328A301D992CC21A12DEEF76AB85CDDF82F82F17D05DE717D18F; CH3 CBED701E4E510BF84C13C850B6F60898059FF22BD4D45063ABC0F15DFBA6EEC4
+T14,EQ-init manifest deterministic,PASS,9 entries including state stage 0
+T15,register authority matrix complete,PASS,82 candidate entries; every required authority field
+T16,read-side-effect blacklist complete,PASS,Bank0 B8-BE and C0-C6 prohibited; B0 separately audited safe
+T17,SCAN1 read manifest complete,PASS,82 entries; SHA 2773DFA86ABEC87EF1E5BFB6F093D83BD8FCB4382B51B1792F3B7E8E302A1B2B
+T18,scan-time model complete at 25 kHz,PASS,105 transactions; 3681 SCL periods; 147.240 ms; max group 25.560 ms
+T19,SCAN1 MMIO/FSM/CDC design complete,PASS,"0x12000..0x123FF, frozen FSM, single-domain disposition"
+T20,host state machine and schema complete,PASS,raw-preserving schema and three-tuple campaign
+T21,ACQ1 action catalog complete,PASS,10 whitelisted actions; arbitrary I2C absent
+T22,ACQ1 rollback contract complete,PASS,"full target baseline, ledger, symbolic fields, reverse restore"
+T23,CAM1 protocol complete,PASS,"2500/2500, real 1920x1080, spatial and controlled temporal gates"
+T24,evidence index and SHA manifest complete,PASS,builder closes index then hashes every other published file

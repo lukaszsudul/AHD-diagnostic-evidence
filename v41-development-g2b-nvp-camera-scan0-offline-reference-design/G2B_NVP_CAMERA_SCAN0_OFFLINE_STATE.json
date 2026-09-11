@@ -1,0 +1,55 @@
+{
+  "acq1": {
+    "action_manifest_sha256": "64FFDBB1EF5E34D4DA2301B0256CFE2BA271E41ECDF26D64F85E42223C6344C1",
+    "blocked": [
+      "ENTER_NOVIDEO_AHD1080P25",
+      "STEP_NOVIDEO_SLICE",
+      "APPLY_AHD1080P25_MODE",
+      "INIT_EQ_AHD1080P25"
+    ],
+    "partial": [
+      "RESTORE_PRODUCT_BASELINE",
+      "ABORT_AND_RESTORE"
+    ],
+    "ready": [
+      "READ_DETECTION_SNAPSHOT",
+      "RESET_FORMAT_DETECTOR_STATE",
+      "VERIFY_AHD1080P25_LOCK",
+      "ROUTE_CHANNEL_TO_VDO1"
+    ],
+    "semantic_operations": 211,
+    "symbolic_preserved_fields": 2
+  },
+  "current": {
+    "commit": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+    "files_inventoried": 9,
+    "tree": "cdff3ea9d786141ff9bfd46f7099198324604663"
+  },
+  "engineering_gate": "PASS",
+  "evidence_publication": "EXTERNAL_GIT_PUSH_AND_COMMIT_PINNED_READBACK_REQUIRED_AFTER_THIS_OFFLINE_BUILD",
+  "hardware_access": false,
+  "offline_gate": "24/24 PASS",
+  "offline_only": true,
+  "overall_result": "PASS_SCAN1_READ_MANIFEST_READY_ACQ1_REFERENCE_COMPATIBILITY_TEST_REQUIRED",
+  "project_state_rev": "8 - OWNER_ATTESTED_NOT_REVERIFIED",
+  "reference": {
+    "commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+    "csv_sha256": "FBC9E25CCA9A35E429D67BF466560E97DA015803FD012E259D02F90FCC41D0FF",
+    "driver_version": "17.03.20.01",
+    "files_frozen": 14,
+    "repository": "4e4o/nvp6134_ex"
+  },
+  "scan1": {
+    "duration_ms_at_25khz": 147.24,
+    "entries": 82,
+    "groups": 10,
+    "manifest_sha256": "2773DFA86ABEC87EF1E5BFB6F093D83BD8FCB4382B51B1792F3B7E8E302A1B2B",
+    "max_group_ownership_ms": 25.56,
+    "mmio_range": "0x12000..0x123FF",
+    "scl_periods": 3681,
+    "transactions": 105
+  },
+  "source_modified": false,
+  "task": "AHD v41 G2B-NVP-CAMERA-SCAN0-OFFLINE",
+  "vivado_run": false
+}

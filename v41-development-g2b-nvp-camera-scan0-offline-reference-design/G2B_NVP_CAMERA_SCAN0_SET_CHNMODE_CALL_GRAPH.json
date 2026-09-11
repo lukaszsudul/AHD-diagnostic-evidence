@@ -1,0 +1,174 @@
+{
+  "mode_dispatch": [
+    {
+      "function": "nvp6134_setchn_720h",
+      "mode": "NVP6134_VI_720H",
+      "source_line": 1122
+    },
+    {
+      "function": "nvp6134_setchn_960h",
+      "mode": "NVP6134_VI_960H",
+      "source_line": 1123
+    },
+    {
+      "function": "nvp6134_setchn_1280h",
+      "mode": "NVP6134_VI_1280H",
+      "source_line": 1124
+    },
+    {
+      "function": "nvp6134_setchn_1440h",
+      "mode": "NVP6134_VI_1440H",
+      "source_line": 1125
+    },
+    {
+      "function": "nvp6134_setchn_1920h",
+      "mode": "NVP6134_VI_1920H",
+      "source_line": 1126
+    },
+    {
+      "function": "nvp6134_setchn_3840h",
+      "mode": "NVP6134_VI_960H2EX",
+      "source_line": 1127
+    },
+    {
+      "function": "nvp6134_setchn_ahd_720p",
+      "mode": "NVP6134_VI_720P_2530",
+      "source_line": 1128
+    },
+    {
+      "function": "nvp6134_setchn_ahd_720pex",
+      "mode": "NVP6134_VI_HDEX",
+      "source_line": 1129
+    },
+    {
+      "function": "nvp6134_setchn_exc_720p",
+      "mode": "NVP6134_VI_EXC_720P",
+      "source_line": 1130
+    },
+    {
+      "function": "nvp6134_setchn_exc_720pex",
+      "mode": "NVP6134_VI_EXC_HDEX",
+      "source_line": 1131
+    },
+    {
+      "function": "nvp6134_setchn_exta_720p",
+      "mode": "NVP6134_VI_EXT_720PA",
+      "source_line": 1132
+    },
+    {
+      "function": "nvp6134_setchn_exta_720pex",
+      "mode": "NVP6134_VI_EXT_HDAEX",
+      "source_line": 1133
+    },
+    {
+      "function": "nvp6134_setchn_extb_720p",
+      "mode": "NVP6134_VI_EXT_720PB",
+      "source_line": 1134
+    },
+    {
+      "function": "nvp6134_setchn_extb_720pex",
+      "mode": "NVP6134_VI_EXT_HDBEX",
+      "source_line": 1135
+    },
+    {
+      "function": "nvp6134_setchn_ahd_720p5060",
+      "mode": "NVP6134_VI_720P_5060",
+      "source_line": 1136
+    },
+    {
+      "function": "nvp6134_setchn_exc_720p5060",
+      "mode": "NVP6134_VI_EXC_720PRT",
+      "source_line": 1137
+    },
+    {
+      "function": "nvp6134_setchn_ext_720p5060",
+      "mode": "NVP6134_VI_EXT_720PRT",
+      "source_line": 1138
+    },
+    {
+      "function": "nvp6134_setchn_ahd_1080p_NRT",
+      "mode": "NVP6134_VI_1080P_NRT",
+      "source_line": 1139
+    },
+    {
+      "function": "nvp6134_setchn_ahd_1080p2530",
+      "mode": "NVP6134_VI_1080P_2530",
+      "source_line": 1140
+    },
+    {
+      "function": "nvp6134_setchn_exc_1080p2530",
+      "mode": "NVP6134_VI_EXC_1080P",
+      "source_line": 1141
+    },
+    {
+      "function": "nvp6134_setchn_ext_1080p2530",
+      "mode": "NVP6134_VI_EXT_1080P",
+      "source_line": 1142
+    },
+    {
+      "function": "nvp6134_setchn_ahd_3MNRT",
+      "mode": "NVP6134_VI_3M_NRT",
+      "source_line": 1143
+    },
+    {
+      "function": "nvp6134_setchn_ext_3MNRT",
+      "mode": "NVP6134_VI_EXT_3M_NRT",
+      "source_line": 1144
+    },
+    {
+      "function": "nvp6134_setchn_ahd_3M",
+      "mode": "NVP6134_VI_3M",
+      "source_line": 1145
+    },
+    {
+      "function": "nvp6134_setchn_ahd_QHD_NRT",
+      "mode": "NVP6134_VI_4M_NRT",
+      "source_line": 1146
+    },
+    {
+      "function": "nvp6134_setchn_ahd_QHD",
+      "mode": "NVP6134_VI_4M",
+      "source_line": 1147
+    },
+    {
+      "function": "nvp6134_setchn_ahd_5MNRT",
+      "mode": "NVP6134_VI_5M_NRT",
+      "source_line": 1148
+    },
+    {
+      "function": "nvp6134_setchn_ahd_5M_20p",
+      "mode": "NVP6134_VI_5M_20P",
+      "source_line": 1149
+    },
+    {
+      "function": "nvp6134_setchn_ext_5MNRT",
+      "mode": "NVP6134_VI_EXT_5M_NRT",
+      "source_line": 1150
+    }
+  ],
+  "postlude": [
+    "save mode/format state",
+    "ACP unless NOVIDEO",
+    "EQ init unless NOVIDEO",
+    "bank9 pulse and 35 ms delay",
+    "bank0 channel enable"
+  ],
+  "prelude": [
+    "validate channel",
+    "validate PAL/NTSC",
+    "nvp6134_set_common_value"
+  ],
+  "root": "nvp6134_set_chnmode",
+  "selected_path": [
+    "nvp6134_set_common_value",
+    "nvp6134_setchn_ahd_1080p2530",
+    "nvp6134_setchn_common_fhd",
+    "state assignments",
+    "acp_each_setting",
+    "acp_set_baudrate",
+    "acp_reg_rx_clear",
+    "eq_init_each_format",
+    "post-mode bank9 re-arm",
+    "bank0 channel enable"
+  ]
+}

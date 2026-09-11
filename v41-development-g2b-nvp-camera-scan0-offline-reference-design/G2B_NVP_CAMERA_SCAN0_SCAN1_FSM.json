@@ -1,0 +1,102 @@
+{
+  "autonomous_timer": false,
+  "host_history": true,
+  "single_buffer": true,
+  "states": [
+    "IDLE",
+    "WAIT_AUTOINIT_DONE",
+    "CAPTURE_ENTRY_BANK",
+    "SELECT_GROUP_BANK",
+    "VERIFY_GROUP_BANK",
+    "READ_GROUP_ENTRY",
+    "RESTORE_ENTRY_BANK",
+    "VERIFY_RESTORED_BANK",
+    "FINALIZE_SNAPSHOT",
+    "PUBLISH_DONE",
+    "WAIT_HOST_ACK",
+    "ABORT_SAFE",
+    "ERROR_SAFE"
+  ],
+  "transitions": [
+    {
+      "event": "START",
+      "from": "IDLE",
+      "to": "WAIT_AUTOINIT_DONE"
+    },
+    {
+      "event": "autoinit_done",
+      "from": "WAIT_AUTOINIT_DONE",
+      "to": "CAPTURE_ENTRY_BANK"
+    },
+    {
+      "event": "success",
+      "from": "CAPTURE_ENTRY_BANK",
+      "to": "SELECT_GROUP_BANK"
+    },
+    {
+      "event": "write_done",
+      "from": "SELECT_GROUP_BANK",
+      "to": "VERIFY_GROUP_BANK"
+    },
+    {
+      "event": "match",
+      "from": "VERIFY_GROUP_BANK",
+      "to": "READ_GROUP_ENTRY"
+    },
+    {
+      "event": "more_entries",
+      "from": "READ_GROUP_ENTRY",
+      "to": "READ_GROUP_ENTRY"
+    },
+    {
+      "event": "next_group",
+      "from": "READ_GROUP_ENTRY",
+      "to": "SELECT_GROUP_BANK"
+    },
+    {
+      "event": "last_group_done",
+      "from": "READ_GROUP_ENTRY",
+      "to": "RESTORE_ENTRY_BANK"
+    },
+    {
+      "event": "write_done",
+      "from": "RESTORE_ENTRY_BANK",
+      "to": "VERIFY_RESTORED_BANK"
+    },
+    {
+      "event": "match",
+      "from": "VERIFY_RESTORED_BANK",
+      "to": "FINALIZE_SNAPSHOT"
+    },
+    {
+      "event": "complete",
+      "from": "FINALIZE_SNAPSHOT",
+      "to": "PUBLISH_DONE"
+    },
+    {
+      "event": "done_visible",
+      "from": "PUBLISH_DONE",
+      "to": "WAIT_HOST_ACK"
+    },
+    {
+      "event": "ACK",
+      "from": "WAIT_HOST_ACK",
+      "to": "IDLE"
+    },
+    {
+      "event": "ABORT_or_preempt",
+      "from": "ANY_ACTIVE",
+      "to": "ABORT_SAFE"
+    },
+    {
+      "event": "protocol_error",
+      "from": "ANY_ACTIVE",
+      "to": "ERROR_SAFE"
+    },
+    {
+      "event": "restore_attempt_complete",
+      "from": "ABORT_SAFE_OR_ERROR_SAFE",
+      "to": "WAIT_HOST_ACK"
+    }
+  ]
+}
