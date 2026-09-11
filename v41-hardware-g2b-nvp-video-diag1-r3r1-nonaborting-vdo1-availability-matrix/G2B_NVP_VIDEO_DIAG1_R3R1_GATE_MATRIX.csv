@@ -1,0 +1,12 @@
+Gate,Result,Detail
+R3 runtime identity,PASS,fc37d815b5d64ef90dfbd99c57ae4cc09567b56f
+Host controller,PASS,10/10
+Driver and Gen2 x1,PASS,0000:01:00.0
+Bounded MMIO sanity,PASS,1/1
+Double-PREPARE,PASS,26/26; 88/88/00
+Session 1 CH1 RED,PASS,2500/2500; complete frame; color match
+Session 2 CH2 availability,PASS,CLOCK_PRESENT_NO_SAV; capture NOT_RUN; ACK
+Session 3 CH3 capture,FAIL,"vertical-tail capture-sequence deltas 2, expected 22"
+Complete 4x4 matrix,NOT_REACHED,3/16 observed; 2/16 acknowledged
+PRODUCT baseline restore,PASS,88/88/00; restore status 3
+Cleanup,PASS,pending AIO 0; driver/nodes/locks removed

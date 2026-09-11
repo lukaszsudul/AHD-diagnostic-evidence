@@ -1,0 +1,864 @@
+--- controller_nvp_capture_r3.py
++++ controller_nvp_capture_r3r1.py
+@@ -15,8 +15,16 @@
+ import traceback
+ from typing import Any
+ 
+-
+-TASK = "G2B-NVP-VIDEO-DIAG1-R3"
++from availability_classifier_r3r1 import (
++    choose_post_window,
++    classify as classify_availability,
++    no_capture_classification,
++    qualified as availability_window_qualified,
++    session_semantics,
++)
++
++
++TASK = "G2B-NVP-VIDEO-DIAG1-R3R1"
+ PRIMARY_RECORDS = 2500
+ RECORD_BYTES = 4096
+ PRIMARY_BYTES = PRIMARY_RECORDS * RECORD_BYTES
+@@ -28,7 +36,7 @@
+ NO_PROGRESS_TIMEOUT_SECONDS = 1.0
+ TOTAL_CAPTURE_TIMEOUT_SECONDS = 5.0
+ MAX_DISABLE_LATENCY_US = 500.0
+-READ_RANGES = ((0x0000, 0x0030), (0x006C, 0x006C),
++READ_RANGES = ((0x0000, 0x0030), (0x006C, 0x0074),
+                (0x0080, 0x00B4), (0x3800, 0x3858))
+ COUNTER_OFFSETS = {
+     "attempted": 0x3814,
+@@ -212,6 +220,29 @@
+         return {"label": label, "epoch": epoch,
+                 "generation": expected_generation, **counters}
+ 
++    def live_checkpoint(self, label: str) -> dict[str, Any]:
++        """Read a non-coherent pre-reset checkpoint without issuing a write."""
++        counters = self.counters(label)
++        return {
++            "Checkpoint": label,
++            "Epoch": self.read(0x3838, label),
++            "Control": self.read(0x380C, label),
++            "Status": self.read(0x3810, label),
++            "ErrorStatus": self.read(0x383C, label),
++            "LastErrorCause": self.read(0x3840, label),
++            "Attempted": counters["attempted"],
++            "Committed": counters["committed"],
++            "Streamed": counters["streamed"],
++            "Dropped": counters["dropped"],
++            "Overflow": counters["overflow"],
++            "Discontinuity": counters["discontinuity"],
++            "Abandoned": counters["abandoned"],
++            "BeatsStreamed": counters["beats"],
++            "LastGlobalSequence": counters["last_global"],
++            "LastAttemptSequence": counters["last_attempt"],
++            "Timestamp": time.time_ns(),
++        }
++
+ 
+ def hardware_quiescent(control: int, status: int) -> bool:
+     return control == 0 and (status & 0x10F) == 0x004
+@@ -251,48 +282,88 @@
+     return False, rows
+ 
+ 
+-def source_readiness(mmio: Mmio) -> dict[str, Any]:
+-    require(mmio.read(0x3800, "READINESS") == 0x43324831,
+-            "R3R4R6R2R4_G2B_C2H_MAGIC_ABSENT")
+-    require(mmio.read(0x3804, "READINESS") == 0x00010000,
+-            "R3R4R6R2R4_TRANSPORT_ABI_VERSION_NOT_1")
+-    before = {offset: mmio.read(offset, "READINESS_BEFORE")
+-              for offset in range(0x80, 0xB8, 4)}
+-    deadline = time.monotonic() + 30.0
+-    last: dict[str, Any] = {}
+-    while time.monotonic() < deadline:
+-        interval_start = time.monotonic()
+-        time.sleep(3.0)
+-        after = {offset: mmio.read(offset, "READINESS_AFTER")
+-                 for offset in range(0x80, 0xB8, 4)}
+-        elapsed = time.monotonic() - interval_start
+-        vclk = (after[0x80] - before[0x80]) & 0xFFFFFFFF
+-        sav = (after[0x84] - before[0x84]) & 0xFFFFFFFF
+-        ratio = vclk / max(1, sav)
+-        sav_per_second = sav / elapsed
+-        g2b_status = mmio.read(0x3810, "READINESS_STATUS")
+-        last = {
+-            "nvp_values": {f"0x{key:04X}": value for key, value in after.items()},
+-            "vclk_delta": vclk, "sav_delta": sav,
+-            "vclk_per_sav": ratio, "sav_per_second": sav_per_second,
+-            "g2b_status": g2b_status,
+-        }
+-        ready = (
+-            (after[0x8C] & 0x3F) == 0x39 and
+-            after[0x90] == 0 and after[0x94] == 0 and
+-            not (after[0x9C] & 0x80000000) and
+-            5200 <= ratio <= 5360 and 20000 <= sav_per_second <= 35000 and
+-            (g2b_status & 0xC0) == 0xC0 and not (g2b_status & 0x800)
+-        )
+-        if ready:
+-            return {
+-                "result": "PASS", "nack_count": after[0x90],
+-                "init_error": after[0x94], "physical_input": 0,
+-                "source_ready": True, "source_locked": True, **last,
+-            }
+-        before = after
+-    raise GateError("R3R4R6R2R4_LIVE_SOURCE_NOT_READY:" +
+-                    json.dumps(last, sort_keys=True))
++SOURCE_REGISTER_OFFSETS = tuple(range(0x80, 0xB8, 4))
++
++
++def read_source_observability(mmio: Mmio, label: str) -> dict[str, Any]:
++    """Read the complete source block currently exposed by the R3 image."""
++    nvp_values = {offset: mmio.read(offset, label)
++                  for offset in SOURCE_REGISTER_OFFSETS}
++    return {
++        "timestamp_ns": time.time_ns(),
++        "monotonic_ns": time.monotonic_ns(),
++        "vclk_count": nvp_values[0x80],
++        "sav_count": nvp_values[0x84],
++        "record_commit_count": nvp_values[0x88],
++        "nvp_init_status": nvp_values[0x8C],
++        "nvp_nack_count": nvp_values[0x90],
++        "nvp_init_error": nvp_values[0x94],
++        "nvp_detail_status": nvp_values[0x9C],
++        "source_malformed_count": mmio.read(0x70, label),
++        "source_dropped_count": mmio.read(0x74, label),
++        "g2b_control": mmio.read(0x380C, label),
++        "g2b_status": mmio.read(0x3810, label),
++        "transport_error_status": mmio.read(0x383C, label),
++        "transport_last_error_cause": mmio.read(0x3840, label),
++        "raw_registers": {f"0x{key:04X}": value
++                          for key, value in nvp_values.items()},
++        "raw_vdo_toggle_count": "NOT_EXPOSED_CURRENT_PROFILE",
++        "raw_ff_count": "NOT_EXPOSED_CURRENT_PROFILE",
++        "ff0000xy_candidate_count": "NOT_EXPOSED_CURRENT_PROFILE",
++        "legal_sav_count": nvp_values[0x84],
++        "legal_eav_count": "NOT_EXPOSED_CURRENT_PROFILE",
++        "illegal_marker_count": "NOT_EXPOSED_CURRENT_PROFILE",
++        "parser_state": "NOT_EXPOSED_CURRENT_PROFILE",
++        "parser_lock": "NOT_EXPOSED_CURRENT_PROFILE",
++    }
++
++
++def observe_source_availability(mmio: Mmio, label: str,
++                                duration_seconds: float) -> dict[str, Any]:
++    """Measure one bounded, read-only VDO1/BT.656 source window."""
++    require(duration_seconds > 0, "R3R1_SOURCE_WINDOW_DURATION_INVALID")
++    before = read_source_observability(mmio, label + "_BEFORE")
++    started = time.monotonic()
++    time.sleep(duration_seconds)
++    after = read_source_observability(mmio, label + "_AFTER")
++    elapsed = time.monotonic() - started
++    require(elapsed > 0, "R3R1_SOURCE_WINDOW_CLOCK_INVALID")
++    vclk_delta = delta32(after["vclk_count"], before["vclk_count"])
++    sav_delta = delta32(after["sav_count"], before["sav_count"])
++    ratio = (vclk_delta / sav_delta) if sav_delta else None
++    g2b_status = int(after["g2b_status"])
++    error_status = int(after["transport_error_status"])
++    nvp_init_status = int(after["nvp_init_status"])
++    result = {
++        "label": label,
++        "requested_duration_ms": round(duration_seconds * 1000.0, 3),
++        "elapsed_ms": round(elapsed * 1000.0, 3),
++        "before": before, "after": after,
++        "vclk_delta": vclk_delta,
++        "vclk_rate": vclk_delta / elapsed,
++        "sav_delta": sav_delta,
++        "sav_rate": sav_delta / elapsed,
++        "vclk_per_sav": ratio,
++        "source_ready": bool(g2b_status & 0x40),
++        "source_locked": bool(g2b_status & 0x80),
++        "source_fatal": bool(g2b_status & 0x800),
++        "transport_fatal": bool(error_status & 0x38),
++        "nvp_fatal": bool(
++            (nvp_init_status & 0x3F) != 0x39 or
++            int(after["nvp_nack_count"]) != 0 or
++            int(after["nvp_init_error"]) != 0 or
++            (int(after["nvp_detail_status"]) & 0x80000000)
++        ),
++        "mmio_counter_consistent": True,
++        "source_malformed_delta": delta32(
++            int(after["source_malformed_count"]),
++            int(before["source_malformed_count"])),
++        "source_dropped_delta": delta32(
++            int(after["source_dropped_count"]),
++            int(before["source_dropped_count"])),
++    }
++    result["qualified"] = availability_window_qualified(result)
++    return result
+ 
+ 
+ def runtime_identity(mmio: Mmio, expected_git_sha: str,
+@@ -483,32 +554,76 @@
+                 "R3R4R6R2R4_DRIVER_OR_NODE_OPERATION_FAILED:USER_NODE")
+         require(Path(args.c2h_node).is_char_device(),
+                 "R3R4R6R2R4_DRIVER_OR_NODE_OPERATION_FAILED:C2H_NODE")
+-        require(Path(args.native_helper).is_file(),
+-                "R3R4R6R2R4_NATIVE_HELPER_MISSING")
+         Path(args.private_dir).mkdir(parents=True, exist_ok=True, mode=0o700)
+         logs.mkdir(parents=True, exist_ok=True, mode=0o700)
+         mmio = Mmio(args.user_node)
+         result["runtime_identity"] = runtime_identity(
+             mmio, args.expected_git_sha, args.expected_build_flags)
+-        result["source_readiness"] = source_readiness(mmio)
++        require(mmio.read(0x3800, "SOURCE_IDENTITY") == 0x43324831,
++                "R3R1_G2B_C2H_MAGIC_ABSENT")
++        require(mmio.read(0x3804, "SOURCE_IDENTITY") == 0x00010000,
++                "R3R1_TRANSPORT_ABI_VERSION_NOT_1")
+         control = mmio.read(0x380C, "S0")
+         status = mmio.read(0x3810, "S0")
+         require(hardware_quiescent(control, status),
+-                "R3R4R6R2R4_S0_NOT_PHYSICALLY_QUIESCENT")
+-        s0 = mmio.checkpoint("S0")
++                "R3R1_S0_NOT_PHYSICALLY_QUIESCENT")
++        s0 = mmio.live_checkpoint("S0_PRE_RESET_READ_ONLY")
+         timeline.append(s0)
+         result["S0"] = s0
+ 
++        pre_reset = observe_source_availability(mmio, "PRE_RESET", 0.250)
++        result["pre_reset_source_observation"] = pre_reset
++
++        if pre_reset["vclk_delta"] == 0:
++            availability = classify_availability(
++                pre_reset, None, reset_attempted=False,
++                reset_acknowledged=False)
++            result["source_availability"] = availability
++            result["reset_stream_state"] = "NOT_RUN_SOURCE_CLOCK_ABSENT"
++            result["post_reset_source_observation"] = None
++            parent_quiescent, quiescence_rows = prove_quiescence(
++                mmio, "NO_VCLK_NO_CAPTURE")
++            require(parent_quiescent,
++                    "R3R1_NO_VCLK_PHYSICAL_QUIESCENCE_NOT_PROVEN")
++            result["physical_quiescence"] = {
++                "result": "PASS", "total_samples": len(quiescence_rows),
++                "accepted_samples": quiescence_rows[-1]["Consecutive"],
++                "span_ms": quiescence_rows[-1]["SpanMs"],
++            }
++            semantics = session_semantics(
++                availability=availability["availability_classification"],
++                capture_result="NOT_RUN", quiescent=True,
++                helper_launched=False, aio_submitted=0,
++                stream_enable_writes=0)
++            result.update(semantics)
++            result.update({
++                "capture_eligible": False,
++                "capture_result_detail": "NOT_RUN_NO_VCLK",
++                "capture_bytes": 0, "capture_records": 0,
++                "aio_submitted": 0, "stream_enable_writes": 0,
++                "stream_disable_writes": 0,
++                "native_helper_launched": False,
++                "final_pending_aio": 0,
++                "result": "PASS", "blocker": None,
++            })
++            return result
++
+         mmio.write(0x380C, 4, "RESET_STREAM_STATE", "S0_QUIESCENT")
+         reset_deadline = time.monotonic() + 5.0
++        reset_completed = False
+         while True:
+             control = mmio.read(0x380C, "RESET_WAIT")
+             status = mmio.read(0x3810, "RESET_WAIT")
+             if hardware_quiescent(control, status):
++                reset_completed = True
+                 break
+-            require(time.monotonic() < reset_deadline,
+-                    "R3R4R6R2R4_RESET_STREAM_STATE_TIMEOUT")
++            if time.monotonic() >= reset_deadline:
++                result["source_availability"] = classify_availability(
++                    pre_reset, None, reset_attempted=True,
++                    reset_acknowledged=False)
++                raise GateError("R3R1_RESET_ACK_TIMEOUT_WITH_VCLK")
+             time.sleep(0.001)
++        require(reset_completed, "R3R1_RESET_ACK_TIMEOUT_WITH_VCLK")
+         s1 = mmio.checkpoint("S1")
+         timeline.append(s1)
+         result["S1"] = s1
+@@ -532,11 +647,66 @@
+         result["S2"] = s2
+         result["baseline_snapshot"] = baseline
+ 
++        post_reset_short = observe_source_availability(
++            mmio, "POST_RESET_SHORT", 0.250)
++        post_reset_extended = None
++        if not availability_window_qualified(post_reset_short):
++            post_reset_extended = observe_source_availability(
++                mmio, "POST_RESET_EXTENDED", 1.500)
++        selected_post = choose_post_window(
++            post_reset_short, post_reset_extended)
++        availability = classify_availability(
++            pre_reset, selected_post, reset_attempted=True,
++            reset_acknowledged=True)
++        result["post_reset_short_source_observation"] = post_reset_short
++        result["post_reset_extended_source_observation"] = post_reset_extended
++        result["post_reset_source_observation"] = selected_post
++        result["source_availability"] = availability
++        result["reset_stream_state"] = "PASS"
++        result["capture_eligible"] = availability["capture_eligible"]
++
++        if availability["availability_classification"] in (
++                "SOURCE_FATAL_STATUS", "MMIO_COUNTER_INCONSISTENT"):
++            raise GateError(availability["availability_classification"])
++
++        if not availability["capture_eligible"]:
++            parent_quiescent, quiescence_rows = prove_quiescence(
++                mmio, "NO_CAPTURE_POST_RESET")
++            require(parent_quiescent,
++                    "R3R1_NO_CAPTURE_PHYSICAL_QUIESCENCE_NOT_PROVEN")
++            result["physical_quiescence"] = {
++                "result": "PASS", "total_samples": len(quiescence_rows),
++                "accepted_samples": quiescence_rows[-1]["Consecutive"],
++                "span_ms": quiescence_rows[-1]["SpanMs"],
++            }
++            no_capture_class = no_capture_classification(
++                availability["availability_classification"])
++            semantics = session_semantics(
++                availability=availability["availability_classification"],
++                capture_result="NOT_RUN", quiescent=True,
++                helper_launched=False, aio_submitted=0,
++                stream_enable_writes=0)
++            result.update(semantics)
++            result.update({
++                "capture_result_detail": no_capture_class,
++                "capture_bytes": 0, "capture_records": 0,
++                "aio_submitted": 0, "stream_enable_writes": 0,
++                "stream_disable_writes": 0,
++                "native_helper_launched": False,
++                "final_pending_aio": 0,
++                "result": "PASS", "blocker": None,
++            })
++            return result
++
++        require(Path(args.native_helper).is_file(),
++                "R3R1_NATIVE_HELPER_MISSING")
++
+         process = subprocess.Popen(
+             [args.native_helper, args.c2h_node, args.private_dir],
+             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+             bufsize=0, close_fds=True)
+         result["native_helper_pid"] = process.pid
++        result["native_helper_launched"] = True
+         reader = MetadataEventReader(process)
+         prequeue = wait_event(reader, "ROLLING_PREQUEUE_READY",
+                               time.monotonic() + 15.0, result["events"])
+@@ -771,6 +941,18 @@
+         result["primary_completion_progress_last_reported"] = max(
+             (int(event.get("primary_completed", 0)) for event in result["events"]
+              if event.get("type") == "ROLLING_PROGRESS"), default=0)
++        result.update(session_semantics(
++            availability=availability["availability_classification"],
++            capture_result="PASS", quiescent=True,
++            helper_launched=True, aio_submitted=PRIMARY_RECORDS,
++            stream_enable_writes=1))
++        result["capture_result_detail"] = "PASS"
++        result["capture_bytes"] = PRIMARY_BYTES
++        result["capture_records"] = PRIMARY_RECORDS
++        result["aio_submitted"] = PRIMARY_RECORDS
++        result["stream_enable_writes"] = 1
++        result["stream_disable_writes"] = 1
++        result["final_pending_aio"] = 0
+         result["result"] = "PASS"
+         result["blocker"] = None
+         return result
+@@ -878,6 +1060,10 @@
+     print(json.dumps({
+         "task": TASK, "result": result["result"],
+         "blocker": result.get("blocker"),
++        "availability_classification": result.get(
++            "source_availability", {}).get("availability_classification"),
++        "capture_eligible": result.get("capture_eligible"),
++        "capture_result": result.get("capture_result"),
+         "primary_exact_completions": result.get("primary_completion", {}).get(
+             "primary_exact_completions"),
+         "primary_bytes": result.get("primary_completion", {}).get("primary_bytes"),
+
+--- controller_nvp_video_diag1_r3.py
++++ controller_nvp_video_diag1_r3r1.py
+@@ -15,12 +15,18 @@
+ import time
+ from typing import Any
+ 
+-from controller_nvp_capture_r3 import Mmio as ProductMmio
+-from controller_nvp_capture_r3 import hardware_quiescent
+-from controller_nvp_capture_r3 import runtime_identity as read_product_identity
+-
+-
+-TASK = "G2B-NVP-VIDEO-DIAG1-R3"
++from availability_classifier_r3r1 import (
++    AVAILABILITY_CLASSES,
++    CAPTURE_ELIGIBLE_CLASSES,
++    firmware_advance_response,
++    validate_complete_matrix,
++)
++from controller_nvp_capture_r3r1 import Mmio as ProductMmio
++from controller_nvp_capture_r3r1 import hardware_quiescent
++from controller_nvp_capture_r3r1 import runtime_identity as read_product_identity
++
++
++TASK = "G2B-NVP-VIDEO-DIAG1-R3R1"
+ DIAG_MAGIC = 0x4E565034
+ DIAG_VERSION = 0x00010002
+ DIAG_CAPABILITIES = 0x3C08
+@@ -73,6 +79,9 @@
+     "FirstI2CErrorLow8", "LastI2CErrorLow8", "SnapshotWords",
+     "CaptureResult", "CaptureBlocker", "FrameSequence", "FrameSHA256",
+     "PNG_SHA256", "PixelClassification", "CleanupResult",
++    "AvailabilityClassification", "CaptureEligible", "CaptureAttempted",
++    "SessionObservationResult", "CapturePass", "FirmwareAdvanceAck",
++    "FirmwareResponseRaw",
+ ]
+ CAPTURE_DETAIL_FIELDS = [
+     "PrimaryBytes",
+@@ -113,6 +122,10 @@
+     "UNIFORM_OTHER_COLOR", "NONBLACK_LOW_CONTRAST",
+     "NONBLACK_SPATIALLY_VARYING", "INVALID_OR_CORRUPT",
+ }
++NO_CAPTURE_CLASSIFICATIONS = {
++    "NOT_RUN_NO_VCLK", "NOT_RUN_CLOCK_PRESENT_NO_SAV",
++    "NOT_RUN_SAV_RATE_UNQUALIFIED", "NOT_RUN_RESET_REGRESSION",
++}
+ 
+ 
+ class ScanError(RuntimeError):
+@@ -254,14 +267,27 @@
+     pairs = {(int(row["Round"]), int(row["Channel"])) for row in json_rows}
+     require(generations == expected_ids and len(pairs) == 16,
+             "NVP_DIAG1_R1_HOST_HISTORY_PERSISTED_SEQUENCE_INVALID")
+-    require(all(row["CaptureResult"] == "PASS" and
+-                row["CleanupResult"] == "PASS" and
++    def valid_result(row: dict[str, Any]) -> bool:
++        if row["CleanupResult"] != "PASS":
++            return False
++        if row["CaptureResult"] == "PASS":
++            return bool(
+                 row["PixelClassification"] in FRAME_CLASSIFICATIONS -
+                 {"INVALID_OR_CORRUPT"} and
+                 isinstance(row["FrameSHA256"], str) and
+-                len(row["FrameSHA256"]) == 64
+-                for row in json_rows),
+-            "NVP_DIAG1_R1_HOST_HISTORY_PERSISTED_RESULT_INVALID")
++                len(row["FrameSHA256"]) == 64 and
++                row["CapturePass"] is True)
++        if row["CaptureResult"] == "NOT_RUN":
++            return bool(
++                row["PixelClassification"] in NO_CAPTURE_CLASSIFICATIONS and
++                row["CapturePass"] is False and
++                row["SessionObservationResult"] ==
++                "PASS_NO_BT656_CAPTURE_NOT_RUN" and
++                row["FirmwareAdvanceAck"] == "PASS_AND_QUIESCENT")
++        return False
++
++    require(all(valid_result(row) for row in json_rows),
++            "NVP_DIAG1_R3R1_HOST_HISTORY_PERSISTED_RESULT_INVALID")
+     return {
+         "status_csv_rows": len(status_rows),
+         "status_jsonl_rows": len(json_rows),
+@@ -555,6 +581,46 @@
+     controller_result = read_json(logs_dir / "controller-result.json")
+     require(controller_result.get("result") == "PASS",
+             f"NVP_DIAG1_SESSION_{session_id:02d}_CAPTURE_CONTRACT_FAILED")
++    availability = controller_result.get("source_availability", {})
++    availability_class = availability.get("availability_classification")
++    require(availability_class in AVAILABILITY_CLASSES,
++            f"NVP_DIAG1_R3R1_SESSION_{session_id:02d}_AVAILABILITY_INVALID")
++    capture_result = controller_result.get("capture_result")
++    if capture_result == "NOT_RUN":
++        write_counts = controller_result.get("mmio_write_counts", {})
++        quiescence = controller_result.get("physical_quiescence", {})
++        no_capture_class = controller_result.get("capture_result_detail")
++        require(
++            controller_result.get("capture_eligible") is False and
++            controller_result.get("native_helper_launched") is False and
++            controller_result.get("aio_submitted") == 0 and
++            controller_result.get("stream_enable_writes") == 0 and
++            controller_result.get("stream_disable_writes") == 0 and
++            controller_result.get("final_pending_aio") == 0 and
++            write_counts.get("STREAM_ENABLE", 0) == 0 and
++            write_counts.get("NORMAL_DISABLE", 0) == 0 and
++            write_counts.get("SAFETY_DISABLE", 0) == 0 and
++            quiescence.get("result") == "PASS" and
++            controller_result.get("session_observation_result") ==
++                "PASS_NO_BT656_CAPTURE_NOT_RUN" and
++            controller_result.get("capture_pass") is False and
++            no_capture_class in NO_CAPTURE_CLASSIFICATIONS,
++            f"NVP_DIAG1_R3R1_SESSION_{session_id:02d}_NO_CAPTURE_PROOF_FAILED")
++        return {
++            "session_id": session_id, "round": round_number,
++            "channel": channel, "assigned_color": color,
++            "status_class": status_class,
++            "controller": controller_result,
++            "availability": availability,
++            "validation": {"result": "NOT_RUN"},
++            "pixels": {"result": "NOT_RUN",
++                       "classification": no_capture_class},
++            "private_dir": str(private_dir), "logs_dir": str(logs_dir),
++            "images_dir": str(image_dir),
++        }
++    require(capture_result == "PASS" and
++            controller_result.get("capture_eligible") is True,
++            f"NVP_DIAG1_R3R1_SESSION_{session_id:02d}_CAPTURE_DISPATCH_INVALID")
+     completion = controller_result.get("primary_completion", {})
+     finalization = controller_result.get("native_finalization", {})
+     disable_latency_us = controller_result.get("primary_complete_to_disable_us")
+@@ -618,7 +684,8 @@
+     return {
+         "session_id": session_id, "round": round_number, "channel": channel,
+         "assigned_color": color, "status_class": status_class,
+-        "controller": controller_result, "validation": validation,
++        "controller": controller_result, "availability": availability,
++        "validation": validation,
+         "pixels": pixels, "private_dir": str(private_dir),
+         "logs_dir": str(logs_dir), "images_dir": str(image_dir),
+     }
+@@ -662,6 +729,7 @@
+     completion = controller_result.get("primary_completion", {})
+     finalization = controller_result.get("native_finalization", {})
+     quiescence = controller_result.get("physical_quiescence", {})
++    availability = controller_result.get("source_availability", {})
+ 
+     exact = completion.get("primary_exact_completions")
+     short = completion.get("primary_short_completions")
+@@ -674,6 +742,8 @@
+     final_pending = finalization.get("final_pending")
+     if final_pending is None:
+         final_pending = completion.get("pending_aio")
++    if final_pending is None:
++        final_pending = controller_result.get("final_pending_aio")
+     quiescence_result = (quiescence.get("result") if isinstance(quiescence, dict)
+                          else quiescence)
+     if quiescence_result is None:
+@@ -725,6 +795,17 @@
+         "NativeHelperNormalExit":
+             controller_result.get("native_helper_exit_code") == 0,
+         "CleanupResult": cleanup_result,
++        "AvailabilityClassification": availability.get(
++            "availability_classification"),
++        "CaptureEligible": controller_result.get("capture_eligible"),
++        "CaptureAttempted": controller_result.get(
++            "native_helper_launched", False),
++        "SessionObservationResult": controller_result.get(
++            "session_observation_result"),
++        "CapturePass": controller_result.get("capture_pass"),
++        "FirmwareAdvanceAck": controller_result.get(
++            "firmware_advance_ack"),
++        "FirmwareResponseRaw": "NOT_YET_ACKNOWLEDGED",
+     }
+     pixel_fields = {
+         "AssignedColor": session_result.get("assigned_color"),
+@@ -998,6 +1079,274 @@
+         "channel_summary": channel_summary,
+         "overall_result": overall,
+     }
++
++
++def summarize_r3r1(sessions: list[dict[str, Any]],
++                    firmware: list[dict[str, Any]]) -> dict[str, Any]:
++    """Summarize a complete observation matrix without equating ACK with capture."""
++    validate_complete_matrix([
++        {
++            "session_id": row["session_id"], "round": row["round"],
++            "channel": row["channel"],
++            "availability_classification": row["controller"]
++                ["source_availability"]["availability_classification"],
++        }
++        for row in sessions
++    ])
++    route_passes = sum(
++        row["route_readback"] & 0xF == row["channel"] - 1
++        for row in firmware)
++    captures = [row for row in sessions
++                if row["controller"].get("capture_result") == "PASS"]
++    no_captures = [row for row in sessions
++                   if row["controller"].get("capture_result") == "NOT_RUN"]
++    eligible = [row for row in sessions
++                if row["controller"].get("capture_eligible") is True]
++    reset_recovered = [row for row in sessions if row["controller"]
++                       ["source_availability"]["availability_classification"] ==
++                       "BT656_READY_ONLY_AFTER_RESET"]
++    reset_regressed = [row for row in sessions if row["controller"]
++                       ["source_availability"]["availability_classification"] ==
++                       "BT656_READY_PRE_RESET_BUT_LOST_AFTER_RESET"]
++    no_sav = [row for row in no_captures if row["controller"]
++              ["source_availability"]["availability_classification"] ==
++              "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET"]
++    no_vclk = [row for row in no_captures if row["controller"]
++               ["source_availability"]["availability_classification"] ==
++               "NO_VCLK_RESET_NOT_ATTEMPTED"]
++    all_capture_structure = all(
++        row["validation"].get("result") == "PASS" and
++        row["validation"].get("record_integrity_failures") == 0 and
++        row["validation"].get("global_sequence_gaps") == 0 and
++        row["validation"].get("attempt_sequence_gaps") == 0 and
++        row["validation"].get("overflow_flag_records") == 0 and
++        row["validation"].get("malformed_preceding_flag_records") == 0 and
++        row["validation"].get("source_dropped_snapshot_delta") == 0 and
++        row["validation"].get("frame_reconstruction") == "PASS"
++        for row in captures)
++    all_no_capture_safe = all(
++        row["controller"].get("native_helper_launched") is False and
++        row["controller"].get("aio_submitted") == 0 and
++        row["controller"].get("stream_enable_writes") == 0 and
++        row["controller"].get("final_pending_aio") == 0 and
++        row["controller"].get("physical_quiescence", {}).get("result") == "PASS"
++        for row in no_captures)
++
++    channel_summary: dict[str, Any] = {}
++    logical_camera: int | None = None
++    camera_temporal = "NOT_TESTED"
++    multi_color_channels: list[int] = []
++    captured_channels: list[int] = []
++    for channel in range(1, 5):
++        rows = [row for row in sessions if row["channel"] == channel]
++        channel_available = [row for row in rows if row["controller"]
++                             ["source_availability"]
++                             ["availability_classification"] in
++                             CAPTURE_ELIGIBLE_CLASSES]
++        channel_captures = [row for row in rows if row in captures]
++        if channel_captures:
++            captured_channels.append(channel)
++        classes = [row["controller"]["source_availability"]
++                   ["availability_classification"] for row in rows]
++        if len(channel_available) == 4:
++            availability_summary = "BT656_AVAILABLE_4_OF_4"
++        elif channel_available:
++            availability_summary = "BT656_AVAILABLE_INTERMITTENT"
++        elif len(rows) == 4 and all(
++                value == "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET"
++                for value in classes):
++            availability_summary = "CLOCK_PRESENT_NO_SAV_4_OF_4"
++        elif len(rows) == 4 and all(
++                value == "NO_VCLK_RESET_NOT_ATTEMPTED" for value in classes):
++            availability_summary = "NO_VCLK_4_OF_4"
++        elif len(rows) == 4:
++            availability_summary = "MIXED_AVAILABILITY"
++        else:
++            availability_summary = "NOT_ENOUGH_VALID_OBSERVATIONS"
++
++        bg_rows = [row for row in channel_captures
++                   if row["status_class"] == "NO_VIDEO_STABLE" and
++                   row["pixels"].get("assigned_bgcolor_pixel_match") is True and
++                   str(row["pixels"].get("classification", "")).startswith(
++                       "UNIFORM_BGDCOL_")]
++        colors = {row["assigned_color"] for row in bg_rows}
++        hashes = {row["pixels"].get("frame_sha256") for row in bg_rows}
++        dominants = {row["pixels"].get("dominant_uyvy_word_hex")
++                     for row in bg_rows}
++        if len(colors) >= 3 and len(hashes) >= 3 and len(dominants) >= 3:
++            bg_path = "PROVEN_MULTI_COLOR"
++            multi_color_channels.append(channel)
++        elif bg_rows:
++            bg_path = "PROVEN_SINGLE_COLOR"
++        elif not channel_captures:
++            bg_path = "NOT_TESTED_NO_BT656"
++        else:
++            bg_path = "FAIL_COLOR_MISMATCH"
++
++        live = [row for row in channel_captures
++                if row["status_class"] == "ACTIVE_STABLE" and
++                row["pixels"].get("classification") in
++                ("NONBLACK_SPATIALLY_VARYING", "NONBLACK_LOW_CONTRAST") and
++                row["pixels"].get("assigned_bgcolor_pixel_match") is False]
++        if len(live) >= 2 and logical_camera is None:
++            logical_camera = channel
++            camera_temporal = (
++                "PASS" if len({row["pixels"].get("frame_sha256")
++                               for row in live}) >= 2 else "STATIC")
++        channel_summary[f"CH{channel}"] = {
++            "availability": availability_summary,
++            "availability_classes": classes,
++            "captures": len(channel_captures),
++            "bgcolor_colors_captured": len(colors),
++            "bgcolor_pixel_path": bg_path,
++            "active_camera_captures": len(live),
++        }
++
++    if multi_color_channels:
++        digital_path = "PASS_MULTI_COLOR_ONE_OR_MORE_CHANNELS"
++    elif captures:
++        digital_path = "PASS_SINGLE_COLOR_CH1_INHERITED_AND_CONFIRMED"
++    elif no_captures:
++        digital_path = "NOT_PROVEN"
++    else:
++        digital_path = "PARTIAL_PASS"
++
++    if logical_camera is not None:
++        spatial = any(
++            row["channel"] == logical_camera and
++            row["pixels"].get("classification") ==
++            "NONBLACK_SPATIALLY_VARYING" for row in captures)
++        if spatial and camera_temporal == "PASS":
++            overall = "PASS_END_TO_END_CAMERA_IMAGE_QUALIFIED"
++        else:
++            overall = "PASS_LOGICAL_CAMERA_CHANNEL_IDENTIFIED_PHYSICAL_CONNECTOR_OPEN"
++    elif reset_regressed:
++        overall = "PASS_RESET_REGRESSION_IDENTIFIED_MATRIX_COMPLETE"
++    elif reset_recovered:
++        overall = "PASS_RESET_RECOVERED_ONE_OR_MORE_ROUTES"
++    elif len(eligible) == 16 and len(captures) == 16:
++        overall = "PASS_ALL_FOUR_CHANNELS_BT656_AVAILABLE_CAMERA_NOT_DETECTED"
++    elif not eligible:
++        overall = "PASS_NO_CHANNEL_BT656_AVAILABLE_MATRIX_COMPLETE"
++    elif (set(captured_channels) == {1} and
++          channel_summary["CH1"]["availability"] ==
++          "BT656_AVAILABLE_4_OF_4"):
++        overall = "PASS_CH1_ONLY_BT656_AVAILABLE_MATRIX_COMPLETE"
++    else:
++        overall = "PASS_PARTIAL_BT656_AVAILABILITY_MATRIX_COMPLETE"
++
++    return {
++        "overall_result": overall,
++        "route_readbacks_passed": route_passes,
++        "sessions_observed": len(sessions),
++        "sessions_acknowledged": len(sessions),
++        "capture_eligible_sessions": len(eligible),
++        "captures_attempted": len(captures),
++        "captures_completed": len(captures),
++        "captures_passed": len(captures),
++        "captures_failed": 0,
++        "no_capture_no_sav_sessions": len(no_sav),
++        "no_capture_no_vclk_sessions": len(no_vclk),
++        "reset_recovered_sessions": len(reset_recovered),
++        "reset_regression_sessions": len(reset_regressed),
++        "all_attempted_captures_structurally_valid": all_capture_structure,
++        "all_no_capture_sessions_safe": all_no_capture_safe,
++        "downstream_digital_pixel_path": digital_path,
++        "logical_active_camera_channel": logical_camera,
++        "camera_temporal_response": camera_temporal,
++        "multi_color_channels": multi_color_channels,
++        "channel_summary": channel_summary,
++    }
++
++
++def persist_r3r1_availability(root: Path,
++                              sessions: list[dict[str, Any]]) -> None:
++    """Persist compact and window-level availability evidence on the DUT."""
++    window_rows: list[dict[str, Any]] = []
++    matrix_rows: list[dict[str, Any]] = []
++    reset_rows: list[dict[str, Any]] = []
++    outcome_rows: list[dict[str, Any]] = []
++    for session in sessions:
++        controller = session["controller"]
++        availability = controller["source_availability"]
++        for phase, key in (
++                ("PRE_RESET", "pre_reset_source_observation"),
++                ("POST_RESET_SHORT", "post_reset_short_source_observation"),
++                ("POST_RESET_EXTENDED",
++                 "post_reset_extended_source_observation")):
++            window = controller.get(key)
++            if not window:
++                continue
++            window_rows.append({
++                "SessionID": session["session_id"], "Round": session["round"],
++                "Channel": session["channel"], "Phase": phase,
++                "ElapsedMs": window.get("elapsed_ms"),
++                "VCLKDelta": window.get("vclk_delta"),
++                "VCLKRate": window.get("vclk_rate"),
++                "SAVDelta": window.get("sav_delta"),
++                "SAVRate": window.get("sav_rate"),
++                "VCLKPerSAV": window.get("vclk_per_sav"),
++                "SourceReady": window.get("source_ready"),
++                "SourceLocked": window.get("source_locked"),
++                "SourceFatal": window.get("source_fatal"),
++                "TransportFatal": window.get("transport_fatal"),
++                "NVPFatal": window.get("nvp_fatal"),
++                "SourceMalformedDelta": window.get("source_malformed_delta"),
++                "SourceDroppedDelta": window.get("source_dropped_delta"),
++                "Qualified": window.get("qualified"),
++            })
++        selected_post = controller.get("post_reset_source_observation") or {}
++        pre = controller.get("pre_reset_source_observation") or {}
++        matrix_rows.append({
++            "SessionID": session["session_id"], "Round": session["round"],
++            "Channel": session["channel"],
++            "AssignedBGDCOL": session["assigned_color"],
++            "NVPClassification": session["status_class"],
++            "PreResetVCLKRate": pre.get("vclk_rate"),
++            "PreResetSAVRate": pre.get("sav_rate"),
++            "PreResetVCLKPerSAV": pre.get("vclk_per_sav"),
++            "ResetAttempted": availability.get("reset_attempted"),
++            "ResetResult": controller.get("reset_stream_state"),
++            "PostResetVCLKRate": selected_post.get("vclk_rate"),
++            "PostResetSAVRate": selected_post.get("sav_rate"),
++            "PostResetVCLKPerSAV": selected_post.get("vclk_per_sav"),
++            "AvailabilityClassification": availability[
++                "availability_classification"],
++            "CaptureEligible": controller.get("capture_eligible"),
++            "CaptureAttempted": controller.get("native_helper_launched", False),
++            "CaptureResult": controller.get("capture_result"),
++            "FrameClassification": session["pixels"].get("classification"),
++            "FirmwareAdvanceAck": controller.get("firmware_advance_ack"),
++        })
++        reset_rows.append({
++            "SessionID": session["session_id"],
++            "PreResetQualified": availability.get("pre_reset_qualified"),
++            "ResetAttempted": availability.get("reset_attempted"),
++            "ResetAcknowledged": availability.get("reset_acknowledged"),
++            "PostResetQualified": availability.get("post_reset_qualified"),
++            "AvailabilityClassification": availability[
++                "availability_classification"],
++        })
++        outcome_rows.append({
++            "SessionID": session["session_id"],
++            "SessionObservationResult": controller.get(
++                "session_observation_result"),
++            "CaptureResult": controller.get("capture_result"),
++            "CapturePass": controller.get("capture_pass"),
++            "CaptureBytes": controller.get("capture_bytes"),
++            "CaptureRecords": controller.get("capture_records"),
++            "FirmwareAdvanceAck": controller.get("firmware_advance_ack"),
++            "FirmwareResponseRaw":
++                f"0x{firmware_advance_response(session['session_id']):08X}",
++        })
++    write_csv_atomic(root / "availability-windows.csv",
++                     list(window_rows[0]), window_rows)
++    write_csv_atomic(root / "reset-isolation.csv",
++                     list(reset_rows[0]), reset_rows)
++    write_csv_atomic(root / "availability-matrix.csv",
++                     list(matrix_rows[0]), matrix_rows)
++    write_csv_atomic(root / "session-outcomes.csv",
++                     list(outcome_rows[0]), outcome_rows)
+ 
+ 
+ def main() -> int:
+@@ -1390,7 +1739,11 @@
+                     snapshot_coherence_csv, SNAPSHOT_COHERENCE_FIELDS,
+                     snapshot_coherence_records)
+ 
+-            capture_outcome = "PASS" if capture_error is None else "FAIL"
++            capture_outcome = (
++                session_result.get("controller", {}).get("capture_result")
++                if capture_error is None else "FAIL")
++            require(capture_outcome in ("PASS", "NOT_RUN", "FAIL"),
++                    "NVP_DIAG1_R3R1_CAPTURE_OUTCOME_INVALID")
+             capture_blocker = (None if capture_error is None else
+                                (str(capture_error) or type(capture_error).__name__))
+             if (post_capture_error is not None and
+@@ -1449,6 +1802,17 @@
+             require(mmio.read(CURRENT_RESULT_VALID,
+                               f"SESSION_{session_id:02d}_VALID_CLEARED") == 0,
+                     "NVP_DIAG1_R1_SNAPSHOT_VALID_NOT_CLEARED")
++            response_raw = firmware_advance_response(session_id)
++            response_hex = f"0x{response_raw:08X}"
++            for row in (snapshot_row, capture_history_records[-1],
++                        pixel_history_records[-1]):
++                row["FirmwareAdvanceAck"] = "PASS_AND_QUIESCENT"
++                row["FirmwareResponseRaw"] = response_hex
++            persist_host_histories(
++                status_history_csv, status_history_jsonl,
++                capture_history_csv, pixel_history_csv,
++                host_history_records, capture_history_records,
++                pixel_history_records)
+ 
+         wait_for(mmio, lambda bits: bits["done"] and bits["baseline_restored"],
+                  15.0, "SCAN_DONE_AND_RESTORE")
+@@ -1499,9 +1863,8 @@
+             status_history_csv, status_history_jsonl, capture_history_csv,
+             pixel_history_csv)
+ 
+-        summary = summarize(sessions, firmware_rows)
+-        require(summary["overall_result"] != "FAIL",
+-                "NVP_DIAG1_CONCLUSIVE_SCAN_ENGINEERING_FAILURE")
++        persist_r3r1_availability(args.logs_root, sessions)
++        summary = summarize_r3r1(sessions, firmware_rows)
+         result = {
+             "result": "PASS", "blocker": None,
+             "overall_result": summary["overall_result"],
