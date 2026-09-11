@@ -1,0 +1,7 @@
+order,kind,bank,register,operation,value_or_mask,condition,state_dependency,authorization,decision
+1,COMPANION_READ,0x00,0xA8,READ,bits[3:0],per chip,NOVID source,READ_ONLY,CONTEXT_ONLY
+2,SOFTWARE_STATE,STATE,slice_counter,INCREMENT_OR_WRAP,greater-than-100 wraps; otherwise increment,once per call,reset initializes zero,NO_NVP_WRITE,CONTEXT_ONLY
+3,BANK_SELECT,GLOBAL,0xFF,WRITE,0x05,CH1 NOVID,CH1 maps to Bank5,AUTHORIZED_OPERATIONAL,WOULD_BE_REQUIRED
+4,SLICE,0x05,0x08,WRITE,0x50/0x40/0x60,NOVID and format not set,counter modulo three,AUTHORIZED_FUNCTIONAL,INSUFFICIENT_ALONE
+5,NEIGHBOR,0x05,0x05,WRITE,0xA4,every NOVID branch,none,NOT_AUTHORIZED,INSEPARABLE_BLOCKER
+6,HELPER,0x05,0x08,OPTIONAL_WRITE,0x50,stored mode below 720p,suppressed by reset state,NOT_EXECUTED,CONTEXT_RECORDED

@@ -1,0 +1,8 @@
+# G2B NVP CAMERA ACQ1 COMPAT0 BUS SKEW REPORT
+
+- Task: `G2B-NVP-CAMERA-ACQ1-COMPAT0`
+- Gate: `BUS_SKEW`
+- Status: `NOT_REACHED`
+- Reason: `ACQ1_COMPAT0_SLICE_ACTION_EXCEEDS_AUTHORIZED_WRITE_SET`
+
+No new routed design exists; 0/11 checks executed.
