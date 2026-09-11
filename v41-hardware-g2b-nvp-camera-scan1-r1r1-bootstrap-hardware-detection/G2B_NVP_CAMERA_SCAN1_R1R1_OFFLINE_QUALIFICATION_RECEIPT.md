@@ -1,0 +1,11 @@
+# G2B NVP Camera SCAN1 R1R1 offline qualification receipt
+
+- SCAN1-R1 source/build/sign-off: `PASS_INHERITED`
+- SCAN1-R1 bitstream: `OFFLINE_QUALIFIED_READY_FOR_HARDWARE`
+- R1R1 source modification: `NO`
+- R1R1 rebuild: `NO`
+- Source commit: `c7e16fa3da26545cef960a6c75427a3614c4b655`
+- Source tree: `56526e17154f8e06f3eb4b95233934c18b6ee06e`
+- Bitstream path: `C:\FPGA\G2B_NVP_CAMERA_SCAN1_R1_20260911T152909Z\signoff\G2B_NVP_CAMERA_SCAN1_R1_READONLY_ONESHOT.bit`
+- Accepted size: `2192144`
+- Accepted SHA-256: `6DACBFFF9B6DA0A904B2A49B18C9BA59695DBA04B834A8A758AD44184769443E`

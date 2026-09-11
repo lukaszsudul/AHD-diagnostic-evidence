@@ -1,0 +1,21 @@
+# Cleanup receipt
+
+- scanner_busy: `NO`
+- snapshot_acknowledged_or_preserved: `YES`
+- entry_bank_restored: `PASS`
+- autoinit_unchanged: `PASS`
+- nvp_functional_writes: `0`
+- stream_disabled: `YES`
+- pending_aio: `0`
+- physical_quiescence: `PASS`
+- native_helpers_absent: `YES`
+- driver_unload_command: `sudo rmmod xdma_ahd_pcie`
+- driver_unload_attempts: `1`
+- force_unload: `NO`
+- module_absent: `YES`
+- xdma_nodes_absent: `YES`
+- dut_lock_released: `YES`
+- controller_lock_released_last: `YES`
+- reboot_after_campaign: `NO`
+- power_cycle: `NO`
+- final_fpga_runtime_profile: `G2B_NVP_CAMERA_SCAN1_R1_VOLATILE_SRAM`
