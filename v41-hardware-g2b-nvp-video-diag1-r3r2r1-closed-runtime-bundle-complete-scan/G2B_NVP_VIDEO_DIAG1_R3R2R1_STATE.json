@@ -1,0 +1,271 @@
+{
+  "cleanup": {
+    "driver_unloaded": true,
+    "firmware_internal_bank_verify": "PASS_FIRMWARE_INTERNAL_PHYSICAL_READBACK",
+    "linux_lock_released": true,
+    "native_helpers_absent": true,
+    "pending_aio": 0,
+    "physical_quiescence": "PASS",
+    "pre_unload": {
+      "bgcolor_78": 136,
+      "bgcolor_79": 136,
+      "diag_error": "0x00000000",
+      "diag_status": "0x000000AA",
+      "i2c_nack": 0,
+      "i2c_recovery": 0,
+      "i2c_timeout": 0,
+      "restore_status": "0x00000003",
+      "route": 0,
+      "transport_control": "0x00000000",
+      "transport_status": "0x000004C4"
+    },
+    "product_baseline_restored": true,
+    "result": "PASS",
+    "stream_disabled": true,
+    "task": "G2B-NVP-VIDEO-DIAG1-R3R2",
+    "xdma_nodes_removed": true
+  },
+  "engineering_gate": "PASS",
+  "execution_transparency": [
+    {
+      "disposition": "PRE_SCAN_NO_HARDWARE_ACTION; EXACT_BUNDLE_WRAPPER_USED",
+      "event": "DIRECT_ISOLATED_SCRIPT_INVOCATION_EXCLUDED_BUNDLE_PATH"
+    },
+    {
+      "disposition": "PRECONDITION_ONLY; EXACT_R3R2R1_ADAPTER_PASSED",
+      "event": "FROZEN_CLEANUP_LOCK_LITERAL_MISMATCH"
+    }
+  ],
+  "final_state": {
+    "bgcolor_78": 136,
+    "bgcolor_79": 136,
+    "completed_sessions": 16,
+    "error": 0,
+    "i2c_bus_recovery_count": 0,
+    "i2c_nack_count": 0,
+    "i2c_timeout_count": 0,
+    "i2c_transaction_count": 565,
+    "original_bank_final_verify": "PASS_FIRMWARE_INTERNAL_PHYSICAL_READBACK",
+    "original_bgcolor_78": 136,
+    "original_bgcolor_79": 136,
+    "original_route": 0,
+    "restore_status": 3,
+    "route": 0,
+    "status": 170
+  },
+  "first_blocker": "NONE",
+  "fpga_programming": false,
+  "fpga_source_changed": false,
+  "matrix": {
+    "all_attempted_captures_active_frame_integrity": true,
+    "all_attempted_captures_bounded_vbi_tail": true,
+    "all_attempted_captures_structurally_valid": true,
+    "all_no_capture_sessions_safe": true,
+    "camera_temporal_response": "NOT_TESTED",
+    "capture_eligible_sessions": 8,
+    "captures_attempted": 8,
+    "captures_completed": 8,
+    "captures_failed": 0,
+    "captures_passed": 8,
+    "channel_summary": {
+      "CH1": {
+        "active_camera_captures": 0,
+        "availability": "BT656_AVAILABLE_4_OF_4",
+        "availability_classes": [
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET"
+        ],
+        "bgcolor_colors_captured": 4,
+        "bgcolor_pixel_path": "PROVEN_MULTI_COLOR",
+        "captures": 4,
+        "vbi_tail": {
+          "boundary_count": 9,
+          "capture_sequence_delta_values": [
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22,
+            22
+          ],
+          "fingerprint_classification": "STABLE_ROUTE_TAIL_21",
+          "legacy_ch1_exact_21_tail_fingerprint": "PASS",
+          "maximum_tail_intervals": 21,
+          "minimum_tail_intervals": 21,
+          "mode_tail_intervals": 21,
+          "tail_interval_values": [
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21,
+            21
+          ],
+          "unique_tail_interval_count": 1
+        }
+      },
+      "CH2": {
+        "active_camera_captures": 0,
+        "availability": "CLOCK_PRESENT_NO_SAV_4_OF_4",
+        "availability_classes": [
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET"
+        ],
+        "bgcolor_colors_captured": 0,
+        "bgcolor_pixel_path": "NOT_TESTED_NO_BT656",
+        "captures": 0,
+        "vbi_tail": {
+          "boundary_count": 0,
+          "capture_sequence_delta_values": [],
+          "fingerprint_classification": "NOT_CAPTURED_NO_BT656",
+          "legacy_ch1_exact_21_tail_fingerprint": "NOT_APPLICABLE",
+          "maximum_tail_intervals": null,
+          "minimum_tail_intervals": null,
+          "mode_tail_intervals": null,
+          "tail_interval_values": [],
+          "unique_tail_interval_count": 0
+        }
+      },
+      "CH3": {
+        "active_camera_captures": 0,
+        "availability": "BT656_AVAILABLE_4_OF_4",
+        "availability_classes": [
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET",
+          "BT656_READY_PRE_RESET_AND_POST_RESET"
+        ],
+        "bgcolor_colors_captured": 4,
+        "bgcolor_pixel_path": "PROVEN_MULTI_COLOR",
+        "captures": 4,
+        "vbi_tail": {
+          "boundary_count": 10,
+          "capture_sequence_delta_values": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "fingerprint_classification": "STABLE_ROUTE_TAIL_1",
+          "legacy_ch1_exact_21_tail_fingerprint": "FAIL",
+          "maximum_tail_intervals": 1,
+          "minimum_tail_intervals": 1,
+          "mode_tail_intervals": 1,
+          "tail_interval_values": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "unique_tail_interval_count": 1
+        }
+      },
+      "CH4": {
+        "active_camera_captures": 0,
+        "availability": "CLOCK_PRESENT_NO_SAV_4_OF_4",
+        "availability_classes": [
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET",
+          "CLOCK_PRESENT_NO_SAV_PRE_AND_POST_RESET"
+        ],
+        "bgcolor_colors_captured": 0,
+        "bgcolor_pixel_path": "NOT_TESTED_NO_BT656",
+        "captures": 0,
+        "vbi_tail": {
+          "boundary_count": 0,
+          "capture_sequence_delta_values": [],
+          "fingerprint_classification": "NOT_CAPTURED_NO_BT656",
+          "legacy_ch1_exact_21_tail_fingerprint": "NOT_APPLICABLE",
+          "maximum_tail_intervals": null,
+          "minimum_tail_intervals": null,
+          "mode_tail_intervals": null,
+          "tail_interval_values": [],
+          "unique_tail_interval_count": 0
+        }
+      }
+    },
+    "downstream_digital_pixel_path": "PASS_MULTI_COLOR_ONE_OR_MORE_CHANNELS",
+    "logical_active_camera_channel": null,
+    "multi_color_channels": [
+      1,
+      3
+    ],
+    "no_capture_no_sav_sessions": 8,
+    "no_capture_no_vclk_sessions": 0,
+    "out_of_range_vbi_captures": 0,
+    "overall_result": "PASS_MULTI_CHANNEL_MULTI_COLOR_PATH_PROVEN_MATRIX_COMPLETE",
+    "reset_recovered_sessions": 0,
+    "reset_regression_sessions": 0,
+    "route_readbacks_passed": 16,
+    "sessions_acknowledged": 16,
+    "sessions_observed": 16,
+    "variable_but_bounded_vbi_captures": 0
+  },
+  "overall_result": "PASS_MULTI_CHANNEL_MULTI_COLOR_PATH_PROVEN_MATRIX_COMPLETE",
+  "power_cycle": false,
+  "project_state_rev": "8 \u2014 OWNER_ATTESTED_NOT_REVERIFIED",
+  "public_exclusions": {
+    "bitstream": "NO",
+    "camera_pixels": "NO",
+    "credentials": "NO",
+    "dcp": "NO",
+    "driver_binary": "NO",
+    "native_binary": "NO",
+    "pngs": "NO",
+    "raw_captures": "NO",
+    "uyvy_frames": "NO"
+  },
+  "r3_bitstream_sha256": "EC3A79064F03010E9E8B42A557DE57FA5E82849C1E2C37D2F3E662439211034F",
+  "r3_source_commit": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+  "r3_source_tree": "cdff3ea9d786141ff9bfd46f7099198324604663",
+  "runtime": {
+    "diag_capabilities": "0x00000BFF",
+    "diag_magic": "0x4E565034",
+    "diag_version": "0x00010002",
+    "double_prepare": "PASS",
+    "endpoint": "0000:01:00.0",
+    "pcie": "GEN2_X1_PASS",
+    "prepare_a_delta": 26,
+    "prepare_b_delta": 26
+  },
+  "runtime_bundle": {
+    "abi_v1_sha256": "2939FC522A2D9679BB720F287AC022FC48FF042CE06E20877F8E686F35909F1E",
+    "ambiguous_imports": 0,
+    "controller_root": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\runtime-bundle",
+    "dut_gate": "PASS",
+    "dut_origin_violations": 0,
+    "dut_root": "/home/vcdeagent1/vcde_artifacts/g2b_nvp_video_diag1_r3r2r1/20260911T093811Z/runtime-bundle",
+    "files": 25,
+    "local_gate": "PASS",
+    "local_import_modules": 17,
+    "manifest_sha256": "0EC4B48D2C7665F71B8E99C0C0F766AFBE78E35AA89A4A52956D5CF400C9F787",
+    "missing_resources": 0,
+    "runtime_resources": 9,
+    "unresolved_imports": 0
+  },
+  "task": "AHD v41 G2B-NVP-VIDEO-DIAG1-R3R2R1",
+  "warm_reboot": false
+}

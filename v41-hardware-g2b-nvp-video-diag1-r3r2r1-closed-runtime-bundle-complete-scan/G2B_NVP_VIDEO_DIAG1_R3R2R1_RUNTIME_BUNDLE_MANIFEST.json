@@ -1,0 +1,422 @@
+{
+  "counts": {
+    "ambiguous_local_imports": 0,
+    "files": 25,
+    "local_import_closure_modules": 17,
+    "missing_runtime_resources": 0,
+    "runtime_resources": 9,
+    "unresolved_local_imports": 0
+  },
+  "deterministic_sort": "relative_path_ordinal",
+  "files": [
+    {
+      "direct_consumers": [
+        "frame_reconstruct_nvp_capture",
+        "isolated_bundle_gate_r3r2r1"
+      ],
+      "file_size": 30488,
+      "file_type": "LOCAL_PYTHON_MODULE",
+      "module_resource_name": "abi_v1",
+      "relative_path": "abi_v1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "2939FC522A2D9679BB720F287AC022FC48FF042CE06E20877F8E686F35909F1E",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\abi_v1.py",
+      "transitive_consumers": [
+        "frame_reconstruct_nvp_capture",
+        "isolated_bundle_gate_r3r2r1",
+        "validate_nvp_capture_r3r2"
+      ]
+    },
+    {
+      "direct_consumers": [
+        "generate_r3r2_synthetic_primary",
+        "isolated_bundle_gate_r3r2r1",
+        "validate_nvp_capture_r3r2"
+      ],
+      "file_size": 30847,
+      "file_type": "LOCAL_PYTHON_MODULE",
+      "module_resource_name": "abi_v1_r3r2",
+      "relative_path": "abi_v1_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "B40345CED07ADFAD5E41D2C9CDAE3A3CF0FC016B3C9F4895552CEBBA60C6C7CA",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\abi_v1_r3r2.py",
+      "transitive_consumers": [
+        "generate_r3r2_synthetic_primary",
+        "isolated_bundle_gate_r3r2r1",
+        "validate_nvp_capture_r3r2"
+      ]
+    },
+    {
+      "direct_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ],
+      "file_size": 27716,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "aggregate_nvp_session_metadata",
+      "relative_path": "aggregate_nvp_session_metadata.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "48344A2CAE759C26094A7C26D9A5645362A6172581201D3C64FB83EADCAC0280",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\aggregate_nvp_session_metadata.py",
+      "transitive_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ]
+    },
+    {
+      "direct_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ],
+      "file_size": 11305,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "analyze_nvp_video_diag1",
+      "relative_path": "analyze_nvp_video_diag1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "157E500E98907DDA0E58F783A40868DA39FB5E9C1343BDF4EA3F6F6E1B6D0686",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\analyze_nvp_video_diag1.py",
+      "transitive_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ]
+    },
+    {
+      "direct_consumers": [
+        "controller_nvp_capture_r3r2",
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers"
+      ],
+      "file_size": 6857,
+      "file_type": "LOCAL_PYTHON_MODULE",
+      "module_resource_name": "availability_classifier_r3r2",
+      "relative_path": "availability_classifier_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "87BE163DE189C95E7789BF15025F836E6E9012EFAD58973C8EE40FFE4D8E9E0A",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\availability_classifier_r3r2.py",
+      "transitive_consumers": [
+        "controller_nvp_capture_r3r2",
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers"
+      ]
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 38248,
+      "file_type": "NATIVE_HELPER_BINARY",
+      "module_resource_name": "bin/xdma_c2h_rolling_4k_diag1",
+      "relative_path": "bin/xdma_c2h_rolling_4k_diag1",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "FE50853C600098836548CF6C198012566A80E1C43A46F452B8B2965F806C5D52",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\dut-bundle-staging\\native-helper-from-dut\\xdma_c2h_rolling_4k_diag1",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 436,
+      "file_type": "NATIVE_HELPER_BUILD_SCRIPT",
+      "module_resource_name": "build_native_helper_r3r2r1.sh",
+      "relative_path": "build_native_helper_r3r2r1.sh",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "BCA0D4419710CE47F776B987C884F368D446B4AE76C799C2C43542843B02B114",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\scripts\\build_native_helper_r3r2r1.sh",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1"
+      ],
+      "file_size": 50840,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "controller_nvp_capture_r3r2",
+      "relative_path": "controller_nvp_capture_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "7AC6B0028DBC0B0BC89E464897994531CDB3E188D7C300170B0577C57DF33D88",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\controller_nvp_capture_r3r2.py",
+      "transitive_consumers": [
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers"
+      ]
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 100556,
+      "file_type": "IMMUTABLE_TEST_REFERENCE",
+      "module_resource_name": "controller_nvp_video_diag1_r3r1",
+      "relative_path": "controller_nvp_video_diag1_r3r1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "2E3409E6E50A64F3D2C8745B5035BFE458DAAF42B3AFC9F40E23BFEF81226F99",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\controller_nvp_video_diag1_r3r1.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers"
+      ],
+      "file_size": 105756,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "controller_nvp_video_diag1_r3r2",
+      "relative_path": "controller_nvp_video_diag1_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "1FBB936167F23CC161DB7CB9C2CE54E11FDCC5FF197F7D6015A15DAD0FB52163",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\controller_nvp_video_diag1_r3r2.py",
+      "transitive_consumers": [
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers"
+      ]
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 3576,
+      "file_type": "TEST_FIXTURE",
+      "module_resource_name": "fixtures/retained-ch3-validation-result.json",
+      "relative_path": "fixtures/retained-ch3-validation-result.json",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "55C1313F23A61A27E6439951FD2127F856AB54C6CF04BB6431E10705ADBAC996",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R1_20260911T055202Z\\evidence-staging\\remote-text\\logs\\session-03-r1-ch3\\validation-result.json",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [
+        "isolated_bundle_gate_r3r2r1",
+        "validate_nvp_capture_r3r2"
+      ],
+      "file_size": 7039,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "frame_reconstruct_nvp_capture",
+      "relative_path": "frame_reconstruct_nvp_capture.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "C394C7A212FCE1EC5686878016F887DF02A68C209994A4A2A4681B54FDA89AEF",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\frame_reconstruct_nvp_capture.py",
+      "transitive_consumers": [
+        "isolated_bundle_gate_r3r2r1",
+        "validate_nvp_capture_r3r2"
+      ]
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 2189,
+      "file_type": "BUNDLE_GATE_ENTRYPOINT",
+      "module_resource_name": "generate_r3r2_synthetic_primary",
+      "relative_path": "generate_r3r2_synthetic_primary.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "97C97FA683546725C6F1B8A555214E9B9143A085C55D27FAFBC41DBA290385B1",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\generate_r3r2_synthetic_primary.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 13898,
+      "file_type": "BUNDLE_GATE_ENTRYPOINT",
+      "module_resource_name": "isolated_bundle_gate_r3r2r1",
+      "relative_path": "isolated_bundle_gate_r3r2r1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "2FBBAEA591AE8FDB8399B9F9524DEF5B04D97CD14497BF47C45AF4280A6BB02D",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\scripts\\isolated_bundle_gate_r3r2r1.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 6100,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "r3r2_final_cleanup",
+      "relative_path": "r3r2_final_cleanup.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "C87EE6584516A8AB75B14CE4D2CD26131DAF35F11EEC5C9B880272451EB53217",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\r3r2_final_cleanup.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 10546,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "r3r2_mmio_sanity",
+      "relative_path": "r3r2_mmio_sanity.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "552E86AF261EDEB34BDBD81CFB2718D83FBA1977417D0DA340D20B1881388792",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\r3r2_mmio_sanity.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 4746,
+      "file_type": "BUNDLE_GATE_ENTRYPOINT",
+      "module_resource_name": "test_closed_bundle_r3r2r1",
+      "relative_path": "test_closed_bundle_r3r2r1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "CBAAE4C4602A6384F00D11E5D33E1FB6722C66C6C0DCF0F225B24D2B2EBDEA0E",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\scripts\\test_closed_bundle_r3r2r1.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 7875,
+      "file_type": "BUNDLE_GATE_ENTRYPOINT",
+      "module_resource_name": "test_r3r2_host_controllers",
+      "relative_path": "test_r3r2_host_controllers.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "89D2DD8F5DF5058155B0C57AEE28F175D8589DBE4745C48F5EABB0A2CCF4CDD1",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\test_r3r2_host_controllers.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 8075,
+      "file_type": "BUNDLE_GATE_ENTRYPOINT",
+      "module_resource_name": "test_r3r2_validator",
+      "relative_path": "test_r3r2_validator.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "B1F78CC3477391C5A1D5FFFCFFDA1D1E7DD014C9B6EF8BE885102A34DBE29A89",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\test_r3r2_validator.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 34679,
+      "file_type": "RUNTIME_CONTRACT_RESOURCE",
+      "module_resource_name": "V41_C2H_TRANSPORT_ABI_V1.json",
+      "relative_path": "V41_C2H_TRANSPORT_ABI_V1.json",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "AACB8F32CE3807C0A1DACD644FFFA90D214AA599F0798A700576987924E0D2B6",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\V41_C2H_TRANSPORT_ABI_V1.json",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 562,
+      "file_type": "RUNTIME_CONTRACT_RESOURCE",
+      "module_resource_name": "V41_NVP_DIAG_ROUTE_SPECIFIC_VBI_TAIL_CONTRACT_V1.json",
+      "relative_path": "V41_NVP_DIAG_ROUTE_SPECIFIC_VBI_TAIL_CONTRACT_V1.json",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "BUNDLE_GATE",
+      "sha256": "B9F88485DB38CE03EB05296E9CD3A136FCEE24D850C41B3D3A0DAABFAA72A36B",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\contracts\\V41_NVP_DIAG_ROUTE_SPECIFIC_VBI_TAIL_CONTRACT_V1.json",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ],
+      "file_size": 30082,
+      "file_type": "RUNTIME_ENTRYPOINT",
+      "module_resource_name": "validate_nvp_capture_r3r2",
+      "relative_path": "validate_nvp_capture_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "CBAEFF14DACA8237F52683743FA1BD4389E359EBD26B4034243310CE067B2D3D",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\validate_nvp_capture_r3r2.py",
+      "transitive_consumers": [
+        "isolated_bundle_gate_r3r2r1"
+      ]
+    },
+    {
+      "direct_consumers": [
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1",
+        "test_r3r2_host_controllers",
+        "test_r3r2_validator",
+        "validate_nvp_capture_r3r2"
+      ],
+      "file_size": 4896,
+      "file_type": "LOCAL_PYTHON_MODULE",
+      "module_resource_name": "vbi_tail_contract_r3r2",
+      "relative_path": "vbi_tail_contract_r3r2.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "A77824073D926989B1BF40273480E5E3584905C0869E3D799E7B737DAA24804F",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\vbi_tail_contract_r3r2.py",
+      "transitive_consumers": [
+        "controller_nvp_video_diag1_r3r2",
+        "isolated_bundle_gate_r3r2r1",
+        "test_closed_bundle_r3r2r1",
+        "test_r3r2_host_controllers",
+        "test_r3r2_validator",
+        "validate_nvp_capture_r3r2"
+      ]
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 3986,
+      "file_type": "LOCAL_PYTHON_MODULE",
+      "module_resource_name": "verify_dut_bundle_r3r2r1",
+      "relative_path": "verify_dut_bundle_r3r2r1.py",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "ED74E2F656C2544E79E0812CCE2B71331EE3E51E76C143B9034D9A6957D49AE1",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2R1_20260911T093811Z\\scripts\\verify_dut_bundle_r3r2r1.py",
+      "transitive_consumers": []
+    },
+    {
+      "direct_consumers": [],
+      "file_size": 44324,
+      "file_type": "NATIVE_HELPER_SOURCE",
+      "module_resource_name": "xdma_c2h_rolling_4k_diag1.c",
+      "relative_path": "xdma_c2h_rolling_4k_diag1.c",
+      "required_on_controller": true,
+      "required_on_dut": true,
+      "runtime_phase": "HARDWARE_CAPTURE",
+      "sha256": "D0E82EE590C4140892B8562602F0C7DA9F681D9990AF6D2228404BCAF9553EC5",
+      "source_authority_path": "C:\\FPGA\\G2B_NVP_VIDEO_DIAG1_R3R2_20260911T073120Z\\scripts\\xdma_c2h_rolling_4k_diag1.c",
+      "transitive_consumers": []
+    }
+  ],
+  "line_endings": "LF",
+  "schema": "G2B_NVP_VIDEO_DIAG1_R3R2R1_RUNTIME_BUNDLE_MANIFEST_V1",
+  "security": {
+    "absolute_old_task_path_dependencies": 0,
+    "credential_hit_files": [],
+    "credential_remnants": 0,
+    "escaping_symlinks": 0,
+    "old_path_hit_files": []
+  },
+  "third_party_packages": []
+}
