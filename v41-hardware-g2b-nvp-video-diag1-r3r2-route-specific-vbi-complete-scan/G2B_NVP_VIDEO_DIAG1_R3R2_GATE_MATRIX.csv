@@ -1,0 +1,17 @@
+Gate,Result,Detail
+Retained_CH3_exact_artifact,NOT_AVAILABLE,Nonblocking exact artifact missing
+VBI_contract,PASS,NVP_DIAG_ROUTE_SPECIFIC_VBI_TAIL_V1
+Validator_regression,PASS,16/16
+Host_controller_gate,PASS,10/10
+Runtime_identity,PASS,R3 exact identity
+Driver_load,PASS,0000:01:00.0 Gen2 x1
+MMIO_sanity,PASS,No FFFFFFFF or timeout
+Double_PREPARE,PASS,26/26 and 0x88/0x88/0x00
+Scan_start,PASS,Fresh scan session 1
+Session_1_capture,PASS_POST_FAILURE_ANALYSIS,2500/2500 bounded VBI complete RED frame
+Session_1_firmware_success_ack,FAIL,Failure response 0x0001000A triggered safe restore
+Complete_4x4_matrix,FAIL,1/16 sessions observed
+PRODUCT_baseline_restore,PASS,0x88/0x88/0x00 and bank verify
+Cleanup,PASS,Driver nodes AIO locks clean
+Engineering_gate,FAIL,R3R2_DUT_VALIDATOR_DEPLOYMENT_MISSING_ABI_V1
+Evidence_publication,PENDING,Containing commit and pinned remote readback
