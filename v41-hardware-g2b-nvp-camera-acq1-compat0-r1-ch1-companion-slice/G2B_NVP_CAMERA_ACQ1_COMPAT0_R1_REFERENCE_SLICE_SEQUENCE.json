@@ -1,0 +1,64 @@
+{
+  "comparison": "CONTRADICTION",
+  "first_blocker": "ACQ1_COMPAT0_R1_REFERENCE_SEQUENCE_AUTHORITY_CONTRADICTION",
+  "r1_required_executor": {
+    "campaign_level_order": [
+      "0x50",
+      "0x40",
+      "0x60"
+    ],
+    "declared_final_literal": "BANK5_0x05_A4_THEN_0x08_50_40_60",
+    "ordered_functional_writes": [
+      "Bank5/0x05=0xA4",
+      "Bank5/0x08=selected level"
+    ]
+  },
+  "reference": {
+    "commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+    "condition": "NOVID asserted; level write additionally requires format-set state clear",
+    "file": "video.c",
+    "file_sha256": "CBC10B8585CF9F300C47EBD40AACB08635EF62784CF94B691B722758BA49657A",
+    "function": "nvp6134_getvideoloss",
+    "inter_write_delay": "none visible",
+    "ordered_operations": [
+      {
+        "address": "0xFF",
+        "bank": "global",
+        "kind": "bank_select",
+        "order": 1,
+        "value": "0x05"
+      },
+      {
+        "address": "0x08",
+        "bank": "0x05",
+        "kind": "functional_write",
+        "order": 2,
+        "value": "phase level"
+      },
+      {
+        "address": "0x05",
+        "bank": "0x05",
+        "kind": "functional_write",
+        "order": 3,
+        "value": "0xA4"
+      },
+      {
+        "address": "0x08",
+        "bank": "0x05",
+        "kind": "conditional_helper_write",
+        "order": 4,
+        "value": "0x50"
+      }
+    ],
+    "phase_mapping": [
+      "0x50",
+      "0x40",
+      "0x60"
+    ],
+    "post_handler_delay": "approximately 200 ms in detector path",
+    "repository": "4e4o/nvp6134_ex",
+    "reset_first_level": "0x40",
+    "tree": "f6926ef14a34365a0e47652253f5f4d63274cb1e"
+  },
+  "task": "G2B-NVP-CAMERA-ACQ1-COMPAT0-R1"
+}
