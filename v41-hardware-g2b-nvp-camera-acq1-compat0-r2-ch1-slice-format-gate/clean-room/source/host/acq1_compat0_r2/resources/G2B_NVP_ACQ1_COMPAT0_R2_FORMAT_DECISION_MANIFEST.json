@@ -1,0 +1,48 @@
+{
+  "schema": "G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION_MANIFEST_V1",
+  "policy": "READ_ONLY_SCAN1_FIELDS_ONLY",
+  "required_consecutive_equal_snapshots": 3,
+  "fields": [
+    "Bank0/0xA8 CH1 NOVID",
+    "Bank5/0xF0",
+    "Bank5/0xF2",
+    "Bank5/0xF3",
+    "Bank5/0xF4",
+    "Bank5/0xF5",
+    "Bank5/0xE2",
+    "Bank5/0xE3",
+    "Bank5/0xE8",
+    "Bank5/0xE9",
+    "Bank5/0xEA",
+    "Bank5/0xEB",
+    "Bank0/0xE0 AGC lock",
+    "Bank0/0xE1 clamp/comparator lock",
+    "Bank0/0xE2 H lock",
+    "Bank0/0xE8 CH1 status"
+  ],
+  "coherence_rules": [
+    "A8_PRE equals A8_POST",
+    "all 82 SCAN1 entries valid",
+    "entry bank restore verified",
+    "no I2C or scanner error",
+    "complete raw tuple equality across three consecutive snapshots"
+  ],
+  "outcomes": [
+    "AHD1080P25_CANDIDATE_CONFIRMED",
+    "FORMAT_PRESENT_UNSUPPORTED",
+    "FORMAT_PRESENT_UNRESOLVED",
+    "NO_FORMAT_CODE",
+    "SIGNAL_UNSTABLE"
+  ],
+  "rules": {
+    "stable_novid_one": "NO_FORMAT_CODE",
+    "unstable_novid_or_tuple": "SIGNAL_UNSTABLE",
+    "stable_novid_zero_and_raw_code_0x31": "FORMAT_PRESENT_UNRESOLVED",
+    "stable_novid_zero_and_other_ambiguous_ahd_cvi_code": "FORMAT_PRESENT_UNRESOLVED",
+    "stable_novid_zero_and_authoritatively_mapped_non_ahd1080p25": "FORMAT_PRESENT_UNSUPPORTED",
+    "ahd1080p25_confirmation": "requires an authoritative read-only AHD/CVI discriminator; no such discriminator is frozen for raw 0x31 in this task"
+  },
+  "ambiguous_ahd_cvi_codes": ["0x20", "0x21", "0x2B", "0x2C", "0x30", "0x31", "0x35", "0x36"],
+  "temporary_writes_allowed": false,
+  "single_f0_sufficient": false
+}

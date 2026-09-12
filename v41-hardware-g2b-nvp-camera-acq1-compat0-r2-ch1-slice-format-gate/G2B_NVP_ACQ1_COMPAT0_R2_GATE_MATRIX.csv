@@ -1,0 +1,10 @@
+order,gate,status,evidence,next
+1,source/reference authority,PASS,c7e16fa3da26545cef960a6c75427a3614c4b655;081ebbff9a2722d47acf16c680594be43cb179e2,implementation
+2,authorized source scope and isolation,PASS,24 changed files; PRODUCT exclusion PASS,offline tests
+3,SCAN1 inherited tests,PASS,24/24,executor tests
+4,executor/integration tests,PASS,20/20,fresh build
+5,fresh synthesis and profile elaboration,BLOCKED,ACQ1_COMPAT0_R2_BUILD_PROFILE_COUNTER_PREFIX_COLLISION,HARD_STOP
+6,implementation/sign-off/bitstream,NOT_REACHED,build-profile elaboration content mismatch,NOT_REACHED
+7,runtime bundle/programming/runtime identity,NOT_REACHED,ACQ1_COMPAT0_R2_BUILD_PROFILE_COUNTER_PREFIX_COLLISION,NOT_REACHED
+8,camera/baseline/slice/format/rollback,NOT_REACHED,ACQ1_COMPAT0_R2_BUILD_PROFILE_COUNTER_PREFIX_COLLISION,NOT_REACHED
+9,evidence publication,REQUIRED_POST_COMMIT,no-force push and commit-pinned raw-byte read-back,external receipt

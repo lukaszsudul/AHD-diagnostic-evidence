@@ -1,0 +1,68 @@
+{
+  "schema": "G2B_NVP_ACQ1_COMPAT0_R2_OPERATION_MANIFEST_V1",
+  "channel": "CH1",
+  "private_bank": "0x05",
+  "reference": {
+    "repository": "4e4o/nvp6134_ex",
+    "commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+    "source_path": "video.c",
+    "semantic_location": "nvp6134_getvideoloss, lines 1036-1069 at the pinned commit",
+    "license_disposition": "SEMANTIC_USE_ONLY_NO_DIRECT_COPY"
+  },
+  "forward_actions": [
+    {
+      "command": "ACQ_APPLY_SLICE_50",
+      "level": "0x50",
+      "writes": [
+        {"bank": "0x05", "register": "0x08", "value": "0x50"},
+        {"bank": "0x05", "register": "0x05", "value": "0xA4"}
+      ]
+    },
+    {
+      "command": "ACQ_APPLY_SLICE_40",
+      "level": "0x40",
+      "writes": [
+        {"bank": "0x05", "register": "0x08", "value": "0x40"},
+        {"bank": "0x05", "register": "0x05", "value": "0xA4"}
+      ]
+    },
+    {
+      "command": "ACQ_APPLY_SLICE_60",
+      "level": "0x60",
+      "writes": [
+        {"bank": "0x05", "register": "0x08", "value": "0x60"},
+        {"bank": "0x05", "register": "0x05", "value": "0xA4"}
+      ]
+    }
+  ],
+  "forward_order": "BANK5_0x08_LEVEL_THEN_BANK5_0x05_A4",
+  "forward_readback_order": ["Bank5/0x08", "Bank5/0x05"],
+  "rollback": {
+    "value_source": "exact full bytes captured by the first pre-campaign baseline pass",
+    "steps": [
+      "select and verify Bank5",
+      "restore Bank5/0x08 baseline and verify",
+      "restore Bank5/0x05 baseline and verify",
+      "restore original baseline entry bank and verify"
+    ]
+  },
+  "reference_helper": {
+    "condition": "ch_mode_status[CH1] < NVP6134_VI_720P_2530",
+    "governed_context": "AHD 1080p25 / 1080p no-video",
+    "condition_result": false,
+    "disposition": "PROVEN_NOT_EXECUTED",
+    "post_companion_0x08_rewrite": "NOT_IMPLEMENTED"
+  },
+  "prohibited_companion_operations": [
+    "set_chnmode",
+    "initial EQ",
+    "adaptive EQ",
+    "ACP",
+    "Bank9 re-arm",
+    "channel-enable write",
+    "VDO1 route write",
+    "BGDCOL write",
+    "CH2-CH4 functional write",
+    "generic host-controlled I2C operation"
+  ]
+}

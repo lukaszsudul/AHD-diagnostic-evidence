@@ -1,0 +1,92 @@
+# ACQ1-COMPAT0-R2 evidence index
+
+- Engineering gate: `BLOCKED`.
+- Evidence publication: `PASS_ON_REQUIRED_COMMIT_PINNED_REMOTE_READBACK`.
+- First blocker: `ACQ1_COMPAT0_R2_BUILD_PROFILE_COUNTER_PREFIX_COLLISION`.
+- Hardware accessed: `NO`; functional writes: `0`.
+- Prohibited binary/reference/pixel artifacts: `ABSENT`.
+
+## Files
+
+- `G2B_NVP_ACQ1_COMPAT0_R2_BASELINE_COMPARISON.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_BITSTREAM_MANIFEST.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_BUILD_REPORT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_CDC_REPORT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_CLEANUP_RECEIPT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_CONNECTED_BASELINE_SCANS.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_DETECTOR_SNAPSHOTS.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_DRC_REPORT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_DRYRUN_REWRITE_RECEIPT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_DUT_BUNDLE_GATE.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FINAL_STATE.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION_MANIFEST.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION_MANIFEST.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_IDENTIFICATION.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FUNCTIONAL_BASELINE_A.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_FUNCTIONAL_BASELINE_B.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_GATE_MATRIX.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_METHODOLOGY_REPORT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_MMIO_SANITY.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_NOVID_DECISION.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_OPERATION_MANIFEST.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_OPERATION_MANIFEST.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_OWNER_AUTHORIZATION.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_POST_ROLLBACK_SCANS.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_PREWRITE_BASELINE.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_PRIOR_TASK_INHERITANCE.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_PROGRAMMING_RECEIPT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_REFERENCE_HELPER_DISPOSITION.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_REFERENCE_ORDER_AUTHORITY.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_REGISTER_SAFETY_AUDIT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_ROLLBACK_RECEIPT.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_RUNTIME_BUNDLE_MANIFEST.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_RUNTIME_IDENTITY.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SCAN1_REGRESSION.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SCOPE.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SLICE_ACTIONS.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SLICE_READBACKS.csv`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SOURCE_DIFF.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_STATE.json`
+- `G2B_NVP_ACQ1_COMPAT0_R2_TEST_RESULTS.md`
+- `G2B_NVP_ACQ1_COMPAT0_R2_TIMING_REPORT.md`
+- `V41_G2B_NVP_CAMERA_ACQ1_COMPAT0_R2_MAIN_REPORT.md`
+- `clean-room/README.md`
+- `clean-room/generate_acq1_compat0_r2_evidence.py`
+- `clean-room/source/host/acq1_compat0_r2/__init__.py`
+- `clean-room/source/host/acq1_compat0_r2/campaign.py`
+- `clean-room/source/host/acq1_compat0_r2/contract.py`
+- `clean-room/source/host/acq1_compat0_r2/controller.py`
+- `clean-room/source/host/acq1_compat0_r2/evidence.py`
+- `clean-room/source/host/acq1_compat0_r2/format_decision.py`
+- `clean-room/source/host/acq1_compat0_r2/mmio.py`
+- `clean-room/source/host/acq1_compat0_r2/policy.py`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION_MANIFEST.json`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_FORMAT_DECISION_MANIFEST.md`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_OPERATION_MANIFEST.json`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_OPERATION_MANIFEST.md`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_PROFILE.json`
+- `clean-room/source/host/acq1_compat0_r2/resources/G2B_NVP_ACQ1_COMPAT0_R2_REGISTER_SAFETY_AUDIT.md`
+- `clean-room/source/host/acq1_compat0_r2_campaign_launcher.py`
+- `clean-room/source/host/acq1_compat0_r2_launcher.py`
+- `clean-room/source/rtl/g2b/g2b_nvp_acq1_compat0_r2.sv`
+- `clean-room/source/rtl/g2b/g2b_nvp_camera_scan1_acq1_compat0_r2.sv`
+- `clean-room/source/rtl/top/ahd_capture_top_xdma.sv`
+- `clean-room/source/scripts/acq1_compat0_r2/build_runtime_bundle.py`
+- `clean-room/source/task-local/g2b_nvp_camera_acq1_compat0_r2_build.tcl`
+- `clean-room/source/tests/acq1_compat0_r2/check_static_contract.py`
+- `clean-room/source/tests/acq1_compat0_r2/run_acq1_compat0_r2_gate.ps1`
+- `clean-room/source/tests/acq1_compat0_r2/tb_g2b_nvp_acq1_compat0_r2.sv`
+- `clean-room/source/tests/acq1_compat0_r2/test_host_policy.py`
+- `clean-room/test_evidence.py`
+- `raw/G2B_BUILD_PROVENANCE.txt`
+- `raw/G2B_BUILD_RESULT.txt`
+- `raw/G2B_COMBINED_TEST_RECEIPT.txt`
+- `raw/G2B_EXECUTOR_TEST_RECEIPT.txt`
+- `raw/G2B_MMIO_ROUTER_SOURCE_INCLUSION.txt`
+- `raw/G2B_OPERATION_COUNTS.txt`
+- `raw/G2B_PRODUCT_EXCLUSION_ELABORATION.txt`
+- `raw/G2B_PROFILE_ELABORATION_RECEIPT.txt`
+- `raw/G2B_SCAN1_TEST_RECEIPT.txt`
+- `raw/G2B_SOURCE_ARCHITECTURE_GATE.txt`
+- `G2B_NVP_ACQ1_COMPAT0_R2_SHA256_MANIFEST.txt`
