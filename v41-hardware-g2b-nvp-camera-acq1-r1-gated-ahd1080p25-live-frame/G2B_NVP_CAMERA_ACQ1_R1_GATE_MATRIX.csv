@@ -1,0 +1,11 @@
+order,gate,status,evidence,next
+1,owner prompt identity,PASS,1C8FC6556291AA4824AD797A8ECE2F056EEDC3CCBD14DF7BA98BF1190C334F95,source authority
+2,source parent/tree and isolated branch,PASS,c7e16fa3da26545cef960a6c75427a3614c4b655/56526e17154f8e06f3eb4b95233934c18b6ee06e,reference freeze
+3,pinned reference identity,PASS,081ebbff9a2722d47acf16c680594be43cb179e2/f6926ef14a34365a0e47652253f5f4d63274cb1e,semantic manifests
+4,exact action semantic extraction,PASS,211 operations; 137 mode targets; route adds one,complete touched closure
+5,complete touched baseline/readback/rollback authority,BLOCKED,138 targets; 6 authorized; 132 authority gaps; 2 symbolic fields,HARD_STOP
+6,AHD/CVI discriminator execution authority,NOT_REACHED,exact semantic branch extracted; earlier rollback gate failed,NOT_REACHED
+7,reference helper disposition,PASS,PROVEN_NOT_EXECUTED,does not override gate 5
+8,source implementation and 56 tests,NOT_REACHED,ACQ1_R1_COMPLETE_ROLLBACK_AUTHORITY_NOT_PROVEN,NOT_REACHED
+9,build/signoff/bitstream/runtime/hardware,NOT_REACHED,ACQ1_R1_COMPLETE_ROLLBACK_AUTHORITY_NOT_PROVEN,NOT_REACHED
+10,evidence publication,REQUIRED_POST_COMMIT,one no-force push plus one commit-pinned read-back,external receipt
