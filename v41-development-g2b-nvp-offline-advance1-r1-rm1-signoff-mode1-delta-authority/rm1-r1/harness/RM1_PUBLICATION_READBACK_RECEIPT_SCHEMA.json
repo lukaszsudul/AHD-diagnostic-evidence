@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "G2B NVP DIAG2-RM1 publication and commit-pinned readback receipt",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "Result",
+    "SourceCommit",
+    "SourceTree",
+    "Branch",
+    "RemoteRefReadback",
+    "CommitPinnedBlobReadback",
+    "HardwareAccessed"
+  ],
+  "properties": {
+    "Result": { "const": "PASS" },
+    "SourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "SourceTree": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "Branch": { "const": "diag/v41-g2b-nvp-video-diag2-rm1" },
+    "RemoteRefReadback": { "const": "PASS" },
+    "CommitPinnedBlobReadback": { "const": "PASS" },
+    "HardwareAccessed": { "const": "NO" }
+  }
+}

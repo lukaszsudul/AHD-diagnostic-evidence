@@ -1,0 +1,75 @@
+{
+  "schema": "MODE1_AUTH1_AUTHORITY_GATE_V1",
+  "source_authority": {
+    "branch": "diag/v41-g2b-nvp-camera-acq1-mode1",
+    "head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+    "tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+    "tracked_worktree": "CLEAN"
+  },
+  "reference_commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+  "current_state_rows": 171,
+  "reference_target_registers": 113,
+  "current_v41_target_state_overlap": "52/113",
+  "reference_operation_count": 211,
+  "differential_class_counts": {
+    "FINAL_STATE_DELTA": 61,
+    "NO_OP_AGAINST_CURRENT_BASELINE": 99,
+    "OPTIONAL_ACP": 35,
+    "REQUIRED_DELAY": 1,
+    "REQUIRED_SEQUENCE_REWRITE": 10,
+    "REQUIRED_WRITE_PULSE": 2,
+    "SOFTWARE_STATE_ONLY": 3
+  },
+  "minimal_action_count": 74,
+  "minimal_functional_operation_count": 63,
+  "minimal_functional_register_count": 62,
+  "minimal_touched_register_count_including_bank_selector": 63,
+  "minimum_phase_operation_counts": {
+    "AHD1080P25": 20,
+    "COMMON": 26,
+    "EQ_INIT": 3,
+    "FHD_COMMON": 12,
+    "POST_MODE": 2
+  },
+  "unresolved_operation_count": 0,
+  "prohibited_unresolved_touched_register_count": 27,
+  "unresolved_symbolic_fields": 27,
+  "initial_eq_authority": "MODE1_INITIAL_EQ_AUTHORITY_INCOMPLETE",
+  "acp_decision": "ACP_NOT_REQUIRED_FOR_FIRST_IMAGE",
+  "bank1_ed": "EXCLUDED_FROM_MINIMAL_MODE1",
+  "bank9_44": "EXCLUDED_FROM_MINIMAL_MODE1",
+  "product_baseline_reconstruction": "FAIL",
+  "recovery": {
+    "minimum_functional_register_count": 62,
+    "minimum_touched_register_count_including_bank_selector": 63,
+    "recovery_class_counts": {
+      "DETERMINISTIC_SEQUENCE_REINIT": 35,
+      "EXACT_READ_RESTORE": 1,
+      "PROHIBITED_UNRESOLVED": 27
+    },
+    "authorized_recovery_register_count": 36,
+    "recovery_authority_coverage_percent": 57.143,
+    "recovery_authority_result": "INCOMPLETE"
+  },
+  "failure_injection": {
+    "failure_type_count": 8,
+    "action_count": 74,
+    "scenario_count": 592,
+    "scenario_coverage": "592/592",
+    "structural_coverage": "100%",
+    "recovery_authority_coverage_percent": 57.143,
+    "terminal_counts": {
+      "RECOVERED_PRODUCT_BASELINE": 9,
+      "FATAL_RECOVERY_FAILURE": 583
+    },
+    "failure_injection_result": "PASS"
+  },
+  "scan1_read_only": true,
+  "generic_host_nvp_i2c": "ABSENT",
+  "implementation_decision": "BLOCKED_NO_SOURCE_CANDIDATE",
+  "build_decision": "NOT_RUN_AUTHORITY_GATE_FAILED",
+  "hardware_prompt_created": false,
+  "hardware_accessed": false,
+  "first_failed_gate": "PROHIBITED_UNRESOLVED_TOUCHED_REGISTER_COUNT_NONZERO",
+  "classification": "MODE1_AUTH1_AUTHORITY_INCOMPLETE"
+}

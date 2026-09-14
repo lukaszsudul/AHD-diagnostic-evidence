@@ -1,0 +1,195 @@
+Step,Layer,OperationType,Bank,Register,Value,Mask,Condition,DelayMs,SourcePath,SourceLine,FinalFieldClass,Note
+1,RESET,RESET_ASSERT,N/A,NVP_RST,0,N/A,rst or first 500 ms,500,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,154,KNOWN_FINAL_VALUE,wrapper holds NVP reset active
+2,RESET,RESET_RELEASE,N/A,NVP_RST,1,N/A,after 500 ms,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,154,KNOWN_FINAL_VALUE,wrapper releases NVP reset
+3,START_DELAY,DELAY,N/A,N/A,N/A,N/A,before autoinit start,1000,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,182,KNOWN_FINAL_VALUE,start occurs 1.5 s after wrapper reset
+4,ENTRY_BANK,READ,CURRENT,0xFF,CAPTURED_ENTRY_BANK,0xFF,before table,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,1966,SYMBOLIC_UNKNOWN_BITS,entry bank is captured and later restored
+5,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x80,0x0F,0xFF,stage2 slot 0,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,233,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+6,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xCA,0x66,0xFF,stage2 slot 1,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,234,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+7,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x03,0x6B,0x00,0xFF,stage2 slot 2,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,235,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+8,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x03,0x3A,0x01,0xFF,stage2 slot 3,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,236,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+9,PRODUCT_EQUIVALENT_AUTOINIT,DELAY,N/A,N/A,N/A,N/A,stage2 slot 4,10,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,237,KNOWN_FINAL_VALUE,qualified fixed table delay
+10,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x03,0x3A,0x00,0xFF,stage2 slot 5,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,238,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+11,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x00,0x10,0xFF,stage2 slot 6,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,239,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+12,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x23,0x43,0xFF,stage2 slot 7,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,240,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+13,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x30,0x10,0xFF,stage2 slot 8,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,241,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+14,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x34,0x02,0xFF,stage2 slot 9,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,242,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+15,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x93,0x00,0xFF,stage2 slot 10,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,243,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+16,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x00,0xC0,0xFF,stage2 slot 11,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,244,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+17,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x01,0x02,0xFF,stage2 slot 12,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,245,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+18,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x08,0x50,0xFF,stage2 slot 13,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,246,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+19,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x11,0x06,0xFF,stage2 slot 14,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,247,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+20,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x23,0x00,0xFF,stage2 slot 15,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,248,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+21,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x2A,0x52,0xFF,stage2 slot 16,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,249,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+22,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x58,0x02,0xFF,stage2 slot 17,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,250,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+23,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x59,0x11,0xFF,stage2 slot 18,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,251,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+24,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xB8,0xB9,0xFF,stage2 slot 19,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,252,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+25,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xC8,0x04,0xFF,stage2 slot 20,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,253,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+26,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x0A,0x74,0x02,0xFF,stage2 slot 21,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,254,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+27,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x64,0x98,0xFF,stage2 slot 22,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,255,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+28,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x6A,0x18,0xFF,stage2 slot 23,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,256,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+29,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x6B,0xFF,0xFF,stage2 slot 24,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,257,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+30,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x80,0x00,0xFF,stage2 slot 25,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,258,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+31,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x81,0x00,0xFF,stage2 slot 26,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,259,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+32,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x00,0x00,0xFF,stage2 slot 27,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,260,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+33,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x00,0xC0,0xFF,stage2 slot 28,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,261,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+34,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x01,0x00,0xFF,stage2 slot 29,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,262,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+35,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x58,0x00,0xFF,stage2 slot 30,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,263,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+36,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x59,0x00,0xFF,stage2 slot 31,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,264,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+37,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x5B,0x03,0xFF,stage2 slot 32,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,265,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+38,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x08,0xDD,0xFF,stage2 slot 33,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,266,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+39,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x0C,0x08,0xFF,stage2 slot 34,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,267,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+40,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x10,0x88,0xFF,stage2 slot 35,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,268,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+41,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x14,0x90,0xFF,stage2 slot 36,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,269,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+42,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x18,0x08,0xFF,stage2 slot 37,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,270,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+43,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x21,0x02,0xFF,stage2 slot 38,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,271,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+44,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x3C,0x84,0xFF,stage2 slot 39,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,272,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+45,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x44,0x00,0xFF,stage2 slot 40,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,273,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+46,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x48,0x00,0xFF,stage2 slot 41,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,274,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+47,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x4C,0x00,0xFF,stage2 slot 42,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,275,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+48,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x50,0x00,0xFF,stage2 slot 43,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,276,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+49,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xED,0x00,0xFF,stage2 slot 44,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,277,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+50,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x69,0x00,0xFF,stage2 slot 45,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,278,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+51,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x47,0x04,0xFF,stage2 slot 46,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,279,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+52,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x50,0x84,0xFF,stage2 slot 47,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,280,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+53,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x84,0x00,0xFF,stage2 slot 48,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,281,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+54,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x86,0x00,0xFF,stage2 slot 49,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,282,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+55,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xD1,0x10,0xFF,stage2 slot 50,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,283,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+56,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x57,0x00,0xFF,stage2 slot 51,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,284,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+57,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x90,0x01,0xFF,stage2 slot 52,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,285,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+58,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x08,0x70,0xFF,stage2 slot 53,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,286,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+59,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x11,0x04,0xFF,stage2 slot 54,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,287,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+60,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x1B,0x20,0xFF,stage2 slot 55,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,288,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+61,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x24,0x10,0xFF,stage2 slot 56,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,289,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+62,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x25,0xCA,0xFF,stage2 slot 57,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,290,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+63,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x26,0x30,0xFF,stage2 slot 58,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,291,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+64,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x29,0x30,0xFF,stage2 slot 59,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,292,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+65,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x2A,0x30,0xFF,stage2 slot 60,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,293,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+66,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x2B,0xA8,0xFF,stage2 slot 61,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,294,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+67,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x5F,0x70,0xFF,stage2 slot 62,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,295,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+68,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x56,0x00,0xFF,stage2 slot 63,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,296,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+69,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x90,0x0D,0xFF,stage2 slot 64,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,297,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+70,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x9B,0x80,0xFF,stage2 slot 65,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,298,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+71,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xB5,0x00,0xFF,stage2 slot 66,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,299,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+72,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xB7,0xFF,0xFF,stage2 slot 67,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,300,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+73,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xB8,0xB8,0xFF,stage2 slot 68,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,301,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+74,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xBB,0xB8,0xFF,stage2 slot 69,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,302,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+75,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0xD1,0x20,0xFF,stage2 slot 70,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,303,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+76,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x20,0x84,0xFF,stage2 slot 71,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,304,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+77,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x27,0x57,0xFF,stage2 slot 72,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,305,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+78,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x76,0x01,0xFF,stage2 slot 73,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,306,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+79,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x6E,0x00,0xFF,stage2 slot 74,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,307,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+80,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x6F,0x00,0xFF,stage2 slot 75,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,308,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+81,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x40,0x00,0xFF,stage2 slot 76,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,309,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+82,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x44,0x00,0xFF,stage2 slot 77,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,310,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+83,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x50,0xCB,0xFF,stage2 slot 78,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,311,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+84,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x51,0x8A,0xFF,stage2 slot 79,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,312,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+85,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x52,0x09,0xFF,stage2 slot 80,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,313,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+86,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x53,0x2A,0xFF,stage2 slot 81,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,314,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+87,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x97,0x00,0xFF,stage2 slot 82,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,315,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+88,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x98,0x00,0xFF,stage2 slot 83,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,316,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+89,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x09,0x99,0x00,0xFF,stage2 slot 84,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,317,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+90,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x02,0x03,0xFF,stage2 slot 85,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,318,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+91,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x28,0x01,0xFF,stage2 slot 86,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,319,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+92,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x29,0x3C,0xFF,stage2 slot 87,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,320,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+93,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x2A,0x0C,0xFF,stage2 slot 88,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,321,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+94,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x2B,0x06,0xFF,stage2 slot 89,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,322,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+95,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x2C,0x36,0xFF,stage2 slot 90,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,323,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+96,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x11,0x00,0x00,0xFF,stage2 slot 91,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,324,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+97,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0x84,0x47,0xFF,stage2 slot 92,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,325,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+98,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0x8C,0xA7,0xFF,stage2 slot 93,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,326,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+99,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x40,0x00,0xFF,stage2 slot 94,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,327,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+100,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x81,0x70,0xFF,stage2 slot 95,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,328,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+101,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x85,0x00,0xFF,stage2 slot 96,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,329,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+102,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x18,0x14,0xFF,stage2 slot 97,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,330,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+103,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x30,0x10,0xFF,stage2 slot 98,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,331,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+104,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x58,0x30,0xFF,stage2 slot 99,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,332,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+105,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x5C,0x1E,0xFF,stage2 slot 100,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,333,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+106,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x64,0x2D,0xFF,stage2 slot 101,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,334,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+107,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x89,0x10,0xFF,stage2 slot 102,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,335,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+108,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x8E,0x30,0xFF,stage2 slot 103,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,336,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+109,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0xA0,0x18,0xFF,stage2 slot 104,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,337,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+110,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0xA4,0x00,0xFF,stage2 slot 105,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,338,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+111,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x64,0x00,0xFF,stage2 slot 106,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,339,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+112,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x28,0x00,0xFF,stage2 slot 107,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,340,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+113,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x29,0x2D,0xFF,stage2 slot 108,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,341,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+114,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x2A,0x0C,0xFF,stage2 slot 109,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,342,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+115,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x02,0x2C,0x27,0xFF,stage2 slot 110,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,343,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+116,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x59,0x11,0xFF,stage2 slot 137,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,370,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+117,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x01,0x00,0xFF,stage2 slot 138,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,371,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+118,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x58,0x00,0xFF,stage2 slot 139,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,372,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+119,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x05,0x59,0x00,0xFF,stage2 slot 140,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,373,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+120,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x00,0x00,0xFF,stage2 slot 141,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,374,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+121,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x56,0x10,0xFF,stage2 slot 142,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,375,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+122,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xC2,0x00,0xFF,stage2 slot 143,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,376,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+123,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xC3,0x00,0xFF,stage2 slot 144,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,377,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+124,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xC8,0x00,0xFF,stage2 slot 145,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,378,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+125,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x01,0xCD,0x86,0xFF,stage2 slot 146,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,379,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+126,PRODUCT_EQUIVALENT_AUTOINIT,WRITE_FULL,0x00,0x00,0x00,0xFF,stage2 slot 147,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,380,KNOWN_FINAL_VALUE,enabled stage-2 source table word
+127,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0xFF,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 0,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,559,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+128,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x80,0x0F,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 1,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,560,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+129,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0xB8,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 2,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,561,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+130,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x00,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 3,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,544,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+131,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x01,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 4,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,545,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+132,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x02,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 5,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,546,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+133,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x03,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 6,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,547,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+134,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x08,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 7,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,526,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+135,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x09,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 8,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,527,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+136,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x0A,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 9,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,528,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+137,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x0B,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 10,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,529,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+138,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x81,0x03,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 11,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,530,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+139,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x82,0x03,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 12,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,531,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+140,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x83,0x03,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 13,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,532,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+141,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x84,0x03,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 14,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,533,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+142,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x85,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 15,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,408,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+143,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x86,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 16,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,409,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+144,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x87,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 17,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,410,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+145,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x88,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 18,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,411,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+146,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x78,0x88,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 19,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,412,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+147,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x79,0x88,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 20,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,413,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+148,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x7A,0x11,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 21,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,414,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+149,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0x7B,0x11,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 22,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,415,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+150,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xFF,0x01,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 23,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,418,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+151,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x84,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 24,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,419,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+152,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x85,0x01,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 25,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,420,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+153,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x86,0x02,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 26,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,421,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+154,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x87,0x03,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 27,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,422,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+155,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x8C,0x40,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 28,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,423,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+156,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x8D,0x41,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 29,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,424,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+157,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x8E,0x42,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 30,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,425,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+158,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x8F,0x43,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 31,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,426,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+159,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x97,0x0F,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 32,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,427,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+160,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0x98,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 33,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,428,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+161,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC2,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 34,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,429,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+162,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC3,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 35,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,430,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+163,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC4,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 36,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,431,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+164,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC5,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 37,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,432,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+165,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC8,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 38,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,433,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+166,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xC9,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 39,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,434,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+167,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xCA,0x22,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 40,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,435,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+168,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xCB,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 41,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,436,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+169,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xCD,0x4A,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 42,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,437,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+170,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x01,0xCE,0x46,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 43,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,438,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+171,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0xFF,0x09,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 44,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,441,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+172,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x40,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 45,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,442,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+173,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x44,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 46,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,443,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+174,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x50,0xAB,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 47,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,444,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+175,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x51,0x7D,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 48,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,445,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+176,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x52,0xC3,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 49,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,446,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+177,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x53,0x52,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 50,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,447,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+178,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x54,0xAB,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 51,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,448,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+179,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x55,0x7D,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 52,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,449,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+180,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x56,0xC3,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 53,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,450,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+181,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x57,0x52,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 54,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,451,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+182,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x58,0xAB,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 55,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,452,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+183,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x59,0x7D,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 56,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,453,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+184,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5A,0xC3,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 57,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,454,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+185,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5B,0x52,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 58,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,455,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+186,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5C,0xAB,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 59,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,456,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+187,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5D,0x7D,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 60,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,457,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+188,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5E,0xC3,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 61,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,458,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+189,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x09,0x5F,0x52,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 62,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,459,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+190,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0xFF,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 63,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,462,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+191,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0xB8,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 64,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,463,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+192,DIAGNOSTIC_PROFILE_OVERLAY,WRITE_FULL,0x00,0xFF,0x00,0xFF,profile=10 phase=A channel=0 AUTO=0 overlay slot 65,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,464,KNOWN_FINAL_VALUE,resolved deterministic overlay expression
+193,POST_INIT_READBACK,READ_GROUP,Bank0/Bank1/Bank5-8,FIXED_MANIFEST,DYNAMIC_OR_CONFIG_READBACK,MANIFEST,after table,120,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,182,DYNAMIC_STATUS,diagnostic reads do not alter functional target state
+194,ENTRY_BANK_RESTORE,WRITE_AND_VERIFY,CAPTURED,0xFF,CAPTURED_ENTRY_BANK,0xFF,after post-init reads,0,rtl/nvp/nvp6134c_diagnostics_pkg.vhd,1966,SYMBOLIC_UNKNOWN_BITS,exact entry bank restored and verified

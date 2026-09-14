@@ -1,0 +1,150 @@
+{
+  "schema": "MODE1_AUTH1_REDUCED_RECOVERY_GRAPH_V1",
+  "states": [
+    "IDLE_PRODUCT_BASELINE",
+    "BASELINE_CAPTURED",
+    "MODE_APPLY_IN_PROGRESS",
+    "MODE_APPLIED",
+    "EQ_APPLY_IN_PROGRESS",
+    "EQ_APPLIED",
+    "LOCK_WAIT",
+    "BT656_WAIT",
+    "SUCCESS_READY",
+    "ABORTING",
+    "EXACT_RESTORE",
+    "NVP_RESET",
+    "PRODUCT_AUTOINIT",
+    "BASELINE_VERIFY",
+    "RECOVERED",
+    "RECOVERED_PRODUCT_BASELINE",
+    "FATAL_RECOVERY_FAILURE"
+  ],
+  "transitions": [
+    {
+      "from": "IDLE_PRODUCT_BASELINE",
+      "to": "BASELINE_CAPTURED",
+      "event": "PREPARE"
+    },
+    {
+      "from": "BASELINE_CAPTURED",
+      "to": "MODE_APPLY_IN_PROGRESS",
+      "event": "APPLY"
+    },
+    {
+      "from": "MODE_APPLY_IN_PROGRESS",
+      "to": "MODE_APPLIED",
+      "event": "MODE_COMPLETE"
+    },
+    {
+      "from": "MODE_APPLIED",
+      "to": "EQ_APPLY_IN_PROGRESS",
+      "event": "EQ_START"
+    },
+    {
+      "from": "EQ_APPLY_IN_PROGRESS",
+      "to": "EQ_APPLIED",
+      "event": "EQ_COMPLETE"
+    },
+    {
+      "from": "EQ_APPLIED",
+      "to": "LOCK_WAIT",
+      "event": "WAIT_LOCK"
+    },
+    {
+      "from": "LOCK_WAIT",
+      "to": "BT656_WAIT",
+      "event": "LOCK_STABLE"
+    },
+    {
+      "from": "BT656_WAIT",
+      "to": "SUCCESS_READY",
+      "event": "BT656_READY"
+    },
+    {
+      "from": "SUCCESS_READY",
+      "to": "ABORTING",
+      "event": "RESTORE_COMMAND"
+    },
+    {
+      "from": "MODE_APPLY_IN_PROGRESS",
+      "to": "ABORTING",
+      "event": "ANY_FAILURE"
+    },
+    {
+      "from": "EQ_APPLY_IN_PROGRESS",
+      "to": "ABORTING",
+      "event": "ANY_FAILURE"
+    },
+    {
+      "from": "LOCK_WAIT",
+      "to": "ABORTING",
+      "event": "ANY_FAILURE"
+    },
+    {
+      "from": "BT656_WAIT",
+      "to": "ABORTING",
+      "event": "ANY_FAILURE"
+    },
+    {
+      "from": "ABORTING",
+      "to": "EXACT_RESTORE",
+      "event": "BASELINE_AVAILABLE"
+    },
+    {
+      "from": "EXACT_RESTORE",
+      "to": "BASELINE_VERIFY",
+      "event": "RESTORE_COMPLETE"
+    },
+    {
+      "from": "BASELINE_VERIFY",
+      "to": "RECOVERED",
+      "event": "VERIFIED"
+    },
+    {
+      "from": "RECOVERED",
+      "to": "RECOVERED_PRODUCT_BASELINE",
+      "event": "TERMINAL"
+    },
+    {
+      "from": "ABORTING",
+      "to": "NVP_RESET",
+      "event": "RECONSTRUCTION_REQUIRED"
+    },
+    {
+      "from": "NVP_RESET",
+      "to": "PRODUCT_AUTOINIT",
+      "event": "RESET_COMPLETE"
+    },
+    {
+      "from": "PRODUCT_AUTOINIT",
+      "to": "BASELINE_VERIFY",
+      "event": "AUTOINIT_COMPLETE"
+    },
+    {
+      "from": "ABORTING",
+      "to": "FATAL_RECOVERY_FAILURE",
+      "event": "AUTHORITY_UNAVAILABLE"
+    },
+    {
+      "from": "EXACT_RESTORE",
+      "to": "FATAL_RECOVERY_FAILURE",
+      "event": "RESTORE_FAILED"
+    },
+    {
+      "from": "PRODUCT_AUTOINIT",
+      "to": "FATAL_RECOVERY_FAILURE",
+      "event": "AUTOINIT_FAILED"
+    },
+    {
+      "from": "BASELINE_VERIFY",
+      "to": "FATAL_RECOVERY_FAILURE",
+      "event": "VERIFY_FAILED"
+    }
+  ],
+  "structural_coverage": "100%",
+  "silent_return_to_idle": false,
+  "allowed_terminals": [
+    "RECOVERED_PRODUCT_BASELINE",
+    "FATAL_RECOVERY_FAILURE"
+  ]
+}

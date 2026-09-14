@@ -1,0 +1,147 @@
+{
+  "schema": "MODE1_AUTH1_VERIFICATION_RECEIPT_V1",
+  "result": "PASS",
+  "gate": "27/27 PASS",
+  "tests": [
+    {
+      "test": "T01_SOURCE_HEAD",
+      "result": "PASS",
+      "detail": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6"
+    },
+    {
+      "test": "T02_SOURCE_TREE",
+      "result": "PASS",
+      "detail": "21e33d481ef637667756caa8015e7fa1b1dd8ebf"
+    },
+    {
+      "test": "T03_SOURCE_CLEAN",
+      "result": "PASS",
+      "detail": "CLEAN"
+    },
+    {
+      "test": "T04_REFERENCE_OPERATION_ROWS",
+      "result": "PASS",
+      "detail": "211"
+    },
+    {
+      "test": "T05_EXACTLY_ONE_DIFF_CLASS",
+      "result": "PASS",
+      "detail": "all classes valid"
+    },
+    {
+      "test": "T06_DIFF_TOTAL",
+      "result": "PASS",
+      "detail": "{'NO_OP_AGAINST_CURRENT_BASELINE': 99, 'REQUIRED_SEQUENCE_REWRITE': 10, 'FINAL_STATE_DELTA': 61, 'SOFTWARE_STATE_ONLY': 3, 'OPTIONAL_ACP': 35, 'REQUIRED_WRITE_PULSE': 2, 'REQUIRED_DELAY': 1}"
+    },
+    {
+      "test": "T07_FINAL_DELTA_COUNT",
+      "result": "PASS",
+      "detail": "61"
+    },
+    {
+      "test": "T08_UNRESOLVED_OPERATION_ZERO",
+      "result": "PASS",
+      "detail": "0"
+    },
+    {
+      "test": "T09_ACP_EXCLUDED",
+      "result": "PASS",
+      "detail": "35"
+    },
+    {
+      "test": "T10_ACTION_COUNT",
+      "result": "PASS",
+      "detail": "74"
+    },
+    {
+      "test": "T11_FUNCTIONAL_REGISTER_COUNT",
+      "result": "PASS",
+      "detail": "62"
+    },
+    {
+      "test": "T12_TOUCHED_INCLUDING_SELECTOR",
+      "result": "PASS",
+      "detail": "63"
+    },
+    {
+      "test": "T13_RECOVERY_CLASSES_VALID",
+      "result": "PASS",
+      "detail": "all classes valid"
+    },
+    {
+      "test": "T14_RECOVERY_COUNTS",
+      "result": "PASS",
+      "detail": "{'EXACT_READ_RESTORE': 1, 'DETERMINISTIC_SEQUENCE_REINIT': 35, 'PROHIBITED_UNRESOLVED': 27}"
+    },
+    {
+      "test": "T15_RECOVERY_COVERAGE",
+      "result": "PASS",
+      "detail": "57.143"
+    },
+    {
+      "test": "T16_FAILURE_SCENARIO_COUNT",
+      "result": "PASS",
+      "detail": "592"
+    },
+    {
+      "test": "T17_FAILURE_EIGHT_PER_ACTION",
+      "result": "PASS",
+      "detail": "actions=74 counts={8}"
+    },
+    {
+      "test": "T18_FAILURE_TERMINALS",
+      "result": "PASS",
+      "detail": "explicit terminals only"
+    },
+    {
+      "test": "T19_STRUCTURAL_COVERAGE",
+      "result": "PASS",
+      "detail": "100%"
+    },
+    {
+      "test": "T20_BANK1_ED",
+      "result": "PASS",
+      "detail": "EXCLUDED_FROM_MINIMAL_MODE1"
+    },
+    {
+      "test": "T21_BANK9_44",
+      "result": "PASS",
+      "detail": "EXCLUDED_FROM_MINIMAL_MODE1"
+    },
+    {
+      "test": "T22_ACP_DECISION",
+      "result": "PASS",
+      "detail": "ACP_NOT_REQUIRED_FOR_FIRST_IMAGE"
+    },
+    {
+      "test": "T23_INITIAL_EQ_FAIL_CLOSED",
+      "result": "PASS",
+      "detail": "MODE1_INITIAL_EQ_AUTHORITY_INCOMPLETE"
+    },
+    {
+      "test": "T24_NO_CANDIDATE_BUILD_HARDWARE",
+      "result": "PASS",
+      "detail": "no candidate/build/hardware"
+    },
+    {
+      "test": "T25_SCAN1_GENERIC_I2C_BOUNDARY",
+      "result": "PASS",
+      "detail": "SCAN1 read-only; generic host I2C absent"
+    },
+    {
+      "test": "T26_GENERATION_OUTPUT_HASHES",
+      "result": "PASS",
+      "detail": "18 output hashes"
+    },
+    {
+      "test": "T27_GENERATOR_DETERMINISM",
+      "result": "PASS",
+      "detail": "two identical consecutive generation receipts"
+    }
+  ],
+  "source_commit": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+  "source_tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+  "candidate_created": false,
+  "build_run": false,
+  "hardware_accessed": false
+}

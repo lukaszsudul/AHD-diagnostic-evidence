@@ -1,0 +1,212 @@
+ReferenceOrder,OperationID,Phase,OperationType,Bank,Register,CurrentBaselineClass,CurrentBaselineValue,TargetValue,TargetMask,DifferentialClass,IncludedInMinimum,LaterOverrideOrder,Rationale
+1,REF-001,COMMON,BANK_SELECT,UNKNOWN_ENTRY_BANK,0xFF,N/A,N/A,0x00,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+2,REF-002,COMMON,WRITE,0x00,0x00,KNOWN_FINAL_VALUE,0x00,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,211,superseded by a later final write; no separate pulse or re-arm authority
+3,REF-003,COMMON,WRITE,0x00,0x22,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x0B,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,68,superseded by a later final write; no separate pulse or re-arm authority
+4,REF-004,COMMON,WRITE,0x00,0x23,KNOWN_FINAL_VALUE,0x43,0x43,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,4,final whole-byte state already equals the target
+5,REF-005,COMMON,WRITE,0x00,0x30,KNOWN_FINAL_VALUE,0x10,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,123,superseded by a later final write; no separate pulse or re-arm authority
+6,REF-006,COMMON,WRITE,0x00,0x34,KNOWN_FINAL_VALUE,0x02,0x02,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,6,final whole-byte state already equals the target
+7,REF-007,COMMON,WRITE,0x00,0x93,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,7,final whole-byte state already equals the target
+8,REF-008,COMMON,WRITE,0x00,0xA4,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,130,superseded by a later final write; no separate pulse or re-arm authority
+9,REF-009,COMMON,BANK_SELECT,0x00,0xFF,N/A,N/A,0x05,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+10,REF-010,COMMON,WRITE,0x05,0x00,KNOWN_FINAL_VALUE,0xC0,0xC0,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,56,superseded by a later final write; no separate pulse or re-arm authority
+11,REF-011,COMMON,WRITE,0x05,0x01,KNOWN_FINAL_VALUE,0x00,0x02,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,57,superseded by a later final write; no separate pulse or re-arm authority
+12,REF-012,COMMON,WRITE,0x05,0x05,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x24,0xFF,FINAL_STATE_DELTA,YES,12,final target byte differs or current v41 does not write the register
+13,REF-013,COMMON,WRITE,0x05,0x08,KNOWN_FINAL_VALUE,0x70,0x50,0xFF,FINAL_STATE_DELTA,YES,13,final target byte differs or current v41 does not write the register
+14,REF-014,COMMON,WRITE,0x05,0x0E,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x30,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,18,superseded by a later final write; no separate pulse or re-arm authority
+15,REF-015,COMMON,WRITE,0x05,0x11,KNOWN_FINAL_VALUE,0x04,0x06,0xFF,FINAL_STATE_DELTA,YES,15,final target byte differs or current v41 does not write the register
+16,REF-016,COMMON,WRITE,0x05,0x23,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,16,final whole-byte state already equals the target
+17,REF-017,COMMON,WRITE,0x05,0x2A,KNOWN_FINAL_VALUE,0x30,0x52,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,142,superseded by a later final write; no separate pulse or re-arm authority
+18,REF-018,COMMON,WRITE,0x05,0x0E,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x30,0xFF,FINAL_STATE_DELTA,YES,18,final target byte differs or current v41 does not write the register
+19,REF-019,COMMON,WRITE,0x05,0x58,KNOWN_FINAL_VALUE,0x00,0x02,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,143,superseded by a later final write; no separate pulse or re-arm authority
+20,REF-020,COMMON,WRITE,0x05,0x59,KNOWN_FINAL_VALUE,0x00,0x11,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,198,superseded by a later final write; no separate pulse or re-arm authority
+21,REF-021,COMMON,WRITE,0x05,0xB8,KNOWN_FINAL_VALUE,0xB8,0xB9,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,152,superseded by a later final write; no separate pulse or re-arm authority
+22,REF-022,COMMON,WRITE,0x05,0xC8,KNOWN_FINAL_VALUE,0x04,0x04,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,202,superseded by a later final write; no separate pulse or re-arm authority
+23,REF-023,COMMON,BANK_SELECT,0x05,0xFF,N/A,N/A,0x0A,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+24,REF-024,COMMON,WRITE,0x0A,0x74,KNOWN_FINAL_VALUE,0x02,0x02,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,204,superseded by a later final write; no separate pulse or re-arm authority
+25,REF-025,COMMON,BANK_SELECT,0x0A,0xFF,N/A,N/A,0x09,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+26,REF-026,COMMON,WRITE,0x09,0x64,KNOWN_FINAL_VALUE,0x98,0xB8,0xFF,FINAL_STATE_DELTA,YES,26,final target byte differs or current v41 does not write the register
+27,REF-027,COMMON,WRITE,0x09,0x6A,KNOWN_FINAL_VALUE,0x18,0x18,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,27,final whole-byte state already equals the target
+28,REF-028,COMMON,WRITE,0x09,0x6B,KNOWN_FINAL_VALUE,0xFF,0x50,0xFF,FINAL_STATE_DELTA,YES,28,final target byte differs or current v41 does not write the register
+29,REF-029,COMMON,WRITE,0x09,0x6C,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0xC0,0xFF,FINAL_STATE_DELTA,YES,29,final target byte differs or current v41 does not write the register
+30,REF-030,COMMON,BANK_SELECT,0x09,0xFF,N/A,N/A,0x09,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+31,REF-031,COMMON,WRITE,0x09,0x80,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,31,final whole-byte state already equals the target
+32,REF-032,COMMON,WRITE,0x09,0x81,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,32,final whole-byte state already equals the target
+33,REF-033,COMMON,BANK_SELECT,0x09,0xFF,N/A,N/A,0x0A,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+34,REF-034,COMMON,WRITE,0x0A,0x60,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x02,0xFF,FINAL_STATE_DELTA,YES,34,final target byte differs or current v41 does not write the register
+35,REF-035,COMMON,WRITE,0x0A,0x61,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x01,0xFF,FINAL_STATE_DELTA,YES,35,final target byte differs or current v41 does not write the register
+36,REF-036,COMMON,WRITE,0x0A,0x62,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x00,0xFF,FINAL_STATE_DELTA,YES,36,final target byte differs or current v41 does not write the register
+37,REF-037,COMMON,WRITE,0x0A,0x63,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x01,0xFF,FINAL_STATE_DELTA,YES,37,final target byte differs or current v41 does not write the register
+38,REF-038,COMMON,WRITE,0x0A,0x64,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x03,0xFF,FINAL_STATE_DELTA,YES,38,final target byte differs or current v41 does not write the register
+39,REF-039,COMMON,WRITE,0x0A,0x65,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0xA0,0xFF,FINAL_STATE_DELTA,YES,39,final target byte differs or current v41 does not write the register
+40,REF-040,COMMON,WRITE,0x0A,0x66,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x04,0xFF,FINAL_STATE_DELTA,YES,40,final target byte differs or current v41 does not write the register
+41,REF-041,COMMON,WRITE,0x0A,0x67,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x03,0xFF,FINAL_STATE_DELTA,YES,41,final target byte differs or current v41 does not write the register
+42,REF-042,COMMON,WRITE,0x0A,0x68,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x03,0xFF,FINAL_STATE_DELTA,YES,42,final target byte differs or current v41 does not write the register
+43,REF-043,COMMON,WRITE,0x0A,0x69,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x0B,0xFF,FINAL_STATE_DELTA,YES,43,final target byte differs or current v41 does not write the register
+44,REF-044,COMMON,WRITE,0x0A,0x6A,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x0A,0xFF,FINAL_STATE_DELTA,YES,44,final target byte differs or current v41 does not write the register
+45,REF-045,COMMON,WRITE,0x0A,0x6B,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x11,0xFF,FINAL_STATE_DELTA,YES,45,final target byte differs or current v41 does not write the register
+46,REF-046,COMMON,WRITE,0x0A,0x6C,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x0D,0xFF,FINAL_STATE_DELTA,YES,46,final target byte differs or current v41 does not write the register
+47,REF-047,COMMON,WRITE,0x0A,0x6D,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x06,0xFF,FINAL_STATE_DELTA,YES,47,final target byte differs or current v41 does not write the register
+48,REF-048,COMMON,WRITE,0x0A,0x6E,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x27,0xFF,FINAL_STATE_DELTA,YES,48,final target byte differs or current v41 does not write the register
+49,REF-049,COMMON,WRITE,0x0A,0x6F,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x00,0xFF,FINAL_STATE_DELTA,YES,49,final target byte differs or current v41 does not write the register
+50,REF-050,COMMON,WRITE,0x0A,0x70,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x4E,0xFF,FINAL_STATE_DELTA,YES,50,final target byte differs or current v41 does not write the register
+51,REF-051,COMMON,WRITE,0x0A,0x71,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x6D,0xFF,FINAL_STATE_DELTA,YES,51,final target byte differs or current v41 does not write the register
+52,REF-052,COMMON,WRITE,0x0A,0x72,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x74,0xFF,FINAL_STATE_DELTA,YES,52,final target byte differs or current v41 does not write the register
+53,REF-053,FHD_COMMON,BANK_SELECT,0x0A,0xFF,N/A,N/A,0x00,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+54,REF-054,FHD_COMMON,WRITE,0x00,0x00,KNOWN_FINAL_VALUE,0x00,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,211,superseded by a later final write; no separate pulse or re-arm authority
+55,REF-055,FHD_COMMON,BANK_SELECT,0x00,0xFF,N/A,N/A,0x05,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+56,REF-056,FHD_COMMON,WRITE,0x05,0x00,KNOWN_FINAL_VALUE,0xC0,0xC0,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,56,final whole-byte state already equals the target
+57,REF-057,FHD_COMMON,WRITE,0x05,0x01,KNOWN_FINAL_VALUE,0x00,0x03,0xFF,FINAL_STATE_DELTA,YES,57,final target byte differs or current v41 does not write the register
+58,REF-058,FHD_COMMON,WRITE,0x05,0x58,KNOWN_FINAL_VALUE,0x00,0x03,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,143,superseded by a later final write; no separate pulse or re-arm authority
+59,REF-059,FHD_COMMON,WRITE,0x05,0x59,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,198,superseded by a later final write; no separate pulse or re-arm authority
+60,REF-060,FHD_COMMON,WRITE,0x05,0x5B,KNOWN_FINAL_VALUE,0x03,0x03,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,60,final whole-byte state already equals the target
+61,REF-061,FHD_COMMON,WRITE,0x05,0x69,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,61,final whole-byte state already equals the target
+62,REF-062,FHD_COMMON,BANK_SELECT,0x05,0xFF,N/A,N/A,0x00,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+63,REF-063,FHD_COMMON,WRITE,0x00,0x0C,KNOWN_FINAL_VALUE,0x08,0x08,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,63,final whole-byte state already equals the target
+64,REF-064,FHD_COMMON,WRITE,0x00,0x10,KNOWN_FINAL_VALUE,0x88,0x88,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,64,final whole-byte state already equals the target
+65,REF-065,FHD_COMMON,WRITE,0x00,0x14,KNOWN_FINAL_VALUE,0x90,0x90,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,65,final whole-byte state already equals the target
+66,REF-066,FHD_COMMON,WRITE,0x00,0x18,KNOWN_FINAL_VALUE,0x14,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,114,superseded by a later final write; no separate pulse or re-arm authority
+67,REF-067,FHD_COMMON,WRITE,0x00,0x21,KNOWN_FINAL_VALUE,0x02,0x82,0xFF,FINAL_STATE_DELTA,YES,67,final target byte differs or current v41 does not write the register
+68,REF-068,FHD_COMMON,WRITE,0x00,0x22,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x0B,0xFF,FINAL_STATE_DELTA,YES,68,final target byte differs or current v41 does not write the register
+69,REF-069,FHD_COMMON,WRITE,0x00,0x3C,KNOWN_FINAL_VALUE,0x84,0x84,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,69,final whole-byte state already equals the target
+70,REF-070,FHD_COMMON,WRITE,0x00,0x44,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,70,final whole-byte state already equals the target
+71,REF-071,FHD_COMMON,WRITE,0x00,0x48,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,71,final whole-byte state already equals the target
+72,REF-072,FHD_COMMON,WRITE,0x00,0x4C,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,72,final whole-byte state already equals the target
+73,REF-073,FHD_COMMON,WRITE,0x00,0x50,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,73,final whole-byte state already equals the target
+74,REF-074,FHD_COMMON,BANK_SELECT,0x00,0xFF,N/A,N/A,0x05,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+75,REF-075,FHD_COMMON,WRITE,0x05,0x1B,KNOWN_FINAL_VALUE,0x20,0x08,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,136,superseded by a later final write; no separate pulse or re-arm authority
+76,REF-076,FHD_COMMON,WRITE,0x05,0x20,KNOWN_FINAL_VALUE,0x84,0x84,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,137,superseded by a later final write; no separate pulse or re-arm authority
+77,REF-077,FHD_COMMON,WRITE,0x05,0x26,KNOWN_FINAL_VALUE,0x30,0xF0,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,140,superseded by a later final write; no separate pulse or re-arm authority
+78,REF-078,FHD_COMMON,WRITE,0x05,0x27,KNOWN_FINAL_VALUE,0x57,0x57,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,78,final whole-byte state already equals the target
+79,REF-079,FHD_COMMON,WRITE,0x05,0x29,KNOWN_FINAL_VALUE,0x30,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,141,superseded by a later final write; no separate pulse or re-arm authority
+80,REF-080,FHD_COMMON,WRITE,0x05,0x76,KNOWN_FINAL_VALUE,0x01,0x00,0xFF,FINAL_STATE_DELTA,YES,80,final target byte differs or current v41 does not write the register
+81,REF-081,FHD_COMMON,WRITE,0x05,0x57,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,81,final whole-byte state already equals the target
+82,REF-082,FHD_COMMON,WRITE,0x05,0x5F,KNOWN_FINAL_VALUE,0x70,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,144,superseded by a later final write; no separate pulse or re-arm authority
+83,REF-083,FHD_COMMON,WRITE,0x05,0x90,KNOWN_FINAL_VALUE,0x0D,0x01,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,148,superseded by a later final write; no separate pulse or re-arm authority
+84,REF-084,FHD_COMMON,WRITE,0x05,0x2B,KNOWN_FINAL_VALUE,0xA8,0xA8,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,84,final whole-byte state already equals the target
+85,REF-085,FHD_COMMON,WRITE,0x05,0xD1,KNOWN_FINAL_VALUE,0x20,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,154,superseded by a later final write; no separate pulse or re-arm authority
+86,REF-086,FHD_COMMON,WRITE,0x05,0xD4,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x00,0xFF,FINAL_STATE_DELTA,YES,86,final target byte differs or current v41 does not write the register
+87,REF-087,FHD_COMMON,WRITE,0x05,0xB8,KNOWN_FINAL_VALUE,0xB8,0xB9,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,152,superseded by a later final write; no separate pulse or re-arm authority
+88,REF-088,FHD_COMMON,BANK_SELECT,0x05,0xFF,N/A,N/A,0x00,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+89,REF-089,FHD_COMMON,WRITE,0x00,0x64,KNOWN_FINAL_VALUE,0x2D,0x80,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,126,superseded by a later final write; no separate pulse or re-arm authority
+90,REF-090,FHD_COMMON,BANK_SELECT,0x00,0xFF,N/A,N/A,0x05,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+91,REF-091,FHD_COMMON,WRITE,0x05,0x6E,KNOWN_FINAL_VALUE,0x00,0x10,0xFF,FINAL_STATE_DELTA,YES,91,final target byte differs or current v41 does not write the register
+92,REF-092,FHD_COMMON,WRITE,0x05,0x6F,KNOWN_FINAL_VALUE,0x00,0x2A,0xFF,FINAL_STATE_DELTA,YES,92,final target byte differs or current v41 does not write the register
+93,REF-093,FHD_COMMON,BANK_SELECT,0x05,0xFF,N/A,N/A,0x01,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+94,REF-094,FHD_COMMON,READ_FOR_RMW,0x01,0xED,KNOWN_FINAL_VALUE,0x00,YCmerge,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,95,paired masked clear is unnecessary against the proven current byte
+95,REF-095,FHD_COMMON,RMW_CLEAR_CHANNEL_BIT,0x01,0xED,KNOWN_FINAL_VALUE,0x00,OLD_VALUE & ~(1 << CH_LOCAL) [YCmerge],0xFE,NO_OP_AGAINST_CURRENT_BASELINE,NO,95,owned bit 0 is already clear; preserved bits remain untouched
+96,REF-096,FHD_COMMON,BANK_SELECT,0x01,0xFF,N/A,N/A,0x02,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+97,REF-097,FHD_COMMON,WRITE,0x02,0x02,KNOWN_FINAL_VALUE,0x03,0x23,0xFF,FINAL_STATE_DELTA,YES,97,final target byte differs or current v41 does not write the register
+98,REF-098,FHD_COMMON,WRITE,0x02,0x28,KNOWN_FINAL_VALUE,0x00,0x10,0xFF,FINAL_STATE_DELTA,YES,98,final target byte differs or current v41 does not write the register
+99,REF-099,FHD_COMMON,WRITE,0x02,0x29,KNOWN_FINAL_VALUE,0x2D,0x78,0xFF,FINAL_STATE_DELTA,YES,99,final target byte differs or current v41 does not write the register
+100,REF-100,FHD_COMMON,WRITE,0x02,0x2A,KNOWN_FINAL_VALUE,0x0C,0x2D,0xFF,FINAL_STATE_DELTA,YES,100,final target byte differs or current v41 does not write the register
+101,REF-101,FHD_COMMON,WRITE,0x02,0x2B,KNOWN_FINAL_VALUE,0x06,0x06,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,101,final whole-byte state already equals the target
+102,REF-102,FHD_COMMON,WRITE,0x02,0x2C,KNOWN_FINAL_VALUE,0x27,0x72,0xFF,FINAL_STATE_DELTA,YES,102,final target byte differs or current v41 does not write the register
+103,REF-103,FHD_COMMON,BANK_SELECT,0x02,0xFF,N/A,N/A,0x09,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+104,REF-104,FHD_COMMON,WRITE,0x09,0x40,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,209,superseded by a later final write; no separate pulse or re-arm authority
+105,REF-105,FHD_COMMON,READ_FOR_RMW,0x09,0x44,KNOWN_FINAL_VALUE,0x00,PN_set,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,106,paired masked clear is unnecessary against the proven current byte
+106,REF-106,FHD_COMMON,RMW_CLEAR_CHANNEL_BIT,0x09,0x44,KNOWN_FINAL_VALUE,0x00,OLD_VALUE & ~(1 << CH_LOCAL) [PN_set],0xFE,NO_OP_AGAINST_CURRENT_BASELINE,NO,106,owned bit 0 is already clear; preserved bits remain untouched
+107,REF-107,FHD_COMMON,WRITE,0x09,0x97,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,132,superseded by a later final write; no separate pulse or re-arm authority
+108,REF-108,FHD_COMMON,BANK_SELECT,0x09,0xFF,N/A,N/A,0x11,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+109,REF-109,FHD_COMMON,WRITE,0x11,0x00,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,109,final whole-byte state already equals the target
+110,REF-110,AHD1080P25,BANK_SELECT,0x11,0xFF,N/A,N/A,0x01,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+111,REF-111,AHD1080P25,WRITE,0x01,0x84,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,111,final whole-byte state already equals the target
+112,REF-112,AHD1080P25,WRITE,0x01,0x8C,KNOWN_FINAL_VALUE,0x40,0x40,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,112,final whole-byte state already equals the target
+113,REF-113,AHD1080P25,BANK_SELECT,0x01,0xFF,N/A,N/A,0x00,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+114,REF-114,AHD1080P25,WRITE,0x00,0x18,KNOWN_FINAL_VALUE,0x14,0x30,0xFF,FINAL_STATE_DELTA,YES,114,final target byte differs or current v41 does not write the register
+115,REF-115,AHD1080P25,WRITE,0x00,0x08,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,115,final whole-byte state already equals the target
+116,REF-116,AHD1080P25,WRITE,0x00,0x40,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,116,final whole-byte state already equals the target
+117,REF-117,AHD1080P25,WRITE,0x00,0x81,KNOWN_FINAL_VALUE,0x03,0x03,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,117,final whole-byte state already equals the target
+118,REF-118,AHD1080P25,WRITE,0x00,0x85,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,118,final whole-byte state already equals the target
+119,REF-119,AHD1080P25,BANK_SELECT,0x00,0xFF,N/A,N/A,0x05,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+120,REF-120,AHD1080P25,WRITE,0x05,0x47,KNOWN_FINAL_VALUE,0x04,0x04,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,120,final whole-byte state already equals the target
+121,REF-121,AHD1080P25,WRITE,0x05,0x50,KNOWN_FINAL_VALUE,0x84,0x84,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,121,final whole-byte state already equals the target
+122,REF-122,AHD1080P25,BANK_SELECT,0x05,0xFF,N/A,N/A,0x00,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+123,REF-123,AHD1080P25,WRITE,0x00,0x30,KNOWN_FINAL_VALUE,0x10,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,123,final whole-byte state already equals the target
+124,REF-124,AHD1080P25,WRITE,0x00,0x58,KNOWN_FINAL_VALUE,0x30,0x7D,0xFF,FINAL_STATE_DELTA,YES,124,final target byte differs or current v41 does not write the register
+125,REF-125,AHD1080P25,WRITE,0x00,0x5C,KNOWN_FINAL_VALUE,0x1E,0x9E,0xFF,FINAL_STATE_DELTA,YES,125,final target byte differs or current v41 does not write the register
+126,REF-126,AHD1080P25,WRITE,0x00,0x64,KNOWN_FINAL_VALUE,0x2D,0x80,0xFF,FINAL_STATE_DELTA,YES,126,final target byte differs or current v41 does not write the register
+127,REF-127,AHD1080P25,WRITE,0x00,0x89,KNOWN_FINAL_VALUE,0x10,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,127,final whole-byte state already equals the target
+128,REF-128,AHD1080P25,WRITE,0x00,0x8E,KNOWN_FINAL_VALUE,0x30,0x00,0xFF,FINAL_STATE_DELTA,YES,128,final target byte differs or current v41 does not write the register
+129,REF-129,AHD1080P25,WRITE,0x00,0xA0,KNOWN_FINAL_VALUE,0x18,0x09,0xFF,FINAL_STATE_DELTA,YES,129,final target byte differs or current v41 does not write the register
+130,REF-130,AHD1080P25,WRITE,0x00,0xA4,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,130,final whole-byte state already equals the target
+131,REF-131,AHD1080P25,BANK_SELECT,0x00,0xFF,N/A,N/A,0x09,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+132,REF-132,AHD1080P25,WRITE,0x09,0x97,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,132,final whole-byte state already equals the target
+133,REF-133,AHD1080P25,WRITE,0x09,0x98,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,133,final whole-byte state already equals the target
+134,REF-134,AHD1080P25,WRITE,0x09,0x99,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,134,final whole-byte state already equals the target
+135,REF-135,AHD1080P25,BANK_SELECT,0x09,0xFF,N/A,N/A,0x05,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+136,REF-136,AHD1080P25,WRITE,0x05,0x1B,KNOWN_FINAL_VALUE,0x20,0x08,0xFF,FINAL_STATE_DELTA,YES,136,final target byte differs or current v41 does not write the register
+137,REF-137,AHD1080P25,WRITE,0x05,0x20,KNOWN_FINAL_VALUE,0x84,0x90,0xFF,FINAL_STATE_DELTA,YES,137,final target byte differs or current v41 does not write the register
+138,REF-138,AHD1080P25,WRITE,0x05,0x24,KNOWN_FINAL_VALUE,0x10,0x10,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,138,final whole-byte state already equals the target
+139,REF-139,AHD1080P25,WRITE,0x05,0x25,KNOWN_FINAL_VALUE,0xCA,0xDC,0xFF,FINAL_STATE_DELTA,YES,139,final target byte differs or current v41 does not write the register
+140,REF-140,AHD1080P25,WRITE,0x05,0x26,KNOWN_FINAL_VALUE,0x30,0xF0,0xFF,FINAL_STATE_DELTA,YES,140,final target byte differs or current v41 does not write the register
+141,REF-141,AHD1080P25,WRITE,0x05,0x29,KNOWN_FINAL_VALUE,0x30,0x00,0xFF,FINAL_STATE_DELTA,YES,141,final target byte differs or current v41 does not write the register
+142,REF-142,AHD1080P25,WRITE,0x05,0x2A,KNOWN_FINAL_VALUE,0x30,0x52,0xFF,FINAL_STATE_DELTA,YES,142,final target byte differs or current v41 does not write the register
+143,REF-143,AHD1080P25,WRITE,0x05,0x58,KNOWN_FINAL_VALUE,0x00,0x03,0xFF,FINAL_STATE_DELTA,YES,143,final target byte differs or current v41 does not write the register
+144,REF-144,AHD1080P25,WRITE,0x05,0x5F,KNOWN_FINAL_VALUE,0x70,0x00,0xFF,FINAL_STATE_DELTA,YES,144,final target byte differs or current v41 does not write the register
+145,REF-145,AHD1080P25,WRITE,0x05,0x75,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x00,0xFF,FINAL_STATE_DELTA,YES,145,final target byte differs or current v41 does not write the register
+146,REF-146,AHD1080P25,WRITE,0x05,0x84,KNOWN_FINAL_VALUE,0x00,0x01,0xFF,FINAL_STATE_DELTA,YES,146,final target byte differs or current v41 does not write the register
+147,REF-147,AHD1080P25,WRITE,0x05,0x86,KNOWN_FINAL_VALUE,0x00,0x20,0xFF,FINAL_STATE_DELTA,YES,147,final target byte differs or current v41 does not write the register
+148,REF-148,AHD1080P25,WRITE,0x05,0x90,KNOWN_FINAL_VALUE,0x0D,0x01,0xFF,FINAL_STATE_DELTA,YES,148,final target byte differs or current v41 does not write the register
+149,REF-149,AHD1080P25,WRITE,0x05,0x9B,KNOWN_FINAL_VALUE,0x80,0x80,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,149,final whole-byte state already equals the target
+150,REF-150,AHD1080P25,WRITE,0x05,0xB5,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,150,final whole-byte state already equals the target
+151,REF-151,AHD1080P25,WRITE,0x05,0xB7,KNOWN_FINAL_VALUE,0xFF,0xFF,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,151,final whole-byte state already equals the target
+152,REF-152,AHD1080P25,WRITE,0x05,0xB8,KNOWN_FINAL_VALUE,0xB8,0x38,0xFF,FINAL_STATE_DELTA,YES,152,final target byte differs or current v41 does not write the register
+153,REF-153,AHD1080P25,WRITE,0x05,0xBB,KNOWN_FINAL_VALUE,0xB8,0x04,0xFF,FINAL_STATE_DELTA,YES,153,final target byte differs or current v41 does not write the register
+154,REF-154,AHD1080P25,WRITE,0x05,0xD1,KNOWN_FINAL_VALUE,0x20,0x20,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,154,final whole-byte state already equals the target
+155,REF-155,AHD1080P25,BANK_SELECT,0x05,0xFF,N/A,N/A,0x09,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+156,REF-156,AHD1080P25,WRITE,0x09,0x50,KNOWN_FINAL_VALUE,0xAB,0xAB,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,156,final whole-byte state already equals the target
+157,REF-157,AHD1080P25,WRITE,0x09,0x51,KNOWN_FINAL_VALUE,0x7D,0x7D,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,157,final whole-byte state already equals the target
+158,REF-158,AHD1080P25,WRITE,0x09,0x52,KNOWN_FINAL_VALUE,0xC3,0xC3,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,158,final whole-byte state already equals the target
+159,REF-159,AHD1080P25,WRITE,0x09,0x53,KNOWN_FINAL_VALUE,0x52,0x52,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,159,final whole-byte state already equals the target
+160,REF-160,STATE,STATE_ASSIGN,0x09,ch_mode_status[CH_LOCAL],N/A,N/A,NVP6134_VI_1080P_2530,N/A,SOFTWARE_STATE_ONLY,NO,,executor session bookkeeping is not an NVP register action
+161,REF-161,STATE,STATE_ASSIGN,0x09,ch_vfmt_status[CH_LOCAL],N/A,N/A,0x01,N/A,SOFTWARE_STATE_ONLY,NO,,executor session bookkeeping is not an NVP register action
+162,REF-162,ACP_COMMON,BANK_SELECT,0x09,0xFF,N/A,N/A,0x01,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+163,REF-163,ACP_COMMON,WRITE,0x01,0xA8,N/A,N/A,0x01,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+164,REF-164,ACP_COMMON,WRITE,0x01,0xBC,N/A,N/A,0x07,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+165,REF-165,ACP_COMMON,BANK_SELECT,0x01,0xFF,N/A,N/A,0x05,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+166,REF-166,ACP_COMMON,WRITE,0x05,0x2F,N/A,N/A,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+167,REF-167,ACP_COMMON,WRITE,0x05,0x30,N/A,N/A,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+168,REF-168,ACP_COMMON,WRITE,0x05,0x31,N/A,N/A,0x43,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+169,REF-169,ACP_COMMON,WRITE,0x05,0x32,N/A,N/A,0xA2,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+170,REF-170,ACP_COMMON,WRITE,0x05,0x7C,N/A,N/A,0x11,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+171,REF-171,ACP_COMMON,WRITE,0x05,0x7D,N/A,N/A,0x80,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+172,REF-172,ACP_BAUD,BANK_SELECT,0x05,0xFF,N/A,N/A,0x05,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+173,REF-173,ACP_BAUD,WRITE,0x05,0x7C,N/A,N/A,0x11,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+174,REF-174,ACP_BAUD,BANK_SELECT,0x05,0xFF,N/A,N/A,0x03,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+175,REF-175,ACP_BAUD,WRITE,0x03,0x00,N/A,N/A,0x27,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+176,REF-176,ACP_BAUD,WRITE,0x03,0x03,N/A,N/A,0x0E,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+177,REF-177,ACP_BAUD,WRITE,0x03,0x0D,N/A,N/A,0xB4,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+178,REF-178,ACP_BAUD,WRITE,0x03,0x0E,N/A,N/A,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+179,REF-179,ACP_BAUD,WRITE,0x03,0x05,N/A,N/A,0x03,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+180,REF-180,ACP_BAUD,WRITE,0x03,0x0A,N/A,N/A,0x03,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+181,REF-181,ACP_BAUD,WRITE,0x03,0x0B,N/A,N/A,0x10,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+182,REF-182,ACP_BAUD,WRITE,0x03,0x2F,N/A,N/A,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+183,REF-183,ACP_RX,BANK_SELECT,0x03,0xFF,N/A,N/A,0x03,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+184,REF-184,ACP_RX,WRITE,0x03,0x60,N/A,N/A,0x55,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+185,REF-185,ACP_RX,WRITE,0x03,0x0B,N/A,N/A,0x10,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+186,REF-186,ACP_RX,WRITE,0x03,0x66,N/A,N/A,0x80,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+187,REF-187,ACP_RX,WRITE,0x03,0x62,N/A,N/A,0x06,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+188,REF-188,ACP_RX,WRITE,0x03,0x68,N/A,N/A,0x70,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+189,REF-189,ACP_RX,WRITE,0x03,0x63,N/A,N/A,0x01,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+190,REF-190,ACP_RX,WRITE,0x03,0x64,N/A,N/A,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+191,REF-191,ACP_RX,WRITE,0x03,0x67,N/A,N/A,0x01,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+192,REF-192,ACP_RX_CLEAR,BANK_SELECT,0x03,0xFF,N/A,N/A,0x03,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+193,REF-193,ACP_RX_CLEAR,WRITE,0x03,0x3A,KNOWN_FINAL_VALUE,0x00,0x01,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+194,REF-194,ACP_RX_CLEAR,DELAY,0x03,N/A,N/A,N/A,N/A,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+195,REF-195,ACP_RX_CLEAR,WRITE,0x03,0x3A,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+196,REF-196,ACP_RX_CLEAR,DELAY,0x03,N/A,N/A,N/A,N/A,N/A,OPTIONAL_ACP,NO,,"datasheet defines ACP as coax camera-control signaling, not video reception"
+197,REF-197,EQ_INIT,BANK_SELECT,0x03,0xFF,N/A,N/A,0x05,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+198,REF-198,EQ_INIT,WRITE,0x05,0x59,KNOWN_FINAL_VALUE,0x00,0x11,0xFF,FINAL_STATE_DELTA,YES,198,final target byte differs or current v41 does not write the register
+199,REF-199,EQ_INIT,BANK_SELECT,0x05,0xFF,N/A,N/A,0x05,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+200,REF-200,EQ_INIT,WRITE,0x05,0xC0,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x17,0xFF,FINAL_STATE_DELTA,YES,200,final target byte differs or current v41 does not write the register
+201,REF-201,EQ_INIT,WRITE,0x05,0xC1,NOT_WRITTEN_BY_CURRENT_V41,UNKNOWN,0x13,0xFF,FINAL_STATE_DELTA,YES,201,final target byte differs or current v41 does not write the register
+202,REF-202,EQ_INIT,WRITE,0x05,0xC8,KNOWN_FINAL_VALUE,0x04,0x04,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,202,final whole-byte state already equals the target
+203,REF-203,EQ_INIT,BANK_SELECT,0x05,0xFF,N/A,N/A,0x0A,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+204,REF-204,EQ_INIT,WRITE,0x0A,0x74,KNOWN_FINAL_VALUE,0x02,0x02,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,204,final whole-byte state already equals the target
+205,REF-205,EQ_INIT,STATE_ASSIGN,0x0A,s_eq.ch_stage[CH_LOCAL],N/A,N/A,0x00,N/A,SOFTWARE_STATE_ONLY,NO,,executor session bookkeeping is not an NVP register action
+206,REF-206,POST_MODE,BANK_SELECT,0x0A,0xFF,N/A,N/A,0x09,N/A,REQUIRED_SEQUENCE_REWRITE,YES,,enters the atomic bank group containing a retained operation
+207,REF-207,POST_MODE,WRITE,0x09,0x40,KNOWN_FINAL_VALUE,0x00,0x61,0xFF,REQUIRED_WRITE_PULSE,YES,209,pinned semantic sequence asserts and releases 0x61 with a fixed 35 ms dwell
+208,REF-208,POST_MODE,DELAY,0x09,N/A,N/A,N/A,N/A,N/A,REQUIRED_DELAY,YES,,protects the proven Bank9/0x40 0x61-to-0x00 re-arm sequence
+209,REF-209,POST_MODE,WRITE,0x09,0x40,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,REQUIRED_WRITE_PULSE,YES,209,pinned semantic sequence asserts and releases 0x61 with a fixed 35 ms dwell
+210,REF-210,POST_MODE,BANK_SELECT,0x09,0xFF,N/A,N/A,0x00,N/A,NO_OP_AGAINST_CURRENT_BASELINE,NO,,no retained operation depends on this bank selection
+211,REF-211,POST_MODE,WRITE,0x00,0x00,KNOWN_FINAL_VALUE,0x00,0x00,0xFF,NO_OP_AGAINST_CURRENT_BASELINE,NO,211,final whole-byte state already equals the target
