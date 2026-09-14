@@ -1,0 +1,167 @@
+{
+  "schema": "G2B_NVP_MODE1_RECOVERY_GRAPH_V1",
+  "candidate_execution_enabled": false,
+  "initial_state": "IDLE_PRODUCT_BASELINE",
+  "success_state": "SUCCESS_READY",
+  "recovery_terminal_states": [
+    "RECOVERED_PRODUCT_BASELINE",
+    "FATAL_RECOVERY_FAILURE"
+  ],
+  "states": [
+    "IDLE_PRODUCT_BASELINE",
+    "BASELINE_CAPTURED",
+    "MODE_APPLY_IN_PROGRESS",
+    "MODE_APPLIED",
+    "EQ_APPLY_IN_PROGRESS",
+    "EQ_APPLIED",
+    "LOCK_WAIT",
+    "BT656_WAIT",
+    "SUCCESS_READY",
+    "ABORTING",
+    "EXACT_RESTORE",
+    "NVP_RESET",
+    "PRODUCT_AUTOINIT",
+    "BASELINE_VERIFY",
+    "RECOVERED",
+    "RECOVERED_PRODUCT_BASELINE",
+    "FATAL_RECOVERY_FAILURE"
+  ],
+  "transitions": [
+    {
+      "from": "IDLE_PRODUCT_BASELINE",
+      "event": "PREPARE_AND_ALL_TARGETS_RECOVERABLE",
+      "to": "BASELINE_CAPTURED"
+    },
+    {
+      "from": "IDLE_PRODUCT_BASELINE",
+      "event": "ANY_TARGET_PROHIBITED_UNRESOLVED",
+      "to": "FATAL_RECOVERY_FAILURE"
+    },
+    {
+      "from": "BASELINE_CAPTURED",
+      "event": "APPLY",
+      "to": "MODE_APPLY_IN_PROGRESS"
+    },
+    {
+      "from": "MODE_APPLY_IN_PROGRESS",
+      "event": "MODE_COMPLETE",
+      "to": "MODE_APPLIED"
+    },
+    {
+      "from": "MODE_APPLIED",
+      "event": "START_EQ",
+      "to": "EQ_APPLY_IN_PROGRESS"
+    },
+    {
+      "from": "EQ_APPLY_IN_PROGRESS",
+      "event": "EQ_COMPLETE",
+      "to": "EQ_APPLIED"
+    },
+    {
+      "from": "EQ_APPLIED",
+      "event": "START_LOCK_WAIT",
+      "to": "LOCK_WAIT"
+    },
+    {
+      "from": "LOCK_WAIT",
+      "event": "LOCK_STABLE",
+      "to": "BT656_WAIT"
+    },
+    {
+      "from": "BT656_WAIT",
+      "event": "BT656_STABLE",
+      "to": "SUCCESS_READY"
+    },
+    {
+      "from": "MODE_APPLY_IN_PROGRESS",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "MODE_APPLIED",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "EQ_APPLY_IN_PROGRESS",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "EQ_APPLIED",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "LOCK_WAIT",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "BT656_WAIT",
+      "event": "ANY_FAILURE",
+      "to": "ABORTING"
+    },
+    {
+      "from": "ABORTING",
+      "event": "ALL_TOUCHED_TARGETS_EXACTLY_RESTORABLE",
+      "to": "EXACT_RESTORE"
+    },
+    {
+      "from": "EXACT_RESTORE",
+      "event": "READBACK_PASS",
+      "to": "BASELINE_VERIFY"
+    },
+    {
+      "from": "ABORTING",
+      "event": "EXACT_RESTORE_NOT_AVAILABLE_AND_REINIT_AUTHORIZED",
+      "to": "NVP_RESET"
+    },
+    {
+      "from": "NVP_RESET",
+      "event": "RESET_RELEASED",
+      "to": "PRODUCT_AUTOINIT"
+    },
+    {
+      "from": "PRODUCT_AUTOINIT",
+      "event": "DONE_WITHOUT_ERROR",
+      "to": "BASELINE_VERIFY"
+    },
+    {
+      "from": "BASELINE_VERIFY",
+      "event": "ALL_PROTECTED_CHECKS_PASS",
+      "to": "RECOVERED"
+    },
+    {
+      "from": "RECOVERED",
+      "event": "PUBLISH_TERMINAL_RESULT",
+      "to": "RECOVERED_PRODUCT_BASELINE"
+    },
+    {
+      "from": "ABORTING",
+      "event": "PROHIBITED_UNRESOLVED_OR_REINIT_GAP",
+      "to": "FATAL_RECOVERY_FAILURE"
+    },
+    {
+      "from": "EXACT_RESTORE",
+      "event": "NACK_TIMEOUT_OR_MISMATCH",
+      "to": "FATAL_RECOVERY_FAILURE"
+    },
+    {
+      "from": "NVP_RESET",
+      "event": "RESET_OR_RELEASE_FAILURE",
+      "to": "FATAL_RECOVERY_FAILURE"
+    },
+    {
+      "from": "PRODUCT_AUTOINIT",
+      "event": "ERROR_NACK_TIMEOUT",
+      "to": "FATAL_RECOVERY_FAILURE"
+    },
+    {
+      "from": "BASELINE_VERIFY",
+      "event": "ANY_MISMATCH",
+      "to": "FATAL_RECOVERY_FAILURE"
+    }
+  ],
+  "fail_closed_rule": "Every unresolved register, lost recovery context, unavailable callable product reconstruction, or failed verification terminates in FATAL_RECOVERY_FAILURE."
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "G2B_NVP_MODE1_INHERITED_TEST_DISPOSITION_V1",
+  "required_by": "PROMPT_SECTION_23",
+  "execution_target": {
+    "path": "C:\\FPGA\\V41_G2B_NVP_CAMERA_ACQ1_MODE1",
+    "head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+    "tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+    "mutation_allowed": false
+  },
+  "overall_disposition": "PASS_2_OF_2_INHERITED_GATES",
+  "status_counts": {
+    "PASS": 2
+  },
+  "suites": [
+    {
+      "suite": "SCAN1",
+      "required_by": "PROMPT_SECTION_23",
+      "status": "PASS",
+      "gate_result": "24/24 PASS",
+      "evidence_path": "C:\\FPGA\\G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z\\workstream-b-mode1\\inherited-scan1-gate-01\\G2B_NVP_CAMERA_SCAN1_R1_SIMULATION_RECEIPT.txt",
+      "evidence_sha256": "28CA649BF0E2151EA8F924114DF58134F7FE75288FECF0E4A1DF49D705A9D86F",
+      "scope": "READ_ONLY_CLEAN_MODE1_PARENT",
+      "tested_head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+      "tested_tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+      "hardware_accessed": "NO"
+    },
+    {
+      "suite": "ACQ",
+      "required_by": "PROMPT_SECTION_23",
+      "status": "PASS",
+      "gate_result": "20/20 PASS",
+      "evidence_path": "C:\\FPGA\\G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z\\workstream-b-mode1\\inherited-acq-gate-01\\G2B_NVP_ACQ1_COMPAT0_R2_TEST_RECEIPT.txt",
+      "evidence_sha256": "F8BB98CCAD4B98C54FF32B1B18C3E8CAC2E52802FB143C3DA72053F91A342F5F",
+      "scope": "READ_ONLY_CLEAN_MODE1_PARENT",
+      "tested_head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+      "tested_tree": "NOT_RECORDED_IN_ACQ_RECEIPT",
+      "hardware_accessed": "NO"
+    }
+  ],
+  "non_claim": "INHERITED_PASS_DOES_NOT_PROVE_MODE1_T19_T21_RTL_IMPLEMENTATION"
+}

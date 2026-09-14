@@ -1,0 +1,89 @@
+{
+  "schema": "G2B_NVP_OFFLINE_ADVANCE1_AUTHORITY_MANIFEST_V1",
+  "task_root": "C:\\FPGA\\G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z",
+  "boundary": "OFFLINE_ONLY",
+  "owner_inputs": {
+    "prompt": {
+      "path": "owner-input/AHD_v41_G2B_NVP_OFFLINE_ADVANCE1_PROMPT.md",
+      "size": 38610,
+      "sha256": "17D40079EF96C4023E6FD5977EF6FE7645C2CB547C279D43DAA9FF847E8B8A29"
+    },
+    "architecture_r1": {
+      "path": "owner-input/NVP6134C_CAMERA_SCANNER_IMPLEMENTATION_R1.md",
+      "size": 25183,
+      "sha256": "2CACBC2C66350ADEE0015704211DCB7B6DBB7F38FFD95CA579331559F5E350C5"
+    }
+  },
+  "source_authorities": {
+    "product_read_only": {
+      "branch": "fix/v41-g2b-bt656-line0-sof",
+      "commit": "30b14d13b0b789b62b05ab513eb9578c7c43b11a",
+      "tree": "bdbe39077a03f8945ebdd1ed9e52761fbe787696"
+    },
+    "r3_parent": {
+      "branch": "diag/v41-g2b-nvp-video-scan",
+      "commit": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+      "tree": "cdff3ea9d786141ff9bfd46f7099198324604663"
+    },
+    "trace_donor_read_only": {
+      "branch": "diag/v41-g2b-bt656-boundary-trace",
+      "commit": "dc04b3954808e5d638636d345115305392ec3288",
+      "tree": "9be0f7f4a2062d26f60459c540a4ee8ca47f2605"
+    },
+    "scan1_read_only": {
+      "branch": "diag/v41-g2b-nvp-camera-scan1",
+      "commit": "c7e16fa3da26545cef960a6c75427a3614c4b655",
+      "tree": "56526e17154f8e06f3eb4b95233934c18b6ee06e"
+    },
+    "acq1_compat0_protected": {
+      "branch": "diag/v41-g2b-nvp-camera-acq1-compat0",
+      "commit": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+      "tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf"
+    },
+    "reference_semantic_only": {
+      "repository": "4e4o/nvp6134_ex",
+      "commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+      "tree": "f6926ef14a34365a0e47652253f5f4d63274cb1e",
+      "license_disposition": "SEMANTIC_USE_ONLY_NO_DIRECT_COPY"
+    }
+  },
+  "protected_candidate": {
+    "run_root": "C:\\FPGA\\G2B_NVP_CAMERA_ACQ1_COMPAT0_R2R1_20260912T121125Z",
+    "signed_off_dcp_sha256": "EE0982524E8C6E5B1395836BEF55130FC6914C9C9BFE47731C09D7621CD86BDC",
+    "bitstream_sha256": "CFA58A46572094209997F6B1A3A5A033BF4E8C8A71EC261A5BBF1833B8BCF91B",
+    "immutable": true
+  },
+  "vendor_documents_private": [
+    {
+      "path": "C:\\FPGA\\V40_1_0_AUDIT_VERIFY_20260816T082147Z\\10_KEY_EVIDENCE\\AUTHORITATIVE_REFERENCES\\NVP6134C_Rev1_0.pdf",
+      "size": 3522488,
+      "sha256": "301FF799A101B0DBDF6CD946EEAD0C1EDC67D07FFEAC7E65FA8C6AE82C316E46",
+      "publish": false
+    },
+    {
+      "path": "C:\\FPGA\\G2B_NVP_CAMERA_SCAN0_OFFLINE_20260911T135131Z\\reference-repo\\docs\\nvp6134_datasheet_release_v03_161025.pdf",
+      "size": 4457791,
+      "sha256": "BC64175739F5093846B10575B7DD3D1EAA0CB03FC732A3F39D246E0A54DEC0FC",
+      "publish": false
+    }
+  ],
+  "worktrees": {
+    "rm1": {
+      "path": "C:\\FPGA\\V41_G2B_NVP_DIAG2_RM1",
+      "branch": "diag/v41-g2b-nvp-video-diag2-rm1",
+      "initial_commit": "fc37d815b5d64ef90dfbd99c57ae4cc09567b56f",
+      "initial_tree": "cdff3ea9d786141ff9bfd46f7099198324604663"
+    },
+    "mode1": {
+      "path": "C:\\FPGA\\V41_G2B_NVP_CAMERA_ACQ1_MODE1",
+      "branch": "diag/v41-g2b-nvp-camera-acq1-mode1",
+      "initial_commit": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+      "initial_tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf"
+    }
+  },
+  "controller_lock": {
+    "path": "C:\\FPGA\\.AHD_G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z.lock",
+    "scope": "LOCAL_SOURCE_AND_WORKTREE_MUTATION_ONLY",
+    "dut_or_hardware_lock": false
+  }
+}

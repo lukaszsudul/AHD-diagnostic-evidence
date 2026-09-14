@@ -1,0 +1,541 @@
+{
+  "schema": "G2B_NVP_MODE1_VERIFICATION_V1",
+  "result": "PASS",
+  "checks_passed": 42,
+  "checks_total": 42,
+  "operation_rows_no_acp": 176,
+  "included_operations": 173,
+  "touched_registers": 113,
+  "recovery_class_counts": {
+    "EXACT_READ_RESTORE": 5,
+    "PROHIBITED_UNRESOLVED": 108
+  },
+  "failure_scenarios": 1211,
+  "failure_terminal_counts": {
+    "FATAL_RECOVERY_FAILURE": 1205,
+    "RECOVERED_PRODUCT_BASELINE": 6
+  },
+  "focused_test_counts": {
+    "BLOCKED": 8,
+    "PASS": 16
+  },
+  "checks": [
+    {
+      "check": "required artifacts present",
+      "result": "PASS",
+      "evidence": [
+        "G2B_NVP_MODE1_BANK1_ED_DISPOSITION.md",
+        "G2B_NVP_MODE1_BANK9_44_DISPOSITION.md",
+        "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.csv",
+        "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.json",
+        "G2B_NVP_MODE1_DETERMINISTIC_RECOVERY_GRAPH.json",
+        "G2B_NVP_MODE1_DETERMINISTIC_RECOVERY_GRAPH.md",
+        "G2B_NVP_MODE1_FAILURE_INJECTION_MATRIX.csv",
+        "G2B_NVP_MODE1_FOCUSED_24_TEST_RESULTS.csv",
+        "G2B_NVP_MODE1_INHERITED_TEST_DISPOSITION.json",
+        "G2B_NVP_MODE1_INITIAL_EQ_AUDIT.md",
+        "G2B_NVP_MODE1_MODEL_SUMMARY.json",
+        "G2B_NVP_MODE1_PRODUCT_BASELINE_RECONSTRUCTION_GAP.md",
+        "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.csv",
+        "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.json",
+        "G2B_NVP_MODE1_WORKSTREAM_REPORT.md"
+      ]
+    },
+    {
+      "check": "operation schema exact",
+      "result": "PASS",
+      "evidence": [
+        "OperationIndex",
+        "OperationID",
+        "SourceSemanticFunction",
+        "Bank",
+        "Register",
+        "OperationType",
+        "Value",
+        "Mask",
+        "PreservedBits",
+        "Condition",
+        "DelayBefore",
+        "DelayAfter",
+        "RequiredInitialState",
+        "ExpectedReadback",
+        "ReadbackMask",
+        "RecoveryClass",
+        "RecoveryAction",
+        "EvidenceAuthority",
+        "Confidence",
+        "IncludedInMinimumMode1",
+        "ExclusionReason"
+      ]
+    },
+    {
+      "check": "operation count",
+      "result": "PASS",
+      "evidence": 176
+    },
+    {
+      "check": "operation indices contiguous",
+      "result": "PASS",
+      "evidence": "1..176"
+    },
+    {
+      "check": "operation types allowed",
+      "result": "PASS",
+      "evidence": [
+        "DELAY_FIXED",
+        "READ_MODIFY_WRITE",
+        "SOFTWARE_STATE_ONLY",
+        "VERIFY_READ",
+        "WRITE_FULL",
+        "WRITE_PULSE"
+      ]
+    },
+    {
+      "check": "ACP absent",
+      "result": "PASS",
+      "evidence": "no ACP row"
+    },
+    {
+      "check": "included and excluded counts",
+      "result": "PASS",
+      "evidence": {
+        "included": 173,
+        "excluded": 3
+      }
+    },
+    {
+      "check": "only software state excluded",
+      "result": "PASS",
+      "evidence": [
+        "MODE1_0160_STATE_STATE_ASSIGN",
+        "MODE1_0161_STATE_STATE_ASSIGN",
+        "MODE1_0170_EQ_INIT_STATE_ASSIGN"
+      ]
+    },
+    {
+      "check": "fixed no-ACP delay",
+      "result": "PASS",
+      "evidence": [
+        [
+          "173",
+          "35"
+        ]
+      ]
+    },
+    {
+      "check": "operation JSON equals CSV",
+      "result": "PASS",
+      "evidence": 176
+    },
+    {
+      "check": "register count and uniqueness",
+      "result": "PASS",
+      "evidence": {
+        "rows": 113,
+        "unique": 113
+      }
+    },
+    {
+      "check": "one allowed class per register",
+      "result": "PASS",
+      "evidence": {
+        "PROHIBITED_UNRESOLVED": 108,
+        "EXACT_READ_RESTORE": 5
+      }
+    },
+    {
+      "check": "conservative recovery counts",
+      "result": "PASS",
+      "evidence": {
+        "PROHIBITED_UNRESOLVED": 108,
+        "EXACT_READ_RESTORE": 5
+      }
+    },
+    {
+      "check": "exact safe-read set",
+      "result": "PASS",
+      "evidence": [
+        "0x00:0x23",
+        "0x00:0x81",
+        "0x00:0x85",
+        "0x01:0x84",
+        "0x01:0x8C"
+      ]
+    },
+    {
+      "check": "Bank1/ED prohibited",
+      "result": "PASS",
+      "evidence": {
+        "RegisterIndex": "30",
+        "Bank": "0x01",
+        "Register": "0xED",
+        "TouchCount": "1",
+        "FirstOperationIndex": "95",
+        "LastOperationIndex": "95",
+        "OperationIndices": "95",
+        "SourceSemanticFunctions": "nvp6134_setchn_common_fhd",
+        "OperationTypes": "READ_MODIFY_WRITE",
+        "RecoveryClass": "PROHIBITED_UNRESOLVED",
+        "RecoveryAction": "DO_NOT_EXECUTE; IF_TOUCHED_END_IN_FATAL_RECOVERY_FAILURE",
+        "SafeReadAuthority": "NOT_PROVEN_FOR_BASELINE_RESTORE",
+        "ReadSideEffectAuthority": "NO_COMPLETE_AUTHORITY",
+        "ProductReconstructionAuthority": "GAP_CALLABLE_REINIT_AND_FULL_BASELINE_VERIFY_ABSENT",
+        "EvidenceAuthority": "SCAN0_REFERENCE_SEMANTICS_ONLY",
+        "Confidence": "LOW_FOR_RECOVERY",
+        "UnresolvedReason": "RMW_MASK_0x01_IS_SEMANTICALLY_EXACT_BUT_SAFE_READ_AND_RESTORE_ARE_NOT_NVP6134C_PROVEN"
+      }
+    },
+    {
+      "check": "Bank9/44 prohibited",
+      "result": "PASS",
+      "evidence": {
+        "RegisterIndex": "79",
+        "Bank": "0x09",
+        "Register": "0x44",
+        "TouchCount": "1",
+        "FirstOperationIndex": "106",
+        "LastOperationIndex": "106",
+        "OperationIndices": "106",
+        "SourceSemanticFunctions": "nvp6134_setchn_common_fhd",
+        "OperationTypes": "READ_MODIFY_WRITE",
+        "RecoveryClass": "PROHIBITED_UNRESOLVED",
+        "RecoveryAction": "DO_NOT_EXECUTE; IF_TOUCHED_END_IN_FATAL_RECOVERY_FAILURE",
+        "SafeReadAuthority": "NOT_PROVEN_FOR_BASELINE_RESTORE",
+        "ReadSideEffectAuthority": "NO_COMPLETE_AUTHORITY",
+        "ProductReconstructionAuthority": "GAP_CALLABLE_REINIT_AND_FULL_BASELINE_VERIFY_ABSENT",
+        "EvidenceAuthority": "SCAN0_REFERENCE_SEMANTICS_ONLY",
+        "Confidence": "LOW_FOR_RECOVERY",
+        "UnresolvedReason": "RMW_MASK_0x01_IS_SEMANTICALLY_EXACT_BUT_SAFE_READ_AND_RESTORE_ARE_NOT_NVP6134C_PROVEN"
+      }
+    },
+    {
+      "check": "register JSON equals CSV",
+      "result": "PASS",
+      "evidence": 113
+    },
+    {
+      "check": "recovery class authority order",
+      "result": "PASS",
+      "evidence": [
+        "EXACT_READ_RESTORE",
+        "MASKED_READ_MODIFY_RESTORE",
+        "STABLE_BITS_ONLY_VERIFY",
+        "DETERMINISTIC_SEQUENCE_REINIT",
+        "PRODUCT_BASELINE_RECONSTRUCTION",
+        "PROHIBITED_UNRESOLVED"
+      ]
+    },
+    {
+      "check": "initial EQ semantic shape",
+      "result": "PASS",
+      "evidence": {
+        "entries": 9,
+        "writes": 5
+      }
+    },
+    {
+      "check": "initial EQ exact values",
+      "result": "PASS",
+      "evidence": [
+        [
+          "0x05",
+          "0x59",
+          "0x11"
+        ],
+        [
+          "0x05",
+          "0xC0",
+          "0x17"
+        ],
+        [
+          "0x05",
+          "0xC1",
+          "0x13"
+        ],
+        [
+          "0x05",
+          "0xC8",
+          "0x04"
+        ],
+        [
+          "0x0A",
+          "0x74",
+          "0x02"
+        ]
+      ]
+    },
+    {
+      "check": "initial EQ functional writes unresolved",
+      "result": "PASS",
+      "evidence": [
+        "PROHIBITED_UNRESOLVED",
+        "PROHIBITED_UNRESOLVED",
+        "PROHIBITED_UNRESOLVED",
+        "PROHIBITED_UNRESOLVED",
+        "PROHIBITED_UNRESOLVED"
+      ]
+    },
+    {
+      "check": "failure scenario count",
+      "result": "PASS",
+      "evidence": 1211
+    },
+    {
+      "check": "seven failure types per included op",
+      "result": "PASS",
+      "evidence": {
+        "operations": 173,
+        "types": [
+          "FAILURE_BEFORE_WRITE",
+          "HOST_ABORT",
+          "MMIO_RESET",
+          "NACK_DURING_WRITE",
+          "READBACK_MISMATCH",
+          "RESET_BETWEEN_OPERATIONS",
+          "TIMEOUT_DURING_WRITE"
+        ]
+      }
+    },
+    {
+      "check": "failure scenario indices contiguous",
+      "result": "PASS",
+      "evidence": "1..1211"
+    },
+    {
+      "check": "terminal counts exact",
+      "result": "PASS",
+      "evidence": {
+        "RECOVERED_PRODUCT_BASELINE": 6,
+        "FATAL_RECOVERY_FAILURE": 1205
+      }
+    },
+    {
+      "check": "unresolved paths fatal",
+      "result": "PASS",
+      "evidence": "all unresolved committed paths"
+    },
+    {
+      "check": "reset paths fatal",
+      "result": "PASS",
+      "evidence": "all reset/MMIO-reset paths"
+    },
+    {
+      "check": "required graph states",
+      "result": "PASS",
+      "evidence": [
+        "ABORTING",
+        "BASELINE_CAPTURED",
+        "BASELINE_VERIFY",
+        "BT656_WAIT",
+        "EQ_APPLIED",
+        "EQ_APPLY_IN_PROGRESS",
+        "EXACT_RESTORE",
+        "FATAL_RECOVERY_FAILURE",
+        "IDLE_PRODUCT_BASELINE",
+        "LOCK_WAIT",
+        "MODE_APPLIED",
+        "MODE_APPLY_IN_PROGRESS",
+        "NVP_RESET",
+        "PRODUCT_AUTOINIT",
+        "RECOVERED",
+        "RECOVERED_PRODUCT_BASELINE",
+        "SUCCESS_READY"
+      ]
+    },
+    {
+      "check": "terminal graph states",
+      "result": "PASS",
+      "evidence": [
+        "RECOVERED_PRODUCT_BASELINE",
+        "FATAL_RECOVERY_FAILURE"
+      ]
+    },
+    {
+      "check": "focused test count and IDs",
+      "result": "PASS",
+      "evidence": {
+        "fields": [
+          "TestID",
+          "Requirement",
+          "Result",
+          "Scope",
+          "Evidence"
+        ],
+        "count": 24
+      }
+    },
+    {
+      "check": "focused test outcomes",
+      "result": "PASS",
+      "evidence": {
+        "counts": {
+          "PASS": 16,
+          "BLOCKED": 8
+        },
+        "blocked": [
+          "T16",
+          "T17",
+          "T18",
+          "T19",
+          "T2",
+          "T20",
+          "T21",
+          "T8"
+        ],
+        "T19-T21": [
+          {
+            "TestID": "T19",
+            "Requirement": "scanner/executor arbitration",
+            "Result": "BLOCKED",
+            "Scope": "MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED",
+            "Evidence": "no RTL implementation proves exclusive whole-action ownership or scanner suppression"
+          },
+          {
+            "TestID": "T20",
+            "Requirement": "no SCAN1 publication during functional action",
+            "Result": "BLOCKED",
+            "Scope": "MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED",
+            "Evidence": "no RTL implementation proves publication suppression during functional ownership"
+          },
+          {
+            "TestID": "T21",
+            "Requirement": "action result frozen until ACK",
+            "Result": "BLOCKED",
+            "Scope": "MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED",
+            "Evidence": "no RTL implementation proves terminal-result retention through ACK"
+          }
+        ]
+      }
+    },
+    {
+      "check": "summary classification",
+      "result": "PASS",
+      "evidence": {
+        "classification": "MODE1_INITIAL_EQ_AUTHORITY_INCOMPLETE",
+        "recovery": "MODE1_RECOVERY_AUTHORITY_INCOMPLETE",
+        "T19-T21": "MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED",
+        "focused": {
+          "BLOCKED": 8,
+          "PASS": 16
+        },
+        "inherited": "PASS_2_OF_2_INHERITED_GATES"
+      }
+    },
+    {
+      "check": "ACP first-image disposition and non-claim",
+      "result": "PASS",
+      "evidence": {
+        "summary": "UNRESOLVED",
+        "expected": "UNRESOLVED",
+        "evidence": "NO_AUTHORITY_PROVES_ACP_INDISPENSABLE_AND_NO_AUTHORITY_PROVES_FIRST_IMAGE_WITHOUT_ACP"
+      }
+    },
+    {
+      "check": "inherited test receipt identity and disposition",
+      "result": "PASS",
+      "evidence": {
+        "disposition": "PASS_2_OF_2_INHERITED_GATES",
+        "SCAN1": {
+          "suite": "SCAN1",
+          "required_by": "PROMPT_SECTION_23",
+          "status": "PASS",
+          "gate_result": "24/24 PASS",
+          "evidence_path": "C:\\FPGA\\G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z\\workstream-b-mode1\\inherited-scan1-gate-01\\G2B_NVP_CAMERA_SCAN1_R1_SIMULATION_RECEIPT.txt",
+          "evidence_sha256": "28CA649BF0E2151EA8F924114DF58134F7FE75288FECF0E4A1DF49D705A9D86F",
+          "scope": "READ_ONLY_CLEAN_MODE1_PARENT",
+          "tested_head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+          "tested_tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+          "hardware_accessed": "NO"
+        },
+        "SCAN1_actual_sha256": "28CA649BF0E2151EA8F924114DF58134F7FE75288FECF0E4A1DF49D705A9D86F",
+        "ACQ": {
+          "suite": "ACQ",
+          "required_by": "PROMPT_SECTION_23",
+          "status": "PASS",
+          "gate_result": "20/20 PASS",
+          "evidence_path": "C:\\FPGA\\G2B_NVP_OFFLINE_ADVANCE1_20260913T201843Z\\workstream-b-mode1\\inherited-acq-gate-01\\G2B_NVP_ACQ1_COMPAT0_R2_TEST_RECEIPT.txt",
+          "evidence_sha256": "F8BB98CCAD4B98C54FF32B1B18C3E8CAC2E52802FB143C3DA72053F91A342F5F",
+          "scope": "READ_ONLY_CLEAN_MODE1_PARENT",
+          "tested_head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+          "tested_tree": "NOT_RECORDED_IN_ACQ_RECEIPT",
+          "hardware_accessed": "NO"
+        },
+        "ACQ_actual_sha256": "F8BB98CCAD4B98C54FF32B1B18C3E8CAC2E52802FB143C3DA72053F91A342F5F"
+      }
+    },
+    {
+      "check": "summary counts",
+      "result": "PASS",
+      "evidence": "all exact"
+    },
+    {
+      "check": "summary output hashes",
+      "result": "PASS",
+      "evidence": {
+        "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.csv": "20E3AB5A78399184B2C56C59D0287E016DA827FBD57F43EB96F755FFA5B24926",
+        "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.json": "477B40AD52E16D4C0E07063E2F9C7EEA0497151CDBC551A016090812A1042863",
+        "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.csv": "9E4364C011A189614819226656B32EA67F465BD235FFE92B93681A9C2D3AD750",
+        "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.json": "A7345063405A47A1674AA88ADC15EC7FA7CC1E903E0132CA19CD3989BE443469",
+        "G2B_NVP_MODE1_FAILURE_INJECTION_MATRIX.csv": "4BB59BACE5C4016F280EC74826596A784185C01DB3BE896A7A5BE51B77D3D7A2",
+        "G2B_NVP_MODE1_DETERMINISTIC_RECOVERY_GRAPH.json": "7ACADAEDE0B4ADDD9B22198F4822B2C703FC3C61052E1FE0737F998392A80BA0",
+        "G2B_NVP_MODE1_FOCUSED_24_TEST_RESULTS.csv": "AFBB71B790DAD3C5232CFBA084D361619CF5EF0F241581B6A143A144959EE194",
+        "G2B_NVP_MODE1_INHERITED_TEST_DISPOSITION.json": "C95C008FEA7387A47A218D14CC9AC4E8B673A9E3968332230B326FF281D85260"
+      }
+    },
+    {
+      "check": "SCAN0 source manifest identity",
+      "result": "PASS",
+      "evidence": "9537C24203A3A34978E100779A06DEEC9CE984DB3EB0DFE19DC89654BE3BA6B9"
+    },
+    {
+      "check": "NVP6134C PDF identity",
+      "result": "PASS",
+      "evidence": "301FF799A101B0DBDF6CD946EEAD0C1EDC67D07FFEAC7E65FA8C6AE82C316E46"
+    },
+    {
+      "check": "candidate source identity",
+      "result": "PASS",
+      "evidence": {
+        "head": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+        "tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf"
+      }
+    },
+    {
+      "check": "candidate worktree untouched",
+      "result": "PASS",
+      "evidence": "clean"
+    },
+    {
+      "check": "reference identity",
+      "result": "PASS",
+      "evidence": {
+        "head": "081ebbff9a2722d47acf16c680594be43cb179e2",
+        "status": "clean"
+      }
+    },
+    {
+      "check": "no build bitstream or hardware output",
+      "result": "PASS",
+      "evidence": "none"
+    }
+  ],
+  "artifact_sha256": {
+    "G2B_NVP_MODE1_BANK1_ED_DISPOSITION.md": "031F04D232518B6C6544FBD5C10B29A26838AE0095CDDFE7B54B2065BBE7CF9D",
+    "G2B_NVP_MODE1_BANK9_44_DISPOSITION.md": "CD362295483307655CF2B1B7183B023A9EF760B61B5248E88BA4C339137B8E13",
+    "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.csv": "20E3AB5A78399184B2C56C59D0287E016DA827FBD57F43EB96F755FFA5B24926",
+    "G2B_NVP_MODE1_CLEANROOM_NO_ACP_OPERATION_MANIFEST.json": "477B40AD52E16D4C0E07063E2F9C7EEA0497151CDBC551A016090812A1042863",
+    "G2B_NVP_MODE1_DETERMINISTIC_RECOVERY_GRAPH.json": "7ACADAEDE0B4ADDD9B22198F4822B2C703FC3C61052E1FE0737F998392A80BA0",
+    "G2B_NVP_MODE1_DETERMINISTIC_RECOVERY_GRAPH.md": "7D5B682BE4250948127A6B9BC05AD1A7638C051F5D13514194D2328563AF04FC",
+    "G2B_NVP_MODE1_FAILURE_INJECTION_MATRIX.csv": "4BB59BACE5C4016F280EC74826596A784185C01DB3BE896A7A5BE51B77D3D7A2",
+    "G2B_NVP_MODE1_FOCUSED_24_TEST_RESULTS.csv": "AFBB71B790DAD3C5232CFBA084D361619CF5EF0F241581B6A143A144959EE194",
+    "G2B_NVP_MODE1_INHERITED_TEST_DISPOSITION.json": "C95C008FEA7387A47A218D14CC9AC4E8B673A9E3968332230B326FF281D85260",
+    "G2B_NVP_MODE1_INITIAL_EQ_AUDIT.md": "0D9C6E56BF0CA0C6AFCFD292F799B62EB58011D9E9C7EE3429116655BEDAB454",
+    "G2B_NVP_MODE1_MODEL_SUMMARY.json": "03264D271F3AABDE1F7FB0BEB55164BAEB3753CE587D0A1FA63731BB1FFDA51E",
+    "G2B_NVP_MODE1_PRODUCT_BASELINE_RECONSTRUCTION_GAP.md": "92377B7D43FE647FE5B2B2E63478BF1D878BDED35FD88CAE30BDBAB8136268A1",
+    "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.csv": "9E4364C011A189614819226656B32EA67F465BD235FFE92B93681A9C2D3AD750",
+    "G2B_NVP_MODE1_TOUCHED_REGISTER_RECOVERY_MATRIX.json": "A7345063405A47A1674AA88ADC15EC7FA7CC1E903E0132CA19CD3989BE443469",
+    "G2B_NVP_MODE1_WORKSTREAM_REPORT.md": "B32C32C7C8CEE299F364A9FA18F02639CFAEA1D8C42EF06A5C753A6A0B4CF09A",
+    "generate_mode1_audit.py": "36D7F05E5444E96115EF74684DCEEEC73D2F2EE000E165DF8DA4B62A372913A6",
+    "verify_mode1_audit.py": "9F355429D5527C5EFC2AC573D994373E66394CDC3FA1A55798405D75105F50C2"
+  }
+}

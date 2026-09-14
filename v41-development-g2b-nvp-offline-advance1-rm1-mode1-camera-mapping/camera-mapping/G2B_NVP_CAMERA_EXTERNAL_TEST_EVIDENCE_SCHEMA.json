@@ -1,0 +1,838 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ahd-v41:g2b:nvp-camera:external-test-evidence:r1",
+  "title": "G2B NVP camera external test evidence",
+  "description": "Schema for separately authorized camera external-test, physical connector, continuity, termination and optional powered-correlation evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "campaign_id",
+    "generated_utc",
+    "scope_boundary",
+    "overall_status",
+    "first_failed_gate",
+    "board_identity",
+    "authorization",
+    "source_artifacts",
+    "camera_evidence",
+    "channel_evidence",
+    "private_artifacts_copied_to_public_evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "G2B_NVP_CAMERA_EXTERNAL_TEST_EVIDENCE_SCHEMA_R1"
+    },
+    "campaign_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope_boundary": {
+      "const": "CAMERA_AND_PHYSICAL_CONNECTOR_QUALIFICATION_ONLY"
+    },
+    "overall_status": {
+      "enum": [
+        "PASS",
+        "BLOCKED",
+        "FAIL"
+      ]
+    },
+    "first_failed_gate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "board_identity": {
+      "$ref": "#/$defs/board_identity"
+    },
+    "authorization": {
+      "$ref": "#/$defs/authorization"
+    },
+    "source_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source_artifact"
+      }
+    },
+    "camera_evidence": {
+      "$ref": "#/$defs/camera_evidence"
+    },
+    "channel_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/channel_evidence"
+      }
+    },
+    "private_artifacts_copied_to_public_evidence": {
+      "const": false
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "board_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "board_serial",
+        "assembly_revision",
+        "identity_status",
+        "photo_artifact_ids"
+      ],
+      "properties": {
+        "board_serial": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assembly_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity_status": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED"
+          ]
+        },
+        "photo_artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorization_id",
+        "owner",
+        "allowed_actions",
+        "prohibited_actions",
+        "authorized_utc"
+      ],
+      "properties": {
+        "authorization_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowed_actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "prohibited_actions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authorized_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "source_artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "artifact_type",
+        "path_or_private_reference",
+        "sha256",
+        "identity_verified",
+        "publication_classification"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact_type": {
+          "enum": [
+            "SCHEMATIC",
+            "NETLIST",
+            "PCB",
+            "BOM",
+            "AS_BUILT_PHOTO",
+            "MEASUREMENT_LOG",
+            "INSTRUMENT_EXPORT",
+            "OTHER"
+          ]
+        },
+        "path_or_private_reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "identity_verified": {
+          "type": "boolean"
+        },
+        "publication_classification": {
+          "enum": [
+            "PRIVATE_REFERENCE_ONLY",
+            "SANITIZED_PUBLIC",
+            "LOCAL_NONPUBLIC"
+          ]
+        }
+      }
+    },
+    "path_element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence",
+        "refdes",
+        "pin_from",
+        "pin_to",
+        "net_in",
+        "net_out",
+        "function",
+        "as_built_status"
+      ],
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "refdes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pin_from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pin_to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "net_in": {
+          "type": "string",
+          "minLength": 1
+        },
+        "net_out": {
+          "type": "string",
+          "minLength": 1
+        },
+        "function": {
+          "enum": [
+            "CONNECTOR",
+            "PROTECTION",
+            "TERMINATION",
+            "FILTER",
+            "COUPLING_CAPACITOR",
+            "AFE",
+            "ZERO_OHM_LINK",
+            "OTHER"
+          ]
+        },
+        "as_built_status": {
+          "enum": [
+            "FOUND",
+            "NOT_FOUND",
+            "NOT_INSPECTED"
+          ]
+        }
+      }
+    },
+    "termination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "nominal_ohm",
+        "topology",
+        "termination_refdes",
+        "dc_resistance_ohm",
+        "ac_impedance_ohm",
+        "measurement_frequency_hz",
+        "instrument_id",
+        "evidence_artifact_ids"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "DATASHEET_EXPECTATION_NOT_PROVEN",
+            "MEASURED_AND_DOCUMENTED",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "nominal_ohm": {
+          "const": 75
+        },
+        "topology": {
+          "enum": [
+            "UNKNOWN",
+            "INTERNAL_TO_NVP_EXPECTED",
+            "EXTERNAL_SHUNT",
+            "OTHER_DOCUMENTED"
+          ]
+        },
+        "termination_refdes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dc_resistance_ohm": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "ac_impedance_ohm": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "measurement_frequency_hz": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "instrument_id": {
+          "type": "string"
+        },
+        "evidence_artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "MEASURED_AND_DOCUMENTED"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "instrument_id": {
+                "minLength": 1
+              },
+              "evidence_artifact_ids": {
+                "minItems": 1
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "dc_resistance_ohm"
+                ],
+                "properties": {
+                  "dc_resistance_ohm": {
+                    "type": "number"
+                  }
+                }
+              },
+              {
+                "required": [
+                  "ac_impedance_ohm"
+                ],
+                "properties": {
+                  "ac_impedance_ohm": {
+                    "type": "number"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "camera_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manufacturer",
+        "model",
+        "serial_or_identifying_label",
+        "nameplate_power_voltage_v",
+        "applied_power_voltage_v",
+        "measured_current_a",
+        "connector_type",
+        "cable_type",
+        "cable_instance_id",
+        "cable_length_m",
+        "external_tester_make_model",
+        "external_tester_serial",
+        "external_tester_known_working_status",
+        "external_tester_result",
+        "output_standard",
+        "resolution",
+        "frame_rate_hz",
+        "region_setting",
+        "osd_menu_setting",
+        "selector_state",
+        "utc_coax_control_setting",
+        "controlled_scene_change_observed",
+        "test_utc",
+        "photograph_or_report_artifact_ids",
+        "scientific_classification"
+      ],
+      "properties": {
+        "manufacturer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "serial_or_identifying_label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nameplate_power_voltage_v": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "applied_power_voltage_v": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "measured_current_a": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "connector_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cable_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cable_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cable_length_m": {
+          "type": ["number", "null"],
+          "minimum": 0
+        },
+        "external_tester_make_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_tester_serial": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_tester_known_working_status": {
+          "enum": ["PASS", "BLOCKED", "FAIL"]
+        },
+        "external_tester_result": {
+          "enum": ["PASS", "FAIL", "NOT_RUN"]
+        },
+        "output_standard": {
+          "enum": ["AHD", "TVI", "CVI", "CVBS", "OTHER", "UNKNOWN"]
+        },
+        "resolution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "frame_rate_hz": {
+          "type": ["number", "null"],
+          "exclusiveMinimum": 0
+        },
+        "region_setting": {
+          "enum": ["PAL", "NTSC", "NOT_APPLICABLE", "UNKNOWN"]
+        },
+        "osd_menu_setting": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selector_state": {
+          "enum": ["AHD", "TVI", "CVI", "CVBS", "AUTO", "UNKNOWN", "NOT_APPLICABLE"]
+        },
+        "utc_coax_control_setting": {
+          "type": "string",
+          "minLength": 1
+        },
+        "controlled_scene_change_observed": {
+          "enum": ["YES", "NO", "NOT_RUN"]
+        },
+        "test_utc": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "photograph_or_report_artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "scientific_classification": {
+          "enum": [
+            "EXTERNALLY_CONFIRMED_AHD_1080P25",
+            "EXTERNALLY_CONFIRMED_OTHER_FORMAT",
+            "CAMERA_OUTPUT_CONFIGURABLE_BUT_NOT_VERIFIED",
+            "CAMERA_FORMAT_UNKNOWN",
+            "CAMERA_NOT_PROVEN_OPERATIONAL"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scientific_classification": {
+                "const": "EXTERNALLY_CONFIRMED_AHD_1080P25"
+              }
+            },
+            "required": ["scientific_classification"]
+          },
+          "then": {
+            "properties": {
+              "external_tester_known_working_status": {"const": "PASS"},
+              "external_tester_result": {"const": "PASS"},
+              "output_standard": {"const": "AHD"},
+              "resolution": {"const": "1920x1080"},
+              "frame_rate_hz": {"const": 25},
+              "controlled_scene_change_observed": {"const": "YES"},
+              "test_utc": {"type": "string"},
+              "photograph_or_report_artifact_ids": {"minItems": 1}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scientific_classification": {
+                "const": "EXTERNALLY_CONFIRMED_OTHER_FORMAT"
+              }
+            },
+            "required": ["scientific_classification"]
+          },
+          "then": {
+            "properties": {
+              "external_tester_known_working_status": {"const": "PASS"},
+              "external_tester_result": {"const": "PASS"},
+              "output_standard": {"not": {"const": "UNKNOWN"}},
+              "controlled_scene_change_observed": {"const": "YES"},
+              "test_utc": {"type": "string"},
+              "photograph_or_report_artifact_ids": {"minItems": 1}
+            },
+            "not": {
+              "properties": {
+                "output_standard": {"const": "AHD"},
+                "resolution": {"const": "1920x1080"},
+                "frame_rate_hz": {"const": 25}
+              },
+              "required": ["output_standard", "resolution", "frame_rate_hz"]
+            }
+          }
+        }
+      ]
+    },
+    "channel_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_id",
+        "connector_instance_id",
+        "connector_refdes",
+        "connector_signal_pin",
+        "connector_return_pin",
+        "mapping_status",
+        "mapping_confidence",
+        "external_afe_path",
+        "nvp_refdes",
+        "nvp_pin",
+        "nvp_vin",
+        "logical_channel",
+        "classifier_bank",
+        "vdo1_route_code",
+        "as_built_status",
+        "continuity_result",
+        "cross_channel_isolation_result",
+        "termination",
+        "evidence_artifact_ids"
+      ],
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connector_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connector_refdes": {
+          "type": "string",
+          "pattern": "^(UNKNOWN|[A-Za-z][A-Za-z0-9._-]*)$"
+        },
+        "connector_signal_pin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "connector_return_pin": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapping_status": {
+          "enum": [
+            "UNRESOLVED",
+            "HIGH_CONFIDENCE_INSTANCE_ONLY",
+            "QUALIFIED"
+          ]
+        },
+        "mapping_confidence": {
+          "enum": [
+            "NONE",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "external_afe_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path_element"
+          }
+        },
+        "nvp_refdes": {
+          "const": "U6"
+        },
+        "nvp_pin": {
+          "enum": [
+            76,
+            1,
+            6,
+            8
+          ]
+        },
+        "nvp_vin": {
+          "enum": [
+            "VIN1",
+            "VIN2",
+            "VIN3",
+            "VIN4"
+          ]
+        },
+        "logical_channel": {
+          "enum": [
+            "CH1",
+            "CH2",
+            "CH3",
+            "CH4"
+          ]
+        },
+        "classifier_bank": {
+          "enum": [
+            "Bank5",
+            "Bank6",
+            "Bank7",
+            "Bank8"
+          ]
+        },
+        "vdo1_route_code": {
+          "enum": [
+            "0x0",
+            "0x1",
+            "0x2",
+            "0x3"
+          ]
+        },
+        "as_built_status": {
+          "enum": [
+            "FOUND",
+            "NOT_FOUND",
+            "NOT_INSPECTED"
+          ]
+        },
+        "continuity_result": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_RUN",
+            "BLOCKED"
+          ]
+        },
+        "cross_channel_isolation_result": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "NOT_RUN",
+            "BLOCKED"
+          ]
+        },
+        "termination": {
+          "$ref": "#/$defs/termination"
+        },
+        "evidence_artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "logical_channel": {
+                  "const": "CH1"
+                },
+                "classifier_bank": {
+                  "const": "Bank5"
+                },
+                "nvp_vin": {
+                  "const": "VIN1"
+                },
+                "nvp_pin": {
+                  "const": 76
+                },
+                "vdo1_route_code": {
+                  "const": "0x0"
+                }
+              }
+            },
+            {
+              "properties": {
+                "logical_channel": {
+                  "const": "CH2"
+                },
+                "classifier_bank": {
+                  "const": "Bank6"
+                },
+                "nvp_vin": {
+                  "const": "VIN2"
+                },
+                "nvp_pin": {
+                  "const": 1
+                },
+                "vdo1_route_code": {
+                  "const": "0x1"
+                }
+              }
+            },
+            {
+              "properties": {
+                "logical_channel": {
+                  "const": "CH3"
+                },
+                "classifier_bank": {
+                  "const": "Bank7"
+                },
+                "nvp_vin": {
+                  "const": "VIN3"
+                },
+                "nvp_pin": {
+                  "const": 6
+                },
+                "vdo1_route_code": {
+                  "const": "0x2"
+                }
+              }
+            },
+            {
+              "properties": {
+                "logical_channel": {
+                  "const": "CH4"
+                },
+                "classifier_bank": {
+                  "const": "Bank8"
+                },
+                "nvp_vin": {
+                  "const": "VIN4"
+                },
+                "nvp_pin": {
+                  "const": 8
+                },
+                "vdo1_route_code": {
+                  "const": "0x3"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "mapping_status": {
+                "const": "QUALIFIED"
+              }
+            },
+            "required": [
+              "mapping_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "connector_refdes": {
+                "not": {
+                  "const": "UNKNOWN"
+                }
+              },
+              "external_afe_path": {
+                "minItems": 1
+              },
+              "as_built_status": {
+                "const": "FOUND"
+              },
+              "continuity_result": {
+                "const": "PASS"
+              },
+              "cross_channel_isolation_result": {
+                "const": "PASS"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

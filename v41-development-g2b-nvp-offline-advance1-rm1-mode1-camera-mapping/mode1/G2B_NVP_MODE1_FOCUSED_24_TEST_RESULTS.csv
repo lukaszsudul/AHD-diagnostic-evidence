@@ -1,0 +1,25 @@
+TestID,Requirement,Result,Scope,Evidence
+T1,semantic manifest deterministic,PASS,OFFLINE_MODEL_EVIDENCE,176 rows; source digest 64FFDBB1EF5E34D4DA2301B0256CFE2BA271E41ECDF26D64F85E42223C6344C1
+T2,no prohibited operation included,BLOCKED,OFFLINE_MODEL_EVIDENCE,108 required targets are PROHIBITED_UNRESOLVED
+T3,no CH2-CH4 write,PASS,OFFLINE_MODEL_EVIDENCE,all resolved hardware targets are CH1 expressions
+T4,no generic host I2C,PASS,OFFLINE_MODEL_EVIDENCE,audit contains compiled operations only
+T5,action order exact,PASS,OFFLINE_MODEL_EVIDENCE,source order preserved after ACP exclusion
+T6,masks preserve unrelated bits,PASS,OFFLINE_MODEL_EVIDENCE,B1/ED and B9/44 use mask 0x01 and preserved bits 0xFE
+T7,fixed delays exact,PASS,OFFLINE_MODEL_EVIDENCE,no-ACP sequence contains one fixed 35 ms delay
+T8,initial EQ subset exact,BLOCKED,OFFLINE_MODEL_EVIDENCE,five writes isolated but NVP6134C private-register compatibility is incomplete
+T9,failure injection at every operation boundary,PASS,OFFLINE_MODEL_EVIDENCE,1211/1211 classified
+T10,NACK recovery,PASS,OFFLINE_MODEL_EVIDENCE,every included operation has a terminal NACK classification
+T11,timeout recovery,PASS,OFFLINE_MODEL_EVIDENCE,every included operation has a terminal timeout classification
+T12,readback mismatch recovery,PASS,OFFLINE_MODEL_EVIDENCE,every included operation has a terminal mismatch classification
+T13,host abort recovery,PASS,OFFLINE_MODEL_EVIDENCE,every included operation has a terminal host-abort classification
+T14,reset during mode apply,PASS,OFFLINE_MODEL_EVIDENCE,reset paths are classified fail-closed
+T15,reset during EQ apply,PASS,OFFLINE_MODEL_EVIDENCE,EQ reset paths are classified fail-closed
+T16,exact restore path,BLOCKED,OFFLINE_MODEL_EVIDENCE,only 5/113 targets have complete SCAN0 safe-read authority
+T17,NVP reset plus autoinit path,BLOCKED,OFFLINE_MODEL_EVIDENCE,current autoinit is deterministic but not a callable recovery action
+T18,protected baseline verification,BLOCKED,OFFLINE_MODEL_EVIDENCE,complete post-reconstruction protected-field verifier is absent
+T19,scanner/executor arbitration,BLOCKED,MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED,no RTL implementation proves exclusive whole-action ownership or scanner suppression
+T20,no SCAN1 publication during functional action,BLOCKED,MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED,no RTL implementation proves publication suppression during functional ownership
+T21,action result frozen until ACK,BLOCKED,MODEL_CONTRACT_DEFINED_NOT_RTL_IMPLEMENTED,no RTL implementation proves terminal-result retention through ACK
+T22,source/profile isolation,PASS,OFFLINE_MODEL_EVIDENCE,only task-local audit/model artifacts are generated
+T23,product profile excludes MODE1,PASS,OFFLINE_MODEL_EVIDENCE,no candidate or PRODUCT source is modified
+T24,no transport or DMA change,PASS,OFFLINE_MODEL_EVIDENCE,"no RTL, transport, DMA, driver, or hardware action occurs"
