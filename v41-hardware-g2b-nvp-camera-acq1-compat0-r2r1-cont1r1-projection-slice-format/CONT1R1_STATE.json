@@ -1,0 +1,107 @@
+{
+  "activation": {
+    "acq_identity": "PASS",
+    "driver": "PASS",
+    "path": "REUSED_EXACT_VOLATILE_RUNTIME",
+    "pcie": "Gen2 x1",
+    "pcie_endpoint": "0000:01:00.0",
+    "programming_attempts": 0,
+    "scan1_identity": "PASS",
+    "warm_reboots": 0
+  },
+  "bitstream_sha256": "CFA58A46572094209997F6B1A3A5A033BF4E8C8A71EC261A5BBF1833B8BCF91B",
+  "camera_gate": "NOT_REACHED",
+  "capture_actions": 0,
+  "cleanup": {
+    "controller_lock_released_last": true,
+    "driver_unloaded": true,
+    "dut_lock_released": true,
+    "executor_idle": true,
+    "nvp_persistent_state_restored": true,
+    "pending_aio": 0,
+    "physical_quiescence": "PASS",
+    "result": "PASS",
+    "scanner_idle": true,
+    "stream_disabled": true,
+    "xdma_nodes_removed": true
+  },
+  "cont1_evidence_commit": "787278bfd74b7c63af5204f8e8bc9f031f8bb842",
+  "dcp_sha256": "EE0982524E8C6E5B1395836BEF55130FC6914C9C9BFE47731C09D7621CD86BDC",
+  "dut": {
+    "boot_id": "0c8657ab-9167-48db-9e97-92081c427c99",
+    "hostname": "VCDE-DUT-1",
+    "identity": "PASS",
+    "machine_id": "0e90f50d9465492b80258da5658446f8",
+    "parallel_hardware_activity": "NONE",
+    "ssh": "PASS"
+  },
+  "endpoint": "192.168.1.57:22",
+  "engineering_gate": "FAIL",
+  "eq_actions": 0,
+  "evidence_publication": "PENDING_COMMIT_AND_REMOTE_READBACK",
+  "first_failed_gate": "SCAN1_LIVE_32_SCAN_REPEAT_01_RETRY_NACK",
+  "fpga_source_changed": false,
+  "functional_nvp_writes": 0,
+  "host_only_correction": true,
+  "live_32_scan_regression": {
+    "accepted": 0,
+    "attempted": 1,
+    "failed_attempt_generation": 3,
+    "physical_entries": 82,
+    "physical_groups": 10,
+    "physical_transactions": 106,
+    "raw_sha256": "671D570715F53E6E1EEB74ADCB7BF08D18C24223FFB191CDE9B8436D89509C6D",
+    "required": 32,
+    "result": "FAIL",
+    "retried_entries": 1,
+    "retry_entry": {
+      "bank": "0x07",
+      "index": 62,
+      "register": "0xF4",
+      "status": "0x07"
+    }
+  },
+  "live_single": {
+    "entries": 82,
+    "generation": 2,
+    "groups": 10,
+    "projection": "PASS",
+    "raw_sha256": "172A535BB17166B6B2D014E464044BA0B23BE5804CC0DB2D56D8CEBC5B8968C6",
+    "result": "PASS",
+    "transactions": 105
+  },
+  "mmio": {
+    "acq": "16/16 PASS",
+    "scan1": "16/16 PASS",
+    "timeouts": 0
+  },
+  "mmio_changed": false,
+  "mode_actions": 0,
+  "new_fpga_build": false,
+  "overall_result": "FAIL",
+  "project_state_rev": "8 - OWNER_ATTESTED_NOT_REVERIFIED",
+  "projection": {
+    "bank_groups": 10,
+    "host_gate": "16/16 PASS",
+    "key_type": "BANK_AND_REGISTER_PAIR",
+    "manifest_entries": 82,
+    "preflight": "PASS",
+    "preserved_snapshot_replay": "PASS",
+    "unexpected_duplicate_full_keys": 0
+  },
+  "retired_endpoint_contacted": false,
+  "rollback": "NOT_REACHED_NOT_REQUIRED",
+  "runtime_bundle": {
+    "dut_deployment": "PASS",
+    "dut_gate": "PASS",
+    "local": "PASS",
+    "manifest_sha256": "6C3880783854E5F7B10DF58C354F7E6F31CE573E3435E22AA64387B44E6D33BF"
+  },
+  "runtime_error": "RuntimeError:RUNTIME_SCAN_FLAGS_FAILED:0x006a0005",
+  "same_window": true,
+  "scan1_manifest_changed": false,
+  "schema": "AHD_V41_CONT1R1_FINAL_STATE_V1",
+  "source_commit": "dae2aff60141ecdbc0afac08fc0df9a3166f66c6",
+  "source_tree": "21e33d481ef637667756caa8015e7fa1b1dd8ebf",
+  "unauthorized_functional_writes": 0
+}

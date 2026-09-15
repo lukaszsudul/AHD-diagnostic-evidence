@@ -1,0 +1,18 @@
+gate,result,detail
+Host projection gate,PASS,16/16
+Preserved CONT1 snapshot replay,PASS,82/82; 10/10; 105/105
+Local corrected bundle,PASS,47 deployed files
+DUT identity and safety,PASS,VCDE-DUT-1; no parallel activity
+DUT corrected bundle,PASS,hash/import/origin/replay
+Locks,PASS,fresh controller and DUT locks
+Runtime continuity,PASS,REUSED_EXACT_VOLATILE_RUNTIME
+Driver and PCIe,PASS,0000:01:00.0; Gen2 x1
+Runtime identities,PASS,SCAN1 and ACQ exact
+MMIO sanity,PASS,16/16 + 16/16
+Live single scan physical,PASS,82/82; 10/10; 105/105
+Live single scan projection,PASS,13/13 keys
+Live 32-scan regression,FAIL,0/32 accepted; repeat 01 retried once; 106/105
+Physical camera gate,NOT_REACHED,stopped at first failed automatic gate
+Functional CH1 campaign,NOT_REACHED,0 functional writes
+Rollback,NOT_REACHED,not required; no functional writes
+Cleanup,PASS,driver/nodes/locks released; idle

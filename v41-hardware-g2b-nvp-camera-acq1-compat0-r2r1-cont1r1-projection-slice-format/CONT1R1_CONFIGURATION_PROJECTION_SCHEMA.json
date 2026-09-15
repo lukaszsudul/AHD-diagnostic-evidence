@@ -1,0 +1,79 @@
+{
+  "schema": "AHD_V41_CONT1R1_CONFIGURATION_PROJECTION_SCHEMA_V1",
+  "key_type": "BANK_AND_REGISTER_PAIR",
+  "authority": "EXACT_SCAN1_MANIFEST_PLUS_OWNER_ACCEPTED_SEMANTIC_PROJECTION",
+  "fixed_requirements": [
+    {
+      "semantic_family": "device_identity",
+      "bank": 0,
+      "register": 244,
+      "channel": null,
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    },
+    {
+      "semantic_family": "revision_identity",
+      "bank": 0,
+      "register": 245,
+      "channel": null,
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    },
+    {
+      "semantic_family": "per_channel_register_control_mask",
+      "bank": 0,
+      "register": 128,
+      "channel": null,
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    },
+    {
+      "semantic_family": "channel_reset",
+      "bank": 1,
+      "register": 151,
+      "channel": "PACKED_CH0_TO_CH3",
+      "bit_rule": "bit_ch",
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    },
+    {
+      "semantic_family": "decoder_power_clock",
+      "bank": 1,
+      "register": 152,
+      "channel": "PACKED_CH0_TO_CH3",
+      "bit_rule": "bit_ch",
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    }
+  ],
+  "channel_families": [
+    {
+      "semantic_family": "adc_clock_delay",
+      "bank": 1,
+      "base_register": 132,
+      "channel_range": [0, 3],
+      "register_rule": "base_register_plus_channel",
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    },
+    {
+      "semantic_family": "pre_clock",
+      "bank": 1,
+      "base_register": 140,
+      "channel_range": [0, 3],
+      "register_rule": "base_register_plus_channel",
+      "read_safe_authority": "NVP6134C_DATASHEET"
+    }
+  ],
+  "rejected_legacy_family": {
+    "semantic_family": "stale_or_wrong_address_family",
+    "bank": 1,
+    "base_register": 136,
+    "channel_range": [0, 3],
+    "register_rule": "base_register_plus_channel",
+    "reason": "NO_EXACT_SCAN1_MANIFEST_ENTRY_OR_ACCEPTED_SEMANTIC_AUTHORITY"
+  },
+  "governed_repeated_scan_keys": [
+    {
+      "bank": 0,
+      "register": 168,
+      "entry_indices": [0, 4, 81],
+      "reason": "NOVID_PRE_LIVE_POST_SAMPLING",
+      "projection_consumer": "NONE"
+    }
+  ]
+}

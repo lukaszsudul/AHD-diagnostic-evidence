@@ -1,0 +1,83 @@
+entry_index,group,bank,register,full_key,semantic_family,channel,meaning,read_safe_authority,projection_consumer,governed_repeated_scan_operation
+0,G0-PRE,0x00,0xA8,"(0x00,0xA8)",novid_sampling,ALL_CH_BITS,NOVID pre-bookend,NVP6134C_DATASHEET,NONE,YES
+1,G0-ID,0x00,0xF4,"(0x00,0xF4)",device_identity,CHIP,device ID,NVP6134C_DATASHEET,device_identity,NO
+2,G0-ID,0x00,0xF5,"(0x00,0xF5)",revision_identity,CHIP,revision ID,NVP6134C_DATASHEET,revision_identity,NO
+3,G0-ID,0x00,0x80,"(0x00,0x80)",per_channel_register_control_mask,CHIP,per-channel register control mask,NVP6134C_DATASHEET,per_channel_register_control_mask,NO
+4,G0-LOCK,0x00,0xA8,"(0x00,0xA8)",novid_sampling,CHIP_OR_PACKED_CHANNELS,NOVID live status,NVP6134C_DATASHEET,NONE,YES
+5,G0-LOCK,0x00,0xB0,"(0x00,0xB0)",global_lock_status,CHIP_OR_PACKED_CHANNELS,latched/held NOVID status; B0 itself is not a documented clear trigger,NVP6134C_DATASHEET,NONE,NO
+6,G0-LOCK,0x00,0xE0,"(0x00,0xE0)",global_lock_status,CHIP_OR_PACKED_CHANNELS,AGC lock bits,NVP6134C_DATASHEET,NONE,NO
+7,G0-LOCK,0x00,0xE1,"(0x00,0xE1)",global_lock_status,CHIP_OR_PACKED_CHANNELS,clamp/comparator lock bits,NVP6134C_DATASHEET,NONE,NO
+8,G0-LOCK,0x00,0xE2,"(0x00,0xE2)",global_lock_status,CHIP_OR_PACKED_CHANNELS,horizontal lock bits,NVP6134C_DATASHEET,NONE,NO
+9,G0-LOCK,0x00,0x7A,"(0x00,0x7A)",global_lock_status,CHIP_OR_PACKED_CHANNELS,channel 1/2 data-out mode,NVP6134C_DATASHEET,NONE,NO
+10,G0-LOCK,0x00,0x7B,"(0x00,0x7B)",global_lock_status,CHIP_OR_PACKED_CHANNELS,channel 3/4 data-out mode,NVP6134C_DATASHEET,NONE,NO
+11,G0-CH,0x00,0xE8,"(0x00,0xE8)",per_channel_status_or_configuration,CH1,FSC change/color-kill/FSC-lock/NOVID packed status,NVP6134C_DATASHEET,NONE,NO
+12,G0-CH,0x00,0x81,"(0x00,0x81)",per_channel_status_or_configuration,CH1,SD/AHD mode selection,NVP6134C_DATASHEET,reference_helper_context,NO
+13,G0-CH,0x00,0x85,"(0x00,0x85)",per_channel_status_or_configuration,CH1,special-mode selection,NVP6134C_DATASHEET,reference_helper_context,NO
+14,G0-CH,0x00,0x23,"(0x00,0x23)",per_channel_status_or_configuration,CH1,YC/color-kill configuration readback,NVP6134C_DATASHEET,NONE,NO
+15,G0-CH,0x00,0xE9,"(0x00,0xE9)",per_channel_status_or_configuration,CH2,FSC change/color-kill/FSC-lock/NOVID packed status,NVP6134C_DATASHEET,NONE,NO
+16,G0-CH,0x00,0x82,"(0x00,0x82)",per_channel_status_or_configuration,CH2,SD/AHD mode selection,NVP6134C_DATASHEET,NONE,NO
+17,G0-CH,0x00,0x86,"(0x00,0x86)",per_channel_status_or_configuration,CH2,special-mode selection,NVP6134C_DATASHEET,NONE,NO
+18,G0-CH,0x00,0x27,"(0x00,0x27)",per_channel_status_or_configuration,CH2,YC/color-kill configuration readback,NVP6134C_DATASHEET,NONE,NO
+19,G0-CH,0x00,0xEA,"(0x00,0xEA)",per_channel_status_or_configuration,CH3,FSC change/color-kill/FSC-lock/NOVID packed status,NVP6134C_DATASHEET,NONE,NO
+20,G0-CH,0x00,0x83,"(0x00,0x83)",per_channel_status_or_configuration,CH3,SD/AHD mode selection,NVP6134C_DATASHEET,NONE,NO
+21,G0-CH,0x00,0x87,"(0x00,0x87)",per_channel_status_or_configuration,CH3,special-mode selection,NVP6134C_DATASHEET,NONE,NO
+22,G0-CH,0x00,0x2B,"(0x00,0x2B)",per_channel_status_or_configuration,CH3,YC/color-kill configuration readback,NVP6134C_DATASHEET,NONE,NO
+23,G0-CH,0x00,0xEB,"(0x00,0xEB)",per_channel_status_or_configuration,CH4,FSC change/color-kill/FSC-lock/NOVID packed status,NVP6134C_DATASHEET,NONE,NO
+24,G0-CH,0x00,0x84,"(0x00,0x84)",per_channel_status_or_configuration,CH4,SD/AHD mode selection,NVP6134C_DATASHEET,NONE,NO
+25,G0-CH,0x00,0x88,"(0x00,0x88)",per_channel_status_or_configuration,CH4,special-mode selection,NVP6134C_DATASHEET,NONE,NO
+26,G0-CH,0x00,0x2F,"(0x00,0x2F)",per_channel_status_or_configuration,CH4,YC/color-kill configuration readback,NVP6134C_DATASHEET,NONE,NO
+27,G1,0x01,0x97,"(0x01,0x97)",channel_reset,PACKED_CHANNELS,channel reset/power control,NVP6134C_DATASHEET,channel_reset,NO
+28,G1,0x01,0x98,"(0x01,0x98)",decoder_power_clock,PACKED_CHANNELS,channel reset/power control,NVP6134C_DATASHEET,decoder_power_clock,NO
+29,G1,0x01,0x84,"(0x01,0x84)",adc_clock_delay,CH1,ADC clock selection,NVP6134C_DATASHEET,adc_clock_delay,NO
+30,G1,0x01,0x8C,"(0x01,0x8C)",pre_clock,CH1,pre/decoder clock selection,NVP6134C_DATASHEET,pre_clock,NO
+31,G1,0x01,0x85,"(0x01,0x85)",adc_clock_delay,CH2,ADC clock selection,NVP6134C_DATASHEET,adc_clock_delay,NO
+32,G1,0x01,0x8D,"(0x01,0x8D)",pre_clock,CH2,pre/decoder clock selection,NVP6134C_DATASHEET,pre_clock,NO
+33,G1,0x01,0x86,"(0x01,0x86)",adc_clock_delay,CH3,ADC clock selection,NVP6134C_DATASHEET,adc_clock_delay,NO
+34,G1,0x01,0x8E,"(0x01,0x8E)",pre_clock,CH3,pre/decoder clock selection,NVP6134C_DATASHEET,pre_clock,NO
+35,G1,0x01,0x87,"(0x01,0x87)",adc_clock_delay,CH4,ADC clock selection,NVP6134C_DATASHEET,adc_clock_delay,NO
+36,G1,0x01,0x8F,"(0x01,0x8F)",pre_clock,CH4,pre/decoder clock selection,NVP6134C_DATASHEET,pre_clock,NO
+37,G2,0x05,0xF0,"(0x05,0xF0)",private_detector,CH1,raw video-format classifier,NVP6134C_DATASHEET,NONE,NO
+38,G2,0x05,0xF2,"(0x05,0xF2)",private_detector,CH1,format conversion auxiliary,RAW_SEMANTICS_PARTIAL,NONE,NO
+39,G2,0x05,0xF3,"(0x05,0xF3)",private_detector,CH1,special-format discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+40,G2,0x05,0xF4,"(0x05,0xF4)",private_detector,CH1,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+41,G2,0x05,0xF5,"(0x05,0xF5)",private_detector,CH1,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+42,G2,0x05,0xE2,"(0x05,0xE2)",private_detector,CH1,ACC gain high byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+43,G2,0x05,0xE3,"(0x05,0xE3)",private_detector,CH1,ACC gain low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+44,G2,0x05,0xE8,"(0x05,0xE8)",private_detector,CH1,Y-plus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+45,G2,0x05,0xE9,"(0x05,0xE9)",private_detector,CH1,Y-plus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+46,G2,0x05,0xEA,"(0x05,0xEA)",private_detector,CH1,Y-minus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+47,G2,0x05,0xEB,"(0x05,0xEB)",private_detector,CH1,Y-minus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+48,G3,0x06,0xF0,"(0x06,0xF0)",private_detector,CH2,raw video-format classifier,NVP6134C_DATASHEET,NONE,NO
+49,G3,0x06,0xF2,"(0x06,0xF2)",private_detector,CH2,format conversion auxiliary,RAW_SEMANTICS_PARTIAL,NONE,NO
+50,G3,0x06,0xF3,"(0x06,0xF3)",private_detector,CH2,special-format discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+51,G3,0x06,0xF4,"(0x06,0xF4)",private_detector,CH2,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+52,G3,0x06,0xF5,"(0x06,0xF5)",private_detector,CH2,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+53,G3,0x06,0xE2,"(0x06,0xE2)",private_detector,CH2,ACC gain high byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+54,G3,0x06,0xE3,"(0x06,0xE3)",private_detector,CH2,ACC gain low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+55,G3,0x06,0xE8,"(0x06,0xE8)",private_detector,CH2,Y-plus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+56,G3,0x06,0xE9,"(0x06,0xE9)",private_detector,CH2,Y-plus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+57,G3,0x06,0xEA,"(0x06,0xEA)",private_detector,CH2,Y-minus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+58,G3,0x06,0xEB,"(0x06,0xEB)",private_detector,CH2,Y-minus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+59,G4,0x07,0xF0,"(0x07,0xF0)",private_detector,CH3,raw video-format classifier,NVP6134C_DATASHEET,NONE,NO
+60,G4,0x07,0xF2,"(0x07,0xF2)",private_detector,CH3,format conversion auxiliary,RAW_SEMANTICS_PARTIAL,NONE,NO
+61,G4,0x07,0xF3,"(0x07,0xF3)",private_detector,CH3,special-format discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+62,G4,0x07,0xF4,"(0x07,0xF4)",private_detector,CH3,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+63,G4,0x07,0xF5,"(0x07,0xF5)",private_detector,CH3,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+64,G4,0x07,0xE2,"(0x07,0xE2)",private_detector,CH3,ACC gain high byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+65,G4,0x07,0xE3,"(0x07,0xE3)",private_detector,CH3,ACC gain low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+66,G4,0x07,0xE8,"(0x07,0xE8)",private_detector,CH3,Y-plus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+67,G4,0x07,0xE9,"(0x07,0xE9)",private_detector,CH3,Y-plus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+68,G4,0x07,0xEA,"(0x07,0xEA)",private_detector,CH3,Y-minus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+69,G4,0x07,0xEB,"(0x07,0xEB)",private_detector,CH3,Y-minus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+70,G5,0x08,0xF0,"(0x08,0xF0)",private_detector,CH4,raw video-format classifier,NVP6134C_DATASHEET,NONE,NO
+71,G5,0x08,0xF2,"(0x08,0xF2)",private_detector,CH4,format conversion auxiliary,RAW_SEMANTICS_PARTIAL,NONE,NO
+72,G5,0x08,0xF3,"(0x08,0xF3)",private_detector,CH4,special-format discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+73,G5,0x08,0xF4,"(0x08,0xF4)",private_detector,CH4,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+74,G5,0x08,0xF5,"(0x08,0xF5)",private_detector,CH4,special-format vertical-count discriminator,RAW_SEMANTICS_PARTIAL,NONE,NO
+75,G5,0x08,0xE2,"(0x08,0xE2)",private_detector,CH4,ACC gain high byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+76,G5,0x08,0xE3,"(0x08,0xE3)",private_detector,CH4,ACC gain low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+77,G5,0x08,0xE8,"(0x08,0xE8)",private_detector,CH4,Y-plus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+78,G5,0x08,0xE9,"(0x08,0xE9)",private_detector,CH4,Y-plus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+79,G5,0x08,0xEA,"(0x08,0xEA)",private_detector,CH4,Y-minus slope high bits,RAW_SEMANTICS_PARTIAL,NONE,NO
+80,G5,0x08,0xEB,"(0x08,0xEB)",private_detector,CH4,Y-minus slope low byte,RAW_SEMANTICS_PARTIAL,NONE,NO
+81,G0-POST,0x00,0xA8,"(0x00,0xA8)",novid_sampling,ALL_CH_BITS,NOVID post-bookend,NVP6134C_DATASHEET,NONE,YES
