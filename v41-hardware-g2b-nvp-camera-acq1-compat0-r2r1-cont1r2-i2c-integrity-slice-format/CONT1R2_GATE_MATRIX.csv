@@ -1,0 +1,19 @@
+gate,result,evidence
+prior_retried_nack_replay,PASS,byte-exact artifact and semantic replay
+host_integrity_controller,PASS,18/18
+local_runtime_bundle,PASS,3189BF6849F675B60C21C1C1F21BB57AF4EB522FEACAAE099342AB08FC760D9A
+dut_runtime_bundle,PASS,3189BF6849F675B60C21C1C1F21BB57AF4EB522FEACAAE099342AB08FC760D9A
+dut_identity_and_safety,PASS,VCDE-DUT-1 0e90f50d9465492b80258da5658446f8
+locks,PASS,fresh controller and DUT locks
+runtime_continuity,PASS,REUSED_EXACT_VOLATILE_RUNTIME
+driver_pcie,PASS,0000:01:00.0 Gen2 x1
+runtime_identity,PASS,SCAN1 and ACQ exact identities
+mmio_sanity,PASS,SCAN1 16/16; ACQ 16/16
+control_scan,PASS,105/105; NACK=0; retry=0
+i2c_integrity_10000,FAIL_RETRIED_NACK,qualification stopped at scan 7
+recovered_nack_characterization,PASS,10 events; no hard stop
+spaced_cadence,SAFELY_NOT_APPLICABLE,global 10-event limit reached
+functional_camera_campaign,NOT_REACHED,functional writes prohibited
+cleanup,PASS,"normal unload, nodes removed, locks released"
+public_evidence_preparation,PASS,sanitized set; private raw data excluded; extraction PASS
+commit_pinned_remote_readback,OUT_OF_BAND_POST_COMMIT_GATE,recorded in final execution response

@@ -1,0 +1,180 @@
+{
+  "artifacts": [
+    {
+      "name": "connection-pre-camera-gate.json",
+      "read_only": true,
+      "sha256": "284EF8B98B6140DB0DF93BC5DD00419BC1CB47DF7C8C5F6B58FC7BF4D3F1C996",
+      "size": 1879
+    },
+    {
+      "name": "CONT1R1_32_SCAN_REGRESSION.csv",
+      "read_only": true,
+      "sha256": "3D5D6CB0104B12477AA0FBA524BC32B85D1C35AAD79C3D66CB71FCA1AA27F147",
+      "size": 507
+    },
+    {
+      "name": "CONT1R1_MAIN_REPORT.md",
+      "read_only": true,
+      "sha256": "D884E96DDFA4811F7368AF59C763389B4F1778DF7EB817ED5D6EECFD6A1AAECC",
+      "size": 2898
+    },
+    {
+      "name": "CONT1R1_STATE.json",
+      "read_only": true,
+      "sha256": "ADE72AE9E4D9E7936A25CBB1BD15C761CA53DA9A3E6990CE9FCCE923F626D178",
+      "size": 3292
+    },
+    {
+      "name": "driver-load-gate.json",
+      "read_only": true,
+      "sha256": "A5A8E3300D6ADC982461077412DE1959C6EE1E0463BBB8910E7166F370BD265F",
+      "size": 10159
+    },
+    {
+      "name": "failed-scan.bin",
+      "read_only": true,
+      "sha256": "671D570715F53E6E1EEB74ADCB7BF08D18C24223FFB191CDE9B8436D89509C6D",
+      "size": 584
+    },
+    {
+      "name": "failed-scan.json",
+      "read_only": true,
+      "sha256": "D529C28F64CD1880085BA68B97B9142325AFFA79C75E1E66472F1DA86AE43F69",
+      "size": 6459
+    },
+    {
+      "name": "failure-ack-and-quiescence.json",
+      "read_only": true,
+      "sha256": "5447FB4B4142916F0F01513DD42851C3F50DB69D0665769A39611C1F74E07898",
+      "size": 578
+    },
+    {
+      "name": "failure-cleanup-receipt.json",
+      "read_only": true,
+      "sha256": "03D2E8925C3D4DA0DB9E6C5F73FCCBAE5308DA61DAFB099D0638CB024F39B774",
+      "size": 2344
+    },
+    {
+      "name": "final-state-gate.json",
+      "read_only": true,
+      "sha256": "B6FD1F6B13CFC4E6067B1B60A4A952EC4757B0D93082C4F304694241F4F0AE09",
+      "size": 2163
+    },
+    {
+      "name": "pre-camera-gate-failed.json",
+      "read_only": true,
+      "sha256": "6D06E5897137A4A36136D4F3660F5A6E2C9F3D3D2BD4AD232D6A3374E47F000B",
+      "size": 191
+    },
+    {
+      "name": "scan1-controller.py",
+      "read_only": true,
+      "sha256": "79BD083F93692A36112F9857971C10E39DA6E58C52184EB3A1C12267AB1CF220",
+      "size": 9470
+    },
+    {
+      "name": "scan1-rtl.sv",
+      "read_only": true,
+      "sha256": "130A99A1ABE976CF182963C312C747D74B8A1EBD0F3237A0F966F6DDAB363C05",
+      "size": 23032
+    },
+    {
+      "name": "scan1-status-encoding.md",
+      "read_only": true,
+      "sha256": "B1B4D9599B9D98EB852CAD686A62A095561E4D05CBBD99079B8A23AC7DF6DEBA",
+      "size": 1307
+    }
+  ],
+  "bank_group_count": 10,
+  "end_ticks": 541252109787,
+  "entry_bank": "0x00",
+  "entry_bank_restore": "PASS",
+  "entry_count": 82,
+  "exact_nack_protocol_phase": "NOT_ENCODED",
+  "exact_phase_reason": "successful retry stores VALUE_VALID|RETRIED|BANK_VERIFIED with ERROR_CODE=NONE and does not populate FIRST_ERROR",
+  "exit_bank": "0x00",
+  "expected_clean_transaction_count": 105,
+  "failed_entry_count": 0,
+  "final_retry_result": "PASS_VALID_VALUE",
+  "generation": 3,
+  "hardware_err_cnt_after": null,
+  "hardware_err_cnt_before": null,
+  "hardware_err_cnt_delta": null,
+  "hardware_err_cnt_disposition": "NOT_EXPOSED_BY_SCAN1_MMIO_CONTRACT",
+  "host_derived_event_counter_after": 1,
+  "host_derived_event_counter_before": 0,
+  "host_derived_event_counter_delta": 1,
+  "host_scan_duration_seconds": null,
+  "json_snapshot": {
+    "path": "private CONT1R1 failed-scan.json (not published)",
+    "raw_entry_words_match": true,
+    "sha256": "D529C28F64CD1880085BA68B97B9142325AFFA79C75E1E66472F1DA86AE43F69",
+    "size": 6459
+  },
+  "logical_target": "Bank7/0xF4",
+  "nack_event_count": 1,
+  "next_entry": {
+    "bank": "0x07",
+    "bank_verified": true,
+    "final_error_code": 0,
+    "index": 63,
+    "raw_word": "0x07F50005",
+    "register": "0xF5",
+    "retried": false,
+    "skipped_after_abort": false,
+    "status": "0x05",
+    "value": "0x00",
+    "value_valid": true
+  },
+  "non_claims": [
+    "Bank7 is defective",
+    "register 0xF4 is unsafe",
+    "CH3 is defective",
+    "the scanner RTL is defective",
+    "the I2C master requires modification"
+  ],
+  "previous_entry": {
+    "bank": "0x07",
+    "bank_verified": true,
+    "final_error_code": 0,
+    "index": 61,
+    "raw_word": "0x07F30005",
+    "register": "0xF3",
+    "retried": false,
+    "skipped_after_abort": false,
+    "status": "0x05",
+    "value": "0x00",
+    "value_valid": true
+  },
+  "prior_event_replay": "PASS",
+  "raw_snapshot": {
+    "byte_identity": "PASS",
+    "path": "private CONT1R1 failed-scan.bin (not published)",
+    "sha256": "671D570715F53E6E1EEB74ADCB7BF08D18C24223FFB191CDE9B8436D89509C6D",
+    "size": 584
+  },
+  "retried_entry_count": 1,
+  "scan_duration_ticks": 10552314,
+  "scan_flags": "0x006A0005",
+  "scan_index": "CONT1R1_REPEAT_01",
+  "schema": "AHD_V41_CONT1R2_PRIOR_RETRIED_NACK_EVENT_V1",
+  "snapshot_published_complete": true,
+  "source_failure": "SCAN1_LIVE_32_SCAN_REPEAT_01_RETRY_NACK",
+  "source_task": "G2B-NVP-CAMERA-ACQ1-COMPAT0-R2R1-CONT1R1",
+  "start_ticks": 541241557473,
+  "target": {
+    "bank": "0x07",
+    "bank_verified": true,
+    "final_error_code": 0,
+    "index": 62,
+    "raw_word": "0x07F40007",
+    "register": "0xF4",
+    "retried": true,
+    "skipped_after_abort": false,
+    "status": "0x07",
+    "value": "0x00",
+    "value_valid": true
+  },
+  "transaction_count": 106,
+  "valid_entry_count": 82
+}
