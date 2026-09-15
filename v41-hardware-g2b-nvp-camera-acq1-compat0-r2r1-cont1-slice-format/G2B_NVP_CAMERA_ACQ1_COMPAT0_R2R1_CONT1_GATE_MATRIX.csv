@@ -1,0 +1,33 @@
+gate,result,first_failure_or_note
+LOCAL_SOURCE_DCP_BITSTREAM_IDENTITY,PASS,exact inherited identities
+LOCAL_RUNTIME_BUNDLE,PASS,39 files including manifest
+SSH_RECONNECT,PASS,192.168.1.57 only
+DUT_IDENTITY,PASS,stable hostname machine-id and product UUID
+DUT_SAFETY_SURVEY,PASS,no parallel hardware activity
+DUT_RUNTIME_BUNDLE,PASS,hash size import and origin gates
+CONTROLLER_LOCK,PASS,fresh atomic lock
+DUT_HARDWARE_LOCK,PASS,fresh atomic lock
+SRAM_PROGRAMMING,PASS,one attempt DONE=1
+PRODUCT_EQUIVALENT_AUTOINIT,PASS,done reset released no errors
+WARM_REBOOT,PASS,exactly one
+POST_REBOOT_RECONNECT,PASS,new endpoint only
+DRIVER_PCIE,PASS,10ee:7011 subsystem 10ee:0007 Gen2x1
+SCAN1_RUNTIME_IDENTITY,PASS,exact identity
+ACQ_RUNTIME_IDENTITY,PASS,exact identity and prohibited capabilities absent
+SCAN1_MMIO_SANITY,PASS,16/16
+ACQ_MMIO_SANITY,PASS,16/16
+SCAN1_SINGLE_TRANSACTION_SNAPSHOT,PASS,82 entries 10 groups 105 transactions
+SCAN1_SINGLE_HOST_QUALIFICATION,FAIL,SCAN1_CONFIGURATION_PROJECTION_INCOMPLETE
+SCAN1_REPEATED_REGRESSION,NOT_REACHED,stopped at first failure
+PHYSICAL_CAMERA_GATE,NOT_REACHED,pre-camera gate failed
+CONNECTED_BASELINE,NOT_REACHED,pre-camera gate failed
+TWO_REGISTER_BASELINE,NOT_REACHED,pre-camera gate failed
+IDEMPOTENT_REWRITE,NOT_REACHED,no functional write
+SLICE_SEARCH,NOT_REACHED,no functional write
+FORMAT_IDENTIFICATION,NOT_REACHED,no stable NOVID gate
+EXACT_ROLLBACK,NOT_REQUIRED,no functional write
+SAFE_FAILURE_STATE,PASS,idle quiescent zero errors and writes
+DRIVER_UNLOAD,PASS,one normal unload
+XDMA_NODE_REMOVAL,PASS,all removed
+DUT_LOCK_RELEASE,PASS,released
+EVIDENCE_PUBLICATION,PASS,append-only commit and commit-pinned readback reported by execution controller
