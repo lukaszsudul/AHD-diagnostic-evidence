@@ -1,0 +1,76 @@
+{
+  "schema": "AHD_V41_CONT1R3R4R1_LIVE_PCI_DRIVER_NODE_MAP_V1",
+  "survey_utc": "2026-09-16T21:54:18.334096+00:00",
+  "endpoint": "10.132.1.111:22",
+  "host_key_sha256": "yunI1fwP5I6WfGcSVkyaPxd0siCbdSiOOXVrP0wtEu8",
+  "hostname": "VCDE-DUT-1",
+  "machine_id": "0e90f50d9465492b80258da5658446f8",
+  "boot_id": "32d7b853-06fe-4004-9c4b-9b4abafbe896",
+  "kernel": "7.0.0-29-generic",
+  "mapping_method": "stat(st_rdev) -> /sys/dev/char/major:minor -> nearest PCI function -> driver/module",
+  "functions": [
+    {
+      "bdf": "0000:01:00.0",
+      "role": "intended_AHD_target",
+      "role_basis": "inherited exact card ID, unchanged BDF and parent topology; current PCI sysfs corroboration",
+      "vendor_device": "10ee:7011",
+      "subsystem": "10ee:0007",
+      "pci_class": "0x058000",
+      "link_speed": "5.0 GT/s PCIe",
+      "link_width": 1,
+      "sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0",
+      "driver": null,
+      "live_module": null,
+      "driver_override": "(null)",
+      "user_node": null,
+      "c2h_0_node": null,
+      "task_authority": "target only after safe driver admission; admission failed before intervention"
+    },
+    {
+      "bdf": "0000:0b:00.0",
+      "role": "protected_non_target",
+      "role_basis": "Owner no-touch designation; physical purpose not established by current survey",
+      "vendor_device": "10ee:7021",
+      "subsystem": "10ee:f0a1",
+      "pci_class": "0x070001",
+      "link_speed": "5.0 GT/s PCIe",
+      "link_width": 1,
+      "sysfs": "/sys/devices/pci0000:00/0000:00:02.2/0000:0b:00.0",
+      "driver": "xdma",
+      "live_module": "xdma",
+      "live_module_source": "/sys/bus/pci/devices/0000:0b:00.0/driver/module -> /sys/module/xdma",
+      "driver_override": "(null)",
+      "user_node": {
+        "path": "/dev/xdma0_user",
+        "major_minor": "511:0",
+        "sysfs": "/sys/devices/pci0000:00/0000:00:02.2/0000:0b:00.0/xdma/xdma0_user"
+      },
+      "c2h_0_node": {
+        "path": "/dev/xdma0_c2h_0",
+        "major_minor": "511:36",
+        "sysfs": "/sys/devices/pci0000:00/0000:00:02.2/0000:0b:00.0/xdma/xdma0_c2h_0"
+      },
+      "task_authority": "read-only metadata only; no open, unload, unbind, reset or reprogram"
+    }
+  ],
+  "xdma_class": {
+    "path": "/sys/class/xdma",
+    "exists": true,
+    "members_count": 21,
+    "representative_members": ["xdma0_user", "xdma0_c2h_0"],
+    "representative_member_owner_bdf": "0000:0b:00.0",
+    "representative_member_owner_module": "xdma"
+  },
+  "candidate_exact_match_set_from_current_inventory": ["0000:01:00.0"],
+  "candidate_match_alias": "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*",
+  "visible_xdma_node_holders": [],
+  "holder_observation_limit": "unprivileged /proc visibility; zero visible holders is not unload authorization",
+  "read_only_survey_calls": 3,
+  "private_receipts_sha256": {
+    "initial": "C8612D50BCB214EC5903BE41768B298254C7F45B3F0281E8AF1C1A0823B42AE7",
+    "module_followup": "BDE0F86374F41587A22FB268A2F69744F659A177EFB9ED4B5178408A2EC0FF39",
+    "preservation_followup": "F4C8562008C0B0F26584A6391ABC146C94395CB243B74B03450835228EDAD5EC"
+  },
+  "device_node_open_count": 0,
+  "hardware_intervention_count": 0
+}

@@ -1,0 +1,17 @@
+gate,status,evidence,disposition
+PROJECT_STATE_REV9,PASS,PROJECT_STATE.json and TRACK_STATUS.json,unchanged at start
+FROZEN_SOURCE_DCP_FIRMWARE,PASS,local Git and SHA256,unchanged exact artifacts
+PINNED_SSH_IDENTITY,PASS,private connection receipts,VCDE-DUT-1 and machine-id match
+LIVE_BDF_NODE_ANCESTRY,PASS,LIVE_PCI_DRIVER_NODE_MAP.json,xdma0 belongs to protected 0b:00.0
+LIVE_MODULE_VS_DISK,PASS,LOADED_MODULE_VS_DISK_IDENTITY.md,live srcversion differs installed disk
+EXACT_CANDIDATE_PROBE_SET,PASS,NAMESPACE_AND_PROBE_IMPACT_DECISION.md,only AHD 01:00.0 matches current inventory
+CLASS_NAMESPACE_ADMISSION,BLOCKED,NAMESPACE_AND_PROBE_IMPACT_DECISION.md,existing global xdma class conflicts with candidate class_create
+NODE_RESOLVER_TESTS,NOT_REACHED,first blocker,unsafe to continue
+CLOSED_BUNDLE,NOT_REACHED,first blocker,unsafe to continue
+CONTROLLER_DUT_LOCKS,NOT_REACHED,first blocker,no hardware intervention
+QUALIFIED_DRIVER_LOAD,NOT_REACHED,first blocker,no speculative insertion
+JTAG_TARGET_AND_ACTIVATION,NOT_REACHED,first blocker,no programming or reboot
+RUNTIME_IDENTITY_MMIO,NOT_REACHED,first blocker,no target node
+CONTROL_AND_1000_SCANS,NOT_REACHED,first blocker,no campaign data
+NON_TARGET_PRESERVATION,PASS,NON_TARGET_PRESERVATION_RECEIPT.md,protected binding and nodes unchanged
+EVIDENCE_PUBLICATION,SEPARATE_GATE,EVIDENCE_INDEX.md,commit-pinned readback after payload creation
