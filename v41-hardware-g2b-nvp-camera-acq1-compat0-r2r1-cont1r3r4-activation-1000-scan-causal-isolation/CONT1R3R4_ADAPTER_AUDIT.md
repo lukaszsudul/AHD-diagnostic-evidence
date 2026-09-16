@@ -1,0 +1,5 @@
+# Task-local read-only adapters
+
+The task-local SSH connection adapter is derived from the qualified CONT1R3R1 helper. Only task/root/lock paths, the explicit `SURVEY` pre-hardware operation and task receipt labeling were changed. It retained the established credential mechanism, pinned host key, batch mode, single authorized IP, output redaction, private temporary credential file, timeout and deletion checks. Syntax parsing passed; no retired endpoint literal was present. Its private SHA-256 is `C25AC38E228B934A044F334110B5CFE6ED588A3E4BBF86A8E6B2575083C3EAE9` (15,233 bytes). The adapter source remains in the private run root because it names the credential authority path; no credential value is published.
+
+The published `host-source/cont1r3r1_minimal_survey.py` is a byte-identical copy of the inherited read-only survey helper (SHA-256 `80F3D24FDF25B82FBE21771CF278EC9D579392458ACF9FDF610BC71829FB3566`). The published `host-source/cont1r3r4_pci_survey.py` is the task-local bounded read-only sysfs/module/node mapping adjunct (SHA-256 `F1E63B23B0D3100B5B861984ABCDFB0526DAC02E6208984A29C55660E462BC90`). Neither opens a device node or modifies hardware.

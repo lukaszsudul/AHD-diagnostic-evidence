@@ -1,0 +1,36 @@
+{
+  "schema": "AHD_V41_CONT1R3R4_SANITIZED_SURVEY_V1",
+  "read_only_ssh_calls": 3,
+  "all_ssh_calls_succeeded": true,
+  "endpoint": "10.132.1.111:22",
+  "retired_endpoint_used": false,
+  "pinned_host_key_verified_by_helper": true,
+  "hostname": "VCDE-DUT-1",
+  "machine_id": "0e90f50d9465492b80258da5658446f8",
+  "boot_id": "32d7b853-06fe-4004-9c4b-9b4abafbe896",
+  "last_measured_cont1r2_boot_id": "0c8657ab-9167-48db-9e97-92081c427c99",
+  "boot_changed_since_last_measured_session": true,
+  "owner_reported_warm_reboot": "POSSIBLE_NOT_CONFIRMED",
+  "kernel": "7.0.0-29-generic",
+  "intended_endpoint": {
+    "bdf": "0000:01:00.0",
+    "vendor_device": "10ee:7011",
+    "subsystem": "10ee:0007",
+    "link": "5.0 GT/s x1",
+    "driver": null
+  },
+  "preexisting_other_endpoint": {
+    "bdf": "0000:0b:00.0",
+    "bound_driver": "xdma",
+    "module_filename": "/lib/modules/7.0.0-29-generic/kernel/drivers/dma/xilinx/xdma.ko.zst",
+    "module_alias": "platform:xdma",
+    "xdma0_user_sysfs_bdf": "0000:0b:00.0",
+    "xdma0_c2h_0_sysfs_bdf": "0000:0b:00.0",
+    "observed_holder_fds_for_two_nodes": 0,
+    "ownership_disposition": "UNKNOWN_FOREIGN_NOT_MODIFIED"
+  },
+  "qualified_xdma_ahd_pcie_loaded": false,
+  "historical_upstream_lock_file_observed": true,
+  "task_hardware_intervention": false,
+  "first_unmet_admission_prerequisite": "FOREIGN_XDMA0_NODE_OWNERSHIP"
+}
