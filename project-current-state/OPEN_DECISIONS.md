@@ -1,6 +1,6 @@
 # AHD Open Decisions
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 
 Every item in the open table below has lifecycle status `OPEN`. An agent may investigate or
 publish evidence about an item, but may not silently choose a value or update

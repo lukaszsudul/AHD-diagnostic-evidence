@@ -1,6 +1,6 @@
 # AHD Current Status
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 State type: `CURRENT_ACCEPTED_STATE`
 Accepted by role: `OWNER_ARCHITECT`
 Decision basis: historical accepted state plus explicit Owner/Architect

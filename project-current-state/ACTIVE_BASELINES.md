@@ -1,6 +1,6 @@
 # AHD Active Baselines and Working Identities
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 
 This page distinguishes accepted/frozen baselines from active or provisional
 working branches. Branch existence is provenance; it does not confer

@@ -1,6 +1,6 @@
 # AHD Current Interfaces
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 
 > `CURRENT_TRANSPORT_ABI_STATUS = FROZEN_FOR_G2B`
 
@@ -8,6 +8,24 @@ This document separates accepted/frozen compatibility surfaces and frozen
 implementation-input contracts from implementation and hardware
 qualification. Freezing an interface does not mean that its RTL, DMA path,
 host frontend, or hardware behavior has been implemented or proven.
+
+## Operational DUT SSH endpoint — META-9
+
+The sole current endpoint for new governed DUT SSH work is
+`10.132.1.111:22`. The former task-level endpoint `192.168.1.57:22` is
+superseded and is not a fallback. This operational interface decision applies
+only to the DUT; it does not alter other machines or services. The Owner
+attests `OWNER_ATTESTED_UNCHANGED_EXCEPT_IP`, with `DUT_IP_ADDRESS` as the only
+reported change. That attestation is not a new hostname, machine-id, boot-id,
+FPGA-runtime or hardware measurement. New intervention still requires the
+normal bounded SSH host-key, identity and exclusive-ownership checks. The IP
+change alone requires no broad requalification, reboot or programming.
+
+Decision evidence: `1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e`,
+`v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1/OWNER_DUT_ENDPOINT_DECISION.md`.
+No existing `COMPATIBILITY_MATRIX.csv` row describes the operational DUT SSH
+endpoint, so its 19 consumer rows remain unchanged. Historical evidence and
+prior task prompts retain the addresses applicable at their execution time.
 
 ## Authoritative accepted/frozen interfaces
 

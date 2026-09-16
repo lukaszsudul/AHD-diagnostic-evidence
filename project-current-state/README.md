@@ -12,14 +12,15 @@ identifies the exact evidence that supports each statement.
 | Field | Value |
 |---|---|
 | Project | `AHD_v41` |
-| `PROJECT_STATE_REV` | `8` |
+| `PROJECT_STATE_REV` | `9` |
 | Governance version | `1` |
 | State type | `CURRENT_ACCEPTED_STATE` |
-| Last update | `2026-09-05` |
+| Last update | `2026-09-16` |
 | Acceptance authority | `OWNER_ARCHITECT` |
 | SSOT writer | `META_UPDATE_AGENT_ONLY` |
 | Creation authorization | `META-0_TASK_DIRECTIVE` / `SSOT WRITE AUTHORIZED` |
 | Revision-8 decision basis | Exact offline PRODUCT candidate accepted; separate HW0-PRODUCT planned |
+| Revision-9 decision basis | Owner-declared operational DUT SSH endpoint return to `10.132.1.111:22`; continuity attested except IP, not hardware-reverified |
 
 ## Mandatory read before any work
 
@@ -44,7 +45,7 @@ At the end of the task, the agent must read the revision again, record
 | Product | G2B-LUT1 `ACCEPTED`; `OFFLINE_QUALIFIED_G2B_PRODUCT_CANDIDATE`; G2B-HW `PLANNED / NOT_PROVEN` |
 | Research | R-track state `HOLD`, not closed; R2/R3 remain resumable |
 | Linux Video | L0 `PLANNED` |
-| META | META-8A accepts the exact offline candidate and defines separate controlled hardware scope |
+| META | META-9 records only the returned operational DUT endpoint and Owner-attested continuity; META-8A's exact offline candidate and separate hardware scope remain unchanged |
 | Qualified FPGA baseline | R1i `ACCEPTED`; preservation identity `FROZEN` |
 | PCIe product requirement | Gen2 x1 or better; sustained payload `>= 288 MB/s` per card |
 | Transport ABI | `AHD_C2H_TRANSPORT_ABI_V1`, version 1, `FROZEN_FOR_G2B` |

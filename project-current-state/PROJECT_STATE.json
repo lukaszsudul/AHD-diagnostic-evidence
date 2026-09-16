@@ -1,18 +1,18 @@
 {
   "project": "AHD_v41",
-  "project_state_revision": 8,
+  "project_state_revision": 9,
   "state_type": "CURRENT_ACCEPTED_STATE",
   "governance_version": 1,
-  "last_update": "2026-09-05",
+  "last_update": "2026-09-16",
   "accepted_by_role": "OWNER_ARCHITECT",
-  "acceptance_authorization": "META-8A_TASK_DIRECTIVE",
+  "acceptance_authorization": "META-9-DUT-IP-RETURN_TASK_DIRECTIVE",
   "ssot_write_authorization": "SSOT WRITE AUTHORIZED",
-  "update_type": "TRACK_GATE_ACCEPTANCE",
+  "update_type": "INTERFACE_CHANGE",
   "source_evidence_repository": "lukaszsudul/AHD-diagnostic-evidence",
-  "source_evidence_commit": "6843d582fd367fbc0edc0b1d55a9617162c489b0",
-  "source_evidence_directory": "v41-development-g2b-lut1-signoff-recovery-4",
-  "expected_previous_project_state_revision": 7,
-  "write_contract_receipt": "v41-meta-project-state-rev8-offline-g2b-product-candidate-hw0-authorization/META8A_WRITE_CONTRACT_RECEIPT.md",
+  "source_evidence_commit": "1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e",
+  "source_evidence_directory": "v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1",
+  "expected_previous_project_state_revision": 8,
+  "write_contract_receipt": "v41-meta-project-state-rev9-dut-endpoint-return/META9_WRITE_CONTRACT_RECEIPT.md",
   "meta4r2_frozen_contract_header_sha256": "D7456D989F0D879B2E1FD8777876F5AE786947D789CE1D480CA720316AC7342B",
   "current_transport_abi_status": "FROZEN_FOR_G2B",
   "lifecycle_status_enum": [
@@ -145,12 +145,12 @@
     },
     "meta": {
       "status": "ACCEPTED",
-      "current_task": "META-8A",
-      "acceptance_basis": "EXACT_OFFLINE_PRODUCT_CANDIDATE_ACCEPTED_AND_SEPARATE_CONTROLLED_HW0_SCOPE_AUTHORIZED",
-      "decision_source": "META-8A_TASK_DIRECTIVE",
-      "source_evidence_commit": "6843d582fd367fbc0edc0b1d55a9617162c489b0",
+      "current_task": "META-9-DUT-IP-RETURN",
+      "acceptance_basis": "OWNER_DECLARED_DUT_ENDPOINT_RETURN_AND_CONTINUITY_ATTESTATION_ONLY",
+      "decision_source": "META-9-DUT-IP-RETURN_TASK_DIRECTIVE",
+      "source_evidence_commit": "1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e",
       "accepted_by_role": "OWNER_ARCHITECT",
-      "evidence_directory": "v41-development-g2b-lut1-signoff-recovery-4"
+      "evidence_directory": "v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1"
     }
   },
   "qualified_fpga_baseline": {
@@ -694,6 +694,25 @@
     "source_evidence_commit": "f1258ba3ad2d6ab29c01260ce70fd23b59d8d4dd"
   },
   "interfaces": {
+    "dut_ssh_endpoint": {
+      "id": "IF-DUT-SSH-ENDPOINT",
+      "status": "ACCEPTED",
+      "interface_type": "OPERATIONAL_CONTROL_ENDPOINT",
+      "provider": "VCDE-DUT-1",
+      "consumer": "GOVERNED_HOST_CONTROLLERS",
+      "protocol": "SSH",
+      "host": "10.132.1.111",
+      "port": 22,
+      "endpoint": "10.132.1.111:22",
+      "superseded_task_endpoint": "192.168.1.57:22",
+      "continuity_attestation": "OWNER_ATTESTED_UNCHANGED_EXCEPT_IP",
+      "only_owner_reported_change": "DUT_IP_ADDRESS",
+      "verification_state": "OWNER_ATTESTED_NOT_HARDWARE_REVERIFIED",
+      "broad_environment_requalification_due_to_ip_change": false,
+      "accepted_by_role": "OWNER_ARCHITECT",
+      "decision_source": "META-9-DUT-IP-RETURN_TASK_DIRECTIVE",
+      "source_evidence_commit": "1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e"
+    },
     "identity": {
       "status": "FROZEN",
       "block_id": "0xA40A0C07",
@@ -2018,6 +2037,21 @@
         "STMT-RESOURCES"
       ],
       "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_EXACT_OFFLINE_PRODUCT_ONLY_HARDWARE_NOT_PROVEN_HISTORICAL_SYNTHETIC_HW0_PLAN_NOT_PROMOTED"
+    },
+    {
+      "id": "EVID-META9-DUT-IP-RETURN",
+      "repository": "lukaszsudul/AHD-diagnostic-evidence",
+      "source_evidence_commit": "1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e",
+      "payload_commit": "1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e",
+      "directory": "v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1",
+      "files": [
+        "OWNER_DUT_ENDPOINT_DECISION.md"
+      ],
+      "supports": [
+        "STMT-DUT-SSH-ENDPOINT",
+        "STMT-DUT-OWNER-ATTESTED-CONTINUITY"
+      ],
+      "acceptance_boundary": "OWNER_ARCHITECT_ACCEPTED_OPERATIONAL_ENDPOINT_ONLY_NO_HARDWARE_REVERIFICATION_OR_TECHNICAL_PROMOTION"
     }
   ],
   "groups15_17_release_slot_cdc_signoff": {

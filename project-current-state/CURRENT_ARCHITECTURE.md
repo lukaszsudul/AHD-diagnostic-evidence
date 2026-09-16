@@ -1,6 +1,6 @@
 # AHD Current Architecture
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 
 This architecture separates accepted/proven substrate, accepted but not yet
 implemented architecture, active work, planned product layers, and open

@@ -1,9 +1,11 @@
 # AHD Current-State Evidence Map
 
-`PROJECT_STATE_REV = 8`
+`PROJECT_STATE_REV = 9`
 Evidence repository: `lukaszsudul/AHD-diagnostic-evidence`
 Evidence accepted-evidence anchor used for revision 8:
 `6843d582fd367fbc0edc0b1d55a9617162c489b0`
+Owner-decision evidence anchor used for revision 9:
+`1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e`
 
 ## Acceptance rule
 
@@ -11,6 +13,17 @@ Evidence proves execution, measurement, build, observation, or documented
 architecture input. It does not prove Owner/Architect acceptance. For every
 `ACCEPTED`, `REJECTED`, `SUPERSEDED`, or `BLOCKED` project-truth statement,
 the decision basis must be explicit.
+
+## Revision-9 operational endpoint decision
+
+| Evidence ID | Immutable commit | Directory | File | Supports |
+|---|---|---|---|---|
+| `EVID-META9-DUT-IP-RETURN` | `1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e` | `v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1` | `OWNER_DUT_ENDPOINT_DECISION.md` | Sole current DUT SSH endpoint `10.132.1.111:22`; supersession of `192.168.1.57:22` for future work; Owner-attested continuity except IP |
+
+The explicit Owner decision, not an engineering PASS, accepts only this
+operational endpoint/context update. It does not verify the current DUT
+runtime, change PRODUCT or SSOT technical baselines, resolve NACK causality,
+qualify hardware, or authorize a broader environment requalification.
 
 Revision 1 uses `META-0_TASK_DIRECTIVE` as the Owner/Architect decision basis.
 That directive explicitly identifies the supplied current state as approved

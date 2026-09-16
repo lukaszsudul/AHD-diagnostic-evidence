@@ -602,3 +602,35 @@ Exactly 16 affected SSOT files:
 - project-current-state/TRACK_STATUS.json
 
 Audit package: `v41-meta-project-state-rev8-offline-g2b-product-candidate-hw0-authorization`. One ordinary non-force commit. Publication SHA and remote read-back are post-commit executor completion data; no future SHA or precompleted remote PASS is invented here.
+
+
+## PROJECT_STATE_REV 9 — 2026-09-16 — META-9-DUT-IP-RETURN
+
+Update type: `INTERFACE_CHANGE`. `SSOT WRITE AUTHORIZED`.
+Expected prior revision: 8; resulting revision: 9. Explicit Owner/Architect
+decision: return the sole operational DUT SSH endpoint to `10.132.1.111:22`,
+supersede `192.168.1.57:22` for future DUT work, and record
+`OWNER_ATTESTED_UNCHANGED_EXCEPT_IP`. Decision evidence:
+`1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e:v41-owner-decisions/2026-09-16-dut-endpoint-return-cont1r3r1/OWNER_DUT_ENDPOINT_DECISION.md`.
+
+The prior SSOT had no operational DUT IP value, so this revision does not
+claim an in-place replacement of a prior SSOT address. The compatibility
+matrix had no operational DUT SSH row and remains unchanged. The Owner's
+continuity statement is an attestation, not a new hardware measurement.
+Product authority, source/binary identities, requirements, timing/resource
+limits, unresolved NACK causality, historical evidence and technical gate
+results remain unchanged. No broad environment qualification, FPGA build,
+programming, reboot, DUT contact or camera operation is implied by META-9.
+
+Affected SSOT files: `ACTIVE_BASELINES.md`, `CHANGELOG.md`,
+`CURRENT_ARCHITECTURE.md`, `CURRENT_INTERFACES.md`,
+`CURRENT_REQUIREMENTS.md`, `CURRENT_RESOURCE_STATE.md`, `CURRENT_STATUS.md`,
+`CURRENT_TRACKS.md`, `EVIDENCE_MAP.md`, `GOVERNANCE.md`,
+`OPEN_DECISIONS.md`, `PROJECT_STATE.json`, `README.md`,
+`SHA256_MANIFEST.txt`, `TRACK_STATUS.json`. Files beyond the active
+endpoint/provenance/bookkeeping scope receive current-revision metadata only.
+All historical changelog entries are preserved byte-for-byte.
+
+Audit package: `v41-meta-project-state-rev9-dut-endpoint-return`. One ordinary
+non-force commit. Publication SHA and remote read-back are executor completion
+data and are not claimed by this pre-publication entry.
