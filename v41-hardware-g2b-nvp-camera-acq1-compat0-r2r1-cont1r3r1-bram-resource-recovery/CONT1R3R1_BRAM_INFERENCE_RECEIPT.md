@@ -1,0 +1,6 @@
+RAMB36E1=1
+RAMB18E1=1
+FDRE=1657
+LUTRAM_SELECTED=23
+RAMB36_NAMES=telemetry_ram_reg
+RAMB18_NAMES=entry_index_reg_rep

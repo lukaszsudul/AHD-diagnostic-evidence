@@ -1,0 +1,5 @@
+# Candidate 1 payload-word equivalence
+
+The task-local extended RTL simulation instantiated the exact frozen CONT1R3 reference telemetry module beside the new candidate with identical clock, accepted commands, completion stimuli and manifest. It compared every group and entry payload word (50 + 820 = 870) for four complete scans: clean, three phase-specific recovered NACKs, all 82 entries with recovered RADDR NACK, and a clean scan after deliberate writer fault/reset. Each comparison was exact; no payload word was masked or recomputed from a nominal I²C duration.
+
+The same bench checked WADDR/REGADDR/RADDR first-cause retention, retry success/failure, timeout hard paths, bank-select/verify/restore hard contexts, complete/frozen gating, full 64-bit timestamp upper word over lower-word wrap, and all 870 frozen words reread in coprime shuffled order before ACK. The final log marker is `PASS CONT1R3_RTL_TELEMETRY_DIRECTED_GATE 6/6`; additional supplemental markers and assertions are in `simulation/candidate1_extended/c1r3r1_extended.log` and its task-local bench source. An xsim process exit code alone is not treated as proof when a `Fatal:` line occurs.

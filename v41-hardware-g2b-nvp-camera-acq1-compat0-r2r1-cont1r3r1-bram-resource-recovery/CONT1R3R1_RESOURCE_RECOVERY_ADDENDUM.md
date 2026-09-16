@@ -1,0 +1,11 @@
+# CONT1R3R1 preregistration addendum — storage and endpoint only
+
+Frozen before DUT contact and before any new first-attempt NACK observations. The inherited CONT1R3 preregistration is preserved byte-exactly at SHA-256 `18CDD7FBC67ABDB799475CE509BC686C3A2CD0E7153BC4E44910ABC809B5DF8C` and controls the hypotheses, time bins, denominators, decision thresholds and 1,000-campaign-scan separation. This addendum does not amend those predictions.
+
+The failed CONT1R3 instrumentation used distributed payload arrays and a costly asynchronous indexed readout. CONT1R3R1 substitutes one synchronous 1,024×32 BRAM-backed logical word store with a bounded ten-word staging writer. The logical payload remains 82×10 entry words plus 10×5 group words. New read-only implementation identity is `0x52335231` / `0x00010000` at `0x137F0` / `0x137F4`. The existing telemetry payload schema digest and SCAN1 manifest remain unchanged. An incomplete writer, overflow, generation mismatch, old runtime, record loss or partial publication is a hard integrity failure, never a clean sample.
+
+The sole owner-attested DUT endpoint for any subsequent hardware campaign is `10.132.1.111:22`; `192.168.1.57:22` is superseded and has no executable fallback. The endpoint decision has independent evidence commit `1c0bad816d98c4ce077e7237bd759c0c1bfbdb2e`, and META-9 has independent commit `f8429a81e22a2f887afd06b334889c30aed7a293`. This is an address/continuity correction, not new NACK evidence or authorization for broader hardware work.
+
+The new diagnostic source candidate is frozen at commit `09cd7cbb426027acaefd0cf3989579b80a451f3a`, tree `c6be008ddc387c1f43eefa35d4fed0e2ccb968db`, direct child of CONT1R3 `dc73d486bf0d68e52dc394dd731031e8598212f5`. No observational campaign result is known at addendum freeze. The control scan remains separate from exactly 1,000 complete campaign scans. The causal model may honestly be unresolved; a safe no-event result is distinct from a hardware or integrity failure.
+
+This addendum authorizes no experimental functional NVP write, camera operation, delay/cadence intervention, mode, EQ, ACP, capture or 10,000-scan qualification. Established deployment autoinit and scanner Bank 0xFF selection/restoration are accounted separately from experimental writes.
