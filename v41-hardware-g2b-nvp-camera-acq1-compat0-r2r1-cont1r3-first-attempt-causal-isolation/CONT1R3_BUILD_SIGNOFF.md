@@ -1,0 +1,9 @@
+# Fresh diagnostic build: first failed gate
+
+The fresh, nonincremental Vivado 2025.2 build used frozen source commit `dc73d486bf0d68e52dc394dd731031e8598212f5` (tree `f86fcbc15f9a279ae81e689b49c5a7e9ade87602`) in its isolated worktree and the established exact ACQ1 diagnostic profile. Product-exclusion elaboration, FPGA synthesis, post-synthesis exact reference-name profile (SCAN1=1, wrapper=1, executor=1; prohibited cores=0) and `opt_design` passed. Synthesis reported 0 errors and 0 critical warnings.
+
+At the post-opt hard resource gate, the candidate used **21,446 / 20,800 LUT (103.106%)**, exceeding both the device capacity by 646 LUT and the inherited ≤20,384 diagnostic threshold by 1,062 LUT. The exact failure was `LUT_USED_GT_20384`, stage `RESOURCE_HEADROOM_GATE_POST_OPT`. The accepted R2R1 post-opt baseline was 19,574 LUT; measured incremental cost is +1,872 LUT, with the SCAN1 leaf growing 687→2,017 LUT (+1,330) and LUTRAM 96→1,104 (+1,008). The AXI-Lite bridge's optimized hierarchy grew 1,294→1,791 LUT (+497) despite unchanged source; this is measured synthesis attribution, not proof of an RTL edit in that module. FF 20,884/41,600, BRAM 27/50 and DSP 0/90 were within their limits.
+
+The bounded flow stopped at this first hard gate: place=0, phys_opt=0, route=0, bitstream writes=0. No routed DCP, signed-off DCP or CONT1R3 bitstream exists; timing/CDC/bus-skew/DRC/methodology gates were not reached. The post-opt DCP is evidence only, SHA-256 `AFBA7ECA60E2E9D85B5A2563CA6CD8022CD771DFEADA27C0A53D8C1E49CDEC22`; synth DCP SHA-256 `9B7485E3C4CF4A6B3C28B82819178E08C8CD81758953E62B9A755C8BD1C51595`. Neither is a deployment candidate.
+
+No RTL reduction, constraint relaxation, second synthesis or implementation retry was made. The requested all-entry event/exposure coverage must not be silently reduced merely to obtain a PASS. Hardware deployment and the 1,000-scan campaign were not reached. Engineering result: `FAIL`.

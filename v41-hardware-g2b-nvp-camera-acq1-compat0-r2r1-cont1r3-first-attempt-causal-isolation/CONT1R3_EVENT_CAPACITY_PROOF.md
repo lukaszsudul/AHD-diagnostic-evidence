@@ -1,0 +1,3 @@
+# Complete per-scan capacity
+
+The frozen SCAN1 manifest has 82 entries and the existing bounded scanner can make at most one recovered first-attempt failure per entry. The maximum recovered-event population is therefore 82, not the ten previously observed. The telemetry stores one record for every one of the 82 entries, including clean exposures, and a per-entry first-attempt failure marker/cause. No event queue can overwrite a prior entry. The directed simulation injects 82 recovered events into one scan and verifies the last entry, count 82 and no overflow. A count above 82 or an incomplete exposure set is an explicit host-fatal integrity error. Hard errors are not converted into recovered events.

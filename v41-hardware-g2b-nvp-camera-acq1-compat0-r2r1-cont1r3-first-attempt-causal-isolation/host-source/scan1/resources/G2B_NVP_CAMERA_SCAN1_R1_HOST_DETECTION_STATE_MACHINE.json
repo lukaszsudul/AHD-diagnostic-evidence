@@ -1,0 +1,87 @@
+{
+  "per_channel_state": [
+    "campaign_id",
+    "scan_index",
+    "previous_raw_tuple",
+    "stable_count",
+    "candidate_format",
+    "confirmed_format",
+    "format_debounce_buffers",
+    "last_applied_mode",
+    "last_eq_state",
+    "slice_phase",
+    "video_loss_transition_history"
+  ],
+  "required_consecutive_equal_tuples": 3,
+  "states": [
+    "CAMPAIGN_RESET",
+    "REQUEST_SCAN",
+    "VALIDATE_SNAPSHOT",
+    "RETAIN_RAW",
+    "CLASSIFY_SIGNAL",
+    "UPDATE_DEBOUNCE",
+    "FORMAT_UNRESOLVED",
+    "FORMAT_CONFIRMED",
+    "UNSUPPORTED_FORMAT",
+    "ELIGIBLE_FOR_ACQ1",
+    "CAMPAIGN_COMPLETE"
+  ],
+  "transitions": [
+    {
+      "event": "fresh_state",
+      "from": "CAMPAIGN_RESET",
+      "to": "REQUEST_SCAN"
+    },
+    {
+      "event": "DONE",
+      "from": "REQUEST_SCAN",
+      "to": "VALIDATE_SNAPSHOT"
+    },
+    {
+      "event": "valid_complete",
+      "from": "VALIDATE_SNAPSHOT",
+      "to": "RETAIN_RAW"
+    },
+    {
+      "action": "persist ineligible observation and all findings",
+      "event": "invalid_or_live_changed",
+      "from": "VALIDATE_SNAPSHOT",
+      "to": "REQUEST_SCAN"
+    },
+    {
+      "event": "stored",
+      "from": "RETAIN_RAW",
+      "to": "CLASSIFY_SIGNAL"
+    },
+    {
+      "event": "candidate_tuple",
+      "from": "CLASSIFY_SIGNAL",
+      "to": "UPDATE_DEBOUNCE"
+    },
+    {
+      "event": "fewer_than_3_equal_complete_tuples",
+      "from": "UPDATE_DEBOUNCE",
+      "to": "REQUEST_SCAN"
+    },
+    {
+      "event": "3_equal_but_private_semantics_insufficient",
+      "from": "UPDATE_DEBOUNCE",
+      "to": "FORMAT_UNRESOLVED"
+    },
+    {
+      "event": "3_equal_AHD1080P25",
+      "from": "UPDATE_DEBOUNCE",
+      "to": "FORMAT_CONFIRMED"
+    },
+    {
+      "event": "supported",
+      "from": "FORMAT_CONFIRMED",
+      "to": "ELIGIBLE_FOR_ACQ1"
+    },
+    {
+      "event": "other_format",
+      "from": "FORMAT_CONFIRMED",
+      "to": "UNSUPPORTED_FORMAT"
+    }
+  ]
+}

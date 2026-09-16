@@ -1,0 +1,169 @@
+{
+  "schema_name": "AHD_V41_CONT1R3_SCAN1_FIRST_ATTEMPT_TELEMETRY",
+  "schema_version": "1.0.0",
+  "byte_order": "little-endian",
+  "counter": {
+    "clock_domain": "axi_aclk_autonomous_clk",
+    "frequency_hz": 62500000,
+    "tick_width": 64,
+    "wrap_semantics": "unsigned_modulo_2_pow_64",
+    "nanosecond_conversion": "floor(delta_ticks * 1000000000 / 62500000)"
+  },
+  "mmio": {
+    "base": "0x12800",
+    "last": "0x137FF",
+    "alignment_bytes": 4,
+    "header": {
+      "0x12800": "magic_0x4E565433",
+      "0x12804": "version_0x00010000",
+      "0x12808": "capabilities",
+      "0x1280C": "status",
+      "0x12810": "telemetry_generation",
+      "0x12814": "entry_count",
+      "0x12818": "group_count",
+      "0x1281C": "entry_record_words",
+      "0x12820": "maximum_event_count",
+      "0x12824": "event_count",
+      "0x12828": "exposure_count",
+      "0x1282C": "counter_frequency_hz",
+      "0x12830": "counter_width_bits",
+      "0x12834": "group_record_words",
+      "0x12838": "group_record_base",
+      "0x1283C": "entry_record_base",
+      "0x12840..0x1285C": "schema_sha256_words_msw_first",
+      "0x12860..0x1287C": "scan1_manifest_sha256_words_msw_first"
+    },
+    "group_records": {
+      "base": "0x12880",
+      "count": 10,
+      "words_per_record": 5,
+      "words": {
+        "0": "group_context",
+        "1": "previous_group_bank",
+        "2": "verify_completion_tick_low",
+        "3": "verify_completion_tick_high",
+        "4": "verify_transaction_sequence"
+      }
+    },
+    "entry_records": {
+      "base": "0x12A00",
+      "count": 82,
+      "words_per_record": 10,
+      "words": {
+        "0": "scan_generation",
+        "1": "first_attempt_start_tick_low",
+        "2": "first_attempt_start_tick_high",
+        "3": "verify_completion_tick_low",
+        "4": "verify_completion_tick_high",
+        "5": "first_attempt_transaction_sequence",
+        "6": "transaction_and_final_value",
+        "7": "entry_group_context",
+        "8": "predecessor_and_target_context",
+        "9": "outcome_and_causes"
+      }
+    }
+  },
+  "capabilities": {
+    "bit_0": "all_entry_first_attempt_exposure",
+    "bit_1": "raw_and_decoded_first_failure_cause",
+    "bit_2": "retry_outcome_and_final_value",
+    "bit_3": "fpga_native_post_verify_timing",
+    "bit_4": "actual_execution_group_context",
+    "bit_5": "explicit_overflow_and_generation_coherency",
+    "bit_6": "master_transaction_sequence"
+  },
+  "status_word": {
+    "bit_0": "complete",
+    "bit_1": "frozen_waiting_for_ack",
+    "bit_2": "overflow",
+    "bit_3": "generation_coherent",
+    "bit_4": "scan_active",
+    "bit_5": "incomplete_error_or_abort",
+    "bits_12_8": "scanner_state",
+    "bits_31_16": "reserved_zero"
+  },
+  "group_context_word": {
+    "bits_3_0": "group_index",
+    "bits_10_4": "first_entry_index",
+    "bits_17_11": "entry_count",
+    "bits_25_18": "current_verified_bank",
+    "bit_26": "previous_group_bank_valid",
+    "bit_27": "selection_changes_bank_value",
+    "bit_28": "same_bank_reselection",
+    "bits_31_29": "reserved_zero"
+  },
+  "entry_group_context_word": {
+    "bits_6_0": "entry_index",
+    "bits_10_7": "group_index",
+    "bits_17_11": "zero_based_position_in_group",
+    "bits_25_18": "current_verified_bank",
+    "bit_26": "previous_group_bank_valid",
+    "bit_27": "selection_changes_bank_value",
+    "bit_28": "same_bank_reselection",
+    "bit_29": "group_verify_success_observed",
+    "bits_31_30": "reserved_zero"
+  },
+  "predecessor_and_target_context_word": {
+    "bits_7_0": "previous_execution_group_bank",
+    "bits_15_8": "target_register",
+    "bits_23_16": "manifest_target_bank",
+    "bits_31_24": "reserved_zero"
+  },
+  "transaction_and_final_value_word": {
+    "bits_15_0": "transactions_since_successful_group_verify_before_first_attempt",
+    "bits_23_16": "final_read_value",
+    "bits_31_24": "reserved_zero"
+  },
+  "outcome_and_causes_word": {
+    "bit_0": "exposure_valid",
+    "bit_1": "first_attempt_complete",
+    "bit_2": "first_attempt_success",
+    "bit_3": "first_attempt_failure_event",
+    "bit_4": "retry_attempted",
+    "bit_5": "retry_complete",
+    "bit_6": "retry_success",
+    "bit_7": "final_value_valid",
+    "bit_8": "first_attempt_timeout",
+    "bit_9": "retry_timeout",
+    "bit_10": "group_verify_success_observed",
+    "bits_15_11": "reserved_zero",
+    "bits_19_16": "first_attempt_raw_master_cause",
+    "bits_23_20": "first_attempt_decoded_scanner_cause",
+    "bits_27_24": "retry_raw_master_cause",
+    "bits_31_28": "retry_decoded_scanner_cause"
+  },
+  "raw_master_causes": {
+    "0": "NONE",
+    "1": "WADDR_NACK",
+    "2": "REGADDR_NACK",
+    "3": "RADDR_NACK",
+    "4": "DATA_NACK",
+    "5": "SCL_TIMEOUT",
+    "6": "BUS_IDLE_TIMEOUT"
+  },
+  "decoded_scanner_causes": {
+    "0": "NONE",
+    "1": "WADDR_NACK",
+    "2": "REGADDR_NACK",
+    "3": "RADDR_NACK",
+    "4": "SCL_TIMEOUT",
+    "5": "BUS_IDLE_TIMEOUT",
+    "6": "BANK_VERIFY_MISMATCH",
+    "7": "ENTRY_BANK_READ_FAILURE",
+    "8": "ENTRY_BANK_RESTORE_FAILURE",
+    "9": "AUTOINIT_PREEMPTED",
+    "10": "INTERNAL_PROTOCOL"
+  },
+  "coherency": {
+    "complete_rule": "status.complete and status.frozen and not status.overflow",
+    "generation_rule": "telemetry_generation equals legacy_snapshot_generation and every valid entry record generation",
+    "exposure_rule": "complete scan has exactly 82 valid exposure records",
+    "immutability_rule": "header, group records, and entry records remain unchanged until legacy ACK",
+    "overflow_rule": "any overflow is fatal and cannot produce campaign PASS"
+  },
+  "capacity": {
+    "maximum_first_attempt_failure_events_per_scan": 82,
+    "derivation": "one bounded first attempt per each of 82 ordered manifest entries; retry cannot create a second first-attempt event for that entry"
+  },
+  "digest_scope": "SHA-256 over the exact UTF-8 bytes of this file; digest is exposed by RTL and held externally to avoid a self-referential document"
+}

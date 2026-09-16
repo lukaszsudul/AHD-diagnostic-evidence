@@ -1,0 +1,26 @@
+{
+  "counter": "s_fmt_dbnc_cnt modulo 3",
+  "dependencies": [
+    "s_keep_fmt",
+    "s_keep_sync_width",
+    "s_fmt_set_done",
+    "g_eq_set_done"
+  ],
+  "governed_host_delta": "new campaign requires three complete raw tuples even for initial confirmation",
+  "history": [
+    "s_fmt_dbnc_buf0",
+    "s_fmt_dbnc_buf1",
+    "s_fmt_dbnc_buf2"
+  ],
+  "required_agreeing_samples": 3,
+  "states": [
+    "RESET",
+    "COLLECT_0",
+    "COLLECT_1",
+    "COLLECT_2",
+    "COMPARE",
+    "KEEP_PREVIOUS",
+    "ACCEPT_NEW",
+    "CLEAR_ON_STABLE_NOVID"
+  ]
+}

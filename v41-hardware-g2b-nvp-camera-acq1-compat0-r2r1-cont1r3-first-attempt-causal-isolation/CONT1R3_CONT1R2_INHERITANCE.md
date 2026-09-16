@@ -1,0 +1,5 @@
+# Frozen CONT1R2 observation and limits
+
+Accepted evidence commit: `501a0dea7588679b0379b88cdc32c8fec2507c3f`. The prior campaign had 65 recorded scans (one control, seven qualification, 57 same-cadence characterization), 64 fast-cadence scans and ten recovered NACKs in seven distinct entries; all ended in valid values with 65/65 complete projections, zero timeout, zero bank-verify failure, zero incomplete publication, zero snapshot mutation and no experimental functional write. The separate 10,000-scan zero-error gate was not passed. Its error count was host-derived, not an exposed hardware ERR_CNT.
+
+Seven bank-run boundaries do not describe all ten execution-group boundaries. The fresh task-local manifest/RTL audit derives the true group-relative positions and transaction denominators; the old pattern is only hypothesis-generating. The prior DCP/bitstream remain historical identity evidence, not substitutes for a newly instrumented candidate. No camera/NOVID/format claim follows from this campaign.
