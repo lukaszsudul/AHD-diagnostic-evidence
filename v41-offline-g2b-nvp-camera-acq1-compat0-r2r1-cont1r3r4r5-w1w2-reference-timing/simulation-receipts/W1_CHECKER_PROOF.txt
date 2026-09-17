@@ -1,0 +1,7 @@
+XSim log: C:\FPGA\CONT1R3R4R5_W1W2_20260917T151605Z\W1\simulation\xsim.log
+Complete scan: 105 accepted, 82 entry reads, 10 group selects, 10 group verifies, one entry-bank restore and verify.
+All 105 commands: one resolved initial START, one STOP; all 94 reads: one internal repeated START.
+All 104 adjacent resolved STOP-to-initial-START gaps: 3755 cycles = 60080 ns.
+W1 CSV rows: 21; kinds={'SELECT_WRITE_STOP_TO_VERIFY_INITIAL_START': 10, 'VERIFY_READ_STOP_TO_FIRST_ENTRY_INITIAL_START': 10, 'RESTORE_WRITE_STOP_TO_VERIFY_INITIAL_START': 1}; same-bank group reselections=3; banks={0: 0, 1: 0, 2: 0, 3: 0, 4: 1, 5: 5, 6: 6, 7: 7, 8: 8, 9: 0}.
+Negative test 1: shift first select STOP by +16 ns: REJECTED (source/model gap disagreement).
+Negative test 2: substitute verify-read internal repeated START: REJECTED (not next transaction).
