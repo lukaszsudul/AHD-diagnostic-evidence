@@ -1,0 +1,3 @@
+# One next executable action
+
+The Owner should provide one serial/revision-linked **as-built board and safe-access packet** for the specific DUT: assembled schematic/BOM (including R20/R21/R42/C114 and any bodges), confirmed I²C/reset supply-domain and logic-threshold information, and an identified low-stub SCL/SDA/RESETB observation point with adjacent common ground. The reviewed 2020 Rev0.1 KiCad snapshot is not a serial-linked as-built record and does not establish safe probe access or live voltages. Until that packet exists, no responsible physical ACK/RESETB measurement plan can be frozen. This request is not authorization to connect an instrument, change the FPGA image, load a driver, reset the DUT or start a camera campaign.

@@ -1,0 +1,47 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Sep 17 15:16:11 2026
+# Process ID         : 7008
+# Current directory  : C:/FPGA/CONT1R3R4R4_I2C_OFFLINE_20260917T122048Z/simulation/scanner-integration
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/scanner_stretch_sim/xsim_script.tcl}
+# Log file           : C:/FPGA/CONT1R3R4R4_I2C_OFFLINE_20260917T122048Z/simulation/scanner-integration/xsim.log
+# Journal file       : C:/FPGA/CONT1R3R4R4_I2C_OFFLINE_20260917T122048Z/simulation/scanner-integration\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19578 MB
+# Available Virtual  : 6953 MB
+#-----------------------------------------------------------
+source xsim.dir/scanner_stretch_sim/xsim_script.tcl
+# xsim {scanner_stretch_sim} -testplusarg PIN_STRETCH_TIMEOUT -autoloadwcfg -runall -onerror quit
+Time resolution is 1 ps
+run -all
+REAL_MASTER_PARAMETERS clk=62500000 i2c=25000 divider=1250 scl_timeout=1250 bus_idle_timeout=62500
+PIN_TARGET_ACCEPT t=76725016000 seq=49 group=5 index=36 write=1 reg=ff data=05 bank=01
+PIN_START t=76765048000 ordinal=1 repeated=0
+PIN_BYTE t=77085864000 phase=0 value=60
+PIN_ACK_SLOT_LOW t=77105960000 phase=0 decoded=60 ack=1 scl=0 sda=1
+PIN_ACK_SAMPLE t=77125976000 phase=0 value=0
+PIN_BYTE t=77446872000 phase=1 value=ff
+PIN_ACK_SLOT_LOW t=77466968000 phase=1 decoded=ff ack=1 scl=0 sda=1
+PIN_ACK_SAMPLE t=77486984000 phase=1 value=0
+PIN_BYTE t=77807880000 phase=2 value=05
+SCANNER_STRETCH_BEGIN t=77827976000 cycles=2500
+PIN_ACK_SLOT_LOW t=77827976000 phase=2 decoded=05 ack=1 scl=0 sda=1
+MASTER_COMPLETION t=77868040000 seq=49 success=0 timeout=1 raw=5 bank=01
+SCANNER_STRETCH_RELEASE t=77888000000
+SCANNER_STRETCH_TIMEOUT_PASS detail=0005ff04 gen=0 valid=37
+$finish called at time : 80735760 ns : File "C:/FPGA/CONT1R3R4R4_I2C_OFFLINE_20260917T122048Z/model/tb_scanner_stretch.sv" Line 235
+run: Time (s): cpu = 00:00:03 ; elapsed = 00:00:18 . Memory (MB): peak = 194.355 ; gain = 0.105
+exit
+INFO: xsimkernel Simulation Memory Usage: 9696 KB (Peak: 9696 KB), Simulation CPU Usage: 17280 ms
+INFO: [Common 17-206] Exiting xsim at Thu Sep 17 15:16:32 2026...

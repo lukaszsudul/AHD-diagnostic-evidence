@@ -1,0 +1,63 @@
+{
+  "contract": "CONT1R3R4R4_I2C_OFFLINE_PRE_REGISTERED",
+  "mode": "Standard-mode generic I2C at nominal 25 kHz, subject to actual measured waveform",
+  "source_nxp": {
+    "publisher": "NXP Semiconductors",
+    "document": "UM10204 I2C-bus specification and user manual",
+    "revision": "7.0, 2021-10-01",
+    "url": "https://www.nxp.com/docs/en/user-guide/UM10204.pdf",
+    "location": "section 6.1, Table 11 printed page 44; footnotes 3,4,10,11 printed page 45; section 3.1.9 clock synchronization/stretching",
+    "local_sha256": null,
+    "retrieval_note": "Official web rendering verified; direct local PDF download unavailable. No substituted mirror hash."
+  },
+  "source_nvp": {
+    "publisher": "Nextchip",
+    "document": "NVP6134C Data sheet",
+    "revision": "1.0, 2016-10-12",
+    "path": "C:/FPGA/V41_NVP_R1F_PHASE_COMPLETE_OBSERVABILITY/03_SAFE_PROBE_TARGET/AUTHORITATIVE_REFERENCES/NVP6134C_Rev1_0.pdf",
+    "sha256": "301FF799A101B0DBDF6CD946EEAD0C1EDC67D07FFEAC7E65FA8C6AE82C316E46",
+    "location": "section 8.4 printed page 90; chapter 5 printed pages 36-37"
+  },
+  "units": "ns unless otherwise specified",
+  "generic_standard": {
+    "f_scl_max_hz": 100000,
+    "t_low_min_ns": 4700,
+    "t_high_min_ns": 4000,
+    "t_su_dat_min_ns": 250,
+    "t_vd_ack_max_ns": 3450,
+    "t_r_30_70_max_ns": 1000,
+    "t_f_70_30_max_ns": 300,
+    "fast_device_stretching_in_standard_ack_pre_release_setup_ns": 1250,
+    "note": "Footnote 4 includes ACK setup; ACK validity from preceding SCL LOW and through HIGH is assessed independently. Late asserted cases that may violate tVD;ACK are not certified valid."
+  },
+  "nvp6134c_rev1": {
+    "f_scl_typ_hz": 100000,
+    "f_scl_max_hz": 400000,
+    "t_low_min_ns": 1300,
+    "t_high_min_ns": 600,
+    "t_su_dat_min_ns": 100,
+    "t_buf_min_ns": 1300,
+    "resetb_setup_min_ns": 1000,
+    "resetb_low_min_ns": 1000,
+    "resetb_release_min_ns": 10000,
+    "clock_stretch_max_ns": null,
+    "clock_stretch_max_disposition": "NOT_DOCUMENTED_IN_REVIEWED_MATERIAL"
+  },
+  "digital_model": {
+    "fpga_period_ns": 16,
+    "nominal_scl_timeout_cycles": 1250,
+    "nominal_scl_timeout_conversion_ns": 20000,
+    "scl_release_to_input_high_delay_anchors_ns": [0,32,128,500,1000,2000],
+    "delay_is_analog_rise_time": false,
+    "metastability_modeled": false,
+    "actual_timeout_boundary": "MEASURE_FROM_COUNTER_AND_RESOLVED_PIN; not equated to nominal 20 us"
+  },
+  "compliance_classes": [
+    "GENERIC_VALID_DIGITAL",
+    "DIGITAL_SENSITIVITY_ANALOG_UNVERIFIED",
+    "STRETCH_TIMEOUT_SENSITIVITY",
+    "TIMING_STRESS_TVD_ACK_UNVERIFIED",
+    "INTENTIONALLY_INVALID_NO_ACK",
+    "INTENTIONALLY_INVALID_ACK_HOLD"
+  ]
+}
