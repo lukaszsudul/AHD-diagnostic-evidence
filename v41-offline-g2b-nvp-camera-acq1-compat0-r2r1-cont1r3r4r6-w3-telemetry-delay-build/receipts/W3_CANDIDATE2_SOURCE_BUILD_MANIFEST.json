@@ -1,0 +1,275 @@
+{
+  "schema": "AHD_V41_W3_FROZEN_BUILD_INPUTS_V1",
+  "source_commit": "98d4d214c1219b29a60dc1a33af13e91fe33d27c",
+  "source_tree": "1c43ee847bc468408f574125e3e37209cbb27d54",
+  "source_branch": "diag/v41-g2b-w3-first-terminal-wait-delay-20260917T165535Z",
+  "parent_commit": "09cd7cbb426027acaefd0cf3989579b80a451f3a",
+  "source_status": "CLEAN",
+  "top": "ahd_capture_top_xdma",
+  "part": "xc7a35tcsg325-2",
+  "tool_expected": "Vivado 2025.2 SW Build 6299465",
+  "one_worker": true,
+  "generics": "SLOT_COUNT=2 GIT_SHA_W0=32'h98d4d214 GIT_SHA_W1=32'hc1219b29 GIT_SHA_W2=32'ha60dc1a3 GIT_SHA_W3=32'h3af13e91 GIT_SHA_W4=32'hfe33d27c BUILD_FLAGS=32'h00000802 ENABLE_MAREK_INIT_TABLE=1 ENABLE_RTRACK_DIAGNOSTICS=0 ENABLE_NVP_VIDEO_DIAGNOSTIC=0 ENABLE_NVP_CAMERA_SCAN1=1 ENABLE_NVP_ACQ1_EXECUTOR=1",
+  "w3_abi_contract": {
+    "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\contract\\W3_CONTRACT.json",
+    "size_bytes": 17783,
+    "sha256": "99868A4ECE2D859DA16224408F289EBEACE1F63315622109CBCEA9C4776A07B7"
+  },
+  "build_recipe": {
+    "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\build\\w3_candidate2_full_implementation.tcl",
+    "size_bytes": 8931,
+    "sha256": "8C141FFB9AF548B54968F81B731921FEABE99E147C5540BE923310CFB7DBD58D"
+  },
+  "build_inputs": {
+    "systemverilog": [
+      {
+        "relative_path": "rtl/v41/axi_lite_host_bridge.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\axi_lite_host_bridge.sv",
+        "size_bytes": 4628,
+        "sha256": "D94BE3FC0AE7D9DDEC87DF4289277BDE5F3AEE2597F02AC2CE19EF9C4EDB890E"
+      },
+      {
+        "relative_path": "rtl/v41/axi_clock_lifecycle_monitor.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\axi_clock_lifecycle_monitor.sv",
+        "size_bytes": 2632,
+        "sha256": "EC96D90784F5CF60C348CA1798340F79B3A067504D0A1F42DD8EF318810B4B9B"
+      },
+      {
+        "relative_path": "rtl/v41/axi_clock_measurement_regs.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\axi_clock_measurement_regs.sv",
+        "size_bytes": 1366,
+        "sha256": "CF0DDDB78B8C54F9D0597B67A2536B802B0B9949A029314C9E74A5795FC5A28B"
+      },
+      {
+        "relative_path": "rtl/v41/r1e_measurement_regs.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\r1e_measurement_regs.sv",
+        "size_bytes": 2967,
+        "sha256": "034F8C63258CA6436817CFFE1605CDF23EF04030047CCE36146E115F3C374939"
+      },
+      {
+        "relative_path": "rtl/v41/r1h_probe_index_bram_store.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\r1h_probe_index_bram_store.sv",
+        "size_bytes": 3066,
+        "sha256": "67410872DE78C7C48531E96E831E82ED5D97AF2EDF42F34C4FADB2C7EAE8433F"
+      },
+      {
+        "relative_path": "rtl/v41/nvp_i2c_tri_phase_probe.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\nvp_i2c_tri_phase_probe.sv",
+        "size_bytes": 49861,
+        "sha256": "D459FC7AE6D72F1B604974CADDF4D633468334D9D488818746A0C0B5EE22B4DD"
+      },
+      {
+        "relative_path": "rtl/v41/nvp_i2c_fixed_master.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\nvp_i2c_fixed_master.sv",
+        "size_bytes": 22100,
+        "sha256": "62F2383B3F6E72FB2FCF513A28ABA2D0A34E388DB159FB747CEBE8F803FA73B9"
+      },
+      {
+        "relative_path": "rtl/v41/r1f_failed_txn_logger.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\r1f_failed_txn_logger.sv",
+        "size_bytes": 6932,
+        "sha256": "F8B11E29D99E6FA548899681C2A9A3D76144DB3EAC73BFBDE599462E488C7761"
+      },
+      {
+        "relative_path": "rtl/v41/r1f_measurement_regs.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\r1f_measurement_regs.sv",
+        "size_bytes": 11792,
+        "sha256": "EC246486BD0F5DF0966F6DC81BC8A8EAC17741E2641F8DFE68E276EDBE567542"
+      },
+      {
+        "relative_path": "rtl/v41/r1h_mmio_read_service.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\r1h_mmio_read_service.sv",
+        "size_bytes": 5292,
+        "sha256": "00ECE27375BE07D52E8FA4BF07F535AB29DC39A099AF4FC148BF654E0073BA2B"
+      },
+      {
+        "relative_path": "rtl/v41/g2b_product_profile_read_service.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\g2b_product_profile_read_service.sv",
+        "size_bytes": 8189,
+        "sha256": "18245E9B7F1EA75439445FD9743D98138D9EA58B8FA69E6396B936F0BD18B73A"
+      },
+      {
+        "relative_path": "rtl/v41/control_status_regs.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\v41\\control_status_regs.sv",
+        "size_bytes": 10052,
+        "sha256": "77B63935A7042D74A11A85C2220715F87CF58EF7B42AF34D8D47BF04A6870A16"
+      },
+      {
+        "relative_path": "rtl/pio/pio_slot_adapter.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\pio\\pio_slot_adapter.sv",
+        "size_bytes": 1253,
+        "sha256": "96B8E53B23295A9C8B597EF15E10DA819962E3F96B45FB02F6E472B108720CEE"
+      },
+      {
+        "relative_path": "rtl/pio/pio_bar_target.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\pio\\pio_bar_target.sv",
+        "size_bytes": 17901,
+        "sha256": "E6BED9C57D5A79E4D2AD2C5E3CEEFCD4AEDCCC9CEA77A61C6A84F350FE6FF833"
+      },
+      {
+        "relative_path": "rtl/record/bt656_record_producer.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\record\\bt656_record_producer.sv",
+        "size_bytes": 17908,
+        "sha256": "96ECA58AC2FE6D9A2E0A390076FA02370B85409F1F1353CB9F41784D2ED363EE"
+      },
+      {
+        "relative_path": "rtl/record/capture_mailbox.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\record\\capture_mailbox.sv",
+        "size_bytes": 9363,
+        "sha256": "91A55EC1DEE546F026E3DC92F04A788A779F8A3F8D9D3D8DABEF08F089CA3FF5"
+      },
+      {
+        "relative_path": "rtl/video/video_capture.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\video\\video_capture.sv",
+        "size_bytes": 16949,
+        "sha256": "7DFB7253C6649885665DB8449E33CE2F31D584811586DAEAA746DE04DF4AFFC9"
+      },
+      {
+        "relative_path": "rtl/video/physical_frontend.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\video\\physical_frontend.sv",
+        "size_bytes": 6757,
+        "sha256": "3F4BD5FC715E409C1FA0B6F3B3F13A825F892F0BCE61F880C73B0401417C3347"
+      },
+      {
+        "relative_path": "rtl/g2b/v41_g2b_mmio_router.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\v41_g2b_mmio_router.sv",
+        "size_bytes": 2341,
+        "sha256": "2C4B4B037116447DAF12FF1C78D7C9096BD77D14F6E2CB59EF2ABC9CB806BE25"
+      },
+      {
+        "relative_path": "rtl/g2b/v41_g2b_onech_c2h.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\v41_g2b_onech_c2h.sv",
+        "size_bytes": 93701,
+        "sha256": "EB4A79608F1954440FA957C4F2571F6430DBD5DC89955B9CEC98B11AB171A97A"
+      },
+      {
+        "relative_path": "rtl/g2b/g2b_nvp_camera_scan1_manifest_pkg.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\g2b_nvp_camera_scan1_manifest_pkg.sv",
+        "size_bytes": 15528,
+        "sha256": "F21EE3718F84304DD40D29B0A5FE95BBBA15336D9B7BD642177B950CF7598DD6"
+      },
+      {
+        "relative_path": "rtl/g2b/g2b_nvp_camera_w3_telemetry.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\g2b_nvp_camera_w3_telemetry.sv",
+        "size_bytes": 50568,
+        "sha256": "E545FB629F3269168C626E7768A4EEA1D77EE7409439D84ED250D6DA71FEA587"
+      },
+      {
+        "relative_path": "rtl/g2b/g2b_nvp_camera_scan1.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\g2b_nvp_camera_scan1.sv",
+        "size_bytes": 44333,
+        "sha256": "46488440CC33FEB9A4CD7FC34F727D87D3F3302D91FC691B1749B67DA5BF0855"
+      },
+      {
+        "relative_path": "rtl/g2b/g2b_nvp_acq1_compat0_r2.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\g2b_nvp_acq1_compat0_r2.sv",
+        "size_bytes": 36414,
+        "sha256": "79792717C8AAB7659692DC8ACD04F2B9C74B1D3FD522179F71CEEA307177E70C"
+      },
+      {
+        "relative_path": "rtl/g2b/g2b_nvp_camera_scan1_acq1_compat0_r2.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\g2b\\g2b_nvp_camera_scan1_acq1_compat0_r2.sv",
+        "size_bytes": 6658,
+        "sha256": "FA67D7ADFE83A98585E591200445ABC11587BC199A8CFECDD20C5DBDFAF13026"
+      },
+      {
+        "relative_path": "rtl/top/ahd_capture_top_xdma.sv",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\top\\ahd_capture_top_xdma.sv",
+        "size_bytes": 72465,
+        "sha256": "2112171A68A07FE0348C221383710F4E6ADB8000721BC7165DFC5638DA9151A6"
+      }
+    ],
+    "vhdl": [
+      {
+        "relative_path": "rtl/nvp/nvp6134c_diagnostics_pkg.vhd",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\nvp\\nvp6134c_diagnostics_pkg.vhd",
+        "size_bytes": 36196,
+        "sha256": "36BCA98533647E998A281A518935669FB29B48125D48F6D3785EA12CBFF04156"
+      },
+      {
+        "relative_path": "rtl/nvp/r1f_transaction_serial_counter.vhd",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\nvp\\r1f_transaction_serial_counter.vhd",
+        "size_bytes": 1348,
+        "sha256": "FA92E1B52A5BB870EDBEDA5457A7021DB882AE9FF31DF880CBD97A6C7549019E"
+      },
+      {
+        "relative_path": "rtl/nvp/nvp6134c_i2c_bringup.vhd",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\nvp\\nvp6134c_i2c_bringup.vhd",
+        "size_bytes": 98808,
+        "sha256": "C7AA56E8BC546DD0173FF79FA6E3376DEE607B2DDFDA3F52FD1503C05FFC6C68"
+      },
+      {
+        "relative_path": "rtl/nvp/nvp6134c_autoinit.vhd",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\rtl\\nvp\\nvp6134c_autoinit.vhd",
+        "size_bytes": 11293,
+        "sha256": "FCB5F98955F0507C095E774FA9E3048ACD34D07DF5EA40B6B8EEA715B649D5E5"
+      }
+    ],
+    "xdc": [
+      {
+        "relative_path": "xdc/boards/current/xdma_pcie.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\boards\\current\\xdma_pcie.xdc",
+        "size_bytes": 372,
+        "sha256": "65568DD132FE9C65231BCE50CA5F7364702E303659DB36AAAA1057C318282F6A"
+      },
+      {
+        "relative_path": "xdc/boards/current/pins.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\boards\\current\\pins.xdc",
+        "size_bytes": 1104,
+        "sha256": "A8849CD13E75CAB2F509449617440ABE359BAA2B42ACAAE869BA25B581E6F8B9"
+      },
+      {
+        "relative_path": "xdc/boards/current/vdo_input_timing.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\boards\\current\\vdo_input_timing.xdc",
+        "size_bytes": 2459,
+        "sha256": "6B5E11BBB1556449CF00C85986FE77903B7852B495FCC3BE65D553C08E6E2E78"
+      },
+      {
+        "relative_path": "xdc/boards/current/pcie_pio.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\boards\\current\\pcie_pio.xdc",
+        "size_bytes": 927,
+        "sha256": "BE7BFB70921AD272661071408C0820B4EC4BB60AB7C1102340011E57D8BE8503"
+      },
+      {
+        "relative_path": "xdc/boards/current/nvp_control.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\boards\\current\\nvp_control.xdc",
+        "size_bytes": 1149,
+        "sha256": "B2AE6FA7446A094D68149A8016F89FD4E7F72CA438200772CF0E4B33D7E2F318"
+      },
+      {
+        "relative_path": "xdc/common/cdc.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\common\\cdc.xdc",
+        "size_bytes": 2596,
+        "sha256": "E37500150FD91D324AA6488FB36DE6674561BF18DC220E3CD61CC0DA42C48A62"
+      },
+      {
+        "relative_path": "xdc/common/g2b_cdc.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\common\\g2b_cdc.xdc",
+        "size_bytes": 24200,
+        "sha256": "9D6911E4BD8B365853BD04FDB9F4C59F1C99E6F08436EE61DB1AE8C8E6FFA7AE"
+      },
+      {
+        "relative_path": "xdc/common/configuration_bank.xdc",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\xdc\\common\\configuration_bank.xdc",
+        "size_bytes": 251,
+        "sha256": "3F94073A8054B28FA4168FC6137430058FAE4EA46B3C5D035AFE637D2A135C68"
+      }
+    ],
+    "ip_xci": [
+      {
+        "relative_path": "ip/v41/xdma_v41_m1.xci",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\ip\\v41\\xdma_v41_m1.xci",
+        "size_bytes": 166384,
+        "sha256": "9BDA9F1C79C1553C0271DD1599119D8F6E74D4F089ECFBDE1E4A067F3F50CA9F"
+      }
+    ],
+    "ip_configuration": [
+      {
+        "relative_path": "scripts/v41/xdma_config_common.tcl",
+        "path": "C:\\FPGA\\CONT1R3R4R6_W3_20260917T165535Z\\source\\scripts\\v41\\xdma_config_common.tcl",
+        "size_bytes": 3751,
+        "sha256": "4B240CE27E4C8065C897EF4D184EC7EB97BB1CF4BF747C1E06F92ED3A9AE2162"
+      }
+    ]
+  }
+}

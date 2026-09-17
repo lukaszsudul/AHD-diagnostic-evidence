@@ -1,0 +1,9 @@
+# Candidate 1 first failed gate: top-level W3 telemetry connection
+
+Candidate 1 is the frozen source commit `57c92ec0d3dd97feb967371d765ed3bbe627b550`, tree `15b777a32b827f75c85fe379feaee294ade6028b`. Its 40 selected build inputs are in `W3_SOURCE_BUILD_MANIFEST.json` (SHA-256 `821C371B905088F6FEFB6E7F673F09E0732B86373157A853612BC52404AA4291`). Vivado 2025.2 SW 6299465 began one-worker whole-design synthesis using `w3_candidate1_full_implementation.tcl` (SHA-256 `97285B96C78FC61AD390C2977C64F7723F155418C88947184B8909FB419A3123`).
+
+Vivado reported `Synth 8-11241` for `diag_i2c_w3_observation` and `diag_i2c_w3_first_fault_pulse` at top-level lines 408–409, before their explicit declarations at lines 665–666. It then reported `Synth 8-689`: the connection to master output `telemetry_bundle` was **1 bit**, while the master port is **86 bits**. This invalidates the intended W3 observation path. The run was interrupted at synthesis when this was identified, before synthesis completed or any post-opt, placement, routing, sign-off, checkpoint or bitstream result. Candidate 1 is **FAIL at the top connectivity/synthesis gate**, not a resource measurement.
+
+The raw Vivado log is `w3_candidate1_vivado.log`, 163,244 bytes, SHA-256 `2C0760DC65C8EF3E18780EE62DEC72A9EE40D5D484A54515AECAF9668A2FB598`; its journal is 1,414 bytes, SHA-256 `002D93E2A032DFC1B222880B7A0182779B4617F0FEF7BFC701068F049A4D082A`. The specific warnings are at log lines 255–258 and 276. Other unconnected legacy master outputs and generated XDMA IP warnings are retained in the raw log and are not used to dismiss the W3 width failure.
+
+Candidate 2 is a separate narrow revision under the prompt's three-candidate allowance. It moves only the two new W3 top-level net declarations before first use. Its source identity, affected tests, and independent build require new receipts; no candidate-1 result is promoted to candidate 2.

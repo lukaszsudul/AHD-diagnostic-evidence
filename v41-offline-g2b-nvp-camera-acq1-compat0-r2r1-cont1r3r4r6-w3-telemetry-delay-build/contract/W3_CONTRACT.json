@@ -1,0 +1,492 @@
+{
+  "contract_name": "AHD_V41_CONT1R3R4R6_W3_TELEMETRY_DELAY",
+  "schema_version": "1.0.0",
+  "parent_commit": "09cd7cbb426027acaefd0cf3989579b80a451f3a",
+  "bar_address_bits": 17,
+  "page": {
+    "first": "0x13800",
+    "last": "0x147FF",
+    "word_bytes": 4,
+    "old_ranges_unchanged": [
+      "0x12000..0x123FF",
+      "0x12400..0x127FF",
+      "0x12800..0x137FF"
+    ]
+  },
+  "identity": {
+    "magic_address": "0x13800",
+    "magic": "0x5733544D",
+    "version_address": "0x13804",
+    "version": "0x00010000",
+    "capabilities_address": "0x13808",
+    "capabilities": "0x0000007F",
+    "legacy_implementation_identity_unchanged": [
+      "0x137F0",
+      "0x137F4"
+    ],
+    "schema_digest_addresses": "0x13860..0x1387C",
+    "schema_digest_word_order": "most_significant_32_bits_first"
+  },
+  "clock": {
+    "hz": 62500000,
+    "cycle_ns": 16,
+    "post_bank_write_delay_cycles": 18750,
+    "wait_counter_bits": 11,
+    "wait_saturated_value": 2047
+  },
+  "read_protocol": {
+    "word_order": "little_endian_dword",
+    "one_outstanding_response": true,
+    "invalid_or_reserved_read": "ZERO",
+    "unaligned_read": "ZERO",
+    "payload_storage": "one synchronous 1024x32 BRAM or equivalent registered service",
+    "capture_address_at_accept": true,
+    "hold_response_until_ready": true,
+    "coherence": "Read status and revision before and after all payload words; require identical block_id, companion_scan_attempt_seq, revision, record_valid bits and inactive scanner/writer on both reads. Reject sequence wrap flag and any reset/identity mismatch. No legacy published-generation requirement for incomplete attempts.",
+    "reset_rule": "Reset invalidates all W3 valid bits and block identity and returns pause OFF. Host must re-admit a nonzero block ID and identity after reset; zero payload is not historical success."
+  },
+  "header_registers": [
+    {
+      "address": "0x13800",
+      "name": "MAGIC",
+      "access": "RO",
+      "reset": "0x5733544D"
+    },
+    {
+      "address": "0x13804",
+      "name": "VERSION",
+      "access": "RO",
+      "reset": "0x00010000"
+    },
+    {
+      "address": "0x13808",
+      "name": "CAPABILITIES",
+      "access": "RO",
+      "reset": "0x0000007F"
+    },
+    {
+      "address": "0x1380C",
+      "name": "CONTROL",
+      "access": "WO",
+      "reset": 0
+    },
+    {
+      "address": "0x13810",
+      "name": "STAGED_BLOCK_ID",
+      "access": "RW",
+      "reset": 0
+    },
+    {
+      "address": "0x13814",
+      "name": "STATUS",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13818",
+      "name": "REJECT_COUNT",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x1381C",
+      "name": "LAST_REJECT",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13820",
+      "name": "SCAN_ATTEMPT_SEQUENCE",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13824",
+      "name": "COMPANION_SCAN_ATTEMPT_SEQUENCE",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13828",
+      "name": "PAYLOAD_REVISION",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x1382C",
+      "name": "ACTIVE_BLOCK_ID",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13830",
+      "name": "EFFECTIVE_MODE",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13834",
+      "name": "LAST_ACCEPTED_CONTROL",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13838",
+      "name": "EVENT_OVERFLOW_FLAGS",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x1383C",
+      "name": "COMPANION_VALID_COUNTS",
+      "access": "RO",
+      "reset": 0
+    },
+    {
+      "address": "0x13840",
+      "name": "FIRST_RECORD_BASE",
+      "access": "RO",
+      "reset": "0x13900"
+    },
+    {
+      "address": "0x13844",
+      "name": "TERMINAL_RECORD_BASE",
+      "access": "RO",
+      "reset": "0x13980"
+    },
+    {
+      "address": "0x13848",
+      "name": "COUNTER_BASE",
+      "access": "RO",
+      "reset": "0x13A00"
+    },
+    {
+      "address": "0x1384C",
+      "name": "GROUP_BASE",
+      "access": "RO",
+      "reset": "0x13B00"
+    },
+    {
+      "address": "0x13850",
+      "name": "ENTRY_BASE",
+      "access": "RO",
+      "reset": "0x13C40"
+    },
+    {
+      "address": "0x13854",
+      "name": "AUX_BASE",
+      "access": "RO",
+      "reset": "0x14680"
+    },
+    {
+      "address": "0x13858",
+      "name": "CLOCK_HZ",
+      "access": "RO",
+      "reset": 62500000
+    },
+    {
+      "address": "0x1385C",
+      "name": "PAUSE_CYCLES",
+      "access": "RO",
+      "reset": 18750
+    },
+    {
+      "address": "0x13860..0x1387C",
+      "name": "SCHEMA_SHA256",
+      "access": "RO",
+      "reset": "contract file SHA256 split into eight dwords"
+    },
+    {
+      "address": "0x13880..0x138FC",
+      "name": "RESERVED",
+      "access": "RO",
+      "reset": 0
+    }
+  ],
+  "status_bits": {
+    "0": "configured_enable",
+    "1": "block_locked",
+    "2": "effective_enable",
+    "3": "scanner_active",
+    "4": "executor_active",
+    "5": "i2c_command_owned_or_busy",
+    "6": "snapshot_or_response_pending",
+    "7": "companion_writer_busy",
+    "8": "first_record_valid",
+    "9": "terminal_record_valid",
+    "10": "companion_frozen",
+    "11": "payload_revision_wrap",
+    "12": "scan_attempt_wrap",
+    "13": "counter_saturation",
+    "14": "bank_context_lockout",
+    "15": "successful_control_set_frozen"
+  },
+  "control": {
+    "write_address": "0x1380C",
+    "legal_values": {
+      "0x00000001": "CONFIG_OFF",
+      "0x00000002": "CONFIG_ON",
+      "0x00000004": "ARM_BLOCK",
+      "0x00000008": "CLOSE_BLOCK",
+      "0x00000010": "CLEAR_W3_TELEMETRY"
+    },
+    "write_byte_enable": "0xF only",
+    "unaligned_or_unknown_or_multi_bit": "reject_count_saturates; last_reject set; no side effect",
+    "staged_block_id_write": "0x13810 full dword nonzero only while idle and unlocked",
+    "configuration_admission": "scanner IDLE, executor idle, no I2C ownership/busy, no snapshot/response ownership pending, block unlocked",
+    "arm_admission": "same idle conditions, nonzero staged block ID, block unlocked; lock configured mode and ID",
+    "close_admission": "same idle conditions except block locked is required; release block lock, effective mode OFF",
+    "clear_admission": "same idle conditions and block unlocked; clears W3 records/counters/samples only, never scanner lockout or legacy snapshot",
+    "legacy_scan_without_armed_block": "effective OFF",
+    "mid_block_mode_change": "reject and count",
+    "write_response": "ordinary completed MMIO write; host must check reject counter, last reject, status and block ID readback"
+  },
+  "reject_codes": {
+    "0": "NONE",
+    "1": "PARTIAL_OR_UNALIGNED",
+    "2": "UNSUPPORTED_VALUE_OR_BITS",
+    "3": "BUSY_OR_OWNED",
+    "4": "BLOCK_LOCKED",
+    "5": "BLOCK_NOT_LOCKED",
+    "6": "BLOCK_ID_ZERO",
+    "7": "ILLEGAL_ORDER",
+    "8": "SAFETY_LOCKOUT"
+  },
+  "operation_kind": {
+    "0": "ENTRY_BANK_SAVE_READ",
+    "1": "GROUP_SELECT_WRITE",
+    "2": "GROUP_VERIFY_READ",
+    "3": "ENTRY_READ",
+    "4": "RESTORE_WRITE",
+    "5": "RESTORE_VERIFY_READ"
+  },
+  "raw_master_cause": {
+    "0": "NONE",
+    "1": "WADDR_NACK",
+    "2": "REGADDR_NACK",
+    "3": "RADDR_NACK",
+    "4": "DATA_NACK",
+    "5": "SCL_TIMEOUT",
+    "6": "BUS_IDLE_TIMEOUT"
+  },
+  "attempt_outcome": {
+    "0": "ABSENT",
+    "1": "SUCCESS",
+    "2": "FAILED",
+    "3": "RESERVED_INVALID"
+  },
+  "select_outcome": {
+    "0": "NOT_ATTEMPTED",
+    "1": "SUCCESS",
+    "2": "FAILED"
+  },
+  "verify_outcome": {
+    "0": "NOT_ATTEMPTED",
+    "1": "SUCCESS_MATCH",
+    "2": "TRANSPORT_FAILED",
+    "3": "VALUE_MISMATCH"
+  },
+  "restore_outcome": {
+    "0": "NOT_ATTEMPTED",
+    "1": "WRITE_SUCCESS_VERIFY_MATCH",
+    "2": "WRITE_FAILED",
+    "3": "VERIFY_TRANSPORT_FAILED",
+    "4": "VERIFY_VALUE_MISMATCH"
+  },
+  "wait_phase_class": {
+    "0": "NONE_OR_UNAVAILABLE",
+    "1": "START",
+    "2": "WADDR_BIT",
+    "3": "WADDR_ACK",
+    "4": "REGADDR_BIT",
+    "5": "REGADDR_ACK",
+    "6": "DATA_BIT",
+    "7": "DATA_ACK",
+    "8": "REPEATED_START",
+    "9": "RADDR_BIT",
+    "10": "RADDR_ACK",
+    "11": "READ_BIT",
+    "12": "MASTER_NACK",
+    "13": "STOP",
+    "14": "BUS_IDLE",
+    "15": "OTHER_RECOGNIZED_SCL_HIGH"
+  },
+  "attempt_companion_format": {
+    "words": 4,
+    "word0": "exact accepted master transaction_sequence[31:0]",
+    "word1_bits": {
+      "1:0": "attempt_outcome",
+      "4:2": "first_detected_raw_cause; zero if no detected fault",
+      "7:5": "completion_raw_cause; separate from first detected cause",
+      "8": "completion_timeout",
+      "11:9": "operation_kind",
+      "12": "retry_attempt",
+      "20:13": "target_bank",
+      "28:21": "register",
+      "31:29": "maximum_wait_bit_position; 0 when not applicable"
+    },
+    "words2_3_bits": {
+      "10:0": "WADDR_ACK_wait_cycles",
+      "21:11": "REGADDR_ACK_wait_cycles",
+      "32:22": "DATA_ACK_wait_cycles",
+      "43:33": "RADDR_ACK_wait_cycles",
+      "54:44": "maximum_consecutive_SCL_wait_cycles",
+      "58:55": "ACK_valid_mask WADDR/REGADDR/DATA/RADDR",
+      "62:59": "maximum_wait_phase_class; zero means unavailable, otherwise maximum is valid even when wait value is zero",
+      "63": "wait_saturated"
+    },
+    "slot_validity": "Separate validity mask is cleared at scan admission, set only after all four words committed; invalid reads return zero. Outcome zero is absent, never inferred success.",
+    "wait_definition": "Consecutive core clock cycles waiting for released SCL to be recognized HIGH; includes input/filter latency, not a physical stretching measurement."
+  },
+  "first_terminal_records": {
+    "first_base": "0x13900",
+    "terminal_base": "0x13980",
+    "stride_words": 32,
+    "validity": "independent valid bits, first captures earliest failed operation, terminal captures terminal scan failure; if same operation, same transaction_sequence and SAME_OPERATION flag",
+    "words": {
+      "0": "FLAGS exact bit map in record_word0_bits",
+      "1": "retention epoch, increment on accepted explicit W3 clear; reset invalidates",
+      "2": "frozen block ID",
+      "3": "scan-attempt sequence",
+      "4": "exact failed master transaction sequence",
+      "5": "kind/retry/group/entry/position exact bit map in record_word5_bits",
+      "6": "current bank[7:0], target bank[15:8], register[23:16], write value[31:24]",
+      "7": "first detected raw cause[2:0], timeout[3], master phase[9:4], bit[12:10], reserved[31:13]",
+      "8": "completion raw cause[2:0], timeout[3], legacy scanner mapped cause[7:4], success[8], reserved[31:9]",
+      "9": "maximum wait[10:0], full master phase[16:11], bit[19:17], reserved[31:20]",
+      "10": "WADDR ACK wait[10:0], valid[11], REGADDR ACK wait[22:12], valid[23], reserved[31:24]",
+      "11": "DATA ACK wait[10:0], valid[11], RADDR ACK wait[22:12], valid[23], reserved[31:24]",
+      "12": "first-attempt start tick low 32 bits",
+      "13": "first-attempt start tick high 32 bits",
+      "14": "verify origin transaction sequence; valid in FLAGS bit7",
+      "15": "verify delta FPGA cycles, valid FLAGS bit8; if overflow FLAGS bit22 set and bit8 clear",
+      "16": "select outcome[1:0], verify outcome[3:2], restore outcome[6:4], reserved[31:7]",
+      "17": "select transaction sequence, valid FLAGS bit9",
+      "18": "verify transaction sequence, valid FLAGS bit10",
+      "19": "restore transaction sequence, valid FLAGS bit11",
+      "20": "related first/original failure transaction sequence, valid FLAGS bit12",
+      "21": "first detected fault tick low 32 bits; valid FLAGS bit4",
+      "22": "first detected fault tick high 32 bits; valid FLAGS bit4",
+      "23": "reserved zero",
+      "24..27": "same-kind successful control four-word attempt companion; valid FLAGS bit13",
+      "28": "successful control block ID, valid FLAGS bit13",
+      "29": "successful control scan-attempt sequence, valid FLAGS bit13",
+      "30": "successful control location: group[3:0], entry[10:4], group-valid[11], entry-valid[12], reserved[31:13]; valid FLAGS bit13",
+      "31": "payload revision captured at record commit"
+    },
+    "lifetime": "Survives retry, restore, legacy ACK_CLEAR and later scans until accepted W3 clear or reset; updating terminal does not overwrite first. Records are coherent only under read_protocol.",
+    "record_word0_bits": {
+      "0": "record valid",
+      "1": "terminal type; zero means first",
+      "2": "effective pause mode at failed scan admission",
+      "3": "first and terminal refer to same master transaction sequence",
+      "4": "first detected fault valid",
+      "5": "maximum wait valid",
+      "6": "maximum wait saturated",
+      "7": "verify origin valid",
+      "8": "verify delta valid",
+      "9": "select sequence valid",
+      "10": "verify sequence valid",
+      "11": "restore sequence valid",
+      "12": "related sequence valid",
+      "13": "same-kind successful sample valid",
+      "14": "group index valid",
+      "15": "entry index valid",
+      "16": "position valid",
+      "17": "current bank valid",
+      "18": "target bank valid",
+      "19": "write value valid",
+      "20": "first-attempt start tick valid",
+      "21": "completion event valid",
+      "22": "verify delta exceeds 32 bits or tick wraps",
+      "31:23": "reserved zero"
+    },
+    "record_word5_bits": {
+      "2:0": "operation kind enum",
+      "3": "retry attempt",
+      "7:4": "group index",
+      "14:8": "entry index",
+      "22:15": "position within group or entry; validity in FLAGS",
+      "31:23": "reserved zero"
+    }
+  },
+  "count_region": {
+    "base": "0x13A00",
+    "per_kind_stride_words": 8,
+    "kinds": 6,
+    "offset_words": {
+      "0": "accepted_first",
+      "1": "accepted_retry",
+      "2": "completed_success_first",
+      "3": "completed_success_retry",
+      "4": "completed_failure_first",
+      "5": "completed_failure_retry",
+      "6": "timeout_first",
+      "7": "timeout_retry"
+    },
+    "trailing_16_words": "reserved zero",
+    "count_rule": "Count accepted and completed actual master attempts, including partial scans and uncompleted publication. All 32-bit counters saturate; EVENT_OVERFLOW_FLAGS identifies any saturation. Clear only on accepted W3 clear or reset, independent of companion per-scan lifetime."
+  },
+  "group_region": {
+    "base": "0x13B00",
+    "group_count": 10,
+    "stride_words": 8,
+    "slot_layout": "select attempt words 0..3; verify attempt words 4..7",
+    "validity": "per-slot validity mask, group index and expected bank from frozen manifest; select failure means verify slot absent, not failed"
+  },
+  "entry_region": {
+    "base": "0x13C40",
+    "entry_count": 82,
+    "stride_words": 8,
+    "slot_layout": "first attempt words 0..3; optional retry words 4..7",
+    "validity": "per-slot validity mask, index/register/bank from frozen manifest; retry never replaces first"
+  },
+  "aux_region": {
+    "base": "0x14680",
+    "last": "0x147FF",
+    "operations": {
+      "0x14680..0x1468F": "entry-bank save attempt",
+      "0x14690..0x1469F": "restore write attempt",
+      "0x146A0..0x146AF": "restore verify attempt"
+    },
+    "successful_controls": "0x146B0..0x1476F, six operation kinds x eight words: four-word attempt, block ID, scan-attempt sequence, location/validity, captured revision. Deterministic most-recent-success per kind until first record freezes; thereafter retain sample with records until explicit clear/reset. If no same-kind sample is present at failure, its embedded sample-valid bit is zero; no substitution.",
+    "reserved": "0x14770..0x147FF read zero"
+  },
+  "lifetime_and_sequence": {
+    "scan_attempt_sequence": "increments once at accepted scan admission independently of legacy published generation; 32-bit wrap flag is sticky until clear/reset",
+    "companion": "represents most recent admitted scan, including incomplete; validity masks reset at admission and freeze after writer drain; revision changes at admission and freeze",
+    "first_terminal": "retained across scans, legacy ACK_CLEAR and recovery; explicit safe W3 clear or reset only",
+    "successful_samples": "deterministic most-recent success per kind until first failed record freezes comparison set; embeds sample validity at first/terminal capture; unavailable is explicit",
+    "block": "staged configuration persists unlocked; arm freezes mode and ID; scan latches effective mode and ID at admission; close releases lock but retained records keep former identity",
+    "counter": "since accepted clear/reset; includes partial and no-publication attempts",
+    "tick_counter": "64-bit FPGA cycles; subtraction modulo 2^64 only when both origins valid and no observed wrap; delta overflow flag otherwise"
+  },
+  "safe_scope": {
+    "only_new_functional_i2c_effect": "optional 18750-cycle scanner-owned pause after a successful 0xFF bank write and before its existing verification command",
+    "no_generic_nvp_access": true,
+    "autoinit_unchanged": true,
+    "acq_unchanged": true,
+    "legacy_mmio_unchanged": true,
+    "driver_unchanged": true
+  },
+  "header_field_bits": {
+    "COMPANION_VALID_COUNTS": {
+      "8:0": "committed entry attempt slots 0..164",
+      "14:9": "committed group attempt slots 0..20",
+      "16:15": "committed auxiliary slots 0..3",
+      "31:17": "reserved zero"
+    },
+    "EVENT_OVERFLOW_FLAGS": {
+      "0": "rejection counter saturated",
+      "1": "any opportunity/outcome counter saturated",
+      "2": "scan attempt sequence wrapped",
+      "3": "payload revision wrapped",
+      "4": "telemetry writer overrun",
+      "31:5": "reserved zero"
+    },
+    "EFFECTIVE_MODE": {
+      "0": "latched mode of active or last admitted scan",
+      "31:1": "reserved zero"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+gate_id,status,actual_result,evidence,limit_or_consequence
+G01_GOVERNANCE_START_END,PASS,PROJECT_STATE_REV_AT_START=9 END=9; SSOT_STALENESS=NONE; 18/18 hashes at fresh end check; manifest SHA 5F5BEE9FB84BE98AE5D1A24B98CD487C42C8C70DC785C2326F0AC634815DCCCC,reports/W3_AUTHORITY_PUBLIC.md;reports/V41_G2B_NVP_CAMERA_ACQ1_COMPAT0_R2R1_CONT1R3R4R6_W3_MAIN_REPORT.md,No SSOT/META/PRODUCT change or promotion
+G02_HISTORICAL_ID,PASS_HISTORICAL_ONLY,26 completed records ID 0x90 revision 0x01; incomplete scan excluded,reports/HISTORICAL_CHIP_ID_AND_AUDITOR_PREFLIGHT.md,Live identity NOT_SURVEYED_IN_W3
+G03_AUDITOR_ALIGNMENT,PASS_SCOPED_ONLY,27 matching/18 differing/6 unmatched Bank5 occurrences,reports/HISTORICAL_CHIP_ID_AND_AUDITOR_PREFLIGHT.md,No product-setting or physical-cause conclusion
+G04_SOURCE_SCOPE_IMMUTABLE,PASS,4 modified+16 new W3 paths; 75 immutable parent-byte matches; candidate2 top declaration move only,reports/CHANGE_ALLOWLIST_AND_DIFF_REVIEW.md;reports/CANDIDATE2_SOURCE_AND_IDENTITY.md,No SSOT/META/PRODUCT/driver/IP/XDC change
+G05_SOURCE_FREEZE,PASS,Candidate2 commit 98d4d214c1219b29a60dc1a33af13e91fe33d27c tree 1c43ee847bc468408f574125e3e37209cbb27d54,receipts/W3_CANDIDATE2_SOURCE_BUILD_MANIFEST.json,Exact 40 selected build inputs and W3 schema pinned
+G06_SOURCE_REMOTE_READBACK,PASS,342 remote blobs with exact modes/sizes/SHA-256 at candidate2 commit/tree,receipts/SOURCE_REMOTE_READBACK.json,Private source release only; independent of public evidence
+G07_DIRECTED_DIGITAL_T02_T31,PASS_BOUNDED_DIGITAL,30/30 directed offline cases PASS; T01/T32 remain PARTIAL release,reports/W3_TEST_COVERAGE_AUDIT.md;reports/TEST_MATRIX.csv,No routed or hardware qualification
+G08_INHERITED_REGRESSIONS,PASS_BOUNDED_DIGITAL,SCAN1/ACQ/BRAM and CONT1R3 current-source replay PASS,receipts/W3_INHERITED_FINAL.json;receipts/W3_CONT1R3_CURRENT.json,No hardware claim
+G09_OFF_PARENT_EQUIVALENCE,PASS_BOUNDED_DIGITAL,105 commands/complete resolved pin-edge trace; all 104 gaps; 21 W1 selected boundaries,receipts/W3_DELAY_FINAL.json,OFF waveform equivalence only
+G10_ON_PAUSE_SCOPE,PASS_BOUNDED_DIGITAL,11 successful bank writes x 18750 cycles=206250 total; 93 other gaps unchanged,receipts/W3_DELAY_FINAL.json;receipts/W3_DELAY_NEGATIVE_FINAL.json,Failed select receives no pause; no analog timing claim
+G11_HOST_PROVISIONAL,PASS_PROVISIONAL,49-file copy; 27 imports; wrong-BDF/foreign-descriptor negatives PASS,receipts/W3_PROVISIONAL_BUNDLE_GATE.json,T32 PARTIAL; not a final closed bundle
+G12_CANDIDATE1_SYNTH_CONNECTIVITY,FAIL_CANDIDATE1,telemetry_bundle implicit 1-bit net versus 86-bit master port,reports/W3_CANDIDATE1_FIRST_FAILED_GATE.md,Candidate1 stopped before post-opt; not promoted
+G13_CANDIDATE2_TOP_COMPILE,PASS,Moved 86-bit/scalar declarations before use; negative control rejects candidate1,receipts/W3_CANDIDATE2_TOP_PREFLIGHT.json,"Targeted compile, not resource acceptance"
+G14_CANDIDATE2_SYNTHESIS,PASS_STAGE_ONLY,Whole-design synthesis completed; post-synth 25372 Slice LUTs,build/candidate2_vivado.log;receipts/POST_SYNTH_UTILIZATION.rpt,Post-opt resource gate governs
+G15_CANDIDATE2_POST_OPT_LUT,FAIL_FIRST_FINAL_GATE,23774 Slice LUTs vs 20384 ceiling; excess 3390; POST_OPT_LUT_GATE_FAILED:23774,build/candidate2_vivado.log;receipts/POST_OPT_UTILIZATION.rpt;reports/RESOURCE_DELTA.csv,Engineering FAIL; no candidate3
+G16_PLACEMENT_ROUTE,NOT_RUN,No candidate2 place/route after post-opt failure,reports/CANDIDATE2_SOURCE_AND_IDENTITY.md,No routed resource or timing result
+G17_FRESH_SIGNOFF,NOT_RUN,Timing/DRC/CDC/bus-skew/same-view checkpoint reopen not reached,reports/CANDIDATE2_SOURCE_AND_IDENTITY.md,No signed new DCP
+G18_SIGNED_DCP,NONE,No qualified new routed DCP path/size/SHA-256,reports/CANDIDATE2_SOURCE_AND_IDENTITY.md,Historical parent DCP cannot substitute
+G19_BITSTREAM,NOT_RUN,write_bitstream invocations 0; firmware path/size/SHA-256 NONE,reports/V41_G2B_NVP_CAMERA_ACQ1_COMPAT0_R2R1_CONT1R3R4R6_W3_MAIN_REPORT.md,No W3 firmware
+G20_FINAL_BUNDLE_PACKAGE,NONE,Closed final bundle and private package identities NONE,reports/W4_HANDOFF.md,Provisional host copy is not release
+G21_EVIDENCE_PUBLICATION,PENDING_FINAL_REMOTE_READBACK,No public publication PASS at matrix freeze,reports/V41_G2B_NVP_CAMERA_ACQ1_COMPAT0_R2R1_CONT1R3R4R6_W3_MAIN_REPORT.md,Independent from private source readback
+G22_ENGINEERING,FAIL,"Candidate2 first final failed gate G15, excess 3390 LUT",build/candidate2_vivado.log;reports/RESOURCE_DELTA.csv,No ready-for-W4 claim
+G23_OVERALL,FAIL,Engineering FAIL; evidence publication pending,reports/V41_G2B_NVP_CAMERA_ACQ1_COMPAT0_R2R1_CONT1R3R4R6_W3_MAIN_REPORT.md,No qualified W3 delivery
+G24_W4_DUT,BLOCKED_NOT_RUN,W4 0; DUT/SSH/JTAG/real MMIO NONE; programming/reboot/scan/frame 0/0/0/0,reports/W4_HANDOFF.md,No W4 authorization or hardware qualification

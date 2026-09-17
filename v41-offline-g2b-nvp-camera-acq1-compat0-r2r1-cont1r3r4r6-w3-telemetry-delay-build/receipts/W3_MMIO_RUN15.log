@@ -1,0 +1,52 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Sep 17 20:14:19 2026
+# Process ID         : 17788
+# Current directory  : C:/FPGA/CONT1R3R4R6_W3_20260917T165535Z/simulation/mmio-run15
+# Command line       : xsim.exe -log C:\FPGA\CONT1R3R4R6_W3_20260917T165535Z\simulation\mmio-run15\xsim.log -mode tcl -source {xsim.dir/w3_scanner_mmio/xsim_script.tcl}
+# Log file           : C:/FPGA/CONT1R3R4R6_W3_20260917T165535Z/simulation/mmio-run15/xsim.log
+# Journal file       : C:/FPGA/CONT1R3R4R6_W3_20260917T165535Z/simulation/mmio-run15\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19578 MB
+# Available Virtual  : 5593 MB
+#-----------------------------------------------------------
+source xsim.dir/w3_scanner_mmio/xsim_script.tcl
+# xsim {w3_scanner_mmio} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+PASS W3_MMIO_RESET_IDENTITY_DEFAULT_OFF
+PASS W3_MMIO_EXACT_SYNCHRONOUS_RESPONSE_EDGES
+PASS W3_MMIO_ALTERNATING_OLD_NEW_ACQ_BACKPRESSURE
+PASS W3_MMIO_CONTROL_REJECTIONS_BLOCK_LOCK
+PASS W3_MMIO_RAPID_ACK_START_REJECT_WRITER_BUSY
+PASS W3_MMIO_PARTIAL_FIRST_TERMINAL_COMPANION_COHERENCE
+PASS W3_MMIO_RETAIN_THROUGH_ACK_AND_LATER_SCAN
+PASS W3_MMIO_SAFE_CLEAR_RESET_DEFAULTS
+PASS W3_MMIO_UNARMED_RAPID_RESTART_VISIBLE_OVERRUN
+PASS W3_MMIO_FIRST_EQUALS_TERMINAL_RESTORE_RETENTION
+PASS W3_MMIO_ON_PAUSE_ABORT_OWNERSHIP_CLEANUP
+PASS W3_MMIO_ENTRY_RETRY_FAILURE_DISTINCT_COMPANIONS
+PASS W3_MMIO_SYNTHETIC_SEQUENCE_REVISION_WRAP_FAIL_CLOSED
+PASS W3_MMIO_ON_PAUSE_AUTOINIT_PREEMPT_CLEANUP
+PASS W3_MMIO_ON_FAILED_RESTORE_HARD_LOCKOUT
+PASS W3_MMIO_82_RECOVERED_WRITER_CAPACITY_AND_T24_ORIGIN
+PASS W3_MMIO_ALL_TEN_GROUP_COMPANIONS
+PASS W3_MMIO_VERIFY_VALUE_MISMATCH_RAW_NONE
+PASS W3_MMIO_VERIFY_TRANSPORT_FAILURE_DISTINCT
+PASS W3_MMIO_ON_RESTORE_VERIFY_MISMATCH_LOCKOUT
+PASS W3_MMIO_CONTROLS_NO_ACQ_OR_FUNCTIONAL_ADMISSION
+PASS W3_SCANNER_MMIO_INTEGRATION
+$finish called at time : 5696576 ns : File "C:/FPGA/CONT1R3R4R6_W3_20260917T165535Z/source/tests/w3/tb_w3_scanner_mmio.sv" Line 1251
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Sep 17 20:14:24 2026...
