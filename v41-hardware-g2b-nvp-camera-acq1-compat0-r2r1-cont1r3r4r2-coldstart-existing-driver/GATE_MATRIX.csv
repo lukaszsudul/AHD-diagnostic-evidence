@@ -1,0 +1,20 @@
+gate,status,evidence_or_reason
+owner_cold_start_gate,PASS,Owner token received; electrical rails not measured
+pre_cold_state_and_autostart,PASS,Foreign xdma live; interactive insmod supported; no static autoload found within bounds
+post_cold_dut_identity,PASS,Host and machine ID match; changed boot ID
+post_cold_namespace,PASS,Free; protected and AHD Xilinx PCI functions initially absent
+known_jtag_target,PASS,Exact xc7a35t IDCODE 0362D093 DONE 0
+closed_runtime_bundle,PASS,34 exact files; zero unresolved import/origin failures
+exact_sram_programming,PASS,One approved attempt DONE 1
+one_declared_warm_reboot,PASS,One new final boot; no second reboot
+exact_existing_driver_and_target_mapping,PASS,One unchanged module load; unique 10ee:7011; both nodes BDF-bound
+runtime_identity,PASS,SCAN1 ACQ telemetry and implementation values match
+inert_mmio_sanity,PASS,SCAN1 16/16; ACQ 16/16
+autoinit_direct_nack_counter,NOT_INDEPENDENTLY_RECORDED,Status done/error-free/readiness observed; no separate counter receipt
+control_scan,PASS,1/1 complete; 82 entries 10 groups 105 transactions
+campaign_1000,FAIL,25/1000 complete then SCANNER_HARD_STOP 0x00000C18
+failure_error_code,CAPTURED,First error index 36 detail 0x0005FF0A Bank5 0xFF INTERNAL_PROTOCOL_ERROR
+safe_scanner_ack,PASS,One ACK_CLEAR returned status 0x00000011 idle
+normal_exclusive_driver_unload,PASS,Zero holders/refcount; one normal unload; nodes gone
+task_lock_cleanup,PASS,DUT lock then controller lock released
+evidence_publication,PENDING_AT_STAGING,Final push and commit-pinned read-back recorded outside immutable staged package
