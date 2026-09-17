@@ -1,0 +1,9 @@
+# W3a lean resume card — 2026-09-17 19:33:48 UTC
+
+The interrupted W3 run root is `C:\FPGA\CONT1R3R4R6_W3_20260917T165535Z`. Its source worktree is clean at candidate-2 commit `98d4d214c1219b29a60dc1a33af13e91fe33d27c`, tree `1c43ee847bc468408f574125e3e37209cbb27d54`; the parent is `09cd7cbb426027acaefd0cf3989579b80a451f3a`. The historical ledger has exactly two revisions: candidate 1 stopped at the top telemetry-width synthesis failure; candidate 2 stopped after opt at 23,774 LUT against 20,384. No candidate-3 source, input manifest, build process, or result was found. Original diffs, task-local untracked files, logs and checkpoints remain untouched.
+
+The process inventory queried PID, parent PID, executable and command line for Vivado, XSim, Git and W3-related workers. Only the inventory's own PowerShell processes matched; no old W3 worker was writing the run root. No process was signaled or lock removed.
+
+The earlier public evidence push is commit `d4d023f60579a9cf272e6242541f349be361c769`, tree `d5aebf77f9d2d7a3508d5e55aef382ca98a439fb`, on `AHD-diagnostic-evidence/main`. An already completed independent receipt at the old run root records `PASS` for 54 published files at that commit, and a fresh `ls-remote` still resolves `main` to that commit. The reviewed local staging manifest is self-excluding with 53 member rows and SHA-256 `05FFBD5D659BD2DCB3A157FBC4367F82AD837859860B1EB60E89BBECDB27510D`. The old immutable report correctly preserves its prepublication `PENDING` status; this card records the later receipt.
+
+The new isolated source worktree is `C:\FPGA\W3_LEAN_RESUME_20260917T193348Z\source`, branch `diag/v41-g2b-w3a-lean-resume-20260917T193348Z`, based on candidate 2. One originally permitted candidate revision remains. W3a will use that revision without new XSim or DUT access. Historical digital results are tied to their old source hashes and will not be promoted as tests of changed W3a RTL.

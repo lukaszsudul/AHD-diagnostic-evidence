@@ -1,0 +1,94 @@
+{
+  "contract_name": "AHD_V41_CONT1R3R4R6_W3A_LEAN_BANK_FAILURE_PAUSE",
+  "schema_version": "1.0.0",
+  "supersedes_for_this_image": "AHD_V41_CONT1R3R4R6_W3_TELEMETRY_DELAY",
+  "page": "0x13800..0x147FF",
+  "word_bytes": 4,
+  "magic": "0x5733414C",
+  "version": "0x00010000",
+  "capabilities": "0x00000007",
+  "capability_bits": {
+    "0": "DEFAULT_OFF_18750_CYCLE_POST_SUCCESSFUL_BANK_WRITE_PAUSE",
+    "1": "RETAINED_PRIMARY_BANK_FAILURE",
+    "2": "SEPARATE_FAILED_CLEANUP_RESTORE"
+  },
+  "clock_hz": 62500000,
+  "pause_cycles": 18750,
+  "off_extra_cycles": 0,
+  "offsets": {
+    "magic": "0x13800",
+    "version": "0x13804",
+    "capabilities": "0x13808",
+    "control": "0x1380C",
+    "staged_block_id": "0x13810",
+    "active_block_id": "0x13814",
+    "status": "0x13818",
+    "scan_attempt_id": "0x1381C",
+    "primary_meta": "0x13820",
+    "primary_scan_id": "0x13824",
+    "primary_transaction_sequence": "0x13828",
+    "cleanup_meta": "0x1382C",
+    "cleanup_transaction_sequence": "0x13830",
+    "rejected_write_count": "0x13834",
+    "pause_cycles": "0x13838",
+    "clock_hz": "0x1383C"
+  },
+  "control_one_hot_full_dword": {
+    "1": "CONFIGURE_OFF",
+    "2": "CONFIGURE_ON",
+    "4": "ARM_STAGED_NONZERO_BLOCK_ID",
+    "8": "CLOSE_BLOCK",
+    "16": "CLEAR_RETAINED_BANK_RECORDS"
+  },
+  "status_bits": {
+    "1": "SCANNER_NOT_IDLE",
+    "2": "CONFIGURED_ON",
+    "3": "BLOCK_LOCKED",
+    "4": "EFFECTIVE_ON_FOR_ADMITTED_SCAN",
+    "5": "PRIMARY_VALID",
+    "6": "CLEANUP_VALID",
+    "7": "BANK_CONTEXT_LOCKOUT",
+    "8..11": "LAST_REJECT_REASON"
+  },
+  "record_meta_bits": {
+    "31": "RESERVED_ZERO",
+    "30": "VALID",
+    "27..29": "KIND",
+    "23..26": "RAW_FIRST_CAUSE_OF_THIS_TRANSACTION",
+    "19..22": "RAW_COMPLETION_CAUSE_OF_THIS_TRANSACTION",
+    "18": "COMPLETION_TIMEOUT",
+    "16..17": "VERIFY_OUTCOME",
+    "8..15": "REQUESTED_BANK",
+    "0..7": "REGISTER_0xFF"
+  },
+  "kind_codes": {
+    "0": "SAVE_BANK_READ",
+    "1": "GROUP_SELECT_WRITE",
+    "2": "GROUP_VERIFY_READ",
+    "3": "RESTORE_WRITE",
+    "4": "RESTORE_VERIFY_READ"
+  },
+  "verify_outcome_codes": {
+    "0": "VERIFY_NOT_EXECUTED_OR_NOT_APPLICABLE",
+    "2": "VERIFY_TRANSPORT_FAILED",
+    "3": "VERIFY_VALUE_MISMATCH"
+  },
+  "raw_cause_codes": {
+    "0": "NONE",
+    "1": "WADDR_NACK",
+    "2": "REGADDR_NACK",
+    "3": "RADDR_NACK",
+    "4": "DATA_NACK",
+    "5": "SCL_TIMEOUT",
+    "6": "BUS_IDLE_TIMEOUT"
+  },
+  "retention": "Latest hard bank failure remains through restore, legacy ACK and later clean scans until accepted W3a clear or reset. A later scan's first bank failure replaces it; any failed cleanup restore is separate.",
+  "excluded_features": [
+    "W3_FULL_FIRST_TERMINAL_ALL_OPERATION_HISTORY",
+    "PER_ATTEMPT_SCL_WAIT_MAX",
+    "ACK_PHASE_WAIT_ARRAYS",
+    "SUCCESSFUL_CONTROL_SAMPLE_HISTORY",
+    "W3B_WIDE_COUNTERS"
+  ],
+  "old_scanner_acq_manifest_projection_capture_and_master_functional_semantics": "UNCHANGED"
+}
