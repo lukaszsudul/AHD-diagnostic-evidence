@@ -1,0 +1,5 @@
+# One next action toward a genuine camera frame
+
+Under a **separate, explicit hardware authorization**, perform one bounded pin-level SCL/SDA observation around a single SCAN1 Bank5-select `0xFF=0x05` command, retaining the data-byte ACK slot and its timing relative to SCL. Stop at the first failure; do not restart a 1,000-scan campaign or apply a timing/retry workaround. If a raw master-cause field can be retained by the then-approved observability path, bind it to that exact command; do not infer it from SCAN1 nibble `0xA`.
+
+Why this action: the offline result establishes a compatible digital DATA_NACK path and excludes several ordinary alternatives, but the historical failed command has no raw cause or pin trace. The existing 11 recovered read REGADDR_NACK events do not supply the missing write-data ACK observation. Changing the public `0xA` label alone would improve observability, **not** fix communication or produce a frame. A source/bitstream rebuild is not automatically selected by this report. No part of this next action is executed or authorized by the present offline task.

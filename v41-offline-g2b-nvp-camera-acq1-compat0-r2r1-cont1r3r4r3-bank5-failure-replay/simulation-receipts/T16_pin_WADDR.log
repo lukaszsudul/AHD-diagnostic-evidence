@@ -1,0 +1,41 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Sep 17 11:53:09 2026
+# Process ID         : 20888
+# Current directory  : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation
+# Command line       : xsim.exe -log C:\FPGA\CONT1R3R4R3_BANK5_20260917T094025Z\logs\T16_pin_WADDR.log -mode tcl -source {xsim.dir/bank5_pin_sim/xsim_script.tcl}
+# Log file           : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/logs/T16_pin_WADDR.log
+# Journal file       : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19578 MB
+# Available Virtual  : 7505 MB
+#-----------------------------------------------------------
+source xsim.dir/bank5_pin_sim/xsim_script.tcl
+# xsim {bank5_pin_sim} -testplusarg PIN_WADDR -autoloadwcfg -runall -onerror quit
+Time resolution is 1 ps
+run -all
+REAL_MASTER_PARAMETERS clk=62500000 i2c=25000 divider=1250 scl_timeout=1250 bus_idle_timeout=62500
+PIN_TARGET_ACCEPT t=76725016000 seq=49 group=5 index=36 write=1 reg=ff data=05 bank=01
+PIN_START t=76765048000 ordinal=1 repeated=0
+PIN_BYTE t=77085864000 phase=0 value=60
+PIN_ACK_SLOT_LOW t=77105960000 phase=0 decoded=60 ack=0 scl=0 sda=1
+PIN_ACK_SAMPLE t=77125976000 phase=0 value=1
+PIN_STOP t=77186184000 bank=01
+MASTER_COMPLETION t=77206216000 seq=49 success=0 timeout=0 raw=1 bank=01
+PIN_OBS phase=2 status=00000c18 gen=0 valid=37 failed=0 retried=0 index=36 detail=0005ff01 flags=00330004 commands=51 entry=00 exit=00
+TEST_EXECUTION_PASS T16 phase=2
+$finish called at time : 80053920 ns : File "C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/tests/tb_bank5_pin.sv" Line 207
+run: Time (s): cpu = 00:00:01 ; elapsed = 00:00:10 . Memory (MB): peak = 195.602 ; gain = 0.555
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Sep 17 11:53:21 2026...

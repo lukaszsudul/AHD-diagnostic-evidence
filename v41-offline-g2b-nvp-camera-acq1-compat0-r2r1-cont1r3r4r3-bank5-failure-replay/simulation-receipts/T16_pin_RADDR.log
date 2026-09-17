@@ -1,0 +1,51 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Sep 17 11:53:38 2026
+# Process ID         : 16776
+# Current directory  : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation
+# Command line       : xsim.exe -log C:\FPGA\CONT1R3R4R3_BANK5_20260917T094025Z\logs\T16_pin_RADDR.log -mode tcl -source {xsim.dir/bank5_pin_sim/xsim_script.tcl}
+# Log file           : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/logs/T16_pin_RADDR.log
+# Journal file       : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19578 MB
+# Available Virtual  : 7465 MB
+#-----------------------------------------------------------
+source xsim.dir/bank5_pin_sim/xsim_script.tcl
+# xsim {bank5_pin_sim} -testplusarg PIN_RADDR -autoloadwcfg -runall -onerror quit
+Time resolution is 1 ps
+run -all
+REAL_MASTER_PARAMETERS clk=62500000 i2c=25000 divider=1250 scl_timeout=1250 bus_idle_timeout=62500
+PIN_TARGET_ACCEPT t=76725016000 seq=49 group=5 index=36 write=1 reg=ff data=05 bank=01
+MASTER_COMPLETION t=77928232000 seq=49 success=1 timeout=0 raw=0 bank=05
+PIN_TARGET_ACCEPT t=77928248000 seq=50 group=5 index=36 write=0 reg=ff data=00 bank=05
+PIN_START t=77968280000 ordinal=1 repeated=0
+PIN_BYTE t=78289096000 phase=0 value=60
+PIN_ACK_SLOT_LOW t=78309192000 phase=0 decoded=60 ack=1 scl=0 sda=1
+PIN_ACK_SAMPLE t=78329208000 phase=0 value=0
+PIN_BYTE t=78650104000 phase=1 value=ff
+PIN_ACK_SLOT_LOW t=78670200000 phase=1 decoded=ff ack=1 scl=0 sda=1
+PIN_ACK_SAMPLE t=78690216000 phase=1 value=0
+PIN_START t=78750424000 ordinal=2 repeated=1
+PIN_BYTE t=79091256000 phase=3 value=61
+PIN_ACK_SLOT_LOW t=79111352000 phase=3 decoded=61 ack=0 scl=0 sda=1
+PIN_ACK_SAMPLE t=79131368000 phase=3 value=1
+PIN_STOP t=79191576000 bank=05
+MASTER_COMPLETION t=79211608000 seq=50 success=0 timeout=0 raw=3 bank=05
+PIN_OBS phase=4 status=00000c18 gen=0 valid=37 failed=0 retried=0 index=36 detail=0005ff03 flags=00340004 commands=52 entry=00 exit=00
+TEST_EXECUTION_PASS T16 phase=4
+$finish called at time : 82059312 ns : File "C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/tests/tb_bank5_pin.sv" Line 207
+run: Time (s): cpu = 00:00:04 ; elapsed = 00:00:17 . Memory (MB): peak = 195.188 ; gain = 0.547
+exit
+INFO: xsimkernel Simulation Memory Usage: 9688 KB (Peak: 9688 KB), Simulation CPU Usage: 16577 ms
+INFO: [Common 17-206] Exiting xsim at Thu Sep 17 11:53:58 2026...

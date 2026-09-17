@@ -1,0 +1,17 @@
+path,stage,raw_cause,timeout,success,scanner_detail,valid,failed,retried,commands,generation,published,entry_exit_bank,restore,classification,historical_match,evidence
+historical_hardware,select,NOT_RETAINED,NOT_RETAINED,NO,0x0005FF0A,37,0,0,51,26,NO,0x00/0x00,PASS,MEASURED_HARDWARE,REFERENCE,HARD_STOP_RECEIPT.md
+mock_data_nack,select,0x4,0,NO,0x0005FF0A,37,0,0,51,26,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,FULL,T02_mock_final.log
+mock_data_nack_bank_unchanged,select,0x4,0,NO,0x0005FF0A,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,PARTIAL_GENERATION_NOT_WARMED,T03_mock_final.log
+mock_data_nack_bank_accepted,select,0x4,0,NO,0x0005FF0A,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,PARTIAL_GENERATION_NOT_WARMED,T03_mock_final.log
+mock_waddr_nack,select,0x1,0,NO,0x0005FF01,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL,T04_mock_final.log
+mock_regaddr_nack,select,0x2,0,NO,0x0005FF02,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL,T05_mock_final.log
+mock_raddr_nack,verify,0x3,0,NO,0x0005FF03,37,0,0,52,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL_AND_COUNT,T06_mock_final.log
+mock_verify_mismatch,verify,0x0,0,YES,0x0005FF06,37,0,0,52,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL_AND_COUNT,T07_mock_final.log
+mock_scl_timeout,select,0x5,1,NO,0x0005FF04,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL,T08_mock_final.log
+mock_bus_idle_timeout,select,0x6,1,NO,0x0005FF05,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_DIGITAL_MODEL,NO_DETAIL,T09_mock_final.log
+mock_zero_cause_failure,select,0x0,0,NO,0x0005FF0A,37,0,0,51,0,NO,0x00/0x00,PASS,SYNTHETIC_INTERFACE_OR_ILLEGAL_STATE,PARTIAL_GENERATION_NOT_WARMED,T11_mock_final.log
+mock_restore_failure,restore,0x4_then_0x1,0,NO,0x0005FF0A,37,0,0,50,0,NO,0x00/UNKNOWN,FAIL_LOCKOUT,INJECTED_DOUBLE_FAULT,NO_FLAGS_COUNT_RESTORE,T13_mock_final.log
+real_master_data_nack,select,0x4,0,NO,0x0005FF0A,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_PIN_DIGITAL_SLAVE,PARTIAL_GENERATION_NOT_WARMED,T15_pin.log
+real_master_waddr_nack,select,0x1,0,NO,0x0005FF01,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_PIN_DIGITAL_SLAVE,NO_DETAIL,T16_pin_WADDR.log
+real_master_regaddr_nack,select,0x2,0,NO,0x0005FF02,37,0,0,51,0,NO,0x00/0x00,PASS,INJECTED_PIN_DIGITAL_SLAVE,NO_DETAIL,T16_pin_REGADDR.log
+real_master_raddr_nack,verify,0x3,0,NO,0x0005FF03,37,0,0,52,0,NO,0x00/0x00,PASS,INJECTED_PIN_DIGITAL_SLAVE,NO_DETAIL_AND_COUNT,T16_pin_RADDR.log

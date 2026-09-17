@@ -1,0 +1,41 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Sep 17 11:59:38 2026
+# Process ID         : 22896
+# Current directory  : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation
+# Command line       : xsim.exe -log C:\FPGA\CONT1R3R4R3_BANK5_20260917T094025Z\logs\T13_mock_final.log -mode tcl -source {xsim.dir/bank5_mock_sim/xsim_script.tcl}
+# Log file           : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/logs/T13_mock_final.log
+# Journal file       : C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/simulation\xsim.jou
+# Running On         : NBLSUDUL
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+# CPU Frequency      : 2904 MHz
+# CPU Physical cores : 2
+# CPU Logical cores  : 4
+# Host memory        : 17028 MB
+# Swap memory        : 2550 MB
+# Total Virtual      : 19578 MB
+# Available Virtual  : 7520 MB
+#-----------------------------------------------------------
+source xsim.dir/bank5_mock_sim/xsim_script.tcl
+# xsim {bank5_mock_sim} -testplusarg CASE_13 -autoloadwcfg -runall -onerror quit
+Time resolution is 1 ps
+run -all
+MANIFEST_SCHEDULE_PASS starts=0,1,4,11,27,37,48,59,70,81 counts=1,3,7,16,10,11,11,11,11,1
+ENTRY_REGADDR_NACK retry=0 seq=12
+ENTRY_REGADDR_NACK retry=1 seq=13
+OBS status=00000c18 gen=0 valid=4 failed=1 retried=1 index=4 detail=0000a802 flags=000f0004 commands=15 entry=00000100 exit=00000100 bank=00 lockout=0
+RETRY_FAILURE_PASS
+BANK5_SELECT_ACCEPT seq=49 prior_bank=01 entry=36 group=5 gen=0
+SELECT_FAULT mode=11 raw=4 timeout=0 bank_after=01 seq=49
+RESTORE_FAULT seq=50
+OBS status=00000c58 gen=0 valid=37 failed=0 retried=0 index=36 detail=0005ff0a flags=00320000 commands=50 entry=00000100 exit=00000000 bank=01 lockout=1
+RESTORE_FAILURE_LOCKOUT_PASS
+TEST_EXECUTION_PASS T13
+$finish called at time : 25424 ns : File "C:/FPGA/CONT1R3R4R3_BANK5_20260917T094025Z/tests/tb_bank5_mock.sv" Line 309
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Sep 17 11:59:40 2026...
