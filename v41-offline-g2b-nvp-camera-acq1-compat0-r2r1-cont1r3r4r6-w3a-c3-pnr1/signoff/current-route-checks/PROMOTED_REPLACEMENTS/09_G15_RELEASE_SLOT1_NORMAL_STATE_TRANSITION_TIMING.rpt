@@ -1,0 +1,67 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Fri Sep 18 01:09:36 2026
+| Host         : NBLSUDUL running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -quiet -delay_type max -sort_by slack -max_paths 1 -nworst 1 -from [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/(release_generation_axi|release_epoch_axi)_reg\[1\].*}] {IS_SEQUENTIAL == 1}] -to [filter [get_cells -quiet -hier -regexp {.*G2B_ONECH_C2H/slot_state_source_reg\[1\].*}] {IS_SEQUENTIAL == 1}]] -file C:/FPGA/W3A_C3_PNR1_20260917T221245Z/signoff/current-route-checks/PROMOTED_REPLACEMENTS/09_G15_RELEASE_SLOT1_NORMAL_STATE_TRANSITION_TIMING.rpt
+| Design       : ahd_capture_top_xdma
+| Device       : 7a35t-csg325
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             0.631ns  (required time - arrival time)
+  Source:                 G2B_ONECH_C2H/release_generation_axi_reg[1][18]/C
+                            (rising edge-triggered cell FDRE clocked by userclk1  {rise@0.000ns fall@8.000ns period=16.000ns})
+  Destination:            G2B_ONECH_C2H/slot_state_source_reg[1][0]/D
+                            (rising edge-triggered cell FDRE clocked by nvp_vclk1  {rise@0.000ns fall@3.367ns period=6.734ns})
+  Path Group:             nvp_vclk1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            6.000ns  (MaxDelay Path 6.000ns)
+  Data Path Delay:        5.399ns  (logic 1.431ns (26.505%)  route 3.968ns (73.495%))
+  Logic Levels:           7  (CARRY4=1 LUT6=6)
+  Timing Exception:       MaxDelay Path 6.000ns -datapath_only
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X3Y75                                       0.000     0.000 r  G2B_ONECH_C2H/release_generation_axi_reg[1][18]/C
+    SLICE_X3Y75          FDRE (Prop_fdre_C_Q)         0.348     0.348 r  G2B_ONECH_C2H/release_generation_axi_reg[1][18]/Q
+                         net (fo=1, routed)           1.177     1.525    G2B_ONECH_C2H/release_generation_axi_reg[1]_8[18]
+    SLICE_X6Y71                                                       r  G2B_ONECH_C2H/slot_state_source[1][2]_i_18/I2
+    SLICE_X6Y71          LUT6 (Prop_lut6_I2_O)        0.242     1.767 r  G2B_ONECH_C2H/slot_state_source[1][2]_i_18/O
+                         net (fo=1, routed)           0.000     1.767    G2B_ONECH_C2H/slot_state_source[1][2]_i_18_n_0
+    SLICE_X6Y71                                                       r  G2B_ONECH_C2H/slot_state_source_reg[1][2]_i_8/S[2]
+    SLICE_X6Y71          CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.316     2.083 f  G2B_ONECH_C2H/slot_state_source_reg[1][2]_i_8/CO[3]
+                         net (fo=2, routed)           1.205     3.289    G2B_ONECH_C2H/slot_state_source_reg[1][2]_i_8_n_0
+    SLICE_X15Y74                                                      f  G2B_ONECH_C2H/slot_state_source[1][2]_i_3/I4
+    SLICE_X15Y74         LUT6 (Prop_lut6_I4_O)        0.105     3.394 f  G2B_ONECH_C2H/slot_state_source[1][2]_i_3/O
+                         net (fo=3, routed)           0.498     3.892    G2B_ONECH_C2H/slot_state_source[1][2]_i_3_n_0
+    SLICE_X12Y76                                                      f  G2B_ONECH_C2H/slot_state_source[1][2]_i_4/I5
+    SLICE_X12Y76         LUT6 (Prop_lut6_I5_O)        0.105     3.997 f  G2B_ONECH_C2H/slot_state_source[1][2]_i_4/O
+                         net (fo=6, routed)           0.415     4.412    G2B_ONECH_C2H/slot_state_source[1][2]_i_4_n_0
+    SLICE_X10Y77                                                      f  G2B_ONECH_C2H/slot_state_source[1][0]_i_5/I0
+    SLICE_X10Y77         LUT6 (Prop_lut6_I0_O)        0.105     4.517 f  G2B_ONECH_C2H/slot_state_source[1][0]_i_5/O
+                         net (fo=1, routed)           0.361     4.878    G2B_ONECH_C2H/slot_state_source[1][0]_i_5_n_0
+    SLICE_X10Y77                                                      f  G2B_ONECH_C2H/slot_state_source[1][0]_i_2/I5
+    SLICE_X10Y77         LUT6 (Prop_lut6_I5_O)        0.105     4.983 r  G2B_ONECH_C2H/slot_state_source[1][0]_i_2/O
+                         net (fo=1, routed)           0.311     5.294    G2B_ONECH_C2H/slot_state_source[1][0]_i_2_n_0
+    SLICE_X11Y76                                                      r  G2B_ONECH_C2H/slot_state_source[1][0]_i_1/I1
+    SLICE_X11Y76         LUT6 (Prop_lut6_I1_O)        0.105     5.399 r  G2B_ONECH_C2H/slot_state_source[1][0]_i_1/O
+                         net (fo=1, routed)           0.000     5.399    G2B_ONECH_C2H/slot_state_source[1][0]_i_1_n_0
+    SLICE_X11Y76         FDRE                                         r  G2B_ONECH_C2H/slot_state_source_reg[1][0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         max delay                    6.000     6.000    
+    SLICE_X11Y76         FDRE (Setup_fdre_C_D)        0.030     6.030    G2B_ONECH_C2H/slot_state_source_reg[1][0]
+  -------------------------------------------------------------------
+                         required time                          6.030    
+                         arrival time                          -5.399    
+  -------------------------------------------------------------------
+                         slack                                  0.631    
+
+
+
+

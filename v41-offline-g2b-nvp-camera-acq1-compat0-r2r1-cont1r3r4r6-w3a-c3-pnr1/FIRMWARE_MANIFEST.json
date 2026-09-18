@@ -1,0 +1,67 @@
+{
+  "schema": "AHD_V41_W3A_C3_PNR1_FIRMWARE_MANIFEST_V1",
+  "task_id": "CONT1R3R4R6-W3A-C3-PNR1",
+  "classification": "PRIVATE_DIAGNOSTIC_OFFLINE_IMPLEMENTATION",
+  "source_candidate": "C3",
+  "source_commit": "70266f0b90c6fc6a853495eba1d526b285fd7286",
+  "source_tree": "5f2bd8377985406b45433418b20be8993399bcb6",
+  "new_source_revisions": 0,
+  "vivado": "2025.2 SW Build 6299465",
+  "part": "xc7a35tcsg325-2",
+  "top": "ahd_capture_top_xdma",
+  "runtime_identity": {
+    "SLOT_COUNT": 2,
+    "GIT_SHA_W0": "70266f0b",
+    "GIT_SHA_W1": "90c6fc6a",
+    "GIT_SHA_W2": "853495eb",
+    "GIT_SHA_W3": "a1d526b2",
+    "GIT_SHA_W4": "85fd7286",
+    "BUILD_FLAGS": "00000802",
+    "ENABLE_MAREK_INIT_TABLE": 1,
+    "ENABLE_RTRACK_DIAGNOSTICS": 0,
+    "ENABLE_NVP_VIDEO_DIAGNOSTIC": 0,
+    "ENABLE_NVP_CAMERA_SCAN1": 1,
+    "ENABLE_NVP_ACQ1_EXECUTOR": 1
+  },
+  "signed_dcp": {
+    "path": "C:\\FPGA\\W3A_C3_PNR1_20260917T221245Z\\signoff\\C3_PNR1_SIGNED.dcp",
+    "size_bytes": 63219896,
+    "sha256": "A99EDFE4DF21A3607EC1C31464AD4A03EC6717FCBABBC2979FDA4DFF48E188A5",
+    "independent_as_stored_reopen": "PASS_SIGNED_DCP_INDEPENDENT_AS_STORED_REOPEN"
+  },
+  "bitstream": {
+    "path": "C:\\FPGA\\W3A_C3_PNR1_20260917T221245Z\\firmware\\AHD_v41_W3A_C3_PNR1_DIAGNOSTIC.bit",
+    "size_bytes": 2192144,
+    "sha256": "8B6402C776AAF6B2D6E0F4453479B75462516AB79A9FE534257CD5339B95A51B",
+    "write_bitstream_invocations": 1,
+    "write_bitstream_exit_code": 0,
+    "design_header": "ahd_capture_top_xdma;UserID=0XFFFFFFFF;Version=2025.2;SW_CRC=ddfad6ca",
+    "part_header": "7a35tcsg325",
+    "date_header": "2026/09/18",
+    "time_header": "02:28:51",
+    "payload_offset": 132,
+    "payload_length": 2192012,
+    "sync_word_near_payload_start": true
+  },
+  "host_bundle": {
+    "manifest_path": "C:\\FPGA\\W3A_C3_PNR1_20260917T221245Z\\HOST_BUNDLE_MANIFEST.json",
+    "manifest_sha256": "E2F16444A1B6DA59603774A79AE24D60541151DF05D3CD976BE87915BAE79478",
+    "file_count": 7,
+    "contract_sha256": "7F2A9647EF60D360B9884E57F6FAE16BCAFC4DD8F60D592CE0A44D728FA67D39",
+    "offline_self_test": "PASS_NO_DEVICE_OPEN"
+  },
+  "erratum": {
+    "path": "C:\\FPGA\\W3A_C3_PNR1_20260917T221245Z\\C3_STATUS_BIT1_ERRATUM.md",
+    "sha256": "B3764AC42EE2A26DA0202FF50F906E087B96A7A6E017DBCA020DF52849990689"
+  },
+  "gate_receipts": {
+    "pre_signoff_sha256": "FAEBE3BB9D911E200742A607355684A103F4E87A7269D1C819CB2908431AD09C",
+    "signed_reopen_sha256": "F1CDB0FC5E47483B0232991AD90F8C4A3F171930DE46857BF22222B2C63A1AF1",
+    "bitgen_sha256": "A086333A05C8D3D2E6886B5322A7C24215CD83938819E322E518D0B88EE08F50",
+    "bit_header_sha256": "A8677E3B866265AA5C4B91943431209BC674BAACA0552463B9E6A97F001DA38A"
+  },
+  "new_rtl_simulation": "NOT_RUN_OWNER_REQUESTED_SPEEDUP",
+  "hardware_qualification": "NOT_RUN",
+  "dut_contact": "NONE",
+  "programming": "NONE"
+}

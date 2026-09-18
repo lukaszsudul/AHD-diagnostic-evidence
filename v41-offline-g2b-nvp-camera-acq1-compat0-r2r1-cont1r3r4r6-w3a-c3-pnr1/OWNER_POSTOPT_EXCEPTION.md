@@ -1,0 +1,9 @@
+# C3-PNR1: scoped Owner post-opt exception
+
+Task `CONT1R3R4R6-W3A-C3-PNR1` authorizes one implementation attempt for exact C3 source commit `70266f0b90c6fc6a853495eba1d526b285fd7286`, tree `5f2bd8377985406b45433418b20be8993399bcb6`. The historical 20,456 whole-design post-opt Slice LUT result remains a historical failure of the ordinary 20,384 gate. This task permits a fresh exact-C3 post-opt result in `(20384, 20456]` to continue under `OWNER_EXCEPTION_C3_POST_OPT`; it does not convert the historical result to PASS.
+
+The final whole-design routed Slice LUT acceptance limit remains **20,384 without exception**, including LUT-as-memory. A fresh post-opt count above 20,456 stops before place. A final count above 20,384 stops qualification and bitgen, regardless of timing or routing. No second place/route, source revision, strategy change, new XSim, or DUT access is authorized.
+
+At entry: historical source-candidate budget `4/4_USED_UNCHANGED`; C3-PNR1 implementation budget `0/1`. The starting point is `REPRODUCED_C3` because no full C3 post-opt or post-synth checkpoint was found in the historical run root. The task-local recipe preserves original synthesis/place/phys-opt/route commands and directives, adds stage checkpoints, and replaces only the post-opt admission decision above.
+
+Fresh result: post-opt whole-design Slice LUT `20456`, admission `OWNER_EXCEPTION_C3_POST_OPT`; the one implementation budget is now `1/1`. The single place/phys-opt/route completed and saved a routed DCP. Raw routed utilization reports `19995` whole-design Slice LUT, headroom `389`. The wrapper then exited 1 at `ROUTED_LUT_COUNT_NOT_PARSED` because its unmodified final report parser expected `Slice LUTs*` while Vivado's post-route table labels the row `Slice LUTs`. The routed result is preserved; no second implementation is authorized. Sign-off must independently verify it from the byte-verified DCP copy.
