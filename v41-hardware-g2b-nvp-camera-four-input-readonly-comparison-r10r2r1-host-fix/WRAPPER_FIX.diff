@@ -1,0 +1,66 @@
+--- R10R2/run_four_input_scans.py
++++ R10R2R1/run_four_input_scans.py
+@@ -19,13 +19,13 @@
+ import time
+ 
+ 
+-ROOT = Path('/home/vcdeagent1/vcde_artifacts/camera_four_input_compare/20260918T163409Z')
++ROOT = Path('/home/vcdeagent1/vcde_artifacts/camera_four_input_r10r2r1/20260918T182723Z')
+ BUNDLE = ROOT / 'host-bundle'
+ RAW = ROOT / 'raw'
+ GATE = ROOT / 'deployment/runtime_gate.json'
+-LOCK = Path('/home/vcdeagent1/vcde_artifacts/.camera_four_input_compare_20260918T163409Z.lock')
+-TASK = 'CONT1R3R4R10R2-FOUR-INPUT-READONLY-COMPARISON'
+-SESSION = 'db11c255-a56d-4536-ad6f-f5e3f66e74f9'
++LOCK = Path('/home/vcdeagent1/vcde_artifacts/.camera_four_input_r10r2r1_20260918T182723Z.lock')
++TASK = 'CONT1R3R4R10R2R1-HOST-FIX-FOUR-INPUT-RETEST'
++SESSION = '2ef38106-b81a-487a-97de-d2d1b2f7fc8e'
+ BDF = '0000:01:00.0'
+ SOURCE = '70266f0b90c6fc6a853495eba1d526b285fd7286'
+ GIT_WORDS = [0x70266F0B, 0x90C6FC6A, 0x853495EB, 0xA1D526B2, 0x85FD7286]
+@@ -149,7 +149,7 @@
+     from cont1r3 import telemetry
+     from cont1r1_projection import (manifest_preflight, required_projection_keys,
+                                     configuration_projection)
+-    from scan1 import decoder, mmio
++    from scan1 import decoder, mmio, manifest as scan_manifest
+     from scan1.controller import ScannerController
+     from w3a.controller import W3AController, OBSERVED
+     from w3a.device import VerifiedMmioDevice
+@@ -163,7 +163,7 @@
+     return (ExecutorController, format_decision, LiveScanner, telemetry,
+             decoder, mmio, ScannerController, W3AController, OBSERVED,
+             VerifiedMmioDevice, manifest_preflight, required_projection_keys,
+-            configuration_projection)
++            configuration_projection, scan_manifest)
+ 
+ 
+ class Session:
+@@ -171,11 +171,17 @@
+         (executor_type, self.format_decision, scanner_type, self.telemetry,
+          self.decoder, self.mmio, self.scanner_controller_type,
+          w3a_type, self.w3a_observed, _, self.projection_manifest_preflight,
+-         self.required_projection_keys, self.original_projection) = api
++         self.required_projection_keys, self.original_projection,
++         scan_manifest) = api
+         self.device = device
+         self.gate = gate
+         self.boot = gate['boot_id']
+         self.scanner = scanner_type(device)
++        manifest_entries, manifest_prohibited, self.raw_manifest = (
++            scan_manifest.load_and_validate())
++        need(manifest_entries == self.scanner.entries and
++             manifest_prohibited == self.scanner.prohibited,
++             'PINNED_SCANNER_MANIFEST_API_MISMATCH')
+         self.executor = executor_type(device)
+         self.w3a = w3a_type(device)
+         self.initial_acq = None
+@@ -265,7 +271,7 @@
+                                                     self.scanner.prohibited)
+             retried = sum(bool(item['status'] & 0x02) for item in decoded)
+             group_status = []
+-            for group_index, group_name in enumerate(self.scanner.raw_manifest['bank_groups']):
++            for group_index, group_name in enumerate(self.raw_manifest['bank_groups']):
+                 expected_entries = [entry for entry in self.scanner.entries
+                                     if entry.group == group_name]
+                 need(expected_entries, 'EMPTY_FROZEN_MANIFEST_GROUP')
