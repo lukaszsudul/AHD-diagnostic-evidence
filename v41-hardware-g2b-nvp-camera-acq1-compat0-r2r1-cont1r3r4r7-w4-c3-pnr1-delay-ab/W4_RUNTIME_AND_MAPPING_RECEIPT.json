@@ -1,0 +1,108 @@
+{
+  "bdf": "0000:01:00.0",
+  "boot_after": "0a86ba7c-b382-4c90-b2bd-cce33b8cf56b",
+  "boot_before": "e9656f6c-dd41-4500-95cc-9dc90ef9b69d",
+  "c2h_dev_t": "511:36",
+  "c2h_node": "/dev/xdma0_c2h_0",
+  "c2h_transfer_count": 0,
+  "driver": {
+    "alias": "pci:v000010EEd00007011sv000010EEsd00000007bc*sc*i*",
+    "bdf": "0000:01:00.0",
+    "boot_id": "0a86ba7c-b382-4c90-b2bd-cce33b8cf56b",
+    "driver": "xdma_ahd_pcie",
+    "module_path": "/home/vcdeagent1/vcde_builds/g2b_hw0_drv1/20260906T121539Z/BUILD_A/source/XDMA/linux-kernel/xdma/xdma_ahd_pcie.ko",
+    "module_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "result": "PASS",
+    "schema": "AHD_V41_W4_EXACT_DRIVER_LOAD_V1",
+    "srcversion": "EE8B149D1883AE8C6B1EE31",
+    "task_owned": true,
+    "vermagic": "7.0.0-29-generic SMP preempt mod_unload modversions"
+  },
+  "endpoint": "10.132.1.111:22",
+  "hostname": "VCDE-DUT-1",
+  "ids": "10ee:7011 / 10ee:0007",
+  "link": "PCIe Gen2 x1",
+  "machine_id": "0e90f50d9465492b80258da5658446f8",
+  "parent": "0000:00:01.1",
+  "protected_function_final": "ABSENT",
+  "protected_function_ids": "10ee:7021 / 10ee:f0a1",
+  "protected_function_initial": "ABSENT",
+  "result": "PASS",
+  "runtime_preflight": {
+    "acq_mmio_sanity": 16,
+    "autoinit_nack_count": "NOT_EXPOSED/NOT_INDEPENDENTLY_MEASURED",
+    "final_idle": {
+      "acq_status": 8388625,
+      "scanner_status": 17,
+      "stream_enable": 0,
+      "w3a_status": 0
+    },
+    "identities": {
+      "acq": [
+        1314275651,
+        65536,
+        255
+      ],
+      "build_flags": 2050,
+      "git_sha_words": [
+        "70266F0B",
+        "90C6FC6A",
+        "853495EB",
+        "A1D526B2",
+        "85FD7286"
+      ],
+      "inherited_telemetry": {
+        "capabilities": 127,
+        "counter_frequency_hz": 62500000,
+        "counter_width_bits": 64,
+        "entry_count": 82,
+        "group_count": 10,
+        "implementation_magic": 1379095089,
+        "implementation_version": 65536,
+        "magic": 1314280499,
+        "manifest_sha256": "2773DFA86ABEC87EF1E5BFB6F093D83BD8FCB4382B51B1792F3B7E8E302A1B2B",
+        "schema_sha256": "438D630943B0D3A2BFCB2C23B9FB060FD0C347C16F331D008997DBB3B8B22F95",
+        "version": 65536
+      },
+      "scan1": {
+        "bank_group_count": 10,
+        "capabilities": 15,
+        "entry_count": 82,
+        "i2c_hz": 25000,
+        "magic": 1314280259,
+        "manifest_sha256": "2773DFA86ABEC87EF1E5BFB6F093D83BD8FCB4382B51B1792F3B7E8E302A1B2B",
+        "mode": "READ_ONLY_ONESHOT_SINGLE_FROZEN_SNAPSHOT",
+        "version": 65537
+      },
+      "slot_count": 2,
+      "w3a": {
+        "clock_hz": 62500000,
+        "contract_sha256": "7F2A9647EF60D360B9884E57F6FAE16BCAFC4DD8F60D592CE0A44D728FA67D39",
+        "pause_cycles": 18750,
+        "schema": "W3A_LEAN_V1"
+      }
+    },
+    "initial_acq": {
+      "0x12410": 8388625,
+      "0x12414": 0,
+      "0x12418": 0,
+      "0x1242c": 0,
+      "0x12430": 0,
+      "0x12434": 0
+    },
+    "os_gate": {
+      "bdf": "0000:01:00.0",
+      "boot_id": "0a86ba7c-b382-4c90-b2bd-cce33b8cf56b",
+      "c2h_ancestry": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/xdma/xdma0_c2h_0",
+      "c2h_dev_t": "511:36",
+      "c2h_node": "/dev/xdma0_c2h_0",
+      "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+      "user_node": "/dev/xdma0_user"
+    },
+    "result": "PASS",
+    "scan1_mmio_sanity": 16
+  },
+  "ssh_host_key_sha256": "yunI1fwP5I6WfGcSVkyaPxd0siCbdSiOOXVrP0wtEu8",
+  "user_dev_t": "511:0",
+  "user_node": "/dev/xdma0_user"
+}

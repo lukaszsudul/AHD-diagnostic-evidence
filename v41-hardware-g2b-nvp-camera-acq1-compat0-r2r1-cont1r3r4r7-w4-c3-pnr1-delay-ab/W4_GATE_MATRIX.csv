@@ -1,0 +1,11 @@
+gate,status,evidence
+SSOT rev9 and manifest,PASS,18/18 local hashes; pinned project-current-state tree
+Exact C3 image,PASS,size/SHA; sole JTAG SRAM program; runtime Git SHA
+Host bundle,PASS,local and DUT R1 42/42; C3 7/7 unchanged
+DUT mapping and protected function,PASS,AHD 0000:01:00.0; protected absent initial/final
+Control,PASS_CLEAN,1/1; 82/82; bank restore PASS
+A/B,PASS,16/16 blocks; 256/256 scans; 128 per arm
+Byte identity,PASS,532/532 DUT manifest files verified
+Cleanup,PASS,"idle, stream OFF, driver and locks released"
+Scientific effect,INCONCLUSIVE_LOW_EVENTS_OR_INCOMPLETE,zero recovered REGADDR_NACK in either arm
+Evidence publication,PENDING_REMOTE_READBACK,separate final receipt after push
