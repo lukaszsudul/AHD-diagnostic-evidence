@@ -1,0 +1,5 @@
+# CH1 camera status at last measurement
+
+`NO_VIDEO_AFTER_AVAILABLE_CH1_ACTIONS`. Owner confirmed the powered camera on the known CH1 connection with `CAMERA_CH1_CONNECTED`; the connector label and configured camera format were not supplied. The NVP reported CH1 NOVID=1 in all 20 qualified snapshots; A8 PRE/POST=0x0F/0x0F. At the last scan (2026-09-18T14:55:51.457269Z) the camera format remained UNKNOWN and readiness was NO. The physical source may require investigation; this task cannot distinguish a source/cable/input issue from an unexposed codec setting.
+
+The three allowed ACQ levels did not recover the signal. Exact rollback restored Bank5/08=0x70, Bank5/05=0x24, entry bank=0x00 and closed the ACQ campaign. No settings are retained beyond baseline. Digital VCLK/SAV activity was observed with stream OFF but does not establish a live CH1 source. No C2H open or frame capture occurred. The final idle read was 2026-09-18T15:02:00.669029Z; the task driver and locks were subsequently released. Camera readiness was not remeasured after unloading the driver. Fresh short revalidation is required before any future capture.

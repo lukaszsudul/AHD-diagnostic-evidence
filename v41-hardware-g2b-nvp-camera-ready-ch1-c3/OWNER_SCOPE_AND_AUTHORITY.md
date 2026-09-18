@@ -1,0 +1,9 @@
+# CONT1R3R4R10-CAMERA-READY-CH1-C3 — scope and authority
+
+Owner authorized this bounded C3 CH1 camera readiness diagnosis, conditional existing ACQ commands on Bank5/0x08 and Bank5/0x05, normal driver use, and append-only publication. Physical gate reply was exactly `CAMERA_CH1_CONNECTED`; it confirms connection and power on the known CH1 path, with no connector label or camera format supplied. The label and Owner-reported format remain UNKNOWN. The measured CH1 signal is evaluated separately.
+
+Source commit `70266f0b90c6fc6a853495eba1d526b285fd7286`, source tree `5f2bd8377985406b45433418b20be8993399bcb6`, C3 bitstream SHA-256 `8B6402C776AAF6B2D6E0F4453479B75462516AB79A9FE534257CD5339B95A51B`. Runtime git words, BUILD_FLAGS `0x802`, SCAN1/ACQ/telemetry/W3a identities, exact driver SHA-256 `E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77`, PCI BDF and current boot were checked before writes. SSOT `PROJECT_STATE_REV=9`, 18/18 manifest hashes valid; project-current-state tree `24e8b5e3f7b151bebe6b8da5dc102d734037ee48`. No SSOT/META/PRODUCT edit.
+
+The initial five complete scans had CH1 NOVID=1, Bank5/F2 nonzero on CH1 and zero on CH2–CH4. The exact compiled AHD1080p25/no-video ACQ context permitted one bounded existing sequence; this context is not a measured camera format. The ACQ write gate and raw initial scans are included. Three PREPARE, one DRYRUN, 0x50→0x40→0x60 once each, and one rollback were performed. After all levels CH1 still had NOVID=1. The final state is baseline restored and ACQ campaign closed.
+
+`TEN_THOUSAND_SCAN_QUALIFICATION=NOT_RUN`; `CAMERA_READY_BEFORE_10000=OWNER_AUTHORIZED_SCOPED_EXCEPTION`; `PRODUCT_RELIABILITY_QUALIFICATION=NOT_CLAIMED`; `W3A_PAUSE=OFF`; `DMA_IMPLEMENTATION_CHANGE=NOT_AUTHORIZED`; `HDMI_REUSE=CANCELLED_FOR_THIS_SCOPE`; `C2H_OPEN/C2H_REQUESTS/H2C_REQUESTS/STREAM_ENABLE=0/0/0/0`; `XSIM_NEW_RUNS/NEW_RTL_REGRESSIONS=0/0`; `NEW_FPGA_BUILD/SRAM_PROGRAMMING/REBOOT/POWER_CYCLE=0/0/0/0`.
