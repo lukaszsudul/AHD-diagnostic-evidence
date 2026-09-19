@@ -1,0 +1,128 @@
+{
+  "CH2_profile_configuration": "NOT_RUN",
+  "PN_A": "NOT_RUN",
+  "PN_B": "NOT_RUN",
+  "capture": {
+    "bytes": 0,
+    "complete_lines": 0,
+    "sessions": 0
+  },
+  "cleanup": {
+    "controller_lock": "PRESERVED_HELD",
+    "dut_lock": "PRESERVED_HELD_AT_ARCHIVE",
+    "release_receipt": null,
+    "result": "FAIL_CONTAINMENT",
+    "task_owned_driver": "PRESERVED_LOADED_AT_ARCHIVE"
+  },
+  "engineering_gate": "FAIL_CONTAINED_AT_PRE_SCAN_3",
+  "firmware": {
+    "bitstream_sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "build_program_reboot_xsim": {
+      "build": 0,
+      "program": 0,
+      "reboot": 0,
+      "xsim": 0
+    },
+    "candidate": 2,
+    "fpga_revision_budget": "2/2_USED_UNCHANGED",
+    "source_commit": "D8DC9592037CA73E2321B30FD1F65A2A3F8B92E7",
+    "source_tree": "46BC7D8C6269CE74C14B72AF771B29A410E84FB3",
+    "unchanged": true
+  },
+  "first_blocker": "SCAN3_BANK_RESTORE_HARD_ERROR_STATUS_0x00000C58",
+  "historical_raw": "HISTORICAL_RAW_UNAVAILABLE",
+  "host_bundle_sha256": "DD5D0DBC7E1E49C8E9699CD4087EE4E544A60E7EC30FA5D8B890EC2F9B6BD2ED",
+  "host_only": true,
+  "local_tests": "14_OF_14_PASS_TWICE",
+  "non_claims": [
+    "No PRODUCT or 10000-scan qualification claim.",
+    "No CH3 synchronization claim.",
+    "No real-frame or PNG claim.",
+    "No cleanup PASS claim."
+  ],
+  "png": null,
+  "pre": {
+    "attempts": 3,
+    "invalid_or_hard_error": 1,
+    "maximum_consecutive_clean_stable": 0,
+    "observations": [
+      {
+        "A8_stable": true,
+        "CH3_F0": "0x34",
+        "CH3_NOVID_POST": 1,
+        "CH3_NOVID_PRE": 1,
+        "R": 2,
+        "T": 107,
+        "class": "VALID_RECOVERED_READ_RETRY",
+        "scan": 1
+      },
+      {
+        "A8_stable": true,
+        "CH3_F0": "0x34",
+        "CH3_NOVID_POST": 1,
+        "CH3_NOVID_PRE": 1,
+        "R": 1,
+        "T": 106,
+        "class": "VALID_RECOVERED_READ_RETRY",
+        "scan": 2
+      },
+      {
+        "R": 0,
+        "T": 105,
+        "ack_sent": false,
+        "bank_restore_verified": false,
+        "class": "INVALID_OR_HARD_ERROR",
+        "first_error_detail": "0x0000FF08",
+        "raw_saved_before_rejection": true,
+        "scan": 3,
+        "status": "0x00000C58"
+      }
+    ],
+    "valid_clean": 0,
+    "valid_recovered": 2
+  },
+  "private_host_diff_sha256": "01E2D08454B9F7557E7DCACD93FDFB225D12208D04147571DB3254331B3F689F",
+  "recovered_retry_events": [
+    {
+      "bank": "0x00",
+      "entry_index": 22,
+      "final_value_valid": true,
+      "first_attempt_cause": "WADDR_NACK",
+      "register": "0x2B",
+      "retry_complete": true,
+      "retry_success": true,
+      "scan": 1
+    },
+    {
+      "bank": "0x05",
+      "entry_index": 43,
+      "final_value_valid": true,
+      "first_attempt_cause": "REGADDR_NACK",
+      "register": "0xE3",
+      "retry_complete": true,
+      "retry_success": true,
+      "scan": 1
+    },
+    {
+      "bank": "0x00",
+      "entry_index": 19,
+      "final_value_valid": true,
+      "first_attempt_cause": "RADDR_NACK",
+      "register": "0xEA",
+      "retry_complete": true,
+      "retry_success": true,
+      "scan": 2
+    }
+  ],
+  "route_gate": "NOT_RUN",
+  "runtime": {
+    "bdf": "0000:01:00.0",
+    "boot_id": "4402007f-bbf9-438a-a357-e89c5ea6c8f4",
+    "candidate2_identity": "PASS",
+    "dut": "10.132.1.111:22",
+    "loader_entry": "CAMP_VIRGIN",
+    "loader_exit": "UNVERIFIED_AFTER_HARD_ERROR"
+  },
+  "schema": "AHD_V41_CH3_R2R1_PUBLIC_RESULT_V1",
+  "user_result": "CH3_NOT_SYNCHRONIZED_FRAME_NOT_ATTEMPTED"
+}
