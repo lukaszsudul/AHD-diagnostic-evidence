@@ -1,0 +1,71 @@
+{
+  "schema": "AHD_V41_CH3_R2R3_PUBLIC_EXECUTION_SUMMARY_V1",
+  "created_utc": "2026-09-19T22:15:09Z",
+  "engineering_gate": "BLOCKED",
+  "user_result": "NO_CH3_SYNC_NO_FRAME_NO_PNG",
+  "first_actual_blocker": "POSTWARM_AUTORUN_ARM_MARKER_CREATION_FAILED",
+  "candidate2": {
+    "source_commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "source_tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3",
+    "bitstream_sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "bitstream_size": 2192144
+  },
+  "driver": {
+    "name": "xdma_ahd_pcie",
+    "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "changed": false
+  },
+  "dut": {
+    "bdf": "0000:01:00.0",
+    "vendor_device": "10ee:7011",
+    "subsystem": "10ee:0007",
+    "boot_before": "4402007f-bbf9-438a-a357-e89c5ea6c8f4",
+    "boot_after": "b1cc6fd6-2a07-48b7-8c5f-92c97b64248f"
+  },
+  "budgets": {
+    "build_invocations": 0,
+    "program_invocations": 1,
+    "warm_reboot_invocations": 1,
+    "xsim_invocations": 0,
+    "work_ssh_used": 3,
+    "work_ssh_limit": 3,
+    "cleanup_ssh_used": 2,
+    "cleanup_ssh_reserved": 2
+  },
+  "campaign": {
+    "PRE_FULL_SCANS": 0,
+    "prepare": "NOT_RUN",
+    "apply_a": "NOT_RUN",
+    "recover": "NOT_RUN",
+    "apply_b": "NOT_RUN",
+    "fresh_scans": [],
+    "maximum_clean_streak": 0,
+    "selected_pn": "NONE",
+    "fresh_ch3_sync": "NOT_ESTABLISHED",
+    "ch2_impact": "NOT_MEASURED",
+    "route": "NOT_RUN"
+  },
+  "autoinit_nack": {
+    "source_exposed": true,
+    "logical_address": "0x00002114",
+    "mask": "0x0000FFFF",
+    "scope": "AGGREGATE_NVP_AUTOINIT_NACKS",
+    "count": "NOT_PROVEN_FRESH",
+    "fresh_read_performed": false
+  },
+  "capture": {
+    "sessions": 0,
+    "bytes": 0,
+    "complete_lines": 0,
+    "frame_created": false,
+    "png_created": false
+  },
+  "prohibited_changes": {
+    "rtl": 0,
+    "firmware_build": 0,
+    "dma": 0,
+    "driver": 0,
+    "xdc": 0,
+    "xsim": 0
+  }
+}
