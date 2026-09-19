@@ -1,0 +1,117 @@
+{
+  "bitstream": {
+    "sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "status": "PASS_HASH_VERIFIED"
+  },
+  "capture": {
+    "c2h_sha256": null,
+    "complete": false,
+    "frame_epoch": null,
+    "frame_sequence": null,
+    "received_bytes": 0,
+    "required_active_lines": 1080,
+    "session_count": 0,
+    "status": "NOT_RUN",
+    "unique_valid_active_lines": 0,
+    "valid_record_count": 0
+  },
+  "ch2_impact": {
+    "fresh_scan_count": 0,
+    "result": "NOT_RUN"
+  },
+  "cleanup": {
+    "controller_lock_released": true,
+    "driver_state_safe": true,
+    "dut_lock_released": true,
+    "result": "PASS_PRISTINE_VIRGIN",
+    "rollback_pass": true,
+    "stream_off": true,
+    "task_io_closed": true,
+    "task_owned_pending_io": 0
+  },
+  "detection": {
+    "ch3_f0": null,
+    "ch3_novid_final": null,
+    "ch3_novid_initial": null,
+    "fresh_scan_count": 1,
+    "status": "FAIL_RUNTIME_SCAN_FLAGS_0X006A0005_BEFORE_OBSERVATION"
+  },
+  "dut": {
+    "bdf": "0000:01:00.0",
+    "boot_id": "4402007f-bbf9-438a-a357-e89c5ea6c8f4",
+    "contacted": true,
+    "driver": {
+      "identity_result": "PASS_EXACT_TASK_OWNED_DRIVER",
+      "module": "xdma_ahd_pcie",
+      "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77"
+    },
+    "runtime_result": "PASS_EXACT_ACTIVATION"
+  },
+  "engineering_gate": "FAIL",
+  "evidence_publication": "PENDING_COMMIT_READBACK",
+  "expected_base_commit": "fa27688bbdbb054c6c5bb49986265eff2a82eab0",
+  "first_blocker": "DETECTION",
+  "next_step": "RECONCILE_SCAN_TRANSACTION_COUNT_BEFORE_NEW_GOVERNED_ATTEMPT",
+  "overall_result": "FAIL_RUNTIME_SCAN_FLAGS_0X006A0005",
+  "package_relative_path": "v41-hardware-g2b-nvp-ch3-tvi1080p25-first-frame1/20260919T173901Z-r2-lean-continuation",
+  "pn": {
+    "selected_variant": null,
+    "variant_a": {
+      "ch3_f0": null,
+      "ch3_novid": null,
+      "fresh_scan_count": 0,
+      "result": "NOT_RUN"
+    },
+    "variant_b": {
+      "ch3_f0": null,
+      "ch3_novid": null,
+      "fresh_scan_count": 0,
+      "result": "NOT_RUN"
+    }
+  },
+  "prior_r1_path": "v41-hardware-g2b-nvp-ch3-tvi1080p25-first-frame1/20260918T222144Z-r1-two-pn-continuation",
+  "private_png": {
+    "sha256": null,
+    "status": "NOT_RUN"
+  },
+  "resources": {
+    "candidate1_executor_slice_luts": 1702,
+    "candidate2_lean_executor_slice_luts": 214,
+    "candidate2_post_opt_slice_luts": 20138,
+    "candidate2_routed_slice_luts": 19682,
+    "resource_gate": "PASS_POST_OPT_AND_ROUTED_WITHIN_20384",
+    "slice_lut_limit": 20384
+  },
+  "revisions": {
+    "authorized": 2,
+    "candidate1_commit": "a6bc53136b4c0cb1eb973011d62475a9ebf4aeb2",
+    "candidate1_tree": "2dac5cd1a864f86a39c5947833da8fe787450f6e",
+    "candidate2_commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "candidate2_tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3",
+    "used": 2
+  },
+  "route": {
+    "mapping": "CH3_TO_VDO1",
+    "proof_type": "NOT_RUN",
+    "result": "NOT_RUN"
+  },
+  "schema": "AHD_CH3_TVI1080P25_R2_LEAN_PUBLIC_STATE_V1",
+  "source": {
+    "commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "status": "PASS_EXACT_CANDIDATE2_ALLOWED_SOURCE_DIFF",
+    "tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3"
+  },
+  "task": "AHD_V41_CH3_TVI1080P25_FIRST_FRAME1_R2_LEAN",
+  "timing": {
+    "bus_skew": "PASS_11_OF_11_FULL_XDC_RESTORED",
+    "cdc": "PASS_TARGETED_SEMANTIC_CONE_RECONCILIATION",
+    "drc": "PASS_ZERO_ERRORS_ZERO_CRITICAL_WARNINGS",
+    "methodology": "PASS_ZERO_ERRORS_ZERO_CRITICAL_WARNINGS",
+    "result": "PASS",
+    "signed_reopen": "PASS_INDEPENDENT_AS_STORED",
+    "ths_ns": 0.0,
+    "tns_ns": 0.0,
+    "whs_ns": 0.028,
+    "wns_ns": 0.149
+  }
+}
