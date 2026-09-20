@@ -1,0 +1,59 @@
+{
+  "schema": "AHD_V41_CH3_R2R4_PUBLIC_CLEANUP_AND_CONTAINMENT_V1",
+  "created_utc": "2026-09-20T07:59:06Z",
+  "result": "BLOCKED_LOCKS_PRESERVED",
+  "first_cleanup_connection": {
+    "purpose": "CLEANUP_ONLY",
+    "result": "BLOCKED_PRESERVE_LOCKS",
+    "boot_id_unchanged": true,
+    "mmio_reads": 8,
+    "mmio_writes": 0,
+    "all_mmio_words": "0xFFFFFFFF",
+    "open_xdma_holders": 0,
+    "module_refcount": 0,
+    "driver_unload_attempted": false,
+    "dut_lock_present_at_end": true
+  },
+  "second_cleanup_connection": {
+    "purpose": "CONTAINMENT_ONLY",
+    "normal_exact_driver_unload_attempts": 1,
+    "connection_watchdog_seconds": 180,
+    "connection_result": "TIMEOUT",
+    "driver_unload_outcome": "UNPROVEN",
+    "result_archive_created": false,
+    "lock_release_operation_present": false
+  },
+  "task_activity": {
+    "prepare_commands": 1,
+    "apply_a_commands": 0,
+    "recover_commands": 0,
+    "apply_b_commands": 0,
+    "scan1_commands": 0,
+    "c2h_sessions": 0,
+    "build_invocations": 0,
+    "program_invocations": 0,
+    "reboot_invocations": 0,
+    "xsim_invocations": 0,
+    "force_kill_invocations": 0
+  },
+  "locks": {
+    "remote_dut_lock": "PRESERVED_LAST_VERIFIED_PRESENT",
+    "remote_lock_release_executed": false,
+    "local_controller_lock": "HELD",
+    "local_controller_lock_release_executed": false
+  },
+  "final_runtime": {
+    "stream_state": "UNPROVEN_AFTER_MMIO_FAILURE",
+    "scanner_state": "UNPROVEN_AFTER_MMIO_FAILURE",
+    "loader_state": "UNPROVEN_AFTER_MMIO_FAILURE",
+    "driver_module_presence": "UNPROVEN_AFTER_UNLOAD_TIMEOUT",
+    "pending_task_c2h_aio": 0,
+    "frame_artifacts": "NONE"
+  },
+  "cleanup_reserve": {
+    "used": 2,
+    "limit": 2,
+    "remaining": 0
+  },
+  "next_action": "SEPARATE_OWNER_GOVERNED_DUT_BAR_AND_MODULE_RECOVERY_UNDER_PRESERVED_LOCKS"
+}

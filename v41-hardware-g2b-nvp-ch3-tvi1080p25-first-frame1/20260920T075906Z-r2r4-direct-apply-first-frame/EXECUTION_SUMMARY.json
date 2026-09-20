@@ -1,0 +1,101 @@
+{
+  "schema": "AHD_V41_CH3_R2R4_PUBLIC_EXECUTION_SUMMARY_V1",
+  "created_utc": "2026-09-20T07:59:06Z",
+  "engineering_gate": "BLOCKED",
+  "user_result": "NO_CH3_SYNC_NO_FRAME_NO_PNG",
+  "first_actual_blocker": "R2_CH3L_V3_IDENTITY_MISMATCH_AFTER_SINGLE_PREPARE",
+  "parent_evidence_commit": "76a5b1ac4e505ae829456b1af54efab6c5dd9698",
+  "candidate2": {
+    "source_commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "source_tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3",
+    "bitstream_sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "bitstream_size": 2192144,
+    "programmed_before_this_task": true
+  },
+  "dut": {
+    "boot_id": "b1cc6fd6-2a07-48b7-8c5f-92c97b64248f",
+    "bdf": "0000:01:00.0",
+    "vendor_device": "10ee:7011",
+    "subsystem": "10ee:0007"
+  },
+  "admission": {
+    "result": "PASS",
+    "scanner_status": "0x00000011",
+    "scanner_idle": true,
+    "scanner_bank_context_lockout": false,
+    "autoinit_done": true,
+    "autoinit_busy": false,
+    "loader_status": "0xC3C00000",
+    "loader_state": "VIRGIN_IDLE_CLEAN",
+    "stream_off": true,
+    "transport_quiescent": true,
+    "w3a_off": true,
+    "protected_function_conflict": false
+  },
+  "driver": {
+    "name": "xdma_ahd_pcie",
+    "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "source_or_configuration_changed": false,
+    "loaded_by_task": true,
+    "final_unload_outcome": "UNPROVEN_TIMEOUT"
+  },
+  "autoinit_nack": {
+    "source_exposed": true,
+    "logical_address": "0x00002114",
+    "mask": "0x0000FFFF",
+    "scope": "AGGREGATE_NVP_AUTOINIT_NACKS",
+    "fresh_read_performed": true,
+    "read_count": 1,
+    "counter_value": 0,
+    "cleared_before_read": false,
+    "new_i2c_transactions": 0
+  },
+  "campaign": {
+    "PRE_FULL_SCANS": 0,
+    "prepare": "ISSUED_ONCE_COMPLETION_IDENTITY_GATE_FAILED",
+    "prepare_commands": 1,
+    "apply_a": "NOT_RUN",
+    "apply_a_commands": 0,
+    "fresh_post_a_scans": 0,
+    "recover": "NOT_RUN",
+    "apply_b": "NOT_RUN",
+    "fresh_post_b_scans": 0,
+    "selected_pn": "NONE",
+    "fresh_ch3_sync": "NOT_ESTABLISHED",
+    "fresh_f0_f2_f3_a8_novid": "NOT_MEASURED",
+    "ch2_impact": "NOT_ESTABLISHED",
+    "route": "NOT_RUN"
+  },
+  "capture": {
+    "sessions": 0,
+    "bytes": 0,
+    "records": 0,
+    "complete_lines": 0,
+    "frame_created": false,
+    "png_created": false
+  },
+  "budgets": {
+    "build_invocations": 0,
+    "program_invocations": 0,
+    "reboot_invocations": 0,
+    "xsim_invocations": 0,
+    "work_ssh_connections": 1,
+    "failed_work_reconnect_attempts": 0,
+    "cleanup_connections_used": 2,
+    "cleanup_connections_reserved": 2
+  },
+  "prohibited_changes": {
+    "rtl": 0,
+    "firmware_build": 0,
+    "dma": 0,
+    "driver_source": 0,
+    "camera_configuration_outside_candidate2_prepare": 0,
+    "xsim": 0
+  },
+  "private_evidence_sha256": {
+    "activation": "82C7A7A1CCD16436997F7436E7920030DAC7B2F938A11511F162303771F6C6AF",
+    "autoinit_nack_measurement": "2A049B98B372FBA72346861906717181C508451BA1B7888FDC3BA8D48F71143B",
+    "campaign_failure": "1FC871091A4F799024399813DE8C99456CD980E6E74F9F9879620096DB16F49B",
+    "cleanup1_inspection": "03A7336A616DCC3A0433E6824BA91DBF7A2F36CD659D8F11E1E631C8ACCF3A81"
+  }
+}
