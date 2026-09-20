@@ -1,0 +1,15 @@
+gate,result,evidence
+MMIO_DEFECT_REPRODUCTION,PASS,exact bounded deadlock signature
+FOCUSED_PATCH_XSIM,PASS,old loader plus SCAN1 control plus patched loader
+PRIVATE_SOURCE_PUBLICATION,PASS,private remote ref equals patched commit
+ONE_IMPLEMENTATION,PASS,1/1 used
+ROUTE,PASS,zero unrouted and partial nets
+ROUTED_LUT_LIMIT,PASS,19695 <= 20384
+AGGREGATE_BUS_SKEW,PASS,11/11 minimum +1.119 ns
+ACTIVE_XDC_CONTENT,PASS_EXPLAINED,161/162 lines sequence-identical; one output-path header
+FINAL_TIMING_SUMMARY,NOT_RUN,first blocker before report
+FINAL_DRC,NOT_RUN,first blocker before report
+CDC_LOCAL,UNRESOLVED,realized check not reached
+BITSTREAM,NONE,write_bitstream attempts 0
+PREPARE_ONLY_SCOPED_ADMISSION,BLOCKED,required final gates incomplete
+DUT_UNTOUCHED,PASS,all hardware counters zero

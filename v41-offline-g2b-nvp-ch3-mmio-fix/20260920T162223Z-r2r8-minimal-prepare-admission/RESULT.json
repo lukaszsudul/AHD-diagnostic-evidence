@@ -1,0 +1,93 @@
+{
+  "schema": "AHD_V41_CH3_R2R8_PUBLIC_RESULT_V1",
+  "result": "BLOCKED_NO_BITSTREAM",
+  "engineering_patch": "PASS",
+  "prepare_only_scoped_admission": "BLOCKED",
+  "first_blocker": "FINALIZER_RAW_ACTIVE_XDC_HASH_SELF_REFERENTIAL_HEADER_MISMATCH_AFTER_SINGLE_ALLOWED_DCP_REOPEN",
+  "base": {
+    "commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3"
+  },
+  "patched": {
+    "commit": "b2f80cf4fda1775ab34804a246cb7be61e0ecd62",
+    "tree": "fd19d5e27923f69d16d2d8679db85d7813124c37",
+    "source_visibility": "PRIVATE_CONFIRMED"
+  },
+  "xsim": {
+    "old_loader": "PASS_EXPECTED_EXACT_DEADLOCK_REPRODUCTION",
+    "scan1_control": "PASS_UNCHANGED_COMMON_PATH",
+    "patched_loader": "PASS",
+    "prepare_model": "PASS_TRANSACTIONAL_MODEL",
+    "hardware_claim": "NONE"
+  },
+  "implementation": {
+    "budget": "1/1_USED",
+    "route": "PASS_FULLY_ROUTED",
+    "post_opt_lut": 20150,
+    "routed_lut": 19695,
+    "routed_lut_limit": 20384,
+    "routed_lut_margin": 689,
+    "ff": 21559,
+    "bram_tile": 28.5
+  },
+  "dcp": {
+    "size_bytes": 62555747,
+    "sha256": "F589B7C6151EC2EAB576B358837D0A331B02D69A11DF30F5BCF5910416EEBA64",
+    "published": false
+  },
+  "bitstream": null,
+  "bus_skew": {
+    "result": "PASS_AGGREGATE_11_OF_11",
+    "minimum_slack_ns": 1.119,
+    "negative_slacks": 0,
+    "report_calls": 1
+  },
+  "active_xdc_comparison": {
+    "method": "SEQUENTIAL_NO_SORT",
+    "lines": 162,
+    "differing_lines": 1,
+    "difference": "SELF_REFERENTIAL_COMMAND_OUTPUT_PATH_HEADER_ONLY",
+    "payload_sequence_equal": true,
+    "payload_sha256": "64EB95F3F938C4803A83B818291FB3CA42BF4974C50CC20FB3FD7A53AF15BF9D",
+    "active_bus_skew_constraints": 11,
+    "retry_performed": false
+  },
+  "final_gates": {
+    "timing_summary": "NOT_RUN_FIRST_BLOCKER",
+    "pulse_width": "NOT_RUN_FIRST_BLOCKER",
+    "constraints_coverage": "NOT_RUN_FIRST_BLOCKER",
+    "drc": "NOT_RUN_FIRST_BLOCKER",
+    "cdc_local": "UNRESOLVED_REALIZED_CHECK_NOT_REACHED",
+    "cdc_full_rerun": "NOT_RUN_SCOPED_PREPARE_ADMISSION"
+  },
+  "scope": {
+    "qualification_scope": "NOT_GRANTED_BLOCKED_BEFORE_PREPARE_ONLY_SCOPED_ADMISSION",
+    "hardware_qualification": "NOT_RUN",
+    "camera_configuration_admission": "NOT_GRANTED_BY_THIS_TASK",
+    "capture_admission": "NOT_GRANTED",
+    "product_qualification": "NOT_CLAIMED"
+  },
+  "counters": {
+    "dut_contact": 0,
+    "hardware_prepare": 0,
+    "apply": 0,
+    "oneshot": 0,
+    "scans": 0,
+    "dma": 0,
+    "capture": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "implementation": 1,
+    "controlled_dcp_reopen": 1,
+    "successful_final_timing_reports": 0,
+    "final_drc_reports": 0,
+    "write_bitstream_attempts": 0
+  },
+  "ssot": {
+    "revision": 9,
+    "files_checked": 19,
+    "all_unchanged": true,
+    "project_state_sha256": "B441296763785CB0FD8764DB78175F1F0D2A5DA891D174FEF364417901C6A6C2"
+  }
+}
