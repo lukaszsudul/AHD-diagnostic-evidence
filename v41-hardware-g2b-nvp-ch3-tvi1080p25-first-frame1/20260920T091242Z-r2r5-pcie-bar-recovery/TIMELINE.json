@@ -1,0 +1,83 @@
+{
+  "schema": "AHD_V41_CH3_R2R5_PUBLIC_TIMELINE_V1",
+  "clock_rule": "WINDOWS_UTC_DUT_UTC_AND_MONOTONIC_SEPARATE_NO_GUESSED_ALIGNMENT",
+  "events": [
+    {
+      "event": "R2R4_LAST_GOOD_GLOBAL_READS",
+      "clock": "DUT_UTC",
+      "time": "NOT_RETAINED",
+      "bound": "2026-09-20T07:49:18Z archive-second before failure",
+      "values": "loader 0xC3C00000 scanner 0x00000011 stream OFF"
+    },
+    {
+      "event": "R2R4_PREPARE_WRITE",
+      "clock": "DUT_UTC",
+      "time": "NOT_RETAINED",
+      "monotonic": "NOT_RETAINED",
+      "count": 1
+    },
+    {
+      "event": "R2R4_FIRST_BAD_READ",
+      "clock": "DUT_UTC",
+      "time": "NOT_RETAINED",
+      "monotonic": "NOT_RETAINED",
+      "raw": "NOT_RETAINED"
+    },
+    {
+      "event": "R2R4_FIRST_RETAINED_ALL_ONES",
+      "clock": "DUT_UTC",
+      "time": "2026-09-20T07:52:46.635891Z",
+      "detail": "8 distinct direct MMIO reads"
+    },
+    {
+      "event": "R2R4_CLEANUP2_CONNECTION_START",
+      "clock": "WINDOWS_UTC",
+      "time": "2026-09-20T07:54:12.2624227Z"
+    },
+    {
+      "event": "R2R4_NORMAL_RMMOD_INVOKED",
+      "clock": "DUT_UTC",
+      "time": "NOT_RETAINED",
+      "pid": "NOT_RETAINED",
+      "completion": "NOT_RETAINED"
+    },
+    {
+      "event": "CURRENT_BOOT_AHD_ENUMERATION",
+      "clock": "DUT_JOURNAL_NORMALIZED_TO_UTC",
+      "time": "2026-09-20T07:54:40.738599Z",
+      "boot_id": "a7398b07-9452-4b60-ada1-46ca76ad3819",
+      "causal_attribution": "NONE"
+    },
+    {
+      "event": "R2R4_CONTROLLER_WATCHDOG",
+      "clock": "WINDOWS_UTC",
+      "time": "2026-09-20T07:57:12.4091233Z",
+      "duration_seconds": 180
+    },
+    {
+      "event": "R2R5_SINGLE_SSH_START",
+      "clock": "WINDOWS_UTC",
+      "time": "2026-09-20T09:12:41.1751520Z"
+    },
+    {
+      "event": "R2R5_CONFIG_READ",
+      "clock": "DUT_UTC",
+      "time": "2026-09-20T09:12:42.647746Z",
+      "requested_bytes": 40,
+      "returned_bytes": 40,
+      "result": "PASS"
+    },
+    {
+      "event": "R2R5_SINGLE_SSH_END",
+      "clock": "WINDOWS_UTC",
+      "time": "2026-09-20T09:12:42.3555584Z",
+      "note": "DUT timestamp is later than controller receipt end; clocks are intentionally not aligned"
+    },
+    {
+      "event": "R2R5_HARD_STOP",
+      "clock": "DUT_UTC",
+      "time": "2026-09-20T09:12:42.782054Z",
+      "detail": "No PREPARE, BAR read, driver load, unload, reset, reboot, scanner or capture"
+    }
+  ]
+}

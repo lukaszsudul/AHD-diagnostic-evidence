@@ -1,0 +1,103 @@
+{
+  "schema": "AHD_V41_CH3_R2R5_PUBLIC_HOST_STATE_AND_CLOSEOUT_V1",
+  "created_utc": "2026-09-20T09:12:42Z",
+  "engineering_gate": "PASS_SCOPED_INCIDENT_REVIEW_AND_CURRENT_HOST_CLOSEOUT",
+  "classifications": {
+    "FIRST_BAD_READ": "NOT_RETAINED",
+    "HOST_IDENTITY_CHECK": "PASS_CORRECT_MASK",
+    "PCI_CONFIG_ACCESS": "AVAILABLE_ONE_40_BYTE_READ",
+    "BAR_ACCESS": "NOT_RETESTED_NO_DRIVER",
+    "UNLOAD": "R2R4_COMPLETION_RECEIPT_NOT_RETAINED_PROCESS_ABSENT_AFTER_BOOT_CHANGE",
+    "HOST_CLOSEOUT": "PASS_NO_MODULE_BINDING_NODES_HANDLES_OR_MAPPINGS",
+    "HARDWARE_STATE": "PCI_ENDPOINT_CONFIG_RESPONDS_BAR_CONTENT_UNKNOWN",
+    "RECOVERY_ACTION_REQUIRED": "OWNER_GOVERNED_STALE_LOCK_HANDOFF_OR_RELEASE_NO_RESET_OR_RESTART_JUSTIFIED"
+  },
+  "boot": {
+    "r2r4": "b1cc6fd6-2a07-48b7-8c5f-92c97b64248f",
+    "r2r5": "a7398b07-9452-4b60-ada1-46ca76ad3819",
+    "changed": true,
+    "current_ahd_enumeration_utc": "2026-09-20T07:54:40.738599Z",
+    "cleanup2_window_start_utc": "2026-09-20T07:54:12.2624227Z",
+    "cleanup2_watchdog_utc": "2026-09-20T07:57:12.4091233Z",
+    "causal_attribution": "NOT_ESTABLISHED"
+  },
+  "pci": {
+    "bdf": "0000:01:00.0",
+    "vendor_device": "10ee:7011",
+    "subsystem": "10ee:0007",
+    "class": "0x058000",
+    "config_read_count": 1,
+    "config_requested_bytes": 40,
+    "config_returned_bytes": 40,
+    "config_all_ones": false,
+    "command": "0x0000",
+    "status": "0x0010",
+    "bar0": "0xF6E00000",
+    "bar0_size_bytes": 131072,
+    "bar1": "0xF6E20000",
+    "bar1_size_bytes": 65536,
+    "link_speed": "5.0 GT/s PCIe",
+    "link_width": 1,
+    "driver": null,
+    "protected_10ee_7021_f0a1_present": false
+  },
+  "current_host": {
+    "old_unload_processes": 0,
+    "new_rmmod_attempts": 0,
+    "module_present": false,
+    "driver_binding_present": false,
+    "xdma_nodes": 0,
+    "xdma_fd_holders": 0,
+    "xdma_mappings": 0,
+    "proc_scan_unreadable": 0,
+    "bar_read_sets": 0,
+    "bar_read_words": 0
+  },
+  "kernel_log": {
+    "scope": "CURRENT_BOOT_BOUNDED",
+    "normal_ahd_enumeration_present": true,
+    "matching_aer_dpc_hung_fatal_timeout_xdma_faults": 0,
+    "prior_boot_root_cause_available": false,
+    "private_log_sha256": "C487AAE496500BE33152D0E3238E9C650645208AA92E6BA4A5FC94804D641EC6"
+  },
+  "locks": {
+    "remote_dut": "PRESERVED_OLD_BOOT_RECEIPT",
+    "remote_acquisition_pid": 5004,
+    "remote_acquisition_pid_currently_present": false,
+    "local_controller": "PRESERVED_OLD_BOOT_RECEIPT",
+    "matching_local_controller_processes": 0,
+    "release_executed": false,
+    "reason": "EXISTING_RELEASE_CHAIN_REQUIRES_BOOT_CONTINUITY",
+    "handoff": "NO_PREPARE_NO_SCANNER_NO_CAPTURE"
+  },
+  "counts": {
+    "PREPARE": 0,
+    "APPLY_A": 0,
+    "APPLY_B": 0,
+    "RECOVER_LOADER": 0,
+    "ONESHOT": 0,
+    "NEW_I2C": 0,
+    "NEW_C2H": 0,
+    "BUILD": 0,
+    "PROGRAM": 0,
+    "REBOOT": 0,
+    "RESET": 0,
+    "XSIM": 0,
+    "CONFIG_READ_ATTEMPTS": 1,
+    "BAR_READ_SETS": 0,
+    "NEW_NORMAL_RMMOD_ATTEMPTS": 0,
+    "WORK_SSH_CONNECTIONS": 1,
+    "FAILED_WORKING_ACCESS_ATTEMPTS": 0,
+    "CLEANUP_CONNECTIONS": 0
+  },
+  "private_evidence_sha256": {
+    "connection_receipt": "B3AFD0CCCD4D0F1E2680C5A1EB8389CE4BBC0E7E91B86CF5DBCDF4F635E16640",
+    "remote_archive": "E333FAD79AE4D3C50392C134C4ABD7B64C484753542AF2CF207BC15383994DB0",
+    "remote_manifest": "1D6AC2849E15A508337292CE37CF4448E13E4695795809EA230F621D34DF3478",
+    "live_result": "55E6FB546CE041598C2CD166B19FF6001B9E38FD92407BED3D6B8E945467E586",
+    "config_result": "B32DFCE552D89E6C39EA32283DF109950A42F87226A91BF961EDC1E2AAB004EF",
+    "initial_kernel_survey": "31C71A5AFE4E56F26FBFF778CE2359895A95F3AF23B0BE246C1BF9D1FA599AC9",
+    "ownership_observation": "2037F98642BE24CD7A4662749D65B5CF1D1A71D96D17C26998BB7176D7424021",
+    "handoff": "D00A0D4D9A51E82DFD1186D11FC7994F7C5D997F9CFB72F2534C26213E488A43"
+  }
+}

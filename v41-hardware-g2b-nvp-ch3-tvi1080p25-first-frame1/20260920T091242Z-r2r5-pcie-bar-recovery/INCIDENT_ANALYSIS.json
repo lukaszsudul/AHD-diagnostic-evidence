@@ -1,0 +1,56 @@
+{
+  "schema": "AHD_V41_CH3_R2R5_PUBLIC_INCIDENT_ANALYSIS_V1",
+  "created_utc": "2026-09-20T09:12:42Z",
+  "parent_evidence_commit": "99cd3ad4606d477e03cbd6004c1a7f1c3841587a",
+  "source": {
+    "commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3",
+    "loader_rtl_sha256": "83B3B750D7A4E6616D5879B81E510E3822B52F568CDC9B0005BD8A70A79EEF0C",
+    "executed_backend_sha256": "A491718E2901E84F7B4FCD405C55045C491AFA25FBBA03DFDB1042BB83342EB9",
+    "verified_mmio_device_sha256": "E31CF884F3F16F9D7F51EE4EBB04630E41267665A078D94BDF9583C7CB8AE7C8"
+  },
+  "first_bad_read": {
+    "result": "NOT_RETAINED",
+    "logical_address": "0x00012400",
+    "node": "/dev/xdma0_user",
+    "pread_offset": "0x00012400",
+    "requested_bytes": 4,
+    "returned_bytes": "PROVEN_4_BY_CONTROL_FLOW_NOT_LOGGED",
+    "errno": "NONE_DELIVERED_BY_CONTROL_FLOW_NOT_LOGGED",
+    "utc": "NOT_RETAINED",
+    "monotonic": "NOT_RETAINED",
+    "first_post_write_line": 225,
+    "identity_failing_read_line": 227,
+    "identity_exception_line": 228
+  },
+  "identity": {
+    "mask": "0xFFC00000",
+    "expected": "0xC3C00000",
+    "host_check": "PASS_CORRECT",
+    "rtl_check": "PASS_CORRECT",
+    "full_virgin_word_required_after_prepare": false,
+    "all_ones_passes": false
+  },
+  "first_retained_all_ones": {
+    "phase": "R2R4_CLEANUP1",
+    "utc": "2026-09-20T07:52:46.635891Z",
+    "distinct_reads": 8,
+    "value": "0xFFFFFFFF",
+    "direct_four_byte_reads": true,
+    "fallback_value": false,
+    "relationship_to_first_bad_read": "NOT_PROVEN"
+  },
+  "root_cause": {
+    "result": "UNRESOLVED",
+    "proven_host_validator_defect": false,
+    "proven_physical_card_loss": false,
+    "proven_prepare_completion": false,
+    "proven_causal_layer": "NONE"
+  },
+  "private_evidence_sha256": {
+    "first_bad_read_analysis": "65201173FEC43A6052D166410EA437700CE27D7529592A17E46855B43A09D9DE",
+    "decoder_selftest": "8490B9F01FB387AD069583AE9BA1E360890584E37D4F166BC5A254FD3D82AB6F",
+    "r2r4_campaign_failure": "1FC871091A4F799024399813DE8C99456CD980E6E74F9F9879620096DB16F49B",
+    "r2r4_cleanup1_inspection": "03A7336A616DCC3A0433E6824BA91DBF7A2F36CD659D8F11E1E631C8ACCF3A81"
+  }
+}
