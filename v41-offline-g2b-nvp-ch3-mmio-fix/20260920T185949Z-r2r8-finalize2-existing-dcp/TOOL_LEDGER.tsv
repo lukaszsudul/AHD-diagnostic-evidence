@@ -1,0 +1,13 @@
+stage	status	calls_or_count	detail
+DCP_OPEN	PASS	1	exact byte-identical working copy
+TIMING_SUMMARY	PASS	1	min_max whole routed design; saved before parsing
+FINAL_DRC	PASS_WITH_BASELINE_WARNINGS	1	default entire design; 0 errors; 0 critical; 24 exact baseline warnings
+CDC_INVENTORY	PASS	1	realized cell pin clock reset fanin inventory
+CDC_COVERAGE_CORRECTION	PASS	1	nworst 2 duplicated corners and capped coverage; changed to nworst 1 max_paths 64
+FULL_CDC	NOT_RUN	0	scoped PREPARE admission
+BUS_SKEW	PASS_REUSED_EXACT	0	11 of 11; minimum +1.119 ns
+WRITE_BITSTREAM	PASS	1	mandatory internal DRC 0 errors; first bitstream created
+BIT_HEADER_PARSER_1	TECHNICAL_FAIL	1	Python command unavailable; existing bitstream preserved
+BIT_HEADER_PARSER_2	TECHNICAL_FAIL_FORMAT_MODEL	1	standard header omits speed grade; existing bitstream preserved
+BIT_HEADER_PARSER_V2	PASS	1	device and package header plus exact DCP target gate
+DUT_CONTACT	NOT_RUN	0	offline task
