@@ -1,0 +1,139 @@
+{
+  "PREPARE": "COMPLETION_UNPROVEN",
+  "admission": {
+    "autoinit_nack_count": 0,
+    "loader_status": "0xC3C00000",
+    "oneshot_before_prepare": 0,
+    "pre_full_scans": 0,
+    "result": "PASS",
+    "scanner_status": "0x00000011",
+    "stream_control": "0x00000000",
+    "transport_status": "0x000000C4",
+    "w3a_status": "0x00000000"
+  },
+  "apply_a": "NOT_RUN",
+  "apply_b": "NOT_RUN",
+  "c2h": {
+    "bytes": 0,
+    "lines_of_1080": 0,
+    "records": 0,
+    "sessions": 0
+  },
+  "camera_ready": false,
+  "candidate_2": {
+    "bitstream_sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "build_flags": "0x00000002",
+    "source_commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "source_tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3"
+  },
+  "ch2_post_profile_gate": "NOT_RUN",
+  "cleanup": "CONTAINMENT_MODULE_AND_LOCKS_PRESERVED",
+  "counts": {
+    "ACK_CLEAR": 0,
+    "APPLY_A": 0,
+    "APPLY_B": 0,
+    "BUILD": 0,
+    "C2H_SESSION": 0,
+    "DRIVER_LOAD": 1,
+    "DRIVER_UNLOAD": 0,
+    "MMIO_WRITES": 1,
+    "ONESHOT": 0,
+    "PREPARE": 1,
+    "PROGRAM": 0,
+    "REBOOT": 0,
+    "RECOVER": 0,
+    "RESET": 0,
+    "XSIM": 0
+  },
+  "engineering_gate": "BLOCKED_PREPARE_COMPLETION_UNPROVEN_FIRST_POLL_ALL_ONES",
+  "first_invalid_response": {
+    "call_duration_ms": 229.379993,
+    "call_utc_after": "2026-09-20T13:26:25.486848+00:00",
+    "call_utc_before": "2026-09-20T13:26:25.257467+00:00",
+    "errno": null,
+    "exception_type": null,
+    "offset": "0x00012400",
+    "operation_number": 68,
+    "phase": "PREPARE_POLL_0001",
+    "raw_bytes_hex": "FFFFFFFF",
+    "requested_length": 4,
+    "returned_length": 4,
+    "validation": "ALL_ONES_HARD_STOP",
+    "value_le_hex": "0xFFFFFFFF"
+  },
+  "fresh_camera_registers": {
+    "A8": "NOT_MEASURED",
+    "F0": "NOT_MEASURED",
+    "F2": "NOT_MEASURED",
+    "F3": "NOT_MEASURED",
+    "NOVID": "NOT_MEASURED",
+    "R": "NOT_APPLICABLE",
+    "T": "NOT_APPLICABLE"
+  },
+  "png": "NOT_CREATED",
+  "prepare": {
+    "all_io_begin_have_io_return": true,
+    "command_policy": {
+      "poll_interval_seconds": 0.02,
+      "timeout_seconds": 60.0
+    },
+    "durable_log_private": true,
+    "durable_log_sha256": "DC30728F0CAEE8F20A061D043BBC8308F5268C56340EE5116C915C338A35F3A8",
+    "first_response_after_prepare": {
+      "call_duration_ms": 229.379993,
+      "call_utc_after": "2026-09-20T13:26:25.486848+00:00",
+      "call_utc_before": "2026-09-20T13:26:25.257467+00:00",
+      "errno": null,
+      "exception_type": null,
+      "offset": "0x00012400",
+      "operation_number": 68,
+      "phase": "PREPARE_POLL_0001",
+      "raw_bytes_hex": "FFFFFFFF",
+      "requested_length": 4,
+      "returned_length": 4,
+      "validation": "ALL_ONES_HARD_STOP",
+      "value_le_hex": "0xFFFFFFFF"
+    },
+    "last_status_before_prepare": {
+      "identity": "CANDIDATE2_VIRGIN_IDLE",
+      "offset": "0x00012400",
+      "operation_number": 66,
+      "phase": "PREPARE_LAST_PRE_STATUS",
+      "raw_bytes_hex": "0000C0C3",
+      "returned_length": 4,
+      "value_le_hex": "0xC3C00000"
+    },
+    "operation_count": 68,
+    "operations_after_first_invalid": 0,
+    "prepare_write": {
+      "exception_type": null,
+      "host_write_completed": true,
+      "loader_completion_proven": false,
+      "offset": "0x0001240C",
+      "operation_number": 67,
+      "returned_length": 4,
+      "write_bytes_hex": "01000000"
+    },
+    "result": "COMPLETION_UNPROVEN",
+    "retry": "NOT_PERFORMED",
+    "schema": "AHD_V41_CH3_R2R7_PUBLIC_PREPARE_TRANSCRIPT_V1"
+  },
+  "real_frame": false,
+  "recover": "NOT_RUN",
+  "route": "NOT_RUN",
+  "runtime": {
+    "bar_base": "0x00000000F6E00000",
+    "bar_length": "0x20000",
+    "bdf": "0000:01:00.0",
+    "boot_id": "a7398b07-9452-4b60-ada1-46ca76ad3819",
+    "driver": "xdma_ahd_pcie",
+    "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77"
+  },
+  "schema": "AHD_V41_CH3_R2R7_PUBLIC_RESULT_V1",
+  "scope": {
+    "bar_mapping_is_camera_synchronization": false,
+    "host_write_completion_is_loader_completion": false,
+    "prepare_repair_claim": "NONE"
+  },
+  "user_outcome": "NO_FRESH_CH3_SYNC_NO_FRAME"
+}

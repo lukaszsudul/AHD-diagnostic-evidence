@@ -1,0 +1,47 @@
+{
+  "all_io_begin_have_io_return": true,
+  "command_policy": {
+    "poll_interval_seconds": 0.02,
+    "timeout_seconds": 60.0
+  },
+  "durable_log_private": true,
+  "durable_log_sha256": "DC30728F0CAEE8F20A061D043BBC8308F5268C56340EE5116C915C338A35F3A8",
+  "first_response_after_prepare": {
+    "call_duration_ms": 229.379993,
+    "call_utc_after": "2026-09-20T13:26:25.486848+00:00",
+    "call_utc_before": "2026-09-20T13:26:25.257467+00:00",
+    "errno": null,
+    "exception_type": null,
+    "offset": "0x00012400",
+    "operation_number": 68,
+    "phase": "PREPARE_POLL_0001",
+    "raw_bytes_hex": "FFFFFFFF",
+    "requested_length": 4,
+    "returned_length": 4,
+    "validation": "ALL_ONES_HARD_STOP",
+    "value_le_hex": "0xFFFFFFFF"
+  },
+  "last_status_before_prepare": {
+    "identity": "CANDIDATE2_VIRGIN_IDLE",
+    "offset": "0x00012400",
+    "operation_number": 66,
+    "phase": "PREPARE_LAST_PRE_STATUS",
+    "raw_bytes_hex": "0000C0C3",
+    "returned_length": 4,
+    "value_le_hex": "0xC3C00000"
+  },
+  "operation_count": 68,
+  "operations_after_first_invalid": 0,
+  "prepare_write": {
+    "exception_type": null,
+    "host_write_completed": true,
+    "loader_completion_proven": false,
+    "offset": "0x0001240C",
+    "operation_number": 67,
+    "returned_length": 4,
+    "write_bytes_hex": "01000000"
+  },
+  "result": "COMPLETION_UNPROVEN",
+  "retry": "NOT_PERFORMED",
+  "schema": "AHD_V41_CH3_R2R7_PUBLIC_PREPARE_TRANSCRIPT_V1"
+}

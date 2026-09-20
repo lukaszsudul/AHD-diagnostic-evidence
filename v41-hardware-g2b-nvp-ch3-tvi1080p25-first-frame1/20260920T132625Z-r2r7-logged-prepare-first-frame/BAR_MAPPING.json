@@ -1,0 +1,34 @@
+{
+  "bdf": "0000:01:00.0",
+  "boot_id": "a7398b07-9452-4b60-ada1-46ca76ad3819",
+  "char_sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/xdma/xdma0_user",
+  "dev_t": "511:0",
+  "driver": "xdma_ahd_pcie",
+  "module_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+  "node": "/dev/xdma0_user",
+  "offsets": {
+    "0x12400": {
+      "offset": 74752,
+      "within_user_bar": true
+    },
+    "0x1240C": {
+      "offset": 74764,
+      "within_user_bar": true
+    }
+  },
+  "physical_bar": {
+    "base_hex": "0x00000000F6E00000",
+    "index": 0,
+    "length_hex": "0x20000"
+  },
+  "probe_mapping": {
+    "bar_count": 2,
+    "bypass_bar_index": -1,
+    "config_bar_index": 1,
+    "line": "2026-09-20T15:26:24.717065+02:00 VCDE-DUT-1 kernel: xdma_ahd_pcie:identify_bars: 2 BARs: config 1, user 0, bypass -1.",
+    "user_bar_index": 0
+  },
+  "result": "PASS_BEFORE_PREPARE",
+  "schema": "AHD_V41_CH3_R2R7_PUBLIC_BAR_MAPPING_V1",
+  "translation": "physical BAR base plus byte offset; 4-byte pread/pwrite"
+}
