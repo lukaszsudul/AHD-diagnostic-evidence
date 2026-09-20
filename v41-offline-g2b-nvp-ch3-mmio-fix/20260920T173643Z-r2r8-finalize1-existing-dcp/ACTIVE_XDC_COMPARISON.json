@@ -1,0 +1,37 @@
+{
+  "schema": "AHD_V41_CH3_R2R8_FINALIZE1_PUBLIC_XDC_COMPARISON_V1",
+  "result": "PASS",
+  "raw_export_identity": "DIFFERENT_EXPECTED_OUTPUT_PATH_METADATA_ONLY",
+  "raw_sha256": {
+    "historical_a": "C1CB634BE0E6DF3A4F76110E69DDF0733E5C624492B32DE35EE30FC0174FD39B",
+    "historical_b": "1CF0A8E34AEBF0F11E1267CC77227E3E8B23FB9F4E8102B9189D85D806E4D348",
+    "finalize1_as_open": "E26B7C9043623EE50E899EE31236B12F432E0B843A500199554F51DF1921095B"
+  },
+  "line_count_each": 162,
+  "excluded_metadata": {
+    "one_based_line": 4,
+    "kind": "VIVADO_GENERATED_COMMAND_USED_COMMENT",
+    "command": "write_xdc",
+    "options": "-type timing -force",
+    "differing_field": "OUTPUT_PATH_ARGUMENT_ONLY",
+    "preamble_before_tcl": true,
+    "standalone_comment": true,
+    "not_in_multiline_or_continuation": true
+  },
+  "ordered_payload_comparison": "PASS_SEQUENCE_IDENTICAL",
+  "payload_hash_rule": "Remove exactly verified one-based line 4, join remaining logical lines with UTF-8 LF bytes, no BOM, no trailing LF, and perform no other normalization.",
+  "payload_line_count": 161,
+  "payload_sha256": "64EB95F3F938C4803A83B818291FB3CA42BF4974C50CC20FB3FD7A53AF15BF9D",
+  "difference_count_after_exclusion": 0,
+  "active_bus_skew_constraints": 11,
+  "comparator_selftest": {
+    "result": "PASS_7_OF_7",
+    "actual_pair_accept": "PASS",
+    "constraint_value_reject": "PASS",
+    "selector_reject": "PASS",
+    "command_order_reject": "PASS",
+    "command_removal_reject": "PASS",
+    "command_addition_reject": "PASS",
+    "export_option_reject": "PASS"
+  }
+}
