@@ -1,0 +1,36 @@
+{
+  "bdf": "0000:01:00.0",
+  "char_sysfs": "/sys/devices/pci0000:00/0000:00:01.1/0000:01:00.0/xdma/xdma0_user",
+  "dev_t": "511:0",
+  "driver": "xdma_ahd_pcie",
+  "module_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+  "node": "/dev/xdma0_user",
+  "offset_0x12400": {
+    "length": 4,
+    "offset": 74752,
+    "translated_physical": 4141949952,
+    "translated_physical_hex": "0x00000000F6E12400",
+    "within_user_bar": true
+  },
+  "physical_bar": {
+    "base_hex": "0x00000000F6E00000",
+    "index": 0,
+    "length_hex": "0x20000"
+  },
+  "probe_mapping": {
+    "bar_count": 2,
+    "bypass_bar_index": -1,
+    "config_bar_index": 1,
+    "line": "2026-09-20T14:10:03.997404+02:00 VCDE-DUT-1 kernel: xdma_ahd_pcie:identify_bars: 2 BARs: config 1, user 0, bypass -1.",
+    "user_bar_index": 0
+  },
+  "result": "PASS",
+  "schema": "AHD_V41_CH3_R2R6_PUBLIC_BAR_MAPPING_V1",
+  "source_chain": [
+    "identify_bars assigns and logs user_bar_idx",
+    "create_xcdev creates CHAR_USER with user_bar_idx",
+    "char_ctrl_read uses xdev->bar[xcdev->bar] + file offset"
+  ],
+  "source_provenance_sha256": "BE6D67216552AA86D020BA5C3641C9BAAC21A0D53143CE17C2498F52AD3ACBE2",
+  "translation": "physical BAR base plus byte offset; 4-byte pread"
+}

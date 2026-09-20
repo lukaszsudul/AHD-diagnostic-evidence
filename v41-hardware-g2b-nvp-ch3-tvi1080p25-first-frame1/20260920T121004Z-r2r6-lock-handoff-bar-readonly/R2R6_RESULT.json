@@ -1,0 +1,85 @@
+{
+  "bar_read_only_result": "PASS_24_DURABLY_LOGGED_READS",
+  "boot_id": "a7398b07-9452-4b60-ada1-46ca76ad3819",
+  "candidate_2": {
+    "bitstream_sha256": "2FA12074A874E89EA758DC45BE836F099D192CD5A5FBA83C23FC2E79CE4C713A",
+    "build_flags": "0x00000002",
+    "source_commit": "d8dc9592037ca73e2321b30fd1f65a2a3f8b92e7",
+    "source_tree": "46bc7d8c6269ce74c14b72af771b29a410e84fb3"
+  },
+  "cleanup": "PASS_MODULE_UNLOADED_NO_NODES_HANDLES_OR_MAPPINGS",
+  "counts": {
+    "ACK_CLEAR": 0,
+    "APPLY_A": 0,
+    "APPLY_B": 0,
+    "BAR_READ_ATTEMPTS": 24,
+    "BUILD": 0,
+    "C2H_OPEN": 0,
+    "CAPTURE": 0,
+    "DMA_TRANSFER": 0,
+    "DRIVER_LOAD": 1,
+    "DRIVER_UNLOAD": 1,
+    "H2C_OPEN": 0,
+    "MMIO_TEST_WRITES": 0,
+    "NEW_I2C": 0,
+    "ONESHOT": 0,
+    "PCI_CONFIG_TEST_WRITES": 0,
+    "PREPARE": 0,
+    "PROGRAM": 0,
+    "REBOOT": 0,
+    "RECOVER_LOADER": 0,
+    "RESET": 0,
+    "XSIM": 0
+  },
+  "driver": {
+    "load_count": 1,
+    "load_result": "PASS",
+    "module": "xdma_ahd_pcie",
+    "sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "unload_count": 1,
+    "unload_result": "PASS"
+  },
+  "engineering_gate": "PASS_SCOPED_BAR_READONLY_CHECK",
+  "final_state": {
+    "driver_binding": null,
+    "locks": "RELEASED",
+    "module_present": false,
+    "open_handles": [],
+    "xdma_nodes": []
+  },
+  "first_invalid_response": "NONE",
+  "read_count": 24,
+  "runtime_state": {
+    "autoinit_nack_count": 0,
+    "autoinit_nack_raw": 0,
+    "loader": {
+      "campaign": 0,
+      "ch2_impact": false,
+      "ch3_f0": 0,
+      "ch3_novid": 0,
+      "engine": 0,
+      "magic": 195,
+      "raw": 3284140032,
+      "route_verified": false,
+      "terminal_code": 0,
+      "variant_b": false,
+      "version": 3
+    },
+    "loader_safe_idle_or_done": true,
+    "safe_for_normal_remove": true,
+    "scanner_clean_idle": true,
+    "scanner_status_raw": 17,
+    "stream_control_raw": 0,
+    "transport_quiescent": true,
+    "transport_status_raw": 196,
+    "w3a_idle": true,
+    "w3a_status_raw": 0
+  },
+  "schema": "AHD_V41_CH3_R2R6_PUBLIC_RESULT_V1",
+  "scope": {
+    "camera_readiness_claim": "NONE",
+    "camera_test_executed": false,
+    "note": "Loader F0/NOVID fields are internal loader state, not a fresh camera measurement.",
+    "prepare_executed": false
+  }
+}
