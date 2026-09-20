@@ -1,0 +1,111 @@
+{
+  "bitstream": {
+    "sha256": "34DFC48E9CCEDD9E4F608624EE51D1D79767E8E74035393576B69C21C07E8CB8",
+    "size": 2192144,
+    "storage": "FPGA_SRAM_VOLATILE_ONLY"
+  },
+  "camera_ch3_owner_attestation": "FRESH_RECEIVED",
+  "cleanup": {
+    "controller_lock_released": true,
+    "driver_loads": 1,
+    "independent_post_cleanup": "PASS",
+    "last_mmio_measurement_utc": "2026-09-20T20:29:13.533272+00:00",
+    "normal_driver_unloads": 1,
+    "prepared_state_not_reread_after_unload": true,
+    "remote_lock_released": true,
+    "result": "PASS_EXACT_MODULE_NORMAL_UNLOAD"
+  },
+  "engineering": "PASS_CAMP_PREPARED",
+  "prepare": {
+    "campaign": "CAMP_PREPARED",
+    "ch2_impact": false,
+    "command_bytes_hex": "01000000",
+    "command_offset_hex": "0x1240C",
+    "deadline_seconds": 60.0,
+    "first_response_after_write_ns": 6591513,
+    "first_response_status": "0xC3C00001",
+    "io_watchdog_seconds": 2.0,
+    "mmio_after_prepare": "PASS",
+    "mmio_during_prepare": "PASS_OBSERVED",
+    "observed_f0_hex": "0x34",
+    "poll_count": 4,
+    "poll_interval_seconds": 0.02,
+    "route_verified": false,
+    "terminal_after_write_ns": 99342702,
+    "terminal_error": "ERR_NONE",
+    "terminal_status": "0xC3CD0042",
+    "variant_b": false,
+    "write_attempts": 1
+  },
+  "prohibited_actions": {
+    "ack_clear": 0,
+    "apply_a": 0,
+    "apply_b": 0,
+    "bitgen": 0,
+    "c2h_open": 0,
+    "capture": 0,
+    "dma_transfer": 0,
+    "h2c_open": 0,
+    "host_recover": 0,
+    "new_rtl": 0,
+    "new_signoff_reports": 0,
+    "oneshot": 0,
+    "opt": 0,
+    "phys_opt": 0,
+    "place": 0,
+    "route": 0,
+    "scan": 0,
+    "synth": 0,
+    "xsim": 0
+  },
+  "qualification": {
+    "camera_configuration": "NOT_RUN",
+    "camera_ready": "NOT_CLAIMED",
+    "capture_admission": "NOT_GRANTED",
+    "hardware_prepare": "PASS",
+    "product_qualification": "NOT_CLAIMED"
+  },
+  "recovery": {
+    "boot_changed": true,
+    "jtag_repeat_after_host_query_error": 0,
+    "order": "JTAG_THEN_WARM_REBOOT",
+    "post_boot_id_sha256": "8B5A47BA80FDA9E923CBB90B52CD0433C362AD645CA10DB64E40675696FEFEDE",
+    "pre_boot_id_sha256": "11C6E6F5C07EECDA164628AEA662658D5AA0E130573D4E6A1E904C6ED7CF90DE",
+    "pre_recovery_rmmod_attempts": 0,
+    "pre_recovery_unbind_attempts": 0,
+    "sram_program_attempts": 1,
+    "warm_reboot_attempts": 1
+  },
+  "result": "PASS_RECOVERY_ACTIVATION_PREPARE_ONLY",
+  "runtime": {
+    "autoinit_nack_count": 1,
+    "bdf": "0000:01:00.0",
+    "config_bar_index": 1,
+    "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "driver_srcversion": "EE8B149D1883AE8C6B1EE31",
+    "image_identity": "PASS",
+    "input_loader_status": "0xC3C00000",
+    "user_bar_index": 0,
+    "user_bar_length_hex": "0x20000"
+  },
+  "schema": "AHD_V41_CH3_R2R9_PUBLIC_RESULT_V1",
+  "scope": "PREPARE_ONLY",
+  "source": {
+    "commit": "b2f80cf4fda1775ab34804a246cb7be61e0ecd62",
+    "tree": "fd19d5e27923f69d16d2d8679db85d7813124c37"
+  },
+  "task": "AHD_V41_CH3_R2R9_RECOVERY_ACTIVATION_PREPARE_ONLY_R1",
+  "technical_corrections": [
+    {
+      "effect": "host_query_error_after_durable PASS markers",
+      "hardware_repeat": 0,
+      "stage": "post_jtag_result_collection"
+    },
+    {
+      "driver_load": 0,
+      "effect": "unrelated OS D-state was retained as evidence but removed from AHD-only blocking predicate",
+      "prepare_write_attempts": 0,
+      "stage": "first_post_reboot_preflight"
+    }
+  ]
+}
