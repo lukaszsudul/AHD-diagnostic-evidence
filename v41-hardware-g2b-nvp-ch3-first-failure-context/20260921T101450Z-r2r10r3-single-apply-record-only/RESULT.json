@@ -1,0 +1,104 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R3_PUBLIC_RESULT_V1",
+  "result": "FAIL_APPLY_A_READBACK_CONTEXT_RETAINED",
+  "engineering": "FAIL_WITH_FIRST_FAILURE_CONTEXT",
+  "image_activation": "PASS_EXACT_RUNTIME_IDENTITY",
+  "source": {
+    "commit": "e804b5a865637781f6a0f7e85a3607c284b72ffe",
+    "tree": "428ebb18e6f4057f333b78d0f889041ccf136363"
+  },
+  "private_bitstream": {
+    "published": false,
+    "size": 2192144,
+    "sha256": "8B910FF5243A95750F7B278AD4924689ED2A084BFE7EB9BAE023373C1DB86010"
+  },
+  "boot": {
+    "before": "626453ed-56c7-4d4c-8837-197b877f61f1",
+    "after": "079faad8-c8ee-4c18-9463-b17c901f3235"
+  },
+  "runtime_admission": {
+    "result": "PASS_CAMP_VIRGIN_EMPTY_RECORD",
+    "autoinit_nack_count": 0,
+    "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+    "driver_srcversion": "EE8B149D1883AE8C6B1EE31",
+    "user_bar": 0,
+    "user_bar_length": 131072,
+    "config_bar": 1
+  },
+  "prepare": {
+    "execution": "PASS_CAMP_PREPARED",
+    "write_attempts": 1,
+    "first_response_raw": "0xC3C00001",
+    "first_response_relative_ns": 6300326,
+    "terminal_raw": "0xC3CD0042",
+    "terminal_relative_ns": 100124761,
+    "record": "EMPTY_VALID0"
+  },
+  "apply_a": {
+    "execution": "FAIL_LOADER_TERMINAL",
+    "write_attempts": 1,
+    "first_response_raw": "0xC3C00081",
+    "first_response_relative_ns": 10728636,
+    "terminal_raw": "0xC3FFCB42",
+    "terminal_code": 5,
+    "terminal_name": "LOADER_ERR_READBACK",
+    "terminal_relative_ns": 480730894,
+    "final_campaign": "CAMP_RECOVERED",
+    "automatic_recovery": "OBSERVED_FINAL_CAMP_RECOVERED; hardware transaction count not exposed"
+  },
+  "first_failure_record": {
+    "read": "PASS",
+    "coherence": "PASS",
+    "state": "VALID",
+    "origin": "APPLY_A",
+    "variant": "A",
+    "command_valid": true,
+    "pc": 310,
+    "register": "0xF0",
+    "direction": "READ",
+    "bank_valid": true,
+    "bank_expected_match": true,
+    "confirmed_bank": 7,
+    "bank_pending_valid": false,
+    "read_data_valid": true,
+    "read_data": "0xFF",
+    "source_expected_data": "0x34",
+    "readback_fault": true,
+    "transport_fault": false,
+    "raw_cause_valid": false,
+    "timeout": false
+  },
+  "historical_nack_reproduction": "NOT_REPRODUCED_AS_REGADDR_NACK",
+  "post_apply": {
+    "oneshot_attempts": 0,
+    "snapshot_ack_attempts": 0,
+    "ch3_sync": "NOT_TESTED",
+    "route_config_verified": "NOT_RUN",
+    "ch2_observation": "NOT_RUN"
+  },
+  "cleanup": {
+    "result": "PASS_EXACT_MODULE_NORMAL_UNLOAD_ACTIVE_PROFILE_PRESERVED",
+    "driver_unload_attempts": 1,
+    "module_present_after": false,
+    "endpoint_bound_after": false,
+    "nodes_after": 0,
+    "fd_after": 0,
+    "maps_after": 0,
+    "aio_after": 0,
+    "dut_lock_released": true,
+    "controller_lock_released": true
+  },
+  "mmio_audit": {
+    "result": "PASS",
+    "ledger_rows": 354,
+    "operations": 109,
+    "orphan_short_exception_count": 0,
+    "application_writes": 2,
+    "command_retries": 0
+  },
+  "analyzer_mode": "RECORD_ONLY",
+  "trace_status": "NOT_COLLECTED",
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "product_qualification": "NOT_CLAIMED",
+  "capture_admission": "NOT_GRANTED"
+}
