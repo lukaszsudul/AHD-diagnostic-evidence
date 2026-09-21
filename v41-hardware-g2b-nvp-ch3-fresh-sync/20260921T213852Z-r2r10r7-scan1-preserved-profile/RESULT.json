@@ -1,0 +1,194 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R7_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R7_FRESH_SCAN1_PRESERVED_PROFILE",
+  "created_utc": "2026-09-21T21:32:20.4480354Z",
+  "engineering": "PASS_BOUNDED_FRESH_SCAN1_AFTER_HOST_SENTINEL_FIX",
+  "camera_result": "CH3_SYNC_CONFIRMED_IN_FRESH_BOUNDED_SCAN1",
+  "preserved_image_profile": "PASS_EXACT_RUNTIME_LOADER_STATE_AND_NO_CONFIGURATION_WRITES",
+  "source_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+  "source_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+  "bitstream": {
+    "name": "AHD_v41_CH3_DETECTOR_WINDOW_EXPERIMENTAL_UNTESTED.bit",
+    "size": 2192144,
+    "sha256": "B95F95C9392EE34DE6FDC969B1FF1266C55AA211C1F8523262170D14359389D9",
+    "qualification": "EXPERIMENTAL_UNTESTED"
+  },
+  "boot": {
+    "expected": "c26ece85-7c4b-447b-8719-6cd82fe5760e",
+    "observed": "c26ece85-7c4b-447b-8719-6cd82fe5760e",
+    "unchanged": true
+  },
+  "runtime": {
+    "loader_before": "0xC3CD0092",
+    "loader_after": "0xC3CD0092",
+    "campaign": "CAMP_A_DIRTY",
+    "variant": "A",
+    "terminal": 0,
+    "loader_f0": "0x34",
+    "loader_novid": 0,
+    "loader_route_verified": true,
+    "loader_ch2_impact": false,
+    "first_failure_record": "EMPTY_VALID0",
+    "first_failure_header": "0xF1100000",
+    "stream": "OFF",
+    "transport_quiescent": true,
+    "w3a": "OFF"
+  },
+  "scan1": {
+    "outcome": "CONFIRMED_IN_FRESH_BOUNDED_SCAN1",
+    "oneshot_attempts": 3,
+    "ack_snapshot_attempts": 3,
+    "valid_scans": 3,
+    "clean_scans": 3,
+    "recovered_retry_scans": 0,
+    "target_clean_streak": 3,
+    "generations": [
+      1,
+      2,
+      3
+    ],
+    "T": [
+      105,
+      105,
+      105
+    ],
+    "R": [
+      0,
+      0,
+      0
+    ],
+    "F0": [
+      "0x34",
+      "0x34",
+      "0x34"
+    ],
+    "F2": [
+      "0xC0",
+      "0xC0",
+      "0xC0"
+    ],
+    "F3": [
+      "0x03",
+      "0x03",
+      "0x03"
+    ],
+    "A8_PRE": [
+      "0x0B",
+      "0x0B",
+      "0x0B"
+    ],
+    "A8_POST": [
+      "0x0B",
+      "0x0B",
+      "0x0B"
+    ],
+    "NOVID03_PRE": [
+      0,
+      0,
+      0
+    ],
+    "NOVID03_POST": [
+      0,
+      0,
+      0
+    ],
+    "bank_restore": [
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    "raw_snapshot_sha256": [
+      "C5E6EFC8433E27E8C4CDA20C3036F90572E786E8F0695828903A28A00FE22C50",
+      "F4D3B6449024DEC7E917DCAA1165F19E3F4B07990B1EC1B6ED55957B6F02A789",
+      "8078B4CF73FB4083FBC547070CEFE64F1D86D316707141B8922256D2C2D14E3C"
+    ],
+    "integrity": "PASS_RAW_AND_VALIDATED_HASH_READBACK",
+    "continuous_lock": "NOT_PROVEN_BY_SEQUENTIAL_SAMPLES"
+  },
+  "route": {
+    "loader_flag": "PASS_TRUE",
+    "scan1_profile_subset": "PASS_ALL_THREE",
+    "full_independent_route_readback": "NOT_EXPOSED_BY_SCAN1",
+    "classification": "PARTIAL_CONFIRMED"
+  },
+  "ch2": {
+    "loader_impact_flag": false,
+    "scan1_current_observation": "F0_0x34_NOVID1_IN_ALL_THREE",
+    "qualification": "LIMITED_OBSERVATION_NOT_INDEPENDENT_IMAGE_QUALIFICATION",
+    "second_physical_input": "NOT_INFERRED"
+  },
+  "host_correction": {
+    "initial_stop": "FALSE_POSITIVE_ALL_ONES_AT_SCAN1_FIRST_ERROR_INDEX_0x12028",
+    "semantic_value": "0xFFFFFFFF_MEANS_NO_FIRST_ERROR",
+    "scope": "ALLOWLIST_ONLY_0x12028",
+    "generation1_replacement_oneshot": 0,
+    "generation1_resumed_frozen": true,
+    "initial_driver_load_repeated": 0
+  },
+  "cleanup": {
+    "result": "PASS_EXACT_MODULE_NORMAL_UNLOAD_PROFILE_A_PRESERVED",
+    "last_measurement_utc": "2026-09-21T21:23:35.993258+00:00",
+    "driver_load_attempts": 1,
+    "driver_unload_attempts": 1,
+    "module_present_after": false,
+    "pci_binding_after": null,
+    "nodes_after": 0,
+    "fds_after": 0,
+    "maps_after": 0,
+    "aio_nr_after": 0,
+    "remote_dut_lock_released": true,
+    "controller_lock_released": true,
+    "intentional_profile_rollback": 0
+  },
+  "counts": {
+    "scan1_oneshot_write_attempts": 3,
+    "scan1_ack_snapshot_attempts": 3,
+    "host_i2c_retries": 0,
+    "prepare": 0,
+    "apply_a": 0,
+    "apply_b": 0,
+    "host_recover": 0,
+    "acq": 0,
+    "error_clear": 0,
+    "record_clear": 0,
+    "jtag": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "power_cycle": 0,
+    "c2h_open": 0,
+    "h2c_open": 0,
+    "dma_transfer": 0,
+    "capture": 0,
+    "png": 0,
+    "new_rtl": 0,
+    "microcode_changes": 0,
+    "profile_changes": 0,
+    "pn_changes": 0,
+    "master_changes": 0,
+    "driver_changes": 0,
+    "new_xsim": 0,
+    "other_rtl_sim": 0,
+    "host_unit_tests": 0,
+    "regression": 0,
+    "formal": 0,
+    "lint": 0,
+    "synth": 0,
+    "opt": 0,
+    "place": 0,
+    "phys_opt": 0,
+    "route": 0,
+    "bitgen": 0,
+    "new_signoff_reports": 0
+  },
+  "limits": {
+    "independence_scope": "FRESH_SCAN1_NOT_CACHED_LOADER_STATUS_SHARED_I2C_PATH",
+    "loader_window_sample_history": "NOT_EXPOSED_UNCHANGED",
+    "historical_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+    "timing_cdc_bus_skew_signoff": "NOT_PERFORMED_UNCHANGED",
+    "product_qualification": "NOT_CLAIMED",
+    "capture_admission": "NOT_GRANTED"
+  },
+  "first_blocker": null,
+  "publication_payload": "SANITIZED_PRE_COMMIT_NO_SELF_REFERENCE"
+}
