@@ -1,0 +1,55 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R4_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R4_F0_NOVID_OFFLINE",
+  "source_commit": "e804b5a865637781f6a0f7e85a3607c284b72ffe",
+  "source_tree": "428ebb18e6f4057f333b78d0f889041ccf136363",
+  "r2r10r3_evidence_commit": "e6b8110d62be34b21c5b82a13a85270320e772f5",
+  "identities": {
+    "microcode_sha256": "1A5E332E0C3C6E9C470AAAFD507B16E908B62A404CC3A58FA79CA5B93A6FB570",
+    "bitstream_sha256": "8B910FF5243A95750F7B278AD4924689ED2A084BFE7EB9BAE023373C1DB86010",
+    "bitstream_size": 2192144
+  },
+  "owner_context": {
+    "two_cameras_connected": "ATTESTED",
+    "target_physical_input": "CH3_OWNER_CONFIRMED",
+    "current_live_survey": "NOT_RUN_OFFLINE_SCOPE"
+  },
+  "findings": {
+    "mapping": "CH3_INDEX2_BANK7_AND_BANK0_A8_BIT2_NOVID03_CONFIRMED_BY_DOCUMENTS_REFERENCE_AND_RETAINED_EVIDENCE",
+    "prepare_f0": "PC38_HARDWARE_RETURNED_0x34",
+    "pc307_novid": "BIT2_ZERO_SOURCE_RECONSTRUCTED_FULL_A8_NOT_RETAINED_SEQUENTIAL_SAMPLE_ONLY",
+    "pc310": "F0_RETURNED_0xFF_EXPECTED_0x34_FIRST_READBACK_FAILURE",
+    "route": "NOT_REACHED_NO_DMA_OR_ROUTE_FAILURE_DIAGNOSIS",
+    "first_read_timing_guarantee": "NOT_FOUND"
+  },
+  "decision": "RECOMMEND_BOUNDED_DETECTOR_READINESS_WINDOW",
+  "recommendation": {
+    "entry": "AFTER_STATIC_PC306_BEFORE_CH2_PROTECTION_AND_ROUTE",
+    "one_sample": "A8_PRE_F0_F2_F3_A8_POST_WITH_BANK_SELECT_VERIFY",
+    "initial_wait_ms": 200,
+    "interval_ms": 200,
+    "max_complete_samples": 5,
+    "deadline_ms": 1200,
+    "success_streak": 3,
+    "success": "F0_0x34_AND_NOVID03_ZERO_AT_BOTH_SAMPLE_BOUNDARIES",
+    "hard_fail": "TRANSPORT_BANK_STATIC_READBACK_CH2_SEQUENCE_OR_MMIO_ERROR",
+    "exhaustion": "DETECTOR_NOT_READY_WITHIN_BUDGET",
+    "status": "DESIGN_ONLY_NOT_IMPLEMENTED"
+  },
+  "nonclaims": [
+    "CURRENT_NVP_STATE_NOT_MEASURED",
+    "CH3_CURRENT_SYNCHRONIZATION_NOT_ESTABLISHED",
+    "HISTORICAL_REGADDR_NACK_ROOT_CAUSE_NOT_PROVEN",
+    "PC310_PHYSICAL_CAUSE_NOT_PROVEN",
+    "PRODUCT_QUALIFICATION_NOT_CLAIMED",
+    "CAPTURE_ADMISSION_NOT_GRANTED"
+  ],
+  "counters": {
+    "dut_contact": 0,
+    "hardware_operations": 0,
+    "production_changes": 0,
+    "simulations": 0,
+    "fpga_build_or_signoff": 0
+  },
+  "next_implementation_or_hardware": "SEPARATE_OWNER_AUTHORIZATION_REQUIRED"
+}
