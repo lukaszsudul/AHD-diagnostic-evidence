@@ -1,0 +1,100 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R6_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R6_EXPERIMENTAL_WINDOW_SINGLE_APPLY",
+  "engineering_result": "PASS_SINGLE_EXPERIMENT_REPORTED_BY_LOADER",
+  "qualification_scope": "SINGLE_EXPERIMENTAL_HARDWARE_ATTEMPT_NOT_PRODUCT",
+  "pre_execution_behavioral_assurance": "UNTESTED_NEW_CHANGE_OWNER_ACCEPTED",
+  "source_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+  "source_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+  "bitstream": {
+    "bytes": 2192144,
+    "sha256": "B95F95C9392EE34DE6FDC969B1FF1266C55AA211C1F8523262170D14359389D9"
+  },
+  "boot": {
+    "before": "079faad8-c8ee-4c18-9463-b17c901f3235",
+    "after": "c26ece85-7c4b-447b-8719-6cd82fe5760e"
+  },
+  "activation": {
+    "sram_program_attempts": 1,
+    "warm_reboot_attempts": 1,
+    "jtag_done": 1,
+    "pre_activation_rmmod": 0,
+    "pre_activation_unbind": 0
+  },
+  "runtime_admission": "PASS_CAMP_VIRGIN_EMPTY_RECORD",
+  "autoinit_nack_count": 0,
+  "prepare": {
+    "write_attempts": 1,
+    "first_response_raw": "0xC3C00001",
+    "terminal_raw": "0xC3CD0042",
+    "terminal_relative_ms": 100.458,
+    "result": "PASS_CAMP_PREPARED",
+    "record": "EMPTY_VALID0"
+  },
+  "apply_a": {
+    "write_attempts": 1,
+    "first_response_raw": "0xC3C00081",
+    "terminal_raw": "0xC3CD0092",
+    "terminal_relative_ms": 1047.136,
+    "result": "PASS_REPORTED_BY_EXPERIMENTAL_LOADER",
+    "campaign": "CAMP_A_DIRTY",
+    "terminal_code": 0,
+    "variant": "A",
+    "f0": "0x34",
+    "novid": 0,
+    "route_verified": true,
+    "ch2_impact": false,
+    "record": "EMPTY_VALID0"
+  },
+  "detector_window": "PASS_REPORTED_BY_LOADER",
+  "window_sample_history": "NOT_EXPOSED_NOT_RETAINED",
+  "window_sample_count": "NOT_EXPOSED_NOT_RETAINED",
+  "a8_boundary_values": "NOT_EXPOSED_NOT_RETAINED",
+  "f2_f3": "NOT_EXPOSED_NOT_RETAINED",
+  "independent_camera_sync_verification": "NOT_RUN",
+  "historical_regaddr_nack_reproduction": "NOT_REPRODUCED_IN_THIS_ATTEMPT",
+  "historical_regaddr_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "mmio_order": {
+    "record_first_after_prepare_terminal": true,
+    "record_first_after_apply_terminal": true,
+    "io_begin": 82,
+    "io_return": 82,
+    "unmatched_io_begin": 0,
+    "other_writes": 0
+  },
+  "cleanup": {
+    "result": "PASS_EXACT_MODULE_NORMAL_UNLOAD_ACTIVE_PROFILE_PRESERVED",
+    "driver_loads": 1,
+    "driver_unloads": 1,
+    "module_present_after": false,
+    "pci_binding_after": false,
+    "nodes_after": 0,
+    "fds_after": 0,
+    "maps_after": 0,
+    "aio_nr_after": 0,
+    "dut_lock_released": true,
+    "controller_lock_released": true,
+    "active_profile_preserved": true,
+    "post_cleanup_fpga_state_remeasured": false
+  },
+  "prohibited_actions": {
+    "apply_b": 0,
+    "host_recover": 0,
+    "record_clear": 0,
+    "error_ack_clear": 0,
+    "oneshot": 0,
+    "scan1_ack": 0,
+    "extra_nvp_scans": 0,
+    "c2h_open": 0,
+    "h2c_open": 0,
+    "dma_transfer": 0,
+    "capture": 0,
+    "png": 0,
+    "new_offline_tests": 0,
+    "new_builds": 0,
+    "new_signoff_reports": 0
+  },
+  "product_qualification": "NOT_CLAIMED",
+  "capture_admission": "NOT_GRANTED",
+  "first_blocker": null
+}
