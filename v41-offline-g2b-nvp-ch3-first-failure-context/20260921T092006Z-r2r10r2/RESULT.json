@@ -1,0 +1,95 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R2_PUBLIC_RESULT_V1",
+  "result": "PASS_FIRST_FAILURE_CONTEXT_OFFLINE_BITSTREAM_READY",
+  "scope": "LOADER_FIRST_FAILURE_CONTEXT_SCOPED_OFFLINE_RELEASE",
+  "source": {
+    "base_commit": "b2f80cf4fda1775ab34804a246cb7be61e0ecd62",
+    "base_tree": "fd19d5e27923f69d16d2d8679db85d7813124c37",
+    "release_commit": "e804b5a865637781f6a0f7e85a3607c284b72ffe",
+    "release_tree": "428ebb18e6f4057f333b78d0f889041ccf136363"
+  },
+  "tests": {
+    "xsim_cases": 13,
+    "host_unit_tests": 8,
+    "clean_i2c_ledger_byte_identical": true,
+    "clean_i2c_ledger_size": 7229,
+    "clean_i2c_ledger_sha256": "5F231D7A66A24F59B74C71D9ECB0E88CD1D320BFEA9428C2138083EAFE02431B"
+  },
+  "implementation": {
+    "full_runs": 1,
+    "fully_routed_nets": 38789,
+    "routing_errors": 0,
+    "lut": 19725,
+    "ff": 21712,
+    "bram_tile": 28.5,
+    "lut_delta": 30,
+    "ff_delta": 153,
+    "bram_delta": 0.0,
+    "lut_limit": 20384,
+    "lut_headroom": 659
+  },
+  "timing": {
+    "result": "PASS",
+    "wns_ns": 0.148,
+    "tns_ns": 0.0,
+    "whs_ns": 0.036,
+    "ths_ns": 0.0,
+    "setup_failures": 0,
+    "hold_failures": 0,
+    "pulse_width_failures": 0,
+    "missing_clocks": 0,
+    "unconstrained_internal_endpoints": 0
+  },
+  "drc": {
+    "result": "PASS_WARNINGS_EXACT_ACCEPTED_BASELINE",
+    "errors": 0,
+    "critical_warnings": 0,
+    "accepted_warnings": 24,
+    "mandatory_bitgen_drc_runs": 1,
+    "mandatory_bitgen_drc_errors": 0
+  },
+  "cdc": {
+    "local_realized": "PASS",
+    "full_rerun": "NOT_RUN_SCOPED_RELEASE"
+  },
+  "bus_skew": {
+    "result": "PASS_AGGREGATE_BUS_SKEW_11_OF_11",
+    "report_calls": 1,
+    "active_constraints": 11,
+    "minimum_slack_ns": 1.121
+  },
+  "private_artifacts": {
+    "dcp": {
+      "published": false,
+      "size": 62797045,
+      "sha256": "E662906B1248C7E80127E00B5D540B731FF5BD7BC47768B9FF666F736156EB9F"
+    },
+    "bitstream": {
+      "published": false,
+      "size": 2192144,
+      "sha256": "8B910FF5243A95750F7B278AD4924689ED2A084BFE7EB9BAE023373C1DB86010"
+    }
+  },
+  "hardware": {
+    "qualification": "NOT_RUN",
+    "dut_contact": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "prepare": 0,
+    "apply": 0,
+    "dma": 0,
+    "capture": 0
+  },
+  "admission": {
+    "next_hardware": "SEPARATE_OWNER_AUTHORIZATION_REQUIRED",
+    "camera_synchronization": "NOT_ESTABLISHED_BY_THIS_TASK",
+    "capture": "NOT_GRANTED",
+    "product": "NOT_CLAIMED"
+  },
+  "historical": {
+    "apply_r2r10": "FAIL_UNCHANGED",
+    "failed_context": "NOT_RETAINED_UNCHANGED",
+    "physical_nack_root_cause": "NOT_PROVEN"
+  }
+}
