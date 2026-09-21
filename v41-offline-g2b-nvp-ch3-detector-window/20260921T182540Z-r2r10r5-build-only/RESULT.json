@@ -1,0 +1,73 @@
+{
+  "task": "AHD_V41_CH3_R2R10R5_BUILD_ONLY_NO_TESTS_LUT100",
+  "build_result": "BITSTREAM_GENERATED_UNTESTED",
+  "qualification_scope": "EXPERIMENTAL_BUILD_ONLY_NOT_QUALIFIED",
+  "owner_test_deferral": "EXPLICIT",
+  "base_commit": "e804b5a865637781f6a0f7e85a3607c284b72ffe",
+  "base_tree": "428ebb18e6f4057f333b78d0f889041ccf136363",
+  "source_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+  "source_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+  "target": "xc7a35tcsg325-2",
+  "top": "ahd_capture_top_xdma",
+  "full_builds": 1,
+  "write_bitstream_calls": 1,
+  "tests": {
+    "xsim": 0,
+    "other_rtl_sim": 0,
+    "host_unit_tests": 0,
+    "regression": 0,
+    "formal": 0,
+    "lint": 0
+  },
+  "extra_signoff": {
+    "timing_summary": 0,
+    "check_timing": 0,
+    "drc_report": 0,
+    "cdc": 0,
+    "bus_skew": 0,
+    "methodology": 0,
+    "promoted_checks": 0
+  },
+  "utilization": {
+    "post_opt_lut": 20301,
+    "routed_lut": 19846,
+    "available_lut": 20800,
+    "routed_lut_percent": 95.41,
+    "routed_ff": 21792,
+    "routed_bram_tiles": 28.5
+  },
+  "routing": {
+    "fully_routed_nets": 38961,
+    "unrouted_nets": 0,
+    "partially_routed_nets": 0,
+    "routing_errors": 0
+  },
+  "native_route_timing_message": {
+    "wns_ns": 0.291,
+    "tns_ns": 0.000,
+    "whs_ns": 0.036,
+    "ths_ns": 0.000,
+    "timing_signoff": "NOT_PERFORMED"
+  },
+  "native_process": {
+    "error_lines": 0,
+    "fatal_lines": 0,
+    "critical_warning_lines": 0,
+    "bitgen_drc_errors": 0,
+    "bitgen": "COMPLETED_SUCCESSFULLY"
+  },
+  "routed_dcp": {
+    "bytes": 62878434,
+    "sha256": "5FBD91805CA3D2D52EBE4E87EFCBFAA3510F7602E13B7B5B064CB53E2511B846"
+  },
+  "bitstream": {
+    "bytes": 2192144,
+    "sha256": "B95F95C9392EE34DE6FDC969B1FF1266C55AA211C1F8523262170D14359389D9"
+  },
+  "behavioral_assurance": "UNTESTED_NEW_CHANGE",
+  "historical_regaddr_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "hardware_qualification": "NOT_RUN",
+  "dut_contact": "SSH=JTAG=LIVE_MMIO=LIVE_I2C=0",
+  "capture_admission": "NOT_GRANTED",
+  "next_hardware_experiment": "SEPARATE_OWNER_AUTHORIZATION_REQUIRED"
+}
