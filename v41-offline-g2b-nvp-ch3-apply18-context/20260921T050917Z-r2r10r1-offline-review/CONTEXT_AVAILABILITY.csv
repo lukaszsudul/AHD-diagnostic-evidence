@@ -1,0 +1,11 @@
+field,result,evidence_or_limit
+FAILED_COMMAND_CONTEXT,NOT_RETAINED,"loader status has no PC/bank/register/direction/transaction ID"
+FAILED_COMMAND_PC,NOT_RETAINED,"PC is internal and no sticky first-failure PC was exposed"
+FAILED_BANK,NOT_RETAINED,"no bank field or failed instruction receipt"
+FAILED_REGISTER,NOT_RETAINED,"no register field or failed instruction receipt"
+FAILED_READ_OR_WRITE,NOT_ESTABLISHED,"REGADDR_NACK phase occurs in register reads and writes"
+FAILED_TRANSACTION_ID,NOT_RETAINED,"host operation 67 is one MMIO APPLY command, not an I2C transaction"
+RAW_STATUS,HARDWARE_RETAINED_R2R10,"0xC3C02542"
+ERROR_DECODE,SOURCE_VERIFIED,"terminal 18; I2C_TRANSPORT cause 2; I2C_REGADDR_NACK"
+W2_CROSS_REFERENCE,NOT_EVALUABLE_NO_CONTEXT,"exact failed-operation key was not retained"
+PHYSICAL_ROOT_CAUSE,NOT_PROVEN,"protocol phase does not identify physical cause"
