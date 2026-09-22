@@ -1,0 +1,57 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R12R1_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R12R1_PREPARE_PC14_RADDR_NACK_OFFLINE",
+  "source_commit": "d0f28b35c44d66bfd46c2b02388cdf03923e0c0a",
+  "source_tree": "082c6dbc7c2367ac872ca8bc71039926227360ac",
+  "bitstream_sha256": "59B27D56C8B27AD0F317523277710BAAB2F9B3611AB905DA414AD1F29B6A1D5E",
+  "r12_evidence_commit": "a6171fa3041c334ef0b9e8458a637ac8f1092849",
+  "historical_r12": "FAIL_PREPARE_I2C_RADDR_NACK_UNCHANGED",
+  "diagnosis": "ROOT_CAUSE_UNPROVEN_SMALLEST_OBSERVATION_DEFINED",
+  "code_defect_demonstrated": false,
+  "r12_physical_root_cause_proven": false,
+  "event": {
+    "origin": "PREPARE",
+    "pc": 14,
+    "bank": "0x09",
+    "register": "0x6C",
+    "direction": "READ",
+    "raw_cause": "0x03",
+    "error": "I2C_RADDR_NACK",
+    "terminal_code": 19,
+    "timeout": false,
+    "read_data_valid": false
+  },
+  "repeatability_same_bitstream": {
+    "classification": "NOT_ESTABLISHED_SINGLE_CONFIRMED_FAILURE",
+    "independent_trials": 1,
+    "reached": 1,
+    "passes": 0,
+    "raddr_nacks": 1,
+    "other": 0,
+    "unknown": 0
+  },
+  "repeatability_other_equivalent_images": {
+    "classification": "THREE_PASSES_EQUIVALENT_PREPARE_NO_PC14_FAILURE",
+    "independent_trials": 3,
+    "reached": 3,
+    "passes": 3,
+    "raddr_nacks": 0,
+    "other": 0,
+    "unknown": 0,
+    "limit": "DIFFERENT_BITSTREAMS_AND_PHYSICAL_IMPLEMENTATIONS"
+  },
+  "source_equivalence": {
+    "pc0_46_sha256": "E7ACBB6123B7150234AC33119FD2344EC58F81673B28ABFC82FF5ED56A7E7189",
+    "master_wrapper_top_blobs_identical": true
+  },
+  "legal_continuation": "PLAN_ONLY_EXACT_IMAGE_REACTIVATION_REQUIRED_FOR_EMPTY_STICKY_RECORD_AND_OBSERVABLE_RETRY",
+  "first_failure_record_reuse_risk": "BLOCKING_DIRECT_RETRY",
+  "smallest_missing_observation": "CORRELATED_SCL_SDA_AT_NVP_PINS_FOR_ACK_AFTER_READ_ADDRESS_0x61_OF_ACCEPTED_PC14_TRANSACTION",
+  "observation_availability": "NOT_ESTABLISHED",
+  "dut_and_build": 0,
+  "r12_eq_execution": "NOT_RUN_UNCHANGED",
+  "historical_regaddr_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "pattern_root_cause": "OUT_OF_SCOPE",
+  "product_qualification": "NOT_CLAIMED",
+  "publication_commit": "SELF_COMMIT_NOT_EMBEDDED"
+}
