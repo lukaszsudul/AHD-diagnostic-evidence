@@ -1,0 +1,72 @@
+{
+  "task": "AHD_V41_CH3_R2R10R11_EQ_COMPLETION_BUILD_ONLY",
+  "qualification_scope": "EXPERIMENTAL_EQ_FINALIZATION_BUILD_ONLY",
+  "build_result": "BLOCKED_RESOURCE_PHYSICAL_LUT_STOP",
+  "source": {
+    "base_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+    "base_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+    "new_commit": "d0f28b35c44d66bfd46c2b02388cdf03923e0c0a",
+    "new_tree": "082c6dbc7c2367ac872ca8bc71039926227360ac",
+    "scope": "SCOPED_EQ_FINALIZATION_EXPERIMENTAL",
+    "full_vendor_adaptive_eq_implemented": false
+  },
+  "tool": {
+    "vivado": "2025.2",
+    "sw_build": "6299465",
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma"
+  },
+  "synthesis": {
+    "attempts": 1,
+    "result": "PASS",
+    "errors": 0,
+    "critical_warnings": 0,
+    "elapsed_seconds": 1386.711,
+    "slice_lut_used": 21920,
+    "slice_lut_available": 20800,
+    "utilization_percent": 105.38,
+    "slice_registers": 22700,
+    "bram_tiles": 29.5
+  },
+  "commands": {
+    "place_design": 0,
+    "route_design": 0,
+    "write_bitstream": 0,
+    "opt_design": 0,
+    "phys_opt_design": 0,
+    "power_opt_design": 0,
+    "iphys_opt_design": 0
+  },
+  "artifacts": {
+    "bitstream": "NONE",
+    "routed_dcp": "NONE",
+    "private_post_synth_dcp_sha256": "62FD1EC927508D7B7E4212B14395CAEF3D80B45A94619F0D69DF1E71AF3BA2B6",
+    "private_post_synth_dcp_bytes": 53200665,
+    "private_vivado_log_sha256": "F227C563C3B347065B822428E473CFCA2E2E20AC23AC33BE403F9DB94993029D"
+  },
+  "assurance": {
+    "behavioral": "UNTESTED_NEW_CHANGE_OWNER_DEFERRED",
+    "timing_signoff": "NOT_PERFORMED",
+    "cdc_signoff": "NOT_PERFORMED",
+    "bus_skew_signoff": "NOT_PERFORMED",
+    "product_qualification": "NOT_CLAIMED"
+  },
+  "hardware": {
+    "dut_contact": 0,
+    "ssh": 0,
+    "jtag": 0,
+    "mmio": 0,
+    "i2c": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "prepare": 0,
+    "apply": 0,
+    "scan": 0,
+    "dma": 0,
+    "capture": 0
+  },
+  "first_blocker": "POST_SYNTH_SLICE_LUT_USED_GREATER_THAN_OR_EQUAL_TO_AVAILABLE",
+  "historical_regaddr_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "next_hardware_test": "BLOCKED_NO_DEPLOYABLE_BITSTREAM_AND_SEPARATE_OWNER_AUTHORIZATION_REQUIRED"
+}
