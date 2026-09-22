@@ -1,0 +1,109 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R10_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R10_SCENE_DEPENDENCY_SINGLE_CAPTURE",
+  "prompt_revision": "R1_COMPLETE",
+  "published_scope": "SANITIZED_NO_PIXELS_NO_PRIVATE_PROFILE_NO_SYSTEM_LOGS",
+  "engineering_capture": "PASS_ONE_BOUNDED_C2H_SESSION",
+  "fresh_scan1": {
+    "result": "PASS_FRESH_CLEAN_CH3",
+    "generation": 5,
+    "transactions": 105,
+    "retries": 0,
+    "F0": "0x34",
+    "F2": "0xC0",
+    "F3": "0x03",
+    "A8_PRE": "0x0B",
+    "A8_POST": "0x0B",
+    "NOVID03_PRE": 0,
+    "NOVID03_POST": 0,
+    "restore": "PASS"
+  },
+  "route": "PARTIAL_CONFIRMED_LOADER_ROUTE_AND_SCAN1_PROJECTION_SUBSET",
+  "c2h": {
+    "sessions": 1,
+    "requested_records": 2500,
+    "submitted": 2500,
+    "completed": 2500,
+    "pending": 0,
+    "bytes": 10240000,
+    "short": 0,
+    "failed": 0,
+    "duplicate": 0,
+    "max_in_flight": 1024,
+    "capture_seconds": 0.094170638
+  },
+  "frame": {
+    "complete": true,
+    "complete_frames": 1,
+    "geometry": "1920x1080",
+    "lines": "1080/1080",
+    "reset_epoch": 2,
+    "source_frame_sequence": 1634795
+  },
+  "baseline": "R2R10R8_HISTORICAL_RETAINED_PAYLOAD",
+  "payload_changed": false,
+  "direct_byte_equal": true,
+  "changed_bytes": 0,
+  "changed_bytes_percent": 0.0,
+  "changed_lines": 0,
+  "component_absolute_differences": {
+    "Y": {
+      "changed": 0,
+      "samples": 2073600,
+      "mean": 0.0,
+      "max": 0
+    },
+    "Cb": {
+      "changed": 0,
+      "samples": 1036800,
+      "mean": 0.0,
+      "max": 0
+    },
+    "Cr": {
+      "changed": 0,
+      "samples": 1036800,
+      "mean": 0.0,
+      "max": 0
+    }
+  },
+  "scene_dependence": "NO_SCENE_RESPONSE_OBSERVED_PAYLOAD_IDENTICAL",
+  "visual_observation": "REPEATED_COLOR_BLOCK_MOSAIC_DECLARED_CH3_TARGET_NOT_VISIBLE",
+  "cleanup": "PASS_EXACT_MODULE_NORMAL_UNLOAD_PROFILE_A_PRESERVED",
+  "first_blocker": null,
+  "identity": {
+    "source_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+    "source_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+    "bitstream_sha256": "B95F95C9392EE34DE6FDC969B1FF1266C55AA211C1F8523262170D14359389D9",
+    "reader_sha256": "FE50853C600098836548CF6C198012566A80E1C43A46F452B8B2965F806C5D52"
+  },
+  "limitations": [
+    "Owner scene confirmation is an attestation; the R8 baseline is historical, not simultaneous.",
+    "Identical payload does not by itself localize a generator, frozen data, or VDO timing.",
+    "SCAN1 and C2H share the same hardware path; this is not an independent instrument measurement.",
+    "R5 timing values are not a new timing or VDO interface sign-off.",
+    "No product qualification."
+  ],
+  "forbidden_counts": {
+    "baseline_capture": 0,
+    "second_capture": 0,
+    "prepare": 0,
+    "apply_a": 0,
+    "apply_b": 0,
+    "host_recover": 0,
+    "acq": 0,
+    "w3a": 0,
+    "h2c_open": 0,
+    "jtag": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "power_cycle": 0,
+    "functional_nvp_writes": 0,
+    "new_rtl": 0,
+    "synth": 0,
+    "route": 0,
+    "bitgen": 0,
+    "new_signoff": 0
+  },
+  "next_action": "SEPARATELY_AUTHORIZED_READ_ONLY_EXACT_R5_ROUTED_DCP_PIXEL_SOURCE_CONE_AUDIT"
+}

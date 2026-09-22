@@ -1,0 +1,3 @@
+# Next action
+
+Under separate Owner authorization, perform one read-only audit of the exact R2R10R5 routed DCP. Trace the realized data cone from `vdo1_data[*]` and `nvp_vclk1` through IDDR/`physical_frontend` to the payload input of `v41_g2b_onech_c2h`, enumerating any mux, constant, or generated source and its realized select. No DUT access, RTL/XDC changes, ECO, implementation, bitstream, or capture.
