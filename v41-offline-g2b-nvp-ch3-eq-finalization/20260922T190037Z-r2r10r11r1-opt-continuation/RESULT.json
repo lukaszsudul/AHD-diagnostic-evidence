@@ -1,0 +1,80 @@
+{
+  "task": "AHD_V41_CH3_R2R10R11R1_CONTINUE_POST_SYNTH_WITH_OPT",
+  "result": "BITSTREAM_GENERATED_UNTESTED",
+  "qualification_scope": "EXPERIMENTAL_EQ_FINALIZATION_POST_SYNTH_CONTINUATION_ONLY",
+  "historical_r11_result": "BLOCKED_POST_SYNTH_LUT_UNCHANGED",
+  "source_commit": "d0f28b35c44d66bfd46c2b02388cdf03923e0c0a",
+  "source_tree": "082c6dbc7c2367ac872ca8bc71039926227360ac",
+  "source_code_changes": 0,
+  "input_dcp_sha256": "62FD1EC927508D7B7E4212B14395CAEF3D80B45A94619F0D69DF1E71AF3BA2B6",
+  "new_synth_attempts": 0,
+  "open_checkpoint_calls": 2,
+  "technical_pre_opt_resumes": 1,
+  "opt_design_attempts": 1,
+  "place_design_attempts": 1,
+  "route_design_attempts": 1,
+  "write_bitstream_attempts": 1,
+  "phys_opt_design_attempts": 0,
+  "power_opt_design_attempts": 0,
+  "iphys_opt_design_attempts": 0,
+  "lut": {
+    "post_opt_used": 20321,
+    "post_place_used": 19855,
+    "routed_used": 19855,
+    "available": 20800
+  },
+  "routing": {
+    "routable_nets": 39033,
+    "fully_routed_nets": 39033,
+    "routing_error_nets": 0
+  },
+  "native_router_estimate": {
+    "wns_ns": 0.123,
+    "tns_ns": 0.0,
+    "whs_ns": 0.036,
+    "ths_ns": 0.0,
+    "timing_signoff": "NOT_PERFORMED"
+  },
+  "native_bitgen_drc_errors": 0,
+  "artifacts": {
+    "bitstream_bytes": 2192144,
+    "bitstream_sha256": "59B27D56C8B27AD0F317523277710BAAB2F9B3611AB905DA414AD1F29B6A1D5E",
+    "routed_dcp_bytes": 17498317,
+    "routed_dcp_sha256": "48B11D5E48B658153100DFF92913EDD994C332D190A20CB1102234AFD11450EE"
+  },
+  "tests": {
+    "xsim": 0,
+    "rtl_sim": 0,
+    "host_unit_tests": 0,
+    "regression": 0,
+    "formal": 0,
+    "lint": 0
+  },
+  "extra_signoff": {
+    "timing_reports": 0,
+    "check_timing": 0,
+    "drc_report": 0,
+    "cdc": 0,
+    "bus_skew": 0,
+    "methodology": 0
+  },
+  "hardware": {
+    "dut_contact": 0,
+    "ssh": 0,
+    "jtag": 0,
+    "live_mmio": 0,
+    "live_i2c": 0,
+    "program": 0,
+    "reset": 0,
+    "reboot": 0,
+    "prepare": 0,
+    "apply": 0,
+    "dma": 0,
+    "capture": 0
+  },
+  "historical_regaddr_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "pattern_root_cause": "NOT_PROVEN_BY_BUILD",
+  "camera_live_scene": "NOT_TESTED_BY_THIS_TASK",
+  "product_qualification": "NOT_CLAIMED",
+  "next_hardware_test": "SEPARATE_OWNER_AUTHORIZATION_REQUIRED"
+}
