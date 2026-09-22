@@ -1,0 +1,81 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R9_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R9_TARGETED_LIVE_SOURCE",
+  "result": "BRANCH_C_NO_IDENTIFIED_PATTERN_SWITCH_NO_MUTATION",
+  "source_commit": "bc20bfbde7b5eb9a6d9deec5796651ffa4be0886",
+  "source_tree": "cbf787a8ca3ba71a97fd2175e021fe05e6f61475",
+  "retained_scan": {
+    "generation": 4,
+    "bank0_7b": "0x11",
+    "ch3_data_out_mode": 1,
+    "ch4_data_out_mode": 1,
+    "ch3_f0_f2_f3": [
+      "0x34",
+      "0xC0",
+      "0x03"
+    ],
+    "a8_pre_post": [
+      "0x0B",
+      "0x0B"
+    ],
+    "ch3_novid_pre_post": [
+      0,
+      0
+    ],
+    "transaction_count": 105,
+    "retried_entry_count": 0,
+    "bank_restore": "PASS"
+  },
+  "route": {
+    "result": "PARTIAL_CONFIRMED_INTERNAL_VERIFY_PLUS_SOURCE_CHAIN_NO_FULL_HOST_READBACK",
+    "vport1_seq1_low_nibble": 2,
+    "port_mode": "ONE_PORT_ONE_CHANNEL_SOURCE_RECONSTRUCTED",
+    "fpga_source_chain": "VDO1_TO_PHYSICAL_FRONTEND_TO_G2B_C2H"
+  },
+  "pattern": {
+    "working_assumption": "NVP_GENERATED_PATTERN_NOT_REGISTER_PROOF",
+    "documented_background_selector": "IDENTIFIED_ALREADY_NORMAL",
+    "exact_visible_pattern_control": "NOT_IDENTIFIED",
+    "register_write": "NOT_RUN",
+    "source_patch": "NONE"
+  },
+  "two_retained_frames": {
+    "keys": [
+      [
+        1,
+        1019416
+      ],
+      [
+        1,
+        1019417
+      ]
+    ],
+    "payloads_byte_identical": true,
+    "interpretation": "STATIC_OBSERVATION_PATTERN_ORIGIN_UNRESOLVED"
+  },
+  "transport_flags": {
+    "error_status": 3,
+    "last_error_cause": 1,
+    "decode": "OVERFLOW_AND_DROP_STICKY_LAST_CAUSE_OVERFLOW",
+    "first_assertion_time": "NOT_RETAINED",
+    "input_timing_cause": "NOT_PROVEN"
+  },
+  "constraints": {
+    "XDC_PRESENT_IN_SOURCE": "YES",
+    "XDC_LOADED_IN_EXACT_BUILD": "YES",
+    "EFFECTIVE_VDO_COVERAGE": "SOURCE_SCOPE_CONFIRMED_POST_ROUTE_OBJECT_COVERAGE_NOT_RETAINED",
+    "PHYSICAL_MARGIN_FOR_CURRENT_TVI": "NOT_ESTABLISHED",
+    "NEW_TIMING_SIGNOFF": 0
+  },
+  "next_action": "SEPARATELY_AUTHORIZED_SINGLE_CONTROLLED_SCENE_DEPENDENCY_OBSERVATION",
+  "actions": {
+    "DUT_CONTACT": 0,
+    "NEW_CAPTURE": 0,
+    "LIVE_MMIO": 0,
+    "LIVE_I2C": 0,
+    "REGISTER_WRITES": 0,
+    "SOURCE_PATCHES": 0,
+    "BUILDS": 0,
+    "NEW_SIGNOFF": 0
+  }
+}
