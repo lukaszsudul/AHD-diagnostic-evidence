@@ -1,0 +1,63 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R2_SANITIZED_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14R2_POST_COLD_R13R2_AUTOINIT_EQ_PNG",
+  "result": "FAIL_PREPARE_READBACK_PC38_BANK07_REGF0_FF",
+  "exact_r13r2_active": true,
+  "source_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+  "source_tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+  "bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+  "bitstream_bytes": 2192144,
+  "prior_cold_start": "R14R1_OWNER_ATTESTED_ALREADY_COMPLETED",
+  "boot_changed_after_activation": true,
+  "runtime_admission": "PASS_NEW_IMAGE_CAMP_VIRGIN_EMPTY_RECORD_RETRY_V1_RESET",
+  "autoinit": {
+    "before_cold": {
+      "waddr": 4,
+      "regaddr": 11,
+      "data": 2,
+      "raddr": 0,
+      "total": 17,
+      "timeouts": 0
+    },
+    "after_cold": {
+      "waddr": 5,
+      "regaddr": 11,
+      "data": 0,
+      "raddr": 0,
+      "total": 16,
+      "timeouts": 0
+    },
+    "comparison": "PASS_COMPARISON_RETAINED_NO_CAUSAL_CLAIM"
+  },
+  "prepare": {
+    "execution": "FAIL_TERMINAL",
+    "terminal_code": 5,
+    "error": "LOADER_ERR_READBACK",
+    "pc": 38,
+    "bank": "0x07",
+    "register": "0xF0",
+    "direction": "READ",
+    "read_data": "0xFF",
+    "transport_fault": false,
+    "timeout": false
+  },
+  "retry": {
+    "classification": "FAIL_TERMINAL",
+    "telemetry_complete": true,
+    "first_attempt_nacks": 0,
+    "retry_attempts_accepted": 0,
+    "recovered": 0,
+    "unrecovered": 0,
+    "slots_used": 0
+  },
+  "apply_eq": "NOT_RUN",
+  "scan1": "NOT_RUN",
+  "c2h": "NOT_RUN",
+  "complete_frame": false,
+  "png_created": false,
+  "payload_comparison": "NOT_COMPARABLE",
+  "live_scene": "NOT_MEASURED",
+  "cleanup": "PASS_EXACT_MODULE_NORMAL_UNLOAD_BOTH_OWN_LOCKS_RELEASED",
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "product_qualification": "NOT_CLAIMED"
+}
