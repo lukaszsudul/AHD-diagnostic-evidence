@@ -1,0 +1,99 @@
+{
+  "schema": "AHD_V41_I2C_TA1_SANITIZED_RESULT_V1",
+  "task": "AHD_V41_I2C_TA1_R13R2_ROUTED_COPY_ANALYSIS",
+  "classification": "I2C_SCOPE_PASS_WITHIN_EXISTING_MODEL",
+  "identity": {
+    "source_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+    "source_tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+    "routed_dcp_bytes": 17718175,
+    "routed_dcp_sha256": "C907318FB88B93C224B03468AACF9880D14399383F0F6A77E8FC29F59C9B376D",
+    "bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma",
+    "vivado_version": "2025.2",
+    "vivado_sw_build": "6299465",
+    "copy_identity_gate": "PASS",
+    "inputs_unchanged_after": true
+  },
+  "areas": {
+    "autoinit": {
+      "timing_max_min": "PASS_WITHIN_CHECKED_MODEL",
+      "worst_setup_slack_ns": 2.824,
+      "worst_hold_slack_ns": 0.066,
+      "coverage": "COMPLETE_FOR_DECLARED_SCOPE",
+      "async_structure": "CHECKED_NO_DEFECT_FOUND",
+      "reset_structure": "CHECKED_NO_DEFECT_FOUND",
+      "protocol_review": "SOURCE_DERIVED_RESULT_WITH_LIMITS",
+      "relation_to_r14": "NO_LINK_ESTABLISHED"
+    },
+    "diagnostic_master": {
+      "timing_max_min": "PASS_WITHIN_CHECKED_MODEL",
+      "worst_setup_slack_ns": 5.074,
+      "worst_hold_slack_ns": 0.114,
+      "coverage": "COMPLETE_FOR_DECLARED_SCOPE",
+      "async_structure": "CHECKED_NO_DEFECT_FOUND",
+      "reset_structure": "CHECKED_NO_DEFECT_FOUND",
+      "protocol_review": "SOURCE_DERIVED_RESULT_WITH_LIMITS",
+      "relation_to_r14": "NO_LINK_ESTABLISHED"
+    },
+    "shared_io": {
+      "timing_max_min": "PASS_WITHIN_CHECKED_MODEL",
+      "external_pin_slack": "NOT_APPLICABLE_NO_EXTERNAL_DELAY_OR_PHYSICAL_MODEL",
+      "coverage": "COMPLETE_FOR_DECLARED_SCOPE",
+      "async_structure": "CHECKED_NO_DEFECT_FOUND",
+      "reset_structure": "CHECKED_NO_DEFECT_FOUND",
+      "protocol_review": "SOURCE_DERIVED_RESULT_WITH_LIMITS",
+      "relation_to_r14": "NO_LINK_ESTABLISHED"
+    },
+    "reset_start": {
+      "timing_max_min": "PASS_WITHIN_CHECKED_MODEL",
+      "worst_setup_slack_ns": 2.824,
+      "worst_hold_slack_ns": 0.418,
+      "coverage": "COMPLETE_FOR_DECLARED_SCOPE",
+      "reset_structure": "CHECKED_NO_DEFECT_FOUND",
+      "relation_to_r14": "NO_LINK_ESTABLISHED"
+    }
+  },
+  "coverage": {
+    "autoinit": {"analyzed_setup_hold": 5017, "static": 105, "async_boundary": 2, "unresolved": 0},
+    "diagnostic_master": {"analyzed_setup_hold": 480, "static": 46, "async_boundary": 2, "unresolved": 0},
+    "shared_io": {"analyzed_setup_hold": 40, "static": 28, "async_boundary": 4, "unresolved": 0},
+    "wrapper_loader_scan1": {"analyzed_setup_hold": 8186, "static": 1069, "not_applicable_disabled_ram_internal_pins": 1459, "unresolved": 0},
+    "reset_start": {"analyzed_setup_hold": 3917, "static": 681, "unresolved": 0}
+  },
+  "global_context_not_i2c_result": {
+    "fresh_wns_ns": 0.076,
+    "fresh_tns_ns": 0.0,
+    "fresh_whs_ns": 0.029,
+    "fresh_ths_ns": 0.0,
+    "failing_constrained_setup_endpoints": 0,
+    "failing_constrained_hold_endpoints": 0,
+    "fully_routed_nets": 39821,
+    "routable_nets": 39821,
+    "global_summary_proves_full_coverage_or_external_io_signoff": false
+  },
+  "external_limits": {
+    "raw_scl_sda_port_to_stage0_synchronous_slack_claimed": false,
+    "fpga_to_codec_external_slack_claimed": false,
+    "physical_i2c_qualified": false,
+    "physical_nack_root_cause": "ACTUAL_EVIDENCE_LIMIT_NOT_ASSUMED",
+    "retry_effectiveness_tested": false,
+    "eq_execution_tested": false
+  },
+  "execution_counts": {
+    "vivado_reporting_sessions": 1,
+    "open_checkpoint": 1,
+    "write_checkpoint": 0,
+    "synth": 0,
+    "opt": 0,
+    "place": 0,
+    "phys_opt": 0,
+    "route": 0,
+    "bitgen": 0,
+    "simulation": 0,
+    "hardware_operations": 0,
+    "dut_contact": 0,
+    "hardware_lock_mutations": 0
+  },
+  "publication_scope": "SANITIZED_RESULT_HASHES_ONLY_NO_DCP_NO_NETLIST_NO_PRIVATE_SOURCE_NO_RAW_HOST_LOG"
+}
