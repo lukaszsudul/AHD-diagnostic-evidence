@@ -1,0 +1,78 @@
+{
+  "task": "AHD_V41_CH3_R2R10R13_PREPARE_READ_RETRY_BUILD_ONLY",
+  "prompt_revision": "R1_COMPLETE",
+  "build_result": "BLOCKED_POST_OPT_LUT_CAPACITY",
+  "first_blocker": "POST_OPT_SLICE_LUT_USED_GREATER_THAN_OR_EQUAL_TO_AVAILABLE",
+  "qualification_scope": "EXPERIMENTAL_BOUNDED_PREPARE_READ_RETRY_BUILD_ONLY",
+  "source": {
+    "base_commit": "d0f28b35c44d66bfd46c2b02388cdf03923e0c0a",
+    "base_tree": "082c6dbc7c2367ac872ca8bc71039926227360ac",
+    "candidate_commit": "cb403d24999e760b47db5ebe1775ea5e218edb66",
+    "candidate_tree": "66245a471b5f6380e869026a72fa503462c03aff",
+    "microcode_sha256": "6821A46132381F9E2B52D2BF023294073F36653A814C9FF7BA95E02180FF6054"
+  },
+  "retry_contract": {
+    "layer": "LOADER_ONLY",
+    "allowlisted_instruction_occurrences": 16,
+    "max_retries_per_instruction": 1,
+    "max_retries_per_prepare": 4,
+    "recoverable_causes": [
+      1,
+      2,
+      3
+    ],
+    "continuous_idle_cycles": 18750,
+    "retry_accept_deadline_cycles": 62500,
+    "recovered_telemetry": "READ_ONLY_VERSION_1_FOUR_SLOTS",
+    "terminal_first_failure_record": "RESET_ONLY_FIRST_UNRECOVERED_FAULT",
+    "behavioral_assurance": "UNTESTED_OWNER_DEFERRED"
+  },
+  "process": {
+    "synth_attempts": 1,
+    "opt_attempts": 1,
+    "place_attempts": 0,
+    "route_attempts": 0,
+    "bitgen_attempts": 0,
+    "synth_result": "PASS",
+    "opt_result": "PASS",
+    "place_route_bit": "NOT_RUN_POST_OPT_GATE_FAILED"
+  },
+  "resources": {
+    "post_synth": {
+      "slice_lut": 22449,
+      "available": 20800,
+      "registers": 23164,
+      "bram_tiles": 29.5
+    },
+    "post_opt": {
+      "slice_lut": 20851,
+      "available": 20800,
+      "registers": 22257,
+      "bram_tiles": 28.5
+    },
+    "over_capacity_luts": 51,
+    "minimum_reduction_for_strict_gate": 52
+  },
+  "artifacts": {
+    "bitstream": "NONE",
+    "routed_dcp": "NONE",
+    "post_synth_dcp": {
+      "bytes": 53876298,
+      "sha256": "BEFEF5320CDE8BD08269518FFA29556FE165841ABC0D0B9AC3FC243057852B18",
+      "published": false
+    },
+    "post_opt_dcp": {
+      "bytes": 53272378,
+      "sha256": "7D0598671BB91F0375705EA674389F90078B306770979480FD27B30234AF09A6",
+      "published": false
+    },
+    "diff_patch_sha256": "AC97116B8EA895D3CC1C678AFBDC1D27E35010D2372F81FEF9886A093B421054",
+    "host_decoder_sha256": "ED75BE202EBFB3E4E7E7F5C2A8591D96B466DBB8AA7387E572A4FACAEFDEBF35",
+    "mmio_abi_sha256": "DE03871441572744489B8BE82654A508BF518D4ADAA0ADE50762E5E9CE868CCA"
+  },
+  "tests_and_signoff": "NOT_PERFORMED_BY_OWNER_DIRECTION",
+  "timing_signoff": "NOT_PERFORMED",
+  "hardware_contact": 0,
+  "product_qualification": "NOT_CLAIMED",
+  "next_hardware_test": "NOT_ADMITTED_NO_DEPLOYABLE_BITSTREAM"
+}
