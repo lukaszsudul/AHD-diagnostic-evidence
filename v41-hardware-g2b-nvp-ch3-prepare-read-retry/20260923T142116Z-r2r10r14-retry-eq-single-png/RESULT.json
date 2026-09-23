@@ -1,0 +1,59 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14_RETRY_EQ_DEPLOY_SINGLE_CAPTURE_PNG",
+  "engineering_result": "FAIL_APPLY_A_I2C_WADDR_NACK_PC111_PRE_EQ_FINALIZATION",
+  "source_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+  "source_tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+  "bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+  "bitstream_bytes": 2192144,
+  "boot_before": "c2ca3204-12c0-467b-86f2-45e17e4653d9",
+  "boot_after": "f9232944-7167-4d94-bafc-cc702ede4eff",
+  "activation": "PASS_ONE_SRAM_PROGRAM_DONE_1_ONE_WARM_REBOOT",
+  "prepare": "PASS_CLEAN",
+  "retry": {
+    "generation": 1,
+    "telemetry": "COMPLETE_COHERENT_V1",
+    "first_attempt_nacks": 0,
+    "retry_attempts_accepted": 0,
+    "recovered": 0,
+    "unrecovered": 0,
+    "slots": "4_EMPTY",
+    "path_exercised": false
+  },
+  "prepare_hard_failure_record": "EMPTY",
+  "apply": {
+    "result": "FAIL_TERMINAL",
+    "terminal": "0xC3C02283",
+    "terminal_code": 17,
+    "error": "I2C_WADDR_NACK",
+    "pc": 111,
+    "bank": "0x0B",
+    "register": "0x68",
+    "operation": "WRITE",
+    "data": "0x03",
+    "phase": "PRE_EQ_FINALIZATION"
+  },
+  "eq_finalization": "NOT_COMPLETED",
+  "scan1": "NOT_RUN",
+  "c2h": {
+    "status": "NOT_RUN",
+    "sessions": 0,
+    "submitted": 0,
+    "completed": 0,
+    "pending": 0
+  },
+  "complete_frame": false,
+  "png": "NOT_CREATED",
+  "payload_vs_baseline": "NOT_COMPARABLE",
+  "scene_live": "UNCONFIRMED",
+  "cleanup": "CONTAINMENT_DRIVER_AND_LOCKS_RETAINED",
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "product_qualification": "NOT_CLAIMED",
+  "publication": {
+    "status": "PENDING_EXTERNAL_COMMIT_RECEIPT",
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-hardware-g2b-nvp-ch3-prepare-read-retry/20260923T142116Z-r2r10r14-retry-eq-single-png",
+    "commit": "RECORDED_LOCALLY_AFTER_PAYLOAD_COMMIT"
+  }
+}
