@@ -1,0 +1,61 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R3_SANITIZED_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14R3_CAMERA_CONFIRMED_RESTART_EQ_PNG",
+  "result": "FAIL_APPLY_PC120_BANK0B_REG71_WRITE6D_DATA_NACK_BEFORE_EQ",
+  "owner_camera_ready": "FRESH_ATTESTATION_CH3_CONNECTED_POWERED_REMAINS_CONNECTED",
+  "historical_r14r2_camera_disconnect": "OWNER_SUSPECTED_NOT_PROVEN",
+  "exact_r13r2_active": true,
+  "source_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+  "source_tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+  "bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+  "bitstream_bytes": 2192144,
+  "boot_changed_after_activation": true,
+  "runtime_admission": "PASS_NEW_IMAGE_CAMP_VIRGIN_EMPTY_RECORD_RETRY_V1_RESET",
+  "autoinit": {
+    "phases": [
+      4,
+      6,
+      2,
+      1
+    ],
+    "total": 13,
+    "timeouts": 0
+  },
+  "prepare": {
+    "execution": "PASS_WITH_READ_RETRY",
+    "terminal_raw": "0xC3CD0042",
+    "terminal_code": 0,
+    "pc38": "PASS_F0_34",
+    "hard_record": "EMPTY"
+  },
+  "retry": {
+    "first_attempt_nacks": 1,
+    "retry_attempts_accepted": 1,
+    "recovered": 1,
+    "unrecovered": 0,
+    "telemetry_complete": true,
+    "event": "PC3_BANK00_REG02_READ_REGADDR_NACK_RECOVERED"
+  },
+  "apply": {
+    "execution": "FAIL_LOADER_TERMINAL",
+    "terminal_raw": "0xC3C02942",
+    "terminal_code": 20,
+    "error": "I2C_DATA_NACK",
+    "pc": 120,
+    "bank": "0x0B",
+    "register": "0x71",
+    "direction": "WRITE",
+    "write_data": "0x6D",
+    "cause": 4,
+    "timeout": false,
+    "eq_finalization": "NOT_REACHED_PRE_EQ_FINALIZATION"
+  },
+  "scan1": "NOT_RUN",
+  "c2h": "NOT_RUN",
+  "complete_frame": false,
+  "png_created": false,
+  "live_scene": "NOT_MEASURED",
+  "cleanup": "PASS_EXACT_MODULE_NORMAL_UNLOAD_BOTH_OWN_LOCKS_RELEASED",
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "product_qualification": "NOT_CLAIMED"
+}

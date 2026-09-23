@@ -1,0 +1,68 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R3_ATTEMPT_COMPARISON_V1",
+  "historical_r14r2_camera_state": "OWNER_SUSPECTS_DISCONNECTED_NOT_PROVEN",
+  "r14r3_camera_state": "OWNER_ATTESTED_CONNECTED_POWERED_REMAINS_CONNECTED",
+  "same_bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+  "autoinit": {
+    "r14_r14r1_pre_cold": {
+      "phases": [
+        4,
+        11,
+        2,
+        0
+      ],
+      "total": 17,
+      "timeouts": 0
+    },
+    "r14r2_post_cold": {
+      "phases": [
+        5,
+        11,
+        0,
+        0
+      ],
+      "total": 16,
+      "timeouts": 0
+    },
+    "r14r3_camera_confirmed": {
+      "phases": [
+        4,
+        6,
+        2,
+        1
+      ],
+      "total": 13,
+      "timeouts": 0
+    },
+    "interpretation": "COUNTER_COMPARISON_ONLY_NO_CAUSAL_CLAIM"
+  },
+  "prepare": {
+    "r14r2": "FAIL_PC38_BANK07_REGF0_READBACK_FF_NO_TRANSPORT_FAULT",
+    "r14r3": "PASS_WITH_READ_RETRY_PC38_F0_34",
+    "pc38_interpretation": "CURRENT_ATTEMPT_PASSED_GATE_CONSISTENT_WITH_OWNER_HYPOTHESIS_BUT_HISTORICAL_DISCONNECT_NOT_PROVEN"
+  },
+  "r14r3_retry": {
+    "event": "PC3_BANK00_REG02_READ_FIRST_REGADDR_NACK_CAUSE2_RECOVERED",
+    "first_attempt_nacks": 1,
+    "retry_attempts_accepted": 1,
+    "recovered": 1,
+    "unrecovered": 0
+  },
+  "apply": {
+    "r14": "FAIL_PC111_BANK0B_REG68_WRITE03_WADDR_NACK",
+    "r14r2": "NOT_RUN_PREPARE_FAILED_PC38",
+    "r14r3": "FAIL_PC120_BANK0B_REG71_WRITE6D_DATA_NACK_BEFORE_EQ_FINALIZATION"
+  },
+  "pc_status_r14r3": {
+    "pc14": "PASS_SOURCE_DERIVED_FROM_SUCCESSFUL_PREPARE",
+    "pc22": "PASS_SOURCE_DERIVED_FROM_SUCCESSFUL_PREPARE",
+    "pc38": "PASS_OBSERVED_IN_SUCCESSFUL_PREPARE_F0_34",
+    "pc111": "PASS_SOURCE_DERIVED_APPLY_REACHED_LATER_PC120",
+    "pc120": "FRESH_TERMINAL_HARD_RECORD_DATA_NACK"
+  },
+  "scope_limits": [
+    "No pin-level trace was collected.",
+    "The current result does not prove historical camera disconnection.",
+    "The current result does not prove a physical NACK root cause."
+  ]
+}

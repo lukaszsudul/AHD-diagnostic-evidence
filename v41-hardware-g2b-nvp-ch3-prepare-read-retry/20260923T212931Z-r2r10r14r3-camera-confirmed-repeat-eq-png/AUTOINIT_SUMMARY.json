@@ -1,0 +1,38 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R3_SANITIZED_AUTOINIT_SUMMARY_V1",
+  "baselines": {
+    "r14_r14r1_pre_cold": {
+      "waddr": 4,
+      "regaddr": 11,
+      "data": 2,
+      "raddr": 0,
+      "total": 17,
+      "timeouts": 0
+    },
+    "r14r2_post_cold": {
+      "waddr": 5,
+      "regaddr": 11,
+      "data": 0,
+      "raddr": 0,
+      "total": 16,
+      "timeouts": 0
+    }
+  },
+  "r14r3": {
+    "waddr_opportunities": 288,
+    "waddr_nacks": 4,
+    "regaddr_opportunities": 284,
+    "regaddr_nacks": 6,
+    "data_opportunities": 222,
+    "data_nacks": 2,
+    "raddr_opportunities": 56,
+    "raddr_nacks": 1,
+    "starts": 288,
+    "completions": 288,
+    "total_nacks": 13,
+    "timeouts": 0
+  },
+  "snapshot": "PASS_STABLE_FINAL_COHERENT_EXISTING_ADMISSION",
+  "comparison": "PASS_COMPARISON_RETAINED_NO_CAUSAL_CLAIM",
+  "interpretation": "NO_CAUSAL_CLAIM_PHYSICAL_ROOT_CAUSE_NOT_PROVEN"
+}
