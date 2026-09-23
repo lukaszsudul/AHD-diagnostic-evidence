@@ -1,0 +1,47 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R12R2_PC14_REPEATABILITY_SUMMARY_V1",
+  "generated_utc": "2026-09-23T05:27:42.7106841Z",
+  "exact_bitstream": {
+    "classification": "FAILURE_AND_PASS_OBSERVED_NO_SECOND_FAILURE",
+    "independent_prepare_trials": 2,
+    "pc14_reached": 2,
+    "pc14_successes": 1,
+    "pc14_raddr_nacks": 1,
+    "other_pc14_errors": 0,
+    "unknown": 0,
+    "latest_trial": "PC14_PASS_SOURCE_DERIVED_FROM_REACHING_LATER_PC22_FIRST_FAILURE",
+    "pin_level_trace": "NOT_COLLECTED",
+    "denominator_note": "Two independent hardware PREPARE commands after separate activations of the exact R11R1 bitstream."
+  },
+  "older_equivalent_images": {
+    "classification": "THREE_PASSES_EQUIVALENT_PREPARE_NO_PC14_FAILURE",
+    "independent_prepare_trials": 3,
+    "pc14_reached": 3,
+    "pc14_successes": 3,
+    "pc14_raddr_nacks": 0,
+    "other_pc14_errors": 0,
+    "unknown": 0,
+    "cohort_unchanged": true
+  },
+  "current_attempt_failure": {
+    "terminal_raw": "0xC3C02402",
+    "terminal_code": 18,
+    "terminal_name": "I2C_REGADDR_NACK",
+    "pc": 22,
+    "bank": "0x01",
+    "register": "0xC2",
+    "direction": "READ",
+    "raw_cause": "0x02",
+    "classification": "DISTINCT_LATER_FAILURE_NOT_PC14_REPEAT"
+  },
+  "combined_semantic_context": {
+    "classification": "FAILURE_AND_PASS_OBSERVED_NO_SECOND_FAILURE",
+    "independent_prepare_trials": 5,
+    "pc14_reached": 5,
+    "pc14_successes": 4,
+    "pc14_raddr_nacks": 1,
+    "other_pc14_errors": 0,
+    "unknown": 0
+  },
+  "limit": "No SCL/SDA trace; PC14 pass is source-derived from the retained later PC22 first-failure context, not an individually observed ACK byte."
+}
