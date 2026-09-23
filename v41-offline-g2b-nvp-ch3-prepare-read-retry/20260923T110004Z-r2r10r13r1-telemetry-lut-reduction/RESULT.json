@@ -1,0 +1,51 @@
+{
+  "task": "AHD_V41_CH3_R2R10R13R1_TELEMETRY_LUT_REDUCTION_BUILD_ONLY",
+  "prompt_revision": "R1_COMPLETE",
+  "generated_utc": "2026-09-23T11:00:04Z",
+  "result": "BLOCKED_POST_OPT_LUT_CAPACITY",
+  "first_blocker": "POST_OPT_SLICE_LUT_USED_GREATER_THAN_OR_EQUAL_TO_AVAILABLE",
+  "source": {
+    "base_commit": "cb403d24999e760b47db5ebe1775ea5e218edb66",
+    "commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+    "tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+    "changed_product_files": [
+      "rtl/g2b/g2b_nvp_ch3_tvi_lean_r2.sv"
+    ]
+  },
+  "compatibility": {
+    "classification": "SOURCE_REASONED_COMPATIBILITY_NOT_TESTED",
+    "retry_contract": "SOURCE_PRESERVED",
+    "mmio_abi_v1": "BYTE_IDENTICAL_FROZEN_ARTIFACT",
+    "mmio_abi_sha256": "DE03871441572744489B8BE82654A508BF518D4ADAA0ADE50762E5E9CE868CCA",
+    "host_decoder_sha256": "ED75BE202EBFB3E4E7E7F5C2A8591D96B466DBB8AA7387E572A4FACAEFDEBF35",
+    "microcode_sha256": "6821A46132381F9E2B52D2BF023294073F36653A814C9FF7BA95E02180FF6054"
+  },
+  "resources": {
+    "r13_post_opt_lut": 20851,
+    "new_post_synth_lut": 22442,
+    "new_post_opt_lut": 20845,
+    "post_opt_lut_reduction": 6,
+    "available_lut": 20800,
+    "strict_gate_max_lut": 20799,
+    "remaining_reduction_to_pass": 46,
+    "post_opt_registers": 22194,
+    "post_opt_bram_tiles": 28.5
+  },
+  "process": {
+    "synth_design_attempts": 1,
+    "opt_design_attempts": 1,
+    "place_design_attempts": 0,
+    "route_design_attempts": 0,
+    "write_bitstream_attempts": 0,
+    "bitstream": "NONE",
+    "routed_dcp": "NONE"
+  },
+  "assurance": {
+    "tests": 0,
+    "formal_equivalence": 0,
+    "extra_signoff": 0,
+    "hardware_contact": 0,
+    "retry_effectiveness": "NOT_TESTED",
+    "product_qualification": "NOT_CLAIMED"
+  }
+}
