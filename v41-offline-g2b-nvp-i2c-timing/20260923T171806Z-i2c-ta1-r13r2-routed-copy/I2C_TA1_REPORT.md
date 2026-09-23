@@ -18,7 +18,7 @@ This is not physical I²C qualification, does not prove that the R14 NACK was fi
 | Associated bitstream | SHA-256 `22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A` |
 | Part / top | `xc7a35tcsg325-2` / `ahd_capture_top_xdma` |
 | Tool | Vivado 2025.2, SW build 6299465 |
-| Checkpoint use | one reporting session, one `open_checkpoint`, no checkpoint write |
+| Checkpoint use | one full reporting session plus one targeted wrapper-selector correction session; two `open_checkpoint`, no checkpoint write |
 | Build / simulation / hardware | 0 / 0 / 0 |
 
 The original and copied DCP were re-hashed before and after analysis and remained byte-identical to the released identity. The analyzed file was an independent copy, not a hardlink, symlink, or junction.
@@ -34,13 +34,17 @@ The original and copied DCP were re-hashed before and after analysis and remaine
 
 Endpoint accounting ended with zero unresolved entries:
 
-| Group | Setup/hold analyzed | Static | Structurally justified async boundary | Disabled primitive-internal RAM pin, N/A |
+| Group | Setup/hold analyzed | Static | Structurally justified async boundary | RAM pin that is not a capture endpoint, N/A |
 |---|---:|---:|---:|---:|
 | Autoinit | 5,017 | 105 | 2 | 0 |
 | Diagnostic master | 480 | 46 | 2 | 0 |
 | Shared I/O | 40 | 28 | 4 | 0 |
-| Wrapper/loader/SCAN1 | 8,186 | 1,069 | 0 | 1,459 |
+| Wrapper/loader/SCAN1 | 8,186 | 1,177 | 0 | 1,351 |
 | Scoped reset/start | 3,917 | 681 | 0 | 0 |
+
+The first wrapper selector overincluded 1,459 RAM inputs because it treated every non-clock input of a clock-containing cell as a capture endpoint. A targeted per-pin correction classified 637 transformed RAM-macro interface pins, 568 connected asynchronous-read through-pins, 108 implemented static-zero pins, and 146 unconnected implementation pins. The 108 static-zero pins moved into the static class; the other 1,351 are not capture endpoints. No unresolved entry remains.
+
+These are overlapping per-area views, not additive project totals: the shared-I/O and reset views intentionally overlap engine and wrapper objects.
 
 The endpoint register is separate from `report_exceptions -coverage`, which only describes exception-object coverage. Targeted `get_timing_paths -user_ignored -to <declared endpoints>` returned no paths for the final I²C groups; analyzed synchronous endpoints also had finite max/min paths with identified clocks.
 
@@ -68,7 +72,7 @@ The global summary also contains user-ignored and unconstrained clock-pair rows,
 
 Source-derived timing uses a divider value of 1,250 on 62.5 MHz: a tick every 1,251 cycles (20.016 µs) and a nominal complete SCL period near 40.032 µs (about 24.98 kHz). The implemented state machines release SDA before ACK sampling, wait on filtered SCL/SDA, and enter STOP after a write-address NACK before transmitting register address or data.
 
-Historical R14 reported autoinit NACK count 17; this counter counts qualifying NACK observations, including retry attempts, not necessarily 17 distinct unrecovered registers. Historical PREPARE was clean: 46 accepted main transactions, 36 first read attempts, 16 eligible first read attempts, no first-attempt NACK, no accepted retry, generation 1 coherent telemetry, and four empty slots. This did not exercise retry recovery.
+Historical R14 reported autoinit NACK count 17; this counter counts digitally qualified `filtered SDA` NACK observations, including retry attempts, not necessarily 17 distinct unrecovered registers and not physical bus qualification. Historical PREPARE was clean: 46 accepted main transactions, 36 first read attempts, 16 eligible first read attempts, no first-attempt NACK, no accepted retry, generation 1 coherent telemetry, and four empty slots. This did not exercise retry recovery.
 
 Historical APPLY ended with terminal `0xC3C02283`, loader terminal code 17, at PC111 / Bank 0x0B / register 0x68 / planned write 0x03. Raw I²C cause 1 is `I2C_WADDR_NACK`; it is not evidence that register 0x68 rejected data value 0x03.
 

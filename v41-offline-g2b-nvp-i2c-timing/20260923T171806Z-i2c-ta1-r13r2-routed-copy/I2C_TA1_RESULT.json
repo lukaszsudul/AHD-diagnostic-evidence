@@ -55,10 +55,18 @@
     }
   },
   "coverage": {
+    "views_are_non_additive": true,
     "autoinit": {"analyzed_setup_hold": 5017, "static": 105, "async_boundary": 2, "unresolved": 0},
     "diagnostic_master": {"analyzed_setup_hold": 480, "static": 46, "async_boundary": 2, "unresolved": 0},
     "shared_io": {"analyzed_setup_hold": 40, "static": 28, "async_boundary": 4, "unresolved": 0},
-    "wrapper_loader_scan1": {"analyzed_setup_hold": 8186, "static": 1069, "not_applicable_disabled_ram_internal_pins": 1459, "unresolved": 0},
+    "wrapper_loader_scan1": {
+      "analyzed_setup_hold": 8186,
+      "static": 1177,
+      "not_applicable_transformed_ram_macro_interface_pins": 637,
+      "not_applicable_async_read_address_through_pins": 568,
+      "not_applicable_unconnected_implementation_pins": 146,
+      "unresolved": 0
+    },
     "reset_start": {"analyzed_setup_hold": 3917, "static": 681, "unresolved": 0}
   },
   "global_context_not_i2c_result": {
@@ -81,8 +89,10 @@
     "eq_execution_tested": false
   },
   "execution_counts": {
-    "vivado_reporting_sessions": 1,
-    "open_checkpoint": 1,
+    "vivado_reporting_sessions": 2,
+    "full_reporting_sessions": 1,
+    "targeted_wrapper_coverage_correction_sessions": 1,
+    "open_checkpoint": 2,
     "write_checkpoint": 0,
     "synth": 0,
     "opt": 0,
