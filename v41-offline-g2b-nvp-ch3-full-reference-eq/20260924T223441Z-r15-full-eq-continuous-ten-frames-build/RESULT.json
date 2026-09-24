@@ -1,0 +1,78 @@
+{
+  "schema": "AHD_V41_CH3_R15_SANITIZED_RESULT_V1",
+  "task": "AHD_V41_CH3_R15_FULL_REFERENCE_EQ_CONTINUOUS_10S_TEN_FRAMES_BUILD",
+  "result": "BLOCKED_POST_OPT_LUT_CAPACITY",
+  "first_blocker": {
+    "stage": "POST_OPT",
+    "used_slice_lut": 21377,
+    "available_slice_lut": 20800,
+    "excess_over_capacity": 577,
+    "minimum_reduction_for_strict_gate": 578
+  },
+  "source": {
+    "base_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+    "base_tree": "9d35c25b09718057bb100314309006baae8409c5",
+    "new_commit": "d186bf8d1cedef7852e955b5f0a86dc09486454d",
+    "new_tree": "fb076e0f335b3e4039d1faddea82b144ea4ae92a"
+  },
+  "reference_commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+  "source_scope": {
+    "classification": "FULL_REFERENCE_TARGET_EQ_IMPLEMENTED_SOURCE_SCOPE_ONLY",
+    "coverage_rows": 28,
+    "implemented": 19,
+    "reused_equivalent_with_evidence": 5,
+    "not_applicable_with_reason": 4,
+    "missing_required": 0,
+    "executor": "HYBRID_HOST_FPGA"
+  },
+  "attempts": {
+    "synth": 1,
+    "opt_explorearea": 1,
+    "place": 0,
+    "route": 0,
+    "post_route_physopt": 0,
+    "bitgen": 0,
+    "functional_tests": 0,
+    "dut_contact": 0
+  },
+  "resources": {
+    "post_synth": {
+      "slice_lut": 23412,
+      "ff": 23943,
+      "bram_tiles": 29.5
+    },
+    "post_opt": {
+      "slice_lut": 21377,
+      "ff": 23033,
+      "bram_tiles": 28.5
+    },
+    "routed": "NOT_RUN"
+  },
+  "timing": {
+    "setup": "NOT_RUN",
+    "hold": "NOT_RUN",
+    "pulse_width": "NOT_RUN"
+  },
+  "artifacts": {
+    "post_synth_dcp": {
+      "status": "PRIVATE_NOT_PUBLISHED",
+      "bytes": 55399461,
+      "sha256": "DE5FDD139C437FF4B6829ADE08BCB8C750EE6BF734FDE04CCB9BF13FE6EE3180"
+    },
+    "post_opt_dcp": {
+      "status": "PRIVATE_NOT_PUBLISHED",
+      "bytes": 54710830,
+      "sha256": "2A3CECA518F03E5353B8E1666BBB51D51FB65E77570B839E8EAEF90192D02FE9"
+    },
+    "routed_dcp": "NOT_CREATED",
+    "bitstream": "NOT_CREATED",
+    "linux_reader_binary": "NOT_CREATED"
+  },
+  "readiness": "NOT_READY_FOR_SEPARATELY_AUTHORIZED_HARDWARE",
+  "assurance": {
+    "functional_tests": "NOT_PERFORMED",
+    "additional_signoff": "NOT_PERFORMED",
+    "dut": "UNTOUCHED",
+    "product_qualification": "NOT_CLAIMED"
+  }
+}
