@@ -1,0 +1,113 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R6_PUBLIC_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14R6_POST_PHYSOPT_DUAL_RETRY_EQ_PNG",
+  "process_result": "PASS_ONE_AUTHORIZED_ACTIVATION_THROUGH_PNG_AND_CLEANUP",
+  "functional_outcome": "COMPLETE_FRAME_ACQUIRED_PAYLOAD_IDENTICAL_TO_BASELINE_NO_LIVE_SCENE_RESPONSE",
+  "source_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+  "source_tree": "9d35c25b09718057bb100314309006baae8409c5",
+  "bitstream": {
+    "bytes": 2192144,
+    "sha256": "989079972C3051E05FC497E98B41A9CFFD1A9B58329338D682C6E98019D29AA1",
+    "programmed_once_to_volatile_sram": true,
+    "jtag_done_after": 1,
+    "new_boot_confirmed": true
+  },
+  "owner_camera_confirmation": "FRESH_OWNER_ATTESTED_CH3_CONNECTED_POWERED_REMAINS_CONNECTED",
+  "autoinit": {
+    "phase_nacks": {
+      "WADDR": 0,
+      "REGADDR": 0,
+      "DATA": 0,
+      "RADDR": 0
+    },
+    "aggregate_nacks": 0,
+    "timeout_attempts": 0,
+    "starts": 275,
+    "completions": 275,
+    "comparison_limits": "Fresh counters differ from retained history but do not prove a physical cause."
+  },
+  "prepare": {
+    "classification": "PASS_CLEAN",
+    "terminal_raw": "0xC3CD0042",
+    "generation": 1,
+    "hard_record_valid": false,
+    "counters": {
+      "eligible_read_first_attempts": 16,
+      "main_prepare_transactions_accepted": 46,
+      "prepare_read_first_attempts": 36,
+      "read_first_attempt_nacks": 0,
+      "recovered_read_count": 0,
+      "retry_attempts_accepted": 0,
+      "retry_budget_used": 0,
+      "retry_event_count": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_retry_count": 0,
+      "unretried_terminal_nack_count": 0
+    },
+    "retry_path_exercised": false
+  },
+  "apply": {
+    "classification": "PASS_CLEAN",
+    "terminal_raw": "0xC3CD0092",
+    "apply_generation": 1,
+    "linked_prepare_generation": 1,
+    "hard_record_valid": false,
+    "counters": {
+      "aborted_before_acceptance_count": 0,
+      "event_count": 0,
+      "recovered_write_count": 0,
+      "retry_attempts_accepted": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_write_count": 0
+    },
+    "first_data_nack_effect": "NOT_APPLICABLE",
+    "retry_path_exercised": false
+  },
+  "prepare_retention_after_apply": "PASS_BYTE_IDENTICAL_TELEMETRY_VIEW",
+  "eq_finalization_execution": "PASS_REPORTED_BY_LOADER_SCOPED_FINALIZATION",
+  "scan1": {
+    "classification": "VALID_CLEAN",
+    "transactions": 105,
+    "retries": 0,
+    "f0": "0x34",
+    "novid_pre": 0,
+    "novid_post": 0,
+    "bank_restore": "PASS"
+  },
+  "c2h": {
+    "requested": 2500,
+    "submitted": 2500,
+    "completed": 2500,
+    "pending": 0,
+    "short": 0,
+    "failed": 0,
+    "duplicate": 0,
+    "bytes": 10240000,
+    "sha256": "757E5FBAB0021C58F51DC6D2B1534C41AF8239B82128E25EDF09457AC4443AD6"
+  },
+  "frame": {
+    "complete": true,
+    "logical_channel_id": 0,
+    "physical_input_id": 0,
+    "epoch": 1,
+    "source_frame_sequence": 16771,
+    "uyvy_bytes": 4147200,
+    "uyvy_sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+    "png_bytes": 32698,
+    "png_sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+    "payload_equal_to_baseline": true,
+    "changed_bytes": 0,
+    "changed_lines": 0,
+    "live_camera_scene": "UNCONFIRMED_STATIC_COLOR_TILE_PATTERN"
+  },
+  "cleanup": "PASS",
+  "administrative_continuation": "One task-local output-name collision occurred after APPLY and before SCAN1. Only the unconsumed SCAN1/C2H/cleanup stages were resumed; no hardware command was repeated.",
+  "nonclaims": {
+    "full_vendor_adaptive_eq": "NO",
+    "physical_nack_root_cause": "NOT_PROVEN",
+    "retry_effectiveness": "NOT_TESTED_PATHS_NOT_EXERCISED",
+    "product_qualification": "NOT_CLAIMED",
+    "timing_cdc_bus_skew_signoff": "NOT_PERFORMED_IN_THIS_TASK"
+  },
+  "publication_directory": "v41-hardware-g2b-nvp-ch3-apply-write-retry/20260924T144929Z-r2r10r14r6-post-physopt-dual-retry-eq-png/"
+}

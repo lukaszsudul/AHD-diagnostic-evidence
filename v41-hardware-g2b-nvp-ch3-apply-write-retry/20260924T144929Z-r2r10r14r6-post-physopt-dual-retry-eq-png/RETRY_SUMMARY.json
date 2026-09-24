@@ -1,0 +1,29 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R6_PUBLIC_DUAL_RETRY_SUMMARY_V1",
+  "prepare_read_retry_v1": {
+    "classification": "PASS_CLEAN",
+    "generation": 1,
+    "event_count": 0,
+    "retry_attempts_accepted": 0,
+    "recovered": 0,
+    "unrecovered": 0,
+    "slots_valid": 0,
+    "path_exercised": false
+  },
+  "apply_write_retry_v1": {
+    "classification": "PASS_CLEAN",
+    "apply_generation": 1,
+    "linked_prepare_generation": 1,
+    "event_count": 0,
+    "retry_attempts_accepted": 0,
+    "recovered": 0,
+    "unrecovered": 0,
+    "aborted_before_acceptance": 0,
+    "event_valid": false,
+    "path_exercised": false,
+    "first_data_nack_effect": "NOT_APPLICABLE"
+  },
+  "hard_failure_record": "EMPTY_AFTER_PREPARE_APPLY_AND_AT_FINAL_STATE",
+  "prepare_retention_after_apply": "PASS_BYTE_IDENTICAL_TELEMETRY_VIEW",
+  "interpretation": "Both commands were clean. This run verifies coherent observation of both ABI snapshots but does not demonstrate retry recovery effectiveness."
+}
