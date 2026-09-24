@@ -1,0 +1,213 @@
+{
+  "schema": "AHD_R2R10R14R5R2_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14R5R2_POST_ROUTE_PHYSOPT_EXPLORE",
+  "prompt_revision": "R1_COMPLETE",
+  "qualification_scope": "ONE_POST_ROUTE_PHYSOPT_ATTEMPT_SETUP_HOLD_CHECK_IN_EXISTING_MODEL",
+  "result": "PASS_POST_ROUTE_PHYSOPT_SETUP_HOLD_CLOSED_BITSTREAM_READY",
+  "first_blocker": "NONE",
+  "source": {
+    "repository": "lukaszsudul/FPGA_AHD",
+    "commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+    "tree": "9d35c25b09718057bb100314309006baae8409c5",
+    "changes": 0
+  },
+  "target": {
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma",
+    "vivado_version": "2025.2",
+    "vivado_software_build": 6299465
+  },
+  "input": {
+    "original": {
+      "path": "C:\\FPGA\\CH3_R2R10R14R5_SINGLE_WRITE_RETRY_20260924T080215Z\\private\\R2R10R14R5_FINAL_ROUTED.dcp",
+      "bytes": 64022029,
+      "sha256": "B1AE995CD19BEFA562C7427F9A8DA183CAA0014FBAF1397F218D127519552AF8"
+    },
+    "independent_copy": {
+      "path": "C:\\FPGA\\CH3_R2R10R14R5R2_POST_ROUTE_PHYSOPT_20260924T120829Z\\input\\R2R10R14R5_FINAL_ROUTED_INDEPENDENT_COPY.dcp",
+      "bytes": 64022029,
+      "sha256": "B1AE995CD19BEFA562C7427F9A8DA183CAA0014FBAF1397F218D127519552AF8"
+    },
+    "independent_file_identity": true,
+    "original_and_copy_unchanged_after": true,
+    "old_bitstream_identity_only": {
+      "bytes": 2192144,
+      "sha256": "08B02EE2086230E7A372BE64EDD5FD9B93BE91A4C9156CA1D5F6F35D14128F1F",
+      "reused_as_output": false
+    }
+  },
+  "execution": {
+    "open_checkpoint_attempts": 1,
+    "phys_opt_design_attempts": 1,
+    "phys_opt_command": "phys_opt_design -directive Explore",
+    "write_checkpoint_attempts": 1,
+    "final_timing_summary_attempts": 1,
+    "final_route_status_attempts": 1,
+    "final_utilization_attempts": 1,
+    "write_bitstream_attempts": 1,
+    "synth_design_attempts": 0,
+    "opt_design_attempts": 0,
+    "place_design_attempts": 0,
+    "route_design_attempts": 0,
+    "other_phys_opt_attempts": 0,
+    "elapsed_seconds": {
+      "open_checkpoint": 98.34,
+      "phys_opt_explore": 203.734,
+      "post_physopt_checkpoint_write": 18.92,
+      "final_route_status": 7.022,
+      "final_utilization": 1.04,
+      "final_timing_summary": 49.498,
+      "bitgen": 79.768
+    },
+    "phys_opt_process_messages": {
+      "warnings": 0,
+      "critical_warnings": 0,
+      "errors": 0
+    },
+    "bitgen_process_messages": {
+      "warnings": 0,
+      "critical_warnings": 0,
+      "errors": 0
+    },
+    "mandatory_bitgen_drc_errors": 0,
+    "ordinary_main_log_warnings": 40,
+    "ordinary_warning_notes": [
+      "34 presentation warnings from an initial targeted report call; report corrected on retained design without rerunning phys-opt or global reports",
+      "2 multiple-clock informational warnings",
+      "1 duplicate user-strategy warning",
+      "1 preserved set_bus_skew reminder; bus-skew campaign was outside scope",
+      "2 no-negative-path query warnings consistent with zero remaining violations"
+    ]
+  },
+  "phys_opt": {
+    "mode": "post_route",
+    "directive": "Explore",
+    "result": "PASS",
+    "internal_summary_before_ns": {
+      "wns": -0.149,
+      "tns": -1.362,
+      "whs": 0.036,
+      "ths": 0.0
+    },
+    "internal_summary_after_ns": {
+      "wns": 0.06,
+      "tns": 0.0,
+      "whs": 0.036,
+      "ths": 0.0
+    },
+    "wns_gain_ns": 0.209,
+    "tns_gain_ns": 1.362,
+    "added_cells": 0,
+    "removed_cells": 0,
+    "optimized_cells_or_nets": 9,
+    "iterations": 1
+  },
+  "final_gates": {
+    "setup": {
+      "pass": true,
+      "wns_ns": 0.057,
+      "tns_ns": 0.0,
+      "failing_endpoints": 0,
+      "total_endpoints": 66831
+    },
+    "hold": {
+      "pass": true,
+      "whs_ns": 0.036,
+      "ths_ns": 0.0,
+      "failing_endpoints": 0,
+      "total_endpoints": 66142
+    },
+    "pulse_width": {
+      "pass": true,
+      "wpws_ns": 0.0,
+      "tpws_ns": 0.0,
+      "failing_endpoints": 0,
+      "total_endpoints": 24787
+    },
+    "routing": {
+      "pass": true,
+      "routable_nets": 40045,
+      "fully_routed_nets": 40045,
+      "partial_nets": 0,
+      "unrouted_nets": 0,
+      "error_nets": 0
+    },
+    "resources": {
+      "pass": true,
+      "slice_lut_used": 19929,
+      "slice_lut_available": 20800,
+      "slice_lut_headroom": 871,
+      "slice_registers_used": 22285,
+      "bram_tiles_used": 28.5
+    },
+    "family_coverage": {
+      "pass": true,
+      "F1_DROP_CE": {
+        "resolved": 16,
+        "expected": 16,
+        "worst_endpoint_setup_ns": 0.057,
+        "worst_endpoint_hold_ns": 1.756,
+        "worst_source_specific_setup_ns": 0.06,
+        "worst_source_specific_hold_ns": 2.687
+      },
+      "F2_DESC_EPOCH_CE": {
+        "resolved": 1,
+        "expected": 1,
+        "worst_endpoint_setup_ns": 0.377,
+        "worst_endpoint_hold_ns": 1.108,
+        "worst_source_specific_setup_ns": 0.377,
+        "worst_source_specific_hold_ns": 2.771
+      }
+    },
+    "constraint_model": {
+      "pass": true,
+      "manual_changes": 0,
+      "clock_rows_before": 11,
+      "clock_rows_after": 11,
+      "exact_clock_snapshot_match": true
+    },
+    "bitgen": {
+      "pass": true,
+      "mandatory_drc_errors": 0
+    }
+  },
+  "artifacts": {
+    "post_physopt_dcp": {
+      "path": "C:\\FPGA\\CH3_R2R10R14R5R2_POST_ROUTE_PHYSOPT_20260924T120829Z\\private\\R2R10R14R5R2_POST_PHYSOPT.dcp",
+      "bytes": 17788949,
+      "sha256": "E5130AF6AF7338B9D7D53C2395163F72D8936DFC76DD8B8E3E268BCEE12CBA3C"
+    },
+    "bitstream": {
+      "path": "C:\\FPGA\\CH3_R2R10R14R5R2_POST_ROUTE_PHYSOPT_20260924T120829Z\\firmware\\AHD_v41_CH3_APPLY_WRITE_RETRY_R14R5R2_POST_ROUTE_PHYSOPT_EXPERIMENTAL.bit",
+      "bytes": 2192144,
+      "sha256": "989079972C3051E05FC497E98B41A9CFFD1A9B58329338D682C6E98019D29AA1"
+    }
+  },
+  "frozen_contract_hashes": {
+    "microcode_sha256": "6821A46132381F9E2B52D2BF023294073F36653A814C9FF7BA95E02180FF6054",
+    "prepare_abi_v1_sha256": "DE03871441572744489B8BE82654A508BF518D4ADAA0ADE50762E5E9CE868CCA",
+    "prepare_decoder_sha256": "ED75BE202EBFB3E4E7E7F5C2A8591D96B466DBB8AA7387E572A4FACAEFDEBF35",
+    "apply_write_retry_abi_v1_sha256": "ABE48CE78251A8B44772E9378E7D7F99FCF33B906C264082AA10F1962402EA43",
+    "apply_write_retry_decoder_sha256": "634F4F0BDC6A2E62387C4C50169CDD92F98504B0B4F079D87B1467E3E6E3E6B7"
+  },
+  "assurance": {
+    "existing_constraint_model_only": true,
+    "functional_tests": "NOT_PERFORMED",
+    "formal_equivalence": "NOT_PERFORMED",
+    "full_cdc_signoff": "NOT_PERFORMED",
+    "bus_skew_campaign": "NOT_PERFORMED",
+    "methodology_signoff": "NOT_PERFORMED",
+    "dut_contact": 0,
+    "hardware_lock_mutations": 0,
+    "retry_write_semantics": "EXPERIMENTAL_UNPROVEN_UNCHANGED",
+    "historical_nack_root_cause": "NOT_PROVEN_BY_THIS_TASK",
+    "product_qualification": "NOT_CLAIMED"
+  },
+  "publication_target": {
+    "repository": "lukaszsudul/AHD-diagnostic-evidence",
+    "branch": "main",
+    "directory": "v41-offline-g2b-nvp-ch3-apply-write-retry/20260924T123744Z-r2r10r14r5r2-post-route-physopt-explore",
+    "commit_receipt": "RECORDED_SEPARATELY_AFTER_COMMIT"
+  },
+  "next_action": "SEPARATELY_AUTHORIZE_ONE_HARDWARE_ACTIVATION_OF_THE_EXACT_NEW_BITSTREAM"
+}
