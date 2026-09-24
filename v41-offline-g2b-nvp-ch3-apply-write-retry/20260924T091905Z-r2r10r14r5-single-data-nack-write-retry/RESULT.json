@@ -1,0 +1,68 @@
+{
+  "task": "AHD_V41_CH3_R2R10R14R5_SINGLE_DATA_NACK_WRITE_RETRY_BUILD_ONLY",
+  "result": "BITSTREAM_GENERATED_UNTESTED_WITH_NATIVE_SETUP_VIOLATION",
+  "qualification_scope": "EXPERIMENTAL_APPLY_SINGLE_WRITE_RETRY_BUILD_ONLY",
+  "source": {
+    "parent_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+    "commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+    "tree": "9d35c25b09718057bb100314309006baae8409c5",
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma"
+  },
+  "retry": {
+    "scope": "APPLY_A_PC103_121_BANK0B_REG60_72_EXACT_VALUES_ONLY",
+    "allowlist_occurrences": 19,
+    "allowed_cause": "DIAGNOSTIC_MASTER_DATA_NACK_4_ONLY",
+    "max_per_instruction": 1,
+    "max_per_apply": 1,
+    "block_replay": 0,
+    "idle_cycles": 18750,
+    "accept_deadline_cycles": 62500,
+    "telemetry_version": 1,
+    "telemetry_slots": 1,
+    "telemetry_abi_sha256": "ABE48CE78251A8B44772E9378E7D7F99FCF33B906C264082AA10F1962402EA43",
+    "decoder_sha256": "634F4F0BDC6A2E62387C4C50169CDD92F98504B0B4F079D87B1467E3E6E3E6B7",
+    "first_write_commit_after_data_nack": "UNKNOWN",
+    "semantics": "EXPERIMENTAL_UNPROVEN_OWNER_RISK_ACCEPTED"
+  },
+  "frozen": {
+    "microcode_sha256": "6821A46132381F9E2B52D2BF023294073F36653A814C9FF7BA95E02180FF6054",
+    "prepare_abi_v1_sha256": "DE03871441572744489B8BE82654A508BF518D4ADAA0ADE50762E5E9CE868CCA",
+    "prepare_decoder_sha256": "ED75BE202EBFB3E4E7E7F5C2A8591D96B466DBB8AA7387E572A4FACAEFDEBF35",
+    "prepare_policy_changed": false,
+    "hard_failure_record_abi_changed": false,
+    "microcode_changes": 0,
+    "master_changes": 0,
+    "eq_changes": 0,
+    "pn_dma_xdc_changes": 0
+  },
+  "build": {
+    "vivado_version": "2025.2",
+    "vivado_software_build": 6299465,
+    "attempts": {"synth": 1, "explore_area": 1, "place": 1, "route": 1, "bitgen": 1},
+    "results": {"synth": "PASS", "explore_area": "PASS", "place": "PASS", "route": "PASS_COMPLETE", "bitgen": "PASS_DRC_0_ERRORS"},
+    "slice_lut": {"post_synth": 22652, "post_opt": 20666, "post_place": 19927, "routed": 19927, "available": 20800},
+    "slice_registers": {"post_synth": 23195, "post_opt": 22285, "post_place": 22285, "routed": 22285},
+    "bram_tiles": {"post_synth": 29.5, "post_opt": 28.5, "post_place": 28.5, "routed": 28.5},
+    "route": {"routable_nets": 40037, "fully_routed_nets": 40037, "error_nets": 0},
+    "native_timing": {"wns_ns": -0.150, "tns_ns": -1.381, "whs_ns": 0.036, "ths_ns": 0.000, "status": "SETUP_VIOLATION_NOT_SIGNOFF"},
+    "messages": {"errors": 0, "critical_warnings": 0, "final_warnings": 442, "synthesis_internal_cumulative_warnings": 34139},
+    "extra_signoff": "NOT_PERFORMED"
+  },
+  "private_artifacts": {
+    "bitstream": {"bytes": 2192144, "sha256": "08B02EE2086230E7A372BE64EDD5FD9B93BE91A4C9156CA1D5F6F35D14128F1F"},
+    "post_synth_dcp": {"bytes": 54098564, "sha256": "9007B3DD43D002B2ECCDD6F6BD31A72A4FC410408C9C1260089EC9E8CFF43304"},
+    "post_opt_dcp": {"bytes": 53415176, "sha256": "5A40EE88B6495165CA779D14DA2FD31703485DCC2337C1251FAC9286818E6443"},
+    "routed_dcp": {"bytes": 64022029, "sha256": "B1AE995CD19BEFA562C7427F9A8DA183CAA0014FBAF1397F218D127519552AF8"}
+  },
+  "assurance": {
+    "source_review": "SOURCE_REVIEW_ONLY",
+    "tests": "NOT_PERFORMED",
+    "new_timing_cdc_bus_skew_signoff": "NOT_PERFORMED",
+    "dut_contact": 0,
+    "retry_effectiveness": "NOT_TESTED",
+    "product_qualification": "NOT_CLAIMED"
+  },
+  "first_blocker": "NONE",
+  "next_hardware_step": "SEPARATE_OWNER_AUTHORIZATION_REQUIRED"
+}
