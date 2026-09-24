@@ -1,0 +1,39 @@
+{
+  "task": "AHD_V41_CH3_R2R10R14R5R1_NEGATIVE_SETUP_ROUTED_COPY_ANALYSIS",
+  "analysis_execution": "PASS",
+  "timing_result": "SETUP_VIOLATION_LOCALIZED",
+  "negative_endpoint_coverage": "COMPLETE",
+  "source_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+  "source_tree": "9d35c25b09718057bb100314309006baae8409c5",
+  "routed_dcp_sha256": "B1AE995CD19BEFA562C7427F9A8DA183CAA0014FBAF1397F218D127519552AF8",
+  "associated_bitstream_sha256": "08B02EE2086230E7A372BE64EDD5FD9B93BE91A4C9156CA1D5F6F35D14128F1F",
+  "native_timing_ns": {
+    "wns": -0.15,
+    "tns": -1.381,
+    "whs": 0.036,
+    "ths": 0.0
+  },
+  "fresh_timing_ns": {
+    "wns": -0.149,
+    "tns": -1.362,
+    "whs": 0.036,
+    "ths": 0.0
+  },
+  "setup_failing_endpoints": 17,
+  "hold_failing_endpoints": 0,
+  "failing_domain": "148.5_MHz_VIDEO_C2H_SOURCE_DOMAIN",
+  "family_counts": {
+    "lifetime_drop_accounting_enable": 16,
+    "descriptor_epoch_capture_enable": 1
+  },
+  "dominant_delay": "ROUTED_NET_72.3_TO_74.0_PERCENT",
+  "targeted_valid_exceptions": 0,
+  "dcp_open_attempts": 1,
+  "successful_timing_summary_reports": 1,
+  "product_changes": 0,
+  "build_commands": 0,
+  "dut_contact": 0,
+  "next_one_action": "SEPARATELY_AUTHORIZE_ONE_SOURCE_LEVEL_REFACTOR_OF_THE_LOCALIZED_COMMIT_VALIDATION_ENABLE_CONE_AND_A_FULL_REBUILD",
+  "historical_nack_root_cause": "NOT_PROVEN_BY_THIS_TASK",
+  "product_qualification": "NOT_CLAIMED"
+}
