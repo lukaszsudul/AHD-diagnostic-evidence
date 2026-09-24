@@ -1,0 +1,35 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R4_SANITIZED_RESULT_V1",
+  "task": "AHD_V41_CH3_R2R10R14R4_BSF_PC120_DATA_NACK_OFFLINE_REVIEW",
+  "result": "COMPLETE_RECOMMENDATION_C",
+  "source_commit": "88ac649a8484ff359270ec19ab539478edf534c0",
+  "source_tree": "8120a9560d85c1a147b30941e47901e52af0b306",
+  "bitstream_sha256": "22DACBCF9245BB04901B106A27BB37248B14CC877B92DB1774FFAF63FA4B716A",
+  "reference_commit": "081ebbff9a2722d47acf16c680594be43cb179e2",
+  "historical_r14r3": "FAIL_APPLY_PC120_BANK0B_REG71_WRITE6D_DATA_NACK_BEFORE_EQ_UNCHANGED",
+  "bank_notation": "0x0B_DECIMAL_11_NOT_0x11",
+  "bsf_association": "SOURCE_CONFIRMED_RANGE_ASSOCIATION_ONLY",
+  "bsf_mode_before_pc120": "SOURCE_PLANNED_LPF_AUTO_OBSERVED_NOT_RETAINED",
+  "reference_sequence": {
+    "target": "TVI1080p25_CH3_INDEX2",
+    "ordered_pairs_compared": 19,
+    "ordered_pairs_matched": 19,
+    "pc120": "BANK0B_REG71_WRITE6D_MATCH",
+    "timing_equivalence": "PARTIAL_REFERENCE_BUILD_VARIANT_NOT_RETAINED"
+  },
+  "data_nack_write_effect": "NOT_MEASURED_NOT_ASSUMED_COMMIT_AMBIGUOUS",
+  "write_repeatability": "NOT_ESTABLISHED_MISSING_REGISTER_OR_SEQUENCE_SEMANTICS",
+  "readback_safety_and_meaning": "NOT_ESTABLISHED",
+  "recovery_recommendation": "C",
+  "one_next_action": "ACQUIRE_AND_REVIEW_AUTHORITATIVE_BANK0B_REG71_ACCESS_COMMIT_SIDE_EFFECT_READBACK_SEMANTICS",
+  "root_cause_link": "NOT_PROVEN",
+  "counters": {
+    "dut_contact": 0,
+    "driver_operations": 0,
+    "hardware_lock_mutations": 0,
+    "hardware_commands": 0,
+    "build": 0,
+    "tests": 0,
+    "product_changes": 0
+  }
+}
