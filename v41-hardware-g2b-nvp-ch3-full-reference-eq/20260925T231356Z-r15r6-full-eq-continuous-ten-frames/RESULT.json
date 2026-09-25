@@ -1,0 +1,106 @@
+{
+  "activation": {
+    "bitstream_bytes": 2192144,
+    "bitstream_sha256": "3962886A7813B16D4A3B5C0D21F81A5B930696FF8E6DCD319A3331FA7FD2D5E2",
+    "boot_after": "23f3b81e-7a56-4373-9ed4-d4b123a365bd",
+    "boot_before": "14af4c60-ff1d-409d-aca4-915874162901",
+    "done_after": 1,
+    "jtag_attempts": 1,
+    "result": "PASS",
+    "source_commit": "719bcd63aa40cbeadb2b6eae99697f574209b6de",
+    "warm_reboot_attempts": 1
+  },
+  "apply_a": "NOT_RUN_PREPARE_GATE_FAILED",
+  "autoinit": {
+    "aggregate_nacks": 81,
+    "coherence": 3,
+    "completions": 356,
+    "counter_status_end": 15,
+    "counter_status_start": 15,
+    "failed_attempts": 81,
+    "nvp_end": 249,
+    "nvp_start": 249,
+    "phase_nacks": {
+      "DATA": 12,
+      "RADDR": 4,
+      "REGADDR": 35,
+      "WADDR": 30
+    },
+    "phase_sum": 81,
+    "reported_phase_sum": 81,
+    "result": "PASS",
+    "starts": 356,
+    "timeout_attempts": 0,
+    "timeout_count": 0
+  },
+  "c2h": {
+    "completed": 0,
+    "pending": 0,
+    "result": "NOT_RUN",
+    "submitted": 0
+  },
+  "camera_ch3": "FRESH_OWNER_ATTESTED_CAMERA_CH3_CONNECTED_POWERED_FOR_ATTEMPT",
+  "cleanup": "PASS",
+  "feq1_arm": "PASS",
+  "first_blocker": "PREPARE_PC23_BANK_SELECT_09_REGISTER_FF_WRITE_09_I2C_WADDR_NACK",
+  "frames": {
+    "complete_fresh": 0,
+    "png_created": 0,
+    "target": 10
+  },
+  "full_eq": "NOT_RUN_PREPARE_GATE_FAILED",
+  "host_package": {
+    "commit": "c4bc671620f2cc2ae57fcbf9d11c31ba2d56aac4",
+    "mismatch_count": 0,
+    "reader_sha256": "2621B77C9DB756908A9C993A86F70C72F4831DB85EB48EA703B31D1E083040E1",
+    "verified_files": 52
+  },
+  "new_code_build": "0/0",
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "prepare": {
+    "classification": "FAIL_TERMINAL",
+    "hard_failure": {
+      "cause": "I2C_WADDR_NACK",
+      "origin": "PREPARE",
+      "pc": 23,
+      "pending_bank": 9,
+      "register": 255,
+      "write": true,
+      "write_data": 9
+    },
+    "observability_complete": true,
+    "recovered_events": [
+      {
+        "bank": 9,
+        "first_cause": "I2C_WADDR_NACK",
+        "outcome": "RECOVERED",
+        "pc": 12,
+        "read": true,
+        "register": 106
+      }
+    ],
+    "retry_counters": {
+      "eligible_read_first_attempts": 11,
+      "main_prepare_transactions_accepted": 25,
+      "prepare_read_first_attempts": 18,
+      "read_first_attempt_nacks": 1,
+      "recovered_read_count": 1,
+      "retry_attempts_accepted": 1,
+      "retry_budget_used": 1,
+      "retry_event_count": 1,
+      "telemetry_fault_count": 0,
+      "unrecovered_retry_count": 0,
+      "unretried_terminal_nack_count": 0
+    },
+    "terminal_code": 17,
+    "terminal_raw": "0xC3C02202"
+  },
+  "product_qualification": "NOT_CLAIMED",
+  "protected_hdmi": "10ee:7021_UNTOUCHED",
+  "qualification_scope": "ONE_EXPERIMENTAL_HARDWARE_ATTEMPT_NOT_PRODUCT",
+  "result": "FAIL_PREPARE_PC23_BANK_SELECT_09_WADDR_NACK_AFTER_ONE_RECOVERED_READ_NACK",
+  "scene": "NOT_OBSERVED_NO_FRAME",
+  "schema": "AHD_V41_CH3_R15R6_SANITIZED_RESULT_V1",
+  "t0": null,
+  "task": "AHD_V41_CH3_R15R6_FULL_EQ_TEN_FRAMES_HARDWARE_EXECUTION"
+}

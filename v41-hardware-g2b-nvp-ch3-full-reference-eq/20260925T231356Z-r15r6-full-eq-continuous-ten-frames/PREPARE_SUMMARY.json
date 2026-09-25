@@ -1,0 +1,38 @@
+{
+  "classification": "FAIL_TERMINAL",
+  "hard_failure": {
+    "cause": "I2C_WADDR_NACK",
+    "origin": "PREPARE",
+    "pc": 23,
+    "pending_bank": 9,
+    "register": 255,
+    "write": true,
+    "write_data": 9
+  },
+  "observability_complete": true,
+  "recovered_events": [
+    {
+      "bank": 9,
+      "first_cause": "I2C_WADDR_NACK",
+      "outcome": "RECOVERED",
+      "pc": 12,
+      "read": true,
+      "register": 106
+    }
+  ],
+  "retry_counters": {
+    "eligible_read_first_attempts": 11,
+    "main_prepare_transactions_accepted": 25,
+    "prepare_read_first_attempts": 18,
+    "read_first_attempt_nacks": 1,
+    "recovered_read_count": 1,
+    "retry_attempts_accepted": 1,
+    "retry_budget_used": 1,
+    "retry_event_count": 1,
+    "telemetry_fault_count": 0,
+    "unrecovered_retry_count": 0,
+    "unretried_terminal_nack_count": 0
+  },
+  "terminal_code": 17,
+  "terminal_raw": "0xC3C02202"
+}
