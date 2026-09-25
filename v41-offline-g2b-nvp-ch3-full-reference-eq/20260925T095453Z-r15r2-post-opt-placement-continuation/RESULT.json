@@ -1,0 +1,679 @@
+{
+  "task": "AHD_V41_CH3_R15R2_POST_OPT_PLACEMENT_CONTINUATION",
+  "result": "BLOCKED_FINAL_TIMING",
+  "source": {
+    "commit": "e32dae86af20fa5c385026397b7042d8b1dafcd4",
+    "tree": "2f5293036bc91175f9615756923127e8ae3ed8ce",
+    "changed": false
+  },
+  "input": {
+    "stage": "R15R1_POST_OPT_EXPLOREAREA",
+    "bytes": 54497108,
+    "sha256": "7764B7A2AF61A6C7F3968CCC5D6CFB31946FFCFE42DA1F8ADDC786CB0FDAC5EE",
+    "original_and_independent_copy_unchanged_before_after": true,
+    "retained_manifest_match": true
+  },
+  "tool": {
+    "version": "2025.2",
+    "sw_build": "6299465",
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma"
+  },
+  "attempts": {
+    "checkpoint_open": 1,
+    "synth": 0,
+    "opt": 0,
+    "place": 1,
+    "route": 1,
+    "post_route_physopt_explore": 1,
+    "bitgen": 0,
+    "source_changes": 0,
+    "severity_changes": 0,
+    "constraint_changes": 0,
+    "functional_tests": 0,
+    "dut_contact": 0,
+    "reader_work": 0,
+    "toolchain_work": 0
+  },
+  "input_lut_exception": {
+    "authorized": true,
+    "used": true,
+    "input_slice_lut": 21301,
+    "strict_post_place_maximum": 20799,
+    "native_checks_unchanged": true
+  },
+  "resources": {
+    "input_post_opt": {
+      "status": "MEASURED",
+      "slice_lut": 21301.0,
+      "logic_lut": 19977.0,
+      "memory_lut": 1324.0,
+      "ff": 22962.0,
+      "bram_tiles": 28.5,
+      "report": "reports/INPUT_POST_OPT_UTILIZATION.rpt"
+    },
+    "post_place": {
+      "status": "MEASURED",
+      "slice_lut": 20552.0,
+      "logic_lut": 19299.0,
+      "memory_lut": 1253.0,
+      "ff": 22962.0,
+      "bram_tiles": 28.5,
+      "report": "reports/POST_PLACE_UTILIZATION.rpt"
+    },
+    "pre_physopt_routed": {
+      "status": "MEASURED",
+      "slice_lut": 20552.0,
+      "logic_lut": 19299.0,
+      "memory_lut": 1253.0,
+      "ff": 22962.0,
+      "bram_tiles": 28.5,
+      "report": "reports/PRE_PHYSOPT_ROUTED_UTILIZATION.rpt"
+    },
+    "final": {
+      "status": "MEASURED",
+      "slice_lut": 20557.0,
+      "logic_lut": 19304.0,
+      "memory_lut": 1253.0,
+      "ff": 22962.0,
+      "bram_tiles": 28.5,
+      "report": "reports/FINAL_UTILIZATION.rpt"
+    }
+  },
+  "timing": {
+    "WNS": "-3.788",
+    "TNS": "-463.315",
+    "setup_failing": "128",
+    "WHS": "0.016",
+    "THS": "0.000",
+    "hold_failing": "0",
+    "WPWS": "0.000",
+    "TPWS": "0.000",
+    "pulse_failing": "0"
+  },
+  "routing": {
+    "PRE_PHYSOPT": {
+      "routable": "41397",
+      "fully_routed": "41397",
+      "errors": "0",
+      "partial_or_unrouted": "0"
+    },
+    "FINAL": {
+      "routable": "41417",
+      "fully_routed": "41417",
+      "errors": "0",
+      "partial_or_unrouted": "0"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "private/R15R2_FINAL_ROUTED.dcp",
+      "bytes": 18069907,
+      "sha256": "E1E9F087810B4670A66A9F64C14F11A70A84117C966CF26EC704443DD8BA8DBD"
+    },
+    {
+      "path": "private/R15R2_POST_PLACE.dcp",
+      "bytes": 15148093,
+      "sha256": "4FA59AA7C7120AECA16A7AE41E066B23E3AB9C881ABE6D9A9E3CFCC6BCCD224A"
+    },
+    {
+      "path": "private/R15R2_PRE_PHYSOPT_ROUTED.dcp",
+      "bytes": 18209921,
+      "sha256": "43566FC69DF3973A5CC6291AD0DCA6DF8F4BBFA7C04C0393E6E99E5794CFFCB0"
+    }
+  ],
+  "bitstream": "NOT_CREATED",
+  "source_contract_retention": "BYTE_IDENTICAL_TO_RETAINED_MANIFESTS",
+  "full_eq": {
+    "coverage_rows": 28,
+    "implemented": 19,
+    "reused_equivalent": 5,
+    "not_applicable": 4,
+    "missing_required": 0,
+    "executor": "HYBRID_HOST_FPGA_UNCHANGED",
+    "assurance": "SOURCE_SCOPE_PRESERVED_NOT_FUNCTIONALLY_TESTED"
+  },
+  "linux_reader_work": "NOT_RUN_DEFERRED_BY_OWNER",
+  "linux_reader_binary": "NOT_CREATED_UNCHANGED",
+  "ten_frame_hardware_package_ready": false,
+  "hardware_activation": "NOT_AUTHORIZED",
+  "product_qualification": "NOT_CLAIMED",
+  "historical_results": "R15_AND_R15R1_BLOCKED_UNCHANGED",
+  "next_one_action": "Separate Owner authorization for a targeted source/CDC review of the reset/epoch-to-snapshot control path (nvp_vclk1 to userclk1), to establish its handshake and timing contract before any RTL/XDC change.",
+  "first_blocker": {
+    "RESULT": "BLOCKED_FINAL_TIMING",
+    "STAGE": "FINAL_CHECKS",
+    "DETAIL": "WNS=-3.788 WHS=0.016 WPWS=0.000 failing=128/0/0"
+  },
+  "timing_gates": {
+    "setup": "FAIL",
+    "hold": "PASS",
+    "pulse_width": "PASS"
+  },
+  "local_check": {
+    "structural_queries": "NOT_RUN_AFTER_FINAL_TIMING_FAILURE",
+    "retained_report_interpretation": "COMPLETED",
+    "clock_property_comparison": true,
+    "full_cdc": "NOT_PERFORMED",
+    "bus_skew": "NOT_PERFORMED",
+    "functional_test": false,
+    "timing_summary_successful_calls": 1,
+    "bounded_timing_report_calls": 1,
+    "helper_precision_warning": {
+      "requested": 6,
+      "effective": 3,
+      "repeated_report": false
+    }
+  },
+  "clock_model_retention": true,
+  "native_timing_observations": [
+    {
+      "stage": "PLACE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.272",
+        "TNS": "-589.993"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PLACE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.548."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.197",
+        "TNS": "-374.344",
+        "WHS": "-0.723",
+        "THS": "-1368.202"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.197",
+        "TNS": "-425.080",
+        "WHS": "-0.576",
+        "THS": "-27.438"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.771",
+        "TNS": "-579.759",
+        "WHS": "N/A",
+        "THS": "N/A"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.784",
+        "TNS": "-582.402",
+        "WHS": "N/A",
+        "THS": "N/A"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.771",
+        "TNS": "-577.390",
+        "WHS": "N/A",
+        "THS": "N/A"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.771",
+        "TNS": "-576.914",
+        "WHS": "0.036",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "ROUTE",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.771",
+        "TNS": "-576.914",
+        "WHS": "0.036",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.766",
+        "TNS": "-576.251",
+        "WHS": "0.036",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-4.766",
+        "TNS": "-576.251",
+        "WHS": "0.036",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.645."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.551."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.541."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.527."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.516."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.508."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.499."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.317."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-4.144."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-3.865."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-3.829."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-3.798."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "userclk1",
+      "metrics": {
+        "WNS": "-3.788."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.274."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.178."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.104."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.082."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.078."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.078."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.078."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.078."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.065."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.047."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.047."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.047."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.047."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.033."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.033."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.033."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.033."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.022."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.020."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.008."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "PATH_GROUP",
+      "path_group": "nvp_vclk1",
+      "metrics": {
+        "WNS": "-0.008."
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.788",
+        "TNS": "-463.315",
+        "WHS": "0.016",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.788",
+        "TNS": "-463.315",
+        "WHS": "0.016",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    },
+    {
+      "stage": "PHYSOPT",
+      "scope": "NATIVE_SUMMARY",
+      "path_group": null,
+      "metrics": {
+        "WNS": "-3.788",
+        "TNS": "-463.315",
+        "WHS": "0.016",
+        "THS": "0.000"
+      },
+      "qualification": "NATIVE_ESTIMATE_NOT_FINAL_STA_GATE"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "OPEN",
+      "start_utc": "2026-09-25T09:16:06Z",
+      "end_utc": "2026-09-25T09:17:35Z",
+      "elapsed_seconds": "89.535",
+      "result": "RETURNED_OK"
+    },
+    {
+      "stage": "PLACE",
+      "start_utc": "2026-09-25T09:17:42Z",
+      "end_utc": "2026-09-25T09:31:47Z",
+      "elapsed_seconds": "844.245",
+      "result": "RETURNED_OK"
+    },
+    {
+      "stage": "ROUTE",
+      "start_utc": "2026-09-25T09:32:01Z",
+      "end_utc": "2026-09-25T09:42:39Z",
+      "elapsed_seconds": "637.924",
+      "result": "RETURNED_OK"
+    },
+    {
+      "stage": "PHYSOPT",
+      "start_utc": "2026-09-25T09:43:08Z",
+      "end_utc": "2026-09-25T09:50:54Z",
+      "elapsed_seconds": "466.499",
+      "result": "RETURNED_OK"
+    }
+  ],
+  "messages": {
+    "error_fatal_critical_emissions": 0,
+    "ordinary_warning_emissions": 8,
+    "native_drc_summaries": [
+      "INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors",
+      "INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors, 20 Warnings"
+    ]
+  },
+  "publication": "Append-only evidence; this file has no self-referential future commit hash."
+}
