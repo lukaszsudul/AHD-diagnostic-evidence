@@ -1,0 +1,54 @@
+{
+  "task": "AHD_V41_CH3_R15R4R3_COVERAGE_CLOSEOUT_POST_ROUTE_AGGRESSIVEEXPLORE",
+  "result": "BLOCKED_FINAL_SETUP_AFTER_ONE_AGGRESSIVEEXPLORE",
+  "source_commit": "60bbcaa10217df873dd20d2584426002a5272df7",
+  "source_tree": "ac12ab779814923024bf89a1af321aaedea77f29",
+  "input_dcp_sha256": "21CBBD3D1E533C5C108EC651335FC33B93935ACBACEE11AA4A56CA26A90908CF",
+  "input_dcp_bytes": 18092065,
+  "output_dcp_sha256": "154D579F704B5CED1700AED378A0F505F6DE875F05BC3ABA93854131ACD0EB0A",
+  "output_dcp_bytes": 18372143,
+  "coverage": {
+    "historical": 128,
+    "accounted": 128,
+    "unchanged_pin": 110,
+    "role_moved": 15,
+    "ce_merged_into_d": 3,
+    "current_reachable": 125,
+    "current_covered": 125,
+    "source_endpoint_paths": 500,
+    "active_limit_ns": 6.0,
+    "min_sampled_slack_ns": 0.491
+  },
+  "physopt": {
+    "directive": "AggressiveExplore",
+    "attempts": 1,
+    "reported_netlist_modified": false
+  },
+  "final_timing": {
+    "wns_ns": -0.011,
+    "tns_ns": -0.017,
+    "failing_setup_endpoints": 2,
+    "whs_ns": 0.03,
+    "ths_ns": 0.0,
+    "failing_hold_endpoints": 0,
+    "wpws_ns": 0.0,
+    "tpws_ns": 0.0,
+    "failing_pulse_endpoints": 0
+  },
+  "negative_path_families": [
+    "release_generation_to_enable_fault",
+    "ownership_slot_to_source_slot_state"
+  ],
+  "resources": {
+    "slice_lut_used": 20575,
+    "slice_lut_available": 20800,
+    "routable_nets": 41424,
+    "fully_routed_nets": 41424,
+    "route_errors": 0
+  },
+  "bitstream": "NOT_CREATED",
+  "functional_tests": "NOT_RUN",
+  "dut": "UNTOUCHED",
+  "linux_reader": "NOT_RUN",
+  "qualification": "NOT_PRODUCT"
+}

@@ -1,0 +1,6 @@
+# R15R4R3 — scoped continuation
+Result: BLOCKED_FINAL_SETUP_AFTER_ONE_AGGRESSIVEEXPLORE. One authorized post-route AggressiveExplore completed and reported no netlist modification. Final setup still has WNS -0.011 ns, TNS -0.017 ns, and two failing endpoints in two distinct userclk1-to-nvp_vclk1 contract families. Hold and pulse-width pass. Bitstream was not generated.
+
+Historical 128 shadow endpoints are accounted for as 110 unchanged pins, 15 changed pin roles within the same logical cell, and 3 old CE pins merged into an existing D pin. All 125 currently reachable endpoints have active 6 ns paths from each of four held-source bits (500 reported paths); no uncovered reachable endpoint. This is source-and-netlist-derived mapping, not formal equivalence. The two negative paths are separate from the shadow direction. LUT 20575/20800; all 41424 routable nets routed, zero route errors. Local ready-export structure and targeted bus-skew checks retained; global CDC/product sign-off and functional tests were not performed.
+
+The unchanged FPGA source commit is 60bbcaa10217df873dd20d2584426002a5272df7. No RTL/XDC change, synthesis, reader work, or DUT access occurred. The output DCP is private. The next engineering action requires separate authorization for a targeted correction of the two setup path families.
