@@ -1,0 +1,78 @@
+{
+  "task": "R15R4R4",
+  "result": "PASS_RELEASE_OWNERSHIP_RTL_REFACTOR_TIMING_CLOSED_BITSTREAM_READY_UNTESTED",
+  "scope": "EXPERIMENTAL_FPGA_BUILD_ONLY_FUNCTIONALLY_UNTESTED",
+  "source_commit": "719bcd63aa40cbeadb2b6eae99697f574209b6de",
+  "source_tree": "386d0bcff67d3835c6377f767b2b35c2f4698216",
+  "product_rtl_files_changed": 1,
+  "protocol_cycle_assurance": "SOURCE_REVIEW_ONLY_NOT_FORMAL_OR_FUNCTIONAL_TEST",
+  "full_eq_feq1_abi_host_xdc": "SOURCE_UNCHANGED_OUTSIDE_LOCAL_RTL_FILE",
+  "steps": {
+    "synth": 1,
+    "explorearea_opt": 1,
+    "place": 1,
+    "route": 1,
+    "post_route_physopt_explore": 1,
+    "bitgen": 1
+  },
+  "resources": {
+    "slice_lut_available": 20800,
+    "post_synth": 23362,
+    "post_opt": 21469,
+    "post_place": 20753,
+    "pre_physopt": 20753,
+    "final": 20753,
+    "post_place_headroom": 47
+  },
+  "timing": {
+    "wns_ns": 0.08,
+    "tns_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "setup_total_endpoints": 68366,
+    "whs_ns": 0.029,
+    "ths_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "hold_total_endpoints": 67613,
+    "wpws_ns": 0.0,
+    "tpws_ns": 0.0,
+    "pulse_width_failing_endpoints": 0,
+    "pulse_width_total_endpoints": 25465
+  },
+  "route": {
+    "routable": 41478,
+    "fully_routed": 41478,
+    "errors": 0
+  },
+  "changed_families": {
+    "release_worst_slack_ns": 0.08,
+    "ownership_worst_slack_ns": 0.502,
+    "unchanged_datapath_limit_ns": 6.0,
+    "all_four_slots_checked": true
+  },
+  "shadow": {
+    "historical_rows_accounted": 128,
+    "current_endpoints": 127,
+    "current_paths": 508,
+    "minimum_slack_ns": 0.604,
+    "unresolved_historical": 0,
+    "unaccounted_current": 0
+  },
+  "ready_and_snapshot": "REGISTERED_READY_EXPORT_RETAINED_3NS_SNAPSHOT_BUS_SKEW_MET",
+  "cdc_limit": "LOCAL_STABLE_DATA_HANDSHAKE_SOURCE_REASONED; TOOL_CDC1_CRITICAL_RETAINED; NO_GLOBAL_CDC_SIGNOFF",
+  "bitstream": {
+    "bytes": 2192144,
+    "sha256": "3962886A7813B16D4A3B5C0D21F81A5B930696FF8E6DCD319A3331FA7FD2D5E2",
+    "availability": "PRIVATE_UNTESTED"
+  },
+  "routed_dcp": {
+    "bytes": 65641765,
+    "sha256": "C754172FB4F8585F3D344C7B346857B7D47EA94CAB89A25B3FD9B14E06AF9FB4",
+    "availability": "PRIVATE"
+  },
+  "mandatory_bitgen_drc_errors": 0,
+  "linux_reader": "DEFERRED_BY_OWNER_NO_WORK",
+  "ten_frame_hardware_package_ready": false,
+  "dut_contact": 0,
+  "new_functional_tests": 0,
+  "product_qualification": "NOT_CLAIMED"
+}
