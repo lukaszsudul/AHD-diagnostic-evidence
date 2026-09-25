@@ -1,0 +1,59 @@
+{
+  "task": "AHD_V41_CH3_R15R4R2_SHADOW_SELECTOR_STAGE_FIX_REBUILD",
+  "result": "BLOCKED_FINAL_SETUP_WNS_NEGATIVE",
+  "engineering_gate": "FAIL",
+  "first_blocker": "WNS_MINUS_0_011_NS_TWO_SETUP_ENDPOINTS",
+  "source_commit": "60bbcaa10217df873dd20d2584426002a5272df7",
+  "source_tree": "ac12ab779814923024bf89a1af321aaedea77f29",
+  "functional_rtl_byte_identical": true,
+  "attempts": {
+    "synth": 1,
+    "opt_explorearea": 1,
+    "place": 1,
+    "route": 1,
+    "post_route_physopt_explore": 1,
+    "bitgen": 0
+  },
+  "slice_lut": {
+    "post_synth": 23313,
+    "post_opt": 21303,
+    "post_place": 20571,
+    "final": 20575,
+    "available": 20800
+  },
+  "final_sta": {
+    "wns_ns": -0.011,
+    "tns_ns": -0.017,
+    "setup_failing_endpoints": 2,
+    "whs_ns": 0.03,
+    "ths_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "pulse_failing_endpoints": 0
+  },
+  "routing": {
+    "routable": 41424,
+    "fully_routed": 41424,
+    "errors": 0
+  },
+  "shadow_constraint": {
+    "ns": 6.0,
+    "reachable_endpoints_reported": 125,
+    "candidate_pins": 192,
+    "ignored_exceptions": 0,
+    "sampled_min_slack_ns": 0.491
+  },
+  "snapshot_bus_skew": {
+    "gray_ns": 1.547,
+    "epoch_echo_ns": 0.989,
+    "limit_ns": 3.0
+  },
+  "private_final_routed_dcp": {
+    "bytes": 18092065,
+    "sha256": "21CBBD3D1E533C5C108EC651335FC33B93935ACBACEE11AA4A56CA26A90908CF"
+  },
+  "bitstream": "NOT_CREATED",
+  "linux_reader": "DEFERRED_BY_OWNER",
+  "functional_tests": 0,
+  "dut_contact": 0,
+  "product_qualification": "NOT_CLAIMED"
+}

@@ -1,0 +1,11 @@
+# R15R4R2 — selector/stage correction and single FPGA build
+
+Engineering result: **BLOCKED_FINAL_SETUP_WNS_NEGATIVE**. This is an experimental, unqualified firmware build. The local held-commit shadow selector was corrected and the 6 ns datapath constraint was applied after completed synthesis, before ExploreArea. Functional RTL, full EQ, FEQ1, host, ABI, and microcode were not changed.
+
+A retained post-synth reference showed four held source cells and 32+32 shadow cells. The first demonstrated invalid selector step was textual concatenation of two Vivado cell collections before `get_pins -of_objects`. On the new netlist the corrected selector found four sources, 64 shadow cells and 192 D/CE/R pins. The local exception reported 125 reachable endpoints, no ignored exceptions, and minimum sampled slack +0.491 ns. The historical 128 endpoint count was not assumed equivalent without full mapping.
+
+One synthesis, one ExploreArea, one place, one route and one post-route Explore completed. Slice LUT used: 23,313 post-synth; 21,303 post-opt; 20,571 post-place; 20,575 final. The 20,800-LUT physical gate passed. Routing completed 41,424/41,424 routable nets with zero errors. Snapshot Gray and epoch-echo bus skew measured 1.547 ns and 0.989 ns against 3 ns.
+
+Final STA failed setup: WNS -0.011 ns, TNS -0.017 ns, two endpoints in the userclk1-to-nvp_vclk1 6 ns constrained family. Hold: WHS +0.030 ns, THS 0, zero failing endpoints. Pulse-width: zero failing endpoints. No bitstream was generated. The final routed DCP is retained privately for later, separately authorized work; it is not a deployable release.
+
+Two task-local Tcl newline errors occurred only after completed, saved synth and opt checkpoints. Work resumed from those own checkpoints without repeating a costly stage. Source branch commit and three changed/new blobs passed independent commit-pinned readback. Linux reader work remained deferred by Owner; functional tests and DUT contact were not performed. Hardware test package is not ready.
