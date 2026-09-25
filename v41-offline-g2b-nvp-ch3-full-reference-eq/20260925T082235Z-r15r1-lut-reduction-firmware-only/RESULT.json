@@ -1,0 +1,127 @@
+{
+  "task": "AHD_V41_CH3_R15R1_LUT_REDUCTION_FIRMWARE_ONLY",
+  "result": "BLOCKED_POST_OPT_LUT_CAPACITY",
+  "qualification_scope": "R15R1_FPGA_BUILD_ONLY_NOT_FUNCTIONALLY_QUALIFIED",
+  "full_eq_scope": "R15_SOURCE_COVERAGE_PRESERVED_28_ROWS_MISSING_REQUIRED_0",
+  "source_compatibility": "SOURCE_REASONED_NOT_FUNCTIONALLY_TESTED",
+  "eq_executor": "HYBRID_HOST_FPGA_UNCHANGED",
+  "coverage": {
+    "rows": 28,
+    "implemented": 19,
+    "reused": 5,
+    "not_applicable": 4,
+    "missing_required": 0
+  },
+  "change": "FEQ1 shared terminal failure selection and frozen first-fault context view; independent pre-edge bank-valid sample retained",
+  "frozen_contracts_and_host": "BYTE_IDENTICAL",
+  "attempts": {
+    "synth": 1,
+    "explorearea": 1,
+    "place": 0,
+    "route": 0,
+    "post_route_physopt_explore": 0,
+    "bitgen": 0,
+    "new_candidates": 1,
+    "default_opt": 0,
+    "functional_tests": 0,
+    "dut_contact": 0,
+    "linux_reader_compilation": 0,
+    "linux_toolchain_discovery_setup_install": 0,
+    "host_binary_build": 0
+  },
+  "baseline_post_opt": {
+    "slice_lut": 21377,
+    "ff": 23033,
+    "bram_tiles": 28.5
+  },
+  "resources": {
+    "post_synth": {
+      "status": "MEASURED",
+      "slice_lut": 23296,
+      "logic_lut": 21907.0,
+      "memory_lut": 1389.0,
+      "ff": 23872,
+      "bram_tiles": 29.5,
+      "report": "POST_SYNTH_UTILIZATION.rpt"
+    },
+    "post_opt": {
+      "status": "MEASURED",
+      "slice_lut": 21301,
+      "logic_lut": 19977.0,
+      "memory_lut": 1324.0,
+      "ff": 22962,
+      "bram_tiles": 28.5,
+      "report": "POST_OPT_UTILIZATION.rpt"
+    },
+    "post_place": {
+      "status": "NOT_RUN"
+    },
+    "pre_physopt_routed": {
+      "status": "NOT_RUN"
+    },
+    "final_routed": {
+      "status": "NOT_RUN"
+    }
+  },
+  "post_opt_reduction": 76,
+  "minimum_reduction_required": 578,
+  "strict_lut_maximum": 20799,
+  "timing": {
+    "wns": "NOT_RUN",
+    "tns": "NOT_RUN",
+    "setup_failing_endpoints": "NOT_RUN",
+    "whs": "NOT_RUN",
+    "ths": "NOT_RUN",
+    "hold_failing_endpoints": "NOT_RUN",
+    "wpws": "NOT_RUN",
+    "tpws": "NOT_RUN",
+    "pulse_width_failing_endpoints": "NOT_RUN"
+  },
+  "tool": {
+    "version": "2025.2",
+    "sw_build": "6299465",
+    "part": "xc7a35tcsg325-2",
+    "top": "ahd_capture_top_xdma"
+  },
+  "linux_reader_work": "NOT_RUN_DEFERRED_BY_OWNER",
+  "linux_reader_binary": "NOT_CREATED_UNCHANGED",
+  "linux_reader_missing_is_current_fpga_build_blocker": false,
+  "ten_frame_hardware_package_ready": false,
+  "hardware_activation": "NOT_AUTHORIZED",
+  "dut": "UNTOUCHED",
+  "tests": "NOT_PERFORMED",
+  "product_qualification": "NOT_CLAIMED",
+  "historical_nack_root_cause": "NOT_PROVEN_UNCHANGED",
+  "source": {
+    "commit": "e32dae86af20fa5c385026397b7042d8b1dafcd4",
+    "tree": "2f5293036bc91175f9615756923127e8ae3ed8ce",
+    "base_commit": "d186bf8d1cedef7852e955b5f0a86dc09486454d"
+  },
+  "first_blocker": {
+    "RESULT": "BLOCKED_POST_OPT_LUT_CAPACITY",
+    "FIRST_BLOCKER": "POST_OPT_SLICE_LUT_USED_GREATER_THAN_OR_EQUAL_TO_AVAILABLE",
+    "STAGE": "POST_OPT"
+  },
+  "stage_times": [
+    {
+      "stage": "PROJECT_SETUP",
+      "elapsed_seconds": "51.146",
+      "result": "PASS"
+    },
+    {
+      "stage": "SYNTH",
+      "elapsed_seconds": "1122.518",
+      "result": "PASS"
+    },
+    {
+      "stage": "OPT",
+      "elapsed_seconds": "135.594",
+      "result": "PASS"
+    }
+  ],
+  "messages": {
+    "emitted_warning_lines": 442,
+    "error_fatal_critical_line_count": 0,
+    "default_message_suppression_present": true
+  }
+}
