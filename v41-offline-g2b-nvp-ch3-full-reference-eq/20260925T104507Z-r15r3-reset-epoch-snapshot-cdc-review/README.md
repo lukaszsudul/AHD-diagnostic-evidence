@@ -1,0 +1,9 @@
+# R15R3 — read-only reset/epoch/snapshot CDC review
+
+The exact R15R2 final routed checkpoint was copied independently and verified by full SHA-256 and size before and after one read-only Vivado 2025.2 session. R15R2 remains `BLOCKED_FINAL_TIMING`; no bitstream was created.
+
+Fresh STA repeated WNS -3.788 ns, TNS -463.315 ns and 128 failing setup endpoints. All 128 were enumerated: 64 frame-shadow and 64 line-shadow reset-control endpoints, driven by one held commit-phase source bit. The two modeled clock edges at 1999.998 ns and 2000.000 ns produce the nominal 0.002 ns requirement. Their clock trees have no common source or specified phase lock; this number is an STA near coincidence, not a measured 2 ps board requirement.
+
+The current routed paths to the new shadow controls have no valid timing exception. Pinned source constraints bound older held-commit reset destinations but omit these new controls. Source reasoning supports an ACK-qualified held-data transfer; it is not a functional test or complete CDC proof. A pair-scoped CDC summary also reports one `Unsafe` source-to-AXI endpoint without its identity. That exact endpoint/fanin is the smallest missing observation before deciding whether a bounded local constraint amendment alone suffices or control RTL must change. No correction was performed.
+
+Classification: `CONTRACT_UNRESOLVED_WITH_SPECIFIC_MISSING_EVIDENCE`. One next action, separately authorized: detailed cell-scoped CDC observation on the same verified routed checkpoint to identify the `Unsafe` endpoint and compare it with the enumerated shadow-control cone. Full-EQ execution, ten-frame capture and product qualification remain untested. No source/constraint modification, build, reader work or DUT contact occurred.
