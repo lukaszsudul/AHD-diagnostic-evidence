@@ -1,0 +1,212 @@
+{
+  "activation": "ONE_EXACT_JTAG_SRAM_DONE1_NEW_BOOT_RUNTIME_CONFIRMED",
+  "all_host_files_byte_identical_before_after": true,
+  "apply": {
+    "campaign": 2,
+    "classification": "FAIL_TERMINAL",
+    "engine": 3,
+    "feq1_handoff": "NOT_REACHED",
+    "hard_failure": {
+      "bank_valid": true,
+      "confirmed_bank": 0,
+      "origin_name": "APPLY_A",
+      "pc": 70,
+      "raw_i2c_cause_name": "I2C_WADDR_NACK",
+      "register": 54,
+      "timeout": false,
+      "write": true,
+      "write_data": 2
+    },
+    "prepare_retention": true,
+    "terminal": "0xC3C02283",
+    "terminal_code": 17,
+    "write_retry_counters": {
+      "aborted_before_acceptance_count": 0,
+      "event_count": 0,
+      "recovered_write_count": 0,
+      "retry_attempts_accepted": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_write_count": 0
+    },
+    "write_retry_observability_complete": true
+  },
+  "autoinit": {
+    "aggregate_nacks": 49,
+    "coherence": 3,
+    "completions": 324,
+    "counter_status_end": 15,
+    "counter_status_start": 15,
+    "failed_attempts": 49,
+    "nvp_end": 249,
+    "nvp_start": 249,
+    "phase_nacks": {
+      "DATA": 8,
+      "RADDR": 1,
+      "REGADDR": 22,
+      "WADDR": 18
+    },
+    "phase_sum": 49,
+    "reported_phase_sum": 49,
+    "result": "PASS",
+    "starts": 324,
+    "timeout_attempts": 0,
+    "timeout_count": 0
+  },
+  "bitstream_bytes": 2192144,
+  "bitstream_sha256": "3962886A7813B16D4A3B5C0D21F81A5B930696FF8E6DCD319A3331FA7FD2D5E2",
+  "c2h": {
+    "completed": 0,
+    "pending_own": 0,
+    "reader_not_started": true,
+    "submitted": 0
+  },
+  "camera": "OWNER_CONFIRMED_SAME_POWERED_PHYSICAL_CH3_REMAINS_CONNECTED",
+  "closeout": {
+    "driver_and_own_locks_retained": true,
+    "endpoint_metadata": "INCOMPLETE_UNKNOWN_NOT_ASSUMED_ABSENT",
+    "engine_remove_gate": "FAIL_LOCKOUT_AND_NO_FEQ_SAFE_ENVIRONMENT",
+    "no_force_kill_reset_unbind": true,
+    "own_aio": "NO_READER_NO_REQUESTS",
+    "result": "CONTAINMENT_UNLOAD_NOT_QUALIFIED",
+    "stream_off_quiescence": "PASS",
+    "unload_attempts": 0
+  },
+  "counts": {
+    "apply_a_host_writes": 1,
+    "apply_internal_retry": 0,
+    "c2h_sessions": 0,
+    "complete_success": 0,
+    "driver_load": 1,
+    "eq_supervision": 0,
+    "feq_arm": 1,
+    "feq_start_session": 0,
+    "flush": 0,
+    "h2c": 0,
+    "host_recover": 0,
+    "initial_full_eq": 0,
+    "mmio_reads": 230,
+    "mmio_writes": 3,
+    "new_firmware_build": 0,
+    "prepare_host_writes": 1,
+    "prepare_internal_retry": 1,
+    "qualified_unload": 0,
+    "reader": 0,
+    "scan1": 0,
+    "sram_program": 1,
+    "stream_off": 0,
+    "stream_on": 0,
+    "warm_reboot": 1
+  },
+  "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+  "elapsed_to_observed_terminal_ms": {
+    "APPLY_A": 33.004531,
+    "PREPARE": 81.937982
+  },
+  "fresh_frames": 0,
+  "full_eq": "NOT_RUN",
+  "host_files_verified": 52,
+  "host_source_commit": "c4bc671620f2cc2ae57fcbf9d11c31ba2d56aac4",
+  "mmio": {
+    "latch_failure_branch_exercised_offline_only": true,
+    "paired_operations": 233,
+    "post_terminal_first_access": "LOADER_FIRST_FAILURE_HEADER",
+    "reads": 230,
+    "transport_fault_latched": false,
+    "writes": 3
+  },
+  "new_product_changes_builds_retry_changes": 0,
+  "new_wrapper": {
+    "bytes": 20341,
+    "sha256": "6C5EA3E6A469A14A38B100559AE85D8A7B40D44ED4DC189F9DC95A03D44F37EE"
+  },
+  "next_one_action": "Separately authorize controlled closeout of the retained containment; no further image attempt in this task.",
+  "offline_checks": {
+    "cases": 87,
+    "fail": 0,
+    "hardware_during_checks": 0,
+    "pass": 87
+  },
+  "old_wrapper": {
+    "bytes": 17688,
+    "sha256": "8FA2E7855735C51E9F7BE783EA35981B723956E914E0ED45BA1D67C27154EB2C"
+  },
+  "physical_nack_root_cause": "NOT_PROVEN",
+  "png": "NOT_CREATED",
+  "prepare": {
+    "classification": "PASS_WITH_READ_RETRY",
+    "counters": {
+      "eligible_read_first_attempts": 16,
+      "main_prepare_transactions_accepted": 47,
+      "prepare_read_first_attempts": 36,
+      "read_first_attempt_nacks": 1,
+      "recovered_read_count": 1,
+      "retry_attempts_accepted": 1,
+      "retry_budget_used": 1,
+      "retry_event_count": 1,
+      "telemetry_fault_count": 0,
+      "unrecovered_retry_count": 0,
+      "unretried_terminal_nack_count": 0
+    },
+    "generation": 1,
+    "hard_record": "EMPTY_VALID0_PAYLOAD_NOT_READ",
+    "issues": [],
+    "observability_complete": true,
+    "terminal": "0xC3CD0042",
+    "used_slots": [
+      {
+        "bank": 9,
+        "first_cause": "I2C_RADDR_NACK",
+        "first_order": 26,
+        "outcome": "RECOVERED",
+        "pc": 25,
+        "read": true,
+        "readback_match": true,
+        "register": 68,
+        "retry_accepted": true,
+        "retry_order": 27,
+        "slot": 0
+      }
+    ]
+  },
+  "product_qualification": "NOT_CLAIMED",
+  "protected_hdmi": "NO_TARGETED_OPERATIONS; PLANNED_REBOOT_AFFECTS_WHOLE_HOST",
+  "qualification_scope": "TASK_WRAPPER_CHECKS_AND_ONE_SAME_IMAGE_HARDWARE_REPEAT_NOT_PRODUCT",
+  "reader_sha256": "2621B77C9DB756908A9C993A86F70C72F4831DB85EB48EA703B31D1E083040E1",
+  "repeat_observation": {
+    "R15R6": "PREPARE_PC23_WADDR_NACK_AFTER_PC12_RECOVERED_WADDR_NACK",
+    "R15R6R2": "NO_HARDWARE_ATTEMPT",
+    "R15R6R3_PC12": "PASSED_NO_RETRY_SOURCE_DERIVED",
+    "R15R6R3_PC23": "PC23_PASSED_PREPARE_PASS_SOURCE_DERIVED",
+    "autoinit_current": [
+      18,
+      22,
+      8,
+      1
+    ],
+    "autoinit_prior": [
+      30,
+      35,
+      12,
+      4
+    ],
+    "nack_total_current": 49,
+    "nack_total_prior": 81,
+    "same_bitstream_prepare_cohort": {
+      "executions": 2,
+      "pc23_pass": 1,
+      "pc23_terminal_failure": 1
+    },
+    "timeout_prior_current": [
+      0,
+      0
+    ]
+  },
+  "result": "FAIL_APPLY_PC70_WADDR_NACK_CONTAINMENT",
+  "scene": "NOT_OBSERVED",
+  "schema": "AHD_V41_CH3_R15R6R3_SANITIZED_RESULT_V1",
+  "source_commit": "719bcd63aa40cbeadb2b6eae99697f574209b6de",
+  "source_tree": "386d0bcff67d3835c6377f767b2b35c2f4698216",
+  "t0": "NOT_ESTABLISHED",
+  "task": "AHD_V41_CH3_R15R6R3_WRAPPER_FIX_AND_SAME_IMAGE_REPEAT",
+  "wrapper_correction": "PASS_THREE_AUTHORIZED_CORRECTIONS"
+}
