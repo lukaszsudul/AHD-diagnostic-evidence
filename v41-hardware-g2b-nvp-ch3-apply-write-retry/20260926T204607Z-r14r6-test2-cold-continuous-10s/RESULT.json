@@ -1,0 +1,385 @@
+{
+  "schema": "AHD_R14R6_TEST2_COLD_CONTINUOUS_10S_EVIDENCE_V1",
+  "task": "AHD_R14R6_TEST2_COLD_CONTINUOUS_10S",
+  "result": "CAPTURE_AND_LATE_STRICT_PNG_DELIVERED_EARLY_DIAGNOSTIC_FAIL_DISCLOSED",
+  "measurement_started_utc": "2026-09-26T20:54:35.002324+00:00",
+  "measurement_completed_utc": "2026-09-26T20:55:03.317782+00:00",
+  "publication_scope": "RETAINED_TEST2_RESULTS_ONLY_NO_NEW_HARDWARE_ACCESS",
+  "physical_card_number": "0006",
+  "card_number_is_firmware_version": false,
+  "cold_start_evidence": "OWNER_ATTESTED_POWER_REMOVAL_BEFORE_SRAM_ACTIVATION_NOT_VOLTAGE_MEASUREMENT",
+  "planned_warm_reboot_new_boot_confirmed": true,
+  "firmware_source_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+  "firmware_source_tree": "9d35c25b09718057bb100314309006baae8409c5",
+  "bitstream_build": "R14R5R2_POST_ROUTE_PHYSOPT_USED_IN_R14R6",
+  "bitstream_sha256": "989079972C3051E05FC497E98B41A9CFFD1A9B58329338D682C6E98019D29AA1",
+  "bitstream_bytes": 2192144,
+  "reader_sha256": "4682A410AFE95A3BACC861A30F16908CE8A3C09825B4B84862DF95BEDC1C1052",
+  "driver_sha256": "E8B48E342C80B019BB4884FD7AF16AB1049BC60266101E6E4A8B6514AEEB3D77",
+  "host_changes": "Task-local wrapper connects preserved fresh activation/configuration sequence to unchanged TEST1 300000-record reader. Offline selector adds last strict full frame. Original parser acceptance rules unchanged.",
+  "activation_counts": {
+    "sram_program_attempts": 1,
+    "warm_reboot_attempts": 1,
+    "flash_programs": 0,
+    "fpga_builds": 0,
+    "reader_builds": 0
+  },
+  "execution_counts": {
+    "apply_a_write_attempts": 1,
+    "apply_b": 0,
+    "autoinit_snapshot_reads": 28,
+    "c2h_requested_bytes": 1228800000,
+    "c2h_requested_records": 300000,
+    "c2h_session_attempts": 1,
+    "driver_load_attempts": 1,
+    "driver_unload_attempts": 0,
+    "h2c_open": 0,
+    "host_recover": 0,
+    "post_target_tail_flush_attempts": 1,
+    "prepare_write_attempts": 1,
+    "scan1_ack_attempts": 1,
+    "scan1_oneshot_attempts": 1,
+    "stream_disable_attempts": 1,
+    "stream_enable_attempts": 1
+  },
+  "autoinit": {
+    "result": "PASS_STABLE_FINAL_COHERENT_EXISTING_ADMISSION",
+    "phases": [
+      {
+        "nacks": 0,
+        "opportunities": 275,
+        "phase": "WADDR"
+      },
+      {
+        "nacks": 0,
+        "opportunities": 275,
+        "phase": "REGADDR"
+      },
+      {
+        "nacks": 0,
+        "opportunities": 220,
+        "phase": "DATA"
+      },
+      {
+        "nacks": 0,
+        "opportunities": 55,
+        "phase": "RADDR"
+      }
+    ],
+    "aggregate_nacks": 0,
+    "timeout_attempts": 0,
+    "transactions": {
+      "completions": 275,
+      "failed_attempts": 0,
+      "next_serial_raw": 275,
+      "starts": 275,
+      "timeout_attempts": 0
+    }
+  },
+  "prepare": {
+    "classification": "PASS_CLEAN",
+    "terminal": {
+      "campaign": 1,
+      "ch2_impact": false,
+      "ch3_f0": 52,
+      "ch3_novid": 0,
+      "engine": 2,
+      "identity_ok": true,
+      "magic": 195,
+      "raw": 3284992066,
+      "raw_hex": "0xC3CD0042",
+      "route_verified": false,
+      "terminal_code": 0,
+      "variant_b": false,
+      "version": 3
+    },
+    "generation": 1,
+    "observability_complete": true,
+    "counters": {
+      "eligible_read_first_attempts": 16,
+      "main_prepare_transactions_accepted": 46,
+      "prepare_read_first_attempts": 36,
+      "read_first_attempt_nacks": 0,
+      "recovered_read_count": 0,
+      "retry_attempts_accepted": 0,
+      "retry_budget_used": 0,
+      "retry_event_count": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_retry_count": 0,
+      "unretried_terminal_nack_count": 0
+    },
+    "hard_failure_valid": false
+  },
+  "apply": {
+    "classification": "PASS_CLEAN",
+    "terminal": {
+      "campaign": 2,
+      "ch2_impact": false,
+      "ch3_f0": 52,
+      "ch3_novid": 0,
+      "engine": 2,
+      "identity_ok": true,
+      "magic": 195,
+      "raw": 3284992146,
+      "raw_hex": "0xC3CD0092",
+      "route_verified": true,
+      "terminal_code": 0,
+      "variant_b": false,
+      "version": 3
+    },
+    "generation": 1,
+    "observability_complete": true,
+    "counters": {
+      "aborted_before_acceptance_count": 0,
+      "event_count": 0,
+      "recovered_write_count": 0,
+      "retry_attempts_accepted": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_write_count": 0
+    },
+    "hard_failure_valid": false,
+    "eq_result": "PASS_REPORTED_BY_LOADER_SCOPED_FINALIZATION",
+    "full_vendor_adaptive_eq_implemented": false
+  },
+  "scan_result": "PASS_FRESH_CLEAN_CH3",
+  "capture": {
+    "result": "PASS",
+    "submitted": 300000,
+    "completed": 300000,
+    "pending": 0,
+    "elapsed_reader_seconds": 11.118790336,
+    "last_rx_relative_to_stream_on_s": 11.11820904,
+    "maximum_outstanding": 1024,
+    "starvation_events": 0,
+    "raw_bytes": 1228800000,
+    "raw_sha256": "467AA0C45695CC7CC67C69A80933A016F6357F39B4F4F190B70068662A820A32",
+    "strict_full_frames": 184,
+    "invalid_or_incomplete_candidates": 93,
+    "discontinuity_records": 94,
+    "max_adjacent_rx_gap_s": 0.00167924,
+    "late_target_met": true
+  },
+  "timing_basis": "DUT_CLOCK_MONOTONIC_COMPLETION_BATCH_RELATIVE_TO_BEFORE_STREAM_ON_WRITE",
+  "timing_limitations": "Host reception time, not exposure time; possible kernel queue latency.",
+  "frames": [
+    {
+      "role": "diagnostic_first_complete",
+      "epoch": 0,
+      "frame_sequence": 5479,
+      "first_line_rx_delta_s": 0.046246214,
+      "last_line_rx_delta_s": 0.084607734,
+      "complete_lines": 1080,
+      "strict_result": "FAIL",
+      "uyvy_sha256": "8C0085C3D3C68214A83151685769D48F391A2EC27866004FAD6AA5D4CF429073",
+      "raw_sha256": "6174EBCCDC856981C1A539A06B18182D93DA035AC15A61259E55F4ED38B458BB",
+      "png_sha256": "FA97A61D43C6586BD28C4DB1EC1DAA438A9C22921A91E75BDCB0C89BC3DC0A49",
+      "png_bytes": 4400785,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "equals_historical_tile": false,
+      "png_artifact_name": "diagnostic_first_complete.png",
+      "visual_observation": "SURROUNDINGS_VISIBLE_WITH_COLOR_CAST_DIAGNOSTIC_FAIL"
+    },
+    {
+      "role": "frame_start",
+      "epoch": 0,
+      "frame_sequence": 5572,
+      "first_line_rx_delta_s": 3.735820342,
+      "last_line_rx_delta_s": 3.774180399,
+      "complete_lines": 1080,
+      "strict_result": "PASS",
+      "uyvy_sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "raw_sha256": "F9564419E1408F9895216B7047EF609E1773150E246DC14BBBAEAF4C05590645",
+      "png_sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "png_bytes": 32698,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "equals_historical_tile": true,
+      "png_artifact_name": "frame_start.png",
+      "visual_observation": "HISTORICAL_COLORED_TILE"
+    },
+    {
+      "role": "frame_near_10s",
+      "epoch": 0,
+      "frame_sequence": 5729,
+      "first_line_rx_delta_s": 10.015814853,
+      "last_line_rx_delta_s": 10.054173247,
+      "complete_lines": 1080,
+      "strict_result": "PASS",
+      "uyvy_sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "raw_sha256": "6B45BBB52650A8B86FBA15D491133528343B9C64ADD2B29B68E9E6DD0C4E8CF5",
+      "png_sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "png_bytes": 32698,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "equals_historical_tile": true,
+      "png_artifact_name": "frame_near_10s.png",
+      "visual_observation": "HISTORICAL_COLORED_TILE"
+    },
+    {
+      "role": "frame_last",
+      "epoch": 0,
+      "frame_sequence": 5755,
+      "first_line_rx_delta_s": 11.055808928,
+      "last_line_rx_delta_s": 11.094172181,
+      "complete_lines": 1080,
+      "strict_result": "PASS",
+      "uyvy_sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "raw_sha256": "5F2F9B371CE07CDAF5FA3F7E81BAC4031C6B7730843C6AC89C406C7DBE71AD84",
+      "png_sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "png_bytes": 32698,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "equals_historical_tile": true,
+      "png_artifact_name": "frame_last.png",
+      "visual_observation": "HISTORICAL_COLORED_TILE"
+    }
+  ],
+  "payload_comparison": {
+    "strict_frames_checked": 184,
+    "distinct_strict_raster_hashes": [
+      "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03"
+    ],
+    "all_strict_frames_equal_historical_tile": true,
+    "diagnostic_first_raster_equals_tile": false,
+    "diagnostic_first_strict_result": "FAIL",
+    "interpretation": "Early diagnostic raster shows surroundings but fails source progression at frame boundary. All strictly valid frames are identical to the retained tile. No physical cause or live-video qualification is established."
+  },
+  "diagnostic_initial_failure": {
+    "strict_result": "FAIL",
+    "line": 0,
+    "reason": "Source progression mismatch at frame boundary",
+    "observed_progression": [
+      5479,
+      0,
+      6027390,
+      0
+    ],
+    "expected_progression": [
+      5479,
+      0,
+      6027387,
+      0
+    ],
+    "actual_contiguous_lines": 1080,
+    "missing_lines_filled": false,
+    "mixed_frames": false,
+    "qualification": "DIAGNOSTIC_ONLY"
+  },
+  "owner_interpretation": {
+    "classification": "HYPOTHESIS_NOT_ESTABLISHED_CAUSE",
+    "description": "Initial image is real scene content; subsequently something fails and synthetic content appears."
+  },
+  "supported_observation": "Earliest diagnostic raster shows surroundings but fails strict boundary continuity. The first strict full frame at +3.736 s and all 184 strict full frames are byte-identical to the retained colored-tile raster; late and final strict frames are tiles.",
+  "not_established": [
+    "Physical origin or generator location of the tile",
+    "Failure mechanism or cause of content change",
+    "Exact transition instant across unqualified earlier frames",
+    "Qualified live video at the beginning",
+    "Causal effect of cold start from this single attempt"
+  ],
+  "final_transport": {
+    "stream_control": 0,
+    "transport_status": 244,
+    "sticky_error_status": 3,
+    "hardware_quiescent": true,
+    "limitation": "Sticky status after OFF preserved; first assertion time and cause not determined; not substituted for frame integrity."
+  },
+  "cleanup": "PASS_USER_RESOURCES_CLOSED_DRIVER_RETAINED_LOCK_RELEASED",
+  "driver_retained_loaded": true,
+  "activation_preserved": true,
+  "own_locks_released": true,
+  "private_artifact_hashes": [
+    {
+      "name": "diagnostic_first_complete.png",
+      "bytes": 4400785,
+      "sha256": "FA97A61D43C6586BD28C4DB1EC1DAA438A9C22921A91E75BDCB0C89BC3DC0A49",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "diagnostic_first_complete.uyvy",
+      "bytes": 4147200,
+      "sha256": "8C0085C3D3C68214A83151685769D48F391A2EC27866004FAD6AA5D4CF429073",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "diagnostic_first_complete.c2h.bin",
+      "bytes": 4423680,
+      "sha256": "6174EBCCDC856981C1A539A06B18182D93DA035AC15A61259E55F4ED38B458BB",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_start.png",
+      "bytes": 32698,
+      "sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_start.uyvy",
+      "bytes": 4147200,
+      "sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_start.c2h.bin",
+      "bytes": 4423680,
+      "sha256": "F9564419E1408F9895216B7047EF609E1773150E246DC14BBBAEAF4C05590645",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_near_10s.png",
+      "bytes": 32698,
+      "sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_near_10s.uyvy",
+      "bytes": 4147200,
+      "sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_near_10s.c2h.bin",
+      "bytes": 4423680,
+      "sha256": "6B45BBB52650A8B86FBA15D491133528343B9C64ADD2B29B68E9E6DD0C4E8CF5",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_last.png",
+      "bytes": 32698,
+      "sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_last.uyvy",
+      "bytes": 4147200,
+      "sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    },
+    {
+      "name": "frame_last.c2h.bin",
+      "bytes": 4423680,
+      "sha256": "5F2F9B371CE07CDAF5FA3F7E81BAC4031C6B7730843C6AC89C406C7DBE71AD84",
+      "visibility": "PRIVATE_PIXELS_NOT_PUBLISHED"
+    }
+  ],
+  "private_kit_release": "https://github.com/lukaszsudul/FPGA_AHD/releases/tag/r14r6-portable-20260926-v1",
+  "previous_same_activation_evidence_commit": "1e56a88a98cd16a105d3a2c1c42cc11edea65281",
+  "publication_actions": {
+    "DUT_contacts": 0,
+    "programming": 0,
+    "reboots": 0,
+    "capture_sessions": 0,
+    "builds": 0
+  },
+  "privacy": "Pixels/PNG/raw captures, detailed logs, credentials, host addresses and identity, source, ABI, DCP and firmware remain private.",
+  "readback": "RECORDED_IN_SEPARATE_LOCAL_RECEIPT_AFTER_COMMIT_NO_SELF_REFERENCE"
+}
