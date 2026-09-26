@@ -1,0 +1,93 @@
+{
+  "schema": "AHD_R14R6_PORTABLE_RELEASE_EVIDENCE_V1",
+  "result": "PASS_PORTABLE_ARTIFACT_PACKAGE_PUBLISHED_NOT_NEW_HOST_QUALIFICATION",
+  "scope": "OFFLINE_PACKAGING_AND_PUBLICATION_ONLY",
+  "private_repository": "lukaszsudul/FPGA_AHD",
+  "private_branch": "release/r14r6-portable-20260926T201929Z",
+  "release_tag": "r14r6-portable-20260926-v1",
+  "kit_commit": "f5723ad3cab01350e2f60e55c52387be9613756c",
+  "private_release_url": "https://github.com/lukaszsudul/FPGA_AHD/releases/tag/r14r6-portable-20260926-v1",
+  "firmware_source_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+  "firmware_source_tree": "9d35c25b09718057bb100314309006baae8409c5",
+  "firmware_build": "R14R5R2_POST_ROUTE_PHYSOPT_USED_IN_R14R6",
+  "bitstream_bytes": 2192144,
+  "bitstream_sha256": "989079972C3051E05FC497E98B41A9CFFD1A9B58329338D682C6E98019D29AA1",
+  "final_dcp_bytes": 17788949,
+  "final_dcp_sha256": "E5130AF6AF7338B9D7D53C2395163F72D8936DFC76DD8B8E3E268BCEE12CBA3C",
+  "private_assets": [
+    {
+      "file": "AHD_R14R6_PORTABLE_KIT.zip",
+      "bytes": 86804159,
+      "sha256": "77FB9C5BBC81D4DE4178AC98A5D3EDF66B2948B25393AFC2406CB3813B9D0BEB",
+      "remote_readback_match": true
+    },
+    {
+      "file": "IDENTITY.json",
+      "bytes": 1148,
+      "sha256": "BC23050B114976DE9E69EA39A0151DAA28F828A0196A7533328AA560E33A01BD",
+      "remote_readback_match": true
+    },
+    {
+      "file": "MANIFEST.json",
+      "bytes": 31172,
+      "sha256": "0E20A407C371CF6F1DE0AB314D4E13C7A5AF78A901A1CE021BC40663F308FE1B",
+      "remote_readback_match": true
+    },
+    {
+      "file": "SHA256SUMS.txt",
+      "bytes": 256,
+      "sha256": "7FF1E7C07075022A12E7860DD2C5568F927AC79A0C33A4930B94FCC65F7F1179",
+      "remote_readback_match": true
+    }
+  ],
+  "archive_payload_files": 164,
+  "verification": {
+    "fpga_manifest_inputs_matched": 43,
+    "private_commit_pinned_readback_files": 157,
+    "private_release_assets_byte_readback": "PASS_4_OF_4",
+    "archive_payload_sha_readback": "PASS_164_OF_164",
+    "python_files_syntax_parsed": 60,
+    "site_materialization": "PASS_OFFLINE_MOCK_ONLY",
+    "frozen_decoders_abi_readers": "UNCHANGED",
+    "product_source_diff": 0
+  },
+  "included": [
+    "exact_bitstream",
+    "two_routed_checkpoints",
+    "pinned_FPGA_source_archive",
+    "build_recipes_and_input_hashes",
+    "exact_driver_module_and_pinned_upstream_patch_recipe",
+    "short_and_10s_readers_binaries_and_sources",
+    "telemetry_decoders",
+    "historical_activation_capture_wrappers",
+    "offline_site_materializer",
+    "strict_ABI_parser_and_PNG_converter",
+    "historical_tile_reference",
+    "runbook"
+  ],
+  "host_constraints": {
+    "driver_kernel": "7.0.0-29-generic",
+    "architecture": "x86_64",
+    "other_kernel_compatibility": "NOT_QUALIFIED",
+    "site_specific_host_bdf_boot_jtag_values": "REQUIRE_VERIFIED_LOCAL_CONFIGURATION",
+    "tool_installers_and_credentials": "EXCLUDED"
+  },
+  "current_task_counts": {
+    "DUT_contacts": 0,
+    "FPGA_programming": 0,
+    "reboot": 0,
+    "capture": 0,
+    "FPGA_build": 0,
+    "driver_or_reader_compile": 0
+  },
+  "limits": [
+    "No new hardware test or new-host qualification",
+    "Historical scene-like diagnostic frame retains strict FAIL",
+    "Historical valid tile observations are not live-scene qualification",
+    "Rebuild is not promised byte-identical; supplied bitstream is the exact preserved artifact",
+    "Inherited activation gates preserved; arbitrary initial host states are not automatically supported",
+    "Secrets, private source, ABI details, binaries, DCPs and pixels are not published in this public directory"
+  ],
+  "historical_capture_evidence_commit": "1e56a88a98cd16a105d3a2c1c42cc11edea65281",
+  "public_publication_readback": "RECORDED_EXTERNALLY_AFTER_COMMIT_TO_AVOID_SELF_REFERENCE"
+}
