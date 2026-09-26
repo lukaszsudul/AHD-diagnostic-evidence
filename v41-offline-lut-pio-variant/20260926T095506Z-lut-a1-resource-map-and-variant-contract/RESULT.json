@@ -1,0 +1,82 @@
+{
+  "task": "AHD_V41_LUT_A1_RESOURCE_MAP_AND_PIOLESS_VARIANT_CONTRACT",
+  "mode": "OFFLINE_EXISTING_ARTIFACT_ANALYSIS_AND_DESIGN_CONTRACT",
+  "classification": "CONTRACT_DRAFT_READY_FOR_OWNER_VARIANT_DECISION",
+  "firmware_commit": "719bcd63aa40cbeadb2b6eae99697f574209b6de",
+  "firmware_tree": "386d0bcff67d3835c6377f767b2b35c2f4698216",
+  "host_commit": "c4bc671620f2cc2ae57fcbf9d11c31ba2d56aac4",
+  "headroom": {
+    "capacity": 20800,
+    "final_free_lut": 47,
+    "final_free_percent": 0.22596153846153846,
+    "existing_post_place_gate": "<20800",
+    "proposed_targets_not_gates": {
+      "5_percent_free_lut": 19760,
+      "10_percent_free_lut": 18720
+    }
+  },
+  "net_gain": "NET_GAIN_NOT_YET_MEASURED",
+  "active_r15r6r3": "UNTOUCHED",
+  "production_pio_retirement": "NOT_ATTESTED",
+  "historical_nack_physical_root_cause": "NOT_ADDRESSED",
+  "product_qualification": "NOT_CLAIMED",
+  "counts": {
+    "product_rtl_edits": 0,
+    "product_xdc_edits": 0,
+    "product_ip_or_microcode_edits": 0,
+    "released_host_driver_wrapper_edits": 0,
+    "new_builds": 0,
+    "synth_ooc_opt_place_route_physopt_bitgen": 0,
+    "dcp_netlist_or_constraint_mutations": 0,
+    "new_simulation_or_functional_tests": 0,
+    "dut_ssh_jtag_mmio_i2c_dma_reboot_driver_operations": 0,
+    "hardware_lock_mutations": 0,
+    "opened_existing_dcp": 2,
+    "post_synth_dcp_open": 0
+  },
+  "resource_top_by_stage": {
+    "POST_OPT": {
+      "lut_total": 21469,
+      "lut_logic": 20145,
+      "lut_memory": 1324,
+      "ff": 22963,
+      "ramb18": 5,
+      "ramb36": 26,
+      "dsp": 0
+    },
+    "FINAL_ROUTED": {
+      "lut_total": 20753,
+      "lut_logic": 19500,
+      "lut_memory": 1253,
+      "ff": 22963,
+      "ramb18": 5,
+      "ramb36": 26,
+      "dsp": 0
+    }
+  },
+  "pio_baseline_cost": {
+    "post_opt_lut": 1146,
+    "final_hierarchical_inclusive_lut": 1097,
+    "final_exclusive_physical_lut": 1092,
+    "final_cross_group_shared_lut": 5,
+    "ff": 2561,
+    "ramb36": 2,
+    "ramb18": 0,
+    "lut_memory": 0,
+    "dsp": 0,
+    "net_removal_gain": null
+  },
+  "source_and_checkpoint_integrity": "PASS_ORIGINALS_AND_COPIES_RECHECKED",
+  "engineering_gate": "PASS_ANALYSIS_ONLY",
+  "implementation_authorization": "NOT_GRANTED_BY_THIS_ANALYSIS",
+  "host_dependency_review": "PIO capture/control consumers and identity/diagnostic dependencies identified; deployment requirements remain named Owner decisions.",
+  "contract_scope": "Static PIO removal, required diagnostic migration, bounded diagnostic MMIO, variant identity, separate host package, targeted constraints and regression plan. No implementation.",
+  "first_recommendation": "B1 only, after explicit Owner decisions on legacy acceptance/capture consumers, deployed library clients, diagnostic semantics and ABI allocation.",
+  "limits": [
+    "PIO hierarchy cost is not measured net removal savings.",
+    "Final cross-hierarchy shared physical LUTs counted once.",
+    "No new functional or hardware tests.",
+    "Existing transport control handshakes are preserved, not globally redesigned for a stopped source clock.",
+    "Auditor OOC results are external reported results, not measurements from this task."
+  ]
+}
