@@ -1,0 +1,198 @@
+{
+  "schema": "AHD_V41_CH3_R2R10R14R6_PUBLIC_RESULT_V1",
+  "task": "AHD_R14R6_REPEAT_AND_AUTHORIZED_SAME_ACTIVATION_CAPTURE",
+  "process_result": "PASS_SECOND_CAPTURE_FRAME_AND_RESOURCE_CLOSEOUT_FIRST_CAPTURE_INTEGRITY_LIMITATION_RETAINED",
+  "functional_outcome": "SECOND_CAPTURE_COMPLETE_FRAME_IDENTICAL_TO_HISTORICAL_COLOR_TILES_PREVIOUS_CAPTURE_RECOGNIZABLE_SCENE_WITH_BOUNDARY_DISCONTINUITY",
+  "source_commit": "c05f62d204853f36263b5fd486596abd517f5e92",
+  "source_tree": "9d35c25b09718057bb100314309006baae8409c5",
+  "bitstream": {
+    "bytes": 2192144,
+    "sha256": "989079972C3051E05FC497E98B41A9CFFD1A9B58329338D682C6E98019D29AA1",
+    "programmed_once_to_volatile_sram": true,
+    "jtag_done_after": 1,
+    "new_boot_confirmed": true,
+    "event_scope": "PRIOR_ACTIVATION_SHARED_BY_BOTH_CAPTURES",
+    "started_utc": "2026-09-26T16:45:11.0155474Z",
+    "completed_utc": "2026-09-26T16:45:54.0399676Z",
+    "programming_receipt_sha256": "3B994315D2AF2D6CA233EA693CAB7B2221A411B222BBD820AB68706F0BCE4EE4",
+    "new_programming_in_followup": 0,
+    "new_reboot_in_followup": 0
+  },
+  "owner_camera_confirmation": "OWNER_ATTESTED_UNCHANGED_CH3_CONNECTED_POWERED",
+  "autoinit": {
+    "observation_scope": "FIRST_EXECUTION_ON_SHARED_ACTIVATION_NOT_REEXECUTED_OR_REMEASURED_IN_FOLLOWUP",
+    "phase_nacks": {
+      "WADDR": 0,
+      "REGADDR": 0,
+      "DATA": 0,
+      "RADDR": 0
+    },
+    "aggregate_nacks": 0,
+    "timeout_attempts": 0,
+    "starts": 275,
+    "completions": 275
+  },
+  "prepare": {
+    "observation_scope": "FIRST_EXECUTION_NOT_REPEATED",
+    "classification": "PASS_CLEAN",
+    "started_utc": "2026-09-26T16:47:06.492774+00:00",
+    "ended_utc": "2026-09-26T16:47:06.597742+00:00",
+    "terminal_raw": "0xC3CD0042",
+    "generation": 1,
+    "hard_record_valid": false,
+    "counters": {
+      "eligible_read_first_attempts": 16,
+      "main_prepare_transactions_accepted": 46,
+      "prepare_read_first_attempts": 36,
+      "read_first_attempt_nacks": 0,
+      "recovered_read_count": 0,
+      "retry_attempts_accepted": 0,
+      "retry_budget_used": 0,
+      "retry_event_count": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_retry_count": 0,
+      "unretried_terminal_nack_count": 0
+    },
+    "retry_path_exercised": false
+  },
+  "apply": {
+    "observation_scope": "FIRST_EXECUTION_NOT_REPEATED",
+    "classification": "PASS_CLEAN",
+    "started_utc": "2026-09-26T16:47:07.001097+00:00",
+    "ended_utc": "2026-09-26T16:47:08.242826+00:00",
+    "terminal_raw": "0xC3CD0092",
+    "apply_generation": 1,
+    "linked_prepare_generation": 1,
+    "hard_record_valid": false,
+    "counters": {
+      "aborted_before_acceptance_count": 0,
+      "event_count": 0,
+      "recovered_write_count": 0,
+      "retry_attempts_accepted": 0,
+      "telemetry_fault_count": 0,
+      "unrecovered_write_count": 0
+    },
+    "retry_path_exercised": false
+  },
+  "eq_finalization_execution": "PASS_REPORTED_BY_LOADER_SCOPED_FINALIZATION",
+  "same_activation_continuity": {
+    "same_boot_confirmed": true,
+    "fresh_runtime_admission": "PASS_PRESERVED_ACTIVE_A_EMPTY_RECORD",
+    "fresh_loader_raw": "0xC3CD0092",
+    "activation_receipt_is_not_sram_cryptographic_readback": true
+  },
+  "scan1": {
+    "observation_scope": "FRESH_FOLLOWUP_SCAN",
+    "classification": "VALID_CLEAN",
+    "generation": 2,
+    "transactions": 105,
+    "retries": 0,
+    "f0": "0x34",
+    "novid_pre": 0,
+    "novid_post": 0,
+    "bank_restore": "PASS"
+  },
+  "c2h": {
+    "observation_scope": "NEW_AUTHORIZED_SECOND_CAPTURE_ON_SAME_ACTIVATION",
+    "requested": 2500,
+    "submitted": 2500,
+    "completed": 2500,
+    "pending": 0,
+    "short": 0,
+    "failed": 0,
+    "duplicate": 0,
+    "bytes": 10240000,
+    "sha256": "EF6D227D78274A5395CDB2479F1654E98AF9DEC56F29517A389DCDA95354FB28",
+    "first_session_initial_discontinuity_records": 1
+  },
+  "frame": {
+    "complete": true,
+    "strict_extractor": "PASS",
+    "logical_channel_id": 0,
+    "physical_input_id": 0,
+    "epoch": 1,
+    "source_frame_sequence": 31197,
+    "complete_frames_in_session": 2,
+    "selected_frame_ordinal": 0,
+    "line_range": [
+      0,
+      1079
+    ],
+    "uyvy_bytes": 4147200,
+    "uyvy_sha256": "727DACB909C144CAC091A5DCBF31974DE4A11B9BCF273F92DE6AD34DC4821C03",
+    "png_bytes": 32698,
+    "png_sha256": "A83CDE93F03A80BA201CE67AB564BB611B2AE8C60CC36C3D276B3DC39F29DD57",
+    "payload_equal_to_baseline": true,
+    "changed_bytes": 0,
+    "changed_lines": 0,
+    "live_camera_scene": "NOT_OBSERVED_IN_THIS_CAPTURE_COLOR_TILE_PATTERN"
+  },
+  "previous_capture_same_activation": {
+    "started_utc": "2026-09-26T16:47:05.636405+00:00",
+    "completed_utc": "2026-09-26T16:47:15.840480+00:00",
+    "c2h_submitted_completed_pending": [
+      2500,
+      2500,
+      0
+    ],
+    "capture_sha256": "F9D0499B46F06063173020CE524D935C2030A4AF50BA79EECDC7BD2EA287BBD6",
+    "frame_sequence": 1713,
+    "epoch": 0,
+    "uyvy_sha256": "41301376F288E305BB45CC6D81FC1AEFAE0497AFE3D98BEEA85BABE97FA905C4",
+    "png_sha256": "79C3AC2474042753992DF8E2FF9EC480F7157FF0B775AD1D0BDBB602653EDD62",
+    "all_1080_real_lines_received": true,
+    "strict_frame_gate": "FAIL_NO_STRICT_COMPLETE_FRAME",
+    "reason": "source_capture_sequence gap of 3 at selected frame first line; initial session MALFORMED_PRECEDING and DISCONTINUITY; raw and decoder verdict preserved",
+    "visual_result": "RECOGNIZABLE_PLANT_AND_SURROUNDINGS_NO_TEMPORAL_LIVE_PROOF",
+    "cleanup": "PASS_USER_RESOURCES_CLOSED_DRIVER_RETAINED_LOCK_RELEASED"
+  },
+  "followup_times": {
+    "started_utc": "2026-09-26T17:06:48.126902+00:00",
+    "completed_utc": "2026-09-26T17:06:55.140276+00:00"
+  },
+  "followup_counts": {
+    "acq": 0,
+    "apply_a": 0,
+    "apply_b": 0,
+    "c2h_requested_bytes": 10240000,
+    "c2h_requested_records": 2500,
+    "c2h_session_attempts": 1,
+    "driver_load_attempts": 0,
+    "driver_unload_attempts": 0,
+    "h2c_open": 0,
+    "host_recover": 0,
+    "post_target_tail_flush_attempts": 1,
+    "prepare": 0,
+    "scan1_ack_attempts": 1,
+    "scan1_oneshot_attempts": 1,
+    "stream_disable_attempts": 1,
+    "stream_enable_attempts": 1,
+    "sram_program": 0,
+    "warm_reboot": 0,
+    "flash_write": 0
+  },
+  "combined_counts": {
+    "sram_program": 1,
+    "warm_reboot": 1,
+    "prepare": 1,
+    "apply_a": 1,
+    "scan1": 2,
+    "c2h_sessions": 2,
+    "driver_load": 1,
+    "driver_unload": 0,
+    "flash_write": 0
+  },
+  "cleanup": "PASS_USER_RESOURCES_CLOSED_DRIVER_RETAINED_LOCK_RELEASED",
+  "driver_retained_loaded": true,
+  "own_locks_released": true,
+  "administrative_continuation": "Existing activation and configuration retained. Followup executed one fresh SCAN1 and one bounded C2H only. Original runner, decoder, reader and driver bytes retained; task wrapper adapted preloaded-driver admission and no-unload closeout. No timestamp was rewritten to portray a new activation.",
+  "nonclaims": {
+    "full_vendor_adaptive_eq": "NO",
+    "physical_nack_root_cause": "NOT_PROVEN",
+    "pattern_origin_or_reason_for_scene_change": "NOT_ESTABLISHED",
+    "retry_effectiveness": "NOT_EXERCISED",
+    "product_qualification": "NOT_CLAIMED",
+    "timing_cdc_bus_skew_signoff": "NOT_PERFORMED"
+  },
+  "publication_directory": "v41-hardware-g2b-nvp-ch3-apply-write-retry/20260926T170449Z-r2r10r14r6-repeat-same-activation-second-capture/"
+}
