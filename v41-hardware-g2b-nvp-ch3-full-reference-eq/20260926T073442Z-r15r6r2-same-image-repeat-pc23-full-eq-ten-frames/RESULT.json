@@ -1,0 +1,170 @@
+{
+  "additional_known_recipe_limitations": [
+    "Failure closeout may access the user BAR again after an earlier MMIO failure.",
+    "The normal unload gate does not establish all required endpoint ownership and engine-state evidence."
+  ],
+  "apply_handoff": "NOT_RUN",
+  "autoinit": "NOT_RUN",
+  "behavioral_tests": "NOT_RUN",
+  "blocker_summary": "The retained execution wrapper interprets loader hard-record validity differently from the frozen normative decoder. A valid record without a raw I2C cause can therefore have its command/context omitted. Fixing that control flow is outside the unchanged-wrapper scope.",
+  "c2h": {
+    "completed": 0,
+    "pending": 0,
+    "result": "NOT_RUN",
+    "submitted": 0
+  },
+  "camera": "FRESH_OWNER_ATTESTATION_RECEIVED",
+  "camera_attestation": "RECEIVED_BEFORE_PROPOSED_ACTIVATION",
+  "cleanup": "NOT_REQUIRED_NO_RESOURCES_ACQUIRED",
+  "complete_fresh_frames": 0,
+  "counts": {
+    "apply_a_host_write": 0,
+    "c2h_session": 0,
+    "compiler_runs": 0,
+    "driver_load": 0,
+    "driver_unload": 0,
+    "dut_ssh": 0,
+    "feq1_arm": 0,
+    "feq1_start_session": 0,
+    "firmware_changes": 0,
+    "fpga_builds": 0,
+    "full_eq_initial": 0,
+    "functional_tests": 0,
+    "hardware_lock_mutations": 0,
+    "host_product_changes": 0,
+    "jtag_identification": 0,
+    "lut_optimization": 0,
+    "prepare_host_write": 0,
+    "reader_execution": 0,
+    "sram_program": 0,
+    "stream_off": 0,
+    "stream_on": 0,
+    "warm_reboot": 0,
+    "wrapper_control_changes": 0
+  },
+  "current_driver_identity": "NOT_REVERIFIED_NO_DUT_CONTACT",
+  "elf_sha256": "2621B77C9DB756908A9C993A86F70C72F4831DB85EB48EA703B31D1E083040E1",
+  "evidence_basis": "READ_ONLY_INSPECTION_OF_RETAINED_FILES_NOT_FUNCTIONAL_TEST",
+  "firmware_bytes": 2192144,
+  "firmware_sha256": "3962886A7813B16D4A3B5C0D21F81A5B930696FF8E6DCD319A3331FA7FD2D5E2",
+  "firmware_source_commit": "719bcd63aa40cbeadb2b6eae99697f574209b6de",
+  "firmware_source_tree": "386d0bcff67d3835c6377f767b2b35c2f4698216",
+  "first_blocker": "BLOCKED_PRE_ACTIVATION_LOADER_HARD_RECORD_VALID_BIT_MISMATCH",
+  "full_eq": "NOT_RUN",
+  "hdmi": "NO_TARGETED_OPERATIONS_CURRENT_STATE_NOT_MEASURED",
+  "historical_comparison": {
+    "autoinit_nack_phases_waddr_regaddr_data_raddr": [
+      30,
+      35,
+      12,
+      4
+    ],
+    "autoinit_nack_total": 81,
+    "autoinit_starts_completions": [
+      356,
+      356
+    ],
+    "autoinit_timeouts": 0,
+    "cleanup": "PASS_HISTORICAL_ONLY",
+    "evidence_commit": "8cf2a2000aaa0b0c0af4efe01a0d2336a5836876",
+    "pc12": "BANK9_REG6A_READ_FIRST_WADDR_NACK_RECOVERED_ONE_RETRY",
+    "pc23": "PREPARE_WRITE_FF_09_WADDR_NACK_NO_TIMEOUT_PENDING_BANK9_NOT_CONFIRMED",
+    "prepare": "FAIL_TERMINAL",
+    "prepare_terminal": "0xC3C02202",
+    "retry_first_nack_accepted_recovered_unrecovered": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "historical_r15r6": "UNCHANGED",
+  "historical_result_preserved": "The retained R15R6 PC23 record included its payload; its observation remains unchanged.",
+  "host_source_commit": "c4bc671620f2cc2ae57fcbf9d11c31ba2d56aac4",
+  "local_identities": "PASS_SAME_BITSTREAM_HOST_ELF",
+  "new_boot_before_after": "NOT_MEASURED_NO_DUT_CONTACT",
+  "new_fresh_records_generations": "NOT_OBSERVED_NO_ACTIVATION",
+  "next_one_action": "Separately authorize the minimal task-wrapper correction for hard-record validity and the documented failure-closeout requirements, preserving all product binaries and decoder bytes.",
+  "pair": {
+    "actual_prepare_attempts": 1,
+    "executed_prepare_unknown_pc23": 0,
+    "new_activations": 0,
+    "new_prepare_attempts": 0,
+    "new_tasks_not_evaluable": 1,
+    "pc23_pass": 0,
+    "pc23_reached": 1,
+    "same_pc23_waddr_failures": 1
+  },
+  "pc12": "NOT_EVALUABLE",
+  "pc23": "PC23_NOT_EVALUABLE",
+  "png": "NOT_CREATED",
+  "prepare": "NOT_RUN",
+  "private_artifacts_excluded": [
+    "source",
+    "ABI",
+    "full_logs",
+    "raw_MMIO",
+    "firmware",
+    "ELF",
+    "pixels",
+    "environment_addresses"
+  ],
+  "product_qualification": "NOT_CLAIMED",
+  "result": "BLOCKED_PRE_ACTIVATION_LOADER_HARD_RECORD_VALID_BIT_MISMATCH",
+  "scope": "LOCAL_PRE_ACTIVATION_PREPARATION_STOPPED_NO_NEW_HARDWARE_OBSERVATION",
+  "t0": "NOT_ESTABLISHED",
+  "task": "AHD_V41_CH3_R15R6R2_SAME_IMAGE_REPEAT_PC23_FULL_EQ_TEN_FRAMES",
+  "ten_frame_observations": [
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 1
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 2
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 3
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 4
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 5
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 6
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 7
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 8
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 9
+    },
+    {
+      "observation": "NOT_RUN",
+      "png": "NOT_CREATED",
+      "target_seconds_after_t0": 10
+    }
+  ],
+  "verified_local_host_file_count": 52
+}
